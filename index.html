@@ -1,0 +1,475 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Prof. Fang Math — Experience first. Symbols second. Understanding always.</title>
+<meta name="description" content="Free K–12 math lessons, notes, worksheets, videos, games, flash cards and a weekly challenge from Prof. Fang Math.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
+<script src="content.js"></script>
+<style>
+  :root{
+    --bg:#FBF8F3; --surface:#FFFFFF; --ink:#16233B; --muted:#5B6474; --faint:#8C93A0; --line:#E8E2D8;
+    --navy:#1F3A68; --teal:#0F7C7C; --teal-soft:#DDF0EE; --gold:#C9962B; --gold-soft:#FBF1DC; --red:#B3261E; --green:#1E7A45; --green-soft:#DDF4E6;
+    --radius:18px; --shadow:0 8px 26px rgba(22,35,59,.07);
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 Inter,system-ui,-apple-system,sans-serif;-webkit-font-smoothing:antialiased}
+  a{color:var(--teal)}
+  h1,h2,h3{font-family:Fraunces,Georgia,serif;font-weight:600;letter-spacing:-.01em;margin:0;line-height:1.15}
+  button,input,select{font:inherit;color:inherit}
+  .wrap{max-width:1120px;margin:0 auto;padding:0 20px}
+  .hidden{display:none!important}
+
+  /* header */
+  header.top{position:sticky;top:0;z-index:40;background:rgba(255,255,255,.96);border-bottom:1px solid var(--line)}
+  header.top .in{max-width:1120px;margin:0 auto;padding:0 20px;height:64px;display:flex;align-items:center;gap:24px}
+  .brand{font-family:Inter,sans-serif;font-weight:700;font-size:19px;text-decoration:none;color:var(--ink);white-space:nowrap}
+  .brand span{color:var(--teal)}
+  nav.main{display:flex;gap:4px;margin-left:auto}
+  nav.main a{padding:8px 13px;border-radius:999px;text-decoration:none;color:var(--ink);font-weight:500;font-size:15px}
+  nav.main a:hover{background:var(--bg)}
+  nav.main a.active{color:var(--teal);font-weight:600}
+  .menu-btn{display:none;margin-left:auto;border:1px solid var(--line);background:#fff;border-radius:10px;padding:6px 11px;font-size:18px;cursor:pointer}
+  @media (max-width:820px){
+    .menu-btn{display:block}
+    nav.main{display:none;position:absolute;top:64px;left:0;right:0;background:#fff;border-bottom:1px solid var(--line);flex-direction:column;padding:8px 12px 14px;gap:2px}
+    nav.main.open{display:flex}
+    nav.main a{padding:12px 14px;border-radius:12px}
+  }
+
+  /* hero */
+  .hero{text-align:center;padding:56px 0 34px}
+  .wordmark{font-family:Inter,sans-serif;font-weight:800;font-size:clamp(46px,9vw,112px);line-height:1;letter-spacing:-.045em;margin:0}
+  .wordmark .m{color:var(--teal);position:relative;display:inline-block}
+  .wordmark .m::after{content:"";position:absolute;left:4%;right:4%;bottom:-.06em;height:.1em;border-radius:99px;background:var(--gold)}
+  .tagline{font-size:clamp(17px,2.2vw,22px);color:var(--muted);margin:22px 0 0}
+  .tagline b{color:var(--ink);font-weight:600}
+  .hero-cta{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:26px}
+
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 20px;border-radius:999px;font-weight:600;text-decoration:none;border:1px solid transparent;cursor:pointer;font-size:15px;background:var(--navy);color:#fff}
+  .btn:hover{filter:brightness(1.1)}
+  .btn.teal{background:var(--teal)}
+  .btn.ghost{background:#fff;color:var(--ink);border-color:var(--line)}
+  .btn.ghost:hover{background:var(--bg);filter:none}
+  .btn.sm{padding:7px 14px;font-size:14px}
+  .btn:disabled{opacity:.5;cursor:default}
+
+  .card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:24px;min-width:0}
+  .problem{max-width:860px;margin:10px auto 0;text-align:left}
+  .problem .lbl{display:inline-block;background:var(--gold-soft);color:#8A6415;font-weight:700;font-size:12.5px;letter-spacing:.06em;text-transform:uppercase;border-radius:999px;padding:3px 11px}
+  .problem .q{font-family:Fraunces,Georgia,serif;font-size:clamp(19px,2.3vw,24px);line-height:1.45;margin:12px 0 16px}
+
+  section.block{padding:44px 0}
+  .sec-head{display:flex;justify-content:space-between;align-items:end;gap:12px;margin-bottom:20px;flex-wrap:wrap}
+  .sec-head h2{font-size:clamp(26px,3.4vw,36px)}
+  .sec-head p{margin:6px 0 0;color:var(--muted)}
+  .grid{display:grid;gap:16px;grid-template-columns:repeat(auto-fill,minmax(250px,1fr))}
+  .course{display:flex;flex-direction:column;gap:8px;text-decoration:none;color:inherit;border-top:5px solid var(--c);transition:transform .15s}
+  .course:hover{transform:translateY(-2px)}
+  .course h3{font-size:22px}
+  .course p{margin:0;color:var(--muted);font-size:14.5px;flex:1}
+  .course .meta{font-size:13px;color:var(--faint);font-weight:500}
+  .course .go{color:var(--c);font-weight:600;font-size:14.5px}
+
+  .moves{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px;counter-reset:m}
+  @media (max-width:820px){.moves{grid-template-columns:repeat(2,minmax(0,1fr))}}
+  .move{background:#fff;border:1px solid var(--line);border-radius:16px;padding:16px;position:relative}
+  .move::before{counter-increment:m;content:counter(m);position:absolute;top:12px;right:14px;font-family:Fraunces,serif;font-size:26px;color:var(--line)}
+  .move b{display:block;font-family:Fraunces,serif;font-size:18px;font-weight:600}
+  .move span{font-size:14px;color:var(--muted)}
+
+  .promo{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px}
+  .promo .card{display:flex;gap:16px;align-items:center;text-decoration:none;color:inherit}
+  .promo .ic{flex:none;width:58px;height:58px;border-radius:16px;display:grid;place-items:center;font-size:28px;background:var(--teal-soft)}
+  .promo h3{font-size:20px}
+  .promo p{margin:2px 0 0;color:var(--muted);font-size:14.5px}
+
+  /* page */
+  .page-head{padding:34px 0 18px}
+  .crumbs{font-size:14px;color:var(--faint);margin-bottom:8px}
+  .crumbs a{color:var(--muted);text-decoration:none}
+  .page-head h1{font-size:clamp(30px,4.5vw,46px)}
+  .page-head p{color:var(--muted);margin:8px 0 0;max-width:720px}
+  .unit{margin-bottom:12px;padding:0;overflow:hidden}
+  .unit summary{list-style:none;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:10px;padding:16px 20px;font-weight:600;font-size:17px}
+  .unit summary::-webkit-details-marker{display:none}
+  .unit summary .n{font-size:13px;font-weight:600;color:var(--faint);white-space:nowrap}
+  .unit summary .chev{transition:transform .2s;color:var(--faint)}
+  .unit[open] summary .chev{transform:rotate(90deg)}
+  .unit .lessons{border-top:1px solid var(--line);padding:6px 10px 10px}
+  .lesson-row{display:flex;align-items:center;gap:12px;padding:12px 10px;border-radius:12px;text-decoration:none;color:inherit}
+  .lesson-row:hover{background:var(--bg)}
+  .lesson-row .tags{margin-left:auto;display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}
+  .tag{font-size:12px;font-weight:600;border-radius:999px;padding:2px 9px;background:var(--bg);color:var(--muted);white-space:nowrap}
+  .tag.v{background:#FDE7E3;color:#B3261E}
+  .soon{padding:14px 12px;color:var(--faint);font-size:14.5px}
+
+  .lesson-grid{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(0,1fr);gap:20px;align-items:start}
+  @media (max-width:860px){.lesson-grid{grid-template-columns:minmax(0,1fr)}}
+  .video{position:relative;aspect-ratio:16/9;border-radius:16px;overflow:hidden;background:#101a2d;display:grid;place-items:center;color:#c9d2e3;text-align:center}
+  .video iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+  .res-list{display:flex;flex-direction:column;gap:10px}
+  .res{display:flex;align-items:center;gap:12px;padding:12px 14px;border:1px solid var(--line);border-radius:14px;text-decoration:none;color:inherit;background:#fff}
+  .res:hover{border-color:var(--teal)}
+  .res .ic{font-size:22px}
+  .res b{display:block;font-size:15px}
+  .res span{font-size:13px;color:var(--faint)}
+  .steps{list-style:none;padding:0;margin:14px 0 0;counter-reset:s}
+  .steps li{counter-increment:s;display:flex;gap:12px;align-items:flex-start;padding:10px 0;border-top:1px dashed var(--line)}
+  .steps li::before{content:counter(s);flex:none;width:26px;height:26px;border-radius:50%;background:var(--green-soft);color:var(--green);font-weight:700;font-size:13px;display:grid;place-items:center;margin-top:2px}
+
+  /* challenge */
+  .move-btns{display:flex;gap:8px;flex-wrap:wrap;margin:6px 0 12px}
+  .mv{border:1px solid var(--line);background:#fff;border-radius:999px;padding:7px 14px;font-weight:600;font-size:14px;cursor:pointer}
+  .mv.on{background:var(--navy);border-color:var(--navy);color:#fff}
+  .hint{background:var(--bg);border-radius:14px;padding:14px 16px;margin-bottom:10px}
+  .hint b{color:var(--navy)}
+  .answer{background:var(--green-soft);border-radius:14px;padding:14px 16px}
+  .arch{display:flex;justify-content:space-between;gap:10px;align-items:center;padding:14px 4px;border-top:1px solid var(--line);text-decoration:none;color:inherit}
+  .arch:hover{color:var(--teal)}
+
+  /* games */
+  .game{max-width:560px;margin:0 auto;text-align:center}
+  .opts{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin:8px 0 14px}
+  .opt{border:1px solid var(--line);background:#fff;border-radius:12px;padding:9px 16px;font-weight:600;cursor:pointer;min-width:52px}
+  .opt.on{background:var(--teal);border-color:var(--teal);color:#fff}
+  .bigq{font-family:Fraunces,Georgia,serif;font-size:clamp(38px,8vw,60px);margin:14px 0}
+  .ans-in{font-size:28px;text-align:center;width:180px;border:2px solid var(--line);border-radius:14px;padding:8px}
+  .ans-in:focus{outline:none;border-color:var(--teal)}
+  .scorebar{display:flex;justify-content:center;gap:22px;font-weight:600;color:var(--muted);margin-top:4px}
+  .scorebar b{color:var(--ink);font-size:22px;display:block}
+  .flash{animation:none}
+  .ok{color:var(--green)} .bad{color:var(--red)}
+
+  /* flash cards */
+  .deck-wrap{max-width:620px;margin:0 auto}
+  .fc{perspective:1200px;cursor:pointer;margin:10px 0 14px}
+  .fc .inner{position:relative;height:300px;transition:transform .45s;transform-style:preserve-3d}
+  .fc.flip .inner{transform:rotateY(180deg)}
+  .fc .face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:22px;display:flex;align-items:center;justify-content:center;padding:28px;text-align:center;box-shadow:var(--shadow)}
+  .fc .front{background:var(--navy);color:#fff;font-family:Fraunces,Georgia,serif;font-size:clamp(26px,5vw,36px)}
+  .fc .back{background:#fff;border:2px solid var(--teal);transform:rotateY(180deg);font-size:19px;line-height:1.55}
+  @media (prefers-reduced-motion:reduce){.fc .inner{transition:none}}
+  .fc-ctrl{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+  .progress{height:8px;background:var(--line);border-radius:99px;overflow:hidden;margin:6px 0}
+  .progress span{display:block;height:100%;background:var(--teal)}
+
+  footer{border-top:1px solid var(--line);margin-top:40px;padding:28px 0 40px;color:var(--muted);font-size:14px}
+  footer .in{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
+  footer a{color:var(--muted)}
+  .muted{color:var(--muted)}
+</style>
+</head>
+<body>
+<header class="top"><div class="in">
+  <a class="brand" href="#/">Prof. Fang <span>Math</span></a>
+  <button class="menu-btn" aria-label="Menu" aria-expanded="false" id="menuBtn">☰</button>
+  <nav class="main" id="nav">
+    <a href="#/" data-nav="home">Home</a>
+    <a href="#/k8" data-nav="k8">Grades K–8</a>
+    <a href="#/algebra" data-nav="algebra">Algebra</a>
+    <a href="#/challenge" data-nav="challenge">Weekly Challenge</a>
+    <a href="#/games" data-nav="games">Games</a>
+    <a href="#/flashcards" data-nav="flashcards">Flashcards</a>
+  </nav>
+</div></header>
+
+<main id="view"></main>
+
+<footer><div class="wrap in">
+  <div>© <span id="yr"></span> Prof. Fang Math. All rights reserved.</div>
+  <div id="footLinks"></div>
+</div></footer>
+
+<script>
+const $ = id => document.getElementById(id);
+function h(tag, attrs, ...kids){
+  const el = document.createElement(tag);
+  for (const [k, v] of Object.entries(attrs || {})) {
+    if (v == null || v === false) continue;
+    if (k.startsWith("on")) el.addEventListener(k.slice(2), v);
+    else if (k === "class") el.className = v;
+    else if (k === "html") el.innerHTML = v;              // only used for our own trusted content with $math$
+    else el.setAttribute(k, v === true ? "" : v);
+  }
+  for (const c of kids.flat(Infinity)) if (c != null && c !== false) el.append(c.nodeType ? c : document.createTextNode(String(c)));
+  return el;
+}
+// text that may contain $math$ — escaped, then KaTeX renders it
+const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;" }[c]));
+const mathEl = (tag, text, attrs) => h(tag, Object.assign({ html: esc(text) }, attrs || {}));
+function renderMath(root){
+  if (window.renderMathInElement) renderMathInElement(root || document.body, { delimiters:[{ left:"$", right:"$", display:false }], throwOnError:false });
+  else setTimeout(() => renderMath(root), 150);
+}
+const courseById = id => COURSES.find(c => c.id === id);
+const lessonCount = c => c.units.reduce((a, u) => a + u.lessons.length, 0);
+const fmtDate = d => new Date(d + "T12:00:00").toLocaleDateString("en-US", { month:"long", day:"numeric", year:"numeric" });
+function store(k, v){ try { if (v === undefined) return localStorage.getItem(k); localStorage.setItem(k, v); } catch (e) { return null; } }
+
+/* ---------------- router ---------------- */
+$("menuBtn").onclick = () => { const n = $("nav"); n.classList.toggle("open"); $("menuBtn").setAttribute("aria-expanded", n.classList.contains("open")); };
+window.addEventListener("hashchange", route);
+function route(){
+  $("nav").classList.remove("open");
+  const parts = location.hash.replace(/^#\/?/, "").split("/").map(decodeURIComponent);
+  const page = parts[0] || "home";
+  const navKey = { course:(courseById(parts[1]) || {}).group === "Algebra" ? "algebra" : "k8", lesson:(courseById(parts[1]) || {}).group === "Algebra" ? "algebra" : "k8" }[page] || page;
+  document.querySelectorAll("#nav a").forEach(a => a.classList.toggle("active", a.dataset.nav === navKey));
+  const v = $("view"); v.replaceChildren(); window.scrollTo(0, 0);
+  stopGames();
+  if (page === "k8") pageGroup(v, "K–8", "Grades K–8", "Elementary and middle school math — every idea starts with something you can see, touch or draw.");
+  else if (page === "algebra") pageGroup(v, "Algebra", "Algebra", "Algebra 1 and Algebra 2, chapter by chapter.");
+  else if (page === "course") pageCourse(v, parts[1]);
+  else if (page === "lesson") pageLesson(v, parts[1], +parts[2], +parts[3]);
+  else if (page === "challenge") pageChallenge(v, parts[1]);
+  else if (page === "games") parts[1] === "facts" ? gameFacts(v) : parts[1] === "solve" ? gameSolve(v) : pageGames(v);
+  else if (page === "flashcards") parts[1] ? pageDeck(v, parts[1]) : pageDecks(v);
+  else pageHome(v);
+  document.title = (page === "home" ? "" : (v.querySelector("h1") ? v.querySelector("h1").textContent + " — " : "")) + "Prof. Fang Math" + (page === "home" ? " — " + SITE.tagline : "");
+  renderMath(v);
+}
+
+/* ---------------- home ---------------- */
+function courseCard(c){
+  const n = lessonCount(c);
+  return h("a", { class:"card course", href:"#/course/" + c.id, style:"--c:" + c.color },
+    h("div", { class:"meta" }, c.group === "K–8" ? "Grades " + c.short : c.group), h("h3", {}, c.title), h("p", {}, c.blurb),
+    h("div", { class:"meta" }, c.units.length + " units · " + (n ? n + (n === 1 ? " lesson" : " lessons") : "lessons coming soon")),
+    h("span", { class:"go" }, "Open course →"));
+}
+function pageHome(v){
+  const ch = CHALLENGES[0];
+  v.append(h("section", { class:"hero" }, h("div", { class:"wrap" },
+    h("h1", { class:"wordmark" }, "Prof. Fang ", h("span", { class:"m" }, "Math")),
+    h("p", { class:"tagline" }, h("b", {}, "Experience first. "), "Symbols second. ", h("b", {}, "Understanding always.")),
+    h("div", { class:"hero-cta" }, h("a", { class:"btn", href:"#/k8" }, "Grades K–8"), h("a", { class:"btn teal", href:"#/algebra" }, "Algebra"), h("a", { class:"btn ghost", href:"#/challenge" }, "This week's challenge")),
+    ch ? h("div", { class:"card problem", style:"margin-top:38px" },
+      h("span", { class:"lbl" }, "Weekly Challenge · " + ch.level),
+      mathEl("div", ch.q, { class:"q" }),
+      h("a", { class:"btn sm teal", href:"#/challenge" }, "Try it with the Five Moves →")) : null)));
+
+  v.append(h("section", { class:"block" }, h("div", { class:"wrap" },
+    h("div", { class:"sec-head" }, h("div", {}, h("h2", {}, "Courses"), h("p", {}, "Free notes, worksheets, answer keys and video lessons — organized by grade and course."))),
+    h("div", { class:"grid" }, COURSES.map(courseCard)))));
+
+  v.append(h("section", { class:"block", style:"background:#fff;border-top:1px solid var(--line);border-bottom:1px solid var(--line)" }, h("div", { class:"wrap" },
+    h("div", { class:"sec-head" }, h("div", {}, h("h2", {}, "The Five Moves"), h("p", {}, "How we solve every problem — from a first look to real mastery."))),
+    h("div", { class:"moves" }, [["Observe", "What do you notice? What is it asking?"], ["Simplify", "Try a smaller or easier version."], ["Explore", "Test cases, draw, look for a pattern."], ["Generalize", "Say the rule that always works."], ["Master", "Use it on something new."]]
+      .map(([t, d]) => h("div", { class:"move" }, h("b", {}, t), h("span", {}, d)))))));
+
+  v.append(h("section", { class:"block" }, h("div", { class:"wrap" },
+    h("div", { class:"sec-head" }, h("div", {}, h("h2", {}, "Practice & review"), h("p", {}, "Quick, fun ways to build fluency."))),
+    h("div", { class:"promo" },
+      h("a", { class:"card", href:"#/games" }, h("div", { class:"ic" }, "🎮"), h("div", {}, h("h3", {}, "Games"), h("p", {}, "Speed Facts and Solve for x — beat your best score."))),
+      h("a", { class:"card", href:"#/flashcards" }, h("div", { class:"ic", style:"background:var(--gold-soft)" }, "🃏"), h("div", {}, h("h3", {}, "Flashcards"), h("p", {}, "Flip through key terms and rules, then test yourself."))),
+      h("a", { class:"card", href:SITE.pma, target:"_blank", rel:"noopener" }, h("div", { class:"ic", style:"background:#E4ECFF" }, "👨‍👩‍👧"), h("div", {}, h("h3", {}, "For parents"), h("p", {}, "Join Parents Meet AI — a free community about kids, school and AI.")))))));
+}
+
+/* ---------------- course lists ---------------- */
+function pageGroup(v, group, title, intro){
+  v.append(h("div", { class:"wrap" },
+    h("div", { class:"page-head" }, h("h1", {}, title), h("p", {}, intro)),
+    h("div", { class:"grid" }, COURSES.filter(c => c.group === group).map(courseCard))));
+}
+function pageCourse(v, id){
+  const c = courseById(id); if (!c) return notFound(v);
+  const back = c.group === "Algebra" ? ["#/algebra", "Algebra"] : ["#/k8", "Grades K–8"];
+  const wrap = h("div", { class:"wrap" },
+    h("div", { class:"page-head" }, h("div", { class:"crumbs" }, h("a", { href:back[0] }, back[1]), " / " + c.title), h("h1", {}, c.title), h("p", {}, c.blurb)));
+  c.units.forEach((u, ui) => {
+    const det = h("details", { class:"card unit", open: u.lessons.length ? true : null },
+      h("summary", {}, h("span", {}, u.title), h("span", { style:"display:flex;gap:10px;align-items:center" }, h("span", { class:"n" }, u.lessons.length ? u.lessons.length + (u.lessons.length === 1 ? " lesson" : " lessons") : "Coming soon"), h("span", { class:"chev" }, "›"))),
+      h("div", { class:"lessons" }, u.lessons.length ? u.lessons.map((l, li) => h("a", { class:"lesson-row", href:`#/lesson/${c.id}/${ui}/${li}` },
+        h("span", {}, "📄"), h("span", { style:"font-weight:500" }, l.title),
+        h("span", { class:"tags" }, l.video ? h("span", { class:"tag v" }, "▶ Video") : null, l.notes ? h("span", { class:"tag" }, "Notes") : null, l.worksheet ? h("span", { class:"tag" }, "Worksheet") : null, l.answers ? h("span", { class:"tag" }, "Answers") : null)))
+        : h("div", { class:"soon" }, "Lessons for this unit are on the way.")));
+    wrap.append(det);
+  });
+  v.append(wrap);
+}
+function pageLesson(v, cid, ui, li){
+  const c = courseById(cid), u = c && c.units[ui], l = u && u.lessons[li]; if (!l) return notFound(v);
+  const res = [["notes", "📘", "Class notes", "Read and follow along"], ["worksheet", "✏️", "Worksheet", "Printable practice"], ["answers", "✅", "Answer key", "Check your work"]]
+    .filter(r => l[r[0]]).map(([k, ic, t, s]) => h("a", { class:"res", href:l[k], target:"_blank", rel:"noopener" }, h("span", { class:"ic" }, ic), h("div", {}, h("b", {}, t), h("span", {}, s + " · PDF"))));
+  const ex = l.example;
+  let shown = 0; const stepList = h("ol", { class:"steps" }); const nextBtn = h("button", { class:"btn sm teal" }, "Show first step");
+  const showNext = () => { if (!ex || shown >= ex.steps.length) return; const li2 = h("li", {}, mathEl("span", ex.steps[shown])); stepList.append(li2); renderMath(li2); shown++;
+    nextBtn.textContent = shown >= ex.steps.length ? "All steps shown" : "Show next step"; nextBtn.disabled = shown >= ex.steps.length; };
+  nextBtn.onclick = showNext;
+  v.append(h("div", { class:"wrap" },
+    h("div", { class:"page-head" }, h("div", { class:"crumbs" }, h("a", { href:"#/course/" + c.id }, c.title), " / " + u.title), h("h1", {}, l.title), l.summary ? h("p", {}, l.summary) : null),
+    h("div", { class:"lesson-grid" },
+      h("div", {},
+        h("div", { class:"video" }, l.video
+          ? h("iframe", { src:"https://www.youtube-nocookie.com/embed/" + encodeURIComponent(l.video), title:l.title, allow:"accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture", allowfullscreen:true, loading:"lazy" })
+          : h("div", {}, h("div", { style:"font-size:40px" }, "🎬"), "Video lesson coming soon")),
+        ex ? h("div", { class:"card", style:"margin-top:18px" },
+          h("span", { class:"tag", style:"background:var(--green-soft);color:var(--green)" }, "Watch me"),
+          mathEl("p", ex.q, { style:"font-size:18px;margin:10px 0 0;font-weight:500" }),
+          h("p", { class:"muted", style:"margin:6px 0 0;font-size:14px" }, "Think first — then reveal one step at a time."),
+          stepList, h("div", { style:"margin-top:12px" }, nextBtn)) : null),
+      h("div", {}, h("div", { class:"card" }, h("h3", { style:"font-size:20px;margin-bottom:12px" }, "Materials"),
+        res.length ? h("div", { class:"res-list" }, res) : h("p", { class:"muted" }, "Materials coming soon."))))));
+}
+
+/* ---------------- weekly challenge ---------------- */
+function pageChallenge(v, which){
+  const idx = which ? CHALLENGES.findIndex(c => c.date === which) : 0, ch = CHALLENGES[idx]; if (!ch) return notFound(v);
+  const hintBox = h("div"); const ansBox = h("div");
+  const order = ["Observe", "Simplify", "Explore", "Generalize", "Master"];
+  const btns = order.map(m => h("button", { class:"mv", onclick:e => { e.currentTarget.classList.add("on"); if (hintBox.querySelector(`[data-m="${m}"]`)) return;
+      const el = h("div", { class:"hint", "data-m":m }, h("b", {}, m + ": "), mathEl("span", ch.moves[m]));
+      // keep hints in Five-Moves order
+      const after = [...hintBox.children].find(x => order.indexOf(x.dataset.m) > order.indexOf(m)); hintBox.insertBefore(el, after || null); renderMath(el); } }, m));
+  const reveal = h("button", { class:"btn sm", onclick:() => { ansBox.replaceChildren(h("div", { class:"answer" }, h("b", {}, "Answer: "), mathEl("span", ch.answer))); renderMath(ansBox); reveal.remove(); } }, "Show answer");
+  v.append(h("div", { class:"wrap" },
+    h("div", { class:"page-head" }, h("div", { class:"crumbs" }, idx === 0 ? "This week" : fmtDate(ch.date)), h("h1", {}, "Weekly Challenge"), h("p", {}, "One problem a week. Stuck? Open the Five Moves one at a time — try again after each one.")),
+    h("div", { class:"card problem", style:"max-width:none" },
+      h("span", { class:"lbl" }, ch.level + " · " + fmtDate(ch.date)),
+      h("h2", { style:"font-size:26px;margin-top:12px" }, ch.title),
+      mathEl("div", ch.q, { class:"q" }),
+      h("div", { class:"muted", style:"font-size:14px;font-weight:600" }, "Need a nudge? The Five Moves:"),
+      h("div", { class:"move-btns" }, btns), hintBox, ansBox, reveal),
+    CHALLENGES.length > 1 ? h("div", { class:"card", style:"margin-top:18px" }, h("h3", { style:"font-size:20px;margin-bottom:6px" }, "Past challenges"),
+      CHALLENGES.map((c, i) => i === idx ? null : h("a", { class:"arch", href:"#/challenge/" + c.date }, h("span", {}, h("b", {}, c.title), h("span", { class:"muted" }, " · " + c.level)), h("span", { class:"muted", style:"font-size:14px;white-space:nowrap" }, fmtDate(c.date))))) : null));
+}
+
+/* ---------------- games ---------------- */
+let gameTimer = null;
+function stopGames(){ if (gameTimer) { clearInterval(gameTimer); gameTimer = null; } }
+const rnd = (a, b) => a + Math.floor(Math.random() * (b - a + 1));
+function pageGames(v){
+  v.append(h("div", { class:"wrap" }, h("div", { class:"page-head" }, h("h1", {}, "Games"), h("p", {}, "Short rounds, instant feedback. Your best scores are saved on this device.")),
+    h("div", { class:"promo" },
+      h("a", { class:"card", href:"#/games/facts" }, h("div", { class:"ic" }, "⚡"), h("div", {}, h("h3", {}, "Speed Facts"), h("p", {}, "How many facts can you answer in 60 seconds? Grades 1–5."), h("p", { style:"font-size:13px" }, "Best: " + (store("fm-best-facts") || "—")))),
+      h("a", { class:"card", href:"#/games/solve" }, h("div", { class:"ic", style:"background:var(--gold-soft)" }, "🧩"), h("div", {}, h("h3", {}, "Solve for x"), h("p", {}, "10 equations — one-step, two-step, or variables on both sides. Grades 6–9."), h("p", { style:"font-size:13px" }, "Best: " + (store("fm-best-solve") || "—")))))));
+}
+function optRow(choices, cur, onPick){
+  const row = h("div", { class:"opts" });
+  choices.forEach(([val, label]) => row.append(h("button", { class:"opt" + (val === cur ? " on" : ""), onclick:e => { row.querySelectorAll(".opt").forEach(b => b.classList.remove("on")); e.currentTarget.classList.add("on"); onPick(val); } }, label)));
+  return row;
+}
+function gameFacts(v){
+  let op = "×", level = 1, score = 0, tries = 0, left = 60, q = null, playing = false;
+  const qEl = h("div", { class:"bigq" }, "Ready?"), inp = h("input", { class:"ans-in", inputmode:"numeric", autocomplete:"off", "aria-label":"Your answer", disabled:true });
+  const sc = h("b", {}, "0"), tm = h("b", {}, "60"), fb = h("div", { style:"min-height:26px;font-weight:600" });
+  const start = h("button", { class:"btn teal" }, "Start");
+  function make(){
+    const max = [10, 12, 20][level];
+    if (op === "+") { const a = rnd(0, max), b = rnd(0, max); return { t:`${a} + ${b}`, a:a + b }; }
+    if (op === "−") { const a = rnd(0, max * 2), b = rnd(0, a); return { t:`${a} − ${b}`, a:a - b }; }
+    if (op === "×") { const a = rnd(level ? 2 : 1, max), b = rnd(level ? 2 : 1, level === 2 ? 12 : max); return { t:`${a} × ${b}`, a:a * b }; }
+    const b = rnd(2, level === 0 ? 10 : 12), a = rnd(1, level === 2 ? 20 : max); return { t:`${a * b} ÷ ${b}`, a };
+  }
+  function next(){ q = make(); qEl.textContent = q.t + " = ?"; inp.value = ""; inp.focus(); }
+  function end(){
+    stopGames(); playing = false; inp.disabled = true; start.textContent = "Play again";
+    const best = +(store("fm-best-facts") || 0); if (score > best) store("fm-best-facts", String(score));
+    qEl.textContent = "Time!"; fb.className = ""; fb.textContent = `${score} correct out of ${tries}` + (score > best ? " — new best! 🎉" : `. Best: ${Math.max(best, score)}`);
+  }
+  start.onclick = () => { score = 0; tries = 0; left = 60; sc.textContent = "0"; tm.textContent = "60"; fb.textContent = ""; playing = true; inp.disabled = false; start.textContent = "Restart";
+    stopGames(); gameTimer = setInterval(() => { left--; tm.textContent = left; if (left <= 0) end(); }, 1000); next(); };
+  inp.addEventListener("keydown", e => {
+    if (e.key !== "Enter" || !playing || inp.value.trim() === "") return;
+    tries++; const right = +inp.value.trim() === q.a;
+    if (right) { score++; sc.textContent = score; fb.className = "ok"; fb.textContent = "✓ Correct"; }
+    else { fb.className = "bad"; fb.textContent = `✗ ${q.t} = ${q.a}`; }
+    next();
+  });
+  v.append(h("div", { class:"wrap" }, h("div", { class:"page-head" }, h("div", { class:"crumbs" }, h("a", { href:"#/games" }, "Games"), " / Speed Facts"), h("h1", {}, "Speed Facts")),
+    h("div", { class:"card game" },
+      optRow([["+", "+"], ["−", "−"], ["×", "×"], ["÷", "÷"]], op, x => op = x),
+      optRow([[0, "Easy"], [1, "Medium"], [2, "Hard"]], level, x => level = x),
+      qEl, inp, h("p", { class:"muted", style:"font-size:13px;margin:6px 0" }, "Type the answer and press Enter."), fb,
+      h("div", { class:"scorebar" }, h("div", {}, sc, "correct"), h("div", {}, tm, "seconds")),
+      h("div", { style:"margin-top:16px" }, start))));
+}
+function gameSolve(v){
+  let kind = 1, n = 0, right = 0, q = null;
+  const qEl = h("div", { class:"bigq", style:"font-size:clamp(30px,6vw,46px)" }), inp = h("input", { class:"ans-in", inputmode:"numeric", autocomplete:"off", placeholder:"x = ?", "aria-label":"Value of x" });
+  const fb = h("div", { style:"min-height:52px;font-weight:500" }), prog = h("div", { class:"muted", style:"font-weight:600" });
+  const nz = (a, b) => { let x; do { x = rnd(a, b); } while (x === 0); return x; };
+  const sgn = (k, first) => (k < 0 ? (first ? "−" : " − ") : (first ? "" : " + ")) + Math.abs(k);
+  const term = (a, first) => (a < 0 ? (first ? "−" : " − ") : (first ? "" : " + ")) + (Math.abs(a) === 1 ? "" : Math.abs(a)) + "x";
+  function make(){
+    const x = rnd(-9, 12);
+    if (kind === 0) { const b = nz(-15, 15); if (Math.random() < .5) return { t:`x${sgn(b)} = ${x + b}`, x, s:[`Undo ${b > 0 ? "+" : "−"}${Math.abs(b)}: ${b > 0 ? "subtract" : "add"} ${Math.abs(b)} on both sides.`, `x = ${x}`] };
+      const a = nz(-9, 9) || 2; return a === 1 ? make() : { t:`${a}x = ${a * x}`, x, s:[`Divide both sides by ${a}.`, `x = ${x}`] }; }
+    if (kind === 1) { let a; do { a = nz(-9, 9); } while (a === 1); const b = nz(-20, 20);
+      return { t:`${term(a, true)}${sgn(b)} = ${a * x + b}`, x, s:[`${b > 0 ? "Subtract" : "Add"} ${Math.abs(b)} on both sides: ${term(a, true)} = ${a * x}`, `Divide by ${a}: x = ${x}`] }; }
+    let a, c; do { a = nz(-8, 9); c = nz(-8, 9); } while (a === c); const b = nz(-15, 15), d = (a - c) * x + b;
+    return { t:`${term(a, true)}${sgn(b)} = ${term(c, true)}${sgn(d)}`, x, s:[`Move the x-terms to one side: ${term(a - c, true)}${sgn(b)} = ${d}`, `Then: ${term(a - c, true)} = ${d - b}`, `Divide by ${a - c}: x = ${x}`] };
+  }
+  function next(){ if (n >= 10) return finish(); q = make(); qEl.textContent = q.t; inp.value = ""; inp.disabled = false; inp.focus(); prog.textContent = `Question ${n + 1} of 10 · ${right} correct`; }
+  function finish(){ inp.disabled = true; const best = +(store("fm-best-solve") || 0); if (right > best) store("fm-best-solve", String(right));
+    qEl.textContent = `${right} / 10`; prog.textContent = right > best ? "New best score! 🎉" : `Best: ${Math.max(best, right)} / 10`; fb.replaceChildren(h("button", { class:"btn teal", onclick:() => { n = 0; right = 0; fb.replaceChildren(); next(); } }, "Play again")); }
+  inp.addEventListener("keydown", e => {
+    if (e.key !== "Enter" || inp.disabled || inp.value.trim() === "") return;
+    const val = +inp.value.trim().replace(/^x\s*=\s*/i, "").replace("−", "-"); n++;
+    if (val === q.x) { right++; fb.replaceChildren(h("div", { class:"ok" }, "✓ Correct!")); next(); }
+    else { inp.disabled = true; fb.replaceChildren(h("div", { class:"bad" }, `✗ x = ${q.x}`), h("div", { class:"muted", style:"font-size:14px" }, q.s.join("  →  ")),
+        h("button", { class:"btn sm", style:"margin-top:8px", onclick:() => { fb.replaceChildren(); next(); } }, "Next")); }
+  });
+  v.append(h("div", { class:"wrap" }, h("div", { class:"page-head" }, h("div", { class:"crumbs" }, h("a", { href:"#/games" }, "Games"), " / Solve for x"), h("h1", {}, "Solve for x")),
+    h("div", { class:"card game" },
+      optRow([[0, "One-step"], [1, "Two-step"], [2, "Both sides"]], kind, x => { kind = x; n = 0; right = 0; fb.replaceChildren(); next(); }),
+      prog, qEl, inp, h("p", { class:"muted", style:"font-size:13px;margin:6px 0" }, "Type the value of x and press Enter. Answers can be negative."), fb)));
+  next();
+}
+
+/* ---------------- flash cards ---------------- */
+function pageDecks(v){
+  const groups = {}; DECKS.forEach(d => (groups[d.course] = groups[d.course] || []).push(d));
+  const wrap = h("div", { class:"wrap" }, h("div", { class:"page-head" }, h("h1", {}, "Flashcards"), h("p", {}, "Tap a card to flip it. Mark each one “Got it” or “Again” — keep going until you know them all.")));
+  Object.entries(groups).forEach(([course, ds]) => wrap.append(h("h2", { style:"font-size:22px;margin:18px 0 12px" }, course),
+    h("div", { class:"promo" }, ds.map(d => h("a", { class:"card", href:"#/flashcards/" + d.id }, h("div", { class:"ic", style:"background:var(--gold-soft)" }, "🃏"), h("div", {}, h("h3", { style:"font-size:18px" }, d.title), h("p", {}, d.cards.length + " cards")))))));
+  v.append(wrap);
+}
+function pageDeck(v, id){
+  const d = DECKS.find(x => x.id === id); if (!d) return notFound(v);
+  let order = d.cards.map((_, i) => i), pos = 0, known = new Set();
+  const front = h("div", { class:"face front" }), back = h("div", { class:"face back" });
+  const fc = h("div", { class:"fc", tabindex:"0", role:"button", "aria-label":"Flip card" }, h("div", { class:"inner" }, front, back));
+  const count = h("div", { class:"muted", style:"font-weight:600;text-align:center" }), bar = h("span");
+  const flip = () => fc.classList.toggle("flip");
+  fc.onclick = flip; fc.onkeydown = e => { if (e.key === " " || e.key === "Enter") { e.preventDefault(); flip(); } };
+  function show(){
+    const remaining = order.filter(i => !known.has(i));
+    if (!remaining.length) { front.replaceChildren(h("div", {}, "🎉 You know all " + d.cards.length + "!")); back.replaceChildren(); fc.classList.remove("flip"); count.textContent = "Deck complete"; bar.style.width = "100%"; return; }
+    if (pos >= order.length || known.has(order[pos])) { pos = order.findIndex(i => !known.has(i)); }
+    const [f, b] = d.cards[order[pos]];
+    fc.classList.remove("flip");
+    front.replaceChildren(mathEl("div", f)); back.replaceChildren(mathEl("div", b)); renderMath(fc);
+    count.textContent = `Card ${order.indexOf(order[pos]) + 1} of ${d.cards.length} · ${known.size} known`;
+    bar.style.width = (known.size / d.cards.length * 100) + "%";
+  }
+  const step = dir => { const rem = order.filter(i => !known.has(i)); if (!rem.length) return; let k = rem.indexOf(order[pos]); k = (k + dir + rem.length) % rem.length; pos = order.indexOf(rem[k]); show(); };
+  v.append(h("div", { class:"wrap" }, h("div", { class:"page-head" }, h("div", { class:"crumbs" }, h("a", { href:"#/flashcards" }, "Flashcards"), " / " + d.course), h("h1", {}, d.title)),
+    h("div", { class:"deck-wrap" }, h("div", { class:"progress" }, bar), count, fc,
+      h("div", { class:"fc-ctrl" },
+        h("button", { class:"btn ghost", onclick:() => step(-1), "aria-label":"Previous card" }, "←"),
+        h("button", { class:"btn ghost", onclick:() => step(1) }, "Again ↻"),
+        h("button", { class:"btn teal", onclick:() => { known.add(order[pos]); step(1); show(); } }, "Got it ✓"),
+        h("button", { class:"btn ghost", onclick:() => step(1), "aria-label":"Next card" }, "→")),
+      h("div", { class:"fc-ctrl", style:"margin-top:10px" },
+        h("button", { class:"btn sm ghost", onclick:() => { for (let i = order.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [order[i], order[j]] = [order[j], order[i]]; } pos = 0; show(); } }, "Shuffle"),
+        h("button", { class:"btn sm ghost", onclick:() => { known = new Set(); pos = 0; show(); } }, "Start over")))));
+  show();
+}
+
+function notFound(v){ v.append(h("div", { class:"wrap" }, h("div", { class:"page-head" }, h("h1", {}, "Page not found"), h("p", {}, h("a", { href:"#/" }, "← Back home"))))); }
+
+$("yr").textContent = new Date().getFullYear();
+$("footLinks").append(h("span", {}, h("a", { href:"mailto:" + SITE.email }, SITE.email), SITE.youtube ? [" · ", h("a", { href:SITE.youtube, target:"_blank", rel:"noopener" }, "YouTube")] : null, " · ", h("a", { href:SITE.pma, target:"_blank", rel:"noopener" }, "Parents Meet AI")));
+route();
+</script>
+</body>
+</html>

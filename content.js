@@ -12,6 +12,10 @@
       • video = the YouTube video ID (the part after "v=" in the YouTube link). Leave it out if no video yet.
       • Any of notes / worksheet / answers can be left out.
       • Math goes between $ ... $ (LaTeX). In this file every backslash is typed twice: \\frac, \\times.
+      • Optional practice quiz (scores are saved for signed-in students):
+          quiz: [ { q:"Find $12 \\times 3$.", answer:"36" },
+                  { q:"Which is bigger?", choices:["$\\tfrac12$", "$\\tfrac13$"], answer:0 } ]   // answer = number of the right choice, starting at 0
+   WEEKLY CHALLENGE: add  check:"7"  (the exact final answer) so students can submit and get it marked.
    3. Upload this file (content.js) to GitHub again. Done.
    ===================================================================== */
 
@@ -43,7 +47,15 @@ const COURSES = [
           notes: "files/multiply-divide-notes.pdf", worksheet: "files/multiply-divide-worksheet.pdf", answers: "files/multiply-divide-answer-key.pdf",
           summary: "Four ways to multiply (expanded form, area model, partial products, standard algorithm) and 2-digit ÷ 1-digit long division.",
           example: { q: "Find $347 \\times 6$ with the area model.",
-            steps: ["Split $347$ into $300 + 40 + 7$.", "Multiply each part: $300\\times6=1800$, $\\;40\\times6=240$, $\\;7\\times6=42$.", "Add the parts: $1800+240+42=\\mathbf{2082}$."] } },
+            steps: ["Split $347$ into $300 + 40 + 7$.", "Multiply each part: $300\\times6=1800$, $\\;40\\times6=240$, $\\;7\\times6=42$.", "Add the parts: $1800+240+42=\\mathbf{2082}$."]  },
+          quiz: [
+            { q: "Find $347 \\times 6$.", answer: "2082" },
+            { q: "Find $125 \\times 4$.", answer: "500" },
+            { q: "Find $208 \\times 3$.", answer: "624" },
+            { q: "In the area model for $453 \\times 7$, what is the hundreds box ($400 \\times 7$)?", answer: "2800" },
+            { q: "Find $84 \\div 4$.", answer: "21" },
+            { q: "What is $96 \\div 7$?", choices: ["$13$ R $5$", "$13$ R $4$", "$12$ R $12$", "$14$ R $2$"], answer: 0 },
+          ] },
       ] },
       { title: "Fractions", lessons: [] },
       { title: "Decimals", lessons: [] },
@@ -113,7 +125,7 @@ const CHALLENGES = [
       Generalize: "For $\\ell + w = n$ with $n$ odd, there are $\\tfrac{n-1}{2}$ rectangles.",
       Master: "Try perimeter $40$. (Careful: now a square is possible!)",
     },
-    answer: "$7$ rectangles: $1\\times14,\\ 2\\times13,\\ 3\\times12,\\ 4\\times11,\\ 5\\times10,\\ 6\\times9,\\ 7\\times8$." },
+    check: "7", answer: "$7$ rectangles: $1\\times14,\\ 2\\times13,\\ 3\\times12,\\ 4\\times11,\\ 5\\times10,\\ 6\\times9,\\ 7\\times8$." },
   { date: "2026-09-21", level: "Grades 5–8", title: "Adding the Odd Numbers",
     q: "What is $1 + 3 + 5 + 7 + \\cdots + 99$?",
     moves: {
@@ -123,7 +135,7 @@ const CHALLENGES = [
       Generalize: "The sum of the first $n$ odd numbers is $n^2$. From $1$ to $99$ there are $50$ odd numbers.",
       Master: "Draw it: each odd number adds an L-shaped layer to a square of dots.",
     },
-    answer: "$50^2 = 2500$." },
+    check: "2500", answer: "$50^2 = 2500$." },
   { date: "2026-09-14", level: "Competition", title: "Zeros at the End of 25!",
     q: "$25! = 25 \\times 24 \\times 23 \\times \\cdots \\times 2 \\times 1$. How many zeros are at the end of this number?",
     moves: {
@@ -133,7 +145,7 @@ const CHALLENGES = [
       Generalize: "Zeros in $n!$ $= \\lfloor n/5 \\rfloor + \\lfloor n/25 \\rfloor + \\lfloor n/125 \\rfloor + \\cdots$",
       Master: "How many zeros are at the end of $100!$?",
     },
-    answer: "$5 + 1 = 6$ zeros." },
+    check: "6", answer: "$5 + 1 = 6$ zeros." },
 ];
 
 /* ---------------- FLASH CARDS ----------------

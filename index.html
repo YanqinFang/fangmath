@@ -39,7 +39,7 @@
   nav.main a:hover{background:var(--bg)}
   nav.main a.active{color:var(--teal);font-weight:600}
   .menu-btn{display:none;margin-left:auto;border:1px solid var(--line);background:#fff;border-radius:10px;padding:6px 11px;font-size:18px;cursor:pointer}
-  @media (max-width:1060px){
+  @media (max-width:1140px){
     .menu-btn{display:block}
     nav.main{display:none;position:absolute;top:64px;left:0;right:0;background:#fff;border-bottom:1px solid var(--line);flex-direction:column;padding:8px 12px 14px;gap:2px}
     nav.main.open{display:flex}
@@ -165,7 +165,7 @@
 
   nav.main a.acct{background:var(--navy);color:#fff;font-weight:600;margin-left:6px}
   nav.main a.acct:hover{background:var(--navy);filter:brightness(1.12)}
-  @media (max-width:1060px){nav.main a.acct{margin:6px 0 0;text-align:center}}
+  @media (max-width:1140px){nav.main a.acct{margin:6px 0 0;text-align:center}}
   .login-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:18px;align-items:start}
   @media (max-width:820px){.login-grid{grid-template-columns:minmax(0,1fr)}}
   label.f{display:flex;flex-direction:column;gap:5px;font-size:14px;font-weight:600;color:var(--muted);margin-bottom:12px}
@@ -273,12 +273,12 @@
 </head>
 <body>
 <header class="top"><div class="in">
-  <a class="brand" href="#/">Prof. Fang <span>Math</span></a>
+  <a class="brand" href="#/" aria-label="Prof. Fang Math — home">Prof. Fang <span>Math</span></a>
   <button class="menu-btn" aria-label="Menu" aria-expanded="false" id="menuBtn">☰</button>
   <nav class="main" id="nav">
-    <a href="#/" data-nav="home">Home</a>
     <a href="#/k8" data-nav="k8">Grades K–8</a>
-    <a href="#/algebra" data-nav="algebra">Algebra</a>
+    <a href="#/highschool" data-nav="highschool">High School</a>
+    <a href="#/calculus" data-nav="calculus">Calculus &amp; Beyond</a>
     <a href="#/challenge" data-nav="challenge">Weekly Challenge</a>
     <a href="#/testprep" data-nav="testprep">SAT / ACT</a>
     <a href="#/games" data-nav="games">Games</a>
@@ -327,12 +327,13 @@ function route(){
   $("nav").classList.remove("open");
   const parts = location.hash.replace(/^#\/?/, "").split("/").map(decodeURIComponent);
   const page = parts[0] || "home";
-  const navKey = { course:(courseById(parts[1]) || {}).group === "Algebra" ? "algebra" : "k8", lesson:(courseById(parts[1]) || {}).group === "Algebra" ? "algebra" : "k8", login:"account", me:"account", dashboard:"account", student:"account" }[page] || page;
+  const grpKey = (GROUPS[(courseById(parts[1]) || {}).group] || {}).key;
+  const navKey = { course:grpKey, lesson:grpKey, login:"account", me:"account", dashboard:"account", student:"account" }[page] || page;
   document.querySelectorAll("#nav a").forEach(a => a.classList.toggle("active", a.dataset.nav === navKey));
   const v = $("view"); v.replaceChildren(); window.scrollTo(0, 0);
   stopGames();
-  if (page === "k8") pageGroup(v, "K–8", "Grades K–8", "Elementary and middle school math — every idea starts with something you can see, touch or draw.");
-  else if (page === "algebra") pageGroup(v, "Algebra", "Algebra", "Algebra 1 and Algebra 2, chapter by chapter.");
+  const grp = Object.entries(GROUPS).find(([, g]) => g.key === page || (g.alias || []).includes(page));
+  if (grp) pageGroup(v, grp[0], grp[1].title, grp[1].intro);
   else if (page === "course") pageCourse(v, parts[1]);
   else if (page === "lesson") pageLesson(v, parts[1], +parts[2], +parts[3]);
   else if (page === "challenge") pageChallenge(v, parts[1]);
@@ -353,7 +354,7 @@ function route(){
 function courseCard(c){
   const n = lessonCount(c);
   return h("a", { class:"card course", href:"#/course/" + c.id, style:"--c:" + c.color },
-    h("div", { class:"meta" }, c.group === "K–8" ? "Grades " + c.short : c.group), h("h3", {}, c.title), h("p", {}, c.blurb),
+    h("div", { class:"meta" }, c.group === "K–8" ? "Grades " + c.short : (GROUPS[c.group] || {}).title || c.group), h("h3", {}, c.title), h("p", {}, c.blurb),
     h("div", { class:"meta" }, c.units.length + " units · " + (n ? n + (n === 1 ? " lesson" : " lessons") : "lessons coming soon")),
     h("span", { class:"go" }, "Open course →"));
 }
@@ -362,7 +363,7 @@ function pageHome(v){
   v.append(h("section", { class:"hero" }, h("div", { class:"wrap" },
     h("h1", { class:"wordmark" }, "Prof. Fang ", h("span", { class:"m" }, "Math")),
     h("p", { class:"tagline" }, h("b", {}, "Experience first. "), "Symbols second. ", h("b", {}, "Understanding always.")),
-    h("div", { class:"hero-cta" }, h("a", { class:"btn", href:"#/k8" }, "Grades K–8"), h("a", { class:"btn teal", href:"#/algebra" }, "Algebra"), h("a", { class:"btn", style:"background:#B7472A", href:"#/testprep" }, "SAT / ACT"), h("a", { class:"btn ghost", href:"#/challenge" }, "This week's challenge")),
+    h("div", { class:"hero-cta" }, h("a", { class:"btn", href:"#/k8" }, "Grades K–8"), h("a", { class:"btn teal", href:"#/highschool" }, "High School"), h("a", { class:"btn", style:"background:#6A4BD8", href:"#/calculus" }, "Calculus & Beyond"), h("a", { class:"btn", style:"background:#B7472A", href:"#/testprep" }, "SAT / ACT"), h("a", { class:"btn ghost", href:"#/challenge" }, "This week's challenge")),
     ch ? h("div", { class:"card problem", style:"margin-top:38px" },
       h("span", { class:"lbl" }, "Weekly Challenge · " + ch.level),
       mathEl("div", ch.q, { class:"q" }),
@@ -394,7 +395,7 @@ function pageGroup(v, group, title, intro){
 }
 function pageCourse(v, id){
   const c = courseById(id); if (!c) return notFound(v);
-  const back = c.group === "Algebra" ? ["#/algebra", "Algebra"] : ["#/k8", "Grades K–8"];
+  const back = ["#/" + (GROUPS[c.group] || GROUPS["K–8"]).key, (GROUPS[c.group] || GROUPS["K–8"]).title];
   const wrap = h("div", { class:"wrap" },
     h("div", { class:"page-head" }, h("div", { class:"crumbs" }, h("a", { href:back[0] }, back[1]), " / " + c.title), h("h1", {}, c.title), h("p", {}, c.blurb)));
   c.units.forEach((u, ui) => {

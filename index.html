@@ -12,6 +12,7 @@
 <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
 <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/mathjs@14.9.1/lib/browser/math.js"></script>
 <script src="content.js"></script>
 <script src="testprep.js"></script>
 <style>
@@ -35,11 +36,11 @@
   .brand{font-family:Inter,sans-serif;font-weight:700;font-size:19px;text-decoration:none;color:var(--ink);white-space:nowrap}
   .brand span{color:var(--teal)}
   nav.main{display:flex;gap:4px;margin-left:auto}
-  nav.main a{padding:8px 13px;border-radius:999px;text-decoration:none;color:var(--ink);font-weight:500;font-size:15px}
+  nav.main a{padding:8px 11px;border-radius:999px;text-decoration:none;color:var(--ink);font-weight:500;font-size:15px;white-space:nowrap}
   nav.main a:hover{background:var(--bg)}
   nav.main a.active{color:var(--teal);font-weight:600}
   .menu-btn{display:none;margin-left:auto;border:1px solid var(--line);background:#fff;border-radius:10px;padding:6px 11px;font-size:18px;cursor:pointer}
-  @media (max-width:1140px){
+  @media (max-width:1230px){
     .menu-btn{display:block}
     nav.main{display:none;position:absolute;top:64px;left:0;right:0;background:#fff;border-bottom:1px solid var(--line);flex-direction:column;padding:8px 12px 14px;gap:2px}
     nav.main.open{display:flex}
@@ -165,7 +166,7 @@
 
   nav.main a.acct{background:var(--navy);color:#fff;font-weight:600;margin-left:6px}
   nav.main a.acct:hover{background:var(--navy);filter:brightness(1.12)}
-  @media (max-width:1140px){nav.main a.acct{margin:6px 0 0;text-align:center}}
+  @media (max-width:1230px){nav.main a.acct{margin:6px 0 0;text-align:center}}
   .login-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:18px;align-items:start}
   @media (max-width:820px){.login-grid{grid-template-columns:minmax(0,1fr)}}
   label.f{display:flex;flex-direction:column;gap:5px;font-size:14px;font-weight:600;color:var(--muted);margin-bottom:12px}
@@ -265,6 +266,30 @@
   .tp-review > div{margin-top:8px}
   .tp-explain{background:var(--bg);border-radius:12px;padding:10px 12px;font-size:14.5px;line-height:1.55}
   .dl{font-style:normal}
+  .solve-hero{display:flex;gap:16px;align-items:center;max-width:860px;margin:30px auto 0;text-align:left;text-decoration:none;color:inherit;background:linear-gradient(120deg,var(--teal-soft),#fff 70%);border:1.5px solid var(--teal);border-radius:20px;padding:18px 20px;box-shadow:var(--shadow)}
+  .solve-hero .ic{flex:none;width:58px;height:58px;border-radius:16px;background:#fff;display:grid;place-items:center;font-size:30px;border:1px solid var(--line)}
+  .solve-hero .txt{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}
+  .solve-hero b{font-size:20px;font-family:Fraunces,Georgia,serif}
+  .solve-hero .txt span{color:var(--muted);font-size:15px}
+  @media (max-width:640px){.solve-hero{flex-wrap:wrap}.solve-hero .btn{width:100%}}
+  .sv-in{font-size:20px;padding:12px 14px;font-family:inherit}
+  .sv-prev{min-height:44px;font-size:22px;padding:8px 2px;overflow-x:auto}
+  .sv-keys{display:flex;gap:6px;flex-wrap:wrap;margin-top:4px}
+  .sv-keys button{min-width:46px;height:40px;border-radius:10px;border:1px solid var(--line);background:#fff;font-weight:600;font-size:16px;cursor:pointer}
+  .sv-steps{list-style:none;padding:0;margin:12px 0}
+  .sv-steps li{display:grid;grid-template-columns:56px minmax(0,1fr);gap:4px 10px;align-items:center;padding:10px 0;border-top:1px dashed var(--line)}
+  .sv-steps li:first-child{border-top:0}
+  .sv-steps .mk{font-weight:700;font-size:13px;text-align:center;border-radius:999px;padding:3px 0}
+  .sv-steps li.first .mk{background:var(--bg);color:var(--muted)}
+  .sv-steps li.good .mk{background:var(--green-soft);color:var(--green)}
+  .sv-steps li.bad .mk{background:#FDE7E3;color:var(--red)}
+  .sv-steps li.bad .sv-math{opacity:.65;text-decoration:line-through;text-decoration-color:rgba(179,38,30,.5)}
+  .sv-math{font-size:21px;overflow-x:auto}
+  .sv-note{grid-column:2;font-size:13px;color:var(--muted)}
+  .sv-msg{border-radius:14px;padding:12px 14px;font-size:15.5px;line-height:1.5}
+  .sv-msg.good{background:var(--green-soft)} .sv-msg.bad{background:#FDE7E3} .sv-msg.hint{background:var(--gold-soft)}
+  .sv-done{margin-top:14px}
+  .sv-verify{background:var(--bg);border-radius:12px;padding:10px 12px;font-size:15px}
   footer{border-top:1px solid var(--line);margin-top:40px;padding:28px 0 40px;color:var(--muted);font-size:14px}
   footer .in{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
   footer a{color:var(--muted)}
@@ -340,6 +365,7 @@ function route(){
   else if (page === "games") parts[1] === "facts" ? gameFacts(v) : parts[1] === "solve" ? gameSolve(v) : pageGames(v);
   else if (page === "flashcards") parts[1] ? pageDeck(v, parts[1]) : pageDecks(v);
   else if (page === "testprep") { if (typeof TESTS === "undefined") notFound(v); else pageTestprep(v, parts); }
+  else if (page === "solve") pageSolve(v);
   else if (page === "login") pageLogin(v);
   else if (page === "me") pageMe(v);
   else if (page === "dashboard") pageDashboard(v);
@@ -364,7 +390,11 @@ function pageHome(v){
     h("h1", { class:"wordmark" }, "Prof. Fang ", h("span", { class:"m" }, "Math")),
     h("p", { class:"tagline" }, h("b", {}, "Experience first. "), "Symbols second. ", h("b", {}, "Understanding always.")),
     h("div", { class:"hero-cta" }, h("a", { class:"btn", href:"#/k8" }, "Grades K–8"), h("a", { class:"btn teal", href:"#/highschool" }, "High School"), h("a", { class:"btn", style:"background:#6A4BD8", href:"#/calculus" }, "Calculus & Beyond"), h("a", { class:"btn", style:"background:#B7472A", href:"#/testprep" }, "SAT / ACT"), h("a", { class:"btn ghost", href:"#/challenge" }, "This week's challenge")),
-    ch ? h("div", { class:"card problem", style:"margin-top:38px" },
+    h("a", { class:"solve-hero", href:"#/solve" },
+      h("span", { class:"ic", "aria-hidden":"true" }, "📸"),
+      h("span", { class:"txt" }, h("b", {}, "Stuck on a homework problem?"), h("span", {}, "Type it in and solve it yourself, one step at a time — I'll check every step and give hints.")),
+      h("span", { class:"btn teal" }, "Start solving →")),
+    ch ? h("div", { class:"card problem", style:"margin-top:22px" },
       h("span", { class:"lbl" }, "Weekly Challenge · " + ch.level),
       mathEl("div", ch.q, { class:"q" }),
       h("a", { class:"btn sm teal", href:"#/challenge" }, "Try it with the Five Moves →")) : null)));
@@ -1128,6 +1158,301 @@ function tpRunner(v, o){
     gameTimer = setInterval(() => { left--; timerEl.textContent = "⏱ " + fmtClock(Math.max(left, 0)); timerEl.classList.toggle("low", left <= 60); if (left <= 0) { finish(); } }, 1000);
   }
   draw();
+}
+
+/* ---------- step-by-step solver: math core (uses math.js) ---------- */
+const SV = (() => {
+  const M = () => window.math;
+  const CONST = new Set(["pi", "e", "i"]);
+  function clean(s){
+    return String(s).replace(/[−–—]/g, "-").replace(/[×·]/g, "*").replace(/÷/g, "/").replace(/²/g, "^2").replace(/³/g, "^3")
+      .replace(/\s+/g, " ").trim()
+      .replace(/(^|[^\d.])0([a-zA-Z])/g, "$10*$2");             // "0x" would otherwise be read as a hex number
+  }
+  function parseExpr(s){ const n = M().parse(clean(s)); return n; }
+  function varsOf(node){ const v = new Set(); node.traverse((n, path, parent) => { if (n.isSymbolNode && !CONST.has(n.name) && !(parent && parent.isFunctionNode && path === "fn")) v.add(n.name); }); return [...v]; }
+  function tex(s){ try { const t = clean(s); if (t.includes("=")) return t.split("=").map(p => parseExpr(p).toTex({ parenthesis:"auto", implicit:"hide" })).join(" = ").replace(/~/g, ""); return parseExpr(t).toTex({ parenthesis:"auto", implicit:"hide" }).replace(/~/g, ""); } catch (e) { return null; } }
+  const ev = (node, v, x) => { const sc = {}; if (v) sc[v] = x; const r = node.evaluate(sc); return typeof r === "number" ? r : (r && r.re !== undefined && Math.abs(r.im) < 1e-9 ? r.re : NaN); };
+  const near = (a, b, t = 1e-7) => Math.abs(a - b) <= t * Math.max(1, Math.abs(a), Math.abs(b));
+  // fit f (a function of x) as a polynomial of degree ≤ 4 by sampling; returns coefficients [c0..c4] or null
+  function fitPoly(f){
+    const xs = [-2, -1, 0, 1, 2, 3, 0.5], ys = xs.map(f);
+    if (ys.some(y => !Number.isFinite(y))) return null;
+    // Newton divided differences on first 5 points → degree ≤ 4, then check the extra points
+    const X = xs.slice(0, 5), Y = ys.slice(0, 5), n = 5, coef = Y.slice();
+    for (let j = 1; j < n; j++) for (let i = n - 1; i >= j; i--) coef[i] = (coef[i] - coef[i - 1]) / (X[i] - X[i - j]);
+    const P = x => { let r = coef[n - 1]; for (let i = n - 2; i >= 0; i--) r = r * (x - X[i]) + coef[i]; return r; };
+    for (let k = 5; k < xs.length; k++) if (!near(P(xs[k]), ys[k], 1e-6)) return null;
+    // convert to monomial coefficients by solving with exact small system (evaluate P at 0..4 and use finite differences)
+    const c = [0, 0, 0, 0, 0];
+    // P(x) = sum c_k x^k ; get via repeated synthetic expansion of Newton form
+    let poly = [coef[n - 1]];
+    for (let i = n - 2; i >= 0; i--) { const next = new Array(poly.length + 1).fill(0); for (let k = 0; k < poly.length; k++) { next[k + 1] += poly[k]; next[k] -= poly[k] * X[i]; } next[0] += coef[i]; poly = next; }
+    poly.forEach((v, k) => { c[k] = Math.abs(v) < 1e-9 ? 0 : v; });
+    return c;
+  }
+  const degree = c => { for (let k = c.length - 1; k >= 0; k--) if (Math.abs(c[k]) > 1e-9) return k; return -1; };
+  function realRoots(c){
+    const d = degree(c);
+    if (d === -1) return { all: true, roots: [] };
+    if (d === 0) return { none: true, roots: [] };
+    if (d === 1) return { roots: [-c[0] / c[1]] };
+    if (d === 2) { const [C, B, A] = c, D = B * B - 4 * A * C; if (D < -1e-9) return { roots: [] }; if (Math.abs(D) <= 1e-9) return { roots: [-B / (2 * A)] }; const s = Math.sqrt(D); return { roots: [(-B - s) / (2 * A), (-B + s) / (2 * A)].sort((a, b) => a - b) }; }
+    return { tooHigh: true, roots: [] };
+  }
+  // parse an equation step: "2x+3 = 7", or a final answer "x = 2 or x = -3", "x = 2, -3", "x = ±3"
+  function parseStep(text, v){
+    const t = clean(text);
+    if (!t) return { error: "Type a step first." };
+    const ors = t.split(/\s+or\s+|,|;/i).map(s => s.trim()).filter(Boolean);
+    if (ors.length > 1 || /±|\+-|\+\/-/.test(t)) {
+      const vals = [];
+      for (const part of ors) {
+        const m = part.match(new RegExp("^(?:" + v + "\\s*=\\s*)?(.+)$"));
+        if (!m) return { error: "I couldn't read that answer." };
+        let rhs = m[1].trim();
+        if (/^(±|\+-|\+\/-)/.test(rhs)) { const val = numOf(rhs.replace(/^(±|\+-|\+\/-)/, "")); if (val == null) return { error: "I couldn't read that answer." }; vals.push(-val, val); continue; }
+        const val = numOf(rhs); if (val == null) return { error: "Each answer should be a number, like " + v + " = 3." }; vals.push(val);
+      }
+      return { final: true, roots: [...new Set(vals.map(x => +x.toFixed(9)))].sort((a, b) => a - b) };
+    }
+    const sides = t.split("=");
+    if (sides.length !== 2 || !sides[0].trim() || !sides[1].trim()) return { error: "An equation step needs exactly one “=” sign." };
+    let L, R; try { L = parseExpr(sides[0]); R = parseExpr(sides[1]); } catch (e) { return { error: "I couldn't read that. Check the parentheses and operations." }; }
+    const vs = [...new Set([...varsOf(L), ...varsOf(R)])].filter(x => x !== v);
+    if (vs.length) return { error: `Use only the variable ${v} (I see ${vs.join(", ")}).` };
+    const cL = fitPoly(x => ev(L, v, x)), cR = fitPoly(x => ev(R, v, x));
+    if (!cL || !cR) return { error: "This solver handles equations with polynomials (no variables in denominators or square roots yet)." };
+    const c = cL.map((a, k) => a - cR[k]);
+    const rr = realRoots(c);
+    if (rr.tooHigh) return { error: "This solver handles linear and quadratic equations for now." };
+    // is it a final answer?  v = number   (or number = v)
+    const lhsIsVar = L.isSymbolNode && L.name === v && degree(cR) <= 0, rhsIsVar = R.isSymbolNode && R.name === v && degree(cL) <= 0;
+    return { L, R, cL, cR, c, rr, text: t, final: lhsIsVar || rhsIsVar, roots: rr.roots };
+  }
+  function numOf(s){ try { const n = parseExpr(s); if (varsOf(n).length) return null; const x = n.evaluate(); return typeof x === "number" && Number.isFinite(x) ? x : null; } catch (e) { return null; } }
+  function sameSolutions(a, b){
+    if (a.rr && b.rr && a.rr.all && b.rr.all) return true;
+    if ((a.rr && a.rr.all) !== (b.rr && b.rr.all)) return false;
+    if (!a.roots || !b.roots) return false;
+    const ra = a.roots, rb = b.roots; if (ra.length !== rb.length) return false;
+    return ra.every((x, i) => near(x, rb[i], 1e-6));
+  }
+  // expressions: equivalent if they agree at several random points
+  function exprInfo(text, v){
+    const t = clean(text); if (!t) return { error: "Type a step first." };
+    if (t.includes("=")) return { error: "This is an expression — no “=” sign needed." };
+    let n; try { n = parseExpr(t); } catch (e) { return { error: "I couldn't read that. Check the parentheses and operations." }; }
+    const vs = varsOf(n); if (vs.some(x => x !== v)) return { error: `Use only the variable ${v}.` };
+    return { node: n, text: t };
+  }
+  function sameExpr(a, b, v){
+    const pts = [-2.3, -1.1, 0.7, 1.9, 3.3, 5.1];
+    let checked = 0;
+    for (const x of pts) { const p = ev(a.node, v, x), q = ev(b.node, v, x); if (!Number.isFinite(p) || !Number.isFinite(q)) continue; checked++; if (!near(p, q, 1e-8)) return false; }
+    return checked >= 3;
+  }
+  // is a polynomial expression fully simplified? (no parentheses, one term per power, numbers combined)
+  function isSimplified(info, v){
+    const c = fitPoly(x => ev(info.node, v, x)); if (!c) return { ok: true };       // not a polynomial: accept any equivalent form
+    if (/\(/.test(info.text)) return { ok: false, why: "There are still parentheses — multiply them out." };
+    const terms = []; (function walk(n){ if (n.isParenthesisNode) return walk(n.content); if (n.isOperatorNode && (n.op === "+" || n.op === "-") && n.args.length === 2) { walk(n.args[0]); walk(n.args[1]); } else terms.push(n); })(info.node);
+    const powers = terms.map(tn => { const ct = fitPoly(x => ev(tn, v, x)); return ct ? degree(ct) : -9; });
+    if (new Set(powers).size !== powers.length) return { ok: false, why: "Some like terms can still be combined." };
+    const nonzero = c.filter(a => Math.abs(a) > 1e-9).length;
+    if (powers.length > Math.max(nonzero, 1)) return { ok: false, why: "Some terms can still be combined or cancel out." };
+    return { ok: true };
+  }
+  // pretty number (fractions when needed)
+  function nice(x){ if (Number.isInteger(+x.toFixed(9))) return String(Math.round(x)); try { const f = M().fraction(x); if (f.d <= 100) return (f.s < 0 ? "-" : "") + f.n + "/" + f.d; } catch (e) {} return String(+x.toFixed(4)); }
+  // hint for the next step of an equation
+  function hint(step, v){
+    const t = step.text || "";
+    if (/\(/.test(t)) return "Start by distributing: multiply out the parentheses.";
+    if (new RegExp("/[^=]*" + v + "|" + v + "[^=]*/").test(t) && /\//.test(t)) return "Clear the fractions: multiply both sides by the common denominator.";
+    const dL = degree(step.cL), dR = degree(step.cR);
+    if (Math.max(dL, dR) === 2) {
+      if (dR >= 0 && dL >= 0 && !(dR === 0 && Math.abs(step.cR[0]) < 1e-9)) return "Move every term to one side so the equation equals 0.";
+      return "Factor (find two numbers that multiply to the constant and add to the middle coefficient), or use the quadratic formula.";
+    }
+    const a1 = step.cL[1], b1 = step.cL[0], a2 = step.cR[1], b2 = step.cR[0];
+    if (Math.abs(a1) > 1e-9 && Math.abs(a2) > 1e-9) return `Get all the ${v}-terms on one side: ${a2 > 0 ? "subtract" : "add"} ${Math.abs(a2) === 1 ? "" : nice(Math.abs(a2))}${v} on both sides.`;
+    const [a, b, side] = Math.abs(a1) > 1e-9 ? [a1, b1, "left"] : [a2, b2, "right"];
+    if (Math.abs(b) > 1e-9) return `The ${v}-term is on the ${side}. Undo the ${nice(b)}: ${b > 0 ? "subtract" : "add"} ${nice(Math.abs(b))} on both sides.`;
+    if (Math.abs(a - 1) > 1e-9) return `Divide both sides by ${nice(a)} to get ${v} by itself.`;
+    return `You're almost there — write it as ${v} = number.`;
+  }
+  function hintExpr(info){
+    const t = info.text;
+    if (/\(/.test(t)) return "Distribute: multiply each term inside the parentheses by the number (or term) outside.";
+    return "Combine like terms: add the coefficients of terms with the same power of the variable.";
+  }
+  function mistakeNote(prev, cur){
+    if (prev.roots.length === 1 && cur.roots && cur.roots.length === 1 && near(prev.roots[0], -cur.roots[0]) && !near(prev.roots[0], 0)) return "Your answer has the wrong sign — check the signs when you moved a term to the other side.";
+    return "This step changes the answer. Whatever you do to one side, do exactly the same to the other side.";
+  }
+  function detectVar(text){ try { const t = clean(text); const parts = t.split("="); const vs = new Set(); parts.forEach(p => varsOf(parseExpr(p)).forEach(x => vs.add(x))); const a = [...vs]; return a.length === 1 ? a[0] : a.length === 0 ? null : a; } catch (e) { return undefined; } }
+  return { clean, tex, parseStep, sameSolutions, exprInfo, sameExpr, isSimplified, hint, hintExpr, mistakeNote, nice, detectVar, fitPoly, numOf };
+})();
+
+/* ---------- step-by-step solver: page ---------- */
+const SOLVE_EXAMPLES = {
+  eq: ["3(x - 2) + 4 = 2x + 5", "5x - 7 = 2x + 8", "x/3 + 2 = 6", "x^2 - x - 6 = 0", "2x^2 = 18"],
+  ex: ["3(x + 2) - x", "(x + 2)(x + 3)", "4x - 2(x - 5)", "(2x - 1)^2"],
+};
+let solveMode = "eq";
+function texOrText(s){ const t = SV.tex(s); return t ? "$" + t + "$" : s; }
+function pageSolve(v){
+  const wrap = h("div", { class:"wrap", style:"max-width:860px" });
+  v.append(wrap);
+  if (!window.math) { wrap.append(h("div", { class:"page-head" }, h("h1", {}, "Step-by-Step Solver"), h("p", {}, "Loading… please refresh the page if this doesn't go away."))); setTimeout(() => { if (location.hash.startsWith("#/solve")) route(); }, 1500); return; }
+  wrap.append(h("div", { class:"page-head" }, h("h1", {}, "Step-by-Step Solver"),
+    h("p", {}, "You do the math. I check every step — and give a hint when you're stuck.")));
+  const card = h("div", { class:"card" });
+  wrap.append(card);
+  setup();
+
+  function setup(prefill){
+    const tabs = h("div", { class:"tabs2", style:"max-width:420px" },
+      h("button", { class: solveMode === "eq" ? "on" : "", onclick:() => { solveMode = "eq"; setup(); } }, "Solve an equation"),
+      h("button", { class: solveMode === "ex" ? "on" : "", onclick:() => { solveMode = "ex"; setup(); } }, "Simplify an expression"));
+    const inp = h("input", { class:"fin sv-in", placeholder: solveMode === "eq" ? "e.g. 3(x - 2) + 4 = 2x + 5" : "e.g. 3(x + 2) - x", autocomplete:"off", autocapitalize:"off", spellcheck:"false", value: prefill || "" });
+    const prev = h("div", { class:"sv-prev" }), err = h("div", { class:"err" });
+    const upd = () => { const t = inp.value.trim(); prev.replaceChildren(t ? mathEl("span", texOrText(t)) : h("span", { class:"muted" }, "Your problem will appear here")); renderMath(prev); };
+    inp.addEventListener("input", upd);
+    const start = h("button", { class:"btn teal" }, "Start solving →");
+    start.onclick = () => {
+      err.textContent = "";
+      const t = inp.value.trim(); if (!t) return err.textContent = "Type a problem first.";
+      const vr = SV.detectVar(t);
+      if (vr === undefined) return err.textContent = "I couldn't read that. Check the parentheses and operations.";
+      if (vr === null) return err.textContent = "Your problem needs a variable, like x.";
+      if (Array.isArray(vr)) return err.textContent = "Use just one variable (I see " + vr.join(", ") + ").";
+      if (solveMode === "eq") {
+        const s = SV.parseStep(t, vr); if (s.error) return err.textContent = s.error;
+        if (s.final) return err.textContent = "That's already solved! Try an equation like 2x + 3 = 11.";
+        if (s.rr.all) return err.textContent = "Both sides are always equal — every number is a solution. Try another equation.";
+        if (s.rr.none || !s.roots.length) return err.textContent = "This equation has no real solution. Try another one.";
+        work(t, vr, s);
+      } else {
+        if (t.includes("=")) return err.textContent = "That has an “=” sign — switch to “Solve an equation”.";
+        const e = SV.exprInfo(t, vr); if (e.error) return err.textContent = e.error;
+        if (SV.isSimplified(e, vr).ok) return err.textContent = "That's already simplified! Try one with parentheses, like 3(x + 2) - x.";
+        work(t, vr, e);
+      }
+    };
+    inp.addEventListener("keydown", e => { if (e.key === "Enter") start.click(); });
+    card.replaceChildren(tabs,
+      h("label", { class:"f", style:"margin-top:4px" }, solveMode === "eq" ? "Type the equation from your homework" : "Type the expression to simplify", inp), prev, err,
+      keypad(inp, upd),
+      h("div", { style:"display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:12px" }, start,
+        h("button", { class:"btn ghost", disabled:true, title:"Coming soon" }, "📸 Take a photo — coming soon")),
+      h("div", { style:"margin-top:16px" }, h("div", { class:"muted", style:"font-size:13px;font-weight:600;margin-bottom:6px" }, "Or try an example:"),
+        h("div", { class:"chips" }, SOLVE_EXAMPLES[solveMode].map(x => h("button", { class:"chip", onclick:() => { inp.value = x; upd(); start.click(); } }, mathEl("span", texOrText(x)))))),
+      h("p", { class:"muted", style:"font-size:13px;margin:14px 0 0" }, solveMode === "eq"
+        ? "Works with linear and quadratic equations in one variable (fractions and parentheses are OK). Type x^2 for x²."
+        : "Works with polynomial expressions in one variable. Type x^2 for x²."));
+    upd(); renderMath(card);
+  }
+
+  function work(problem, vr, first){
+    const steps = [{ text: problem, ok: true, info: first }];
+    let hints = 0, mistakes = 0, done = false; const t0 = Date.now();
+    const list = h("ol", { class:"sv-steps" }), msg = h("div", { class:"sv-msg" });
+    const inp = h("input", { class:"fin sv-in", autocomplete:"off", autocapitalize:"off", spellcheck:"false", placeholder: solveMode === "eq" ? "Your next step, e.g. 3x - 2 = 2x + 5" : "Your next step" });
+    const prev = h("div", { class:"sv-prev" });
+    const upd = () => { const t = inp.value.trim(); prev.replaceChildren(t ? mathEl("span", texOrText(t)) : h("span", { class:"muted" }, " ")); renderMath(prev); };
+    inp.addEventListener("input", upd);
+    const lastGood = () => { for (let i = steps.length - 1; i >= 0; i--) if (steps[i].ok) return steps[i]; return steps[0]; };
+    const checkBtn = h("button", { class:"btn teal" }, "Check step ✓");
+    const hintBtn = h("button", { class:"btn ghost" }, "💡 Hint");
+    const finalBtn = solveMode === "ex" ? h("button", { class:"btn ghost" }, "This is my final answer") : null;
+    const note = h("div", { class:"saved" });
+    function drawList(){
+      list.replaceChildren(...steps.map((s, i) => h("li", { class: i === 0 ? "first" : s.ok ? "good" : "bad" },
+        h("span", { class:"mk" }, i === 0 ? "Start" : s.ok ? "✓" : "✗"), mathEl("span", texOrText(s.text), { class:"sv-math" }),
+        s.note ? h("div", { class:"sv-note" }, s.note) : null)));
+      renderMath(list);
+    }
+    function say(kind, text){ msg.className = "sv-msg " + kind; msg.replaceChildren(mathEl("span", text)); renderMath(msg); }
+    function finish(final){
+      done = true; inp.disabled = true; checkBtn.disabled = true; hintBtn.disabled = true; if (finalBtn) finalBtn.disabled = true;
+      card.querySelectorAll(".sv-work").forEach(x => x.remove());
+      const good = steps.slice(1).filter(s => s.ok).length, tried = steps.length - 1;
+      let verify = null;
+      if (solveMode === "eq") {
+        const r = steps[0].info, roots = final.roots;
+        verify = h("div", { class:"sv-verify" }, h("b", {}, "Check by plugging in: "),
+          roots.map(x => mathEl("div", `$${vr} = ${SV.nice(x)}$: left side $= ${SV.nice(evalSide(r.L, x))}$, right side $= ${SV.nice(evalSide(r.R, x))}$ ✓`)));
+      }
+      say("good", solveMode === "eq" ? `🎉 Solved! ${texOrText(final.text)}` : `🎉 Fully simplified: ${texOrText(final.text)}`);
+      card.append(h("div", { class:"sv-done" },
+        verify,
+        h("div", { class:"stats", style:"margin-top:12px" },
+          h("div", { class:"stat" }, h("div", { class:"k" }, "Steps"), h("div", { class:"v" }, tried)),
+          h("div", { class:"stat" }, h("div", { class:"k" }, "Correct steps"), h("div", { class:"v" }, good)),
+          h("div", { class:"stat" }, h("div", { class:"k" }, "Hints used"), h("div", { class:"v" }, hints))),
+        note,
+        h("div", { style:"display:flex;gap:8px;flex-wrap:wrap;margin-top:12px" }, h("button", { class:"btn teal", onclick:() => setup() }, "Solve another problem"))));
+      renderMath(card);
+      record("practice", "solver:" + (solveMode === "eq" ? "equation" : "expression"), ("Step-by-step: " + problem).slice(0, 120), good, Math.max(tried, 1),
+        { problem: problem.slice(0, 80), hints, mistakes, missed: [] }, Math.round((Date.now() - t0) / 1000), note);
+    }
+    const evalSide = (node, x) => { const sc = {}; sc[vr] = x; return node.evaluate(sc); };
+    checkBtn.onclick = () => {
+      if (done) return;
+      const t = inp.value.trim(); if (!t) return say("bad", "Type your next step first.");
+      if (solveMode === "eq") {
+        const s = SV.parseStep(t, vr); if (s.error) return say("bad", s.error);
+        const base = lastGood().info;
+        if (SV.sameSolutions(steps[0].info, s)) {
+          if (s.final) { steps.push({ text: t, ok: true, info: s }); drawList(); inp.value = ""; upd(); return finish(s); }
+          const same = SV.clean(t).replace(/\s/g, "") === SV.clean(lastGood().text).replace(/\s/g, "");
+          steps.push({ text: t, ok: true, info: s, note: same ? "Same as before — try to change something." : null });
+          say("good", same ? "That's the same equation. What can you do next?" : "✓ Correct step! Keep going.");
+        } else {
+          mistakes++;
+          steps.push({ text: t, ok: false, info: s, note: s.final && s.roots.length < steps[0].info.roots.length ? "A solution is missing." : null });
+          say("bad", "✗ " + (s.final && s.roots.length < steps[0].info.roots.length ? "Close — but there's another solution. Quadratics can have two answers." : SV.mistakeNote(base, s)) + " Try again from your last ✓ step.");
+        }
+      } else {
+        const e = SV.exprInfo(t, vr); if (e.error) return say("bad", e.error);
+        if (SV.sameExpr(steps[0].info, e, vr)) {
+          steps.push({ text: t, ok: true, info: e });
+          say("good", "✓ Equivalent — nice step! When you can't simplify any more, press “This is my final answer”.");
+        } else {
+          mistakes++; steps.push({ text: t, ok: false, info: e });
+          say("bad", "✗ This isn't equal to the original expression. Check your signs and multiplication, then try again from your last ✓ step.");
+        }
+      }
+      inp.value = ""; upd(); drawList(); inp.focus();
+    };
+    if (finalBtn) finalBtn.onclick = () => {
+      const last = lastGood(); if (last === steps[0]) return say("bad", "Write at least one step first.");
+      const r = SV.isSimplified(last.info, vr);
+      if (r.ok) finish(last); else say("bad", "Almost! " + r.why);
+    };
+    hintBtn.onclick = () => {
+      hints++;
+      const base = lastGood();
+      say("hint", "💡 " + (solveMode === "eq" ? SV.hint(base.info, vr) : SV.hintExpr(base.info)));
+    };
+    inp.addEventListener("keydown", e => { if (e.key === "Enter") checkBtn.click(); });
+    card.replaceChildren(
+      h("div", { style:"display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap;align-items:center" }, h("div", { class:"muted", style:"font-weight:600" }, solveMode === "eq" ? "Solve for " + vr : "Simplify"),
+        h("button", { class:"btn sm ghost", onclick:() => setup(problem) }, "↺ New problem")),
+      list, msg,
+      h("div", { class:"sv-work" }, h("label", { class:"f", style:"margin-top:10px" }, "Write your next step", inp), prev, keypad(inp, upd),
+        h("div", { style:"display:flex;gap:8px;flex-wrap:wrap;margin-top:12px" }, checkBtn, hintBtn, finalBtn)));
+    drawList(); say("hint", solveMode === "eq" ? `Write one step at a time until you reach $${vr} = $ a number.` : "Write one step at a time. I'll check that each step is still equal to the original.");
+    setTimeout(() => inp.focus(), 50);
+  }
+}
+function keypad(inp, upd){
+  const keys = [["x", "x"], ["x²", "^2"], ["(", "("], [")", ")"], ["/", "/"], ["=", " = "], ["±", "±"], ["or", " or "]];
+  return h("div", { class:"sv-keys" }, keys.map(([label, ins]) => h("button", { type:"button", onclick:() => {
+    const a = inp.selectionStart ?? inp.value.length, b = inp.selectionEnd ?? inp.value.length;
+    inp.value = inp.value.slice(0, a) + ins + inp.value.slice(b); const pos = a + ins.length; inp.focus(); inp.setSelectionRange(pos, pos); upd(); } }, label)));
 }
 
 function notFound(v){ v.append(h("div", { class:"wrap" }, h("div", { class:"page-head" }, h("h1", {}, "Page not found"), h("p", {}, h("a", { href:"#/" }, "← Back home"))))); }

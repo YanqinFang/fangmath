@@ -11,6 +11,7 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
 <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
 <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="content.js"></script>
 <style>
   :root{
@@ -161,6 +162,64 @@
   .progress{height:8px;background:var(--line);border-radius:99px;overflow:hidden;margin:6px 0}
   .progress span{display:block;height:100%;background:var(--teal)}
 
+  nav.main a.acct{background:var(--navy);color:#fff;font-weight:600;margin-left:6px}
+  nav.main a.acct:hover{background:var(--navy);filter:brightness(1.12)}
+  @media (max-width:820px){nav.main a.acct{margin:6px 0 0;text-align:center}}
+  .login-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:18px;align-items:start}
+  @media (max-width:820px){.login-grid{grid-template-columns:minmax(0,1fr)}}
+  label.f{display:flex;flex-direction:column;gap:5px;font-size:14px;font-weight:600;color:var(--muted);margin-bottom:12px}
+  .fin{border:1px solid var(--line);border-radius:12px;padding:10px 12px;background:#fff;font-size:16px;width:100%}
+  .fin:focus{outline:none;border-color:var(--teal);box-shadow:0 0 0 3px var(--teal-soft)}
+  .code-in{font-size:26px;letter-spacing:.25em;text-transform:uppercase;text-align:center;font-weight:700}
+  .err{color:var(--red);font-size:14px;min-height:20px;margin:4px 0}
+  .okmsg{color:var(--green);font-size:14px;font-weight:600}
+  .roster{display:grid;grid-template-columns:repeat(auto-fill,minmax(110px,1fr));gap:10px;margin-top:8px}
+  .kidbtn{border:1px solid var(--line);background:#fff;border-radius:16px;padding:14px 8px;cursor:pointer;font-weight:600;display:flex;flex-direction:column;align-items:center;gap:4px}
+  .kidbtn:hover{border-color:var(--teal)}
+  .kidbtn .av{font-size:34px;line-height:1}
+  .pin-dots{display:flex;gap:12px;justify-content:center;margin:14px 0}
+  .pin-dots i{width:16px;height:16px;border-radius:50%;border:2px solid var(--navy)}
+  .pin-dots i.on{background:var(--navy)}
+  .pinpad{display:grid;grid-template-columns:repeat(3,72px);gap:10px;justify-content:center}
+  .pinpad button{height:60px;border-radius:16px;border:1px solid var(--line);background:#fff;font-size:24px;font-weight:600;cursor:pointer}
+  .pinpad button:active{background:var(--bg)}
+  .tabs2{display:flex;background:var(--bg);border-radius:12px;padding:4px;margin-bottom:16px}
+  .tabs2 button{flex:1;border:0;background:none;border-radius:9px;padding:9px;font-weight:600;cursor:pointer;color:var(--muted)}
+  .tabs2 button.on{background:#fff;color:var(--ink);box-shadow:0 1px 3px rgba(0,0,0,.08)}
+  .check{display:flex;gap:10px;align-items:flex-start;font-size:14px;color:var(--muted);margin:4px 0 12px}
+  .check input{margin-top:3px;width:18px;height:18px;flex:none}
+  .kids{display:flex;flex-direction:column;gap:10px}
+  .kid{display:flex;align-items:center;gap:12px;border:1px solid var(--line);border-radius:14px;padding:12px;flex-wrap:wrap}
+  .kid .av{font-size:30px}
+  .kid .nm{font-weight:700}
+  .kid .meta{font-size:13px;color:var(--faint)}
+  .kid .acts{margin-left:auto;display:flex;gap:6px;flex-wrap:wrap}
+  .codebox{display:inline-block;font-size:28px;font-weight:800;letter-spacing:.2em;background:var(--gold-soft);color:#8A6415;border-radius:14px;padding:6px 16px;margin:4px 0}
+  .avs{display:flex;gap:6px;flex-wrap:wrap}
+  .avs button{font-size:24px;width:46px;height:46px;border-radius:12px;border:2px solid var(--line);background:#fff;cursor:pointer}
+  .avs button.on{border-color:var(--teal);background:var(--teal-soft)}
+  .stats{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px}
+  .stat{background:var(--bg);border-radius:14px;padding:12px 14px}
+  .stat .k{font-size:13px;color:var(--muted)}
+  .stat .v{font-size:24px;font-weight:700;font-variant-numeric:tabular-nums}
+  table.rec{width:100%;border-collapse:collapse;font-size:14.5px}
+  table.rec th{text-align:left;color:var(--muted);font-size:12.5px;font-weight:600;padding:8px 6px;border-bottom:1px solid var(--line)}
+  table.rec td{padding:9px 6px;border-bottom:1px solid var(--line)}
+  .scroll{overflow-x:auto}
+  .pct{font-weight:700;font-variant-numeric:tabular-nums}
+  .saved{font-size:14px;margin-top:10px;min-height:20px}
+  .quiz-q{padding:14px 0;border-top:1px dashed var(--line)}
+  .quiz-q:first-of-type{border-top:0}
+  .choices{display:flex;flex-direction:column;gap:8px;margin-top:8px}
+  .choice{display:flex;gap:10px;align-items:center;border:1px solid var(--line);border-radius:12px;padding:10px 12px;cursor:pointer;background:#fff}
+  .choice.right{border-color:var(--green);background:var(--green-soft)}
+  .choice.wrong{border-color:var(--red);background:#FDE7E3}
+  .modal{position:fixed;inset:0;background:rgba(22,35,59,.45);display:flex;align-items:center;justify-content:center;padding:16px;z-index:60}
+  .modal .card{width:100%;max-width:560px;max-height:90vh;overflow:auto}
+  @media print{header.top,footer,.noprint{display:none!important}.modal{position:static;background:none;padding:0}.modal .card{box-shadow:none;border:0;max-height:none}}
+  .logincards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+  .logincard{border:1.5px dashed var(--faint);border-radius:12px;padding:12px;font-size:14px}
+  .logincard b{font-size:17px}
   footer{border-top:1px solid var(--line);margin-top:40px;padding:28px 0 40px;color:var(--muted);font-size:14px}
   footer .in{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
   footer a{color:var(--muted)}
@@ -178,6 +237,7 @@
     <a href="#/challenge" data-nav="challenge">Weekly Challenge</a>
     <a href="#/games" data-nav="games">Games</a>
     <a href="#/flashcards" data-nav="flashcards">Flashcards</a>
+    <a href="#/login" data-nav="account" id="acctLink" class="acct hidden">Sign in</a>
   </nav>
 </div></header>
 
@@ -221,7 +281,7 @@ function route(){
   $("nav").classList.remove("open");
   const parts = location.hash.replace(/^#\/?/, "").split("/").map(decodeURIComponent);
   const page = parts[0] || "home";
-  const navKey = { course:(courseById(parts[1]) || {}).group === "Algebra" ? "algebra" : "k8", lesson:(courseById(parts[1]) || {}).group === "Algebra" ? "algebra" : "k8" }[page] || page;
+  const navKey = { course:(courseById(parts[1]) || {}).group === "Algebra" ? "algebra" : "k8", lesson:(courseById(parts[1]) || {}).group === "Algebra" ? "algebra" : "k8", login:"account", me:"account", dashboard:"account", student:"account" }[page] || page;
   document.querySelectorAll("#nav a").forEach(a => a.classList.toggle("active", a.dataset.nav === navKey));
   const v = $("view"); v.replaceChildren(); window.scrollTo(0, 0);
   stopGames();
@@ -232,6 +292,11 @@ function route(){
   else if (page === "challenge") pageChallenge(v, parts[1]);
   else if (page === "games") parts[1] === "facts" ? gameFacts(v) : parts[1] === "solve" ? gameSolve(v) : pageGames(v);
   else if (page === "flashcards") parts[1] ? pageDeck(v, parts[1]) : pageDecks(v);
+  else if (page === "login") pageLogin(v);
+  else if (page === "me") pageMe(v);
+  else if (page === "dashboard") pageDashboard(v);
+  else if (page === "student") pageStudent(v, parts[1]);
+  else if (page === "privacy") pagePrivacy(v);
   else pageHome(v);
   document.title = (page === "home" ? "" : (v.querySelector("h1") ? v.querySelector("h1").textContent + " — " : "")) + "Prof. Fang Math" + (page === "home" ? " — " + SITE.tagline : "");
   renderMath(v);
@@ -315,7 +380,8 @@ function pageLesson(v, cid, ui, li){
           h("span", { class:"tag", style:"background:var(--green-soft);color:var(--green)" }, "Watch me"),
           mathEl("p", ex.q, { style:"font-size:18px;margin:10px 0 0;font-weight:500" }),
           h("p", { class:"muted", style:"margin:6px 0 0;font-size:14px" }, "Think first — then reveal one step at a time."),
-          stepList, h("div", { style:"margin-top:12px" }, nextBtn)) : null),
+          stepList, h("div", { style:"margin-top:12px" }, nextBtn)) : null,
+        l.quiz && l.quiz.length ? quizCard(l.quiz, `quiz:${c.id}/${ui}/${li}`, l.title) : null),
       h("div", {}, h("div", { class:"card" }, h("h3", { style:"font-size:20px;margin-bottom:12px" }, "Materials"),
         res.length ? h("div", { class:"res-list" }, res) : h("p", { class:"muted" }, "Materials coming soon."))))));
 }
@@ -337,6 +403,7 @@ function pageChallenge(v, which){
       h("h2", { style:"font-size:26px;margin-top:12px" }, ch.title),
       mathEl("div", ch.q, { class:"q" }),
       h("div", { class:"muted", style:"font-size:14px;font-weight:600" }, "Need a nudge? The Five Moves:"),
+      ch.check ? challengeSubmit(ch) : null,
       h("div", { class:"move-btns" }, btns), hintBox, ansBox, reveal),
     CHALLENGES.length > 1 ? h("div", { class:"card", style:"margin-top:18px" }, h("h3", { style:"font-size:20px;margin-bottom:6px" }, "Past challenges"),
       CHALLENGES.map((c, i) => i === idx ? null : h("a", { class:"arch", href:"#/challenge/" + c.date }, h("span", {}, h("b", {}, c.title), h("span", { class:"muted" }, " · " + c.level)), h("span", { class:"muted", style:"font-size:14px;white-space:nowrap" }, fmtDate(c.date))))) : null));
@@ -360,7 +427,7 @@ function optRow(choices, cur, onPick){
 function gameFacts(v){
   let op = "×", level = 1, score = 0, tries = 0, left = 60, q = null, playing = false;
   const qEl = h("div", { class:"bigq" }, "Ready?"), inp = h("input", { class:"ans-in", inputmode:"numeric", autocomplete:"off", "aria-label":"Your answer", disabled:true });
-  const sc = h("b", {}, "0"), tm = h("b", {}, "60"), fb = h("div", { style:"min-height:26px;font-weight:600" });
+  const sc = h("b", {}, "0"), tm = h("b", {}, "60"), fb = h("div", { style:"min-height:26px;font-weight:600" }), saveNote = h("div", { class:"saved" });
   const start = h("button", { class:"btn teal" }, "Start");
   function make(){
     const max = [10, 12, 20][level];
@@ -374,6 +441,7 @@ function gameFacts(v){
     stopGames(); playing = false; inp.disabled = true; start.textContent = "Play again";
     const best = +(store("fm-best-facts") || 0); if (score > best) store("fm-best-facts", String(score));
     qEl.textContent = "Time!"; fb.className = ""; fb.textContent = `${score} correct out of ${tries}` + (score > best ? " — new best! 🎉" : `. Best: ${Math.max(best, score)}`);
+    saveNote.replaceChildren(); record("game", `facts:${op}:${level}`, `Speed Facts ${op} (${["Easy", "Medium", "Hard"][level]})`, score, tries, {}, 60, saveNote);
   }
   start.onclick = () => { score = 0; tries = 0; left = 60; sc.textContent = "0"; tm.textContent = "60"; fb.textContent = ""; playing = true; inp.disabled = false; start.textContent = "Restart";
     stopGames(); gameTimer = setInterval(() => { left--; tm.textContent = left; if (left <= 0) end(); }, 1000); next(); };
@@ -390,12 +458,12 @@ function gameFacts(v){
       optRow([[0, "Easy"], [1, "Medium"], [2, "Hard"]], level, x => level = x),
       qEl, inp, h("p", { class:"muted", style:"font-size:13px;margin:6px 0" }, "Type the answer and press Enter."), fb,
       h("div", { class:"scorebar" }, h("div", {}, sc, "correct"), h("div", {}, tm, "seconds")),
-      h("div", { style:"margin-top:16px" }, start))));
+      h("div", { style:"margin-top:16px" }, start), saveNote)));
 }
 function gameSolve(v){
   let kind = 1, n = 0, right = 0, q = null;
-  const qEl = h("div", { class:"bigq", style:"font-size:clamp(30px,6vw,46px)" }), inp = h("input", { class:"ans-in", inputmode:"numeric", autocomplete:"off", placeholder:"x = ?", "aria-label":"Value of x" });
-  const fb = h("div", { style:"min-height:52px;font-weight:500" }), prog = h("div", { class:"muted", style:"font-weight:600" });
+  const qEl = h("div", { class:"bigq", style:"font-size:clamp(30px,6vw,46px)" }), inp = h("input", { class:"ans-in", inputmode:"text", autocomplete:"off", autocapitalize:"off", placeholder:"x = ?", "aria-label":"Value of x" });
+  const fb = h("div", { style:"min-height:52px;font-weight:500" }), prog = h("div", { class:"muted", style:"font-weight:600" }), saveNote = h("div", { class:"saved" });
   const nz = (a, b) => { let x; do { x = rnd(a, b); } while (x === 0); return x; };
   const sgn = (k, first) => (k < 0 ? (first ? "−" : " − ") : (first ? "" : " + ")) + Math.abs(k);
   const term = (a, first) => (a < 0 ? (first ? "−" : " − ") : (first ? "" : " + ")) + (Math.abs(a) === 1 ? "" : Math.abs(a)) + "x";
@@ -408,8 +476,9 @@ function gameSolve(v){
     let a, c; do { a = nz(-8, 9); c = nz(-8, 9); } while (a === c); const b = nz(-15, 15), d = (a - c) * x + b;
     return { t:`${term(a, true)}${sgn(b)} = ${term(c, true)}${sgn(d)}`, x, s:[`Move the x-terms to one side: ${term(a - c, true)}${sgn(b)} = ${d}`, `Then: ${term(a - c, true)} = ${d - b}`, `Divide by ${a - c}: x = ${x}`] };
   }
-  function next(){ if (n >= 10) return finish(); q = make(); qEl.textContent = q.t; inp.value = ""; inp.disabled = false; inp.focus(); prog.textContent = `Question ${n + 1} of 10 · ${right} correct`; }
+  function next(){ if (n >= 10) return finish(); if (n === 0) saveNote.replaceChildren(); q = make(); qEl.textContent = q.t; inp.value = ""; inp.disabled = false; inp.focus(); prog.textContent = `Question ${n + 1} of 10 · ${right} correct`; }
   function finish(){ inp.disabled = true; const best = +(store("fm-best-solve") || 0); if (right > best) store("fm-best-solve", String(right));
+    record("game", `solve:${kind}`, `Solve for x (${["One-step", "Two-step", "Both sides"][kind]})`, right, 10, {}, null, saveNote);
     qEl.textContent = `${right} / 10`; prog.textContent = right > best ? "New best score! 🎉" : `Best: ${Math.max(best, right)} / 10`; fb.replaceChildren(h("button", { class:"btn teal", onclick:() => { n = 0; right = 0; fb.replaceChildren(); next(); } }, "Play again")); }
   inp.addEventListener("keydown", e => {
     if (e.key !== "Enter" || inp.disabled || inp.value.trim() === "") return;
@@ -421,7 +490,7 @@ function gameSolve(v){
   v.append(h("div", { class:"wrap" }, h("div", { class:"page-head" }, h("div", { class:"crumbs" }, h("a", { href:"#/games" }, "Games"), " / Solve for x"), h("h1", {}, "Solve for x")),
     h("div", { class:"card game" },
       optRow([[0, "One-step"], [1, "Two-step"], [2, "Both sides"]], kind, x => { kind = x; n = 0; right = 0; fb.replaceChildren(); next(); }),
-      prog, qEl, inp, h("p", { class:"muted", style:"font-size:13px;margin:6px 0" }, "Type the value of x and press Enter. Answers can be negative."), fb)));
+      prog, qEl, inp, h("p", { class:"muted", style:"font-size:13px;margin:6px 0" }, "Type the value of x and press Enter. Answers can be negative."), fb, saveNote)));
   next();
 }
 
@@ -437,7 +506,7 @@ function pageDeck(v, id){
   const d = DECKS.find(x => x.id === id); if (!d) return notFound(v);
   let order = d.cards.map((_, i) => i), pos = 0, known = new Set();
   const front = h("div", { class:"face front" }), back = h("div", { class:"face back" });
-  const fc = h("div", { class:"fc", tabindex:"0", role:"button", "aria-label":"Flip card" }, h("div", { class:"inner" }, front, back));
+  const fc = h("div", { class:"fc", tabindex:"0", role:"button", "aria-label":"Flip card" }, h("div", { class:"finner" }, front, back));
   const count = h("div", { class:"muted", style:"font-weight:600;text-align:center" }), bar = h("span");
   const flip = () => fc.classList.toggle("flip");
   fc.onclick = flip; fc.onkeydown = e => { if (e.key === " " || e.key === "Enter") { e.preventDefault(); flip(); } };
@@ -465,11 +534,373 @@ function pageDeck(v, id){
   show();
 }
 
+/* =====================================================================
+   ACCOUNTS — parents & teachers (email) · students (code + nickname + PIN)
+   ===================================================================== */
+const clean = kids => kids.flat(Infinity).filter(x => x != null && x !== false);
+function put(el, ...kids){ el.replaceChildren(...clean(kids)); }
+function add(el, ...kids){ el.append(...clean(kids)); }
+const SUPABASE_URL = "https://zelwkxoefgywnktauyuq.supabase.co";          // fangmath project → Project Settings → API
+const SUPABASE_ANON_KEY = "sb_publishable_7qJFwmQ-6RXRllYG-wXx9Q_GU6YSYWd";  // the sb_publishable_... key (safe to be public)
+const accountsOn = !!(window.supabase && !SUPABASE_URL.startsWith("PASTE") && !SUPABASE_ANON_KEY.startsWith("PASTE"));
+const sb = accountsOn ? window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY) : null;
+let adult = null, adultProfile = null;
+let kid = (() => { try { return JSON.parse(localStorage.getItem("fm-kid") || "null"); } catch (e) { return null; } })();
+const AVATARS = ["🦊", "🐼", "🐯", "🐸", "🦉", "🐙", "🦄", "🐳", "🐝", "🦖", "🐱", "🐶"];
+const GRADES = ["K", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"];
+function setKid(k){ kid = k; try { k ? localStorage.setItem("fm-kid", JSON.stringify(k)) : localStorage.removeItem("fm-kid"); } catch (e) {} updateAcct(); }
+function updateAcct(){
+  const a = $("acctLink"); if (!accountsOn) { a.classList.add("hidden"); return; }
+  a.classList.remove("hidden");
+  if (kid) { a.textContent = kid.avatar + " " + kid.nickname; a.href = "#/me"; }
+  else if (adult) { a.textContent = "Dashboard"; a.href = "#/dashboard"; }
+  else { a.textContent = "Sign in"; a.href = "#/login"; }
+}
+function modal(kids){ const w = h("div", { class:"modal", onclick:e => { if (e.target === w) w.remove(); } }, h("div", { class:"card" }, kids)); document.body.append(w); return w; }
+const pctOf = (s, t) => t ? Math.round(100 * s / t) : 0;
+const when = iso => new Date(iso).toLocaleDateString("en-US", { month:"short", day:"numeric" }) + " " + new Date(iso).toLocaleTimeString("en-US", { hour:"numeric", minute:"2-digit" });
+
+/* save one practice result for the signed-in student */
+async function record(kind, item, title, score, total, detail, seconds, noteEl){
+  if (!noteEl) noteEl = h("div");
+  if (!accountsOn) return;
+  if (!kid) { put(noteEl, h("span", { class:"muted" }, "💾 ", h("a", { href:"#/login" }, "Sign in as a student"), " to save your scores.")); return; }
+  const { error } = await sb.rpc("fm_kid_record", { p_token: kid.token, p_kind: kind, p_item: item, p_title: title, p_score: score, p_total: total, p_detail: detail || {}, p_seconds: seconds });
+  if (error) {
+    if (/sign in again/i.test(error.message)) { setKid(null); put(noteEl, h("span", { class:"bad" }, "Please sign in again to save scores.")); }
+    else put(noteEl, h("span", { class:"bad" }, "Couldn't save: " + error.message));
+    return;
+  }
+  put(noteEl, h("span", { class:"okmsg" }, `✓ Saved to ${kid.avatar} ${kid.nickname}'s record`));
+}
+
+/* ---------- quiz on a lesson page ---------- */
+const norm = x => String(x).toLowerCase().replace(/[\s,$]/g, "").replace(/−/g, "-");
+function quizCard(qs, item, title){
+  const box = h("div", { class:"card", style:"margin-top:18px" });
+  const note = h("div", { class:"saved" });
+  const answers = new Array(qs.length).fill(null);
+  const qEls = qs.map((q, i) => {
+    const wrap = h("div", { class:"quiz-q" }, h("b", {}, `${i + 1}. `), mathEl("span", q.q));
+    if (q.choices) {
+      const list = h("div", { class:"choices", role:"radiogroup" });
+      q.choices.forEach((c, ci) => {
+        const inp = h("input", { type:"radio", name:`q${item}-${i}`, value:ci, onchange:() => { answers[i] = ci; } });
+        list.append(h("label", { class:"choice" }, inp, mathEl("span", c)));
+      });
+      add(wrap, list);
+    } else {
+      const inp = h("input", { class:"fin", style:"max-width:220px;margin-top:8px", inputmode:"text", autocomplete:"off", placeholder:"Your answer", oninput:e => { answers[i] = e.target.value; } });
+      add(wrap, h("div", {}, inp));
+    }
+    add(wrap, h("div", { class:"fbk", style:"font-size:14px;margin-top:6px" }));
+    return wrap;
+  });
+  const check = h("button", { class:"btn teal", style:"margin-top:12px" }, "Check my answers");
+  check.onclick = () => {
+    let right = 0; const missed = [];
+    qs.forEach((q, i) => {
+      const el = qEls[i], fb = el.querySelector(".fbk");
+      const ok = q.choices ? answers[i] === q.answer : answers[i] != null && norm(answers[i]) === norm(q.answer);
+      if (ok) right++; else missed.push(i + 1);
+      el.querySelectorAll("input").forEach(x => x.disabled = true);
+      if (q.choices) el.querySelectorAll(".choice").forEach((c, ci) => { if (ci === q.answer) c.classList.add("right"); else if (ci === answers[i]) c.classList.add("wrong"); });
+      put(fb, ok ? h("span", { class:"ok" }, "✓ Correct") : mathEl("span", "✗ Answer: " + (q.choices ? q.choices[q.answer] : q.answer), { class:"bad" }));
+      renderMath(fb);
+    });
+    check.replaceWith(h("div", { style:"margin-top:12px" }, h("b", { style:"font-size:20px" }, `Score: ${right} / ${qs.length}`),
+      h("button", { class:"btn sm ghost", style:"margin-left:10px", onclick:() => { const n = quizCard(qs, item, title); box.replaceWith(n); renderMath(n); } }, "Try again")));
+    record("quiz", item, title, right, qs.length, { missed }, null, note);
+  };
+  add(box, h("span", { class:"tag", style:"background:var(--gold-soft);color:#8A6415" }, "Practice quiz"),
+    h("p", { class:"muted", style:"margin:8px 0 0;font-size:14px" }, `${qs.length} questions — check your work at the end.`), qEls, check, note);
+  return box;
+}
+
+/* ---------- weekly challenge answer ---------- */
+function challengeSubmit(ch){
+  const note = h("div", { class:"saved" }), res = h("div", { style:"font-weight:600;min-height:22px;margin-top:6px" });
+  const inp = h("input", { class:"fin", style:"max-width:200px", placeholder:"Your answer", autocomplete:"off" });
+  const btn = h("button", { class:"btn sm teal" }, "Submit");
+  btn.onclick = () => {
+    if (!inp.value.trim()) return;
+    const ok = norm(inp.value) === norm(ch.check);
+    put(res, ok ? h("span", { class:"ok" }, "🎉 Correct! Great thinking.") : h("span", { class:"bad" }, "Not yet — try a Five Moves hint below and think again."));
+    record("challenge", "challenge:" + ch.date, "Weekly Challenge: " + ch.title, ok ? 1 : 0, 1, { answer: inp.value.slice(0, 40) }, null, note);
+  };
+  inp.addEventListener("keydown", e => { if (e.key === "Enter") btn.click(); });
+  return h("div", { style:"margin:4px 0 16px" }, h("div", { class:"row", style:"display:flex;gap:8px;flex-wrap:wrap" }, inp, btn), res, note);
+}
+
+/* ---------- sign-in page ---------- */
+function pageLogin(v){
+  if (!accountsOn) return v.append(h("div", { class:"wrap" }, h("div", { class:"page-head" }, h("h1", {}, "Accounts coming soon"))));
+  const kidCard = h("div", { class:"card" }), adultCard = h("div", { class:"card" });
+  v.append(h("div", { class:"wrap" }, h("div", { class:"page-head" }, h("h1", {}, "Sign in"), h("p", {}, "Students sign in with a code from a parent or teacher. Parents and teachers use email.")),
+    h("div", { class:"login-grid" }, kidCard, adultCard)));
+  kidStep1(kidCard); adultForm(adultCard, "login");
+}
+function kidStep1(card, prefill){
+  const err = h("div", { class:"err" });
+  const code = h("input", { class:"fin code-in", maxlength:"6", autocomplete:"off", autocapitalize:"characters", placeholder:"ABC123", "aria-label":"Family or class code", value: prefill || "" });
+  const go = h("button", { class:"btn teal", style:"width:100%" }, "Next →");
+  go.onclick = async () => {
+    const c = code.value.trim().toUpperCase(); if (c.length !== 6) return err.textContent = "The code has 6 letters and numbers.";
+    go.disabled = true; const { data, error } = await sb.rpc("fm_roster", { p_code: c }); go.disabled = false;
+    if (error) return err.textContent = error.message;
+    if (!data || !data.length) return err.textContent = "We couldn't find that code. Check with your parent or teacher.";
+    kidStep2(card, c, data);
+  };
+  code.addEventListener("keydown", e => { if (e.key === "Enter") go.click(); });
+  put(card, h("h2", { style:"font-size:24px" }, "🎒 I'm a student"), h("p", { class:"muted", style:"margin:6px 0 14px" }, "Type your family or class code."), code, err, go);
+  setTimeout(() => code.focus(), 50);
+}
+function kidStep2(card, code, roster){
+  put(card, h("h2", { style:"font-size:24px" }, "Who are you?"), h("p", { class:"muted", style:"margin:6px 0 6px" }, roster[0].group_name),
+    h("div", { class:"roster" }, roster.map(r => h("button", { class:"kidbtn", onclick:() => kidStep3(card, code, r) }, h("span", { class:"av" }, r.avatar), r.nickname))),
+    h("button", { class:"btn sm ghost", style:"margin-top:14px", onclick:() => kidStep1(card, code) }, "← Different code"));
+}
+function kidStep3(card, code, who){
+  let pin = ""; const dots = h("div", { class:"pin-dots" }, [0, 1, 2, 3].map(() => h("i"))); const err = h("div", { class:"err", style:"text-align:center" });
+  const draw = () => [...dots.children].forEach((d, i) => d.classList.toggle("on", i < pin.length));
+  const press = async k => {
+    if (k === "⌫") pin = pin.slice(0, -1); else if (pin.length < 4) pin += k;
+    draw();
+    if (pin.length === 4) {
+      const { data, error } = await sb.rpc("fm_kid_login", { p_code: code, p_nickname: who.nickname, p_pin: pin });
+      const r = data && data[0];
+      if (error || !r || !r.ok) {
+        pin = ""; draw();
+        err.textContent = r && r.message === "locked" ? "Too many tries. Wait 10 minutes, or ask a parent/teacher to reset your PIN." : "That PIN isn't right. Try again.";
+        return;
+      }
+      setKid({ token: r.token, nickname: r.nickname, avatar: r.avatar, grade: r.grade, code });
+      location.hash = "#/me";
+    }
+  };
+  const pad = h("div", { class:"pinpad" }, ["1", "2", "3", "4", "5", "6", "7", "8", "9", "", "0", "⌫"].map(k => k ? h("button", { onclick:() => press(k), "aria-label": k === "⌫" ? "Delete" : k }, k) : h("span")));
+  put(card, h("div", { style:"text-align:center" }, h("div", { style:"font-size:48px" }, who.avatar), h("h2", { style:"font-size:24px" }, "Hi, " + who.nickname + "!"), h("p", { class:"muted", style:"margin:4px 0 0" }, "Enter your 4-digit PIN")),
+    dots, err, pad, h("div", { style:"text-align:center;margin-top:12px" }, h("button", { class:"btn sm ghost", onclick:() => kidStep1(card, code) }, "← Back")));
+  const keyH = e => { if (!document.body.contains(card)) return document.removeEventListener("keydown", keyH); if (/^[0-9]$/.test(e.key)) press(e.key); else if (e.key === "Backspace") press("⌫"); };
+  document.addEventListener("keydown", keyH);
+}
+function adultForm(card, mode){
+  const err = h("div", { class:"err" });
+  const name = h("input", { class:"fin", maxlength:"60", autocomplete:"name" });
+  const email = h("input", { class:"fin", type:"email", autocomplete:"email" });
+  const pw = h("input", { class:"fin", type:"password", minlength:"6", autocomplete: mode === "signup" ? "new-password" : "current-password" });
+  const consent = h("input", { type:"checkbox" });
+  const tabs = h("div", { class:"tabs2" }, h("button", { class: mode === "login" ? "on" : "", onclick:() => adultForm(card, "login") }, "Sign in"), h("button", { class: mode === "signup" ? "on" : "", onclick:() => adultForm(card, "signup") }, "Create account"));
+  const btn = h("button", { class:"btn", style:"width:100%" }, mode === "signup" ? "Create account" : "Sign in");
+  btn.onclick = async () => {
+    err.textContent = "";
+    if (!email.value.trim() || pw.value.length < 6) return err.textContent = "Enter your email and a password of 6+ characters.";
+    if (mode === "signup" && !name.value.trim()) return err.textContent = "Please enter your name.";
+    if (mode === "signup" && !consent.checked) return err.textContent = "Please confirm you are a parent/guardian or teacher (18+).";
+    btn.disabled = true;
+    const res = mode === "signup"
+      ? await sb.auth.signUp({ email: email.value.trim(), password: pw.value, options: { data: { display_name: name.value.trim(), consent: "yes" }, emailRedirectTo: location.origin + location.pathname } })
+      : await sb.auth.signInWithPassword({ email: email.value.trim(), password: pw.value });
+    btn.disabled = false;
+    if (res.error) return err.textContent = /invalid login/i.test(res.error.message) ? "Email or password is not right." : res.error.message;
+    if (mode === "signup" && !res.data.session) { put(card, h("h2", { style:"font-size:22px" }, "📬 Check your email"), h("p", {}, "Click the link we sent to " + email.value.trim() + ", then sign in.")); return; }
+    await loadAdult(); location.hash = "#/dashboard";
+  };
+  const forgot = h("button", { class:"btn sm ghost", style:"margin-top:10px", onclick:async () => {
+    if (!email.value.trim()) return err.textContent = "Type your email first.";
+    const { error } = await sb.auth.resetPasswordForEmail(email.value.trim(), { redirectTo: location.origin + location.pathname });
+    err.textContent = ""; card.append(h("p", { class:"okmsg" }, error ? error.message : "If that email has an account, a reset link is on its way."));
+  } }, "Forgot password?");
+  put(card, h("h2", { style:"font-size:24px" }, "👩‍🏫 Parent or teacher"), h("p", { class:"muted", style:"margin:6px 0 14px" }, "Add your children, see their progress, and (for teachers) manage classes."), tabs,
+    mode === "signup" ? h("label", { class:"f" }, "Your name", name) : null, h("label", { class:"f" }, "Email", email), h("label", { class:"f" }, "Password (6+ characters)", pw),
+    mode === "signup" ? h("label", { class:"check" }, consent, h("span", {}, "I am a parent/guardian or teacher (18+). I agree that my child's nickname, grade and practice results are stored so I can see their progress. ", h("a", { href:"#/privacy" }, "Privacy for families"))) : null,
+    err, btn, mode === "login" ? forgot : null);
+}
+function newPasswordForm(){
+  const pw = h("input", { class:"fin", type:"password", minlength:"6", autocomplete:"new-password" }), err = h("div", { class:"err" });
+  const m = modal([h("h2", { style:"font-size:22px" }, "Set a new password"), h("label", { class:"f", style:"margin-top:12px" }, "New password (6+ characters)", pw), err,
+    h("button", { class:"btn", onclick:async () => { if (pw.value.length < 6) return err.textContent = "At least 6 characters.";
+      const { error } = await sb.auth.updateUser({ password: pw.value }); if (error) return err.textContent = error.message; m.remove(); location.hash = "#/dashboard"; } }, "Save password")]);
+}
+
+/* ---------- student: my progress ---------- */
+function summarize(rows){
+  const best = {}, games = rows.filter(r => r.kind === "game"), quizzes = rows.filter(r => r.kind === "quiz"), ch = rows.filter(r => r.kind === "challenge");
+  games.forEach(r => { if (!best[r.title] || r.score > best[r.title]) best[r.title] = r.score; });
+  const solved = new Set(ch.filter(r => r.score > 0).map(r => r.item));
+  const qAvg = quizzes.length ? Math.round(quizzes.reduce((a, r) => a + pctOf(r.score, r.total), 0) / quizzes.length) : null;
+  return { best, games, quizzes, qAvg, solved, total: rows.length, last: rows[0] && rows[0].created_at };
+}
+function statsBlock(sm){
+  return h("div", { class:"stats" },
+    h("div", { class:"stat" }, h("div", { class:"k" }, "Activities"), h("div", { class:"v" }, sm.total)),
+    h("div", { class:"stat" }, h("div", { class:"k" }, "Games played"), h("div", { class:"v" }, sm.games.length)),
+    h("div", { class:"stat" }, h("div", { class:"k" }, "Quiz average"), h("div", { class:"v" }, sm.qAvg == null ? "—" : sm.qAvg + "%")),
+    h("div", { class:"stat" }, h("div", { class:"k" }, "Challenges solved"), h("div", { class:"v" }, sm.solved.size)));
+}
+function historyTable(rows){
+  if (!rows.length) return h("p", { class:"muted" }, "No practice yet.");
+  return h("div", { class:"scroll" }, h("table", { class:"rec" },
+    h("thead", {}, h("tr", {}, ["When", "Activity", "Score", ""].map(x => h("th", {}, x)))),
+    h("tbody", {}, rows.map(r => h("tr", {}, h("td", { style:"white-space:nowrap;color:var(--muted)" }, when(r.created_at)), h("td", {}, r.title || r.item),
+      h("td", { class:"pct" }, r.kind === "game" && r.item.startsWith("facts") ? `${r.score} correct` : `${r.score} / ${r.total}`),
+      h("td", { style:"font-size:13px;color:var(--muted)" }, r.kind === "quiz" && r.detail && r.detail.missed && r.detail.missed.length ? "Missed #" + r.detail.missed.join(", #") : r.kind !== "game" ? (r.score >= r.total ? "✓" : "") : ""))))));
+}
+function bestTable(best){
+  const e = Object.entries(best); if (!e.length) return null;
+  return h("div", { style:"margin-top:16px" }, h("h3", { style:"font-size:18px;margin-bottom:6px" }, "Best game scores"),
+    h("div", { class:"stats" }, e.map(([t, sc]) => h("div", { class:"stat" }, h("div", { class:"k" }, t), h("div", { class:"v" }, sc)))));
+}
+async function pageMe(v){
+  if (!kid) { location.hash = "#/login"; return; }
+  const wrap = h("div", { class:"wrap" }); v.append(wrap);
+  add(wrap, h("div", { class:"page-head" }, h("div", { style:"font-size:52px;line-height:1" }, kid.avatar), h("h1", {}, "Hi, " + kid.nickname + "!"), h("p", {}, "Here is everything you have practiced. Keep going!")));
+  const { data, error } = await sb.rpc("fm_kid_history", { p_token: kid.token, p_limit: 300 });
+  if (error) { add(wrap, h("p", { class:"bad" }, error.message)); return; }
+  if (!data.length && kid) { /* token might be stale */ }
+  const sm = summarize(data || []);
+  add(wrap, h("div", { class:"card" }, statsBlock(sm), bestTable(sm.best)),
+    h("div", { class:"card", style:"margin-top:16px" }, h("h3", { style:"font-size:20px;margin-bottom:8px" }, "Try something"),
+      h("div", { style:"display:flex;gap:8px;flex-wrap:wrap" }, h("a", { class:"btn sm teal", href:"#/games/facts" }, "⚡ Speed Facts"), h("a", { class:"btn sm teal", href:"#/games/solve" }, "🧩 Solve for x"), h("a", { class:"btn sm", href:"#/challenge" }, "🏆 Weekly Challenge"), h("a", { class:"btn sm ghost", href:"#/flashcards" }, "🃏 Flashcards"))),
+    h("div", { class:"card", style:"margin-top:16px" }, h("h3", { style:"font-size:20px;margin-bottom:8px" }, "My history"), historyTable(data || [])),
+    h("div", { style:"margin-top:16px" }, h("button", { class:"btn ghost", onclick:async () => { try { await sb.rpc("fm_kid_logout", { p_token: kid.token }); } catch (e) {} setKid(null); location.hash = "#/"; } }, "Sign out")));
+}
+
+/* ---------- parent / teacher dashboard ---------- */
+async function loadAdult(){
+  if (!accountsOn) return;
+  const { data: { session } } = await sb.auth.getSession();
+  adult = session ? session.user : null; adultProfile = null;
+  if (adult) { const { data } = await sb.from("fm_adults").select("display_name,is_teacher").eq("id", adult.id).maybeSingle(); adultProfile = data || { display_name:"", is_teacher:false }; }
+  updateAcct();
+}
+function pinInput(){ return h("input", { class:"fin", inputmode:"numeric", maxlength:"4", pattern:"[0-9]*", autocomplete:"off", placeholder:"4 digits", style:"max-width:140px" }); }
+const randPin = () => String(Math.floor(Math.random() * 10000)).padStart(4, "0");
+async function pageDashboard(v){
+  if (!adult) { location.hash = "#/login"; return; }
+  const wrap = h("div", { class:"wrap" }); v.append(wrap);
+  add(wrap, h("div", { class:"page-head" }, h("h1", {}, "Hi" + (adultProfile && adultProfile.display_name ? ", " + adultProfile.display_name : "") + "!"),
+    h("p", {}, adultProfile && adultProfile.is_teacher ? "Your family and your classes." : "Add your children and follow their progress.")));
+  const { data: fam, error } = await sb.rpc("fm_my_family");
+  if (error) { add(wrap, h("p", { class:"bad" }, error.message)); return; }
+  const { data: groups } = await sb.from("fm_groups").select("id,kind,name,code,created_at").order("created_at");
+  const { data: students } = await sb.from("fm_students").select("id,group_id,nickname,grade,avatar,created_at").order("nickname");
+  const { data: recent } = await sb.from("fm_attempts").select("student_id,created_at,kind,score,total").order("created_at", { ascending:false }).limit(1000);
+  const statsFor = id => { const r = (recent || []).filter(x => x.student_id === id); return { n: r.length, last: r[0] && r[0].created_at }; };
+  const groupCard = g => {
+    const kids = (students || []).filter(s => s.group_id === g.id);
+    const isClass = g.kind === "class";
+    return h("div", { class:"card", style:"margin-bottom:16px" },
+      h("div", { style:"display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;align-items:flex-start" },
+        h("div", {}, h("h2", { style:"font-size:24px" }, (isClass ? "🏫 " : "🏠 ") + g.name),
+          h("div", { class:"muted", style:"font-size:14px;margin-top:6px" }, (isClass ? "Class" : "Family") + " code — students type this to sign in:"), h("div", { class:"codebox" }, g.code)),
+        h("div", { style:"display:flex;gap:8px;flex-wrap:wrap" },
+          h("button", { class:"btn sm teal", onclick:() => addKidModal(g) }, isClass ? "＋ Add student" : "＋ Add child"),
+          isClass ? h("button", { class:"btn sm ghost", onclick:() => bulkAddModal(g) }, "＋ Add many") : null)),
+      h("div", { class:"kids", style:"margin-top:14px" }, kids.length ? kids.map(k => { const st = statsFor(k.id);
+        return h("div", { class:"kid" }, h("span", { class:"av" }, k.avatar), h("div", {}, h("div", { class:"nm" }, k.nickname), h("div", { class:"meta" }, (k.grade ? "Grade " + k.grade + " · " : "") + st.n + " activities" + (st.last ? " · last " + when(st.last) : ""))),
+          h("div", { class:"acts" }, h("a", { class:"btn sm", href:"#/student/" + k.id }, "Progress"), h("button", { class:"btn sm ghost", onclick:() => pinModal(k) }, "Change PIN"), h("button", { class:"btn sm ghost", style:"color:var(--red)", onclick:() => removeKid(k) }, "Remove"))); })
+        : h("p", { class:"muted", style:"margin:0" }, isClass ? "No students yet." : "No children yet — add one to get a sign-in PIN.")),
+      h("details", { style:"margin-top:12px;font-size:14px;color:var(--muted)" }, h("summary", { style:"cursor:pointer" }, "How do students sign in?"),
+        h("ol", {}, h("li", {}, "Go to fangmath.com and tap Sign in → I'm a student."), h("li", {}, "Type the code ", h("b", {}, g.code), "."), h("li", {}, "Tap their name and enter their 4-digit PIN."))));
+  };
+  add(wrap, groupCard(fam));
+  if (adultProfile && adultProfile.is_teacher) {
+    const classes = (groups || []).filter(g => g.kind === "class");
+    const cname = h("input", { class:"fin", maxlength:"60", placeholder:"e.g. Algebra 1 — Saturday", style:"max-width:320px" });
+    add(wrap, h("h2", { style:"font-size:28px;margin:28px 0 12px" }, "My classes"),
+      h("div", { class:"card", style:"margin-bottom:16px;display:flex;gap:8px;flex-wrap:wrap;align-items:center" }, cname,
+        h("button", { class:"btn sm", onclick:async () => { if (!cname.value.trim()) return; const { error } = await sb.rpc("fm_create_class", { p_name: cname.value.trim() }); if (error) return alertBox(error.message); route(); } }, "＋ Create class")),
+      classes.map(groupCard));
+  }
+  add(wrap, h("div", { style:"display:flex;gap:10px;margin-top:10px" }, h("button", { class:"btn ghost", onclick:async () => { await sb.auth.signOut(); adult = null; adultProfile = null; updateAcct(); location.hash = "#/"; } }, "Sign out"), h("a", { class:"btn ghost", href:"#/privacy" }, "Privacy for families")));
+}
+function alertBox(msg){ const m = modal([h("p", {}, msg), h("button", { class:"btn sm", onclick:() => m.remove() }, "OK")]); }
+function addKidModal(g){
+  let av = AVATARS[Math.floor(Math.random() * AVATARS.length)];
+  const nick = h("input", { class:"fin", maxlength:"20", placeholder:"e.g. Mia" }), grade = h("select", { class:"fin" }, h("option", { value:"" }, "—"), GRADES.map(x => h("option", { value:x }, x === "K" ? "Kindergarten" : "Grade " + x)));
+  const pin = pinInput(); pin.value = randPin(); const err = h("div", { class:"err" });
+  const avs = h("div", { class:"avs" }, AVATARS.map(a => h("button", { type:"button", class: a === av ? "on" : "", onclick:e => { av = a; avs.querySelectorAll("button").forEach(b => b.classList.toggle("on", b === e.currentTarget)); } }, a)));
+  const m = modal([h("h2", { style:"font-size:22px" }, g.kind === "class" ? "Add a student" : "Add a child"),
+    h("p", { class:"muted", style:"font-size:14px" }, "Use a nickname or first name only — no last names or emails."),
+    h("label", { class:"f" }, "Nickname", nick), h("label", { class:"f" }, "Grade", grade), h("div", { class:"f" }, "Picture", avs),
+    h("label", { class:"f", style:"margin-top:12px" }, "4-digit PIN (write it down for them)", pin), err,
+    h("div", { style:"display:flex;gap:8px;justify-content:flex-end" }, h("button", { class:"btn ghost", onclick:() => m.remove() }, "Cancel"),
+      h("button", { class:"btn teal", onclick:async () => {
+        if (!nick.value.trim()) return err.textContent = "Enter a nickname."; if (!/^[0-9]{4}$/.test(pin.value)) return err.textContent = "The PIN must be 4 digits.";
+        const { error } = await sb.rpc("fm_add_student", { p_group: g.id, p_nickname: nick.value.trim(), p_grade: grade.value, p_pin: pin.value, p_avatar: av });
+        if (error) return err.textContent = /already used/.test(error.message) ? "That nickname is already used here." : error.message;
+        m.remove(); route();
+      } }, "Add"))]);
+  nick.focus();
+}
+function bulkAddModal(g){
+  const names = h("textarea", { class:"fin", rows:"8", placeholder:"One nickname per line\nMia\nLeo\nAva" }), grade = h("select", { class:"fin" }, h("option", { value:"" }, "—"), GRADES.map(x => h("option", { value:x }, x === "K" ? "Kindergarten" : "Grade " + x)));
+  const err = h("div", { class:"err" });
+  const m = modal([h("h2", { style:"font-size:22px" }, "Add many students"), h("p", { class:"muted", style:"font-size:14px" }, "Each student gets a random 4-digit PIN. You'll get printable sign-in cards next — PINs are only shown once."),
+    h("label", { class:"f" }, "Nicknames", names), h("label", { class:"f" }, "Grade", grade), err,
+    h("div", { style:"display:flex;gap:8px;justify-content:flex-end" }, h("button", { class:"btn ghost", onclick:() => m.remove() }, "Cancel"),
+      h("button", { class:"btn teal", onclick:async e => {
+        const list = [...new Set(names.value.split("\n").map(x => x.trim()).filter(Boolean))].slice(0, 60); if (!list.length) return err.textContent = "Type at least one nickname.";
+        e.currentTarget.disabled = true; const made = [], failed = [];
+        for (const n of list) { const pin = randPin(); const { error } = await sb.rpc("fm_add_student", { p_group: g.id, p_nickname: n, p_grade: grade.value, p_pin: pin, p_avatar: AVATARS[made.length % AVATARS.length] }); if (error) failed.push(n + " (" + (/already used/.test(error.message) ? "name taken" : error.message) + ")"); else made.push({ n, pin }); }
+        m.remove(); loginCards(g, made, failed); route();
+      } }, "Create"))]);
+}
+function loginCards(g, made, failed){
+  const m = modal([h("h2", { style:"font-size:22px" }, "Sign-in cards — " + g.name), h("p", { class:"muted noprint", style:"font-size:14px" }, "Print or copy these now. For safety, PINs can't be shown again (you can always set a new one)."),
+    failed.length ? h("p", { class:"bad noprint", style:"font-size:14px" }, "Not added: " + failed.join(", ")) : null,
+    h("div", { class:"logincards" }, made.map(x => h("div", { class:"logincard" }, h("div", {}, "fangmath.com → Sign in → Student"), h("div", {}, "Code: ", h("b", {}, g.code)), h("div", {}, "Name: ", h("b", {}, x.n)), h("div", {}, "PIN: ", h("b", {}, x.pin))))),
+    h("div", { class:"noprint", style:"display:flex;gap:8px;justify-content:flex-end;margin-top:14px" }, h("button", { class:"btn ghost", onclick:() => window.print() }, "🖨 Print"), h("button", { class:"btn", onclick:() => m.remove() }, "Done"))]);
+}
+function pinModal(k){
+  const pin = pinInput(); pin.value = randPin(); const err = h("div", { class:"err" });
+  const m = modal([h("h2", { style:"font-size:22px" }, "New PIN for " + k.avatar + " " + k.nickname), h("p", { class:"muted", style:"font-size:14px" }, "This also unlocks the account if it was locked after wrong tries, and signs it out on other devices."),
+    h("label", { class:"f" }, "New 4-digit PIN", pin), err,
+    h("div", { style:"display:flex;gap:8px;justify-content:flex-end" }, h("button", { class:"btn ghost", onclick:() => m.remove() }, "Cancel"),
+      h("button", { class:"btn teal", onclick:async () => { if (!/^[0-9]{4}$/.test(pin.value)) return err.textContent = "4 digits please.";
+        const { error } = await sb.rpc("fm_set_pin", { p_student: k.id, p_pin: pin.value }); if (error) return err.textContent = error.message;
+        m.remove(); alertBox(`New PIN for ${k.nickname}: ${pin.value}`); } }, "Save PIN"))]);
+}
+function removeKid(k){
+  const m = modal([h("h2", { style:"font-size:22px" }, "Remove " + k.nickname + "?"), h("p", {}, "This permanently deletes " + k.nickname + "'s sign-in and all practice records."),
+    h("div", { style:"display:flex;gap:8px;justify-content:flex-end" }, h("button", { class:"btn ghost", onclick:() => m.remove() }, "Cancel"),
+      h("button", { class:"btn", style:"background:var(--red)", onclick:async () => { const { error } = await sb.from("fm_students").delete().eq("id", k.id); m.remove(); if (error) return alertBox(error.message); route(); } }, "Remove"))]);
+}
+async function pageStudent(v, id){
+  if (!adult) { location.hash = "#/login"; return; }
+  const { data: k } = await sb.from("fm_students").select("id,nickname,grade,avatar").eq("id", id).maybeSingle();
+  if (!k) return notFound(v);
+  const { data: rows } = await sb.from("fm_attempts").select("*").eq("student_id", id).order("created_at", { ascending:false }).limit(500);
+  const sm = summarize(rows || []);
+  v.append(h("div", { class:"wrap" }, h("div", { class:"page-head" }, h("div", { class:"crumbs" }, h("a", { href:"#/dashboard" }, "Dashboard"), " / Progress"),
+    h("div", { style:"font-size:48px;line-height:1" }, k.avatar), h("h1", {}, k.nickname), h("p", {}, (k.grade ? "Grade " + k.grade + " · " : "") + (sm.last ? "Last practiced " + when(sm.last) : "No practice yet"))),
+    h("div", { class:"card" }, statsBlock(sm), bestTable(sm.best)),
+    h("div", { class:"card", style:"margin-top:16px" }, h("h3", { style:"font-size:20px;margin-bottom:8px" }, "All activity"), historyTable(rows || []))));
+}
+
+/* ---------- privacy for families ---------- */
+function pagePrivacy(v){
+  const P = t => h("p", {}, t);
+  v.append(h("div", { class:"wrap", style:"max-width:780px" }, h("div", { class:"page-head" }, h("h1", {}, "Privacy for families"), h("p", {}, "Last updated " + fmtDate("2026-09-30"))),
+    h("div", { class:"card" },
+      h("h3", {}, "What we collect"), P("Parents and teachers: name, email and password (stored securely by our login provider)."),
+      P("Students: only a nickname, grade, a picture (emoji) and a 4-digit PIN (stored scrambled/hashed). We never ask children for an email, last name, photo, location or any contact information."),
+      P("Practice results: scores from quizzes, games and weekly challenges, so students, parents and teachers can see progress."),
+      h("h3", { style:"margin-top:14px" }, "Who can see it"), P("A student's results are visible only to that student and to the parent or teacher who created their sign-in. We do not sell data, show ads, or share it with anyone."),
+      h("h3", { style:"margin-top:14px" }, "Parents are in control"), P("A parent or guardian creates each child's sign-in and agrees to this policy. You can change a PIN or permanently delete a child and all of their records at any time from your Dashboard."),
+      h("h3", { style:"margin-top:14px" }, "Services we use"), P("Accounts and records are stored with Supabase; the website is hosted on GitHub Pages; videos are embedded from YouTube (privacy-enhanced mode)."),
+      h("h3", { style:"margin-top:14px" }, "Contact"), h("p", {}, "Questions or deletion requests: ", h("a", { href:"mailto:" + SITE.email }, SITE.email)))));
+}
+
+/* ---------- start ---------- */
+if (accountsOn) sb.auth.onAuthStateChange((ev) => { if (ev === "PASSWORD_RECOVERY") newPasswordForm(); if (ev === "SIGNED_OUT") { adult = null; adultProfile = null; updateAcct(); } });
+
 function notFound(v){ v.append(h("div", { class:"wrap" }, h("div", { class:"page-head" }, h("h1", {}, "Page not found"), h("p", {}, h("a", { href:"#/" }, "← Back home"))))); }
 
 $("yr").textContent = new Date().getFullYear();
 $("footLinks").append(h("span", {}, h("a", { href:"mailto:" + SITE.email }, SITE.email), SITE.youtube ? [" · ", h("a", { href:SITE.youtube, target:"_blank", rel:"noopener" }, "YouTube")] : null, " · ", h("a", { href:SITE.pma, target:"_blank", rel:"noopener" }, "Parents Meet AI")));
-route();
+(async () => { updateAcct(); if (accountsOn) { try { await loadAdult(); } catch (e) {} } route(); })();
 </script>
 </body>
 </html>

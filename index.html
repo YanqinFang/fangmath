@@ -340,6 +340,13 @@ function renderMath(root){
   if (window.renderMathInElement) renderMathInElement(root || document.body, { delimiters:[{ left:"$", right:"$", display:false }], throwOnError:false });
   else setTimeout(() => renderMath(root), 150);
 }
+/* safety net: keep the site working even if content.js is an older version */
+if (typeof GROUPS === "undefined") window.GROUPS = {
+  "K–8":               { key:"k8",         title:"Grades K–8",        intro:"Elementary and middle school math — every idea starts with something you can see, touch or draw." },
+  "High School":       { key:"highschool", title:"High School",       intro:"Algebra 1, Geometry, Algebra 2 and Precalculus, chapter by chapter.", alias:["algebra"] },
+  "Calculus & Beyond": { key:"calculus",   title:"Calculus & Beyond", intro:"AP Calculus AB and BC, then college math: Linear Algebra and Multivariable Calculus." },
+};
+COURSES.forEach(c => { if (!GROUPS[c.group]) c.group = c.group === "Algebra" ? "High School" : "K–8"; });
 const courseById = id => COURSES.find(c => c.id === id);
 const lessonCount = c => c.units.reduce((a, u) => a + u.lessons.length, 0);
 const fmtDate = d => new Date(d + "T12:00:00").toLocaleDateString("en-US", { month:"long", day:"numeric", year:"numeric" });
@@ -349,6 +356,15 @@ function store(k, v){ try { if (v === undefined) return localStorage.getItem(k);
 $("menuBtn").onclick = () => { const n = $("nav"); n.classList.toggle("open"); $("menuBtn").setAttribute("aria-expanded", n.classList.contains("open")); };
 window.addEventListener("hashchange", route);
 function route(){
+  try { routeInner(); }
+  catch (e) {
+    console.error(e);
+    $("view").replaceChildren(h("div", { class:"wrap" }, h("div", { class:"page-head" }, h("h1", {}, "Something went wrong"),
+      h("p", {}, "This page couldn't load. Please refresh. If it keeps happening, the site files may be out of sync — check that index.html, content.js and testprep.js are all the latest versions."),
+      h("p", { class:"muted", style:"font-size:13px" }, String(e && e.message || e)))));
+  }
+}
+function routeInner(){
   $("nav").classList.remove("open");
   const parts = location.hash.replace(/^#\/?/, "").split("/").map(decodeURIComponent);
   const page = parts[0] || "home";

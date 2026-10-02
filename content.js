@@ -27,6 +27,13 @@ const SITE = {
   pma: "https://parentsmeetai.org",
 };
 
+/* ---------------- COURSE GROUPS (menu pages) ---------------- */
+const GROUPS = {
+  "K–8":               { key:"k8",         title:"Grades K–8",        intro:"Elementary and middle school math — every idea starts with something you can see, touch or draw." },
+  "High School":       { key:"highschool", title:"High School",       intro:"Algebra 1, Geometry, Algebra 2 and Precalculus, chapter by chapter.", alias:["algebra"] },
+  "Calculus & Beyond": { key:"calculus",   title:"Calculus & Beyond", intro:"AP Calculus AB and BC, then college math: Linear Algebra and Multivariable Calculus." },
+};
+
 /* ---------------- COURSES ---------------- */
 const COURSES = [
   {
@@ -74,7 +81,7 @@ const COURSES = [
     ],
   },
   {
-    id: "alg1", group: "Algebra", title: "Algebra 1", short: "Algebra 1", color: "#1F3A68",
+    id: "alg1", group: "High School", title: "Algebra 1", short: "Algebra 1", color: "#1F3A68",
     blurb: "12 chapters, from the language of algebra to quadratics. Simple, specific, systematic.",
     units: [
       { title: "1. Foundations of Algebraic Thinking", lessons: [] },
@@ -92,7 +99,26 @@ const COURSES = [
     ],
   },
   {
-    id: "alg2", group: "Algebra", title: "Algebra 2", short: "Algebra 2", color: "#B7472A",
+    id: "geo", group: "High School", title: "Geometry", short: "Geometry", color: "#2E7D32",
+    blurb: "Reasoning and proof, congruence and similarity, right triangles, circles, area and volume.",
+    units: [
+      { title: "1. Tools of Geometry", lessons: [] },
+      { title: "2. Reasoning & Proof", lessons: [] },
+      { title: "3. Parallel & Perpendicular Lines", lessons: [] },
+      { title: "4. Congruent Triangles", lessons: [] },
+      { title: "5. Relationships Within Triangles", lessons: [] },
+      { title: "6. Polygons & Quadrilaterals", lessons: [] },
+      { title: "7. Similarity", lessons: [] },
+      { title: "8. Right Triangles & Trigonometry", lessons: [] },
+      { title: "9. Transformations", lessons: [] },
+      { title: "10. Circles", lessons: [] },
+      { title: "11. Area", lessons: [] },
+      { title: "12. Surface Area & Volume", lessons: [] },
+      { title: "13. Probability", lessons: [] },
+    ],
+  },
+  {
+    id: "alg2", group: "High School", title: "Algebra 2", short: "Algebra 2", color: "#B7472A",
     blurb: "Functions, polynomials, logarithms, trigonometry and more — with flash cards for every chapter.",
     units: [
       { title: "1. Expressions, Equations & Inequalities", lessons: [] },
@@ -109,6 +135,76 @@ const COURSES = [
       { title: "12. Matrices", lessons: [] },
       { title: "13. Periodic Functions & Trigonometry", lessons: [] },
       { title: "14. Trigonometric Identities & Equations", lessons: [] },
+    ],
+  },
+  {
+    id: "precalc", group: "High School", title: "Precalculus", short: "Precalc", color: "#7B1FA2",
+    blurb: "Functions of every kind, trigonometry, polar, vectors and matrices — follows the AP Precalculus units.",
+    units: [
+      { title: "1. Polynomial & Rational Functions", lessons: [] },
+      { title: "2. Exponential & Logarithmic Functions", lessons: [] },
+      { title: "3. Trigonometric & Polar Functions", lessons: [] },
+      { title: "4. Functions Involving Parameters, Vectors & Matrices", lessons: [] },
+    ],
+  },
+  {
+    id: "calcab", group: "Calculus & Beyond", title: "AP Calculus AB", short: "Calc AB", color: "#C0392B",
+    blurb: "Limits, derivatives and integrals — the 8 units of AP Calculus AB.",
+    units: [
+      { title: "1. Limits & Continuity", lessons: [] },
+      { title: "2. Differentiation: Definition & Fundamental Properties", lessons: [] },
+      { title: "3. Differentiation: Composite, Implicit & Inverse Functions", lessons: [] },
+      { title: "4. Contextual Applications of Differentiation", lessons: [] },
+      { title: "5. Analytical Applications of Differentiation", lessons: [] },
+      { title: "6. Integration & Accumulation of Change", lessons: [] },
+      { title: "7. Differential Equations", lessons: [] },
+      { title: "8. Applications of Integration", lessons: [] },
+    ],
+  },
+  {
+    id: "calcbc", group: "Calculus & Beyond", title: "AP Calculus BC", short: "Calc BC", color: "#AD1457",
+    blurb: "Everything in AB, plus parametric, polar and vector functions, and infinite series.",
+    units: [
+      { title: "1. Limits & Continuity", lessons: [] },
+      { title: "2. Differentiation: Definition & Fundamental Properties", lessons: [] },
+      { title: "3. Differentiation: Composite, Implicit & Inverse Functions", lessons: [] },
+      { title: "4. Contextual Applications of Differentiation", lessons: [] },
+      { title: "5. Analytical Applications of Differentiation", lessons: [] },
+      { title: "6. Integration & Accumulation of Change", lessons: [] },
+      { title: "7. Differential Equations", lessons: [] },
+      { title: "8. Applications of Integration", lessons: [] },
+      { title: "9. Parametric Equations, Polar Coordinates & Vector-Valued Functions", lessons: [] },
+      { title: "10. Infinite Sequences & Series", lessons: [] },
+    ],
+  },
+  {
+    id: "linalg", group: "Calculus & Beyond", title: "Linear Algebra", short: "Linear Algebra", color: "#00695C",
+    blurb: "Vectors, matrices and linear transformations — the language of data science and engineering.",
+    units: [
+      { title: "1. Systems of Linear Equations & Row Reduction", lessons: [] },
+      { title: "2. Vectors & Matrix Equations", lessons: [] },
+      { title: "3. Matrix Algebra & Inverses", lessons: [] },
+      { title: "4. Determinants", lessons: [] },
+      { title: "5. Vector Spaces & Subspaces", lessons: [] },
+      { title: "6. Basis, Dimension & Rank", lessons: [] },
+      { title: "7. Linear Transformations", lessons: [] },
+      { title: "8. Eigenvalues & Eigenvectors", lessons: [] },
+      { title: "9. Orthogonality & Least Squares", lessons: [] },
+    ],
+  },
+  {
+    id: "multivar", group: "Calculus & Beyond", title: "Multivariable Calculus", short: "Multivariable", color: "#4527A0",
+    blurb: "Calculus in three dimensions: partial derivatives, multiple integrals and vector calculus.",
+    units: [
+      { title: "1. Vectors & the Geometry of Space", lessons: [] },
+      { title: "2. Vector-Valued Functions & Motion", lessons: [] },
+      { title: "3. Partial Derivatives", lessons: [] },
+      { title: "4. Gradients, Directional Derivatives & Optimization", lessons: [] },
+      { title: "5. Double & Triple Integrals", lessons: [] },
+      { title: "6. Polar, Cylindrical & Spherical Coordinates", lessons: [] },
+      { title: "7. Vector Fields & Line Integrals", lessons: [] },
+      { title: "8. Green's Theorem", lessons: [] },
+      { title: "9. Surface Integrals, Stokes' & Divergence Theorems", lessons: [] },
     ],
   },
 ];

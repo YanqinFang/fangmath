@@ -17,8 +17,10 @@
                   { q:"Which is bigger?", choices:["$\\tfrac12$", "$\\tfrac13$"], answer:0 } ]   // answer = number of the right choice, starting at 0
       • SIMPLER CASE: add  simpler:"Try $3$ people first: ..."  to an example, a quiz question or a challenge.
         Every problem gets a "Try a simpler case" button; if you leave simpler out, students see a general tip instead.
-   INTERACTIVE PRACTICE APP: add  app:"https://..."  to a course (shows a big button on the course page)
-      and/or to a unit (shows an "Interactive practice" row in that unit). It opens inside the site.
+   INTERACTIVE PRACTICE APP: add  app:"practice/algebra2.html?chapter=sys"  to a unit (an "Interactive practice"
+      row in that unit) and/or  app:"practice/algebra2.html"  to a course (a big button on the course page).
+      Apps in the practice folder open inside the site with Learn / Practice tabs, and scores are saved.
+      (A full web address https://... also works, but those scores are not saved.)
    WEEKLY CHALLENGE: add  check:"7"  (the exact final answer) so students can submit and get it marked.
    3. Upload this file (content.js) to GitHub again. Done.
    ===================================================================== */
@@ -126,22 +128,22 @@ const COURSES = [
   {
     id: "alg2", group: "High School", title: "Algebra 2", short: "Algebra 2", color: "#B7472A",
     blurb: "Functions, polynomials, logarithms, trigonometry and more — with flash cards for every chapter.",
-    app: "https://yanqinfang.github.io/Algebra-2/",
+    app: "practice/algebra2.html",
     units: [
-      { title: "1. Expressions, Equations & Inequalities", app: "https://yanqinfang.github.io/Algebra-2/chapter1.html", lessons: [] },
-      { title: "2. Functions, Equations & Graphs", lessons: [] },
-      { title: "3. Linear Systems", lessons: [] },
-      { title: "4. Quadratic Functions & Equations", lessons: [] },
-      { title: "5. Polynomials & Polynomial Functions", lessons: [] },
-      { title: "6. Radical Functions & Rational Exponents", lessons: [] },
-      { title: "7. Exponential & Logarithmic Functions", lessons: [] },
-      { title: "8. Rational Functions", lessons: [] },
-      { title: "9. Sequences & Series", lessons: [] },
-      { title: "10. Quadratic Relations & Conic Sections", lessons: [] },
-      { title: "11. Probability & Statistics", lessons: [] },
-      { title: "12. Matrices", lessons: [] },
-      { title: "13. Periodic Functions & Trigonometry", lessons: [] },
-      { title: "14. Trigonometric Identities & Equations", lessons: [] },
+      { title: "1. Expressions, Equations & Inequalities", lessons: [] },
+      { title: "2. Functions, Equations & Graphs", app: "practice/algebra2.html?chapter=gr", appTopics: 2, lessons: [] },
+      { title: "3. Linear Systems", app: "practice/algebra2.html?chapter=sys", appTopics: 6, lessons: [] },
+      { title: "4. Quadratic Functions & Equations", app: "practice/algebra2.html?chapter=qt", appTopics: 16, lessons: [] },
+      { title: "5. Polynomials & Polynomial Functions", app: "practice/algebra2.html?chapter=py", appTopics: 17, lessons: [] },
+      { title: "6. Radical Functions & Rational Exponents", app: "practice/algebra2.html?chapter=rf", appTopics: 7, lessons: [] },
+      { title: "7. Exponential & Logarithmic Functions", app: "practice/algebra2.html?chapter=el", appTopics: 7, lessons: [] },
+      { title: "8. Rational Functions", app: "practice/algebra2.html?chapter=rt", appTopics: 7, lessons: [] },
+      { title: "9. Sequences & Series", app: "practice/algebra2.html?chapter=ss", appTopics: 7, lessons: [] },
+      { title: "10. Quadratic Relations & Conic Sections", app: "practice/algebra2.html?chapter=qr", appTopics: 7, lessons: [] },
+      { title: "11. Probability & Statistics", app: "practice/algebra2.html?chapter=ps", appTopics: 7, lessons: [] },
+      { title: "12. Matrices", app: "practice/algebra2.html?chapter=mx", appTopics: 8, lessons: [] },
+      { title: "13. Periodic Functions & Trigonometry", app: "practice/algebra2.html?chapter=tr", appTopics: 7, lessons: [] },
+      { title: "14. Trigonometric Identities & Equations", app: "practice/algebra2.html?chapter=tr2", appTopics: 7, lessons: [] },
     ],
   },
   {

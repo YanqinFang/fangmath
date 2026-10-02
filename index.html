@@ -407,6 +407,7 @@ function routeInner(){
   document.querySelectorAll("#nav a").forEach(a => a.classList.toggle("active", a.dataset.nav === navKey));
   const v = $("view"); v.replaceChildren(); window.scrollTo(0, 0);
   stopGames();
+  if (window.appCleanup) { const f = window.appCleanup; window.appCleanup = null; f(); }
   const grp = Object.entries(GROUPS).find(([, g]) => g.key === page || (g.alias || []).includes(page));
   if (grp) pageGroup(v, grp[0], grp[1].title, grp[1].intro);
   else if (page === "course") pageCourse(v, parts[1]);
@@ -421,7 +422,7 @@ function routeInner(){
   else if (page === "dashboard") pageDashboard(v);
   else if (page === "student") pageStudent(v, parts[1]);
   else if (page === "privacy") pagePrivacy(v);
-  else if (page === "app") pageApp(v, parts[1], parts[2]);
+  else if (page === "app") pageApp(v, parts[1], parts[2], parts[3]);
   else pageHome(v);
   document.title = (page === "home" ? "" : (v.querySelector("h1") ? v.querySelector("h1").textContent + " — " : "")) + "Prof. Fang Math" + (page === "home" ? " — " + SITE.tagline : "");
   renderMath(v);
@@ -484,7 +485,7 @@ function pageCourse(v, id){
     h("span", { class:"txt" }, h("b", {}, "Interactive practice app"), h("span", {}, "Unlimited auto-generated problems for every chapter, checked instantly.")),
     h("span", { class:"btn teal" }, "Open →")));
   c.units.forEach((u, ui) => {
-    const appRow = u.app ? h("a", { class:"lesson-row", href:`#/app/${c.id}/${ui}` }, h("span", {}, "🧩"), h("span", { style:"font-weight:500" }, "Interactive practice"), h("span", { class:"tags" }, h("span", { class:"tag", style:"background:var(--teal-soft);color:var(--teal)" }, "App"))) : null;
+    const appRow = u.app ? h("a", { class:"lesson-row", href:`#/app/${c.id}/${ui}` }, h("span", {}, "🧩"), h("span", { style:"font-weight:500" }, "Interactive practice" + (u.appTopics ? " · " + u.appTopics + " topics" : "")), h("span", { class:"tags" }, h("span", { class:"tag", style:"background:var(--teal-soft);color:var(--teal)" }, "Learn"), h("span", { class:"tag", style:"background:var(--gold-soft);color:#8A6415" }, "Practice"))) : null;
     const det = h("details", { class:"card unit", open: u.lessons.length || u.app ? true : null },
       h("summary", {}, h("span", {}, u.title), h("span", { style:"display:flex;gap:10px;align-items:center" }, h("span", { class:"n" }, u.lessons.length ? u.lessons.length + (u.lessons.length === 1 ? " lesson" : " lessons") : u.app ? "Practice app" : "Coming soon"), h("span", { class:"chev" }, "›"))),
       h("div", { class:"lessons" }, appRow, u.lessons.length ? u.lessons.map((l, li) => h("a", { class:"lesson-row", href:`#/lesson/${c.id}/${ui}/${li}` },
@@ -1577,18 +1578,52 @@ function keypad(inp, upd){
     inp.value = inp.value.slice(0, a) + ins + inp.value.slice(b); const pos = a + ins.length; inp.focus(); inp.setSelectionRange(pos, pos); upd(); } }, label)));
 }
 
-/* ---------- an existing practice app, shown inside the site ---------- */
-function pageApp(v, cid, ui){
+/* ---------- a practice app (e.g. practice/algebra2.html), shown inside the site ---------- */
+// Apps in this site's own folder talk to the page through postMessage: answers, quiz scores and page height.
+function pageApp(v, cid, ui, mode){
   const c = courseById(cid); if (!c) return notFound(v);
-  const u = ui != null && ui !== "" ? c.units[+ui] : null;
-  const url = (u && u.app) || c.app; if (!url || !/^https:\/\//.test(url)) return notFound(v);
+  const u = ui != null && ui !== "" && ui !== "all" ? c.units[+ui] : null;
+  const url = (u && u.app) || c.app;
+  const local = url && /^[\w\-\/]+\.html(\?[\w=&\-]*)?$/.test(url), external = url && /^https:\/\//.test(url);
+  if (!local && !external) return notFound(v);
+  mode = mode === "practice" ? "practice" : "learn";
+  const src = local ? url + (url.includes("?") ? "&" : "?") + "embed=1&mode=" + mode : url;
+  const title = u ? u.title.replace(/^\d+\.\s*/, "") : c.title + " — all chapters";
+  const frame = h("iframe", { src, title: title + " practice", style:"width:100%;height:" + (local ? "900px" : "calc(100vh - 210px)") + ";min-height:560px;border:1px solid var(--line);border-radius:16px;background:#fff;display:block" });
+  const live = h("div", { class:"muted", style:"font-weight:600;font-size:14px" }), note = h("div", { class:"saved", style:"margin:0" });
   v.append(h("div", { class:"wrap" },
     h("div", { class:"page-head", style:"padding-bottom:10px" }, h("div", { class:"crumbs" }, h("a", { href:"#/course/" + c.id }, c.title), u ? " / " + u.title : ""),
       h("div", { style:"display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:end" },
-        h("h1", { style:"font-size:clamp(26px,3.6vw,36px)" }, "🧩 " + (u ? u.title.replace(/^\d+\.\s*/, "") : c.title + " practice app")),
-        h("a", { class:"btn sm ghost", href:url, target:"_blank", rel:"noopener" }, "Open in a new tab ↗"))),
-    h("iframe", { src:url, title:(u ? u.title : c.title) + " practice", style:"width:100%;height:calc(100vh - 210px);min-height:560px;border:1px solid var(--line);border-radius:16px;background:#fff", loading:"lazy" }),
-    h("p", { class:"muted", style:"font-size:13px;margin-top:8px" }, "Scores in this app stay on this device; they are not added to the student's Prof. Fang Math record.")));
+        h("h1", { style:"font-size:clamp(26px,3.6vw,36px)" }, "🧩 " + title),
+        external ? h("a", { class:"btn sm ghost", href:url, target:"_blank", rel:"noopener" }, "Open in a new tab ↗") : null)),
+    local ? modeTabs(mode, m => `#/app/${c.id}/${ui == null || ui === "" ? "all" : ui}/${m}`) : null,
+    local ? h("p", { class:"mode-note" }, mode === "learn"
+      ? "Learn: concept box, hints and two tries per problem. Pick a topic and difficulty, then keep going — your session is saved when you switch topics or leave."
+      : "Practice: choose a topic and difficulty, then start a quiz. No hints. Your quiz score is saved.") : null,
+    local ? h("div", { style:"display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin:-4px 0 10px" }, live, note) : null,
+    frame,
+    external ? h("p", { class:"muted", style:"font-size:13px;margin-top:8px" }, "This app is on another website, so its scores are not added to the student's Prof. Fang Math record.") : null));
+  if (!local) return;
+  const cap = s => s ? s[0].toUpperCase() + s.slice(1) : "";
+  let ses = null;   // current Learn session: one topic + difficulty
+  const showLive = () => { live.textContent = ses && ses.n ? `This session: ${ses.right} / ${ses.n} correct · ${ses.label} (${cap(ses.diff)})` : ""; };
+  const flush = () => { if (ses && ses.n) record("practice", `${c.id}:app:${ses.topic}:${ses.diff}`, `Learn: ${c.title} · ${ses.label} (${cap(ses.diff)})`, ses.right, ses.n, {}, Math.round((Date.now() - ses.t0) / 1000), note); ses = null; showLive(); };
+  const onMsg = e => {
+    if (e.origin !== location.origin || e.source !== frame.contentWindow || !e.data || e.data.source !== "fm-alg2") return;
+    const d = e.data;
+    if (d.type === "height") frame.style.height = Math.max(560, Math.min(d.h + 24, 6000)) + "px";
+    else if (d.type === "answer" && !d.quiz) {
+      if (ses && (ses.topic !== d.topic || ses.diff !== d.difficulty)) flush();
+      if (!ses) ses = { topic: d.topic, diff: d.difficulty, label: String(d.label).slice(0, 80), n: 0, right: 0, t0: Date.now() };
+      ses.n++; if (d.ok) ses.right++; showLive();
+    } else if (d.type === "quiz") {
+      record("quiz", `${c.id}:app:${d.topic}:${d.difficulty}`, `${c.title} · ${String(d.label).slice(0, 80)} quiz (${cap(d.difficulty)})`, +d.right, +d.total, {}, null, note);
+    }
+  };
+  window.addEventListener("message", onMsg);
+  const onHide = () => flush();
+  window.addEventListener("pagehide", onHide);
+  window.appCleanup = () => { flush(); window.removeEventListener("message", onMsg); window.removeEventListener("pagehide", onHide); };
 }
 
 function notFound(v){ v.append(h("div", { class:"wrap" }, h("div", { class:"page-head" }, h("h1", {}, "Page not found"), h("p", {}, h("a", { href:"#/" }, "← Back home"))))); }

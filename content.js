@@ -17,6 +17,8 @@
                   { q:"Which is bigger?", choices:["$\\tfrac12$", "$\\tfrac13$"], answer:0 } ]   // answer = number of the right choice, starting at 0
       • SIMPLER CASE: add  simpler:"Try $3$ people first: ..."  to an example, a quiz question or a challenge.
         Every problem gets a "Try a simpler case" button; if you leave simpler out, students see a general tip instead.
+   INTERACTIVE PRACTICE APP: add  app:"https://..."  to a course (shows a big button on the course page)
+      and/or to a unit (shows an "Interactive practice" row in that unit). It opens inside the site.
    WEEKLY CHALLENGE: add  check:"7"  (the exact final answer) so students can submit and get it marked.
    3. Upload this file (content.js) to GitHub again. Done.
    ===================================================================== */
@@ -124,8 +126,9 @@ const COURSES = [
   {
     id: "alg2", group: "High School", title: "Algebra 2", short: "Algebra 2", color: "#B7472A",
     blurb: "Functions, polynomials, logarithms, trigonometry and more — with flash cards for every chapter.",
+    app: "https://yanqinfang.github.io/Algebra-2/",
     units: [
-      { title: "1. Expressions, Equations & Inequalities", lessons: [] },
+      { title: "1. Expressions, Equations & Inequalities", app: "https://yanqinfang.github.io/Algebra-2/chapter1.html", lessons: [] },
       { title: "2. Functions, Equations & Graphs", lessons: [] },
       { title: "3. Linear Systems", lessons: [] },
       { title: "4. Quadratic Functions & Equations", lessons: [] },

@@ -290,6 +290,11 @@
   .sv-msg.good{background:var(--green-soft)} .sv-msg.bad{background:#FDE7E3} .sv-msg.hint{background:var(--gold-soft)}
   .sv-done{margin-top:14px}
   .sv-verify{background:var(--bg);border-radius:12px;padding:10px 12px;font-size:15px}
+  .modes{display:flex;background:var(--bg);border:1px solid var(--line);border-radius:14px;padding:4px;margin:4px 0 18px;max-width:440px}
+  .modes a{flex:1;text-align:center;text-decoration:none;color:var(--muted);font-weight:600;border-radius:10px;padding:9px 10px;font-size:15px}
+  .modes a.on{background:#fff;color:var(--ink);box-shadow:0 1px 3px rgba(0,0,0,.08)}
+  .modes a small{display:block;font-weight:500;font-size:12px;color:var(--faint)}
+  .mode-note{font-size:14px;color:var(--muted);margin:-8px 0 16px}
   .sc{margin:8px 0 4px}
   .sc-btn{border:1px dashed var(--gold);background:var(--gold-soft);color:#8A6415;border-radius:999px;padding:5px 13px;font-weight:600;font-size:13.5px;cursor:pointer}
   .sc-btn:hover{filter:brightness(.97)}
@@ -373,6 +378,14 @@ function simplerCase(text, opt){
   return h("div", { class:"sc" }, btn, box);
 }
 
+/* ---------------- Learn / Practice mode switch ---------------- */
+// Learn = hints, simpler cases, instant checks, retries (not scored). Practice = on your own, checked at the end, scored.
+function modeTabs(cur, hrefFor){
+  return h("nav", { class:"modes", "aria-label":"Mode" },
+    h("a", { class: cur === "learn" ? "on" : "", href: hrefFor("learn"), "aria-current": cur === "learn" ? "page" : null }, "📘 Learn", h("small", {}, "hints & simpler cases")),
+    h("a", { class: cur === "practice" ? "on" : "", href: hrefFor("practice"), "aria-current": cur === "practice" ? "page" : null }, "✏️ Practice", h("small", {}, "on your own · scored")));
+}
+
 /* ---------------- router ---------------- */
 $("menuBtn").onclick = () => { const n = $("nav"); n.classList.toggle("open"); $("menuBtn").setAttribute("aria-expanded", n.classList.contains("open")); };
 window.addEventListener("hashchange", route);
@@ -397,8 +410,8 @@ function routeInner(){
   const grp = Object.entries(GROUPS).find(([, g]) => g.key === page || (g.alias || []).includes(page));
   if (grp) pageGroup(v, grp[0], grp[1].title, grp[1].intro);
   else if (page === "course") pageCourse(v, parts[1]);
-  else if (page === "lesson") pageLesson(v, parts[1], +parts[2], +parts[3]);
-  else if (page === "challenge") pageChallenge(v, parts[1]);
+  else if (page === "lesson") pageLesson(v, parts[1], +parts[2], +parts[3], parts[4]);
+  else if (page === "challenge") pageChallenge(v, parts[1], parts[2]);
   else if (page === "games") parts[1] === "facts" ? gameFacts(v) : parts[1] === "solve" ? gameSolve(v) : pageGames(v);
   else if (page === "flashcards") parts[1] ? pageDeck(v, parts[1]) : pageDecks(v);
   else if (page === "testprep") { if (typeof TESTS === "undefined") notFound(v); else pageTestprep(v, parts); }
@@ -476,36 +489,52 @@ function pageCourse(v, id){
   });
   v.append(wrap);
 }
-function pageLesson(v, cid, ui, li){
+function pageLesson(v, cid, ui, li, mode){
   const c = courseById(cid), u = c && c.units[ui], l = u && u.lessons[li]; if (!l) return notFound(v);
-  const res = [["notes", "📘", "Class notes", "Read and follow along"], ["worksheet", "✏️", "Worksheet", "Printable practice"], ["answers", "✅", "Answer key", "Check your work"]]
-    .filter(r => l[r[0]]).map(([k, ic, t, s]) => h("a", { class:"res", href:l[k], target:"_blank", rel:"noopener" }, h("span", { class:"ic" }, ic), h("div", {}, h("b", {}, t), h("span", {}, s + " · PDF"))));
-  const ex = l.example;
-  let shown = 0; const stepList = h("ol", { class:"steps" }); const nextBtn = h("button", { class:"btn sm teal" }, "Show first step");
-  const showNext = () => { if (!ex || shown >= ex.steps.length) return; const li2 = h("li", {}, mathEl("span", ex.steps[shown])); stepList.append(li2); renderMath(li2); shown++;
-    nextBtn.textContent = shown >= ex.steps.length ? "All steps shown" : "Show next step"; nextBtn.disabled = shown >= ex.steps.length; };
-  nextBtn.onclick = showNext;
-  v.append(h("div", { class:"wrap" },
-    h("div", { class:"page-head" }, h("div", { class:"crumbs" }, h("a", { href:"#/course/" + c.id }, c.title), " / " + u.title), h("h1", {}, l.title), l.summary ? h("p", {}, l.summary) : null),
-    h("div", { class:"lesson-grid" },
-      h("div", {},
-        h("div", { class:"video" }, l.video
-          ? h("iframe", { src:"https://www.youtube-nocookie.com/embed/" + encodeURIComponent(l.video), title:l.title, allow:"accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture", allowfullscreen:true, loading:"lazy" })
-          : h("div", {}, h("div", { style:"font-size:40px" }, "🎬"), "Video lesson coming soon")),
-        ex ? h("div", { class:"card", style:"margin-top:18px" },
-          h("span", { class:"tag", style:"background:var(--green-soft);color:var(--green)" }, "Watch me"),
-          mathEl("p", ex.q, { style:"font-size:18px;margin:10px 0 0;font-weight:500" }),
-          h("p", { class:"muted", style:"margin:6px 0 0;font-size:14px" }, "Think first — then reveal one step at a time."),
-          simplerCase(ex.simpler),
-          stepList, h("div", { style:"margin-top:12px" }, nextBtn)) : null,
-        l.quiz && l.quiz.length ? quizCard(l.quiz, `quiz:${c.id}/${ui}/${li}`, l.title) : null),
-      h("div", {}, h("div", { class:"card" }, h("h3", { style:"font-size:20px;margin-bottom:12px" }, "Materials"),
-        res.length ? h("div", { class:"res-list" }, res) : h("p", { class:"muted" }, "Materials coming soon."))))));
+  mode = mode === "practice" ? "practice" : "learn";
+  const base = `#/lesson/${c.id}/${ui}/${li}/`;
+  const resRow = ([k, ic, t, s]) => h("a", { class:"res", href:l[k], target:"_blank", rel:"noopener" }, h("span", { class:"ic" }, ic), h("div", {}, h("b", {}, t), h("span", {}, s + " · PDF")));
+  const RES = { notes:["notes", "📘", "Class notes", "Read and follow along"], worksheet:["worksheet", "✏️", "Worksheet", "Printable practice"], answers:["answers", "✅", "Answer key", "Check your work"] };
+  const res = (mode === "learn" ? ["notes"] : ["worksheet", "answers"]).filter(k => l[k]).map(k => resRow(RES[k]));
+  const hasQuiz = l.quiz && l.quiz.length;
+  const head = h("div", { class:"page-head" }, h("div", { class:"crumbs" }, h("a", { href:"#/course/" + c.id }, c.title), " / " + u.title), h("h1", {}, l.title), l.summary ? mathEl("p", l.summary) : null);
+  const side = h("div", {}, h("div", { class:"card" }, h("h3", { style:"font-size:20px;margin-bottom:12px" }, mode === "learn" ? "Learn materials" : "Practice materials"),
+    res.length ? h("div", { class:"res-list" }, res) : h("p", { class:"muted" }, "Materials coming soon.")));
+  let main;
+  if (mode === "learn") {
+    const ex = l.example;
+    let shown = 0; const stepList = h("ol", { class:"steps" }); const nextBtn = h("button", { class:"btn sm teal" }, "Show first step");
+    nextBtn.onclick = () => { if (!ex || shown >= ex.steps.length) return; const li2 = h("li", {}, mathEl("span", ex.steps[shown])); stepList.append(li2); renderMath(li2); shown++;
+      nextBtn.textContent = shown >= ex.steps.length ? "All steps shown" : "Show next step"; nextBtn.disabled = shown >= ex.steps.length; };
+    main = h("div", {},
+      h("div", { class:"video" }, l.video
+        ? h("iframe", { src:"https://www.youtube-nocookie.com/embed/" + encodeURIComponent(l.video), title:l.title, allow:"accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture", allowfullscreen:true, loading:"lazy" })
+        : h("div", {}, h("div", { style:"font-size:40px" }, "🎬"), "Video lesson coming soon")),
+      ex ? h("div", { class:"card", style:"margin-top:18px" },
+        h("span", { class:"tag", style:"background:var(--green-soft);color:var(--green)" }, "Watch me"),
+        mathEl("p", ex.q, { style:"font-size:18px;margin:10px 0 0;font-weight:500" }),
+        h("p", { class:"muted", style:"margin:6px 0 0;font-size:14px" }, "Think first — then reveal one step at a time."),
+        simplerCase(ex.simpler),
+        stepList, h("div", { style:"margin-top:12px" }, nextBtn)) : null,
+      hasQuiz ? quizCard(l.quiz, `quiz:${c.id}/${ui}/${li}`, l.title, "learn") : null,
+      hasQuiz || l.worksheet ? h("div", { class:"card", style:"margin-top:18px;display:flex;gap:12px;align-items:center;justify-content:space-between;flex-wrap:wrap" },
+        h("div", {}, h("b", {}, "Ready to try it on your own?"), h("div", { class:"muted", style:"font-size:14px" }, "No hints — your score is saved.")),
+        h("a", { class:"btn teal", href: base + "practice" }, "Go to Practice →")) : null);
+  } else {
+    main = h("div", {},
+      hasQuiz ? quizCard(l.quiz, `quiz:${c.id}/${ui}/${li}`, l.title, "practice") : null,
+      !hasQuiz && !l.worksheet ? h("div", { class:"card" }, h("p", { class:"muted", style:"margin:0" }, "Practice for this lesson is on the way.")) : null);
+  }
+  v.append(h("div", { class:"wrap" }, head, modeTabs(mode, m => base + m),
+    mode === "practice" ? h("p", { class:"mode-note" }, "On your own: no hints, checked at the end. Stuck? ", h("a", { href: base + "learn" }, "Go back to Learn.")) : null,
+    h("div", { class:"lesson-grid" }, main, side)));
 }
 
 /* ---------------- weekly challenge ---------------- */
-function pageChallenge(v, which){
+function pageChallenge(v, which, mode){
   const idx = which ? CHALLENGES.findIndex(c => c.date === which) : 0, ch = CHALLENGES[idx]; if (!ch) return notFound(v);
+  mode = mode === "learn" ? "learn" : "practice";       // challenges start in Practice: try it first
+  const learn = mode === "learn";
   const hintBox = h("div"); const ansBox = h("div");
   const order = ["Observe", "Simplify", "Explore", "Generalize", "Master"];
   const btns = order.map(m => h("button", { class:"mv", onclick:e => { e.currentTarget.classList.add("on"); if (hintBox.querySelector(`[data-m="${m}"]`)) return;
@@ -514,17 +543,18 @@ function pageChallenge(v, which){
       const after = [...hintBox.children].find(x => order.indexOf(x.dataset.m) > order.indexOf(m)); hintBox.insertBefore(el, after || null); renderMath(el); } }, m));
   const reveal = h("button", { class:"btn sm", onclick:() => { ansBox.replaceChildren(h("div", { class:"answer" }, h("b", {}, "Answer: "), mathEl("span", ch.answer))); renderMath(ansBox); reveal.remove(); } }, "Show answer");
   v.append(h("div", { class:"wrap" },
-    h("div", { class:"page-head" }, h("div", { class:"crumbs" }, idx === 0 ? "This week" : fmtDate(ch.date)), h("h1", {}, "Weekly Challenge"), h("p", {}, "One problem a week. Stuck? Open the Five Moves one at a time — try again after each one.")),
+    h("div", { class:"page-head" }, h("div", { class:"crumbs" }, idx === 0 ? "This week" : fmtDate(ch.date)), h("h1", {}, "Weekly Challenge"), h("p", {}, "One problem a week. Try it on your own first. Stuck? Switch to Learn and open the Five Moves one at a time.")),
+    modeTabs(mode, m => `#/challenge/${ch.date}/${m}`),
     h("div", { class:"card problem", style:"max-width:none" },
       h("span", { class:"lbl" }, ch.level + " · " + fmtDate(ch.date)),
       h("h2", { style:"font-size:26px;margin-top:12px" }, ch.title),
       mathEl("div", ch.q, { class:"q" }),
-      simplerCase(ch.simpler || (ch.moves && ch.moves.Simplify)),
-      h("div", { class:"muted", style:"font-size:14px;font-weight:600;margin-top:10px" }, "Need a nudge? The Five Moves:"),
-      ch.check ? challengeSubmit(ch) : null,
-      h("div", { class:"move-btns" }, btns), hintBox, ansBox, reveal),
+      learn ? simplerCase(ch.simpler || (ch.moves && ch.moves.Simplify)) : null,
+      ch.check ? challengeSubmit(ch, !learn) : null,
+      learn ? [h("div", { class:"muted", style:"font-size:14px;font-weight:600;margin-top:10px" }, "Need a nudge? The Five Moves:"), h("div", { class:"move-btns" }, btns), hintBox, ansBox, reveal]
+            : h("p", { class:"muted", style:"font-size:14px;margin:6px 0 0" }, "Want a hint, a simpler case or the answer? ", h("a", { href:`#/challenge/${ch.date}/learn` }, "Switch to Learn →"))),
     CHALLENGES.length > 1 ? h("div", { class:"card", style:"margin-top:18px" }, h("h3", { style:"font-size:20px;margin-bottom:6px" }, "Past challenges"),
-      CHALLENGES.map((c, i) => i === idx ? null : h("a", { class:"arch", href:"#/challenge/" + c.date }, h("span", {}, h("b", {}, c.title), h("span", { class:"muted" }, " · " + c.level)), h("span", { class:"muted", style:"font-size:14px;white-space:nowrap" }, fmtDate(c.date))))) : null));
+      CHALLENGES.map((c, i) => i === idx ? null : h("a", { class:"arch", href:"#/challenge/" + c.date + "/" + mode }, h("span", {}, h("b", {}, c.title), h("span", { class:"muted" }, " · " + c.level)), h("span", { class:"muted", style:"font-size:14px;white-space:nowrap" }, fmtDate(c.date))))) : null));
 }
 
 /* ---------------- games ---------------- */
@@ -694,12 +724,13 @@ async function record(kind, item, title, score, total, detail, seconds, noteEl){
 
 /* ---------- quiz on a lesson page ---------- */
 const norm = x => String(x).toLowerCase().replace(/[\s,$]/g, "").replace(/−/g, "-");
-function quizCard(qs, item, title){
+function quizCard(qs, item, title, mode){
+  if (mode === "learn") return learnQuiz(qs, item);
   const box = h("div", { class:"card", style:"margin-top:18px" });
   const note = h("div", { class:"saved" });
   const answers = new Array(qs.length).fill(null);
   const qEls = qs.map((q, i) => {
-    const wrap = h("div", { class:"quiz-q" }, h("b", {}, `${i + 1}. `), mathEl("span", q.q), simplerCase(q.simpler));
+    const wrap = h("div", { class:"quiz-q" }, h("b", {}, `${i + 1}. `), mathEl("span", q.q));
     if (q.choices) {
       const list = h("div", { class:"choices", role:"radiogroup" });
       q.choices.forEach((c, ci) => {
@@ -727,16 +758,57 @@ function quizCard(qs, item, title){
       renderMath(fb);
     });
     check.replaceWith(h("div", { style:"margin-top:12px" }, h("b", { style:"font-size:20px" }, `Score: ${right} / ${qs.length}`),
-      h("button", { class:"btn sm ghost", style:"margin-left:10px", onclick:() => { const n = quizCard(qs, item, title); box.replaceWith(n); renderMath(n); } }, "Try again")));
+      h("button", { class:"btn sm ghost", style:"margin-left:10px", onclick:() => { const n = quizCard(qs, item, title, "practice"); box.replaceWith(n); renderMath(n); } }, "Try again")));
     record("quiz", item, title, right, qs.length, { missed }, null, note);
   };
   add(box, h("span", { class:"tag", style:"background:var(--gold-soft);color:#8A6415" }, "Practice quiz"),
-    h("p", { class:"muted", style:"margin:8px 0 0;font-size:14px" }, `${qs.length} questions — check your work at the end.`), qEls, check, note);
+    h("p", { class:"muted", style:"margin:8px 0 0;font-size:14px" }, `${qs.length} questions — no hints, checked at the end. Your score is saved.`), qEls, check, note);
+  return box;
+}
+// Learn mode: same questions, checked one at a time, unlimited retries, simpler case on each, answer shown after 2 misses. Not scored.
+function learnQuiz(qs, item){
+  const box = h("div", { class:"card", style:"margin-top:18px" });
+  let solved = 0; const prog = h("div", { class:"muted", style:"font-size:14px;margin:8px 0 0" });
+  const drawProg = () => { prog.textContent = `${solved} of ${qs.length} solved — check each one as you go. Not scored.`; };
+  const qEls = qs.map((q, i) => {
+    let ans = null, misses = 0, done = false;
+    const fb = h("div", { style:"font-size:14px;margin-top:6px;min-height:20px" });
+    const wrap = h("div", { class:"quiz-q" }, h("b", {}, `${i + 1}. `), mathEl("span", q.q), simplerCase(q.simpler));
+    let inp = null;
+    if (q.choices) {
+      const list = h("div", { class:"choices", role:"radiogroup" });
+      q.choices.forEach((c, ci) => list.append(h("label", { class:"choice" }, h("input", { type:"radio", name:`l${item}-${i}`, value:ci, onchange:() => { ans = ci; } }), mathEl("span", c))));
+      add(wrap, list);
+    } else {
+      inp = h("input", { class:"fin", style:"max-width:220px", inputmode:"text", autocomplete:"off", placeholder:"Your answer", oninput:e => { ans = e.target.value; }, onkeydown:e => { if (e.key === "Enter") btn.click(); } });
+    }
+    const btn = h("button", { class:"btn sm teal" }, "Check");
+    btn.onclick = () => {
+      if (done || ans == null || ans === "") return put(fb, h("span", { class:"muted" }, "Answer first, then check."));
+      const ok = q.choices ? ans === q.answer : norm(ans) === norm(q.answer);
+      wrap.querySelectorAll(".choice").forEach((c, ci) => c.classList.remove("right", "wrong"));
+      if (ok) {
+        done = true; solved++; drawProg(); btn.disabled = true; wrap.querySelectorAll("input").forEach(x => x.disabled = true);
+        if (q.choices) wrap.querySelectorAll(".choice")[q.answer].classList.add("right");
+        put(fb, h("span", { class:"ok" }, misses ? "✓ Got it — nice persistence!" : "✓ Correct!"));
+      } else {
+        misses++;
+        if (q.choices) wrap.querySelectorAll(".choice")[ans].classList.add("wrong");
+        put(fb, misses >= 2 ? mathEl("span", "✗ Not yet. The answer is " + (q.choices ? q.choices[q.answer] : q.answer) + " — can you see why? Try the simpler case, then enter it.", { class:"bad" })
+                            : h("span", { class:"bad" }, "✗ Not yet — open the simpler case and try again."));
+      }
+      renderMath(fb);
+    };
+    add(wrap, h("div", { style:"display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:8px" }, inp, btn), fb);
+    return wrap;
+  });
+  drawProg();
+  add(box, h("span", { class:"tag", style:"background:var(--teal-soft);color:var(--teal)" }, "Guided practice"), prog, qEls);
   return box;
 }
 
 /* ---------- weekly challenge answer ---------- */
-function challengeSubmit(ch){
+function challengeSubmit(ch, scored){
   const note = h("div", { class:"saved" }), res = h("div", { style:"font-weight:600;min-height:22px;margin-top:6px" });
   const inp = h("input", { class:"fin", style:"max-width:200px", placeholder:"Your answer", autocomplete:"off" });
   const btn = h("button", { class:"btn sm teal" }, "Submit");
@@ -744,7 +816,7 @@ function challengeSubmit(ch){
     if (!inp.value.trim()) return;
     const ok = norm(inp.value) === norm(ch.check);
     put(res, ok ? h("span", { class:"ok" }, "🎉 Correct! Great thinking.") : h("span", { class:"bad" }, "Not yet — try a Five Moves hint below and think again."));
-    record("challenge", "challenge:" + ch.date, "Weekly Challenge: " + ch.title, ok ? 1 : 0, 1, { answer: inp.value.slice(0, 40) }, null, note);
+    if (scored !== false) record("challenge", "challenge:" + ch.date, "Weekly Challenge: " + ch.title, ok ? 1 : 0, 1, { answer: inp.value.slice(0, 40) }, null, note);
   };
   inp.addEventListener("keydown", e => { if (e.key === "Enter") btn.click(); });
   return h("div", { style:"margin:4px 0 16px" }, h("div", { class:"row", style:"display:flex;gap:8px;flex-wrap:wrap" }, inp, btn), res, note);
@@ -1051,13 +1123,14 @@ function pageTestprep(v, parts){
   const [, exam, mode, a, b] = parts;
   if (!exam) return tpHub(v);
   const T = TESTS[exam]; if (!T) return notFound(v);
-  if (!mode) return tpExam(v, exam);
-  if (mode === "practice") {
+  if (!mode || mode === "m") return tpExam(v, exam, a);
+  if (mode === "learn" || mode === "practice") {
     const sec = T.sections[a]; if (!sec) return notFound(v);
+    const learn = mode === "learn";
     const dom = b === "all" || b == null ? null : sec.domains[+b];
     let qs = QUESTIONS.filter(q => q.exam === exam && q.section === a && (!dom || q.domain === dom));
     if (!qs[0] || !qs[0].passage || exam === "sat") qs = shuffled(qs);
-    return tpRunner(v, { exam, title: `${T.name} ${sec.name}${dom ? " — " + dom : ""}`, item: `${exam}:${a}:${dom || "all"}`, qs, timed: false });
+    return tpRunner(v, { exam, title: `${T.name} ${sec.name}${dom ? " — " + dom : ""}`, item: `${exam}:${learn ? "learn" : "practice"}:${a}:${dom || "all"}`, qs, timed: !learn, seconds: 0, mode });
   }
   if (mode === "timed") {
     const sec = T.sections[a]; if (!sec) return notFound(v);
@@ -1067,13 +1140,14 @@ function pageTestprep(v, parts){
       for (let i = 0; pick.length < Math.min(10, qs.length); i++) { const g = byDom[i % byDom.length]; if (g.length) pick.push(g.shift()); if (i > 200) break; }
       qs = shuffled(pick);
     }
-    return tpRunner(v, { exam, title: `${T.name} ${sec.name} — timed section`, item: `${exam}:timed:${a}`, qs, timed: true, seconds: Math.round(qs.length * sec.secsPerQ) });
+    return tpRunner(v, { exam, title: `${T.name} ${sec.name} — timed section`, item: `${exam}:timed:${a}`, qs, timed: true, seconds: Math.round(qs.length * sec.secsPerQ), mode: "timed" });
   }
   if (mode === "gen") {
     const g = GENERATORS.find(x => x.id === a); if (!g) return notFound(v);
     const r = (lo, hi) => lo + Math.floor(Math.random() * (hi - lo + 1));
     const qs = Array.from({ length: 10 }, (_, i) => Object.assign({ id: g.id + "-" + i, domain: g.name }, g.make(r)));
-    return tpRunner(v, { exam, title: `Unlimited practice — ${g.name}`, item: `${exam}:gen:${g.id}`, qs, timed: false, again: () => route() });
+    const learn = b !== "practice";
+    return tpRunner(v, { exam, title: `Unlimited ${learn ? "learning" : "practice"} — ${g.name}`, item: `${exam}:gen:${g.id}${learn ? "" : ":practice"}`, qs, timed: !learn, seconds: 0, mode: learn ? "learn" : "practice", again: () => route() });
   }
   notFound(v);
 }
@@ -1087,9 +1161,10 @@ function tpHub(v){
     h("div", { class:"grid", style:"grid-template-columns:repeat(auto-fill,minmax(300px,1fr))" }, card("sat"), card("act")),
     h("p", { class:"muted", style:"font-size:13.5px;margin-top:18px" }, "All questions are original Prof. Fang Math practice items written to match the skills each test measures. They are not official College Board® or ACT® questions. SAT® is a trademark of the College Board; ACT® is a trademark of ACT, Inc.; neither is affiliated with this site.")));
 }
-function tpExam(v, exam){
-  const T = TESTS[exam];
-  const wrap = h("div", { class:"wrap" }, h("div", { class:"page-head" }, h("div", { class:"crumbs" }, h("a", { href:"#/testprep" }, "SAT & ACT"), " / " + T.name), h("h1", {}, T.name + " Practice"), h("p", {}, T.blurb)));
+function tpExam(v, exam, pm){
+  const T = TESTS[exam]; pm = pm === "practice" ? "practice" : "learn";
+  const wrap = h("div", { class:"wrap" }, h("div", { class:"page-head" }, h("div", { class:"crumbs" }, h("a", { href:"#/testprep" }, "SAT & ACT"), " / " + T.name), h("h1", {}, T.name + " Practice"), h("p", {}, T.blurb)), modeTabs(pm, m => `#/testprep/${exam}/m/${m}`),
+    h("p", { class:"mode-note" }, pm === "learn" ? "Learn: check each question, read the explanation, use a simpler case. Topic links below open in Learn." : "Practice: on your own, explanations at the end, score saved. Topic links below open in Practice."));
   Object.entries(T.sections).forEach(([sid, sec]) => {
     const total = qCount(exam, sid);
     const timedN = QUESTIONS.find(q => q.exam === exam && q.section === sid && q.passage && exam === "act") ? total : Math.min(10, total);
@@ -1099,12 +1174,12 @@ function tpExam(v, exam){
         h("div", {}, h("h2", { style:"font-size:26px" }, sec.name), h("p", { class:"muted", style:"margin:4px 0 0" }, `${total} questions` + (passage ? ` · based on one passage (“${PASSAGES[QUESTIONS.find(q => q.exam === exam && q.section === sid).passage].title}”)` : ""))),
         h("a", { class:"btn", href:`#/testprep/${exam}/timed/${sid}` }, `⏱ Timed section · ${timedN} Q · ${fmtClock(Math.round(timedN * sec.secsPerQ)).replace(/:00$/, "")} min`)),
       passage
-        ? h("div", { style:"margin-top:12px" }, h("a", { class:"btn teal sm", href:`#/testprep/${exam}/practice/${sid}/all` }, "Practice with explanations →"))
-        : h("div", { class:"tp-doms" }, sec.domains.map((d, i) => h("a", { class:"tp-dom", href:`#/testprep/${exam}/practice/${sid}/${i}` }, h("b", {}, d), h("span", {}, qCount(exam, sid, d) + " questions"))),
-            h("a", { class:"tp-dom all", href:`#/testprep/${exam}/practice/${sid}/all` }, h("b", {}, "All " + sec.name), h("span", {}, total + " questions, mixed")))));
+        ? h("div", { style:"margin-top:12px" }, h("a", { class:"btn teal sm", href:`#/testprep/${exam}/${pm}/${sid}/all` }, pm === "learn" ? "Learn with explanations →" : "Practice on your own →"))
+        : h("div", { class:"tp-doms" }, sec.domains.map((d, i) => h("a", { class:"tp-dom", href:`#/testprep/${exam}/${pm}/${sid}/${i}` }, h("b", {}, d), h("span", {}, qCount(exam, sid, d) + " questions"))),
+            h("a", { class:"tp-dom all", href:`#/testprep/${exam}/${pm}/${sid}/all` }, h("b", {}, "All " + sec.name), h("span", {}, total + " questions, mixed")))));
   });
   wrap.append(h("div", { class:"card" }, h("h2", { style:"font-size:26px" }, "♾️ Unlimited math practice"), h("p", { class:"muted", style:"margin:4px 0 12px" }, "New numbers every time — 10 questions per round, with explanations."),
-    h("div", { class:"tp-doms" }, GENERATORS.map(g => h("a", { class:"tp-dom", href:`#/testprep/${exam}/gen/${g.id}` }, h("b", {}, g.name), mathEl("span", g.desc))))));
+    h("div", { class:"tp-doms" }, GENERATORS.map(g => h("a", { class:"tp-dom", href:`#/testprep/${exam}/gen/${g.id}/${pm}` }, h("b", {}, g.name), mathEl("span", g.desc))))));
   v.append(wrap);
 }
 
@@ -1117,8 +1192,9 @@ function tpRunner(v, o){
   const qBox = h("div", { class:"card tp-q" });
   const timerEl = h("span", { class:"tp-timer" });
   const navEl = h("div", { class:"tp-nav" });
-  const head = h("div", { class:"page-head" }, h("div", { class:"crumbs" }, h("a", { href:"#/testprep/" + o.exam }, TESTS[o.exam].name), " / " + (o.timed ? "Timed section" : "Practice")),
+  const head = h("div", { class:"page-head" }, h("div", { class:"crumbs" }, h("a", { href:"#/testprep/" + o.exam }, TESTS[o.exam].name), " / " + (o.mode === "timed" ? "Timed section" : o.timed ? "Practice" : "Learn")),
     h("h1", { style:"font-size:clamp(26px,3.6vw,36px)" }, o.title), o.timed ? h("p", {}, "Answer every question, then submit. Explanations appear at the end.") : h("p", {}, "Answer, check, and read the explanation before moving on."));
+  if (o.timed && !o.seconds) timerEl.classList.add("hidden");
   const layout = h("div", { class: hasPassage ? "tp-split" : "" }, passageBox, h("div", {}, o.timed ? h("div", { class:"tp-bar" }, timerEl, navEl) : null, qBox));
   v.append(h("div", { class:"wrap" }, head, layout));
 
@@ -1191,9 +1267,9 @@ function tpRunner(v, o){
       note),
       h("div", { class:"card", style:"margin-top:16px" }, h("h3", { style:"font-size:20px;margin-bottom:8px" }, "Review every question"), review));
     renderMath(layout); window.scrollTo(0, 0);
-    record("practice", o.item, o.title, score, n, { missed }, o.timed ? Math.min(secs, o.seconds) : secs, note);
+    record("practice", o.item, (o.mode === "learn" ? "Learn: " : "") + o.title, score, n, { missed }, o.seconds ? Math.min(secs, o.seconds) : secs, note);
   }
-  if (o.timed) {
+  if (o.timed && o.seconds) {
     timerEl.textContent = "⏱ " + fmtClock(left);
     gameTimer = setInterval(() => { left--; timerEl.textContent = "⏱ " + fmtClock(Math.max(left, 0)); timerEl.classList.toggle("low", left <= 60); if (left <= 0) { finish(); } }, 1000);
   }

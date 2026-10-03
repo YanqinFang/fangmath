@@ -1,0 +1,1190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AP Calculus Practice</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:system-ui,sans-serif;background:#f3f0ff;color:#111;min-height:100vh;padding:1.5rem 1rem;font-size:16px}
+.layout{max-width:1120px;margin:0 auto}
+.main-content{width:100%}
+.topic-sidebar{width:100%;margin-bottom:1.2rem}
+.sidebar-box{background:#fff;border:1px solid #ddd;border-radius:12px;padding:12px 14px 14px;display:flex;flex-wrap:wrap;gap:7px;align-items:flex-start}
+.sidebar-title{flex-basis:100%;font-size:13px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:#888;margin-bottom:1px}
+.sidebar-group{flex:0 0 auto}
+.sidebar-group.wide{flex-basis:100%;width:100%}
+.sidebar-group-hdr{font-size:12px;font-weight:700;padding:7px 14px;color:#fff;margin:0;cursor:pointer;display:inline-flex;gap:7px;align-items:center;user-select:none;border-radius:20px;white-space:nowrap}
+.grp-toggle{font-size:14px;font-weight:800;line-height:1}
+.sidebar-group-body{display:none}
+.sidebar-group-body.open{display:flex;flex-wrap:wrap;gap:6px;width:100%;padding:8px 2px 2px}
+.sidebar-item{font-size:13px;padding:6px 13px;cursor:pointer;color:#444;border:1.5px solid #ddd;border-radius:16px;background:#fafafa;transition:all .12s;line-height:1.3;white-space:nowrap}
+.sidebar-item:hover{background:#f0f0f0;border-color:#bbb}
+h1{font-size:26px;font-weight:700;color:#4527a0;margin-bottom:3px}
+.subtitle{font-size:14px;color:#666;margin-bottom:1.2rem}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:1.2rem}
+.stat{background:#fff;border:1px solid #ddd;border-radius:10px;padding:12px;text-align:center}
+.stat-num{font-size:26px;font-weight:700;color:#4527a0}
+.stat-lbl{font-size:13px;color:#999;margin-top:2px}
+.diff-row{display:flex;gap:8px;margin-bottom:1.2rem}
+.diff-btn{flex:1;padding:8px;border:2px solid #ddd;border-radius:8px;font-size:14px;font-weight:700;cursor:pointer;background:#fff}
+.diff-btn.easy{color:#2e7d32;border-color:#a5d6a7}
+.diff-btn.medium{color:#e65100;border-color:#ffcc80}
+.diff-btn.hard{color:#b71c1c;border-color:#ef9a9a}
+.diff-btn.easy.active{background:#e8f5e9;border-color:#2e7d32}
+.diff-btn.medium.active{background:#fff3e0;border-color:#e65100}
+.diff-btn.hard.active{background:#ffebee;border-color:#b71c1c}
+.controls{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:1.2rem}
+.btn{padding:9px 18px;border:1px solid #ccc;border-radius:8px;font-size:15px;cursor:pointer;background:#fff;color:#111}
+.btn:hover{background:#f0f0f0}
+.btn-primary{background:#4527a0;color:#fff;border-color:#4527a0}
+.btn-primary:hover{background:#512da8}
+.concept-box{background:#ede7f6;border:1.5px solid #b39ddb;border-radius:12px;padding:1.1rem 1.3rem;margin-bottom:1.2rem}
+.concept-header{font-size:16px;font-weight:700;color:#4527a0;margin-bottom:.7rem}
+.concept-rule{background:#fff;border-left:4px solid #4527a0;padding:9px 13px;border-radius:0 8px 8px 0;font-size:13px;color:#333;margin-bottom:.7rem;line-height:1.7;white-space:pre-line}
+.concept-example-title{font-size:13px;font-weight:700;color:#f57f17;margin:6px 0 4px}
+.concept-example-prob{font-size:14px;font-weight:500;color:#111;margin-bottom:5px;white-space:pre-line}
+.concept-steps{list-style:none}
+.concept-steps li{font-size:13px;padding:4px 0;border-bottom:1px dashed #d1c4e9;line-height:1.6;white-space:pre-line}
+.concept-steps li:last-child{border-bottom:none}
+.concept-answer{font-weight:700;color:#4527a0;font-size:14px;margin-top:7px}
+.name-bar{background:#fff;border:1px solid #ddd;border-radius:12px;padding:12px 16px;margin-bottom:1.1rem;display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.name-bar label{font-size:14px;font-weight:600;color:#4527a0;white-space:nowrap}
+.name-input{padding:8px 12px;border:1px solid #ccc;border-radius:8px;font-size:15px;flex:1;min-width:140px;max-width:240px}
+.name-input:focus{outline:none;border-color:#4527a0;box-shadow:0 0 0 2px rgba(69,39,160,.15)}
+.btn-submit{padding:8px 16px;border:none;border-radius:8px;font-size:14px;font-weight:700;cursor:pointer;background:#4527a0;color:#fff}
+.btn-submit:hover{background:#512da8}
+.btn-submit:disabled{background:#bbb;cursor:default}
+.submit-msg{font-size:13px;margin-top:4px;width:100%}
+.submit-msg.ok{color:#2e7d32}
+.submit-msg.err{color:#c62828}
+.card{background:#fff;border:1px solid #ddd;border-radius:12px;padding:1.4rem;margin-bottom:1rem}
+.badges{display:flex;gap:8px;margin-bottom:.9rem;flex-wrap:wrap;align-items:center}
+.badge{display:inline-block;font-size:12px;padding:3px 12px;border-radius:20px;font-weight:600}
+.badge-easy{background:#e8f5e9;color:#2e7d32}
+.badge-medium{background:#fff3e0;color:#e65100}
+.badge-hard{background:#ffebee;color:#b71c1c}
+.prob-svg-wrap{margin-bottom:1rem}
+.problem-text{font-size:21px;font-weight:500;color:#111;margin-bottom:1.1rem;line-height:1.7;white-space:pre-line}
+.answer-input{padding:10px 13px;border:1px solid #ccc;border-radius:8px;font-size:16px;min-width:200px;flex:1;max-width:320px}
+.answer-input:focus{outline:none;border-color:#4527a0;box-shadow:0 0 0 2px rgba(69,39,160,.15)}
+.hint-link{font-size:14px;color:#4527a0;cursor:pointer;text-decoration:underline;margin-top:9px;display:none}
+.hint{margin-top:9px;padding:11px 14px;border-left:3px solid #b39ddb;background:#f5f5f5;font-size:15px;color:#444;border-radius:0 8px 8px 0;display:none;white-space:pre-line}
+.feedback{margin-top:11px;padding:11px 14px;border-radius:8px;font-size:16px;display:none}
+.feedback.correct{background:#e8f5e9;color:#2e7d32;display:block}
+.feedback.wrong{background:#fff3e0;color:#e65100;display:block}
+.feedback.reveal{background:#ffebee;color:#c62828;display:block}
+.attempts-left{font-size:13px;color:#888;background:#f5f5f5;border-radius:20px;padding:3px 12px;display:inline-block;margin-top:7px}
+.attempts-left.warn{color:#e65100;background:#fff3e0;font-weight:600}
+.mc-options{display:flex;flex-direction:column;gap:9px;margin-bottom:.9rem}
+.mc-opt{display:flex;align-items:center;gap:13px;padding:12px 16px;border:2px solid #ddd;border-radius:10px;cursor:pointer;font-size:15px;transition:all .15s;background:#fff;line-height:1.5}
+.mc-opt:hover:not(.locked):not(.tried){border-color:#b39ddb;background:#f5f5f5}
+.mc-opt.correct{border-color:#2e7d32!important;background:#e8f5e9!important;font-weight:600;color:#2e7d32;cursor:default}
+.mc-opt.wrong{border-color:#e65100!important;background:#fff3e0!important;color:#e65100;cursor:default}
+.mc-opt.reveal{border-color:#2e7d32!important;background:#e8f5e9!important;cursor:default}
+.mc-opt.locked,.mc-opt.tried{cursor:default}
+.mc-label{display:inline-flex;align-items:center;justify-content:center;min-width:28px;height:28px;border-radius:50%;background:#ede7f6;color:#4527a0;font-weight:700;font-size:13px;flex-shrink:0}
+.mc-opt.correct .mc-label{background:#2e7d32;color:#fff}
+.mc-opt.wrong .mc-label{background:#e65100;color:#fff}
+.mc-opt.reveal .mc-label{background:#2e7d32;color:#fff}
+.quiz-setup{background:#fff;border:1.5px solid #b39ddb;border-radius:12px;padding:1.1rem 1.3rem;margin-bottom:1.2rem}
+.quiz-setup-title{font-size:15px;font-weight:700;color:#4527a0;margin-bottom:.9rem}
+.quiz-row{display:flex;align-items:center;gap:12px;margin-bottom:.7rem;flex-wrap:wrap}
+.quiz-row label{font-size:14px;color:#444;min-width:180px}
+.quiz-row input[type=range]{width:110px;accent-color:#4527a0}
+.quiz-count{font-size:19px;font-weight:700;color:#4527a0;min-width:28px;text-align:center}
+.quiz-preview{font-size:13px;color:#555;margin:.4rem 0 .9rem;padding:7px 11px;background:#ede7f6;border-radius:8px}
+.btn-quiz-start{padding:9px 24px;border:none;border-radius:8px;font-size:15px;font-weight:700;cursor:pointer;background:#4527a0;color:#fff}
+.btn-quiz-start:hover{background:#512da8}
+.quiz-progress{background:#fff;border:1px solid #ddd;border-radius:10px;padding:11px 16px;margin-bottom:.9rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:9px}
+.quiz-prog-label{font-size:14px;font-weight:700;color:#4527a0}
+.quiz-dots{display:flex;gap:5px;flex-wrap:wrap}
+.qd{width:16px;height:16px;border-radius:50%;border:2px solid transparent}
+.qd.mc{background:#d1c4e9;border-color:#9575cd}
+.qd.fill{background:#fff9c4;border-color:#f9a825}
+.qd.ok{background:#2e7d32;border-color:#2e7d32}
+.qd.bad{background:#c62828;border-color:#c62828}
+.next-row{display:none;gap:10px;margin-top:13px;align-items:center}
+.footer{text-align:center;margin-top:1.5rem;font-size:13px;color:#bbb}
+.welcome-line{font-size:14.5px;color:#4527a0;background:#ede7f6;border:1px solid #d1c4e9;border-radius:10px;padding:10px 14px;margin-bottom:1rem;line-height:1.5}
+.strategy-tip{font-size:13px;color:#00695c;background:#e0f2f1;border-left:3px solid #00897b;border-radius:0 8px 8px 0;padding:8px 12px;margin-top:11px;line-height:1.55}
+math{font-size:1.05em;vertical-align:-.08em}
+math msqrt{padding-top:1px}
+@media(max-width:700px){.sidebar-group-hdr{font-size:11.5px;padding:6px 11px}.sidebar-item{font-size:12.5px;padding:5px 11px}}
+:root{--gc:#e65100;--gs:#fff3e0;--gb:#ffcc80}
+.sidebar-item.active{background:var(--gs);border-color:var(--gc);color:var(--gc);font-weight:700}
+.btn-primary{background:var(--gc);border-color:var(--gc)}
+.btn-primary:hover{background:var(--gc);filter:brightness(1.1)}
+.concept-box{background:var(--gs);border-color:var(--gb)}
+.concept-header,.concept-answer{color:var(--gc)}
+.concept-rule{border-left-color:var(--gc)}
+.concept-steps li{border-bottom-color:var(--gb)}
+.step-lbl{display:inline-block;background:#fff;border:1px solid var(--gb);border-radius:6px;font-size:12px;font-weight:700;color:var(--gc);padding:1px 8px;margin-right:7px}
+.badge-topic{background:var(--gs);color:var(--gc)}
+.badge-easy{background:#e8f5e9;color:#2e7d32}.badge-medium{background:#fff3e0;color:#e65100}.badge-hard{background:#ffebee;color:#b71c1c}
+.problem-text{white-space:pre-wrap;font-variant-numeric:tabular-nums}
+.fill-row{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:4px}
+.fill-fmt{font-size:13px;color:#888;margin-top:6px}
+.sym-keys{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+.sym-keys button{min-width:40px;height:34px;border:1px solid #ddd;border-radius:8px;background:#fafafa;font-size:15px;cursor:pointer}
+.sym-keys button:hover{background:#f0f0f0}
+h1,.stat-num,.quiz-prog-label,.quiz-count,.quiz-setup-title,.hint-link{color:var(--gc)}
+.btn-quiz-start{background:var(--gc)}
+.quiz-setup{border-color:var(--gb)}.quiz-preview{background:var(--gs)}
+.welcome-line{color:#333;background:var(--gs);border-color:var(--gb)}
+.mc-opt:hover:not(.locked):not(.tried){border-color:var(--gb)}
+.mc-label{background:var(--gs);color:var(--gc)}
+.answer-input:focus{border-color:var(--gc)}
+#prob-svg:empty{display:none}
+#prob-svg{margin:0 0 1rem}
+.fig{max-width:100%;height:auto;display:block}
+.fig .acc{fill:var(--gc)} .fig .accs{stroke:var(--gc)} .fig polygon{fill:var(--gs)}
+.nts{font-size:12px;color:#999;margin-top:2px}
+.concept-svg{margin:4px 0 6px}.concept-svg .fig{max-width:260px}
+</style>
+</head>
+<body>
+<div class="layout">
+<div class="topic-sidebar"><div class="sidebar-box" id="sidebar-box"></div></div>
+<div class="main-content">
+  <h1>∫ AP Calculus AB & BC</h1>
+  <p class="subtitle">10 AP units · 64 topics (48 AB + 16 BC) · slope fields, graphs & series · Easy to Hard</p>
+  <p class="welcome-line">👋 Welcome! Pick a unit and topic, read the concept box, then practice. Topics marked BC are for Calculus BC only. You get two tries on every problem.</p>
+  <div class="stats">
+    <div class="stat"><div class="stat-num" id="s-total">0</div><div class="stat-lbl">attempted</div></div>
+    <div class="stat"><div class="stat-num" id="s-correct">0</div><div class="stat-lbl">correct</div></div>
+    <div class="stat"><div class="stat-num" id="s-pct">—</div><div class="stat-lbl">accuracy</div></div>
+  </div>
+  <div class="diff-row">
+    <button class="diff-btn easy active" onclick="setDiff('easy')">⭐ Easy</button>
+    <button class="diff-btn medium" onclick="setDiff('medium')">⭐⭐ Medium</button>
+    <button class="diff-btn hard" onclick="setDiff('hard')">⭐⭐⭐ Hard</button>
+  </div>
+  <div class="controls">
+    <button class="btn btn-primary" id="new-btn" onclick="newProblem()">↻ New Problem</button>
+    <button class="btn" onclick="resetStats()">✕ Reset</button>
+  </div>
+  <div class="concept-box" id="concept-box"></div>
+  <div class="quiz-setup" id="quiz-setup">
+    <div class="quiz-setup-title">📝 Quiz Mode — Mix MC &amp; Fill-in</div>
+    <div class="quiz-row"><label for="mc-count">🔘 Multiple Choice problems:</label><input type="range" id="mc-count" min="0" max="10" value="5" oninput="qp()"><span class="quiz-count" id="mc-val">5</span></div>
+    <div class="quiz-row"><label for="fill-count">✏️ Fill-in problems:</label><input type="range" id="fill-count" min="0" max="10" value="3" oninput="qp()"><span class="quiz-count" id="fill-val">3</span></div>
+    <div class="quiz-preview" id="quiz-preview">8 problems total: 5 Multiple Choice + 3 Fill-in</div>
+    <button class="btn-quiz-start" onclick="startQuiz()">▶ Start Quiz</button>
+  </div>
+  <div id="quiz-prog" style="display:none" class="quiz-progress">
+    <div><div class="quiz-prog-label" id="quiz-label">Question 1 / 8</div><div class="quiz-dots" id="quiz-dots" style="margin-top:5px"></div></div>
+    <button class="btn" onclick="endQuiz()" style="font-size:12px;padding:5px 12px">✕ End Quiz</button>
+  </div>
+  <div class="card">
+    <div class="badges"><span class="badge badge-topic" id="badge-topic">Topic</span><span class="badge badge-easy" id="badge-diff">Easy</span></div>
+    <div id="prob-svg"></div>
+    <div class="problem-text" id="prob"></div>
+    <div class="mc-options" id="mc-options"></div>
+    <div id="attempts-left-bar" style="margin-top:5px;display:none"><span class="attempts-left" id="attempts-left-txt"></span></div>
+    <span class="hint-link" id="hint-link" onclick="showHint()">💡 Show hint</span>
+    <div class="hint" id="hint"></div>
+    <div class="strategy-tip">🧭 <b>Stuck? Try 3-S:</b> <b>Simple</b> small numbers → <b>Specific</b> one worked example → <b>Systematic</b> same steps on the real problem.</div>
+    <div class="feedback" id="feedback"></div>
+    <div class="next-row" id="next-row"><button class="btn btn-primary" onclick="nextQ()">Next Question →</button></div>
+  </div>
+  <div class="footer">AP Calculus &nbsp;·&nbsp; © 2026 Prof. Fang Math · All rights reserved.</div>
+</div>
+</div>
+<script>
+/* ===== Algebra 1 practice — core helpers and answer checking (no page code here) ===== */
+const rnd=(a,b)=>Math.floor(Math.random()*(b-a+1))+a;
+const pick=a=>a[Math.floor(Math.random()*a.length)];
+const nz=(a,b)=>{let x;do{x=rnd(a,b)}while(x===0);return x};
+const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
+const gcd=(a,b)=>{a=Math.abs(a);b=Math.abs(b);while(b){[a,b]=[b,a%b]}return a};
+const SUP={0:'⁰',1:'¹',2:'²',3:'³',4:'⁴',5:'⁵',6:'⁶',7:'⁷',8:'⁸',9:'⁹','-':'⁻'};
+const sup=n=>String(n).split('').map(c=>SUP[c]||c).join('');
+const M=n=>n<0?'−'+Math.abs(n):String(n);                 // display a number with a real minus sign
+const P_=n=>n<0?`(${M(n)})`:String(n);                       // number in parentheses when negative
+function fr(n,d){ if(d===0) return 'undefined'; if(d<0){n=-n;d=-d} const g=gcd(n,d)||1; n/=g; d/=g; return d===1?M(n):`${M(n)}/${d}` }
+const isInt=x=>Math.abs(x-Math.round(x))<1e-9;
+// polynomial from coefficients (highest power first): P([2,-3,1]) → 2x² − 3x + 1
+function P(cs,v='x'){
+  const deg=cs.length-1; let out='';
+  cs.forEach((c,i)=>{ if(!c) return; const p=deg-i, a=Math.abs(c);
+    const vv=p===0?'':p===1?v:v+sup(p), cs_=(a===1&&p>0)?'':String(a);
+    out+= out===''? (c<0?'−':'')+cs_+vv : (c<0?' − ':' + ')+cs_+vv; });
+  return out||'0';
+}
+// a sum of terms [[coef,'x²y'],...] keeping the given order
+function S(terms){ let out=''; for(const [c,v] of terms){ if(!c) continue; const a=Math.abs(c), cs_=(a===1&&v)?'':String(a);
+  out+= out===''? (c<0?'−':'')+cs_+v : (c<0?' − ':' + ')+cs_+v; } return out||'0'; }
+// coefficient times x that may be a fraction: (2/3)x
+function FX(n,d,v='x'){ if(d<0){n=-n;d=-d} const g=gcd(n,d)||1; n/=g; d/=g; if(d===1) return P([n,0],v).trim(); return (n<0?'−':'')+`(${Math.abs(n)}/${d})${v}` }
+function lineStr(mn,md,bn,bd=1){ // y = (m)x + b
+  const g=gcd(bn,bd)||1; bn/=g; bd/=g; if(bd<0){bn=-bn;bd=-bd}
+  let s=mn===0?'':FX(mn,md);
+  if(bn!==0){ const bs=bd===1?String(Math.abs(bn)):`${Math.abs(bn)}/${bd}`; s+= s===''? (bn<0?'−':'')+bs : (bn<0?' − ':' + ')+bs; }
+  return 'y = '+(s||'0');
+}
+function distinct(ans, list, fallback){ // three distractors that differ from the answer and each other
+  const seen=new Set([key(ans)]), out=[];
+  for(const c of list){ const s=String(c); if(s.includes('NaN')||s.includes('undefined')||s.includes('Infinity')) continue; const k=key(s); if(!seen.has(k)){ seen.add(k); out.push(s) } if(out.length===3) break; }
+  let i=1; while(out.length<3 && fallback && i<40){ const s=String(fallback(i++)); const k=key(s); if(!seen.has(k)){ seen.add(k); out.push(s) } }
+  return out;
+}
+const key=s=>String(s).replace(/\s+/g,'').replace(/−/g,'-').toLowerCase();
+const numFall=ans=>i=>{ const v=numVal(ans); return Number.isFinite(v)? M((isInt(v)?v:Math.round(v*100)/100)+(i%2?i:-i)) : ans+' + '+i };
+
+/* ---------- a small, safe expression parser ---------- */
+function cleanIn(s){
+  return String(s).toLowerCase()
+    .replace(/[−–—]/g,'-').replace(/[×·∙]/g,'*').replace(/ˣ/g,'^x').replace(/ᵗ/g,'^t').replace(/÷/g,'/')
+    .replace(/[⁰¹²³⁴⁵⁶⁷⁸⁹⁻]+/g,m=>'^'+m.split('').map(c=>({'⁰':0,'¹':1,'²':2,'³':3,'⁴':4,'⁵':5,'⁶':6,'⁷':7,'⁸':8,'⁹':9,'⁻':'-'})[c]).join(''))
+    .replace(/sqrt/g,'√').replace(/pi/g,'π').replace(/\s+/g,'');
+}
+const FNS=['arcsin','arccos','arctan','asin','acos','atan','sinh','cosh','sin','cos','tan','sec','csc','cot','exp','abs','ln','log'];
+const FNA={asin:'arcsin',acos:'arccos',atan:'arctan'};
+const FEV={sin:Math.sin,cos:Math.cos,tan:Math.tan,sec:x=>1/Math.cos(x),csc:x=>1/Math.sin(x),cot:x=>1/Math.tan(x),arcsin:Math.asin,arccos:Math.acos,arctan:Math.atan,
+  exp:Math.exp,abs:Math.abs,ln:Math.log,log:Math.log10,sinh:Math.sinh,cosh:Math.cosh};
+const FINV={sin:'arcsin',cos:'arccos',tan:'arctan'};
+function tokenize(s){
+  const t=[]; let i=0;
+  while(i<s.length){ const c=s[i];
+    if(/[0-9.]/.test(c)){ let j=i; while(j<s.length&&/[0-9.]/.test(s[j])) j++; const n=s.slice(i,j); if((n.match(/\./g)||[]).length>1) throw 0; t.push({k:'n',v:parseFloat(n),s:n}); i=j; }
+    else if(c==='π'){ t.push({k:'n',v:Math.PI,s:'π',pi:true}); i++; }
+    else if(/[a-z]/.test(c)){ const w=FNS.find(f=>s.startsWith(f,i));
+      if(w){ t.push({k:'fn',v:FNA[w]||w}); i+=w.length }
+      else if(c==='e'){ t.push({k:'n',v:Math.E,s:'e',pi:true}); i++ }      // e is Euler's number
+      else { t.push({k:'v',v:c}); i++ } }
+    else if('+-*/^()√|'.includes(c)){ t.push({k:c}); i++; }
+    else throw 0;
+  } return t;
+}
+function parse(str){
+  const t=tokenize(cleanIn(str)); let p=0;
+  const peek=()=>t[p], eat=k=>{ if(!t[p]||t[p].k!==k) throw 0; return t[p++] };
+  function expr(){ let a=term(); while(peek()&&(peek().k==='+'||peek().k==='-')){ const op=t[p++].k; a={t:'add',op,a,b:term()} } return a }
+  function term(){ let a=unary(); for(;;){ const k=peek()&&peek().k;
+      if(k==='*'||k==='/'){ p++; a={t:'mul',op:k,a,b:unary()} }
+      else if(k==='v'||k==='('||k==='√'||k==='fn'||(k==='n'&&(a.endsParen||peek().pi||a.t==='fn'))){ a={t:'mul',op:'*',a,b:unary(),imp:true} }
+      else break; } return a }
+  function unary(){ if(peek()&&peek().k==='-'){ p++; return {t:'neg',a:unary()} } if(peek()&&peek().k==='+'){ p++; return unary() } return power() }
+  function power(){ const a=atom(); if(peek()&&peek().k==='^'){ p++; return {t:'pow',a,b:unary()} } return a }
+  function atom(){ const x=peek(); if(!x) throw 0;
+    if(x.k==='n'){ p++; return {t:'num',v:x.v} }
+    if(x.k==='v'){ p++; return {t:'var',n:x.v} }
+    if(x.k==='('){ p++; const e=expr(); eat(')'); e.endsParen=true; return Object.assign({},e,{paren:true,endsParen:true}) }
+    if(x.k==='√'){ p++; return {t:'sqrt',a:atom()} }
+    if(x.k==='|'){ p++; const e=expr(); eat('|'); return {t:'fn',f:'abs',a:e,endsParen:true} }
+    if(x.k==='fn'){ p++; let f=x.v, ex=null;
+      if(peek()&&peek().k==='^'){ p++; const e=unary(); if(e.t==='neg'&&e.a.t==='num'&&e.a.v===1&&FINV[f]) f=FINV[f]; else ex=e }
+      let arg; if(peek()&&peek().k==='('){ arg=atom() }
+      else { arg=power(); while(peek()&&(peek().k==='v'||peek().k==='√'||(peek().k==='n'&&peek().pi))) arg={t:'mul',op:'*',a:arg,b:power(),imp:true} }
+      const node={t:'fn',f,a:arg}; return ex?{t:'pow',a:node,b:ex}:node }
+    throw 0 }
+  const e=expr(); if(p!==t.length) throw 0; return e;
+}
+function ev(n,env){
+  switch(n.t){ case'num':return n.v; case'var':return n.n in env?env[n.n]:NaN; case'neg':return -ev(n.a,env);
+    case'add':return n.op==='+'?ev(n.a,env)+ev(n.b,env):ev(n.a,env)-ev(n.b,env);
+    case'mul':return n.op==='*'?ev(n.a,env)*ev(n.b,env):ev(n.a,env)/ev(n.b,env);
+    case'pow':{ const A=ev(n.a,env), B=ev(n.b,env); if(A<0&&B!==0&&Math.abs(1/B-Math.round(1/B))<1e-9&&Math.round(1/B)%2) return -Math.pow(-A,B); return Math.pow(A,B) } case'sqrt':return Math.sqrt(ev(n.a,env)); case'fn':return FEV[n.f](ev(n.a,env)); }
+  return NaN;
+}
+function varsOf(n,s=new Set()){ if(!n) return s; if(n.t==='var') s.add(n.n); ['a','b'].forEach(k=>n[k]&&varsOf(n[k],s)); return s }
+const tryParse=s=>{ try{ return parse(s) }catch(e){ return null } };
+function numVal(s){ const n=tryParse(String(s).replace(/^[a-z]=/i,'')); if(!n||varsOf(n).size) return NaN; return ev(n,{}) }
+const close=(a,b)=>Math.abs(a-b)<=1e-7*Math.max(1,Math.abs(a),Math.abs(b));
+function equiv(A,B){
+  const vs=[...new Set([...varsOf(A),...varsOf(B)])], pts=[[1.37,-0.61,2.11],[-1.83,1.29,0.47],[2.71,0.93,-1.17],[0.59,2.33,1.61],[-2.47,-1.41,2.89],[3.13,1.77,-0.83],[0.31,-0.43,0.77],[-0.68,0.52,-0.29],[0.11,0.21,-0.13],[-0.19,0.07,0.17],[0.23,-0.09,0.12],[0.04,0.15,-0.21],[0.07,0.33,-0.05],[-0.1,0.27,0.09]];
+  let ok=0; for(const pt of pts){ const env={}; vs.forEach((v,i)=>env[v]=pt[i%3]*(1+i*0.37)); const a=ev(A,env), b=ev(B,env);
+    if(!Number.isFinite(a)||!Number.isFinite(b)) continue; if(!close(a,b)) return false; ok++; } return ok>=3;
+}
+function flat(n,type,out=[]){ if(n.t===type&&(type!=='mul'||n.op==='*')&&!n.paren){ flat(n.a,type,out); if(type==='add'&&n.op==='-') out.push({t:'neg',a:n.b}); else flat(n.b,type,out) } else out.push(n); return out }
+const termCount=n=>flat(n,'add').length;
+const numTokens=s=>(cleanIn(s).match(/\d+(\.\d+)?/g)||[]).length;
+// polynomial coefficients of a one-variable node (degree ≤ 4) by sampling
+function coefs(node,v='x'){
+  const X=[0,1,2,3,4], Y=X.map(x=>ev(node,{[v]:x})); if(Y.some(y=>!Number.isFinite(y))) return null;
+  const n=5, c=Y.slice(); for(let j=1;j<n;j++) for(let i=n-1;i>=j;i--) c[i]=(c[i]-c[i-1])/(X[i]-X[i-j]);
+  let poly=[c[n-1]]; for(let i=n-2;i>=0;i--){ const nx=new Array(poly.length+1).fill(0); for(let k=0;k<poly.length;k++){ nx[k+1]+=poly[k]; nx[k]-=poly[k]*X[i] } nx[0]+=c[i]; poly=nx }
+  if(!close(ev(node,{[v]:5.5}),poly.reduce((s,a,k)=>s+a*Math.pow(5.5,k),0))) return null;
+  return poly.map(a=>Math.abs(a-Math.round(a))<1e-7?Math.round(a):a);
+}
+const deg=c=>{ for(let k=c.length-1;k>=0;k--) if(Math.abs(c[k])>1e-9) return k; return -1 };
+function sumFactors(node){ // factors of a product that are sums (count (x+1)^2 as two)
+  let n=node; while(n.t==='neg') n=n.a; const fs=flat(n,'mul'); let out=[];
+  for(const f of fs){ if(f.t==='add') out.push(f); else if(f.t==='pow'&&f.a.t==='add'&&f.b.t==='num'&&isInt(f.b.v)) for(let i=0;i<f.b.v;i++) out.push(f.a); else if(f.t==='neg'&&f.a.t==='add') out.push(f.a) }
+  return out;
+}
+
+/* ---------- checking a typed answer (cur = the generated problem) ---------- */
+function stripLead(s,v){ const c=cleanIn(s); const m=c.match(/^([a-z]|[a-z]\([a-z]\))=(.*)$/); return m?m[2]:c }
+function solSet(s){ // "x = 2 or x = -3", "-3, 2", "±4", "1 ± √3" → sorted numbers
+  let c=cleanIn(s).replace(/[{}]/g,'').replace(/±|\+\/-|\+-/g,'±'); const parts=c.split(/,|;|or|and/).map(x=>x.replace(/^[a-z]=/,'')).filter(Boolean); const vals=[];
+  for(const part of parts){ if(part.includes('±')){ let [a,b]=part.split('±'); let den=null;
+      const m=part.match(/^\((.*)±(.*)\)\/(.*)$/); if(m){ a=m[1]; b=m[2]; den=m[3] }
+      const A=a===''?0:numVal(a), B=numVal(b), D=den?numVal(den):1; if(!Number.isFinite(A)||!Number.isFinite(B)||!Number.isFinite(D)) return null; vals.push((A-B)/D,(A+B)/D) }
+    else { const v=numVal(part); if(!Number.isFinite(v)) return null; vals.push(v) } }
+  return vals.sort((a,b)=>a-b).filter((v,i,a)=>i===0||!close(v,a[i-1]));
+}
+function ineqCanon(s){
+  let c=cleanIn(s).replace(/≥|=>/g,'>=').replace(/≤|=</g,'<=');
+  const num='(-?[0-9.]+(?:/[0-9]+)?)', op='(<=|>=|<|>)', pieces=c.split(/or/), ors=[];
+  for(const pc of pieces){ let I={lo:-Infinity,loI:false,hi:Infinity,hiI:false};
+    for(const q of pc.split(/and/)){ let m, J={lo:-Infinity,loI:false,hi:Infinity,hiI:false};
+      if((m=q.match(new RegExp('^'+num+op+'x'+op+num+'$')))){ const a=numVal(m[1]), b=numVal(m[4]); if(m[2][0]!==m[3][0]) return null;
+        if(m[2][0]==='<'){ J={lo:a,loI:m[2]==='<=',hi:b,hiI:m[3]==='<='} } else { J={lo:b,loI:m[3]==='>=',hi:a,hiI:m[2]==='>='} } }
+      else if((m=q.match(new RegExp('^x'+op+num+'$')))){ const a=numVal(m[2]); if(m[1][0]==='<') J.hi=a, J.hiI=m[1]==='<='; else J.lo=a, J.loI=m[1]==='>=' }
+      else if((m=q.match(new RegExp('^'+num+op+'x$')))){ const a=numVal(m[1]); if(m[2][0]==='<') J.lo=a, J.loI=m[2]==='<='; else J.hi=a, J.hiI=m[2]==='>=' }
+      else return null;
+      if(J.lo>I.lo||(J.lo===I.lo&&!J.loI)) I.lo=J.lo, I.loI=J.loI; if(J.hi<I.hi||(J.hi===I.hi&&!J.hiI)) I.hi=J.hi, I.hiI=J.hiI; }
+    ors.push(I) }
+  return ors.map(I=>`${I.loI?'[':'('}${+I.lo.toFixed(9)},${+I.hi.toFixed(9)}${I.hiI?']':')'}`).sort().join('U');
+}
+const radNorm=s=>cleanIn(s).replace(/\*/g,'').replace(/√\((\d+)\)/g,'√$1');
+function check(cur,raw){
+  const type=cur.type||'num', ans=cur.answers;
+  try{
+    switch(type){
+      case 'mat': { const g=(String(raw).replace(/[−–—]/g,'-').match(/-?\d+(\.\d+)?(\/\d+)?/g)||[]).map(numVal); return g.length===cur.vals.length&&g.every((v,i)=>close(v,cur.vals[i])) }
+      case 'lineq': { const lin=str=>{ const c=cleanIn(str); if((c.match(/=/g)||[]).length!==1) return null; const [l,r]=c.split('='); const L=parse(l), Rr=parse(r); const h=(x,y,z)=>ev(L,{x,y,z})-ev(Rr,{x,y,z});
+          const c0=h(0,0,0), v=[h(1,0,0)-c0,h(0,1,0)-c0,h(0,0,1)-c0,c0]; if(!close(h(1.3,-0.7,2.1),c0+1.3*v[0]-0.7*v[1]+2.1*v[2])) return null; return v };
+        const G=lin(raw), K=lin(ans[0]); if(!G||!K) return false; const i=K.findIndex(v=>Math.abs(v)>1e-9); if(Math.abs(G[i])<1e-12) return false; const k=G[i]/K[i]; return G.every((v,j)=>close(v,k*K[j])) }
+      case 'fx': { const g=cleanIn(raw); const G=parse(g.includes('=')?g.slice(g.lastIndexOf('=')+1):g), K=parse(cleanIn(ans[0]).replace(/^.*=/,'')); return equiv(G,K) }
+      case 'exact': { const G=parse(stripLead(raw)), K=parse(cleanIn(ans[0])); if(varsOf(G).size) return false; return close(ev(G,{}),ev(K,{})) }
+      case 'anti': { const g=cleanIn(raw); const G=parse(g.includes('=')?g.slice(g.lastIndexOf('=')+1):g); if(!varsOf(G).has('c')) return false;
+        const K=parse(cleanIn(ans[0]).replace(/\+c$/,'')), v=cur.v||'x', pts=[0.37,0.71,1.13,1.62,2.27,2.93,0.53,1.37,0.11,0.19,0.23,0.29]; let d0=null, ok=0;
+        for(const x of pts){ const a=ev(G,{[v]:x,c:0}), b=ev(K,{[v]:x}); if(!Number.isFinite(a)||!Number.isFinite(b)) continue; const dd=a-b; if(d0==null) d0=dd; else if(!close(dd,d0)) return false; ok++ }
+        return ok>=3 }
+      case 'approx': { const s=stripLead(raw).replace(/°$/,''); if(!/^-?\d+(\.\d+)?$/.test(s)) return false; return Math.abs(parseFloat(s)-numVal(ans[0]))<=(cur.tol||0.05)+1e-9 }
+      case 'pi': { const s=stripLead(raw), k=cleanIn(ans[0]); if(k.includes('π')&&!s.includes('π')) return false; if(numTokens(s)>numTokens(k)) return false; return close(numVal(s),numVal(k)) }
+      case 'num': { const s=stripLead(raw).replace(/°$/,''); if(!/^-?\d+(\.\d+)?(\/\d+)?$/.test(s)) return false; return close(numVal(s),numVal(ans[0])) }
+      case 'set': { const a=solSet(raw), b=cur.vals.slice().sort((x,y)=>x-y); return !!a&&a.length===b.length&&a.every((v,i)=>close(v,b[i])) }
+      case 'pair': { const c=cleanIn(raw); let x,y; const mx=c.match(/x=([^,;]+)/), my=c.match(/y=([^,;)]+)/);
+        if(mx&&my){ x=numVal(mx[1]); y=numVal(my[1]) } else { const m=c.replace(/[()⟨⟩<>\[\]]/g,'').split(','); if(m.length!==2) return false; x=numVal(m[0]); y=numVal(m[1]) }
+        return close(x,cur.vals[0])&&close(y,cur.vals[1]) }
+      case 'ineq': { const a=ineqCanon(raw); return !!a&&a===ineqCanon(ans[0]) }
+      case 'text': { const g=key(raw).replace(/[.!]/g,''); if(ans.some(a=>key(a)===g)) return true; return !!cur.words&&key(ans[0]).length>0&&String(ans[0]).toLowerCase().split(/\s+/).every(w=>g.includes(w)) }
+      case 'rad': { if(isInt(numVal(ans[0]))&&/^-?\d+$/.test(stripLead(raw))) return close(numVal(stripLead(raw)),numVal(ans[0])); const g=radNorm(stripLead(raw)); return ans.some(a=>radNorm(a)===g) }
+      case 'sci': { const c=cleanIn(raw).replace(/x10/,'*10'); const m=c.match(/^(-?\d+(?:\.\d+)?)\*10\^(-?\d+)$/)||c.match(/^(-?\d+(?:\.\d+)?)e(-?\d+)$/); if(!m) return false;
+        const mant=parseFloat(m[1]); if(Math.abs(mant)<1||Math.abs(mant)>=10) return false; return close(mant,cur.vals[0])&&+m[2]===cur.vals[1] }
+      case 'eq': { const g=cleanIn(raw), k=cleanIn(ans[0]); const lv=k.split('=')[0]; if(!g.startsWith(lv+'=')&&!(lv==='y'&&/^(f\(x\)|g\(x\)|h\(x\)|f\^-1\(x\))=/.test(g))) return false;
+        const G=parse(g.slice(g.indexOf('=')+1)), K=parse(k.slice(k.indexOf('=')+1)); return equiv(G,K) }
+      case 'expr': case 'mono': case 'factor': {
+        const g=stripLead(raw), G=parse(g), K=parse(cleanIn(ans[0])); if(!equiv(G,K)) return false;
+        const kc=cleanIn(ans[0]);
+        if(type!=='factor'&&!cur.anyForm){ if(!kc.includes('(')&&g.includes('(')) return false; if(!kc.includes('/')&&g.includes('/')) return false; if(termCount(G)>termCount(K)) return false }
+        if(type==='mono'){ const vs=g.match(/[a-z]/g)||[]; if(new Set(vs).size!==vs.length) return false; if(numTokens(g)>numTokens(kc)) return false }
+        if(type==='factor'){ const gs=sumFactors(G), ks=sumFactors(K); if(termCount(G)>1) return false; if(gs.length<ks.length) return false;
+          for(const f of gs){ const c=coefs(f); if(!c||deg(c)<1) return false; if(c.reduce((a,b)=>gcd(a,Math.round(b)),0)!==1) return false } }
+        return true }
+    }
+  }catch(e){ return false }
+  return false;
+}
+
+// near-miss versions of an answer: one number changed by ±1, or one sign flipped
+function perturb(a){
+  const out=[], nums=[...a.matchAll(/\d+(\.\d+)?/g)];
+  nums.forEach(m=>{ const v=parseFloat(m[0]); for(const dv of [1,-1,2]){ const nv=+(v+dv).toFixed(4); if(nv<=0&&m.index>0&&/[a-z√(]/i.test(a[m.index+m[0].length]||'')) continue; if(nv<0) continue;
+      out.push(a.slice(0,m.index)+nv+a.slice(m.index+m[0].length)) } });
+  [...a.matchAll(/ [+−] /g)].forEach(m=>out.push(a.slice(0,m.index)+(m[0]===' + '?' − ':' + ')+a.slice(m.index+3)));
+  const SD='⁰¹²³⁴⁵⁶⁷⁸⁹'; [...a.matchAll(/[⁰¹²³⁴⁵⁶⁷⁸⁹]+/g)].forEach(m=>{ const v=+m[0].split('').map(c=>SD.indexOf(c)).join(''); for(const nv of [v+1,v-1,v*2]) if(nv>1) out.push(a.slice(0,m.index)+String(nv).split('').map(c=>SD[c]).join('')+a.slice(m.index+m[0].length)) });
+  if(/^y = /.test(a)){ out.push(a.startsWith('y = −')?a.replace('y = −','y = '):a.replace('y = ','y = −'), a+' + 1', a+' − 1') }
+  if(/^[a-z] [<>≤≥] /.test(a)) out.push(a.replace(/[<>≤≥]/,c=>({'<':'>','>':'<','≤':'≥','≥':'≤'})[c]));
+  return shuffle(out).filter(w=>!/(^|[^0-9.])0[a-z√(\/·]|(^|[^0-9.])1[a-z√(·]|[−-] ?0(?![.\d])|\+ 0(?![.\d])|\(1\/1\)|(^|[^0-9.])1\/1(?![0-9])|√[01](?![0-9])|\^1(?![0-9])/i.test(w)&&!/\(\)/.test(w));
+}
+const pretty=s=>String(s).replace(/(^|[\s(,=])-(?=[\d.√a-z(])/g,'$1−');
+/* multiple-choice options for a problem — a distractor is never something the checker would accept */
+function buildMC(cur){
+  const ans=String(cur.mcAns||cur.answers[0]);
+  let cands=(cur.wrong||[]).map(String);
+  if(!cur.mcAns){
+    const fb=[]; const v0=numVal(cur.answers[0]);
+    if(Number.isFinite(v0)&&cur.type==='num') for(let i=1;i<10;i++) fb.push(numFall(cur.answers[0])(i));
+    if(cur.type==='set') for(let i=1;i<8;i++) fb.push('x = '+cur.vals.map(v=>M(Math.round((v+(i%2?i:-i))*100)/100)).join(' or x = '));
+    if(cur.type==='pair') for(let i=1;i<8;i++) fb.push(`(${M(cur.vals[0]+(i%2?i:0))}, ${M(cur.vals[1]+(i%2?0:i))})`);
+    if(cur.type!=='text') fb.push(...perturb(String(cur.answers[0])));
+    cands=[...cands,...fb].filter(w=>!check(cur,w));
+    if(cur.type==='rad'){ const v=numVal(cur.answers[0]); cands=cands.filter(w=>!close(numVal(w),v)) }
+  }
+  cands=cands.map(w=>w.replace(/-?\d+\.\d{3,}/g,m=>String(Math.round(parseFloat(m)*100)/100)));
+  const wrong=distinct(ans,cands,null);
+  return {ans:pretty(ans), opts:shuffle([ans,...wrong.slice(0,3)]).map(pretty)};
+}
+
+/* ===== Geometry practice — figure drawing (SVG) ===== */
+const escX=s=>String(s).replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
+const FIG={ink:'#263238', fill:'#ede7f6', acc:'#4527a0', mark:'#c62828'};   // page CSS recolors .acc/.accs/polygons to the chapter color
+const svgWrap=(inner,w=320,h=210)=>`<svg class="fig" viewBox="0 0 ${w} ${h}" width="${w}" height="${h}" role="img" aria-label="figure for the problem">${inner}</svg>`;
+const tx=(x,y,s,o={})=>`<text x="${(+x).toFixed(1)}" y="${(+y).toFixed(1)}" font-size="${o.fs||14}" text-anchor="${o.a||'middle'}" dominant-baseline="central" ${o.c===FIG.acc?'class="acc" ':''}fill="${o.c||FIG.ink}" font-weight="${o.b?700:500}" font-family="system-ui,sans-serif"${o.i?' font-style="italic"':''}>${escX(s)}</text>`;
+const ln=(a,b,o={})=>`<line x1="${a[0].toFixed(1)}" y1="${a[1].toFixed(1)}" x2="${b[0].toFixed(1)}" y2="${b[1].toFixed(1)}" stroke="${o.c||FIG.ink}" stroke-width="${o.w||2}"${o.d?' stroke-dasharray="5 4"':''} stroke-linecap="round"/>`;
+const dot=(p,r=3,c=FIG.ink)=>`<circle cx="${p[0].toFixed(1)}" cy="${p[1].toFixed(1)}" r="${r}" fill="${c}"/>`;
+const V={add:(a,b)=>[a[0]+b[0],a[1]+b[1]], sub:(a,b)=>[a[0]-b[0],a[1]-b[1]], mul:(a,k)=>[a[0]*k,a[1]*k], len:a=>Math.hypot(a[0],a[1]), unit:a=>{const l=Math.hypot(a[0],a[1])||1;return [a[0]/l,a[1]/l]}, mid:(a,b)=>[(a[0]+b[0])/2,(a[1]+b[1])/2], perp:a=>[-a[1],a[0]]};
+// fit a list of points into the drawing box (keeps proportions)
+function fit(pts,W=320,H=210,m=34){ const mx=Array.isArray(m)?m[0]:m, my=Array.isArray(m)?m[1]:m, xs=pts.map(p=>p[0]), ys=pts.map(p=>p[1]), x0=Math.min(...xs), y0=Math.min(...ys), w=Math.max(...xs)-x0||1, h=Math.max(...ys)-y0||1, k=Math.min((W-2*mx)/w,(H-2*my)/h);
+  const ox=(W-w*k)/2, oy=(H-h*k)/2; return pts.map(p=>[ox+(p[0]-x0)*k, oy+(p[1]-y0)*k]) }
+const D2R=Math.PI/180;
+// triangle with base AB horizontal and angles A, B (degrees) — drawn to scale
+function triPts(A,B){ const C=180-A-B, ac=Math.sin(B*D2R)/Math.sin(C*D2R); return [[0,0],[1,0],[ac*Math.cos(A*D2R),-ac*Math.sin(A*D2R)]] }
+function triFromSides(a,b,c){ // a = BC, b = CA, c = AB
+  const A=Math.acos((b*b+c*c-a*a)/(2*b*c))/D2R, B=Math.acos((a*a+c*c-b*b)/(2*a*c))/D2R; return triPts(A,B) }
+function arcAt(P,Q,R,r=17,n=1,c=FIG.ink){ // small arc(s) at vertex P between rays PQ and PR
+  let a1=Math.atan2(Q[1]-P[1],Q[0]-P[0]), a2=Math.atan2(R[1]-P[1],R[0]-P[0]); let d=a2-a1; while(d>Math.PI) d-=2*Math.PI; while(d<-Math.PI) d+=2*Math.PI;
+  let s=''; for(let i=0;i<n;i++){ const rr=r+i*4, p1=[P[0]+rr*Math.cos(a1),P[1]+rr*Math.sin(a1)], p2=[P[0]+rr*Math.cos(a1+d),P[1]+rr*Math.sin(a1+d)];
+    s+=`<path d="M${p1[0].toFixed(1)} ${p1[1].toFixed(1)} A${rr} ${rr} 0 0 ${d>0?1:0} ${p2[0].toFixed(1)} ${p2[1].toFixed(1)}" fill="none" stroke="${c}" stroke-width="1.6"/>` } return s }
+function rightMark(P,Q,R,s=11){ const u=V.mul(V.unit(V.sub(Q,P)),s), v=V.mul(V.unit(V.sub(R,P)),s); const a=V.add(P,u), b=V.add(V.add(P,u),v), c=V.add(P,v);
+  return `<path d="M${a[0].toFixed(1)} ${a[1].toFixed(1)} L${b[0].toFixed(1)} ${b[1].toFixed(1)} L${c[0].toFixed(1)} ${c[1].toFixed(1)}" fill="none" stroke="${FIG.ink}" stroke-width="1.5"/>` }
+function ticks(P,Q,n,c=FIG.mark){ if(!n) return ''; const m=V.mid(P,Q), u=V.unit(V.sub(Q,P)), p=V.perp(u); let s='';
+  for(let i=0;i<n;i++){ const o=V.add(m,V.mul(u,(i-(n-1)/2)*5)); s+=ln(V.add(o,V.mul(p,6)),V.add(o,V.mul(p,-6)),{c,w:1.8}) } return s }
+/* triangle: o = {v:[labels], s:[label AB, BC, CA], a:[label at A,B,C], right:index, t:[ticks AB,BC,CA], arcs:[n at A,B,C]} */
+function triSVG(P,o={}){
+  const G=[(P[0][0]+P[1][0]+P[2][0])/3,(P[0][1]+P[1][1]+P[2][1])/3]; let s=`<polygon points="${P.map(p=>p.map(v=>v.toFixed(1)).join(',')).join(' ')}" fill="${FIG.fill}" stroke="${FIG.ink}" stroke-width="2" stroke-linejoin="round"/>`;
+  for(let i=0;i<3;i++){ const A=P[i], B=P[(i+1)%3], C=P[(i+2)%3];
+    if(o.t&&o.t[i]) s+=ticks(A,B,o.t[i]);
+    if(o.s&&o.s[i]!=null&&o.s[i]!==''){ const m=V.mid(A,B), out=V.unit(V.sub(m,G)); s+=tx(...V.add(m,V.mul(out,15)),o.s[i],{c:FIG.acc,b:true}) }
+    if(o.right===i) s+=rightMark(A,B,C); else if(o.arcs&&o.arcs[i]) s+=arcAt(A,B,C,16,o.arcs[i],FIG.mark);
+    if(o.a&&o.a[i]!=null&&o.a[i]!==''){ const u1=V.unit(V.sub(B,A)), u2=V.unit(V.sub(C,A)), bis=V.unit(V.add(u1,u2)), half=Math.acos(Math.max(-1,Math.min(1,u1[0]*u2[0]+u1[1]*u2[1])))/2;
+      const L=String(o.a[i]), cap=0.42*Math.min(V.len(V.sub(B,A)),V.len(V.sub(C,A))), dist=Math.max(24,(9+3.6*L.length)/Math.sin(half||0.3));
+      if(L.length<=5) s+=tx(...V.add(A,V.mul(bis,Math.max(22,Math.min(dist,cap)))),L,{fs:13,c:FIG.acc,b:true});
+      else { // long label: outside the vertex, with an arc showing which angle
+        if(!(o.arcs&&o.arcs[i])&&o.right!==i) s+=arcAt(A,B,C,15,1,FIG.acc);
+        const out=V.mul(bis,-1); s+=tx(A[0]+out[0]*22,A[1]+(out[1]>0?24:-22),L,{fs:13,c:FIG.acc,b:true}) } }
+    if(o.v){ const out=V.unit(V.sub(A,G)); s+=tx(...V.add(A,V.mul(out,13)),o.v[i],{i:true}) } }
+  return s;
+}
+const triFig=(P,o,W=320,H=210)=>{ const long=(o.a||[]).some(L=>L&&String(L).length>5); return svgWrap(triSVG(fit(P,W,H,o.m||(long?[72,40]:36)),o),W,H) };
+function twoTriFig(P,o1,o2){ // second triangle = o2.pts (default P), scaled by o2.k, mirrored if o2.mirror
+  const k=o2.k||1, base=o2.pts||P; let Q=base.map(p=>[(o2.mirror?-p[0]:p[0])*k,p[1]*k]);
+  const w1=Math.max(...P.map(p=>p[0]))-Math.min(...P.map(p=>p[0])), qx=Math.min(...Q.map(p=>p[0])); Q=Q.map(p=>[p[0]-qx+Math.max(...P.map(q=>q[0]))+1.0*Math.max(w1,0.6),p[1]]);
+  const all=fit([...P,...Q],320,200,30); return svgWrap(triSVG(all.slice(0,3),o1)+triSVG(all.slice(3),o2),320,200) }
+/* two parallel lines cut by a transversal, angles numbered 1–8 */
+function parallelFig(show,acute=65){ // show: {n: label}; acute = the acute angle the transversal makes
+  const W=320,H=210, y1=70, y2=145, d=[Math.cos(acute*D2R),Math.sin(acute*D2R)], I1=[140,y1], I2=[140+(y2-y1)*d[0]/d[1],y2];
+  let s=ln([20,y1],[300,y1])+ln([20,y2],[300,y2])+ln(V.add(I1,V.mul(d,-55)),V.add(I2,V.mul(d,55)));
+  s+=tx(305,y1,'ℓ',{a:'start',i:true})+tx(305,y2,'m',{a:'start',i:true})+tx(...V.add(V.add(I2,V.mul(d,55)),[10,0]),'t',{i:true,a:'start'});
+  const up=V.mul(d,-1), dirs=[[[-1,0],up],[[1,0],up],[[-1,0],d],[[1,0],d]];
+  [I1,I2].forEach((I,j)=>dirs.forEach(([a,b],k)=>{ const n=j*4+k+1; if(show[n]==null) return; const ang=Math.acos(a[0]*b[0]+a[1]*b[1]), pos=V.add(I,V.mul(V.unit(V.add(a,b)),Math.min(46,(10+3.4*show[n].length)/Math.sin(ang/2)))); s+=tx(...pos,show[n],{fs:13,c:FIG.acc,b:true}) }));
+  s+=`<path d="M60 ${y1-4} l8 4 l-8 4 M60 ${y2-4} l8 4 l-8 4" fill="none" stroke="${FIG.mark}" stroke-width="1.8"/>`; // parallel arrows
+  return svgWrap(s,W,H)
+}
+/* two lines crossing (vertical angles / linear pairs) */
+function crossFig(labels,deg=55){ // labels at [right-top, top, left, bottom] regions
+  const C=[160,105], a=deg*D2R, u=[Math.cos(a),-Math.sin(a)], h=[1,0]; let s=ln(V.add(C,V.mul(h,-130)),V.add(C,V.mul(h,130)))+ln(V.add(C,V.mul(u,-110)),V.add(C,V.mul(u,110)));
+  const bis=[V.unit(V.add(h,u)),V.unit(V.add(u,[-1,0])),V.unit(V.add([-1,0],V.mul(u,-1))),V.unit(V.add(V.mul(u,-1),h))];
+  const wed=[a,Math.PI-a,a,Math.PI-a]; labels.forEach((L,i)=>{ if(L) s+=tx(...V.add(C,V.mul(bis[i],Math.min(90,(10+3.4*L.length)/Math.sin(wed[i]/2)))),L,{fs:13,c:FIG.acc,b:true}) }); return svgWrap(s+dot(C,2.5)) }
+/* points on a segment with labels on the pieces */
+function segFig(names,pieces){ const n=names.length, xs=[20]; const tot=pieces.reduce((a,b)=>a+b.w,0); pieces.forEach(p=>xs.push(xs[xs.length-1]+280*p.w/tot));
+  let s=ln([xs[0],100],[xs[n-1],100]); names.forEach((nm,i)=>{ s+=dot([xs[i],100],4)+tx(xs[i],122,nm,{i:true}) }); pieces.forEach((p,i)=>{ s+=tx((xs[i]+xs[i+1])/2,80,p.label,{fs:13,c:FIG.acc,b:true}) }); return svgWrap(s,320,150) }
+/* rays from a vertex with angle labels between them */
+function raysFig(angles,labels,names){ const O=[60,175], R=200; let s='', acc=0; const dirs=[0];
+  angles.forEach(a=>{ acc+=a; dirs.push(acc) });
+  dirs.forEach((dg,i)=>{ const p=[O[0]+R*Math.cos(-dg*D2R),O[1]+R*Math.sin(-dg*D2R)]; s+=ln(O,fitClip(O,p)); s+=tx(...V.add(fitClip(O,p),V.mul(V.unit(V.sub(p,O)),12)),names[i+1],{i:true}) });
+  angles.forEach((a,i)=>{ const mdg=dirs[i]+a/2; s+=tx(O[0]+(i?95:118)*Math.cos(-mdg*D2R),O[1]+(i?95:118)*Math.sin(-mdg*D2R),labels[i],{fs:13,c:FIG.acc,b:true}) });
+  return svgWrap(s+dot(O,3)+tx(O[0]-12,O[1]+8,names[0],{i:true}),320,210) }
+function fitClip(O,p){ const d=V.sub(p,O); let t=1; if(O[0]+d[0]>300) t=Math.min(t,(300-O[0])/d[0]); if(O[1]+d[1]<20) t=Math.min(t,(20-O[1])/d[1]); return V.add(O,V.mul(d,t)) }
+/* circle pictures */
+function circleBase(){ return {C:[160,105], r:78} }
+const onC=(C,r,deg)=>[C[0]+r*Math.cos(-deg*D2R),C[1]+r*Math.sin(-deg*D2R)];
+function inscribedFig(arcDeg,labelArc,labelIns){ const {C,r}=circleBase(), a0=270-arcDeg/2, A=onC(C,r,a0), B=onC(C,r,a0+arcDeg), P=onC(C,r,90);
+  let s=`<circle cx="${C[0]}" cy="${C[1]}" r="${r}" fill="none" stroke="${FIG.ink}" stroke-width="2"/>`+ln(P,A)+ln(P,B)+dot(A)+dot(B)+dot(P);
+  s+=`<path d="M${A[0].toFixed(1)} ${A[1].toFixed(1)} A${r} ${r} 0 0 0 ${B[0].toFixed(1)} ${B[1].toFixed(1)}" class="accs" fill="none" stroke="${FIG.acc}" stroke-width="4"/>`;
+  s+=tx(...onC(C,r+16,a0),'A',{i:true})+tx(...onC(C,r+16,a0+arcDeg),'B',{i:true})+tx(...onC(C,r+14,90),'P',{i:true});
+  s+=tx(...onC(C,r+30,270),labelArc,{fs:13,c:FIG.acc,b:true})+tx(P[0],P[1]+(labelIns.length>4?62:48),labelIns,{fs:13,c:FIG.acc,b:true}); return svgWrap(s,320,230) }
+function chordsFig(lab){ const {C,r}=circleBase(), A=onC(C,r,150), B=onC(C,r,-20), Cc=onC(C,r,60), Dd=onC(C,r,230);
+  const den=(A[0]-B[0])*(Cc[1]-Dd[1])-(A[1]-B[1])*(Cc[0]-Dd[0]), t=((A[0]-Cc[0])*(Cc[1]-Dd[1])-(A[1]-Cc[1])*(Cc[0]-Dd[0]))/den, E=[A[0]+t*(B[0]-A[0]),A[1]+t*(B[1]-A[1])];
+  let s=`<circle cx="${C[0]}" cy="${C[1]}" r="${r}" fill="none" stroke="${FIG.ink}" stroke-width="2"/>`+ln(A,B)+ln(Cc,Dd)+[A,B,Cc,Dd,E].map(p=>dot(p)).join('');
+  s+=tx(...onC(C,r+14,150),'A',{i:true})+tx(...onC(C,r+14,-20),'B',{i:true})+tx(...onC(C,r+14,60),'C',{i:true})+tx(...onC(C,r+14,230),'D',{i:true})+tx(E[0]+4,E[1]+16,'E',{i:true});
+  const lb=(P,Q,L,side)=>{ const m=V.mid(P,Q), n=V.perp(V.unit(V.sub(Q,P))); return tx(...V.add(m,V.mul(n,side*13)),L,{fs:13,c:FIG.acc,b:true}) };
+  s+=lb(A,E,lab.AE,-1)+lb(E,B,lab.EB,-1)+lb(Cc,E,lab.CE,1)+lb(E,Dd,lab.ED,1); return svgWrap(s,320,220) }
+function tangentFig(lab,ratio=2){ // ratio = TP / OT, drawn to scale
+  const T0=[Math.cos(60*D2R),-Math.sin(60*D2R)], u0=[Math.sin(60*D2R),Math.cos(60*D2R)], P0=V.add(T0,V.mul(u0,ratio));
+  const pts=fit([[-1,-1],[1,1],P0,T0,[0,0]],320,220,30), k=(pts[1][0]-pts[0][0])/2, C=pts[4], T=pts[3], P=pts[2], r=k;
+  let s=`<circle cx="${C[0].toFixed(1)}" cy="${C[1].toFixed(1)}" r="${r.toFixed(1)}" fill="none" stroke="${FIG.ink}" stroke-width="2"/>`+ln(C,T)+ln(T,P)+ln(C,P,{d:true})+dot(C)+dot(T)+dot(P)+rightMark(T,C,P,10);
+  s+=tx(C[0]-12,C[1]+6,'O',{i:true})+tx(...V.add(T,[-4,-14]),'T',{i:true})+tx(P[0]+10,P[1]+8,'P',{i:true});
+  const G=V.mid(V.mid(C,T),P), lb=(A,B,L)=>{ const m=V.mid(A,B), out=V.unit(V.sub(m,G)); return tx(...V.add(m,V.mul(out,14)),L,{fs:13,c:FIG.acc,b:true}) };
+  s+=lb(C,T,lab.OT)+lb(T,P,lab.TP)+lb(C,P,lab.OP); return svgWrap(s,320,220) }
+function polyFig(n,label){ const C=[160,105], r=80, pts=[...Array(n)].map((_,i)=>onC(C,r,90+360*i/n)); let s=`<polygon points="${pts.map(p=>p.map(v=>v.toFixed(1)).join(',')).join(' ')}" fill="${FIG.fill}" stroke="${FIG.ink}" stroke-width="2"/>`;
+  if(label) s+=arcAt(pts[0],pts[1],pts[n-1],16,1,FIG.mark)+tx(pts[0][0],pts[0][1]+34,label,{fs:13,c:FIG.acc,b:true}); return svgWrap(s,320,210) }
+function quadFig(P,o={}){ const Q=fit(P,320,200,o.a?[92,40]:36); let s=`<polygon points="${Q.map(p=>p.map(v=>v.toFixed(1)).join(',')).join(' ')}" fill="${FIG.fill}" stroke="${FIG.ink}" stroke-width="2"/>`;
+  const G=[Q.reduce((a,p)=>a+p[0],0)/4,Q.reduce((a,p)=>a+p[1],0)/4];
+  if(o.diag){ s+=ln(Q[0],Q[2],{w:1.5})+ln(Q[1],Q[3],{w:1.5}) }
+  Q.forEach((A,i)=>{ const B=Q[(i+1)%4], D=Q[(i+3)%4];
+    if(o.s&&o.s[i]){ const m=V.mid(A,B), out=V.unit(V.sub(m,G)); s+=tx(...V.add(m,V.mul(out,15)),o.s[i],{c:FIG.acc,b:true,fs:13}) }
+    if(o.a&&o.a[i]){ const bis=V.unit(V.add(V.unit(V.sub(B,A)),V.unit(V.sub(D,A)))), out=V.mul(bis,-1), p=V.add(A,V.mul(out,18)); s+=arcAt(A,B,D,15,1,FIG.acc)+tx(p[0],p[1]+(out[1]>0?10:-4),o.a[i],{fs:13,c:FIG.acc,b:true,a:out[0]>0.3?'start':out[0]<-0.3?'end':'middle'}) }
+    if(o.v){ const out=V.unit(V.sub(A,G)); s+=tx(...V.add(A,V.mul(out,13)),o.v[i],{i:true}) } });
+  if(o.diag){ const E=V.mid(Q[0],Q[2]); s+=dot(E)+tx(E[0],E[1]-13,'E',{i:true}) }
+  return svgWrap(s,320,200) }
+
+/* ===== Precalculus practice — function and polar graphs (SVG), uses draw.js primitives ===== */
+// plotFig({fns:[x=>…], xr:[-6,6], yr:[-6,6], vas:[x…], has:[y…], pts:[[x,y]], polar:θ=>r, step, labels})
+function plotFig(o){
+  const W=320,H=250,m=26, xr=o.xr||[-6,6], yr=o.yr||[-6,6];
+  const X=x=>m+(x-xr[0])/(xr[1]-xr[0])*(W-2*m), Y=y=>H-m-(y-yr[0])/(yr[1]-yr[0])*(H-2*m);
+  const sx=o.sx||niceStep(xr), sy=o.sy||niceStep(yr); let s=`<rect x="${m}" y="${m}" width="${W-2*m}" height="${H-2*m}" fill="#fff"/>`;
+  for(let v=Math.ceil(xr[0]/sx)*sx; v<=xr[1]+1e-9; v+=sx) s+=ln([X(v),m],[X(v),H-m],{c:'#e3e3e3',w:1});
+  for(let v=Math.ceil(yr[0]/sy)*sy; v<=yr[1]+1e-9; v+=sy) s+=ln([m,Y(v)],[W-m,Y(v)],{c:'#e3e3e3',w:1});
+  if(xr[0]<0&&xr[1]>0) s+=ln([X(0),m],[X(0),H-m],{c:'#90a4ae',w:1.4});
+  if(yr[0]<0&&yr[1]>0) s+=ln([m,Y(0)],[W-m,Y(0)],{c:'#90a4ae',w:1.4});
+  const lx=o.xlab||(v=>fmtTick(v)), ly=o.ylab||(v=>fmtTick(v)), every=o.every||2;
+  let i=0; for(let v=Math.ceil(xr[0]/sx)*sx; v<=xr[1]+1e-9; v+=sx,i++){ if(Math.abs(v)<1e-9||i%every) continue; s+=tx(X(v),Math.min(H-m+12,Math.max(m+10,Y(0)+12)),lx(v),{fs:10,c:'#607d8b'}) }
+  i=0; for(let v=Math.ceil(yr[0]/sy)*sy; v<=yr[1]+1e-9; v+=sy,i++){ if(Math.abs(v)<1e-9||i%every) continue; s+=tx(Math.max(m+8,Math.min(W-m-8,X(0)-10)),Y(v),ly(v),{fs:10,c:'#607d8b',a:'end'}) }
+  (o.vas||[]).forEach(v=>{ s+=ln([X(v),m],[X(v),H-m],{c:FIG.mark,w:1.5,d:true}) });
+  (o.has||[]).forEach(v=>{ s+=ln([m,Y(v)],[W-m,Y(v)],{c:FIG.mark,w:1.5,d:true}) });
+  const clip=`<clipPath id="pc${o.id||0}"><rect x="${m}" y="${m}" width="${W-2*m}" height="${H-2*m}"/></clipPath>`;
+  let curves='';
+  const path=pts=>{ let d='', pen=false; for(const p of pts){ if(!p){ pen=false; continue } d+=(pen?'L':'M')+p[0].toFixed(1)+' '+p[1].toFixed(1); pen=true } return `<path d="${d}" class="accs" fill="none" stroke="${FIG.acc}" stroke-width="2.6" stroke-linejoin="round"/>` };
+  for(const f of (o.fns||[])){ const pts=[], N=500, span=yr[1]-yr[0]; let prev=null;
+    for(let k=0;k<=N;k++){ const x=xr[0]+(xr[1]-xr[0])*k/N, y=f(x); if(!Number.isFinite(y)||Math.abs(y)>1e4){ pts.push(null); prev=null; continue }
+      if(prev!=null&&Math.abs(y-prev)>span*1.5) pts.push(null); pts.push([X(x),Y(Math.max(yr[0]-span,Math.min(yr[1]+span,y)))]); prev=y }
+    curves+=path(pts) }
+  if(o.polar){ const pts=[]; const T=o.tmax||2*Math.PI; for(let k=0;k<=720;k++){ const t=T*k/720, r=o.polar(t); pts.push([X(r*Math.cos(t)),Y(r*Math.sin(t))]) } curves+=path(pts) }
+  s+=`<defs>${clip}</defs><g clip-path="url(#pc${o.id||0})">${curves}</g>`;
+  (o.pts||[]).forEach(([x,y,L])=>{ s+=dot([X(x),Y(y)],3.5,FIG.ink); if(L) s+=tx(X(x)+8,Y(y)-10,L,{fs:11,a:'start'}) });
+  return svgWrap(s,W,H);
+}
+function niceStep(r){ const span=r[1]-r[0]; return span<=14?1:span<=30?2:span<=70?5:span<=140?10:Math.pow(10,Math.floor(Math.log10(span/10))) }
+function fmtTick(v){ return isInt(v)?M(Math.round(v)):M(+v.toFixed(2)) }
+const piTick=v=>{ const k=Math.round(v/(Math.PI/2)); if(Math.abs(v-k*Math.PI/2)>1e-6) return ''; return k===0?'0':k===1?'π/2':k===-1?'−π/2':k%2===0?(k/2===1?'π':k/2===-1?'−π':`${M(k/2)}π`):`${M(k)}π/2` };
+
+/* ===== Calculus practice — figures: slope fields, piecewise graphs (uses draw.js + plot.js) ===== */
+function slopeField(F,o={}){ const xr=o.xr||[-3,3], yr=o.yr||[-3,3], W=320,H=250,m=26;
+  const X=x=>m+(x-xr[0])/(xr[1]-xr[0])*(W-2*m), Y=y=>H-m-(y-yr[0])/(yr[1]-yr[0])*(H-2*m);
+  let s=`<rect x="${m}" y="${m}" width="${W-2*m}" height="${H-2*m}" fill="#fff"/>`+ln([X(0),m],[X(0),H-m],{c:'#90a4ae',w:1.2})+ln([m,Y(0)],[W-m,Y(0)],{c:'#90a4ae',w:1.2});
+  const sx=(W-2*m)/(xr[1]-xr[0]), sy=(H-2*m)/(yr[1]-yr[0]);
+  for(let x=xr[0];x<=xr[1]+1e-9;x+=0.5) for(let y=yr[0];y<=yr[1]+1e-9;y+=0.5){ const sl=F(x,y); if(!Number.isFinite(sl)) continue;
+    const dx=1, dy=sl, L=Math.hypot(dx*sx,dy*sy)||1, k=8/L; const p=[X(x),Y(y)], u=[dx*sx*k,-dy*sy*k];
+    s+=`<line x1="${(p[0]-u[0]).toFixed(1)}" y1="${(p[1]-u[1]).toFixed(1)}" x2="${(p[0]+u[0]).toFixed(1)}" y2="${(p[1]+u[1]).toFixed(1)}" class="accs" stroke="${FIG.acc}" stroke-width="1.8" stroke-linecap="round"/>` }
+  for(let x=xr[0];x<=xr[1]+1e-9;x+=1) if(x) s+=tx(X(x)+0.25*sx,Y(0)+12,M(x),{fs:10,c:'#37474f',b:1});
+  for(let y=yr[0];y<=yr[1]+1e-9;y+=1) if(y) s+=tx(X(0)-6,Y(y)-0.25*sy,M(y),{fs:10,c:'#37474f',a:'end',b:1});
+  return svgWrap(s,W,H) }
+// piecewise graph with open/closed endpoints: pieces = [{f, a, b, openA, openB}], dots=[[x,y,closed]]
+function pieceFig(pieces,dots,xr,yr){ const fns=pieces.map(p=>x=>(x>=p.a&&x<=p.b)?p.f(x):NaN); let svg=plotFig({fns,xr,yr,every:1,id:7});
+  const W=320,H=250,m=26, X=x=>m+(x-xr[0])/(xr[1]-xr[0])*(W-2*m), Y=y=>H-m-(y-yr[0])/(yr[1]-yr[0])*(H-2*m);
+  const extra=dots.map(([x,y,cl])=>`<circle cx="${X(x).toFixed(1)}" cy="${Y(y).toFixed(1)}" r="4.5" fill="${cl?FIG.acc:'#fff'}" class="${cl?'acc ':''}accs" stroke="${FIG.acc}" stroke-width="2"/>`).join('');
+  return svg.replace('</svg>',extra+'</svg>') }
+
+/* ===== Calculus practice — AP Calculus AB & BC (10 units). bc:true topics are hidden for AB students. =====
+   chk = independent check data used by the validator: {d:'f'} derivative, {i:'f'} antiderivative of integrand, {q:['f',a,b]} definite integral */
+const CHAPTERS=[
+  {id:'c1', icon:'🎯', title:'Unit 1: Limits & Continuity', c:'#c0392b', s:'#fdecea', b:'#f5b7b1'},
+  {id:'c2', icon:'📐', title:'Unit 2: Differentiation — Definition & Basic Rules', c:'#6a1b9a', s:'#f3e5f5', b:'#ce93d8'},
+  {id:'c3', icon:'⛓️', title:'Unit 3: Composite, Implicit & Inverse Functions', c:'#1565c0', s:'#e3f2fd', b:'#90caf9'},
+  {id:'c4', icon:'🚗', title:'Unit 4: Contextual Applications of Differentiation', c:'#00695c', s:'#e0f2f1', b:'#80cbc4'},
+  {id:'c5', icon:'⛰️', title:'Unit 5: Analytical Applications of Differentiation', c:'#e65100', s:'#fff3e0', b:'#ffcc80'},
+  {id:'c6', icon:'∫', title:'Unit 6: Integration & Accumulation of Change', c:'#2e7d32', s:'#e8f5e9', b:'#a5d6a7'},
+  {id:'c7', icon:'🌿', title:'Unit 7: Differential Equations', c:'#00838f', s:'#e0f7fa', b:'#80deea'},
+  {id:'c8', icon:'🧊', title:'Unit 8: Applications of Integration', c:'#4e342e', s:'#efebe9', b:'#bcaaa4'},
+  {id:'c9', icon:'🌀', title:'Unit 9: Parametric, Polar & Vector Functions (BC)', c:'#283593', s:'#e8eaf6', b:'#9fa8da', bc:true},
+  {id:'c10',icon:'♾️', title:'Unit 10: Infinite Sequences & Series (BC)', c:'#ad1457', s:'#fce4ec', b:'#f48fb1', bc:true},
+];
+const R=(d,e,m,h)=>d==='easy'?e:d==='medium'?m:h;
+const neat=s=>typeof s!=='string'?s:s.replace(/(^|[\s(,=\/·*\[{])-(?=[\d.√a-zπ(])/gi,'$1−').replace(/− −(?=[\d.√a-zπ(])/g,'+ ').replace(/\+ −(?=[\d.√a-zπ(])/g,'− ').replace(/(^|[\s(=])[−-][−-](?=[\d.√a-zπ(])/g,'$1').replace(/(\d)\/−(\d+(?:\.\d+)?)/g,'$1/(−$2)');
+const neatR=r=>{ r.text=neat(r.text); r.hint=neat(r.hint); if(r.mcAns) r.mcAns=neat(r.mcAns); r.answers=r.answers.map(a=>typeof a==='string'?neat(a):a); if(r.wrong) r.wrong=r.wrong.map(neat); return r };
+const T=[]; const add=(ch,key,label,type,rule,raw,bc)=>T.push({ch,key,label,type,rule,bc:!!bc,gen:d=>{ for(let i=0;i<300;i++){ const r=raw(d); if(r) return neatR(r) } throw new Error('no problem for '+key) }});
+const pairS=(x,y)=>`(${M(x)}, ${M(y)})`, vecS=(x,y)=>`⟨${M(x)}, ${M(y)}⟩`;
+const piS=(n,d=1)=>{ if(d<0){n=-n;d=-d} const g=gcd(n,d)||1; n/=g; d/=g; if(n===0) return '0'; return d===1?(n===1?'π':n===-1?'−π':`${M(n)}π`):`${n===1?'':n===-1?'−':M(n)}π/${d}` };
+const fac=r=>r===0?'x':`(x ${r>0?'−':'+'} ${Math.abs(r)})`;
+const evalP=(c,x)=>c.reduce((s,a)=>s*x+a,0);
+const dP=c=>{ const n=c.length-1; return c.slice(0,-1).map((a,i)=>a*(n-i)) };      // derivative of coefficient list
+const sg=(v,s)=>v<0?` − ${s(Math.abs(v))}`:` + ${s(v)}`;                          // " + 3x" / " − 3x"
+const k1=(k,s)=>k===1?s:k===-1?'−'+s:M(k)+s;                                         // coefficient in front
+const fct=[1,1,2,6,24,120,720,5040];
+const fx=(n,d)=>fr(n,d);                                                              // fraction text
+function frc(n,d){ return fr(n,d) }
+const ax=(a,inner)=>`${a===1?'':a===-1?'−':a}${inner}`;
+const sub=n=>String(n).split('').map(c=>'₀₁₂₃₄₅₆₇₈₉'[c]||c).join('');
+const nz2=(a,b)=>{let x;do{x=rnd(a,b)}while(Math.abs(x)<2);return x};
+function rad(n){ let k=1,r=n; for(let i=Math.floor(Math.sqrt(n));i>1;i--) if(n%(i*i)===0){ k=i; r=n/(i*i); break } return r===1?String(k):`${k===1?'':k}√${r}` }
+const lin=(m,v='x')=>m===1?v:m===-1?'−'+v:M(m)+v;
+const r3=x=>Math.round(x*1000)/1000, r2=x=>Math.round(x*100)/100;
+
+/* ================= Unit 1: Limits ================= */
+add('c1','lim_sub','Limits by Substitution','num',
+ 'If f is continuous at a (polynomials, and rational functions where the bottom ≠ 0), then lim(x→a) f(x) = f(a).\nJust substitute — but check the denominator first.',
+ d=>{ const a=nz(-4,4); if(d==='easy'){ const c=[nz(-3,3),nz(-6,6),nz(-9,9)]; return {text:`Find lim(x→${M(a)}) (${P(c)}).`, answers:[evalP(c,a)], wrong:[evalP(c,-a),evalP(c,a)+c[2],c[2]], hint:`Polynomials are continuous: substitute x = ${M(a)}.\n= ${M(evalP(c,a))}`} }
+  const t=[nz(-3,3),nz(-6,6)], b=[1,nz(-6,6)]; if(evalP(b,a)===0) return null; const v=fr(evalP(t,a),evalP(b,a));
+  return {text:`Find lim(x→${M(a)}) (${P(t)}) / (${P(b)}).`, answers:[v], wrong:[fr(evalP(t,-a),evalP(b,-a)||1),fr(t[0],b[0]),fr(evalP(b,a),evalP(t,a)||1)], hint:`The denominator at x = ${M(a)} is ${M(evalP(b,a))} ≠ 0, so substitute:\n(${M(evalP(t,a))}) / (${M(evalP(b,a))}) = ${v}`} });
+add('c1','lim_factor','Limits of 0/0 Forms','num',
+ 'If substituting gives 0/0, the limit may still exist. Simplify first:\nfactor and cancel, or multiply by the conjugate (for square roots). Then substitute.',
+ d=>{ if(d==='hard'){ const m=rnd(1,5), k=rnd(1,9), a=m*m-k; // (√(x + k) − m)/(x − a) → 1/(2m)
+    return {text:`Find lim(x→${M(a)}) (√(x + ${k}) − ${m}) / ${fac(a)}.`, answers:[fr(1,2*m)], wrong:[fr(1,m),'0',fr(2*m,1)], hint:`Multiply top and bottom by the conjugate √(x + ${k}) + ${m}:\n= 1/(√(x + ${k}) + ${m}) → 1/(${m} + ${m}) = ${fr(1,2*m)}`} }
+  const r=nz(-6,6); let s; do{ s=nz(-6,6) }while(s===r);
+  if(d==='easy') return {text:`Find lim(x→${M(r)}) (x² − ${r*r}) / ${fac(r)}.`, answers:[2*r], wrong:[r,0,r*r], hint:`x² − ${r*r} = ${fac(r)}(x ${r>0?'+':'−'} ${Math.abs(r)}); cancel ${fac(r)}\nlim = ${M(r)} + ${P_(r)} = ${M(2*r)}`};
+  const c=[1,-(r+s),r*s]; return {text:`Find lim(x→${M(r)}) (${P(c)}) / ${fac(r)}.`, answers:[r-s], wrong:[r+s,s-r,0], hint:`Factor: ${fac(r)}${fac(s)}; cancel ${fac(r)}\nlim = ${M(r)} − ${P_(s)} = ${M(r-s)}`} });
+add('c1','lim_inf','Limits at Infinity','text',
+ 'For a rational function as x → ∞, compare the highest powers:\ntop degree < bottom → 0;  equal → ratio of leading coefficients;  top > bottom → ±∞ (no horizontal asymptote).',
+ d=>{ const n=rnd(1,3), m=R(d,n,n+rnd(1,2),Math.max(1,n-1)), a=nz(-8,8), b=nz(-6,6);
+  const top=P([a,...Array(n-1).fill(0),nz(-9,9)].slice(0,n+1)), bot=P([b,...Array(m-1).fill(0),nz(-9,9)].slice(0,m+1));
+  const ans=n<m?'0':n===m?fr(a,b):(a/b>0?'∞':'−∞'), alts=ans==='∞'?['∞','infinity','inf','+∞']:ans==='−∞'?['−∞','-infinity','-inf']:[ans];
+  return {type:'text',text:`Find lim(x→∞) (${top}) / (${bot}).`, answers:alts, wrong:distinct(ans,['0',fr(a,b),fr(b,a),'∞','−∞','1']), fmt:'a number, or ∞ / −∞ (type infinity)',
+    hint:`Degrees: top ${n}, bottom ${m}.\n${n<m?'Bottom wins → 0':n===m?`Same degree → ${M(a)}/${M(b)} = ${fr(a,b)}`:`Top wins → the function grows without bound: ${ans}`}`} });
+add('c1','lim_trig','Special Trig Limits','num',
+ 'Key limits: lim(x→0) sin x / x = 1   and   lim(x→0) (1 − cos x)/x = 0.\nlim(x→0) sin(ax)/(bx) = a/b.  Rewrite to match these forms.',
+ d=>{ const a=rnd(2,9), b=rnd(2,9);
+  if(d==='easy') return {text:`Find lim(x→0) sin(${a}x) / x.`, answers:[a], wrong:[1,0,fr(1,a)], hint:`sin(${a}x)/x = ${a} · sin(${a}x)/(${a}x) → ${a} · 1 = ${a}`};
+  if(d==='medium') return {text:`Find lim(x→0) sin(${a}x) / (${b}x).`, answers:[fr(a,b)], wrong:[fr(b,a),'1','0'], hint:`= (${a}/${b}) · sin(${a}x)/(${a}x) → ${fr(a,b)}`};
+  return pick([()=>({text:`Find lim(x→0) sin(${a}x) / sin(${b}x).`, answers:[fr(a,b)], wrong:[fr(b,a),'1','0'], hint:`Multiply and divide: [sin(${a}x)/(${a}x)] · [(${b}x)/sin(${b}x)] · (${a}/${b}) → ${fr(a,b)}`}),
+               ()=>({text:`Find lim(x→0) tan(${a}x) / x.`, answers:[a], wrong:[1,0,fr(1,a)], hint:`tan(${a}x)/x = [sin(${a}x)/x] · 1/cos(${a}x) → ${a} · 1 = ${a}`}),
+               ()=>({text:`Find lim(x→0) (1 − cos(${a}x)) / x.`, answers:[0], wrong:[a,1,fr(1,2)], hint:`(1 − cos u)/u → 0, so (1 − cos(${a}x))/x = ${a} · (1 − cos(${a}x))/(${a}x) → 0`})])() });
+add('c1','lim_graph','Limits from a Graph','text',
+ 'lim(x→a⁻) uses values just LEFT of a;  lim(x→a⁺) just RIGHT of a.\nThe two-sided limit exists only if both one-sided limits are equal (it can differ from f(a)!).\nOpen circle = point not included; filled dot = the actual value f(a).',
+ d=>{ const a=rnd(-1,2), L=rnd(-3,3), m1=pick([1,-1,0.5]), jump=Math.random()<.55, Rv=jump?L+pick([-3,-2,2,3]):L, fa=pick([L,Rv,L+1]); if(Math.abs(fa)>4||Math.abs(Rv)>4) return null;
+  const p1={f:x=>L+m1*(x-a),a:-4,b:a}, p2={f:x=>Rv-0.5*(x-a),a:a,b:4};
+  const dots=[[a,L,false],[a,Rv,false],[a,fa,true]].filter((p,i,arr)=>!(i<2&&p[1]===fa)), svg=pieceFig([p1,p2],dots,[-4,4],[-5,5]);
+  const ask=pick(R(d,['left','right'],['left','right','value'],['two','value','two']));
+  const ans=ask==='left'?String(L):ask==='right'?String(Rv):ask==='value'?String(fa):(L===Rv?String(L):'DNE');
+  const Q={left:`lim(x→${M(a)}⁻) f(x)`,right:`lim(x→${M(a)}⁺) f(x)`,value:`f(${M(a)})`,two:`lim(x→${M(a)}) f(x)`}[ask];
+  return {type:'text',svg,text:`Use the graph of f. Find ${Q}.`, answers:ans==='DNE'?['DNE','does not exist','dne']:[ans], mcAns:ans==='DNE'?'Does not exist':M(+ans), wrong:distinct(ans==='DNE'?'Does not exist':M(+ans),[M(L),M(Rv),M(fa),'Does not exist',M(L+1),M(Rv-1),M(a),'0']), fmt:'a number, or DNE',
+    hint:`From the left the graph approaches ${M(L)}; from the right it approaches ${M(Rv)}; the filled dot is f(${M(a)}) = ${M(fa)}.\n${ask==='two'?(L===Rv?`Both sides agree → ${M(L)}`:'The sides disagree → the limit does not exist'):`Answer: ${ans==='DNE'?'DNE':M(+ans)}`}`} });
+add('c1','continuity_k','Make It Continuous','num',
+ 'f is continuous at a when lim(x→a) f(x) = f(a).\nFor a piecewise function: set the two pieces EQUAL at the break point and solve.',
+ d=>{ const a=nz(-3,3), b=nz(-6,6), c=nz(-9,9); const kv=(a*a+c-b)/a; if(d!=='hard'&&!isInt(kv)) return null;
+  return {text:`f(x) = kx ${b<0?'−':'+'} ${Math.abs(b)} for x < ${M(a)}, and f(x) = x² ${c<0?'−':'+'} ${Math.abs(c)} for x ≥ ${M(a)}.\nFind k so that f is continuous at x = ${M(a)}.`, answers:[fr(a*a+c-b,a)], wrong:[fr(a*a+c+b,a),fr(a*a-b,a),fr(a+c-b,a)], hint:`Left piece at ${M(a)}: ${M(a)}k ${b<0?'−':'+'} ${Math.abs(b)}.  Right piece: ${a*a} ${c<0?'−':'+'} ${Math.abs(c)} = ${M(a*a+c)}\n${M(a)}k = ${M(a*a+c-b)} → k = ${fr(a*a+c-b,a)}`} });
+add('c1','ivt','Intermediate Value Theorem','text',
+ 'IVT: if f is CONTINUOUS on [a, b], then f takes every value between f(a) and f(b) somewhere in (a, b).\nIt guarantees existence — it does not say where, and needs continuity.',
+ d=>{ const a=rnd(-2,2), b=a+rnd(2,5), fa=rnd(-6,-1), fb=rnd(1,8), k=rnd(fa+1,fb-1);
+  const ans=`f(c) = ${M(k)} for some c in (${M(a)}, ${M(b)})`;
+  return {type:'text',mcOnly:true,text:`f is continuous on [${M(a)}, ${M(b)}], f(${M(a)}) = ${M(fa)}, and f(${M(b)}) = ${M(fb)}. Which statement MUST be true?`, answers:[ans], mcAns:ans,
+    wrong:[`f(c) = ${M(fb+2)} for some c in (${M(a)}, ${M(b)})`,`f′(c) = ${fr(fb-fa,b-a)} for some c in (${M(a)}, ${M(b)})`,`f has its maximum value at x = ${M(b)}`], hint:`${M(k)} is between ${M(fa)} and ${M(fb)}, and f is continuous → IVT guarantees f(c) = ${M(k)}.\n(The f′ statement is the Mean Value Theorem, which also needs differentiability.)`} });
+
+/* ================= Unit 2: Derivatives ================= */
+function polyD(d){ // a polynomial with possibly negative / fractional powers, as display + parseable + derivative
+  const terms=[]; const used=new Set(); const n=R(d,2,3,3);
+  while(terms.length<n){ const p=pick(R(d,[1,2,3,4,5],[2,3,4,-1,-2,0.5],[3,4,-1,-2,-3,0.5,1.5,-0.5])); if(used.has(p)) continue; used.add(p); terms.push([nz(-6,6)*(p===0.5||p===1.5||p===-0.5?2:1),p]) }
+  terms.push([nz(-9,9),0]);
+  const show=t=>{ const [c,p]=t; if(p===0) return [c,'']; if(p===1) return [c,'x']; if(p===0.5) return [c,'√x']; if(p===1.5) return [c,'x√x']; if(p===-0.5) return [c,'/√x'];
+    if(p<0) return [c,`/x${p===-1?'':sup(-p)}`]; return [c,'x'+sup(p)] };
+  const txt=terms.map(show).map(([c,v],i)=>{ const a=Math.abs(c), body=v.startsWith('/')?`${a}${v}`:(a===1&&v?'':String(a))+v; return (i===0?(c<0?'−':''):(c<0?' − ':' + '))+body }).join('');
+  const parsable=terms.map(([c,p])=>`(${c})*x^(${p})`).join('+');
+  const der=terms.filter(t=>t[1]!==0).map(([c,p])=>[c*p,p-1]);
+  const dtxt=der.map(([c,p])=>{ const cc=isInt(c)?c:c; const cs=Math.abs(cc), body=p===0?String(cs):p===1?`${cs===1?'':cs}x`:p===0.5?`${cs===1?'':cs}√x`:p===-0.5?`${cs}/√x`:p===-1.5?`${cs}/(x√x)`:p<0?`${cs}/x${p===-1?'':sup(-p)}`:`${cs===1?'':cs}x${isInt(p)?sup(p):'^('+p+')'}`; return {c:cc,body} })
+    .map((t,i)=>(i===0?(t.c<0?'−':''):(t.c<0?' − ':' + '))+t.body).join('');
+  return {txt,parsable,dtxt}
+}
+add('c2','deriv_def','Definition of the Derivative','num',
+ 'f′(a) = lim(h→0) [f(a + h) − f(a)] / h.\nIf you RECOGNIZE the limit as a derivative, just compute f′(a) with the rules.',
+ d=>{ const a=nz(-3,4), n=rnd(2,5);
+  if(d==='hard'){ const [fn,pt,val,sh]=pick([['sin','π/3','1/2','cos(π/3)'],['cos','π/2','−1','−sin(π/2)'],['sin','π/6','√3/2','cos(π/6)'],['cos','π/3','−√3/2','−sin(π/3)'],['ln',String(Math.abs(a)+1),fr(1,Math.abs(a)+1),`1/${Math.abs(a)+1}`]]);
+    return {type:'exact',text:`Evaluate lim(h→0) [${fn}(${pt} + h) − ${fn}(${pt})] / h.`, answers:[val], wrong:[val.startsWith('−')?val.slice(1):'−'+val,'0',fn==='ln'?'1':'1'].filter((w,i,a)=>a.indexOf(w)===i).concat(['DNE']), fmt:'exact value, e.g. √3/2 or 1/4', hint:`This is the derivative of ${fn} x at x = ${pt}.\n(d/dx) ${fn} x = ${fn==='sin'?'cos x':fn==='cos'?'−sin x':'1/x'} → ${sh} = ${val}`} }
+  const v=n*Math.pow(a,n-1);
+  return {text:`Evaluate lim(h→0) [(${M(a)} + h)${sup(n)} − ${P_(a)}${sup(n)}] / h.`, answers:[v], wrong:[Math.pow(a,n),n*Math.pow(a,n),0], hint:`This is f′(${M(a)}) for f(x) = x${sup(n)}.\nf′(x) = ${n}x${n-1===1?'':sup(n-1)} → f′(${M(a)}) = ${M(v)}`} });
+add('c2','power_rule','Power Rule','fx',
+ 'Power rule: d/dx xⁿ = n·xⁿ⁻¹ — for ANY real n.\nRewrite first: 1/x³ = x⁻³,  √x = x^(1/2).  Constants have derivative 0.',
+ d=>{ const p=polyD(d); return {type:'fx',text:`Find f′(x) if f(x) = ${p.txt}.`, answers:[p.dtxt], wrong:[], hint:`Rewrite with exponents, then bring each power down and subtract 1:\nf′(x) = ${p.dtxt}`, chk:{d:p.parsable}, fmt:'e.g. 6x^2 − 3/x^2 + 1/(2√x)'} });
+add('c2','deriv_value','Derivative at a Point','num',
+ 'f′(a) is the slope of the tangent line at x = a.\nFind f′(x) with the rules, then substitute a.',
+ d=>{ const c=R(d,[nz(-4,4),nz(-6,6),nz(-9,9)],[nz(-3,3),nz(-4,4),nz(-6,6),nz(-9,9)],[nz(-2,2),0,nz(-4,4),nz(-6,6),nz(-9,9)]), a=nz(-3,3), v=evalP(dP(c),a);
+  return {text:`f(x) = ${P(c)}. Find f′(${M(a)}).`, answers:[v], wrong:[evalP(c,a),evalP(dP(c),-a),v+c[c.length-2]], hint:`f′(x) = ${P(dP(c))}\nf′(${M(a)}) = ${M(v)}`} });
+add('c2','tangent','Tangent Line Equation','eq',
+ 'Tangent line at x = a:  y = f(a) + f′(a)(x − a).\nYou need the point (a, f(a)) and the slope f′(a).',
+ d=>{ const c=R(d,[1,nz(-6,6),nz(-9,9)],[nz(-3,3),nz(-4,4),nz(-9,9)],[1,0,nz(-4,4),nz(-9,9)]), a=nz(-3,3), y0=evalP(c,a), m=evalP(dP(c),a);
+  return {type:'eq',text:`Find the equation of the tangent line to y = ${P(c)} at x = ${M(a)}.`, answers:[lineStr(m,1,y0-m*a)], wrong:[lineStr(m,1,y0),lineStr(y0,1,m-y0*a),lineStr(-1,m||1,y0+a/(m||1))], hint:`Point: (${M(a)}, ${M(y0)}).  Slope: f′(${M(a)}) = ${M(m)}\ny = ${M(y0)} + ${P_(m)}(x − ${P_(a)}) → ${lineStr(m,1,y0-m*a)}`} });
+const BASE=[['eˣ','exp(x)','eˣ'],['sin x','sin(x)','cos x'],['cos x','cos(x)','−sin x'],['ln x','ln(x)','1/x']];
+add('c2','product_rule','Product Rule','fx',
+ 'Product rule: (fg)′ = f′g + fg′.\nd/dx eˣ = eˣ,  d/dx sin x = cos x,  d/dx cos x = −sin x,  d/dx ln x = 1/x.',
+ d=>{ const n=rnd(1,4), a=R(d,1,nz(-5,5),nz(-5,5)), [B,Bp,Bd]=pick(BASE), poly=`${a===1?'':a===-1?'−':M(a)}x${n===1?'':sup(n)}`, pd=`${a*n===1?'':M(a*n)}x${n-1===0?'':n-1===1?'':sup(n-1)}`.replace(/^x$/,'1').replace(/^−x$/,'−1');
+  const pda=n===1?M(a):pd, t1=pda==='1'?B:pda==='−1'?'−'+B:`${pda}·${B}`, ans=`${t1}${a<0?' − ':' + '}${poly.replace(/^−/,'')}·${Bd==='1/x'?'(1/x)':Bd==='−sin x'?'(−sin x)':Bd}`;
+  return {type:'fx',text:`Find the derivative of y = ${poly}${B==='eˣ'?'eˣ':' '+B}.`, answers:[ans], wrong:[], hint:`f = ${poly}, g = ${B}\nf′ = ${pda}, g′ = ${Bd}\ny′ = f′g + fg′ = ${ans}`, chk:{d:`(${a})*x^${n}*${Bp}`}} });
+add('c2','quotient_rule','Quotient Rule','fx',
+ 'Quotient rule: (f/g)′ = (f′g − fg′) / g².  "Low d-high minus high d-low, over low squared."',
+ d=>{ if(d!=='hard'){ const a=nz(-5,5),b=nz(-9,9),c=nz(-5,5),e=nz(-9,9); if(a*e-b*c===0) return null; const top=a*e-b*c;
+    return {type:'fx',text:`Find the derivative of y = (${P([a,b])}) / (${P([c,e])}).`, answers:[`${top}/(${P([c,e])})²`], wrong:[], hint:`f = ${P([a,b])}, g = ${P([c,e])}\n(f′g − fg′)/g² = [${M(a)}(${P([c,e])}) − ${P_(c)}(${P([a,b])})] / (${P([c,e])})²\n= ${M(top)}/(${P([c,e])})²`, chk:{d:`(${a}*x+${b})/(${c}*x+${e})`}} }
+  const [B,Bp,Bd]=pick(BASE.slice(0,3)), n=rnd(1,3);
+  return {type:'fx',text:`Find the derivative of y = ${B} / x${n===1?'':sup(n)}.`, answers:[`(x·${Bd==='−sin x'?'(−sin x)':Bd} − ${n===1?'':n+'·'}${B})/x${sup(n+1)}`], wrong:[], hint:`f = ${B}, g = x${n===1?'':sup(n)}\ny′ = (f′g − fg′)/g² = (x${n===1?'':sup(n)}·${Bd==='−sin x'?'(−sin x)':Bd} − ${n===1?'':n}x${n===1?'⁰':n===2?'':sup(n-1)}·${B})/x${sup(2*n)}\nCancel x${n===1?'⁰':n===2?'':sup(n-1)}: (x·${Bd==='−sin x'?'(−sin x)':Bd} − ${n===1?'':n+'·'}${B})/x${sup(n+1)}`, chk:{d:`${Bp}/x^${n}`}} });
+add('c2','trig_exp','Derivatives of eˣ, ln x, sin x, cos x','fx',
+ 'd/dx eˣ = eˣ    d/dx ln x = 1/x    d/dx sin x = cos x    d/dx cos x = −sin x\nd/dx tan x = sec²x    d/dx aˣ = aˣ ln a',
+ d=>{ const a=nz(-6,6), b=nz(-6,6), c=nz(-6,6);
+  if(d==='easy') return {type:'fx',text:`Find the derivative of y = ${k1(a,'sin x')}${sg(b,v=>k1(v,'cos x'))}.`, answers:[`${k1(a,'cos x')}${sg(-b,v=>k1(v,'sin x'))}`], wrong:[`${k1(a,'cos x')}${sg(b,v=>k1(v,'sin x'))}`,`${k1(-a,'cos x')}${sg(-b,v=>k1(v,'sin x'))}`,`${k1(a,'sin x')}${sg(b,v=>k1(v,'cos x'))}`,`${k1(-a,'cos x')}${sg(b,v=>k1(v,'sin x'))}`], hint:`(sin x)′ = cos x, (cos x)′ = −sin x\ny′ = ${k1(a,'cos x')}${sg(-b,v=>k1(v,'sin x'))}`, chk:{d:`(${a})*sin(x)+(${b})*cos(x)`}};
+  if(d==='medium') return {type:'fx',text:`Find the derivative of y = ${k1(a,'eˣ')}${sg(b,v=>k1(v,'ln x'))}${sg(c,v=>k1(v,'tan x'))}.`, answers:[`${k1(a,'eˣ')}${sg(b,v=>M(v)+'/x').replace(/ \+ 1\/x| − 1\/x/,m=>m)}${sg(c,v=>k1(v,'sec²x'))}`], wrong:[], hint:`(eˣ)′ = eˣ, (ln x)′ = 1/x, (tan x)′ = sec²x`, chk:{d:`(${a})*exp(x)+(${b})*ln(x)+(${c})*tan(x)`}};
+  const base=pick([2,3,5,10]); return {type:'fx',text:`Find the derivative of y = ${base}ˣ${sg(a,v=>k1(v,'eˣ'))}.`, answers:[`${base}^x·ln ${base}${sg(a,v=>k1(v,'eˣ'))}`], mcAns:`${base}ˣ ln ${base}${sg(a,v=>k1(v,'eˣ'))}`, wrong:[`${base}ˣ${sg(a,v=>k1(v,'eˣ'))}`,`x·${base}^(x − 1)${sg(a,v=>k1(v,'eˣ'))}`,`${base}ˣ/ln ${base}${sg(a,v=>k1(v,'eˣ'))}`,`${base}ˣ ln ${base}${sg(a,v=>k1(v,'eˣ'))}x`], hint:`(aˣ)′ = aˣ ln a\ny′ = ${base}ˣ ln ${base}${sg(a,v=>k1(v,'eˣ'))}`, chk:{d:`${base}^x+(${a})*exp(x)`}} });
+
+/* ================= Unit 3: Chain rule etc. ================= */
+add('c3','chain_rule','Chain Rule','fx',
+ 'Chain rule: d/dx f(g(x)) = f′(g(x)) · g′(x) — derivative of the outside (keep the inside), times the derivative of the inside.',
+ d=>{ const a=nz2(-5,5), b=nz(-9,9), n=rnd(2,6);
+  const opts=R(d,[[`(${P([a,b])})${sup(n)}`,`${n*a}(${P([a,b])})${n-1===1?'':sup(n-1)}`,`(${a}*x+${b})^${n}`],[`sin(${a}x)`,`${a}cos(${a}x)`,`sin(${a}*x)`],[`e^(${a}x)`,`${a}e^(${a}x)`,`exp(${a}*x)`]],
+    [[`sin(${P([a,0,b])})`,`${2*a}x·cos(${P([a,0,b])})`,`sin(${a}*x^2+${b})`],[`e^(${P([a,0,b])})`,`${2*a}x·e^(${P([a,0,b])})`,`exp(${a}*x^2+${b})`],[`ln(${P([Math.abs(a),0,Math.abs(b)])})`,`${2*Math.abs(a)}x/(${P([Math.abs(a),0,Math.abs(b)])})`,`ln(${Math.abs(a)}*x^2+${Math.abs(b)})`],[`√(${P([Math.abs(a),Math.abs(b)])})`,`${Math.abs(a)}/(2√(${P([Math.abs(a),Math.abs(b)])}))`,`sqrt(${Math.abs(a)}*x+${Math.abs(b)})`]],
+    [[`sin³(${a}x)`,`${3*a}sin²(${a}x)cos(${a}x)`,`sin(${a}*x)^3`],[`e^(sin x)`,`cos x · e^(sin x)`,`exp(sin(x))`],[`ln(cos x)`,`−tan x`,`ln(cos(x))`,['1/cos x','−sin x','tan x']],[`cos(e^(${a}x))`,`−${a}e^(${a}x)·sin(e^(${a}x))`,`cos(exp(${a}*x))`],[`(${P([1,0,Math.abs(b)])})^(1/2)`,`x/√(${P([1,0,Math.abs(b)])})`,`(x^2+${Math.abs(b)})^(1/2)`]]);
+  const [f,dfs,src,wr]=pick(opts);
+  return {type:'fx',text:`Find dy/dx for y = ${f}.`, answers:[dfs], wrong:wr||[], hint:`Outside function, then multiply by the derivative of the inside:\ndy/dx = ${dfs}`, chk:{d:src}} });
+add('c3','implicit','Implicit Differentiation','num',
+ 'Differentiate both sides with respect to x, treating y as a function of x: d/dx(y²) = 2y·dy/dx.\nThen solve for dy/dx and substitute the point.',
+ d=>{ if(d==='easy'){ const [x0,y0,r]=pick([[3,4,5],[4,3,5],[5,12,13],[12,5,13],[6,8,10],[8,6,10]]).map((v,i)=>i<2?v*pick([1,-1]):v); return {text:`Find dy/dx for x² + y² = ${r*r} at the point (${M(x0)}, ${M(y0)}).`, answers:[fr(-x0,y0)], wrong:[fr(x0,y0),fr(-y0,x0),fr(y0,x0)], hint:`2x + 2y·y′ = 0 → y′ = −x/y\nAt (${M(x0)}, ${M(y0)}): ${fr(-x0,y0)}`} }
+  const x0=nz(-3,3), y0=nz(-3,3);
+  if(d==='medium'){ const k=x0*x0+x0*y0+y0*y0; if(x0+2*y0===0) return null; return {text:`Find dy/dx for x² + xy + y² = ${k} at the point (${M(x0)}, ${M(y0)}).`, answers:[fr(-(2*x0+y0),x0+2*y0)], wrong:[fr(2*x0+y0,x0+2*y0),fr(-(2*x0),2*y0),fr(-(x0+2*y0),2*x0+y0||1)], hint:`2x + (y + x·y′) + 2y·y′ = 0\ny′(x + 2y) = −(2x + y) → y′ = −(2x + y)/(x + 2y)\nAt (${M(x0)}, ${M(y0)}): ${fr(-(2*x0+y0),x0+2*y0)}`} }
+  const k=x0*x0*x0+y0*y0*y0-3*x0*y0; if(y0*y0-x0===0) return null; return {text:`Find dy/dx for x³ + y³ − 3xy = ${k} at (${M(x0)}, ${M(y0)}).`, answers:[fr(y0-x0*x0,y0*y0-x0)], wrong:[fr(x0*x0-y0,y0*y0-x0),fr(-x0*x0,y0*y0),fr(y0*y0-x0,y0-x0*x0||1)], hint:`3x² + 3y²y′ − 3(y + xy′) = 0\ny′(y² − x) = y − x² → y′ = (y − x²)/(y² − x)\nAt the point: ${fr(y0-x0*x0,y0*y0-x0)}`} });
+add('c3','inverse_deriv','Derivative of an Inverse','num',
+ 'If g = f⁻¹ and f(a) = b, then g′(b) = 1 / f′(a).\nFind the a that f sends to b — then use the reciprocal slope.',
+ d=>{ const p=rnd(1,3), q=rnd(1,4), c=nz(-6,6), a=R(d,rnd(0,2),rnd(-2,2),rnd(-2,2)); const f=x=>p*x*x*x+q*x+c, fp=x=>3*p*x*x+q, b=f(a);
+  return {text:`f(x) = ${P([p,0,q,c])} and g is the inverse of f. Find g′(${M(b)}).`, answers:[fr(1,fp(a))], wrong:[fr(1,fp(b)||1),String(fp(a)),fr(1,f(a)||1)], hint:`f(${M(a)}) = ${M(b)}, so g(${M(b)}) = ${M(a)}\nf′(x) = ${P([3*p,0,q])} → f′(${M(a)}) = ${fp(a)}\ng′(${M(b)}) = 1/${fp(a)}`} });
+add('c3','inv_trig','Inverse Trig Derivatives','fx',
+ 'd/dx arcsin x = 1/√(1 − x²)     d/dx arccos x = −1/√(1 − x²)     d/dx arctan x = 1/(1 + x²)\nWith the chain rule: d/dx arctan(u) = u′/(1 + u²).',
+ d=>{ const a=rnd(2,6); const opts=R(d,[[`arctan x`,'1/(1 + x²)','atan(x)'],[`arcsin x`,'1/√(1 − x²)','asin(x)']],[[`arctan(${a}x)`,`${a}/(1 + ${a*a}x²)`,`atan(${a}*x)`],[`arcsin(${a}x)`,`${a}/√(1 − ${a*a}x²)`,`asin(${a}*x)`]],[[`arctan(x²)`,'2x/(1 + x⁴)','atan(x^2)'],[`arcsin(eˣ)`,'eˣ/√(1 − e^(2x))','asin(exp(x))'],[`x·arctan x`,'arctan x + x/(1 + x²)','x*atan(x)']]);
+  const [f,dfs,src]=pick(opts); return {type:'fx',text:`Find dy/dx for y = ${f}.`, answers:[dfs], wrong:[], hint:`Use the formula with the chain rule:\ndy/dx = ${dfs}`, chk:{d:src}} });
+add('c3','higher','Higher-Order Derivatives','fx',
+ 'The second derivative f″ is the derivative of f′. Differentiate twice (or more), step by step.',
+ d=>{ if(d==='easy'){ const c=[nz(-3,3),nz(-4,4),nz(-6,6),nz(-9,9)]; const d2=dP(dP(c)); return {type:'fx',text:`Find f″(x) if f(x) = ${P(c)}.`, answers:[P(d2)], wrong:[], hint:`f′(x) = ${P(dP(c))}\nf″(x) = ${P(d2)}`, chk:{d2:`${c[0]}*x^3+${c[1]}*x^2+${c[2]}*x+${c[3]}`}} }
+  const a=rnd(2,5); if(d==='medium') return {type:'fx',text:`Find f″(x) if f(x) = sin(${a}x).`, answers:[`−${a*a}sin(${a}x)`], wrong:[], hint:`f′ = ${a}cos(${a}x)\nf″ = −${a*a}sin(${a}x)`, chk:{d2:`sin(${a}*x)`}};
+  const n=rnd(3,5); return {type:'fx',text:`Find the ${n}${n===3?'rd':'th'} derivative of f(x) = e^(${a}x).`, answers:[`${Math.pow(a,n)}e^(${a}x)`], wrong:[], hint:`Each derivative multiplies by ${a}: f⁽${n}⁾ = ${a}${sup(n)} e^(${a}x) = ${Math.pow(a,n)}e^(${a}x)`, chk:{dn:[`exp(${a}*x)`,n]}} });
+add('c3','table_chain','Chain & Product Rules from a Table','num',
+ 'With a table of values: (f(g(x)))′ = f′(g(x))·g′(x)  and  (fg)′ = f′g + fg′.\nRead the INSIDE value first, then look up f′ at that value.',
+ d=>{ const xs=[1,2,3,4]; const f=xs.map(()=>rnd(-5,6)), fp=xs.map(()=>nz(-5,5)), g=xs.map(()=>rnd(1,4)), gp=xs.map(()=>nz(-4,4)); const i=rnd(0,3), a=xs[i];
+  const tbl=`  x   |${xs.map(x=>('   '+x).slice(-4)).join('')}\n  f   |${f.map(v=>('    '+M(v)).slice(-4)).join('')}\n  f′  |${fp.map(v=>('    '+M(v)).slice(-4)).join('')}\n  g   |${g.map(v=>('    '+M(v)).slice(-4)).join('')}\n  g′  |${gp.map(v=>('    '+M(v)).slice(-4)).join('')}`;
+  const kind=R(d,'prod','chain',pick(['chain','quot']));
+  if(kind==='prod'){ const v=fp[i]*g[i]+f[i]*gp[i]; return {text:`Use the table. h(x) = f(x)·g(x). Find h′(${a}).\n${tbl}`, answers:[v], wrong:[fp[i]*gp[i],fp[i]*g[i]-f[i]*gp[i],f[i]*g[i]], hint:`h′(${a}) = f′(${a})g(${a}) + f(${a})g′(${a}) = (${M(fp[i])})(${M(g[i])}) + (${M(f[i])})(${M(gp[i])}) = ${M(v)}`} }
+  if(kind==='chain'){ const j=xs.indexOf(g[i]), v=fp[j]*gp[i]; return {text:`Use the table. h(x) = f(g(x)). Find h′(${a}).\n${tbl}`, answers:[v], wrong:[fp[i]*gp[i],fp[j]*g[i],fp[j]],
+    hint:`h′(${a}) = f′(g(${a}))·g′(${a})\ng(${a}) = ${g[i]}, so f′(${g[i]}) = ${M(fp[j])}\nh′(${a}) = ${M(fp[j])} · ${P_(gp[i])} = ${M(v)}`} }
+  if(g[i]===0) return null; const v=fr(fp[i]*g[i]-f[i]*gp[i],g[i]*g[i]); return {text:`Use the table. h(x) = f(x)/g(x). Find h′(${a}).\n${tbl}`, answers:[v], wrong:[fr(f[i]*gp[i]-fp[i]*g[i],g[i]*g[i]),fr(fp[i],gp[i]),fr(fp[i]*g[i]+f[i]*gp[i],g[i]*g[i])], hint:`h′ = (f′g − fg′)/g² = [(${M(fp[i])})(${M(g[i])}) − (${M(f[i])})(${M(gp[i])})] / ${g[i]*g[i]} = ${v}`} });
+
+/* ================= Unit 4: Context ================= */
+add('c4','motion','Position, Velocity, Acceleration','num',
+ 'v(t) = s′(t),  a(t) = v′(t) = s″(t).\nThe particle is at rest when v = 0; speed = |v|; speeding up when v and a have the same sign.',
+ d=>{ const p=rnd(1,3), q=rnd(p+1,6); // s = t³ − (3/2)(p+q)t² + 3pq t  →  v = 3(t − p)(t − q)
+  const s=t=>t*t*t-1.5*(p+q)*t*t+3*p*q*t, v=t=>3*(t-p)*(t-q), a=t=>6*t-3*(p+q), t0=rnd(0,7);
+  const hc=fr(3*(p+q),2), sTxt=`t³ − ${hc.includes('/')?'('+hc+')':hc}t² + ${3*p*q}t`;
+  if(d==='easy') return {text:`s(t) = ${sTxt}. Find the velocity at t = ${t0}.`, answers:[v(t0)], wrong:[s(t0)%1?r2(s(t0)):s(t0),a(t0),v(t0)+3], hint:`v(t) = s′(t) = 3t² − ${3*(p+q)}t + ${3*p*q}\nv(${t0}) = ${M(v(t0))}`};
+  if(d==='medium') return {text:`s(t) = ${sTxt}. Find the acceleration at t = ${t0}.`, answers:[a(t0)], wrong:[v(t0),6*t0,a(t0)+3*(p+q)], hint:`v(t) = 3t² − ${3*(p+q)}t + ${3*p*q},  a(t) = 6t − ${3*(p+q)}\na(${t0}) = ${M(a(t0))}`};
+  return {type:'set',vals:[p,q],text:`s(t) = ${sTxt}, t ≥ 0. At what times is the particle at rest?`, answers:[`t = ${p} or t = ${q}`], wrong:[`t = ${(p+q)/2}`,`t = 0`,`t = ${p*q}`], fmt:'e.g. t = 1 or t = 3', hint:`v(t) = 3t² − ${3*(p+q)}t + ${3*p*q} = 3(t − ${p})(t − ${q}) = 0\nt = ${p} or t = ${q}`} });
+add('c4','related','Related Rates','pi',
+ 'Write an equation linking the quantities, differentiate with respect to TIME t (chain rule), then substitute the known values — only AFTER differentiating.',
+ d=>{ if(d==='easy'){ const r=rnd(2,12), dr=rnd(1,5); return {type:'pi',text:`The radius of a circle grows at ${dr} cm/s. How fast is the area growing when r = ${r} cm? (in terms of π, cm²/s)`, answers:[piS(2*r*dr)], wrong:[piS(r*r*dr),piS(2*r),piS(r*dr)].filter(w=>w!==piS(2*r*dr)), hint:`A = πr² → dA/dt = 2πr · dr/dt = 2π(${r})(${dr}) = ${piS(2*r*dr)}`} }
+  if(d==='medium'){ const r=rnd(2,10), dr=rnd(1,4); return {type:'pi',text:`A sphere's radius grows at ${dr} in/min. How fast is its volume growing when r = ${r} in? (in terms of π)`, answers:[piS(4*r*r*dr)], wrong:[piS(4*r*r*r*dr,3),piS(4*r*dr),piS(r*r*dr)].filter(w=>w!==piS(4*r*r*dr)), hint:`V = (4/3)πr³ → dV/dt = 4πr² · dr/dt = 4π(${r*r})(${dr}) = ${piS(4*r*r*dr)}`} }
+  const [x,y,L]=pick([[6,8,10],[8,6,10],[5,12,13],[12,5,13],[9,12,15]]), dx=rnd(1,4); const dy=fr(-x*dx,y);
+  return {type:'num',text:`A ${L}-ft ladder slides down a wall. The bottom moves away at ${dx} ft/s. How fast is the top moving when the bottom is ${x} ft from the wall? (ft/s; negative means down)`, answers:[dy], wrong:[fr(x*dx,y),fr(-y*dx,x),fr(-dx,1)], hint:`x² + y² = ${L*L}; when x = ${x}, y = ${y}\n2x·x′ + 2y·y′ = 0 → y′ = −x·x′/y = −${x}·${dx}/${y} = ${dy}`} });
+add('c4','linearization','Local Linear Approximation','num',
+ 'Near x = a:  f(x) ≈ f(a) + f′(a)(x − a) — the tangent line approximates the curve.',
+ d=>{ if(d!=='hard'){ const a=pick([4,9,16,25,36,49,64,81,100]), s=Math.sqrt(a), dx=pick([1,2,-1,3]); const approx=s+dx/(2*s); if(!isInt(approx*10000)) return null;
+    return {text:`Use the tangent line to √x at x = ${a} to approximate √${a+dx}.`, answers:[String(+approx.toFixed(4))], wrong:[String(+(s+dx/s).toFixed(4)),String(+(s+dx).toFixed(4)),String(+(s+dx/(4*s)).toFixed(4))], fmt:'a decimal, e.g. 5.1', hint:`f(x) = √x, f′(x) = 1/(2√x) → f′(${a}) = 1/${2*s}\n√${a+dx} ≈ ${s} + (1/${2*s})(${dx}) = ${+approx.toFixed(4)}`} }
+  const a=pick([8,27,64,125]), c=Math.round(Math.cbrt(a)), dx=pick([1,-1,2]); const approx=c+dx/(3*c*c); return {text:`Use local linearization of ∛x at x = ${a} to approximate ∛${a+dx}. (Give a fraction or exact decimal.)`, answers:[fr(Math.round(approx*3*c*c),3*c*c)], wrong:[fr(3*c*c*c+dx,3*c),fr(c*3*c*c+3*dx,3*c*c),String(c)], hint:`f′(x) = 1/(3x^(2/3)) → f′(${a}) = 1/${3*c*c}\n∛${a+dx} ≈ ${c} + ${fr(dx,3*c*c)} = ${fr(Math.round(approx*3*c*c),3*c*c)}`} });
+add('c4','lhopital','L’Hôpital’s Rule','num',
+ 'For 0/0 or ∞/∞ forms: lim f/g = lim f′/g′ (differentiate top and bottom SEPARATELY — not the quotient rule).\nCheck the form first; repeat if needed.',
+ d=>{ const a=rnd(2,7), n=rnd(2,6);
+  const opts=R(d,[[`(e^(${a}x) − 1) / x`,'0',String(a)],[`(x${sup(n)} − 1) / (x − 1)`,'1',String(n)]],[[`ln(x) / (x − 1)`,'1','1'],[`sin(${a}x) / (e^x − 1)`,'0',String(a)],[`(${a}ˣ − 1) / x`,'0',`ln ${a}`]],[[`(1 − cos x) / x²`,'0','1/2'],[`(e^x − 1 − x) / x²`,'0','1/2'],[`x² / e^x`,'∞','0'],[`(ln x) / x`,'∞','0']]);
+  const [ex,to,val]=pick(opts);
+  return {type:'exact',text:`Find lim(x→${to}) ${ex}.`, answers:[val], wrong:distinct(val,['0','1','DNE',String(a),'1/2','∞'].filter(w=>w!==val)), fmt:'exact value, e.g. 3, 1/2, or ln 2', hint:`The form is ${to==='∞'?'∞/∞':'0/0'} → apply L’Hôpital${val==='1/2'&&to!=='∞'?' (twice)':''}.\nlim = ${val}`} });
+
+/* ================= Unit 5: Analysis ================= */
+add('c5','mvt','Mean Value Theorem','exact',
+ 'MVT: if f is continuous on [a, b] and differentiable on (a, b), some c in (a, b) has\nf′(c) = (f(b) − f(a)) / (b − a)  — the tangent slope equals the average slope.',
+ d=>{ if(d!=='hard'){ const b0=nz2(-6,6), p=rnd(-3,2), q=p+rnd(1,5); const c=(p+q)/2; return {type:'exact',text:`f(x) = x² ${b0<0?'−':'+'} ${Math.abs(b0)}x on [${M(p)}, ${M(q)}]. Find the value c guaranteed by the Mean Value Theorem.`, answers:[fr(p+q,2)], wrong:distinct(fr(p+q,2),[fr(q-p,2),M(q),fr(p+q,1),M(p),fr(p+q+b0,2),fr(p+q+2,2)]), hint:`Average slope: (f(${M(q)}) − f(${M(p)}))/(${M(q)} − ${P_(p)}) = ${M(p+q+b0)}\nf′(c) = 2c ${b0<0?'−':'+'} ${Math.abs(b0)} = ${M(p+q+b0)} → c = ${fr(p+q,2)}`} }
+  const k=rnd(2,6); return {type:'exact',text:`f(x) = x³ on [0, ${k}]. Find the value c guaranteed by the Mean Value Theorem.`, answers:[`${k}/√3`], mcAns:`${k}√3/3`, wrong:[fr(k,2),`${k}/3`,`${k}√3/2`], fmt:'exact, e.g. 2√3/3 (type sqrt)', hint:`Average slope: ${k*k*k}/${k} = ${k*k}\n3c² = ${k*k} → c = ${k}/√3 = ${k}√3/3`} });
+add('c5','critical','Critical Points','set',
+ 'Critical points: x-values in the domain where f′(x) = 0 or f′ does not exist.',
+ d=>{ const a=rnd(1,5);
+  if(d==='easy'){ const p=nz(-6,6), q=nz(-9,9); const c=[1,-2*p,q]; return {type:'set',vals:[p],text:`Find the critical point(s) of f(x) = ${P(c)}.`, answers:[`x = ${M(p)}`], wrong:[`x = ${M(-p)}`,`x = ${M(2*p)}`,`x = ${M(q)}`], hint:`f′(x) = 2x ${-2*p<0?'−':'+'} ${Math.abs(2*p)} = 0 → x = ${M(p)}`} }
+  if(d==='medium') return {type:'set',vals:[-a,a],text:`Find the critical points of f(x) = x³ − ${3*a*a}x ${pick(['+ 1','− 4','+ 7'])}.`, answers:[`x = ${M(-a)} or x = ${a}`], wrong:[`x = ${a}`,`x = 0 or x = ${a}`,`x = ${M(-3*a*a)} or x = ${3*a*a}`], hint:`f′(x) = 3x² − ${3*a*a} = 3(x² − ${a*a}) = 0 → x = ±${a}`};
+  return {type:'set',vals:[-a,0,a],text:`Find all critical points of f(x) = x⁴ − ${2*a*a}x².`, answers:[`x = ${M(-a)}, 0, ${a}`], wrong:[`x = ${M(-a)} or x = ${a}`,`x = 0`,`x = ${M(-a*a)}, 0, ${a*a}`], hint:`f′(x) = 4x³ − ${4*a*a}x = 4x(x² − ${a*a}) = 0 → x = 0, ±${a}`} });
+add('c5','increasing','Increasing & Decreasing','ineq',
+ 'f is INCREASING where f′(x) > 0 and DECREASING where f′(x) < 0.\nFind the critical points, then test the sign of f′ in each interval.',
+ d=>{ const a=rnd(1,5), inc=Math.random()<.5;
+  if(d==='easy'){ const p=nz(-6,6); return {type:'ineq',text:`On what interval is f(x) = x² ${-2*p<0?'−':'+'} ${Math.abs(2*p)}x + 3 ${inc?'increasing':'decreasing'}?`, answers:[inc?`x > ${M(p)}`:`x < ${M(p)}`], wrong:[inc?`x < ${M(p)}`:`x > ${M(p)}`,`x > ${M(-p)}`,`x < ${M(-p)}`], fmt:'e.g. x > 2', hint:`f′(x) = 2x ${-2*p<0?'−':'+'} ${Math.abs(2*p)} ${inc?'>':'<'} 0 → x ${inc?'>':'<'} ${M(p)}`} }
+  const ans=inc?`x < ${M(-a)} or x > ${a}`:`${M(-a)} < x < ${a}`, alt=inc?`${M(-a)} < x < ${a}`:`x < ${M(-a)} or x > ${a}`;
+  return {type:'ineq',text:`Where is f(x) = ${d==='hard'?'−':''}x³ ${d==='hard'?'+':'−'} ${3*a*a}x ${inc!==(d==='hard')?'increasing':'decreasing'}?`, answers:[d==='hard'?alt:ans], wrong:[d==='hard'?ans:alt,`x > ${a}`,`x < ${M(-a)}`], fmt:'e.g. x < −2 or x > 2', hint:`f′(x) = ${d==='hard'?'−':''}3x² ${d==='hard'?'+':'−'} ${3*a*a}; zeros at x = ±${a}\nSign of f′: ${d==='hard'?'− , + , −':'+ , − , +'} on (−∞, −${a}), (−${a}, ${a}), (${a}, ∞)\nAnswer: ${d==='hard'?alt:ans}`} });
+add('c5','extrema','Relative Extrema','num',
+ 'First Derivative Test: f′ changes + to − → relative MAX;  − to + → relative MIN.\nSecond Derivative Test: f′(c) = 0 and f″(c) < 0 → max;  f″(c) > 0 → min.',
+ d=>{ const a=rnd(1,5), wantMax=Math.random()<.5, s=d==='hard'?-1:1; // f = s(x³ − 3a²x): s=1 → max at −a, min at a
+  const at=(wantMax===(s===1))?-a:a, f=x=>s*(x*x*x-3*a*a*x);
+  if(d==='medium') return {text:`f(x) = x³ − ${3*a*a}x. What is the relative ${wantMax?'maximum':'minimum'} VALUE of f?`, answers:[f(wantMax?-a:a)], wrong:[f(wantMax?a:-a),wantMax?-a:a,0], hint:`f′ = 3x² − ${3*a*a} = 0 → x = ±${a}; f″ = 6x\nf″(${wantMax?-a:a}) ${wantMax?'< 0 → max':'> 0 → min'}; f(${M(wantMax?-a:a)}) = ${M(f(wantMax?-a:a))}`};
+  return {text:`f(x) = ${s<0?'−':''}x³ ${s<0?'+':'−'} ${3*a*a}x. At what x does f have a relative ${wantMax?'maximum':'minimum'}?`, answers:[at], wrong:[-at,0,3*a*a], hint:`f′(x) = ${s<0?'−':''}3x² ${s<0?'+':'−'} ${3*a*a} = 0 → x = ±${a}\nf″(x) = ${M(6*s)}x: f″(${M(at)}) = ${M(6*s*at)} ${6*s*at<0?'< 0 → max':'> 0 → min'}\nx = ${M(at)}`} });
+add('c5','concavity','Concavity & Inflection Points','num',
+ 'Concave UP where f″ > 0, concave DOWN where f″ < 0.\nAn inflection point is where f″ CHANGES sign.',
+ d=>{ const a=nz(-3,3), b=nz(-9,9), c=nz(-9,9), e=nz(-9,9); const A=d==='easy'?1:a; const ip=-b/(3*A); if(!isInt(ip*1)) { if(d!=='hard') return null }
+  const cs=[A,b,c,e];
+  if(d==='hard'){ const up=Math.random()<.5; const ansI=(A>0)===up?`x > ${fr(-b,3*A)}`:`x < ${fr(-b,3*A)}`; return {type:'ineq',text:`Where is f(x) = ${P(cs)} concave ${up?'up':'down'}?`, answers:[ansI], wrong:[(A>0)===up?`x < ${fr(-b,3*A)}`:`x > ${fr(-b,3*A)}`,`x > ${fr(b,3*A)}`,`x < ${fr(b,3*A)}`], hint:`f″(x) = ${P([6*A,2*b])}; zero at x = ${fr(-b,3*A)}\nf″ ${up?'> 0':'< 0'} when ${ansI}`} }
+  return {text:`Find the x-coordinate of the inflection point of f(x) = ${P(cs)}.`, answers:[fr(-b,3*A)], wrong:[fr(b,3*A),fr(-b,A),fr(-c,2*b)], hint:`f″(x) = ${P([6*A,2*b])} = 0 → x = ${fr(-b,3*A)} (f″ changes sign there)`} });
+add('c5','abs_extrema','Absolute Extrema (Closed Interval)','num',
+ 'Candidates Test: on [a, b], check f at every critical point inside the interval AND at both endpoints.\nThe largest value is the absolute max; the smallest is the absolute min.',
+ d=>{ const a=rnd(1,3), lo=-a-rnd(0,2), hi=a+rnd(0,3); const f=x=>x*x*x-3*a*a*x; const cand=[lo,-a,a,hi].map(f); const wantMax=Math.random()<.5;
+  const v=wantMax?Math.max(...cand):Math.min(...cand);
+  return {text:`Find the absolute ${wantMax?'maximum':'minimum'} value of f(x) = x³ − ${3*a*a}x on [${M(lo)}, ${M(hi)}].`, answers:[v], wrong:[wantMax?Math.min(...cand):Math.max(...cand),f(wantMax?-a:a),f(wantMax?hi:lo)].filter(x=>x!==v), hint:`Critical points: x = ±${a}\nf(${M(lo)}) = ${M(f(lo))}, f(${M(-a)}) = ${M(f(-a))}, f(${a}) = ${M(f(a))}, f(${hi}) = ${M(f(hi))}\nAbsolute ${wantMax?'max':'min'}: ${M(v)}`} });
+add('c5','optimization','Optimization','num',
+ 'Write the quantity to optimize as a function of ONE variable (use the constraint), take the derivative, set it to 0, and check it is really a max or min.',
+ d=>{ if(d==='easy'){ const P0=4*rnd(3,30); return {text:`A rectangle has perimeter ${P0}. What is the largest possible area?`, answers:[P0*P0/16], wrong:[P0*P0/8,P0*P0/4,P0/4], hint:`Sides x and ${P0/2} − x: A = x(${P0/2} − x)\nA′ = ${P0/2} − 2x = 0 → x = ${P0/4} (a square)\nA = ${P0/4}² = ${P0*P0/16}`} }
+  if(d==='medium'){ const L=4*rnd(5,50); return {text:`A farmer has ${L} m of fence for three sides of a rectangle; a river forms the fourth side. What is the maximum area (m²)?`, answers:[L*L/8], wrong:[L*L/16,L*L/4,L*L/9], hint:`Width x (two sides), length ${L} − 2x: A = x(${L} − 2x)\nA′ = ${L} − 4x = 0 → x = ${L/4}, length ${L/2}\nA = ${L/4} · ${L/2} = ${L*L/8}`} }
+  const s=6*rnd(1,5); return {text:`An open box is made from a ${s} × ${s} square sheet by cutting equal squares from the corners and folding up the sides. What is the maximum volume?`, answers:[2*s*s*s/27], wrong:[s*s*s/27,s*s*s/8,4*s*s*s/27], hint:`Cut x: V = x(${s} − 2x)²\nV′ = (${s} − 2x)(${s} − 6x) = 0 → x = ${s/6}\nV = ${s/6} · ${2*s/3}² = ${2*s*s*s/27}`} });
+add('c5','fprime_graph','Reading the Graph of f′','num',
+ 'On the graph of f′:  f increasing where f′ is ABOVE the axis, decreasing below.\nf has a relative max where f′ crosses from + to −, a min where it crosses − to +.\nf is concave up where f′ is increasing.',
+ d=>{ const r1=rnd(-4,0), r2=rnd(r1+2,4), s=pick([1,-1]); const k=3/((r2-r1)*(r2-r1)/4), fp=x=>s*k*(x-r1)*(x-r2); const Y=5;
+  const svg=plotFig({fns:[fp],xr:[-5,5],yr:[-Y,Y],every:1,id:8}), ask=pick(R(d,['max','min'],['max','min'],['infl']));
+  const maxAt=s>0?r1:r2, minAt=s>0?r2:r1, infl=(r1+r2)/2;
+  const ans=ask==='max'?maxAt:ask==='min'?minAt:infl;
+  return {svg,text:`The graph of f′ (the DERIVATIVE of f) is shown. At what x does f have ${ask==='max'?'a relative maximum':ask==='min'?'a relative minimum':'an inflection point'}?`, answers:[ans], wrong:[ask==='max'?minAt:maxAt, ask==='infl'?r1:infl, 0===ans?r2:0].filter((v,i,a)=>a.indexOf(v)===i&&v!==ans).concat([ans+1]), hint:ask==='infl'?`f has an inflection point where f′ changes from increasing to decreasing (its turning point): x = ${fr(r1+r2,2)}`:`f′ crosses the axis at x = ${M(r1)} and x = ${M(r2)}.\nAt x = ${M(ans)} f′ changes from ${ask==='max'?'+ to −':'− to +'} → relative ${ask}.`} });
+
+/* ================= Unit 6: Integration ================= */
+add('c6','riemann','Riemann Sums & Trapezoids','num',
+ 'Left sum: use the LEFT endpoint of each subinterval;  right sum: the RIGHT endpoint;  midpoint: the middle.\nTrapezoidal: average of left and right on each piece: ½·Δx·(f₀ + 2f₁ + … + 2fₙ₋₁ + fₙ).',
+ d=>{ const n=4, h=pick([1,2]), x0=rnd(0,2), xs=[...Array(n+1)].map((_,i)=>x0+i*h), ys=xs.map(()=>rnd(1,12)), kind=pick(R(d,['left','right'],['left','right','trap'],['trap','right','left']));
+  const L=h*ys.slice(0,n).reduce((a,b)=>a+b,0), Rs=h*ys.slice(1).reduce((a,b)=>a+b,0), Tz=(L+Rs)/2, ans={left:L,right:Rs,trap:Tz}[kind];
+  const tbl=`  x    |${xs.map(x=>('    '+x).slice(-5)).join('')}\n  f(x) |${ys.map(y=>('    '+y).slice(-5)).join('')}`;
+  return {text:`Use the table and ${n} subintervals to find the ${kind==='left'?'LEFT Riemann sum':kind==='right'?'RIGHT Riemann sum':'TRAPEZOIDAL approximation'} for ∫ from ${x0} to ${x0+n*h} of f(x) dx.\n${tbl}`, answers:[ans], wrong:[{left:Rs,right:L,trap:L}[kind],{left:Tz,right:Tz,trap:Rs}[kind],ys.reduce((a,b)=>a+b,0)].filter(v=>v!==ans), hint:`Δx = ${h}\n${kind==='trap'?`T = ½·${h}·(${ys[0]} + 2·${ys[1]} + 2·${ys[2]} + 2·${ys[3]} + ${ys[4]}) = ${Tz}`:`${kind==='left'?'L':'R'} = ${h}·(${(kind==='left'?ys.slice(0,n):ys.slice(1)).join(' + ')}) = ${ans}`}`} });
+add('c6','int_graph','Definite Integrals from a Graph','num',
+ '∫ from a to b of f(x) dx = signed area: area ABOVE the axis counts +, BELOW counts −.\nUse triangles, rectangles and semicircles.',
+ d=>{ const pts=[[-4,rnd(-2,3)],[-2,rnd(-3,3)],[0,rnd(-3,3)],[2,rnd(-3,3)],[4,rnd(-2,3)]]; const f=x=>{ for(let i=0;i<4;i++){ const [a,ya]=pts[i],[b,yb]=pts[i+1]; if(x>=a&&x<=b) return ya+(yb-ya)*(x-a)/(b-a) } return NaN };
+  const A=R(d,0,-4,-4), B=R(d,4,2,4), from=A, to=B; let area=0; for(let i=0;i<4;i++){ const [a,ya]=pts[i],[b,yb]=pts[i+1]; if(a>=from&&b<=to) area+=(ya+yb)/2*(b-a) }
+  const rev=d==='hard'&&Math.random()<.5; const svg=plotFig({fns:[f],xr:[-4,4],yr:[-4,4],every:1,id:9});
+  const ans=rev?-area:area;
+  return {svg,text:`The graph of f (made of line segments) is shown. Find ∫ from ${rev?to:from} to ${rev?from:to} of f(x) dx.`, answers:[ans], wrong:[-ans,pts.reduce((s,[,y])=>s+Math.abs(y),0),Math.abs(area)===Math.abs(ans)?Math.abs(ans)+2:Math.abs(area)].filter(v=>v!==ans), hint:`Add trapezoid/triangle areas on each 2-unit piece, with sign.\nTotal = ${M(area)}${rev?`\nReversed limits change the sign → ${M(ans)}`:''}`} });
+add('c6','ftc1','Fundamental Theorem (Part 1)','fx',
+ 'd/dx ∫ from a to x of f(t) dt = f(x).\nWith a function as the upper limit: d/dx ∫ from a to g(x) of f(t) dt = f(g(x))·g′(x).',
+ d=>{ const a=rnd(0,3), b=nz(-5,5);
+  const opts=R(d,[[`t² ${b<0?'−':'+'} ${Math.abs(b)}`,`x² ${b<0?'−':'+'} ${Math.abs(b)}`,'x',['2x',`x³/3 ${b<0?'−':'+'} ${Math.abs(b)}x`,'x²']],[`cos(t)`,`cos(x)`,'x',['sin(x)','−sin(x)','cos(x) − 1']],[`√(1 + t³)`,`√(1 + x³)`,'x',['3x²/(2√(1 + x³))','√(1 + x³) − 1','(1 + x³)^(3/2)']]],
+    [[`sin(t)`,'2x·sin(x²)','x²'],[`t³`,'3x¹¹','x³'],[`e^(t)`,'3e^(3x)','3x']],[[`ln(t)`,'2x·ln(x²) − ln(x)·0','x²'],[`1/(1 + t²)`,'cos(x)/(1 + sin²(x))','sin(x)'],[`e^(t²)`,'2x·e^(x⁴)','x²']]);
+  const [f,ans,g,wr]=pick(opts); const fixed=ans.replace(' − ln(x)·0','');
+  const fSrc=f.replace(/t/g,'u'), gSrc=g.replace(/²/g,'^2').replace(/³/g,'^3');
+  return {type:'fx',text:`Find d/dx ∫ from ${a} to ${g} of ${f} dt.`, answers:[fixed], wrong:wr||[], hint:`Substitute the upper limit into the integrand${g==='x'?'':', then multiply by its derivative'}:\n${fixed}`, chk:{ftc:[f,g]}} });
+add('c6','antideriv','Basic Antiderivatives','anti',
+ '∫ xⁿ dx = xⁿ⁺¹/(n + 1) + C (n ≠ −1)     ∫ 1/x dx = ln|x| + C\n∫ eˣ dx = eˣ + C     ∫ cos x dx = sin x + C     ∫ sin x dx = −cos x + C\nAlways add + C.',
+ d=>{ const a=nz(-6,6), b=nz(-6,6), c=nz(-6,6), n=rnd(2,5);
+  if(d==='easy'){ const t=[a*(n+1),n], key=`${k1(a,'x'+sup(n+1))}${sg(b,v=>k1(v,'x'))} + C`; return {type:'anti',text:`Find ∫ (${M(a*(n+1))}x${sup(n)}${b<0?' − ':' + '}${Math.abs(b)}) dx.`, answers:[key], wrong:[], hint:`Raise each power by 1 and divide by the new power:\n${key}`, chk:{i:`${a*(n+1)}*x^${n}+(${b})`}, fmt:'include + C'} }
+  if(d==='medium') return {type:'anti',text:`Find ∫ (${M(a)}/x ${b<0?'−':'+'} ${Math.abs(b)===1?'':Math.abs(b)}eˣ) dx.`, answers:[`${k1(a,'ln|x|')}${sg(b,v=>k1(v,'eˣ'))} + C`], wrong:[`${M(-a)}/x²${sg(b,v=>k1(v,'eˣ'))} + C`,`${k1(a,'ln|x|')}${sg(b,v=>k1(v,'xeˣ'))} + C`,`${k1(a,'x')}${sg(b,v=>k1(v,'eˣ'))} + C`], hint:`∫ 1/x dx = ln|x|,  ∫ eˣ dx = eˣ\n${k1(a,'ln|x|')}${sg(b,v=>k1(v,'eˣ'))} + C`, chk:{i:`(${a})/x+(${b})*exp(x)`}, fmt:'include + C'};
+  return {type:'anti',text:`Find ∫ (${k1(a,'cos x')}${sg(b,v=>k1(v,'sin x'))}${sg(c,v=>k1(v,'sec²x'))}) dx.`, answers:[`${k1(a,'sin x')}${sg(-b,v=>k1(v,'cos x'))}${sg(c,v=>k1(v,'tan x'))} + C`], wrong:[], hint:`∫cos = sin, ∫sin = −cos, ∫sec² = tan\n${k1(a,'sin x')}${sg(-b,v=>k1(v,'cos x'))}${sg(c,v=>k1(v,'tan x'))} + C`, chk:{i:`(${a})*cos(x)+(${b})*sin(x)+(${c})/cos(x)^2`}, fmt:'include + C'} });
+add('c6','usub','u-Substitution','anti',
+ 'Look for an inside function u whose derivative du also appears (up to a constant).\nRewrite in u, integrate, then substitute back. Don’t forget + C.',
+ d=>{ const a=rnd(2,6), n=rnd(2,5), b=rnd(1,9);
+  const opts=R(d,[[`${2*a}x·cos(${a}x²)`,`sin(${a}x²) + C`,`${2*a}*x*cos(${a}*x^2)`],[`e^(${a}x)`,`(1/${a})e^(${a}x) + C`,`exp(${a}*x)`],[`cos(${a}x)`,`(1/${a})sin(${a}x) + C`,`cos(${a}*x)`]],
+    [[`x(x² + ${b})${sup(n)}`,`(x² + ${b})${sup(n+1)}/${2*(n+1)} + C`,`x*(x^2+${b})^${n}`],[`2x/(x² + ${b})`,`ln(x² + ${b}) + C`,`2*x/(x^2+${b})`],[`x·e^(x²)`,`(1/2)e^(x²) + C`,`x*exp(x^2)`]],
+    [[`sin x · cos${sup(n)}x`,`−cos${sup(n+1)}x/${n+1} + C`,`sin(x)*cos(x)^${n}`],[`(ln x)/x`,`(ln x)²/2 + C`,`ln(x)/x`,['(ln x)² + C','ln x/2 + C','1/x² + C']],[`tan x`,`−ln|cos x| + C`,`tan(x)`,['sec²x + C','ln|sin x| + C']],[`1/(x ln x)`,`ln|ln x| + C`,`1/(x*ln(x))`,['ln|x| + C','(ln x)²/2 + C','x ln x + C']]]);
+  const [f,F,src,wr]=pick(opts); const key=F.replace(/cos(\S+)x\//,'(cos x)$1/').replace(/cos([¹²³⁴⁵⁶⁷⁸⁹]+)x/,'(cos x)$1');
+  return {type:'anti',text:`Find ∫ ${f} dx.`, answers:[key], wrong:wr||[], hint:`Choose u = the inside function; du appears in the integrand.\n${key}`, chk:{i:src}, fmt:'include + C'} });
+add('c6','definite','Evaluate a Definite Integral','exact',
+ 'FTC Part 2: ∫ from a to b of f(x) dx = F(b) − F(a), where F′ = f.',
+ d=>{ if(d!=='hard'){ const c=R(d,[nz(-2,2)*2,nz(-5,5)],[3*nz(-2,2),2*nz(-3,3),nz(-5,5)]), a=rnd(-2,1), b=a+rnd(1,3); const n=c.length; const F=x=>c.reduce((s,k,i)=>s+k*Math.pow(x,n-i)/(n-i),0); const v=F(b)-F(a); const den=n===2?2:6; const num=Math.round(v*den);
+    return {type:'exact',text:`Evaluate ∫ from ${M(a)} to ${M(b)} of (${P(c)}) dx.`, answers:[fr(num,den)], wrong:distinct(fr(num,den),[fr(Math.round((F(b)+F(a))*den),den),fr(evalP(c,b)-evalP(c,a),1),fr(-num,den),fr(num+den,den),fr(2*num,den),fr(num-den,den)]), hint:`Antiderivative F(x), then F(${M(b)}) − F(${M(a)}) = ${fr(num,den)}`, chk:{q:[c.map((k,i)=>`(${k})*x^${n-1-i}`).join('+'),a,b]}} }
+  return pick([()=>{ const k=rnd(1,4); return {type:'exact',text:`Evaluate ∫ from 1 to e${k===1?'':sup(k)} of (1/x) dx.`, answers:[String(k)], wrong:[String(Math.pow(Math.E,k)>99?k+1:k+1),'1',`e${k===1?'':'^'+k} − 1`], hint:`∫ 1/x dx = ln x → ln(e${k===1?'':sup(k)}) − ln 1 = ${k}`, chk:{q:['1/x',1,Math.exp(k)]}} },
+    ()=>({type:'exact',text:`Evaluate ∫ from 0 to π of sin x dx.`, answers:['2'], wrong:['0','1','−2'], hint:`[−cos x] from 0 to π = −cos π + cos 0 = 1 + 1 = 2`, chk:{q:['sin(x)',0,Math.PI]}}),
+    ()=>{ const a=rnd(1,3); return {type:'exact',text:`Evaluate ∫ from 0 to ${a} of eˣ dx.`, answers:[a===1?'e − 1':`e^${a} − 1`], mcAns:`e${a===1?'':sup(a)} − 1`, wrong:[`e${a===1?'':sup(a)}`,`e${a===1?'':sup(a)} + 1`,a===1?'1':`${a}e${sup(a)}`], hint:`[eˣ] from 0 to ${a} = e${a===1?'':sup(a)} − 1`, chk:{q:['exp(x)',0,a]}} },
+    ()=>({type:'exact',text:`Evaluate ∫ from 0 to 1 of 1/(1 + x²) dx.`, answers:['π/4'], wrong:['π/2','1','ln 2'], hint:`[arctan x] from 0 to 1 = π/4 − 0 = π/4`, chk:{q:['1/(1+x^2)',0,1]}})])() });
+add('c6','avg_value','Average Value of a Function','exact',
+ 'Average value of f on [a, b] = (1/(b − a)) · ∫ from a to b of f(x) dx.',
+ d=>{ const a=0, b=R(d,rnd(1,4),rnd(2,6),3); if(d==='hard'){ return {type:'exact',text:`Find the average value of f(x) = sin x on [0, π].`, answers:['2/π'], wrong:['2','1/2','π/2'], hint:`(1/π) ∫₀^π sin x dx = (1/π) · 2 = 2/π`, chk:{q:['sin(x)/pi',0,Math.PI]}} }
+  const c=[3*nz(-2,2),2*nz(-3,3),nz(-6,6)]; const F=x=>c[0]*x*x*x/3+c[1]*x*x/2+c[2]*x, v=(F(b)-F(a))/(b-a);
+  return {type:'exact',text:`Find the average value of f(x) = ${P(c)} on [0, ${b}].`, answers:[fr(Math.round(v*6),6)], wrong:[fr(Math.round(F(b)*6),6),fr(evalP(c,b)+evalP(c,0),2),fr(evalP(c,b/2)*2,2)].filter(w=>w!==fr(Math.round(v*6),6)), hint:`∫₀^${b} f dx = ${fr(Math.round(F(b)*6),6)}\nAverage = that ÷ ${b} = ${fr(Math.round(v*6),6)}`, chk:{q:[`(${c[0]}*x^2+${c[1]}*x+${c[2]})/${b}`,0,b]}} });
+add('c6','by_parts','Integration by Parts','anti',
+ '∫ u dv = uv − ∫ v du.  Choose u by LIATE (Log, Inverse trig, Algebraic, Trig, Exponential).',
+ d=>{ const a=rnd(2,5); const opts=R(d,[['x eˣ','x eˣ − eˣ + C','x*exp(x)',['(x²/2)eˣ + C','x eˣ + C']],['x cos x','x sin x + cos x + C','x*cos(x)',['(x²/2)sin x + C','x sin x + C']],['x sin x','−x cos x + sin x + C','x*sin(x)',['(x²/2)cos x + C','−x cos x + C']]],
+    [['ln x','x ln x − x + C','ln(x)',['1/x + C','x ln x + C','(ln x)²/2 + C']],[`x e^(${a}x)`,`(x/${a})e^(${a}x) − (1/${a*a})e^(${a}x) + C`,`x*exp(${a}*x)`],['x ln x','(x²/2)ln x − x²/4 + C','x*ln(x)']],
+    [['x² eˣ','eˣ(x² − 2x + 2) + C','x^2*exp(x)'],['arctan x','x arctan x − (1/2)ln(1 + x²) + C','atan(x)'],['eˣ sin x','(eˣ/2)(sin x − cos x) + C','exp(x)*sin(x)']]);
+  const [f,F,src,wr]=pick(opts); return {type:'anti',text:`Find ∫ ${f} dx.`, answers:[F], wrong:wr||[], hint:`Use parts with u chosen by LIATE${d==='hard'&&f.includes('²')?' (twice)':''}.\n${F}`, chk:{i:src}, fmt:'include + C'} },true);
+add('c6','partial_frac','Partial Fractions','anti',
+ 'Split 1/((x − a)(x − b)) = A/(x − a) + B/(x − b), solve for A and B, then integrate each into a ln.',
+ d=>{ let a,b; do{ a=nz(-5,5); b=nz(-5,5) }while(a===b); const A=fr(1,a-b), k=d==='hard'?rnd(2,5):1;
+  let n0=k, d0=a-b; if(d0<0){ n0=-n0; d0=-d0 } const g0=gcd(Math.abs(n0),d0); n0/=g0; d0/=g0;
+  const cS=d0===1?String(Math.abs(n0)):`(${Math.abs(n0)}/${d0})`, cS1=cS==='1'?'':cS, ia=fac(a).slice(1,-1), ib=fac(b).slice(1,-1);
+  const F=`${n0<0?'−':''}${cS1}ln|${ia}| ${n0<0?'+':'−'} ${cS1}ln|${ib}| + C`;
+  return {type:'anti',text:`Find ∫ ${k===1?'1':k} / (${fac(a)}${fac(b)}) dx.`, answers:[F], wrong:[`${cS1}ln|${ia}| + ${cS1}ln|${ib}| + C`,`ln|${fac(a)}${fac(b)}| + C`,`${n0<0?'−':''}${cS1}ln|${ib}| ${n0<0?'+':'−'} ${cS1}ln|${ia}| + C`], hint:`Write ${k}/(${fac(a)}${fac(b)}) = A/${fac(a)} + B/${fac(b)}\nCover-up: A = ${k}/(${M(a)} − ${P_(b)}) = ${fr(k,a-b)},  B = ${k}/(${M(b)} − ${P_(a)}) = ${fr(k,b-a)}\n∫ = ${F}`, chk:{i:`${k}/((x-(${a}))*(x-(${b})))`}, fmt:'include + C; use ln|…|'} },true);
+add('c6','improper','Improper Integrals','text',
+ '∫ from a to ∞ = lim(b→∞) ∫ from a to b.  It CONVERGES if the limit is finite.\n∫₁^∞ 1/xᵖ dx converges (to 1/(p − 1)) when p > 1 and diverges when p ≤ 1.',
+ d=>{ if(d==='easy'){ const p=rnd(2,5); return {type:'text',text:`Evaluate ∫ from 1 to ∞ of 1/x${sup(p)} dx.`, answers:[fr(1,p-1)], wrong:[fr(1,p),'diverges',fr(1,p+1)], fmt:'a number, or "diverges"', hint:`[x^(${1-p})/(${1-p})] from 1 to b → 0 − 1/(${1-p}) = ${fr(1,p-1)}`, chk:{q:[`1/x^${p}`,1,4000]}} }
+  if(d==='medium'){ const a=rnd(1,6); return {type:'text',text:`Evaluate ∫ from 0 to ∞ of e^(−${a===1?'':a}x) dx.`, answers:[fr(1,a)], wrong:distinct(fr(1,a),['Diverges','0',String(a),fr(1,a+1),'−'+fr(1,a)]), fmt:'a number, or "diverges"', hint:a===1?`[−e^(−x)] from 0 to b → 0 + 1 = 1`:`[−(1/${a})e^(−${a}x)] from 0 to b → 0 + 1/${a} = ${fr(1,a)}`} }
+  const p=pick([0.5,1,2,3]); const conv=p>1;
+  return {type:'text',text:`Does ∫ from 1 to ∞ of 1/x${p===0.5?'^(1/2)':p===1?'':sup(p)} dx converge or diverge? If it converges, give its value.`, answers:conv?[fr(1,p-1)]:['diverges','diverge','divergent'], mcAns:conv?fr(1,p-1):'Diverges', wrong:distinct(conv?fr(1,p-1):'Diverges',['Diverges','1','1/2','2','0'].filter(w=>w!==(conv?fr(1,p-1):'Diverges'))), fmt:'a number, or "diverges"', hint:`p-test: p = ${p===0.5?'1/2':p} ${conv?'> 1 → converges to 1/(p − 1) = '+fr(1,p-1):'≤ 1 → diverges'}`} },true);
+
+/* ================= Unit 7: Differential equations ================= */
+const SF=[['y′ = x','(x,y)=>x'],['y′ = y','(x,y)=>y'],['y′ = x + y','(x,y)=>x+y'],['y′ = x − y','(x,y)=>x-y'],['y′ = xy','(x,y)=>x*y'],['y′ = −x/y','(x,y)=>-x/y'],['y′ = y − 1','(x,y)=>y-1'],['y′ = x²','(x,y)=>x*x']];
+add('c7','slope_field','Slope Fields','text',
+ 'A slope field draws a short segment with slope dy/dx at each point.\nTest points: on the x-axis (y = 0), on the y-axis (x = 0), and look for horizontal segments (slope 0).',
+ d=>{ const pool=d==='easy'?SF.slice(0,4):SF; const i=rnd(0,pool.length-1), [lab,src]=pool[i]; const F=eval(src);
+  return {type:'text',mcOnly:true,svg:slopeField(F),text:`Which differential equation matches this slope field?`, answers:[lab], mcAns:lab, wrong:shuffle(pool.filter((_,j)=>j!==i).map(s=>s[0])).slice(0,3), hint:`Check where the segments are horizontal (slope 0) and how the slope changes left/right and up/down.\nAnswer: ${lab}`} });
+add('c7','separable','Separable Equations','text',
+ 'Separate: put all y’s with dy and all x’s with dx, integrate both sides, add + C, then solve for y.\ndy/dx = ky  →  y = Ce^(kx).',
+ d=>{ const k=nz2(-4,4); const opts=[[`dy/dx = ${M(k)}y`,`y = Ce^(${M(k)}x)`,[`y = e^(${M(k)}x) + C`,`y = Ce^(${M(-k)}x)`,`y = ${M(k)}x + C`]],[`dy/dx = x/y`,`y² = x² + C`,[`y = x + C`,`y² = x + C`,`y = Ce^x`]],[`dy/dx = xy`,`y = Ce^(x²/2)`,[`y = Ce^x`,`y = x²/2 + C`,`y = Ce^(2x)`]],[`dy/dx = y/x`,`y = Cx`,[`y = x + C`,`y = Cx²`,`y = Ce^x`]],[`dy/dx = 2x·y²`,`y = −1/(x² + C)`,[`y = x² + C`,`y = 1/(x² + C)`,`y = Ce^(x²)`]]];
+  const [de,ans,wr]=pick(d==='easy'?opts.slice(0,2):opts); return {type:'text',mcOnly:true,text:`Find the general solution of ${de}.`, answers:[ans], mcAns:ans, wrong:wr, hint:`Separate and integrate both sides.\n${ans}`} });
+add('c7','growth','Exponential Growth & Decay','approx',
+ 'dy/dt = ky has solution y = y₀e^(kt).  k > 0 growth, k < 0 decay.\nHalf-life: k = −ln 2 / (half-life).',
+ d=>{ const y0=rnd(2,50)*10, k=pick([0.02,0.05,0.1,-0.03,-0.08]), t=rnd(2,20);
+  if(d==='hard'){ const h=rnd(3,30), t2=rnd(5,60), v=y0*Math.pow(0.5,t2/h); return {type:'approx',tol:0.05,text:`A substance has a half-life of ${h} years. Starting with ${y0} g, how much remains after ${t2} years? (nearest tenth)`, answers:[String(Math.round(v*10)/10)], wrong:[String(Math.round(y0*Math.pow(0.5,h/t2)*10)/10),String(Math.round((y0-y0*t2/(2*h))*10)/10),String(Math.round(y0/2*10)/10)], hint:`y = ${y0}·(1/2)^(t/${h}) → ${y0}·(1/2)^(${t2}/${h}) ≈ ${Math.round(v*10)/10}`} }
+  const v=y0*Math.exp(k*t); return {type:'approx',tol:0.05,text:`dy/dt = ${k}y and y(0) = ${y0}. Find y(${t}). (nearest tenth)`, answers:[String(Math.round(v*10)/10)], wrong:[String(Math.round(y0*(1+k*t)*10)/10),String(Math.round(y0*Math.exp(-k*t)*10)/10),String(Math.round(y0*Math.exp(k)*t*10)/10)], hint:`y = ${y0}e^(${k}t) → y(${t}) = ${y0}e^(${r2(k*t)}) ≈ ${Math.round(v*10)/10}`} });
+add('c7','ivp','Particular Solutions (Initial Values)','exact',
+ 'After separating and integrating, use the initial condition to find C. Then evaluate the particular solution.',
+ d=>{ if(d==='easy'){ const a=nz(-5,5), b=nz(-9,9), c=rnd(1,4); // y′ = 2ax + b, y(0) = c → y = ax² + bx + c
+    const x1=rnd(1,3); return {type:'exact',text:`dy/dx = ${P([2*a,b])} and y(0) = ${c}. Find y(${x1}).`, answers:[String(a*x1*x1+b*x1+c)], wrong:[String(a*x1*x1+b*x1),String(2*a*x1+b+c),String(a*x1*x1+b*x1-c)], hint:`y = ${P([a,b,0])} + C; y(0) = ${c} → C = ${c}\ny(${x1}) = ${a*x1*x1+b*x1+c}`} }
+  if(d==='medium'){ const a=rnd(1,5), x1=rnd(1,4); const v=Math.sqrt(x1*x1+a*a); return {type:'exact',text:`dy/dx = x/y and y(0) = ${a}. Find y(${x1}).`, answers:[isInt(v)?String(v):`√${x1*x1+a*a}`], wrong:[String(x1+a),`√${x1*x1-a*a>0?x1*x1-a*a:x1*x1+a}`,String(x1*x1+a*a)], hint:`y dy = x dx → y²/2 = x²/2 + C → y² = x² + ${a*a}\ny(${x1}) = √${x1*x1+a*a}${isInt(v)?' = '+v:''}`} }
+  const a=rnd(1,5), x1=rnd(1,2); return {type:'exact',text:`dy/dx = xy and y(0) = ${a}. Find y(${x1}).`, answers:[`${a===1?'':a}e^(${x1*x1}/2)`], mcAns:`${a===1?'':a}e^(${fr(x1*x1,2)})`, wrong:[`${a===1?'':a}e^(${x1*x1})`,`${a===1?'':a}e^(${2*x1*x1})`,`${a} + ${fr(x1*x1,2)}`], fmt:'exact, e.g. 3e^(1/2)', hint:`dy/y = x dx → ln|y| = x²/2 + C → y = ${a}e^(x²/2)\ny(${x1}) = ${a}e^(${fr(x1*x1,2)})`} });
+add('c7','euler','Euler’s Method','num',
+ 'Euler’s method with step h:  yₙ₊₁ = yₙ + h · f(xₙ, yₙ)  (follow the tangent line for one step at a time).',
+ d=>{ const h=pick([0.5,0.1,1]), n=R(d,1,2,2), x0=0, y0=rnd(1,4), F=pick([['x + y',(x,y)=>x+y],['2x − y',(x,y)=>2*x-y],['xy + 1',(x,y)=>x*y+1]]);
+  let x=x0, y=y0, steps=[]; for(let i=0;i<n;i++){ const s=F[1](x,y); y=y+h*s; x=x+h; steps.push(`x = ${+x.toFixed(4)}: y ≈ ${+y.toFixed(4)}`) } const ans=+y.toFixed(6);
+  return {text:`dy/dx = ${F[0]} with y(0) = ${y0}. Use Euler’s method with step size ${h} to approximate y(${+(n*h).toFixed(4)}).`, answers:[String(ans)], wrong:[String(+(y0+n*h*F[1](0,y0)).toFixed(6)),String(+(ans+h).toFixed(6)),String(+(y0*Math.pow(1+h,n)).toFixed(6))].filter(w=>w!==String(ans)), hint:`yₙ₊₁ = yₙ + ${h}·f(xₙ, yₙ)\n${steps.join('\n')}`} },true);
+add('c7','logistic','Logistic Growth','num',
+ 'Logistic: dP/dt = kP(1 − P/L).  L is the CARRYING CAPACITY: P → L as t → ∞ (if P(0) > 0).\nThe population grows fastest when P = L/2.',
+ d=>{ const k=pick([0.2,0.5,0.03,1.2]), L=rnd(2,50)*100, ask=pick(R(d,['L'],['L','half'],['half','lim']));
+  const de=pick([`dP/dt = ${k}P(1 − P/${L})`,`dP/dt = ${k}P − ${k/L>0.0001?+(k/L).toFixed(6):k+'/'+L}P²`]); const shown=ask==='L'?`dP/dt = ${k}P(1 − P/${L})`:de;
+  if(ask==='L') return {text:`For ${shown}, what is the carrying capacity?`, answers:[L], wrong:[L/2,k,L*k], hint:`In dP/dt = kP(1 − P/L), L is the carrying capacity: ${L}`};
+  if(ask==='half') return {text:`For ${shown}, at what population P is the population growing fastest?`, answers:[L/2], wrong:[L,L/4,0], hint:`dP/dt is largest when P = L/2 = ${L/2}`};
+  return {text:`For ${shown} with P(0) = ${Math.round(L/10)}, find lim(t→∞) P(t).`, answers:[L], wrong:[L/2,Math.round(L/10),0], hint:`A logistic population approaches its carrying capacity L = ${L}`} },true);
+
+/* ================= Unit 8: Applications of integration ================= */
+add('c8','net_change','Accumulation & Net Change','num',
+ 'Net change = ∫ of the rate:  displacement = ∫ v(t) dt,  amount at time b = amount at a + ∫ from a to b of the rate.\nTotal DISTANCE = ∫ |v(t)| dt.',
+ d=>{ const p=rnd(1,3), q=p+rnd(1,3); // v(t) = 3(t − p)(t − q)? keep simple: v = 3t² − 6pt → zeros 0 and 2p
+  if(d==='easy'){ const a=rnd(1,4), b=rnd(1,6), T0=rnd(2,5); return {text:`A tank has ${10*b} L of water. Water flows in at r(t) = ${2*a}t L/min. How much water is in the tank after ${T0} minutes?`, answers:[10*b+a*T0*T0], wrong:[a*T0*T0,10*b+2*a*T0,10*b+2*a*T0*T0], hint:`${10*b} + ∫₀^${T0} ${2*a}t dt = ${10*b} + ${a}·${T0}² = ${10*b+a*T0*T0}`, chk:{q:[`${2*a}*x+${10*b}/${T0}`,0,T0]}} }
+  const c=rnd(1,4), T=2*c+rnd(1,3); // v = t² − 2ct : negative on (0, 2c)
+  const F=t=>t*t*t/3-c*t*t, disp=F(T)-F(0), dist=Math.abs(F(2*c)-F(0))+Math.abs(F(T)-F(2*c));
+  if(d==='medium') return {text:`v(t) = t² − ${2*c}t. Find the DISPLACEMENT from t = 0 to t = ${T}.`, answers:[fr(Math.round(disp*3),3)], wrong:[fr(Math.round(dist*3),3),fr(Math.round(-disp*3),3),String(T*T-2*c*T)], hint:`∫₀^${T} (t² − ${2*c}t) dt = [t³/3 − ${c}t²] = ${fr(Math.round(disp*3),3)}`, chk:{q:[`x^2-${2*c}*x`,0,T]}};
+  return {text:`v(t) = t² − ${2*c}t. Find the TOTAL DISTANCE traveled from t = 0 to t = ${T}.`, answers:[fr(Math.round(dist*3),3)], wrong:[fr(Math.round(disp*3),3),fr(Math.round(Math.abs(disp)*3),3)===fr(Math.round(dist*3),3)?String(T):fr(Math.round(Math.abs(disp)*3),3),fr(Math.round(Math.abs(F(2*c))*3),3)], hint:`v < 0 on (0, ${2*c}), v > 0 on (${2*c}, ${T})\nDistance = |∫₀^${2*c} v| + |∫_${2*c}^${T} v| = ${fr(Math.round(Math.abs(F(2*c))*3),3)} + ${fr(Math.round(Math.abs(F(T)-F(2*c))*3),3)} = ${fr(Math.round(dist*3),3)}`} });
+add('c8','area_between','Area Between Curves','exact',
+ 'Area = ∫ from a to b of (top − bottom) dx. Find the intersection points for the limits.',
+ d=>{ if(d==='easy'){ const k=rnd(1,6); return {type:'exact',text:`Find the area of the region between y = ${lin(k)} and y = x².`, answers:[fr(k*k*k,6)], wrong:[fr(k*k*k,3),fr(k*k,2),fr(k*k*k,2)], hint:`Intersect: x² = ${k}x → x = 0, ${k}\n∫₀^${k} (${k}x − x²) dx = ${k*k*k}/2 − ${k*k*k}/3 = ${fr(k*k*k,6)}`, chk:{q:[`${k}*x-x^2`,0,k]}} }
+  if(d==='medium'){ const a=rnd(1,5); return {type:'exact',text:`Find the area between y = ${a*a} − x² and the x-axis.`, answers:[fr(4*a*a*a,3)], wrong:[fr(2*a*a*a,3),fr(4*a*a*a,1),fr(a*a*a,3)], hint:`Zeros at x = ±${a}\n∫ from −${a} to ${a} of (${a*a} − x²) dx = ${fr(4*a*a*a,3)}`, chk:{q:[`${a*a}-x^2`,-a,a]}} }
+  const a=rnd(1,3); return {type:'exact',text:`Find the area of the region between y = x³ and y = ${lin(a*a)} (all regions they enclose).`, answers:[fr(a*a*a*a,2)], wrong:[fr(a*a*a*a,4),'0',String(a*a*a*a)], hint:`Intersections: x = 0, ±${a}. By symmetry, area = 2∫₀^${a} (${a*a}x − x³) dx = 2(${fr(a*a*a*a,2)} − ${fr(a*a*a*a,4)}) = ${fr(a*a*a*a,2)}`, chk:{q:[`2*(${a*a}*x-x^3)`,0,a]}} });
+add('c8','vol_disk','Volume: Disk Method','pi',
+ 'Rotating y = f(x) around the x-axis: V = π ∫ from a to b of [f(x)]² dx (stack of disks).',
+ d=>{ const a=rnd(1,6); if(d==='easy') return {type:'pi',text:`The region under y = √x from x = 0 to x = ${a} is rotated about the x-axis. Find the volume.`, answers:[piS(a*a,2)], wrong:[piS(a*a),piS(2*a*Math.sqrt(a)%1?a:a,3),piS(a,2)].filter(w=>w!==piS(a*a,2)), hint:`V = π∫₀^${a} x dx = π·${a*a}/2 = ${piS(a*a,2)}`, chk:{q:[`pi*x`,0,a]}};
+  if(d==='medium'){ const b=rnd(1,3); return {type:'pi',text:`The region under y = x² from x = 0 to x = ${b} is rotated about the x-axis. Find the volume.`, answers:[piS(Math.pow(b,5),5)], wrong:[piS(Math.pow(b,3),3),piS(Math.pow(b,4),4),piS(Math.pow(b,5),3)], hint:`V = π∫₀^${b} x⁴ dx = π·${Math.pow(b,5)}/5 = ${piS(Math.pow(b,5),5)}`, chk:{q:[`pi*x^4`,0,b]}} }
+  const r=rnd(1,6), h=rnd(1,8); return {type:'pi',text:`The line y = ${r%h===0?lin(r/h):'('+fr(r,h)+')x'} from x = 0 to x = ${h} is rotated about the x-axis, forming a cone. Find its volume.`, answers:[piS(r*r*h,3)], wrong:distinct(piS(r*r*h,3),[piS(r*r*h),piS(r*r*h,2),piS(r*h,3),piS(r*h*h,3),piS(r*r*h,6)]), hint:`V = π∫₀^${h} (${r%h===0?lin(r/h):'('+fr(r,h)+')x'})² dx = π·${fr(r*r,h*h)}·${h*h*h}/3 = ${piS(r*r*h,3)}  (= ⅓πr²h ✓)`, chk:{q:[`pi*(${r}/${h}*x)^2`,0,h]}} });
+add('c8','vol_washer','Volume: Washer Method','pi',
+ 'Washer method: V = π ∫ ( R² − r² ) dx, with R = outer radius, r = inner radius (distance from the axis).',
+ d=>{ const k=R(d,1,rnd(2,3),rnd(1,3)); // region between y = kx and y = x² … around x-axis: R = kx, r = x², from 0 to k
+  const v=Math.pow(k,5)*(1/3-1/5); const n=Math.round(v*15); const ans=piS(2*Math.pow(k,5),15);
+  return {type:'pi',text:`The region between y = ${k===1?'':k}x and y = x² is rotated about the x-axis. Find the volume.`, answers:[ans], wrong:[piS(Math.pow(k,5),3),piS(Math.pow(k,5),5),piS(Math.pow(k,3),6)].filter(w=>w!==ans), hint:`Intersections x = 0, ${k}. Outer R = ${k===1?'':k}x, inner r = x²\nV = π∫₀^${k} (${k*k===1?'':k*k}x² − x⁴) dx = π(${fr(Math.pow(k,5),3)} − ${fr(Math.pow(k,5),5)}) = ${ans}`, chk:{q:[`pi*((${k}*x)^2-x^4)`,0,k]}} });
+add('c8','cross_sec','Volumes by Cross Sections','exact',
+ 'V = ∫ A(x) dx, where A(x) is the area of a cross section.\nSquares: A = s².  Semicircles on diameter s: A = (π/8)s².  Equilateral triangles: A = (√3/4)s².',
+ d=>{ const a=rnd(1,6); if(d==='easy') return {type:'exact',text:`A solid's base is the triangle bounded by y = ${a} − x, y = 0 and x = 0. Cross sections perpendicular to the x-axis are SQUARES. Find the volume.`, answers:[fr(a*a*a,3)], wrong:[fr(a*a*a,2),fr(a*a,2),String(a*a*a)], hint:`Side s = ${a} − x → A = (${a} − x)²\nV = ∫₀^${a} (${a} − x)² dx = ${a*a*a}/3`, chk:{q:[`(${a}-x)^2`,0,a]}};
+  if(d==='medium') return {type:'exact',text:`A solid's base is the region under y = √x from x = 0 to ${a}. Cross sections perpendicular to the x-axis are squares. Find the volume.`, answers:[fr(a*a,2)], wrong:[fr(a*a,4),String(a*a),fr(2*a,3)], hint:`s = √x → A = x\nV = ∫₀^${a} x dx = ${fr(a*a,2)}`, chk:{q:['x',0,a]}};
+  return {type:'exact',text:`A solid's base is the region under y = √x from x = 0 to ${a}. Cross sections perpendicular to the x-axis are SEMICIRCLES with diameter in the base. Find the volume.`, answers:[`π·${a*a}/16`], mcAns:piS(a*a,16), wrong:[piS(a*a,8),piS(a*a,4),piS(a*a,2)], fmt:'exact, e.g. 9π/16', hint:`Diameter √x → A = (π/8)(√x)² = (π/8)x\nV = (π/8)·${a*a}/2 = ${piS(a*a,16)}`, chk:{q:['pi*x/8',0,a]}} });
+add('c8','arc_length','Arc Length','exact',
+ 'Arc length of y = f(x) from a to b:  L = ∫ from a to b of √(1 + [f′(x)]²) dx.',
+ d=>{ const b=pick([3,8,15]); if(d==='hard'){ const m=rnd(1,4), b2=rnd(1,6); return {type:'exact',text:`Find the arc length of y = ${lin(m)} + 2 from x = 0 to x = ${b2}.`, answers:[`${b2===1?'':b2}√${1+m*m}`], wrong:distinct(`${b2===1?'':b2}√${1+m*m}`,[String(b2*m),String(b2*(1+m)),`${b2+1}√${1+m*m}`,`${b2}√${m*m}`.replace(/^1√/,'√'),String(b2)]), fmt:'exact, e.g. 3√5', hint:`f′ = ${m} → L = ∫₀^${b2} √(1 + ${m*m}) dx = ${b2===1?'':b2}√${1+m*m}`, chk:{q:[`sqrt(1+${m*m})`,0,b2]}} }
+  const L=(2/3)*(Math.pow(1+b,1.5)-1); return {type:'exact',text:`Find the arc length of y = (2/3)x^(3/2) from x = 0 to x = ${b}.`, answers:[fr(Math.round(L*3),3)], wrong:[fr(Math.round((2/3)*Math.pow(b,1.5)*3),3),String(b),fr(Math.round(Math.pow(1+b,1.5)*3),3)], hint:`f′ = √x → √(1 + x)\nL = ∫₀^${b} √(1 + x) dx = (2/3)(1 + x)^(3/2) |₀^${b} = (2/3)(${Math.round(Math.pow(1+b,1.5))} − 1) = ${fr(Math.round(L*3),3)}`, chk:{q:['sqrt(1+x)',0,b]}} },true);
+
+/* ================= Unit 9 (BC): Parametric, polar, vector ================= */
+add('c9','param_deriv','Parametric Derivatives','num',
+ 'For x = x(t), y = y(t):  dy/dx = (dy/dt)/(dx/dt).\nSecond derivative: d²y/dx² = [d/dt (dy/dx)] / (dx/dt).',
+ d=>{ const t=nz(-3,3), a=nz(-3,3), b=nz(-5,5), c=rnd(1,3);
+  if(d!=='hard'){ // x = t² + a t, y = c t³ + b t
+    const dx=2*t+a, dy=3*c*t*t+b; if(dx===0) return null; return {text:`x = t²${sg(a,v=>k1(v,'t'))},  y = ${c===1?'':c}t³${sg(b,v=>k1(v,'t'))}. Find dy/dx at t = ${M(t)}.`, answers:[fr(dy,dx)], wrong:[fr(dx,dy||1),fr(dy,1),fr(3*c*t*t,2*t||1)], hint:`dx/dt = 2t ${a<0?'−':'+'} ${Math.abs(a)} = ${dx},  dy/dt = ${3*c}t² ${b<0?'−':'+'} ${Math.abs(b)} = ${dy}\ndy/dx = ${dy}/${dx} = ${fr(dy,dx)}`} }
+  // x = t², y = t³: dy/dx = 3t/2; d²y/dx² = (3/2)/(2t) = 3/(4t)
+  return {text:`x = t², y = t³. Find d²y/dx² at t = ${M(t)}.`, answers:[fr(3,4*t)], wrong:[fr(3*t,2),fr(3,2),fr(6*t,2)], hint:`dy/dx = 3t²/(2t) = 3t/2\nd/dt(3t/2) = 3/2;  divide by dx/dt = 2t → 3/(4t) = ${fr(3,4*t)}`} },true);
+add('c9','speed','Speed & Arc Length (Parametric)','rad',
+ 'Speed = √((dx/dt)² + (dy/dt)²).  Arc length = ∫ of speed dt.',
+ d=>{ if(d==='hard'){ const r=rnd(1,6), k=pick([1,2,3,4]); return {type:'pi',text:`Find the arc length of x = ${r}cos t, y = ${r}sin t for 0 ≤ t ≤ ${piS(k,2)}.`, answers:[piS(r*k,2)], wrong:distinct(piS(r*k,2),[piS(r*k),piS(r*r*k,2),piS(k,2),piS(r*k,4),piS(2*r*k)]), hint:`Speed = √(${r*r}sin²t + ${r*r}cos²t) = ${r}\nL = ${r} · ${piS(k,2)} = ${piS(r*k,2)}`} }
+  const t=rnd(1,3), a=nz(-4,4), b=nz(-4,4); const dx=2*a*t, dy=3*b*t*t, s2=dx*dx+dy*dy; const ans=isInt(Math.sqrt(s2))?String(Math.sqrt(s2)):rad(s2);
+  return {type:'rad',text:`x(t) = ${a===1?'':a===-1?'−':a}t², y(t) = ${b===1?'':b===-1?'−':b}t³. Find the speed at t = ${t}.`, answers:[ans], wrong:[String(Math.abs(dx)+Math.abs(dy)),String(s2),rad(Math.abs(dx*dx-dy*dy)||2)], hint:`dx/dt = ${M(dx)}, dy/dt = ${M(dy)}\nspeed = √(${dx*dx} + ${dy*dy}) = ${ans}`} },true);
+add('c9','vector_pos','Vector-Valued Motion','pair',
+ 'Position from velocity: r(t) = r(0) + ∫₀ᵗ v(s) ds (do each component separately).\nAcceleration a(t) = v′(t).',
+ d=>{ const a=nz(-3,3), b=nz(-3,3), x0=nz(-5,5), y0=nz(-5,5), t=rnd(1,3);
+  if(d==='easy'){ const ax_=2*a, ay=6*b*t; return {type:'pair',vals:[ax_,ay],text:`v(t) = ⟨${M(2*a)}t, ${M(3*b)}t²⟩. Find the acceleration vector at t = ${t}.`, answers:[vecS(ax_,ay)], wrong:[vecS(2*a*t,3*b*t*t),vecS(ay,ax_),vecS(a*t*t,b*t*t*t)], fmt:'e.g. ⟨2, −6⟩', hint:`a(t) = v′(t) = ⟨${M(2*a)}, ${M(6*b)}t⟩ → ${vecS(ax_,ay)}`} }
+  const X=x0+a*t*t, Y=y0+b*t*t*t; return {type:'pair',vals:[X,Y],text:`v(t) = ⟨${M(2*a)}t, ${M(3*b)}t²⟩ and the position at t = 0 is ⟨${M(x0)}, ${M(y0)}⟩. Find the position at t = ${t}.`, answers:[vecS(X,Y)], wrong:[vecS(a*t*t,b*t*t*t),vecS(x0+2*a*t,y0+3*b*t*t),vecS(Y,X)], fmt:'e.g. ⟨2, −6⟩', hint:`x(t) = ${M(x0)} + ${M(a)}t²,  y(t) = ${M(y0)} + ${M(b)}t³\nAt t = ${t}: ${vecS(X,Y)}`} },true);
+add('c9','polar_area','Polar Area','pi',
+ 'Area inside r = f(θ) from α to β:  A = ½ ∫ from α to β of r² dθ.',
+ d=>{ const a=rnd(1,6); if(d==='easy'){ const k=pick([1,2,3,4,6]); return {type:'pi',text:`Find the area of the sector of r = ${a} for 0 ≤ θ ≤ ${piS(1,k)}.`, answers:[piS(a*a,2*k)], wrong:distinct(piS(a*a,2*k),[piS(a*a,k),piS(a,2*k),piS(a*a,4*k),piS(2*a*a,k),piS(a*a)]), hint:`A = ½ ∫₀^${piS(1,k)} ${a*a} dθ = ½ · ${a*a} · ${piS(1,k)} = ${piS(a*a,2*k)}`} }
+  if(d==='medium') return {type:'pi',text:`Find the area enclosed by r = ${a === 1 ? '' : a}cos θ.`, answers:[piS(a*a,4)], wrong:[piS(a*a,2),piS(a*a),piS(a,4)], hint:`r = ${a}cos θ is a circle of diameter ${a}: one loop for 0 ≤ θ ≤ π\nA = ½∫₀^π ${a*a}cos²θ dθ = ${piS(a*a,4)}`};
+  const n=rnd(2,5); return {type:'pi',text:`Find the total area enclosed by the rose r = ${a}sin(${n}θ).`, answers:[n%2?piS(a*a,4):piS(a*a,2)], wrong:[n%2?piS(a*a,2):piS(a*a,4),piS(a*a*n,4),piS(a*a)], hint:`${n%2?`n odd: ${n} petals, traced once for 0 ≤ θ ≤ π`:`n even: ${2*n} petals over 0 ≤ θ ≤ 2π`}\nA = ½∫ ${a*a}sin²(${n}θ) dθ = ${n%2?piS(a*a,4):piS(a*a,2)}`} },true);
+
+/* ================= Unit 10 (BC): Series ================= */
+add('c10','geo_series','Geometric Series','text',
+ 'Σ a·rⁿ (n from 0) converges when |r| < 1, to a/(1 − r). If |r| ≥ 1 it diverges.',
+ d=>{ const a=rnd(1,9)*pick([1,-1]), p=rnd(1,4), q=rnd(p+1,6)*pick([1,1,-1]); if(gcd(p,Math.abs(q))!==1) return null; const r=p/q, div=d==='hard'&&Math.random()<.3;
+  if(div){ const R_=pick([3/2,2,-2,5/4]); return {type:'text',text:`Find the sum of ${a} + ${a}(${fr(Math.round(R_*4),4)}) + ${a}(${fr(Math.round(R_*4),4)})² + …`, answers:['diverges','diverge'], mcAns:'Diverges', wrong:[fr(a,1)+'',fr(Math.round(a*4),Math.round(4-R_*4))+'','0'], fmt:'a number, or "diverges"', hint:`|r| = ${fr(Math.round(Math.abs(R_)*4),4)} ≥ 1 → the series diverges.`} }
+  const s=fr(a*q,q-p); return {type:'text',text:`Find the sum: Σ (n = 0 to ∞) ${a===1?'':a===-1?'−':M(a)+'·'}(${fr(p,q)})ⁿ.`, answers:[s], wrong:distinct(s,[fr(a*q,q+p),fr(a*p,q-p),fr(a,1),fr(a*q,p),fr(-a*q,q-p),'Diverges']), fmt:'a number, or "diverges"', hint:`a = ${M(a)}, r = ${fr(p,q)} (|r| < 1)\nSum = a/(1 − r) = ${M(a)} / (1 − ${fr(p,q)}) = ${s}`} },true);
+const SERIES=[['Σ 1/n²','Converges (p-series, p = 2 > 1)'],['Σ 1/n','Diverges (harmonic series)'],['Σ 1/√n','Diverges (p-series, p = 1/2 ≤ 1)'],['Σ n/(n + 1)','Diverges (terms → 1 ≠ 0)'],['Σ (−1)ⁿ/n','Converges (alternating series test)'],['Σ 1/2ⁿ','Converges (geometric, r = 1/2)'],['Σ n!/10ⁿ','Diverges (ratio test: ratio → ∞)'],['Σ 1/(n² + 1)','Converges (compare with Σ 1/n²)'],['Σ 3ⁿ/n!','Converges (ratio test: ratio → 0)'],['Σ (2ⁿ + 1)/3ⁿ','Converges (compare with geometric r = 2/3)'],['Σ ln(n)/n','Diverges (larger than Σ 1/n)'],['Σ cos(πn)','Diverges (terms do not → 0)']];
+add('c10','conv_test','Convergence Tests','text',
+ 'nth-term test: if terms do NOT → 0, the series diverges.\np-series Σ 1/nᵖ: converges iff p > 1.  Geometric: |r| < 1.\nAlso: comparison, limit comparison, ratio (factorials/powers), alternating series test.',
+ d=>{ const pool=d==='easy'?SERIES.slice(0,6):SERIES; const i=rnd(0,pool.length-1), [s,ans]=pool[i]; const verdict=ans.split(' ')[0];
+  const others=shuffle(SERIES.filter(x=>x[1].split(' ')[0]!==verdict||x[0]!==s).map(x=>x[1]).filter(x=>x!==ans)).slice(0,2);
+  return {type:'text',mcOnly:true,text:`Does ${s} (n from 1 to ∞) converge or diverge, and why?`, answers:[ans], mcAns:ans, wrong:[verdict==='Converges'?'Diverges (terms → 0 means it converges — not a valid test)':'Converges (the terms go to 0)'].concat(others).slice(0,3), hint:ans} },true);
+add('c10','radius','Radius & Interval of Convergence','ineq',
+ 'Ratio test: lim |aₙ₊₁/aₙ| < 1.  For Σ (x − a)ⁿ/kⁿ the series converges when |x − a| < k (radius k).\nCheck the endpoints separately (here they diverge).',
+ d=>{ const k=rnd(1,6), a=d==='easy'?0:nz(-4,4); const lo=a-k, hi=a+k;
+  const term=a===0?`xⁿ/${k}ⁿ`:`(x ${a>0?'−':'+'} ${Math.abs(a)})ⁿ/${k}ⁿ`;
+  return {type:'ineq',text:`Find the interval of convergence of Σ (n = 0 to ∞) ${term}.`, answers:[`${M(lo)} < x < ${M(hi)}`], wrong:[`${M(lo)} ≤ x ≤ ${M(hi)}`,`${M(-k-a)} < x < ${M(k-a)}`,`x < ${M(hi)}`].filter(w=>w!==`${M(lo)} < x < ${M(hi)}`), fmt:'e.g. −3 < x < 5', hint:`This is geometric with r = ${a===0?'x':`(x ${a>0?'−':'+'} ${Math.abs(a)})`}/${k}: converges when |r| < 1\n|x ${a===0?'':a>0?'− '+a:'+ '+Math.abs(a)}| < ${k} → ${M(lo)} < x < ${M(hi)} (endpoints diverge)`} },true);
+add('c10','taylor','Taylor Polynomials','num',
+ 'Taylor series at x = a: Σ f⁽ⁿ⁾(a)/n! · (x − a)ⁿ.\nThe coefficient of (x − a)ⁿ is f⁽ⁿ⁾(a)/n!.',
+ d=>{ const a=rnd(2,4), n=rnd(2,5);
+  if(d==='easy'){ const f=[rnd(-5,5),nz(-6,6),nz(-6,6)]; const x1=pick([0.1,0.2,-0.1]); const v=f[0]+f[1]*x1+f[2]/2*x1*x1; return {text:`f(0) = ${f[0]}, f′(0) = ${f[1]}, f″(0) = ${f[2]}. Use the 2nd-degree Maclaurin polynomial to approximate f(${x1}).`, answers:[String(+v.toFixed(6))], wrong:[String(+(f[0]+f[1]*x1+f[2]*x1*x1).toFixed(6)),String(+(f[0]+f[1]*x1).toFixed(6)),String(+(f[0]*x1+f[1]*x1+f[2]*x1).toFixed(6))].filter(w=>w!==String(+v.toFixed(6))), hint:`P₂(x) = ${f[0]} + ${P_(f[1])}x + (${f[2]}/2)x²\nP₂(${x1}) = ${+v.toFixed(6)}`} }
+  if(d==='medium') return {text:`Find the coefficient of x${sup(n)} in the Maclaurin series for e^(${a}x).`, answers:[fr(Math.pow(a,n),fct[n])], wrong:[fr(Math.pow(a,n),1),fr(1,fct[n]),fr(a*n,fct[n])], hint:`e^u = Σ uⁿ/n!, u = ${a}x → coefficient ${a}${sup(n)}/${n}! = ${fr(Math.pow(a,n),fct[n])}`};
+  const fn=pick(['sin','cos']), m=fn==='sin'?pick([3,5]):pick([2,4]); const v=(fn==='sin'?(m===3?-1:1):(m===2?-1:1))*Math.pow(a,m);
+  return {text:`Find the coefficient of x${sup(m)} in the Maclaurin series for ${fn}(${a}x).`, answers:[fr(v,fct[m])], wrong:[fr(-v,fct[m]),fr(v,1),fr(Math.pow(a,m),m)].filter((w,i,arr)=>arr.indexOf(w)===i), hint:`${fn} u = ${fn==='sin'?'u − u³/3! + u⁵/5! − …':'1 − u²/2! + u⁴/4! − …'}, u = ${a}x\nCoefficient of x${sup(m)}: ${fr(v,fct[m])}`} },true);
+const MAC=[['eˣ','1 + x + x²/2! + x³/3! + …'],['sin x','x − x³/3! + x⁵/5! − …'],['cos x','1 − x²/2! + x⁴/4! − …'],['1/(1 − x)','1 + x + x² + x³ + …'],['ln(1 + x)','x − x²/2 + x³/3 − …'],['arctan x','x − x³/3 + x⁵/5 − …']];
+add('c10','maclaurin','Known Maclaurin Series','text',
+ 'Memorize: eˣ = Σ xⁿ/n!,  sin x = Σ (−1)ⁿx²ⁿ⁺¹/(2n+1)!,  cos x = Σ (−1)ⁿx²ⁿ/(2n)!,\n1/(1 − x) = Σ xⁿ,  ln(1 + x) = Σ (−1)ⁿ⁺¹xⁿ/n,  arctan x = Σ (−1)ⁿx²ⁿ⁺¹/(2n + 1).',
+ d=>{ const i=rnd(0,MAC.length-1), [f,s]=MAC[i]; const askF=Math.random()<.5;
+  if(askF) return {type:'text',mcOnly:true,text:`Which function has the Maclaurin series\n  ${s}?`, answers:[f], mcAns:f, wrong:shuffle(MAC.filter((_,j)=>j!==i).map(x=>x[0])).slice(0,3), hint:`${f} = ${s}`};
+  return {type:'text',mcOnly:true,text:`Which is the Maclaurin series for ${f}?`, answers:[s], mcAns:s, wrong:shuffle(MAC.filter((_,j)=>j!==i).map(x=>x[1])).slice(0,3), hint:`${f} = ${s}`} },true);
+add('c10','alt_error','Alternating Series Error Bound','num',
+ 'For an alternating series whose terms decrease to 0, the error after stopping at term n is at most the size of the FIRST OMITTED term: |error| ≤ |aₙ₊₁|.',
+ d=>{ const n=rnd(2,6), p=R(d,1,2,3);
+  if(d==='hard'){ const k=n; return {text:`The series Σ (−1)ⁿ/n! (n from 0) is approximated by its terms through n = ${k}. Give the alternating series error bound.`, answers:[fr(1,fct[k+1])], wrong:[fr(1,fct[k]),fr(1,fct[k+2]||5040*8),fr(1,k+1)], hint:`First omitted term: 1/${k+1}! = ${fr(1,fct[k+1])}`} }
+  const nm=Math.pow(n+1,p); return {text:`Σ (n = 1 to ∞) (−1)ⁿ⁺¹/n${p===1?'':sup(p)} is approximated by its first ${n} terms. Give the alternating series error bound.`, answers:[fr(1,nm)], wrong:[fr(1,Math.pow(n,p)),fr(1,Math.pow(n+2,p)),fr(1,n+1)].filter(w=>w!==fr(1,nm)), hint:`First omitted term is n = ${n+1}: 1/${n+1}${p===1?'':sup(p)} = ${fr(1,nm)}`} },true);
+
+// extra distractors for formula answers: sign flip, sin↔cos, tan↔cot, drop the chain factor, wrong divisor
+function alts(s){ const o=[]; o.push(s.startsWith('−')?s.slice(1):'−'+s);
+  if(/sin|cos/.test(s)) o.push(s.replace(/sin|cos/g,m=>m==='sin'?'cos':'sin'));
+  if(/tan|cot/.test(s)) o.push(s.replace(/tan|cot/g,m=>m==='tan'?'cot':'tan'));
+  if(/^[^(]+·/.test(s)) o.push(s.slice(s.indexOf('·')+1));
+  const m=s.match(/\/(\d+)/); if(m) o.push(s.replace(/\/(\d+)/,'/'+(2*m[1])));
+  const e=s.match(/e\^\((−?\d+)x\)/); if(e) o.push(s.replace(/e\^\((−?\d+)x\)/g,'eˣ'));
+  return o.filter(w=>w!==s) }
+T.forEach(t=>{ if(t.type!=='fx'&&t.type!=='anti') return; const g=t.gen; t.gen=d=>{ const r=g(d); if((r.type||t.type)==='fx'||(r.type||t.type)==='anti') r.wrong=[...(r.wrong||[]),...alts(String(r.mcAns||r.answers[0]))]; return r } });
+const topics={}; T.forEach(t=>topics[t.key]=t);
+
+/* ===== Algebra 1 practice — page logic (same behavior as the Algebra 2 app) ===== */
+const MAX_ATTEMPTS=2;
+let current=null,total=0,correct=0,difficulty='easy',currentTopic=T[0].key;
+let questionAnswered=false,attemptCount=0,triedMcIndices=new Set(),mcCorrect=null;
+let quizMode=false,quizQ=[],quizIdx=0,quizRes=[];
+const MCL=['A','B','C','D'];
+const $=id=>document.getElementById(id);
+const escH=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const chOf=key=>CHAPTERS.find(c=>c.id===topics[key].ch);
+const FMT={num:'e.g. 7, −3, or 3/4', set:'e.g. x = 2 or x = −3', pair:'e.g. (2, −3)', ineq:'e.g. x > 3  or  −2 < x ≤ 5   (>= and <= work too)',
+  eq:'e.g. y = 2x + 3', approx:'a decimal, e.g. 7.4', pi:'in terms of π, e.g. 16π (type pi for π)', expr:'e.g. 3x^2 − 2x + 1   (^ for powers)', mono:'e.g. 12x^7y^2', factor:'e.g. (x + 2)(x − 5)', rad:'e.g. 6√2 or 6sqrt2', sci:'e.g. 4.5 × 10^4 or 4.5*10^4'};
+const TEXT_FMT={f_relation:'yes or no', on_line:'yes or no', sys_count:'one, none, or infinitely many', poly_classify:'e.g. quadratic trinomial'};
+
+/* ---------- sidebar ---------- */
+// AP Calculus AB view (?level=ab): drop BC-only topics and units
+if(new URLSearchParams(location.search).get('level')==='ab'&&T.some(t=>t.bc)){
+  for(let i=T.length-1;i>=0;i--) if(T[i].bc){ delete topics[T[i].key]; T.splice(i,1) }
+  for(let i=CHAPTERS.length-1;i>=0;i--) if(!T.some(t=>t.ch===CHAPTERS[i].id)) CHAPTERS.splice(i,1) }
+function buildSidebar(){
+  const box=$('sidebar-box'); let html='<div class="sidebar-title">📋 Choose Topic</div>';
+  for(const c of CHAPTERS){
+    html+=`<div class="sidebar-group"><div class="sidebar-group-hdr" style="background:${c.c}" onclick="toggleGroup(this)">${c.icon} ${escH(c.title)}<span class="grp-toggle">+</span></div><div class="sidebar-group-body" id="grp-${c.id}">`;
+    for(const t of T.filter(t=>t.ch===c.id)) html+=`<div class="sidebar-item" id="sid-${t.key}" style="--gc:${c.c};--gs:${c.s}" onclick="setTopicSidebar('${t.key}')">${escH(t.label)}${t.bc&&!CHAPTERS.find(c=>c.id===t.ch).bc?' <span style="font-size:.7em;font-weight:700;color:#fff;background:#ad1457;border-radius:6px;padding:1px 6px;margin-left:4px">BC</span>':''}</div>`;
+    html+='</div></div>';
+  }
+  box.innerHTML=html;
+}
+function toggleGroup(hdr){ const body=hdr.nextElementSibling, open=body.classList.toggle('open'); hdr.parentElement.classList.toggle('wide',open); const t=hdr.querySelector('.grp-toggle'); if(t) t.textContent=open?'−':'+' }
+function openGroupFor(key){ const body=$('grp-'+topics[key].ch); if(body&&!body.classList.contains('open')) toggleGroup(body.previousElementSibling) }
+function setTopicSidebar(key){
+  if(!topics[key]) return; currentTopic=key; openGroupFor(key);
+  document.querySelectorAll('.sidebar-item').forEach(el=>el.classList.toggle('active',el.id==='sid-'+key));
+  const c=chOf(key), r=document.documentElement.style; r.setProperty('--gc',c.c); r.setProperty('--gs',c.s); r.setProperty('--gb',c.b);
+  renderConcept(key);
+  if(quizMode) showQProblem(); else newProblem();
+}
+function setDiff(d){ difficulty=d; document.querySelectorAll('.diff-btn').forEach(b=>b.classList.toggle('active',b.classList.contains(d))); if(quizMode) showQProblem(); else newProblem() }
+
+/* ---------- concept box: rule + a fresh worked example ---------- */
+function renderConcept(key){
+  const t=topics[key], ex=t.gen('easy'); ex.type=ex.type||t.type;
+  const steps=String(ex.hint).split('\n').map((s,i)=>`<li><span class="step-lbl">Step ${i+1}</span>${escH(s)}</li>`).join('');
+  $('concept-box').innerHTML=`<div class="concept-header">📚 ${escH(t.label)}</div><div class="concept-rule">${escH(t.rule)}</div>
+    <div class="concept-example-title">📖 Worked Example</div><div class="concept-example-prob">${escH(ex.text)}</div>${ex.svg?'<div class="concept-svg">'+ex.svg+'</div>':''}<ul class="concept-steps">${steps}</ul>
+    <div class="concept-answer">✓ Answer: ${escH(pretty(ex.mcAns||ex.answers[0]))}</div>`;
+}
+
+/* ---------- one problem ---------- */
+function resetPerQuestion(){ questionAnswered=false; attemptCount=0; triedMcIndices=new Set(); mcCorrect=null; $('next-row').style.display='none'; $('attempts-left-bar').style.display='none' }
+function showProblem(kind){
+  resetPerQuestion();
+  const t=topics[currentTopic]; current=t.gen(difficulty); current.type=current.type||t.type;
+  $('badge-topic').textContent=t.label;
+  const bd=$('badge-diff'); bd.className='badge badge-'+difficulty; bd.textContent=difficulty[0].toUpperCase()+difficulty.slice(1);
+  $('prob').textContent=current.text;
+  $('prob-svg').innerHTML=current.svg?current.svg+(current.notToScale?'<div class="nts">Figure not drawn to scale</div>':''):'';
+  $('feedback').className='feedback'; $('hint').style.display='none'; $('hint-link').style.display='inline';
+  if(kind==='fill'&&!current.mcOnly) renderFill(); else renderMC();
+}
+function newProblem(){ if(quizMode) return; showProblem('mc') }
+function renderMC(){
+  const {ans,opts}=buildMC(current); mcCorrect=ans;
+  const box=$('mc-options'); box.innerHTML='';
+  opts.forEach((opt,i)=>{
+    const div=document.createElement('div'); div.className='mc-opt'; div.dataset.val=opt;
+    div.innerHTML=`<span class="mc-label">${MCL[i]}</span><span>${escH(opt)}</span>`;
+    div.onclick=()=>{
+      if(questionAnswered||triedMcIndices.has(i)) return;
+      triedMcIndices.add(i); attemptCount++;
+      if(opt===mcCorrect){ div.classList.add('correct'); box.querySelectorAll('.mc-opt').forEach(e=>e.classList.add('locked')); $('attempts-left-bar').style.display='none';
+        showFeedback('correct',attemptCount===1?'✓ Correct! First try! 🌟':'✓ Correct on 2nd try! 👍'); resolveQuestion(true) }
+      else { div.classList.add('wrong','tried'); if(attemptCount>=MAX_ATTEMPTS) autoReveal(box); else { showFeedback('wrong','❌ Not quite — you have 1 more try! 💪'); updateAttemptsLeft() } }
+    };
+    box.appendChild(div);
+  });
+  updateAttemptsLeft();
+}
+function renderFill(){
+  const fmt=current.fmt||(current.type==='text'?(TEXT_FMT[currentTopic]||'type your answer'):FMT[current.type]);
+  const keys=['x²|^2','√|√','±|±','≤|≤','≥|≥','−|-','(|(',')|)'];
+  $('mc-options').innerHTML=`<div class="fill-row"><input class="answer-input" id="ans" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="Type your answer" onkeydown="if(event.key==='Enter')checkFill()"><button class="btn btn-primary" onclick="checkFill()">✓ Check</button></div>
+    <div class="fill-fmt">${escH(fmt)}</div><div class="sym-keys">${keys.map(k=>{ const [l,v]=k.split('|'); return `<button type="button" onclick="insertSym('${v}')">${l}</button>` }).join('')}</div>`;
+  setTimeout(()=>{ const a=$('ans'); if(a) a.focus() },50);
+  updateAttemptsLeft();
+}
+function insertSym(v){ const a=$('ans'); if(!a||a.disabled) return; const p=a.selectionStart??a.value.length, q=a.selectionEnd??a.value.length; a.value=a.value.slice(0,p)+v+a.value.slice(q); a.focus(); a.setSelectionRange(p+v.length,p+v.length) }
+function checkFill(){
+  if(!current||questionAnswered) return;
+  const raw=($('ans')||{value:''}).value.trim(); if(!raw) return;
+  attemptCount++;
+  if(check(current,raw)){ $('ans').disabled=true; $('attempts-left-bar').style.display='none'; showFeedback('correct',attemptCount===1?'✓ Correct! 🌟':'✓ Correct on 2nd try! 👍'); resolveQuestion(true) }
+  else if(attemptCount>=MAX_ATTEMPTS) autoReveal(null);
+  else { showFeedback('wrong','❌ Not quite — 1 more try! 💪 Check the format below the box.'); $('ans').select(); updateAttemptsLeft() }
+}
+function updateAttemptsLeft(){ const bar=$('attempts-left-bar'), t=$('attempts-left-txt'), left=MAX_ATTEMPTS-attemptCount;
+  if(questionAnswered){ bar.style.display='none'; return } bar.style.display='block'; t.textContent=left===1?'⚠ 1 try left':`${left} tries`; t.className='attempts-left'+(left===1?' warn':'') }
+function autoReveal(box){
+  if(box) box.querySelectorAll('.mc-opt').forEach(el=>{ el.classList.add('locked'); if(el.dataset.val===mcCorrect) el.classList.add('reveal') });
+  const a=$('ans'); if(a) a.disabled=true; $('attempts-left-bar').style.display='none';
+  showFeedback('reveal',`❌ Out of attempts. Correct answer: <b>${escH(pretty(current.mcAns||current.answers[0]))}</b>`);
+  $('hint').style.display='block'; $('hint').textContent=current.hint; $('hint-link').style.display='none';
+  resolveQuestion(false);
+}
+function showHint(){ $('hint').style.display='block'; $('hint').textContent=current.hint; $('hint-link').style.display='none' }
+function showFeedback(type,html){ const fb=$('feedback'); fb.className='feedback '+type; fb.innerHTML=html }
+function resolveQuestion(isOk){ if(questionAnswered) return; questionAnswered=true; total++; if(isOk) correct++; updateStats();
+  if(quizMode){ quizRes.push(isOk); renderDots() } $('next-row').style.display='flex' }
+function nextQ(){ if(quizMode){ quizIdx++; renderDots(); showQProblem() } else newProblem() }
+function updateStats(){ $('s-total').textContent=total; $('s-correct').textContent=correct; $('s-pct').textContent=total?Math.round(correct/total*100)+'%':'—' }
+function resetStats(){ total=0; correct=0; updateStats(); newProblem() }
+
+/* ---------- quiz mode ---------- */
+function qp(){ const mc=+$('mc-count').value, fi=+$('fill-count').value; $('mc-val').textContent=mc; $('fill-val').textContent=fi; const t=mc+fi;
+  $('quiz-preview').textContent=t===0?'Please select at least 1 problem':`${t} problems total: ${mc} Multiple Choice + ${fi} Fill-in` }
+function startQuiz(){ const mc=+$('mc-count').value, fi=+$('fill-count').value; if(mc+fi===0){ $('quiz-preview').textContent='Please select at least 1 problem'; return }
+  quizMode=true; quizQ=shuffle([...Array(mc).fill('mc'),...Array(fi).fill('fill')]); quizIdx=0; quizRes=[];
+  $('quiz-setup').style.display='none'; $('quiz-prog').style.display='flex'; renderDots(); showQProblem() }
+function renderDots(){ const c=$('quiz-dots'); c.innerHTML=''; quizQ.forEach((t,i)=>{ const d=document.createElement('div'); d.className='qd '+(i<quizRes.length?(quizRes[i]?'ok':'bad'):t); c.appendChild(d) });
+  $('quiz-label').textContent=quizIdx<quizQ.length?`Question ${quizIdx+1} / ${quizQ.length}  —  ${quizQ[quizIdx]==='mc'?'🔘 Multiple Choice':'✏️ Fill-in'}`:'✓ All done!' }
+function showQProblem(){ if(quizIdx>=quizQ.length){ showQuizSummary(); return } showProblem(quizQ[quizIdx]) }
+function showQuizSummary(){
+  $('quiz-prog').style.display='none'; $('next-row').style.display='none';
+  const right=quizRes.filter(Boolean).length, tot=quizRes.length, pct=tot?Math.round(right/tot*100):0, emoji=pct>=90?'🌟':pct>=70?'😊':pct>=50?'💪':'📚';
+  $('prob-svg').innerHTML='';
+  $('prob').textContent=`${emoji} Quiz Complete!\n\nScore: ${right} / ${tot} correct  (${pct}%)`;
+  $('mc-options').innerHTML='<button class="btn btn-primary" style="margin-top:12px" onclick="endQuiz()">↩ Back to Practice</button>';
+  $('feedback').className='feedback'; $('hint-link').style.display='none'; $('hint').style.display='none'; $('attempts-left-bar').style.display='none';
+  quizMode=false;
+}
+function endQuiz(){ quizMode=false; $('quiz-setup').style.display='block'; $('quiz-prog').style.display='none'; $('next-row').style.display='none'; newProblem() }
+
+buildSidebar();
+setTopicSidebar(currentTopic);
+
+</script>
+<script>
+/* ===== Prof. Fang Math bridge: lets the main site open a chapter/topic and saves scores =====
+   URL options: ?chapter=sys  (one chapter)  &topic=sys2_elim  &mode=learn|practice  &embed=1 (inside the site) */
+(function(){
+  const P=new URLSearchParams(location.search), embed=P.get('embed')==='1', ch=P.get('chapter'), mode=P.get('mode');
+  const inSite=embed&&window.parent!==window;
+  const send=m=>{ if(inSite) window.parent.postMessage(Object.assign({source:'fm-app'},m), location.origin); };
+  const css=[];
+  if(embed) css.push('.main-content>h1,.main-content>.subtitle,.main-content>.welcome-line,.name-bar,.main-content>.footer{display:none!important}body{background:transparent!important}');
+  if(mode==='practice') css.push('body:not(.fm-quizzing) .card,.controls,.stats,.concept-box,.hint-link,.hint,.strategy-tip{display:none!important}');
+  if(mode==='learn') css.push('#quiz-setup,#quiz-prog{display:none!important}');
+  if(css.length){ const st=document.createElement('style'); st.textContent=css.join('\n'); document.head.appendChild(st); }
+  if(mode==='practice') document.body.classList.add('fm-practice');
+  // show only the chosen chapter
+  if(ch){ const body=document.getElementById('grp-'+ch);
+    if(body) document.querySelectorAll('.sidebar-group').forEach(g=>{ if(!g.contains(body)) g.style.display='none'; }); }
+  // report answers and quiz results to the site
+  const _res=resolveQuestion;
+  resolveQuestion=function(ok){ const was=questionAnswered, q=quizMode; _res(ok);
+    if(!was) send({type:'answer', ok:!!ok, quiz:q, topic:currentTopic, label:topics[currentTopic].label, difficulty}); };
+  const _sum=showQuizSummary;
+  showQuizSummary=function(){ const right=quizRes.filter(Boolean).length, tot=quizRes.length; _sum();
+    if(tot) send({type:'quiz', right, total:tot, topic:currentTopic, label:topics[currentTopic].label, difficulty}); };
+  const _start=startQuiz; startQuiz=function(){ document.body.classList.add('fm-quizzing'); return _start.apply(this, arguments); };
+  const _end=endQuiz; endQuiz=function(){ document.body.classList.remove('fm-quizzing'); return _end.apply(this, arguments); };
+  // open the requested topic (or the chapter's first topic)
+  let start=P.get('topic'); if(!(start&&topics[start])) start=null;
+  if(!start&&ch){ const f=document.querySelector('#grp-'+ch+' .sidebar-item[id^="sid-"]'); if(f) start=f.id.slice(4); }
+  if(start) setTopicSidebar(start);
+  // keep the site's frame as tall as the page (no double scrollbars)
+  if(inSite){ let last=0; const tell=()=>{ const hh=document.documentElement.scrollHeight; if(Math.abs(hh-last)>4){ last=hh; send({type:'height', h:hh}); } };
+    new ResizeObserver(tell).observe(document.body); window.addEventListener('load', tell); tell(); }
+})();
+</script>
+</body>
+</html>

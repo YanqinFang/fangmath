@@ -1,0 +1,1118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Multivariable Calculus Practice</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:system-ui,sans-serif;background:#f3f0ff;color:#111;min-height:100vh;padding:1.5rem 1rem;font-size:16px}
+.layout{max-width:1120px;margin:0 auto}
+.main-content{width:100%}
+.topic-sidebar{width:100%;margin-bottom:1.2rem}
+.sidebar-box{background:#fff;border:1px solid #ddd;border-radius:12px;padding:12px 14px 14px;display:flex;flex-wrap:wrap;gap:7px;align-items:flex-start}
+.sidebar-title{flex-basis:100%;font-size:13px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:#888;margin-bottom:1px}
+.sidebar-group{flex:0 0 auto}
+.sidebar-group.wide{flex-basis:100%;width:100%}
+.sidebar-group-hdr{font-size:12px;font-weight:700;padding:7px 14px;color:#fff;margin:0;cursor:pointer;display:inline-flex;gap:7px;align-items:center;user-select:none;border-radius:20px;white-space:nowrap}
+.grp-toggle{font-size:14px;font-weight:800;line-height:1}
+.sidebar-group-body{display:none}
+.sidebar-group-body.open{display:flex;flex-wrap:wrap;gap:6px;width:100%;padding:8px 2px 2px}
+.sidebar-item{font-size:13px;padding:6px 13px;cursor:pointer;color:#444;border:1.5px solid #ddd;border-radius:16px;background:#fafafa;transition:all .12s;line-height:1.3;white-space:nowrap}
+.sidebar-item:hover{background:#f0f0f0;border-color:#bbb}
+h1{font-size:26px;font-weight:700;color:#4527a0;margin-bottom:3px}
+.subtitle{font-size:14px;color:#666;margin-bottom:1.2rem}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:1.2rem}
+.stat{background:#fff;border:1px solid #ddd;border-radius:10px;padding:12px;text-align:center}
+.stat-num{font-size:26px;font-weight:700;color:#4527a0}
+.stat-lbl{font-size:13px;color:#999;margin-top:2px}
+.diff-row{display:flex;gap:8px;margin-bottom:1.2rem}
+.diff-btn{flex:1;padding:8px;border:2px solid #ddd;border-radius:8px;font-size:14px;font-weight:700;cursor:pointer;background:#fff}
+.diff-btn.easy{color:#2e7d32;border-color:#a5d6a7}
+.diff-btn.medium{color:#e65100;border-color:#ffcc80}
+.diff-btn.hard{color:#b71c1c;border-color:#ef9a9a}
+.diff-btn.easy.active{background:#e8f5e9;border-color:#2e7d32}
+.diff-btn.medium.active{background:#fff3e0;border-color:#e65100}
+.diff-btn.hard.active{background:#ffebee;border-color:#b71c1c}
+.controls{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:1.2rem}
+.btn{padding:9px 18px;border:1px solid #ccc;border-radius:8px;font-size:15px;cursor:pointer;background:#fff;color:#111}
+.btn:hover{background:#f0f0f0}
+.btn-primary{background:#4527a0;color:#fff;border-color:#4527a0}
+.btn-primary:hover{background:#512da8}
+.concept-box{background:#ede7f6;border:1.5px solid #b39ddb;border-radius:12px;padding:1.1rem 1.3rem;margin-bottom:1.2rem}
+.concept-header{font-size:16px;font-weight:700;color:#4527a0;margin-bottom:.7rem}
+.concept-rule{background:#fff;border-left:4px solid #4527a0;padding:9px 13px;border-radius:0 8px 8px 0;font-size:13px;color:#333;margin-bottom:.7rem;line-height:1.7;white-space:pre-line}
+.concept-example-title{font-size:13px;font-weight:700;color:#f57f17;margin:6px 0 4px}
+.concept-example-prob{font-size:14px;font-weight:500;color:#111;margin-bottom:5px;white-space:pre-line}
+.concept-steps{list-style:none}
+.concept-steps li{font-size:13px;padding:4px 0;border-bottom:1px dashed #d1c4e9;line-height:1.6;white-space:pre-line}
+.concept-steps li:last-child{border-bottom:none}
+.concept-answer{font-weight:700;color:#4527a0;font-size:14px;margin-top:7px}
+.name-bar{background:#fff;border:1px solid #ddd;border-radius:12px;padding:12px 16px;margin-bottom:1.1rem;display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.name-bar label{font-size:14px;font-weight:600;color:#4527a0;white-space:nowrap}
+.name-input{padding:8px 12px;border:1px solid #ccc;border-radius:8px;font-size:15px;flex:1;min-width:140px;max-width:240px}
+.name-input:focus{outline:none;border-color:#4527a0;box-shadow:0 0 0 2px rgba(69,39,160,.15)}
+.btn-submit{padding:8px 16px;border:none;border-radius:8px;font-size:14px;font-weight:700;cursor:pointer;background:#4527a0;color:#fff}
+.btn-submit:hover{background:#512da8}
+.btn-submit:disabled{background:#bbb;cursor:default}
+.submit-msg{font-size:13px;margin-top:4px;width:100%}
+.submit-msg.ok{color:#2e7d32}
+.submit-msg.err{color:#c62828}
+.card{background:#fff;border:1px solid #ddd;border-radius:12px;padding:1.4rem;margin-bottom:1rem}
+.badges{display:flex;gap:8px;margin-bottom:.9rem;flex-wrap:wrap;align-items:center}
+.badge{display:inline-block;font-size:12px;padding:3px 12px;border-radius:20px;font-weight:600}
+.badge-easy{background:#e8f5e9;color:#2e7d32}
+.badge-medium{background:#fff3e0;color:#e65100}
+.badge-hard{background:#ffebee;color:#b71c1c}
+.prob-svg-wrap{margin-bottom:1rem}
+.problem-text{font-size:21px;font-weight:500;color:#111;margin-bottom:1.1rem;line-height:1.7;white-space:pre-line}
+.answer-input{padding:10px 13px;border:1px solid #ccc;border-radius:8px;font-size:16px;min-width:200px;flex:1;max-width:320px}
+.answer-input:focus{outline:none;border-color:#4527a0;box-shadow:0 0 0 2px rgba(69,39,160,.15)}
+.hint-link{font-size:14px;color:#4527a0;cursor:pointer;text-decoration:underline;margin-top:9px;display:none}
+.hint{margin-top:9px;padding:11px 14px;border-left:3px solid #b39ddb;background:#f5f5f5;font-size:15px;color:#444;border-radius:0 8px 8px 0;display:none;white-space:pre-line}
+.feedback{margin-top:11px;padding:11px 14px;border-radius:8px;font-size:16px;display:none}
+.feedback.correct{background:#e8f5e9;color:#2e7d32;display:block}
+.feedback.wrong{background:#fff3e0;color:#e65100;display:block}
+.feedback.reveal{background:#ffebee;color:#c62828;display:block}
+.attempts-left{font-size:13px;color:#888;background:#f5f5f5;border-radius:20px;padding:3px 12px;display:inline-block;margin-top:7px}
+.attempts-left.warn{color:#e65100;background:#fff3e0;font-weight:600}
+.mc-options{display:flex;flex-direction:column;gap:9px;margin-bottom:.9rem}
+.mc-opt{display:flex;align-items:center;gap:13px;padding:12px 16px;border:2px solid #ddd;border-radius:10px;cursor:pointer;font-size:15px;transition:all .15s;background:#fff;line-height:1.5}
+.mc-opt:hover:not(.locked):not(.tried){border-color:#b39ddb;background:#f5f5f5}
+.mc-opt.correct{border-color:#2e7d32!important;background:#e8f5e9!important;font-weight:600;color:#2e7d32;cursor:default}
+.mc-opt.wrong{border-color:#e65100!important;background:#fff3e0!important;color:#e65100;cursor:default}
+.mc-opt.reveal{border-color:#2e7d32!important;background:#e8f5e9!important;cursor:default}
+.mc-opt.locked,.mc-opt.tried{cursor:default}
+.mc-label{display:inline-flex;align-items:center;justify-content:center;min-width:28px;height:28px;border-radius:50%;background:#ede7f6;color:#4527a0;font-weight:700;font-size:13px;flex-shrink:0}
+.mc-opt.correct .mc-label{background:#2e7d32;color:#fff}
+.mc-opt.wrong .mc-label{background:#e65100;color:#fff}
+.mc-opt.reveal .mc-label{background:#2e7d32;color:#fff}
+.quiz-setup{background:#fff;border:1.5px solid #b39ddb;border-radius:12px;padding:1.1rem 1.3rem;margin-bottom:1.2rem}
+.quiz-setup-title{font-size:15px;font-weight:700;color:#4527a0;margin-bottom:.9rem}
+.quiz-row{display:flex;align-items:center;gap:12px;margin-bottom:.7rem;flex-wrap:wrap}
+.quiz-row label{font-size:14px;color:#444;min-width:180px}
+.quiz-row input[type=range]{width:110px;accent-color:#4527a0}
+.quiz-count{font-size:19px;font-weight:700;color:#4527a0;min-width:28px;text-align:center}
+.quiz-preview{font-size:13px;color:#555;margin:.4rem 0 .9rem;padding:7px 11px;background:#ede7f6;border-radius:8px}
+.btn-quiz-start{padding:9px 24px;border:none;border-radius:8px;font-size:15px;font-weight:700;cursor:pointer;background:#4527a0;color:#fff}
+.btn-quiz-start:hover{background:#512da8}
+.quiz-progress{background:#fff;border:1px solid #ddd;border-radius:10px;padding:11px 16px;margin-bottom:.9rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:9px}
+.quiz-prog-label{font-size:14px;font-weight:700;color:#4527a0}
+.quiz-dots{display:flex;gap:5px;flex-wrap:wrap}
+.qd{width:16px;height:16px;border-radius:50%;border:2px solid transparent}
+.qd.mc{background:#d1c4e9;border-color:#9575cd}
+.qd.fill{background:#fff9c4;border-color:#f9a825}
+.qd.ok{background:#2e7d32;border-color:#2e7d32}
+.qd.bad{background:#c62828;border-color:#c62828}
+.next-row{display:none;gap:10px;margin-top:13px;align-items:center}
+.footer{text-align:center;margin-top:1.5rem;font-size:13px;color:#bbb}
+.welcome-line{font-size:14.5px;color:#4527a0;background:#ede7f6;border:1px solid #d1c4e9;border-radius:10px;padding:10px 14px;margin-bottom:1rem;line-height:1.5}
+.strategy-tip{font-size:13px;color:#00695c;background:#e0f2f1;border-left:3px solid #00897b;border-radius:0 8px 8px 0;padding:8px 12px;margin-top:11px;line-height:1.55}
+math{font-size:1.05em;vertical-align:-.08em}
+math msqrt{padding-top:1px}
+@media(max-width:700px){.sidebar-group-hdr{font-size:11.5px;padding:6px 11px}.sidebar-item{font-size:12.5px;padding:5px 11px}}
+:root{--gc:#e65100;--gs:#fff3e0;--gb:#ffcc80}
+.sidebar-item.active{background:var(--gs);border-color:var(--gc);color:var(--gc);font-weight:700}
+.btn-primary{background:var(--gc);border-color:var(--gc)}
+.btn-primary:hover{background:var(--gc);filter:brightness(1.1)}
+.concept-box{background:var(--gs);border-color:var(--gb)}
+.concept-header,.concept-answer{color:var(--gc)}
+.concept-rule{border-left-color:var(--gc)}
+.concept-steps li{border-bottom-color:var(--gb)}
+.step-lbl{display:inline-block;background:#fff;border:1px solid var(--gb);border-radius:6px;font-size:12px;font-weight:700;color:var(--gc);padding:1px 8px;margin-right:7px}
+.badge-topic{background:var(--gs);color:var(--gc)}
+.badge-easy{background:#e8f5e9;color:#2e7d32}.badge-medium{background:#fff3e0;color:#e65100}.badge-hard{background:#ffebee;color:#b71c1c}
+.problem-text{white-space:pre-wrap;font-variant-numeric:tabular-nums}
+.fill-row{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:4px}
+.fill-fmt{font-size:13px;color:#888;margin-top:6px}
+.sym-keys{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+.sym-keys button{min-width:40px;height:34px;border:1px solid #ddd;border-radius:8px;background:#fafafa;font-size:15px;cursor:pointer}
+.sym-keys button:hover{background:#f0f0f0}
+h1,.stat-num,.quiz-prog-label,.quiz-count,.quiz-setup-title,.hint-link{color:var(--gc)}
+.btn-quiz-start{background:var(--gc)}
+.quiz-setup{border-color:var(--gb)}.quiz-preview{background:var(--gs)}
+.welcome-line{color:#333;background:var(--gs);border-color:var(--gb)}
+.mc-opt:hover:not(.locked):not(.tried){border-color:var(--gb)}
+.mc-label{background:var(--gs);color:var(--gc)}
+.answer-input:focus{border-color:var(--gc)}
+#prob-svg:empty{display:none}
+#prob-svg{margin:0 0 1rem}
+.fig{max-width:100%;height:auto;display:block}
+.fig .acc{fill:var(--gc)} .fig .accs{stroke:var(--gc)} .fig polygon{fill:var(--gs)}
+.nts{font-size:12px;color:#999;margin-top:2px}
+.concept-svg{margin:4px 0 6px}.concept-svg .fig{max-width:260px}
+</style>
+</head>
+<body>
+<div class="layout">
+<div class="topic-sidebar"><div class="sidebar-box" id="sidebar-box"></div></div>
+<div class="main-content">
+  <h1>🧊 Multivariable Calculus</h1>
+  <p class="subtitle">9 units · 53 topics · vectors, partials, multiple integrals & vector calculus · Easy to Hard</p>
+  <p class="welcome-line">👋 Welcome! Pick a unit and topic, read the concept box, then practice. Vectors can be typed as ⟨1, −2, 3⟩ or 1, -2, 3. You get two tries on every problem.</p>
+  <div class="stats">
+    <div class="stat"><div class="stat-num" id="s-total">0</div><div class="stat-lbl">attempted</div></div>
+    <div class="stat"><div class="stat-num" id="s-correct">0</div><div class="stat-lbl">correct</div></div>
+    <div class="stat"><div class="stat-num" id="s-pct">—</div><div class="stat-lbl">accuracy</div></div>
+  </div>
+  <div class="diff-row">
+    <button class="diff-btn easy active" onclick="setDiff('easy')">⭐ Easy</button>
+    <button class="diff-btn medium" onclick="setDiff('medium')">⭐⭐ Medium</button>
+    <button class="diff-btn hard" onclick="setDiff('hard')">⭐⭐⭐ Hard</button>
+  </div>
+  <div class="controls">
+    <button class="btn btn-primary" id="new-btn" onclick="newProblem()">↻ New Problem</button>
+    <button class="btn" onclick="resetStats()">✕ Reset</button>
+  </div>
+  <div class="concept-box" id="concept-box"></div>
+  <div class="quiz-setup" id="quiz-setup">
+    <div class="quiz-setup-title">📝 Quiz Mode — Mix MC &amp; Fill-in</div>
+    <div class="quiz-row"><label for="mc-count">🔘 Multiple Choice problems:</label><input type="range" id="mc-count" min="0" max="10" value="5" oninput="qp()"><span class="quiz-count" id="mc-val">5</span></div>
+    <div class="quiz-row"><label for="fill-count">✏️ Fill-in problems:</label><input type="range" id="fill-count" min="0" max="10" value="3" oninput="qp()"><span class="quiz-count" id="fill-val">3</span></div>
+    <div class="quiz-preview" id="quiz-preview">8 problems total: 5 Multiple Choice + 3 Fill-in</div>
+    <button class="btn-quiz-start" onclick="startQuiz()">▶ Start Quiz</button>
+  </div>
+  <div id="quiz-prog" style="display:none" class="quiz-progress">
+    <div><div class="quiz-prog-label" id="quiz-label">Question 1 / 8</div><div class="quiz-dots" id="quiz-dots" style="margin-top:5px"></div></div>
+    <button class="btn" onclick="endQuiz()" style="font-size:12px;padding:5px 12px">✕ End Quiz</button>
+  </div>
+  <div class="card">
+    <div class="badges"><span class="badge badge-topic" id="badge-topic">Topic</span><span class="badge badge-easy" id="badge-diff">Easy</span></div>
+    <div id="prob-svg"></div>
+    <div class="problem-text" id="prob"></div>
+    <div class="mc-options" id="mc-options"></div>
+    <div id="attempts-left-bar" style="margin-top:5px;display:none"><span class="attempts-left" id="attempts-left-txt"></span></div>
+    <span class="hint-link" id="hint-link" onclick="showHint()">💡 Show hint</span>
+    <div class="hint" id="hint"></div>
+    <div class="strategy-tip">🧭 <b>Stuck? Try 3-S:</b> <b>Simple</b> small numbers → <b>Specific</b> one worked example → <b>Systematic</b> same steps on the real problem.</div>
+    <div class="feedback" id="feedback"></div>
+    <div class="next-row" id="next-row"><button class="btn btn-primary" onclick="nextQ()">Next Question →</button></div>
+  </div>
+  <div class="footer">Multivariable Calculus &nbsp;·&nbsp; © 2026 Prof. Fang Math · All rights reserved.</div>
+</div>
+</div>
+<script>
+/* ===== Algebra 1 practice — core helpers and answer checking (no page code here) ===== */
+const rnd=(a,b)=>Math.floor(Math.random()*(b-a+1))+a;
+const pick=a=>a[Math.floor(Math.random()*a.length)];
+const nz=(a,b)=>{let x;do{x=rnd(a,b)}while(x===0);return x};
+const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
+const gcd=(a,b)=>{a=Math.abs(a);b=Math.abs(b);while(b){[a,b]=[b,a%b]}return a};
+const SUP={0:'⁰',1:'¹',2:'²',3:'³',4:'⁴',5:'⁵',6:'⁶',7:'⁷',8:'⁸',9:'⁹','-':'⁻'};
+const sup=n=>String(n).split('').map(c=>SUP[c]||c).join('');
+const M=n=>n<0?'−'+Math.abs(n):String(n);                 // display a number with a real minus sign
+const P_=n=>n<0?`(${M(n)})`:String(n);                       // number in parentheses when negative
+function fr(n,d){ if(d===0) return 'undefined'; if(d<0){n=-n;d=-d} const g=gcd(n,d)||1; n/=g; d/=g; return d===1?M(n):`${M(n)}/${d}` }
+const isInt=x=>Math.abs(x-Math.round(x))<1e-9;
+// polynomial from coefficients (highest power first): P([2,-3,1]) → 2x² − 3x + 1
+function P(cs,v='x'){
+  const deg=cs.length-1; let out='';
+  cs.forEach((c,i)=>{ if(!c) return; const p=deg-i, a=Math.abs(c);
+    const vv=p===0?'':p===1?v:v+sup(p), cs_=(a===1&&p>0)?'':String(a);
+    out+= out===''? (c<0?'−':'')+cs_+vv : (c<0?' − ':' + ')+cs_+vv; });
+  return out||'0';
+}
+// a sum of terms [[coef,'x²y'],...] keeping the given order
+function S(terms){ let out=''; for(const [c,v] of terms){ if(!c) continue; const a=Math.abs(c), cs_=(a===1&&v)?'':String(a);
+  out+= out===''? (c<0?'−':'')+cs_+v : (c<0?' − ':' + ')+cs_+v; } return out||'0'; }
+// coefficient times x that may be a fraction: (2/3)x
+function FX(n,d,v='x'){ if(d<0){n=-n;d=-d} const g=gcd(n,d)||1; n/=g; d/=g; if(d===1) return P([n,0],v).trim(); return (n<0?'−':'')+`(${Math.abs(n)}/${d})${v}` }
+function lineStr(mn,md,bn,bd=1){ // y = (m)x + b
+  const g=gcd(bn,bd)||1; bn/=g; bd/=g; if(bd<0){bn=-bn;bd=-bd}
+  let s=mn===0?'':FX(mn,md);
+  if(bn!==0){ const bs=bd===1?String(Math.abs(bn)):`${Math.abs(bn)}/${bd}`; s+= s===''? (bn<0?'−':'')+bs : (bn<0?' − ':' + ')+bs; }
+  return 'y = '+(s||'0');
+}
+function distinct(ans, list, fallback){ // three distractors that differ from the answer and each other
+  const seen=new Set([key(ans)]), out=[];
+  for(const c of list){ const s=String(c); if(s.includes('NaN')||s.includes('undefined')||s.includes('Infinity')) continue; const k=key(s); if(!seen.has(k)){ seen.add(k); out.push(s) } if(out.length===3) break; }
+  let i=1; while(out.length<3 && fallback && i<40){ const s=String(fallback(i++)); const k=key(s); if(!seen.has(k)){ seen.add(k); out.push(s) } }
+  return out;
+}
+const key=s=>String(s).replace(/\s+/g,'').replace(/−/g,'-').toLowerCase();
+const numFall=ans=>i=>{ const v=numVal(ans); return Number.isFinite(v)? M((isInt(v)?v:Math.round(v*100)/100)+(i%2?i:-i)) : ans+' + '+i };
+
+/* ---------- a small, safe expression parser ---------- */
+function cleanIn(s){
+  return String(s).toLowerCase()
+    .replace(/[−–—]/g,'-').replace(/[×·∙]/g,'*').replace(/ˣ/g,'^x').replace(/ᵗ/g,'^t').replace(/÷/g,'/')
+    .replace(/[⁰¹²³⁴⁵⁶⁷⁸⁹⁻]+/g,m=>'^'+m.split('').map(c=>({'⁰':0,'¹':1,'²':2,'³':3,'⁴':4,'⁵':5,'⁶':6,'⁷':7,'⁸':8,'⁹':9,'⁻':'-'})[c]).join(''))
+    .replace(/sqrt/g,'√').replace(/pi/g,'π').replace(/\s+/g,'');
+}
+const FNS=['arcsin','arccos','arctan','asin','acos','atan','sinh','cosh','sin','cos','tan','sec','csc','cot','exp','abs','ln','log'];
+const FNA={asin:'arcsin',acos:'arccos',atan:'arctan'};
+const FEV={sin:Math.sin,cos:Math.cos,tan:Math.tan,sec:x=>1/Math.cos(x),csc:x=>1/Math.sin(x),cot:x=>1/Math.tan(x),arcsin:Math.asin,arccos:Math.acos,arctan:Math.atan,
+  exp:Math.exp,abs:Math.abs,ln:Math.log,log:Math.log10,sinh:Math.sinh,cosh:Math.cosh};
+const FINV={sin:'arcsin',cos:'arccos',tan:'arctan'};
+function tokenize(s){
+  const t=[]; let i=0;
+  while(i<s.length){ const c=s[i];
+    if(/[0-9.]/.test(c)){ let j=i; while(j<s.length&&/[0-9.]/.test(s[j])) j++; const n=s.slice(i,j); if((n.match(/\./g)||[]).length>1) throw 0; t.push({k:'n',v:parseFloat(n),s:n}); i=j; }
+    else if(c==='π'){ t.push({k:'n',v:Math.PI,s:'π',pi:true}); i++; }
+    else if(/[a-z]/.test(c)){ const w=FNS.find(f=>s.startsWith(f,i));
+      if(w){ t.push({k:'fn',v:FNA[w]||w}); i+=w.length }
+      else if(c==='e'){ t.push({k:'n',v:Math.E,s:'e',pi:true}); i++ }      // e is Euler's number
+      else { t.push({k:'v',v:c}); i++ } }
+    else if('+-*/^()√|'.includes(c)){ t.push({k:c}); i++; }
+    else throw 0;
+  } return t;
+}
+function parse(str){
+  const t=tokenize(cleanIn(str)); let p=0;
+  const peek=()=>t[p], eat=k=>{ if(!t[p]||t[p].k!==k) throw 0; return t[p++] };
+  function expr(){ let a=term(); while(peek()&&(peek().k==='+'||peek().k==='-')){ const op=t[p++].k; a={t:'add',op,a,b:term()} } return a }
+  function term(){ let a=unary(); for(;;){ const k=peek()&&peek().k;
+      if(k==='*'||k==='/'){ p++; a={t:'mul',op:k,a,b:unary()} }
+      else if(k==='v'||k==='('||k==='√'||k==='fn'||(k==='n'&&(a.endsParen||peek().pi||a.t==='fn'))){ a={t:'mul',op:'*',a,b:unary(),imp:true} }
+      else break; } return a }
+  function unary(){ if(peek()&&peek().k==='-'){ p++; return {t:'neg',a:unary()} } if(peek()&&peek().k==='+'){ p++; return unary() } return power() }
+  function power(){ const a=atom(); if(peek()&&peek().k==='^'){ p++; return {t:'pow',a,b:unary()} } return a }
+  function atom(){ const x=peek(); if(!x) throw 0;
+    if(x.k==='n'){ p++; return {t:'num',v:x.v} }
+    if(x.k==='v'){ p++; return {t:'var',n:x.v} }
+    if(x.k==='('){ p++; const e=expr(); eat(')'); e.endsParen=true; return Object.assign({},e,{paren:true,endsParen:true}) }
+    if(x.k==='√'){ p++; return {t:'sqrt',a:atom()} }
+    if(x.k==='|'){ p++; const e=expr(); eat('|'); return {t:'fn',f:'abs',a:e,endsParen:true} }
+    if(x.k==='fn'){ p++; let f=x.v, ex=null;
+      if(peek()&&peek().k==='^'){ p++; const e=unary(); if(e.t==='neg'&&e.a.t==='num'&&e.a.v===1&&FINV[f]) f=FINV[f]; else ex=e }
+      let arg; if(peek()&&peek().k==='('){ arg=atom() }
+      else { arg=power(); while(peek()&&(peek().k==='v'||peek().k==='√'||(peek().k==='n'&&peek().pi))) arg={t:'mul',op:'*',a:arg,b:power(),imp:true} }
+      const node={t:'fn',f,a:arg}; return ex?{t:'pow',a:node,b:ex}:node }
+    throw 0 }
+  const e=expr(); if(p!==t.length) throw 0; return e;
+}
+function ev(n,env){
+  switch(n.t){ case'num':return n.v; case'var':return n.n in env?env[n.n]:NaN; case'neg':return -ev(n.a,env);
+    case'add':return n.op==='+'?ev(n.a,env)+ev(n.b,env):ev(n.a,env)-ev(n.b,env);
+    case'mul':return n.op==='*'?ev(n.a,env)*ev(n.b,env):ev(n.a,env)/ev(n.b,env);
+    case'pow':{ const A=ev(n.a,env), B=ev(n.b,env); if(A<0&&B!==0&&Math.abs(1/B-Math.round(1/B))<1e-9&&Math.round(1/B)%2) return -Math.pow(-A,B); return Math.pow(A,B) } case'sqrt':return Math.sqrt(ev(n.a,env)); case'fn':return FEV[n.f](ev(n.a,env)); }
+  return NaN;
+}
+function varsOf(n,s=new Set()){ if(!n) return s; if(n.t==='var') s.add(n.n); ['a','b'].forEach(k=>n[k]&&varsOf(n[k],s)); return s }
+const tryParse=s=>{ try{ return parse(s) }catch(e){ return null } };
+function numVal(s){ const n=tryParse(String(s).replace(/^[a-z]=/i,'')); if(!n||varsOf(n).size) return NaN; return ev(n,{}) }
+const close=(a,b)=>Math.abs(a-b)<=1e-7*Math.max(1,Math.abs(a),Math.abs(b));
+function equiv(A,B){
+  const vs=[...new Set([...varsOf(A),...varsOf(B)])], pts=[[1.37,-0.61,2.11],[-1.83,1.29,0.47],[2.71,0.93,-1.17],[0.59,2.33,1.61],[-2.47,-1.41,2.89],[3.13,1.77,-0.83],[0.31,-0.43,0.77],[-0.68,0.52,-0.29],[0.11,0.21,-0.13],[-0.19,0.07,0.17],[0.23,-0.09,0.12],[0.04,0.15,-0.21],[0.07,0.33,-0.05],[-0.1,0.27,0.09]];
+  let ok=0; for(const pt of pts){ const env={}; vs.forEach((v,i)=>env[v]=pt[i%3]*(1+i*0.37)); const a=ev(A,env), b=ev(B,env);
+    if(!Number.isFinite(a)||!Number.isFinite(b)) continue; if(!close(a,b)) return false; ok++; } return ok>=3;
+}
+function flat(n,type,out=[]){ if(n.t===type&&(type!=='mul'||n.op==='*')&&!n.paren){ flat(n.a,type,out); if(type==='add'&&n.op==='-') out.push({t:'neg',a:n.b}); else flat(n.b,type,out) } else out.push(n); return out }
+const termCount=n=>flat(n,'add').length;
+const numTokens=s=>(cleanIn(s).match(/\d+(\.\d+)?/g)||[]).length;
+// polynomial coefficients of a one-variable node (degree ≤ 4) by sampling
+function coefs(node,v='x'){
+  const X=[0,1,2,3,4], Y=X.map(x=>ev(node,{[v]:x})); if(Y.some(y=>!Number.isFinite(y))) return null;
+  const n=5, c=Y.slice(); for(let j=1;j<n;j++) for(let i=n-1;i>=j;i--) c[i]=(c[i]-c[i-1])/(X[i]-X[i-j]);
+  let poly=[c[n-1]]; for(let i=n-2;i>=0;i--){ const nx=new Array(poly.length+1).fill(0); for(let k=0;k<poly.length;k++){ nx[k+1]+=poly[k]; nx[k]-=poly[k]*X[i] } nx[0]+=c[i]; poly=nx }
+  if(!close(ev(node,{[v]:5.5}),poly.reduce((s,a,k)=>s+a*Math.pow(5.5,k),0))) return null;
+  return poly.map(a=>Math.abs(a-Math.round(a))<1e-7?Math.round(a):a);
+}
+const deg=c=>{ for(let k=c.length-1;k>=0;k--) if(Math.abs(c[k])>1e-9) return k; return -1 };
+function sumFactors(node){ // factors of a product that are sums (count (x+1)^2 as two)
+  let n=node; while(n.t==='neg') n=n.a; const fs=flat(n,'mul'); let out=[];
+  for(const f of fs){ if(f.t==='add') out.push(f); else if(f.t==='pow'&&f.a.t==='add'&&f.b.t==='num'&&isInt(f.b.v)) for(let i=0;i<f.b.v;i++) out.push(f.a); else if(f.t==='neg'&&f.a.t==='add') out.push(f.a) }
+  return out;
+}
+
+/* ---------- checking a typed answer (cur = the generated problem) ---------- */
+function stripLead(s,v){ const c=cleanIn(s); const m=c.match(/^([a-z]|[a-z]\([a-z]\))=(.*)$/); return m?m[2]:c }
+function solSet(s){ // "x = 2 or x = -3", "-3, 2", "±4", "1 ± √3" → sorted numbers
+  let c=cleanIn(s).replace(/[{}]/g,'').replace(/±|\+\/-|\+-/g,'±'); const parts=c.split(/,|;|or|and/).map(x=>x.replace(/^[a-z]=/,'')).filter(Boolean); const vals=[];
+  for(const part of parts){ if(part.includes('±')){ let [a,b]=part.split('±'); let den=null;
+      const m=part.match(/^\((.*)±(.*)\)\/(.*)$/); if(m){ a=m[1]; b=m[2]; den=m[3] }
+      const A=a===''?0:numVal(a), B=numVal(b), D=den?numVal(den):1; if(!Number.isFinite(A)||!Number.isFinite(B)||!Number.isFinite(D)) return null; vals.push((A-B)/D,(A+B)/D) }
+    else { const v=numVal(part); if(!Number.isFinite(v)) return null; vals.push(v) } }
+  return vals.sort((a,b)=>a-b).filter((v,i,a)=>i===0||!close(v,a[i-1]));
+}
+function ineqCanon(s){
+  let c=cleanIn(s).replace(/≥|=>/g,'>=').replace(/≤|=</g,'<=');
+  const num='(-?[0-9.]+(?:/[0-9]+)?)', op='(<=|>=|<|>)', pieces=c.split(/or/), ors=[];
+  for(const pc of pieces){ let I={lo:-Infinity,loI:false,hi:Infinity,hiI:false};
+    for(const q of pc.split(/and/)){ let m, J={lo:-Infinity,loI:false,hi:Infinity,hiI:false};
+      if((m=q.match(new RegExp('^'+num+op+'x'+op+num+'$')))){ const a=numVal(m[1]), b=numVal(m[4]); if(m[2][0]!==m[3][0]) return null;
+        if(m[2][0]==='<'){ J={lo:a,loI:m[2]==='<=',hi:b,hiI:m[3]==='<='} } else { J={lo:b,loI:m[3]==='>=',hi:a,hiI:m[2]==='>='} } }
+      else if((m=q.match(new RegExp('^x'+op+num+'$')))){ const a=numVal(m[2]); if(m[1][0]==='<') J.hi=a, J.hiI=m[1]==='<='; else J.lo=a, J.loI=m[1]==='>=' }
+      else if((m=q.match(new RegExp('^'+num+op+'x$')))){ const a=numVal(m[1]); if(m[2][0]==='<') J.lo=a, J.loI=m[2]==='<='; else J.hi=a, J.hiI=m[2]==='>=' }
+      else return null;
+      if(J.lo>I.lo||(J.lo===I.lo&&!J.loI)) I.lo=J.lo, I.loI=J.loI; if(J.hi<I.hi||(J.hi===I.hi&&!J.hiI)) I.hi=J.hi, I.hiI=J.hiI; }
+    ors.push(I) }
+  return ors.map(I=>`${I.loI?'[':'('}${+I.lo.toFixed(9)},${+I.hi.toFixed(9)}${I.hiI?']':')'}`).sort().join('U');
+}
+const radNorm=s=>cleanIn(s).replace(/\*/g,'').replace(/√\((\d+)\)/g,'√$1');
+function check(cur,raw){
+  const type=cur.type||'num', ans=cur.answers;
+  try{
+    switch(type){
+      case 'mat': { const g=(String(raw).replace(/[−–—]/g,'-').match(/-?\d+(\.\d+)?(\/\d+)?/g)||[]).map(numVal); return g.length===cur.vals.length&&g.every((v,i)=>close(v,cur.vals[i])) }
+      case 'lineq': { const lin=str=>{ const c=cleanIn(str); if((c.match(/=/g)||[]).length!==1) return null; const [l,r]=c.split('='); const L=parse(l), Rr=parse(r); const h=(x,y,z)=>ev(L,{x,y,z})-ev(Rr,{x,y,z});
+          const c0=h(0,0,0), v=[h(1,0,0)-c0,h(0,1,0)-c0,h(0,0,1)-c0,c0]; if(!close(h(1.3,-0.7,2.1),c0+1.3*v[0]-0.7*v[1]+2.1*v[2])) return null; return v };
+        const G=lin(raw), K=lin(ans[0]); if(!G||!K) return false; const i=K.findIndex(v=>Math.abs(v)>1e-9); if(Math.abs(G[i])<1e-12) return false; const k=G[i]/K[i]; return G.every((v,j)=>close(v,k*K[j])) }
+      case 'fx': { const g=cleanIn(raw); const G=parse(g.includes('=')?g.slice(g.lastIndexOf('=')+1):g), K=parse(cleanIn(ans[0]).replace(/^.*=/,'')); return equiv(G,K) }
+      case 'exact': { const G=parse(stripLead(raw)), K=parse(cleanIn(ans[0])); if(varsOf(G).size) return false; return close(ev(G,{}),ev(K,{})) }
+      case 'anti': { const g=cleanIn(raw); const G=parse(g.includes('=')?g.slice(g.lastIndexOf('=')+1):g); if(!varsOf(G).has('c')) return false;
+        const K=parse(cleanIn(ans[0]).replace(/\+c$/,'')), v=cur.v||'x', pts=[0.37,0.71,1.13,1.62,2.27,2.93,0.53,1.37,0.11,0.19,0.23,0.29]; let d0=null, ok=0;
+        for(const x of pts){ const a=ev(G,{[v]:x,c:0}), b=ev(K,{[v]:x}); if(!Number.isFinite(a)||!Number.isFinite(b)) continue; const dd=a-b; if(d0==null) d0=dd; else if(!close(dd,d0)) return false; ok++ }
+        return ok>=3 }
+      case 'approx': { const s=stripLead(raw).replace(/°$/,''); if(!/^-?\d+(\.\d+)?$/.test(s)) return false; return Math.abs(parseFloat(s)-numVal(ans[0]))<=(cur.tol||0.05)+1e-9 }
+      case 'pi': { const s=stripLead(raw), k=cleanIn(ans[0]); if(k.includes('π')&&!s.includes('π')) return false; if(numTokens(s)>numTokens(k)) return false; return close(numVal(s),numVal(k)) }
+      case 'num': { const s=stripLead(raw).replace(/°$/,''); if(!/^-?\d+(\.\d+)?(\/\d+)?$/.test(s)) return false; return close(numVal(s),numVal(ans[0])) }
+      case 'set': { const a=solSet(raw), b=cur.vals.slice().sort((x,y)=>x-y); return !!a&&a.length===b.length&&a.every((v,i)=>close(v,b[i])) }
+      case 'pair': { const c=cleanIn(raw); let x,y; const mx=c.match(/x=([^,;]+)/), my=c.match(/y=([^,;)]+)/);
+        if(mx&&my){ x=numVal(mx[1]); y=numVal(my[1]) } else { const m=c.replace(/[()⟨⟩<>\[\]]/g,'').split(','); if(m.length!==2) return false; x=numVal(m[0]); y=numVal(m[1]) }
+        return close(x,cur.vals[0])&&close(y,cur.vals[1]) }
+      case 'ineq': { const a=ineqCanon(raw); return !!a&&a===ineqCanon(ans[0]) }
+      case 'text': { const g=key(raw).replace(/[.!]/g,''); if(ans.some(a=>key(a)===g)) return true; return !!cur.words&&key(ans[0]).length>0&&String(ans[0]).toLowerCase().split(/\s+/).every(w=>g.includes(w)) }
+      case 'rad': { if(isInt(numVal(ans[0]))&&/^-?\d+$/.test(stripLead(raw))) return close(numVal(stripLead(raw)),numVal(ans[0])); const g=radNorm(stripLead(raw)); return ans.some(a=>radNorm(a)===g) }
+      case 'sci': { const c=cleanIn(raw).replace(/x10/,'*10'); const m=c.match(/^(-?\d+(?:\.\d+)?)\*10\^(-?\d+)$/)||c.match(/^(-?\d+(?:\.\d+)?)e(-?\d+)$/); if(!m) return false;
+        const mant=parseFloat(m[1]); if(Math.abs(mant)<1||Math.abs(mant)>=10) return false; return close(mant,cur.vals[0])&&+m[2]===cur.vals[1] }
+      case 'eq': { const g=cleanIn(raw), k=cleanIn(ans[0]); const lv=k.split('=')[0]; if(!g.startsWith(lv+'=')&&!(lv==='y'&&/^(f\(x\)|g\(x\)|h\(x\)|f\^-1\(x\))=/.test(g))) return false;
+        const G=parse(g.slice(g.indexOf('=')+1)), K=parse(k.slice(k.indexOf('=')+1)); return equiv(G,K) }
+      case 'expr': case 'mono': case 'factor': {
+        const g=stripLead(raw), G=parse(g), K=parse(cleanIn(ans[0])); if(!equiv(G,K)) return false;
+        const kc=cleanIn(ans[0]);
+        if(type!=='factor'&&!cur.anyForm){ if(!kc.includes('(')&&g.includes('(')) return false; if(!kc.includes('/')&&g.includes('/')) return false; if(termCount(G)>termCount(K)) return false }
+        if(type==='mono'){ const vs=g.match(/[a-z]/g)||[]; if(new Set(vs).size!==vs.length) return false; if(numTokens(g)>numTokens(kc)) return false }
+        if(type==='factor'){ const gs=sumFactors(G), ks=sumFactors(K); if(termCount(G)>1) return false; if(gs.length<ks.length) return false;
+          for(const f of gs){ const c=coefs(f); if(!c||deg(c)<1) return false; if(c.reduce((a,b)=>gcd(a,Math.round(b)),0)!==1) return false } }
+        return true }
+    }
+  }catch(e){ return false }
+  return false;
+}
+
+// near-miss versions of an answer: one number changed by ±1, or one sign flipped
+function perturb(a){
+  const out=[], nums=[...a.matchAll(/\d+(\.\d+)?/g)];
+  nums.forEach(m=>{ const v=parseFloat(m[0]); for(const dv of [1,-1,2]){ const nv=+(v+dv).toFixed(4); if(nv<=0&&m.index>0&&/[a-z√(]/i.test(a[m.index+m[0].length]||'')) continue; if(nv<0) continue;
+      out.push(a.slice(0,m.index)+nv+a.slice(m.index+m[0].length)) } });
+  [...a.matchAll(/ [+−] /g)].forEach(m=>out.push(a.slice(0,m.index)+(m[0]===' + '?' − ':' + ')+a.slice(m.index+3)));
+  const SD='⁰¹²³⁴⁵⁶⁷⁸⁹'; [...a.matchAll(/[⁰¹²³⁴⁵⁶⁷⁸⁹]+/g)].forEach(m=>{ const v=+m[0].split('').map(c=>SD.indexOf(c)).join(''); for(const nv of [v+1,v-1,v*2]) if(nv>1) out.push(a.slice(0,m.index)+String(nv).split('').map(c=>SD[c]).join('')+a.slice(m.index+m[0].length)) });
+  if(/^y = /.test(a)){ out.push(a.startsWith('y = −')?a.replace('y = −','y = '):a.replace('y = ','y = −'), a+' + 1', a+' − 1') }
+  if(/^[a-z] [<>≤≥] /.test(a)) out.push(a.replace(/[<>≤≥]/,c=>({'<':'>','>':'<','≤':'≥','≥':'≤'})[c]));
+  return shuffle(out).filter(w=>!/(^|[^0-9.])0[a-z√(\/·]|(^|[^0-9.])1[a-z√(·]|[−-] ?0(?![.\d])|\+ 0(?![.\d])|\(1\/1\)|(^|[^0-9.])1\/1(?![0-9])|√[01](?![0-9])|\^1(?![0-9])/i.test(w)&&!/\(\)/.test(w));
+}
+const pretty=s=>String(s).replace(/(^|[\s(,=])-(?=[\d.√a-z(])/g,'$1−');
+/* multiple-choice options for a problem — a distractor is never something the checker would accept */
+function buildMC(cur){
+  const ans=String(cur.mcAns||cur.answers[0]);
+  let cands=(cur.wrong||[]).map(String);
+  if(!cur.mcAns){
+    const fb=[]; const v0=numVal(cur.answers[0]);
+    if(Number.isFinite(v0)&&cur.type==='num') for(let i=1;i<10;i++) fb.push(numFall(cur.answers[0])(i));
+    if(cur.type==='set') for(let i=1;i<8;i++) fb.push('x = '+cur.vals.map(v=>M(Math.round((v+(i%2?i:-i))*100)/100)).join(' or x = '));
+    if(cur.type==='pair') for(let i=1;i<8;i++) fb.push(`(${M(cur.vals[0]+(i%2?i:0))}, ${M(cur.vals[1]+(i%2?0:i))})`);
+    if(cur.type!=='text') fb.push(...perturb(String(cur.answers[0])));
+    cands=[...cands,...fb].filter(w=>!check(cur,w));
+    if(cur.type==='rad'){ const v=numVal(cur.answers[0]); cands=cands.filter(w=>!close(numVal(w),v)) }
+  }
+  cands=cands.map(w=>w.replace(/-?\d+\.\d{3,}/g,m=>String(Math.round(parseFloat(m)*100)/100)));
+  const wrong=distinct(ans,cands,null);
+  return {ans:pretty(ans), opts:shuffle([ans,...wrong.slice(0,3)]).map(pretty)};
+}
+
+/* ===== Geometry practice — figure drawing (SVG) ===== */
+const escX=s=>String(s).replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
+const FIG={ink:'#263238', fill:'#ede7f6', acc:'#4527a0', mark:'#c62828'};   // page CSS recolors .acc/.accs/polygons to the chapter color
+const svgWrap=(inner,w=320,h=210)=>`<svg class="fig" viewBox="0 0 ${w} ${h}" width="${w}" height="${h}" role="img" aria-label="figure for the problem">${inner}</svg>`;
+const tx=(x,y,s,o={})=>`<text x="${(+x).toFixed(1)}" y="${(+y).toFixed(1)}" font-size="${o.fs||14}" text-anchor="${o.a||'middle'}" dominant-baseline="central" ${o.c===FIG.acc?'class="acc" ':''}fill="${o.c||FIG.ink}" font-weight="${o.b?700:500}" font-family="system-ui,sans-serif"${o.i?' font-style="italic"':''}>${escX(s)}</text>`;
+const ln=(a,b,o={})=>`<line x1="${a[0].toFixed(1)}" y1="${a[1].toFixed(1)}" x2="${b[0].toFixed(1)}" y2="${b[1].toFixed(1)}" stroke="${o.c||FIG.ink}" stroke-width="${o.w||2}"${o.d?' stroke-dasharray="5 4"':''} stroke-linecap="round"/>`;
+const dot=(p,r=3,c=FIG.ink)=>`<circle cx="${p[0].toFixed(1)}" cy="${p[1].toFixed(1)}" r="${r}" fill="${c}"/>`;
+const V={add:(a,b)=>[a[0]+b[0],a[1]+b[1]], sub:(a,b)=>[a[0]-b[0],a[1]-b[1]], mul:(a,k)=>[a[0]*k,a[1]*k], len:a=>Math.hypot(a[0],a[1]), unit:a=>{const l=Math.hypot(a[0],a[1])||1;return [a[0]/l,a[1]/l]}, mid:(a,b)=>[(a[0]+b[0])/2,(a[1]+b[1])/2], perp:a=>[-a[1],a[0]]};
+// fit a list of points into the drawing box (keeps proportions)
+function fit(pts,W=320,H=210,m=34){ const mx=Array.isArray(m)?m[0]:m, my=Array.isArray(m)?m[1]:m, xs=pts.map(p=>p[0]), ys=pts.map(p=>p[1]), x0=Math.min(...xs), y0=Math.min(...ys), w=Math.max(...xs)-x0||1, h=Math.max(...ys)-y0||1, k=Math.min((W-2*mx)/w,(H-2*my)/h);
+  const ox=(W-w*k)/2, oy=(H-h*k)/2; return pts.map(p=>[ox+(p[0]-x0)*k, oy+(p[1]-y0)*k]) }
+const D2R=Math.PI/180;
+// triangle with base AB horizontal and angles A, B (degrees) — drawn to scale
+function triPts(A,B){ const C=180-A-B, ac=Math.sin(B*D2R)/Math.sin(C*D2R); return [[0,0],[1,0],[ac*Math.cos(A*D2R),-ac*Math.sin(A*D2R)]] }
+function triFromSides(a,b,c){ // a = BC, b = CA, c = AB
+  const A=Math.acos((b*b+c*c-a*a)/(2*b*c))/D2R, B=Math.acos((a*a+c*c-b*b)/(2*a*c))/D2R; return triPts(A,B) }
+function arcAt(P,Q,R,r=17,n=1,c=FIG.ink){ // small arc(s) at vertex P between rays PQ and PR
+  let a1=Math.atan2(Q[1]-P[1],Q[0]-P[0]), a2=Math.atan2(R[1]-P[1],R[0]-P[0]); let d=a2-a1; while(d>Math.PI) d-=2*Math.PI; while(d<-Math.PI) d+=2*Math.PI;
+  let s=''; for(let i=0;i<n;i++){ const rr=r+i*4, p1=[P[0]+rr*Math.cos(a1),P[1]+rr*Math.sin(a1)], p2=[P[0]+rr*Math.cos(a1+d),P[1]+rr*Math.sin(a1+d)];
+    s+=`<path d="M${p1[0].toFixed(1)} ${p1[1].toFixed(1)} A${rr} ${rr} 0 0 ${d>0?1:0} ${p2[0].toFixed(1)} ${p2[1].toFixed(1)}" fill="none" stroke="${c}" stroke-width="1.6"/>` } return s }
+function rightMark(P,Q,R,s=11){ const u=V.mul(V.unit(V.sub(Q,P)),s), v=V.mul(V.unit(V.sub(R,P)),s); const a=V.add(P,u), b=V.add(V.add(P,u),v), c=V.add(P,v);
+  return `<path d="M${a[0].toFixed(1)} ${a[1].toFixed(1)} L${b[0].toFixed(1)} ${b[1].toFixed(1)} L${c[0].toFixed(1)} ${c[1].toFixed(1)}" fill="none" stroke="${FIG.ink}" stroke-width="1.5"/>` }
+function ticks(P,Q,n,c=FIG.mark){ if(!n) return ''; const m=V.mid(P,Q), u=V.unit(V.sub(Q,P)), p=V.perp(u); let s='';
+  for(let i=0;i<n;i++){ const o=V.add(m,V.mul(u,(i-(n-1)/2)*5)); s+=ln(V.add(o,V.mul(p,6)),V.add(o,V.mul(p,-6)),{c,w:1.8}) } return s }
+/* triangle: o = {v:[labels], s:[label AB, BC, CA], a:[label at A,B,C], right:index, t:[ticks AB,BC,CA], arcs:[n at A,B,C]} */
+function triSVG(P,o={}){
+  const G=[(P[0][0]+P[1][0]+P[2][0])/3,(P[0][1]+P[1][1]+P[2][1])/3]; let s=`<polygon points="${P.map(p=>p.map(v=>v.toFixed(1)).join(',')).join(' ')}" fill="${FIG.fill}" stroke="${FIG.ink}" stroke-width="2" stroke-linejoin="round"/>`;
+  for(let i=0;i<3;i++){ const A=P[i], B=P[(i+1)%3], C=P[(i+2)%3];
+    if(o.t&&o.t[i]) s+=ticks(A,B,o.t[i]);
+    if(o.s&&o.s[i]!=null&&o.s[i]!==''){ const m=V.mid(A,B), out=V.unit(V.sub(m,G)); s+=tx(...V.add(m,V.mul(out,15)),o.s[i],{c:FIG.acc,b:true}) }
+    if(o.right===i) s+=rightMark(A,B,C); else if(o.arcs&&o.arcs[i]) s+=arcAt(A,B,C,16,o.arcs[i],FIG.mark);
+    if(o.a&&o.a[i]!=null&&o.a[i]!==''){ const u1=V.unit(V.sub(B,A)), u2=V.unit(V.sub(C,A)), bis=V.unit(V.add(u1,u2)), half=Math.acos(Math.max(-1,Math.min(1,u1[0]*u2[0]+u1[1]*u2[1])))/2;
+      const L=String(o.a[i]), cap=0.42*Math.min(V.len(V.sub(B,A)),V.len(V.sub(C,A))), dist=Math.max(24,(9+3.6*L.length)/Math.sin(half||0.3));
+      if(L.length<=5) s+=tx(...V.add(A,V.mul(bis,Math.max(22,Math.min(dist,cap)))),L,{fs:13,c:FIG.acc,b:true});
+      else { // long label: outside the vertex, with an arc showing which angle
+        if(!(o.arcs&&o.arcs[i])&&o.right!==i) s+=arcAt(A,B,C,15,1,FIG.acc);
+        const out=V.mul(bis,-1); s+=tx(A[0]+out[0]*22,A[1]+(out[1]>0?24:-22),L,{fs:13,c:FIG.acc,b:true}) } }
+    if(o.v){ const out=V.unit(V.sub(A,G)); s+=tx(...V.add(A,V.mul(out,13)),o.v[i],{i:true}) } }
+  return s;
+}
+const triFig=(P,o,W=320,H=210)=>{ const long=(o.a||[]).some(L=>L&&String(L).length>5); return svgWrap(triSVG(fit(P,W,H,o.m||(long?[72,40]:36)),o),W,H) };
+function twoTriFig(P,o1,o2){ // second triangle = o2.pts (default P), scaled by o2.k, mirrored if o2.mirror
+  const k=o2.k||1, base=o2.pts||P; let Q=base.map(p=>[(o2.mirror?-p[0]:p[0])*k,p[1]*k]);
+  const w1=Math.max(...P.map(p=>p[0]))-Math.min(...P.map(p=>p[0])), qx=Math.min(...Q.map(p=>p[0])); Q=Q.map(p=>[p[0]-qx+Math.max(...P.map(q=>q[0]))+1.0*Math.max(w1,0.6),p[1]]);
+  const all=fit([...P,...Q],320,200,30); return svgWrap(triSVG(all.slice(0,3),o1)+triSVG(all.slice(3),o2),320,200) }
+/* two parallel lines cut by a transversal, angles numbered 1–8 */
+function parallelFig(show,acute=65){ // show: {n: label}; acute = the acute angle the transversal makes
+  const W=320,H=210, y1=70, y2=145, d=[Math.cos(acute*D2R),Math.sin(acute*D2R)], I1=[140,y1], I2=[140+(y2-y1)*d[0]/d[1],y2];
+  let s=ln([20,y1],[300,y1])+ln([20,y2],[300,y2])+ln(V.add(I1,V.mul(d,-55)),V.add(I2,V.mul(d,55)));
+  s+=tx(305,y1,'ℓ',{a:'start',i:true})+tx(305,y2,'m',{a:'start',i:true})+tx(...V.add(V.add(I2,V.mul(d,55)),[10,0]),'t',{i:true,a:'start'});
+  const up=V.mul(d,-1), dirs=[[[-1,0],up],[[1,0],up],[[-1,0],d],[[1,0],d]];
+  [I1,I2].forEach((I,j)=>dirs.forEach(([a,b],k)=>{ const n=j*4+k+1; if(show[n]==null) return; const ang=Math.acos(a[0]*b[0]+a[1]*b[1]), pos=V.add(I,V.mul(V.unit(V.add(a,b)),Math.min(46,(10+3.4*show[n].length)/Math.sin(ang/2)))); s+=tx(...pos,show[n],{fs:13,c:FIG.acc,b:true}) }));
+  s+=`<path d="M60 ${y1-4} l8 4 l-8 4 M60 ${y2-4} l8 4 l-8 4" fill="none" stroke="${FIG.mark}" stroke-width="1.8"/>`; // parallel arrows
+  return svgWrap(s,W,H)
+}
+/* two lines crossing (vertical angles / linear pairs) */
+function crossFig(labels,deg=55){ // labels at [right-top, top, left, bottom] regions
+  const C=[160,105], a=deg*D2R, u=[Math.cos(a),-Math.sin(a)], h=[1,0]; let s=ln(V.add(C,V.mul(h,-130)),V.add(C,V.mul(h,130)))+ln(V.add(C,V.mul(u,-110)),V.add(C,V.mul(u,110)));
+  const bis=[V.unit(V.add(h,u)),V.unit(V.add(u,[-1,0])),V.unit(V.add([-1,0],V.mul(u,-1))),V.unit(V.add(V.mul(u,-1),h))];
+  const wed=[a,Math.PI-a,a,Math.PI-a]; labels.forEach((L,i)=>{ if(L) s+=tx(...V.add(C,V.mul(bis[i],Math.min(90,(10+3.4*L.length)/Math.sin(wed[i]/2)))),L,{fs:13,c:FIG.acc,b:true}) }); return svgWrap(s+dot(C,2.5)) }
+/* points on a segment with labels on the pieces */
+function segFig(names,pieces){ const n=names.length, xs=[20]; const tot=pieces.reduce((a,b)=>a+b.w,0); pieces.forEach(p=>xs.push(xs[xs.length-1]+280*p.w/tot));
+  let s=ln([xs[0],100],[xs[n-1],100]); names.forEach((nm,i)=>{ s+=dot([xs[i],100],4)+tx(xs[i],122,nm,{i:true}) }); pieces.forEach((p,i)=>{ s+=tx((xs[i]+xs[i+1])/2,80,p.label,{fs:13,c:FIG.acc,b:true}) }); return svgWrap(s,320,150) }
+/* rays from a vertex with angle labels between them */
+function raysFig(angles,labels,names){ const O=[60,175], R=200; let s='', acc=0; const dirs=[0];
+  angles.forEach(a=>{ acc+=a; dirs.push(acc) });
+  dirs.forEach((dg,i)=>{ const p=[O[0]+R*Math.cos(-dg*D2R),O[1]+R*Math.sin(-dg*D2R)]; s+=ln(O,fitClip(O,p)); s+=tx(...V.add(fitClip(O,p),V.mul(V.unit(V.sub(p,O)),12)),names[i+1],{i:true}) });
+  angles.forEach((a,i)=>{ const mdg=dirs[i]+a/2; s+=tx(O[0]+(i?95:118)*Math.cos(-mdg*D2R),O[1]+(i?95:118)*Math.sin(-mdg*D2R),labels[i],{fs:13,c:FIG.acc,b:true}) });
+  return svgWrap(s+dot(O,3)+tx(O[0]-12,O[1]+8,names[0],{i:true}),320,210) }
+function fitClip(O,p){ const d=V.sub(p,O); let t=1; if(O[0]+d[0]>300) t=Math.min(t,(300-O[0])/d[0]); if(O[1]+d[1]<20) t=Math.min(t,(20-O[1])/d[1]); return V.add(O,V.mul(d,t)) }
+/* circle pictures */
+function circleBase(){ return {C:[160,105], r:78} }
+const onC=(C,r,deg)=>[C[0]+r*Math.cos(-deg*D2R),C[1]+r*Math.sin(-deg*D2R)];
+function inscribedFig(arcDeg,labelArc,labelIns){ const {C,r}=circleBase(), a0=270-arcDeg/2, A=onC(C,r,a0), B=onC(C,r,a0+arcDeg), P=onC(C,r,90);
+  let s=`<circle cx="${C[0]}" cy="${C[1]}" r="${r}" fill="none" stroke="${FIG.ink}" stroke-width="2"/>`+ln(P,A)+ln(P,B)+dot(A)+dot(B)+dot(P);
+  s+=`<path d="M${A[0].toFixed(1)} ${A[1].toFixed(1)} A${r} ${r} 0 0 0 ${B[0].toFixed(1)} ${B[1].toFixed(1)}" class="accs" fill="none" stroke="${FIG.acc}" stroke-width="4"/>`;
+  s+=tx(...onC(C,r+16,a0),'A',{i:true})+tx(...onC(C,r+16,a0+arcDeg),'B',{i:true})+tx(...onC(C,r+14,90),'P',{i:true});
+  s+=tx(...onC(C,r+30,270),labelArc,{fs:13,c:FIG.acc,b:true})+tx(P[0],P[1]+(labelIns.length>4?62:48),labelIns,{fs:13,c:FIG.acc,b:true}); return svgWrap(s,320,230) }
+function chordsFig(lab){ const {C,r}=circleBase(), A=onC(C,r,150), B=onC(C,r,-20), Cc=onC(C,r,60), Dd=onC(C,r,230);
+  const den=(A[0]-B[0])*(Cc[1]-Dd[1])-(A[1]-B[1])*(Cc[0]-Dd[0]), t=((A[0]-Cc[0])*(Cc[1]-Dd[1])-(A[1]-Cc[1])*(Cc[0]-Dd[0]))/den, E=[A[0]+t*(B[0]-A[0]),A[1]+t*(B[1]-A[1])];
+  let s=`<circle cx="${C[0]}" cy="${C[1]}" r="${r}" fill="none" stroke="${FIG.ink}" stroke-width="2"/>`+ln(A,B)+ln(Cc,Dd)+[A,B,Cc,Dd,E].map(p=>dot(p)).join('');
+  s+=tx(...onC(C,r+14,150),'A',{i:true})+tx(...onC(C,r+14,-20),'B',{i:true})+tx(...onC(C,r+14,60),'C',{i:true})+tx(...onC(C,r+14,230),'D',{i:true})+tx(E[0]+4,E[1]+16,'E',{i:true});
+  const lb=(P,Q,L,side)=>{ const m=V.mid(P,Q), n=V.perp(V.unit(V.sub(Q,P))); return tx(...V.add(m,V.mul(n,side*13)),L,{fs:13,c:FIG.acc,b:true}) };
+  s+=lb(A,E,lab.AE,-1)+lb(E,B,lab.EB,-1)+lb(Cc,E,lab.CE,1)+lb(E,Dd,lab.ED,1); return svgWrap(s,320,220) }
+function tangentFig(lab,ratio=2){ // ratio = TP / OT, drawn to scale
+  const T0=[Math.cos(60*D2R),-Math.sin(60*D2R)], u0=[Math.sin(60*D2R),Math.cos(60*D2R)], P0=V.add(T0,V.mul(u0,ratio));
+  const pts=fit([[-1,-1],[1,1],P0,T0,[0,0]],320,220,30), k=(pts[1][0]-pts[0][0])/2, C=pts[4], T=pts[3], P=pts[2], r=k;
+  let s=`<circle cx="${C[0].toFixed(1)}" cy="${C[1].toFixed(1)}" r="${r.toFixed(1)}" fill="none" stroke="${FIG.ink}" stroke-width="2"/>`+ln(C,T)+ln(T,P)+ln(C,P,{d:true})+dot(C)+dot(T)+dot(P)+rightMark(T,C,P,10);
+  s+=tx(C[0]-12,C[1]+6,'O',{i:true})+tx(...V.add(T,[-4,-14]),'T',{i:true})+tx(P[0]+10,P[1]+8,'P',{i:true});
+  const G=V.mid(V.mid(C,T),P), lb=(A,B,L)=>{ const m=V.mid(A,B), out=V.unit(V.sub(m,G)); return tx(...V.add(m,V.mul(out,14)),L,{fs:13,c:FIG.acc,b:true}) };
+  s+=lb(C,T,lab.OT)+lb(T,P,lab.TP)+lb(C,P,lab.OP); return svgWrap(s,320,220) }
+function polyFig(n,label){ const C=[160,105], r=80, pts=[...Array(n)].map((_,i)=>onC(C,r,90+360*i/n)); let s=`<polygon points="${pts.map(p=>p.map(v=>v.toFixed(1)).join(',')).join(' ')}" fill="${FIG.fill}" stroke="${FIG.ink}" stroke-width="2"/>`;
+  if(label) s+=arcAt(pts[0],pts[1],pts[n-1],16,1,FIG.mark)+tx(pts[0][0],pts[0][1]+34,label,{fs:13,c:FIG.acc,b:true}); return svgWrap(s,320,210) }
+function quadFig(P,o={}){ const Q=fit(P,320,200,o.a?[92,40]:36); let s=`<polygon points="${Q.map(p=>p.map(v=>v.toFixed(1)).join(',')).join(' ')}" fill="${FIG.fill}" stroke="${FIG.ink}" stroke-width="2"/>`;
+  const G=[Q.reduce((a,p)=>a+p[0],0)/4,Q.reduce((a,p)=>a+p[1],0)/4];
+  if(o.diag){ s+=ln(Q[0],Q[2],{w:1.5})+ln(Q[1],Q[3],{w:1.5}) }
+  Q.forEach((A,i)=>{ const B=Q[(i+1)%4], D=Q[(i+3)%4];
+    if(o.s&&o.s[i]){ const m=V.mid(A,B), out=V.unit(V.sub(m,G)); s+=tx(...V.add(m,V.mul(out,15)),o.s[i],{c:FIG.acc,b:true,fs:13}) }
+    if(o.a&&o.a[i]){ const bis=V.unit(V.add(V.unit(V.sub(B,A)),V.unit(V.sub(D,A)))), out=V.mul(bis,-1), p=V.add(A,V.mul(out,18)); s+=arcAt(A,B,D,15,1,FIG.acc)+tx(p[0],p[1]+(out[1]>0?10:-4),o.a[i],{fs:13,c:FIG.acc,b:true,a:out[0]>0.3?'start':out[0]<-0.3?'end':'middle'}) }
+    if(o.v){ const out=V.unit(V.sub(A,G)); s+=tx(...V.add(A,V.mul(out,13)),o.v[i],{i:true}) } });
+  if(o.diag){ const E=V.mid(Q[0],Q[2]); s+=dot(E)+tx(E[0],E[1]-13,'E',{i:true}) }
+  return svgWrap(s,320,200) }
+
+/* ===== Precalculus practice — function and polar graphs (SVG), uses draw.js primitives ===== */
+// plotFig({fns:[x=>…], xr:[-6,6], yr:[-6,6], vas:[x…], has:[y…], pts:[[x,y]], polar:θ=>r, step, labels})
+function plotFig(o){
+  const W=320,H=250,m=26, xr=o.xr||[-6,6], yr=o.yr||[-6,6];
+  const X=x=>m+(x-xr[0])/(xr[1]-xr[0])*(W-2*m), Y=y=>H-m-(y-yr[0])/(yr[1]-yr[0])*(H-2*m);
+  const sx=o.sx||niceStep(xr), sy=o.sy||niceStep(yr); let s=`<rect x="${m}" y="${m}" width="${W-2*m}" height="${H-2*m}" fill="#fff"/>`;
+  for(let v=Math.ceil(xr[0]/sx)*sx; v<=xr[1]+1e-9; v+=sx) s+=ln([X(v),m],[X(v),H-m],{c:'#e3e3e3',w:1});
+  for(let v=Math.ceil(yr[0]/sy)*sy; v<=yr[1]+1e-9; v+=sy) s+=ln([m,Y(v)],[W-m,Y(v)],{c:'#e3e3e3',w:1});
+  if(xr[0]<0&&xr[1]>0) s+=ln([X(0),m],[X(0),H-m],{c:'#90a4ae',w:1.4});
+  if(yr[0]<0&&yr[1]>0) s+=ln([m,Y(0)],[W-m,Y(0)],{c:'#90a4ae',w:1.4});
+  const lx=o.xlab||(v=>fmtTick(v)), ly=o.ylab||(v=>fmtTick(v)), every=o.every||2;
+  let i=0; for(let v=Math.ceil(xr[0]/sx)*sx; v<=xr[1]+1e-9; v+=sx,i++){ if(Math.abs(v)<1e-9||i%every) continue; s+=tx(X(v),Math.min(H-m+12,Math.max(m+10,Y(0)+12)),lx(v),{fs:10,c:'#607d8b'}) }
+  i=0; for(let v=Math.ceil(yr[0]/sy)*sy; v<=yr[1]+1e-9; v+=sy,i++){ if(Math.abs(v)<1e-9||i%every) continue; s+=tx(Math.max(m+8,Math.min(W-m-8,X(0)-10)),Y(v),ly(v),{fs:10,c:'#607d8b',a:'end'}) }
+  (o.vas||[]).forEach(v=>{ s+=ln([X(v),m],[X(v),H-m],{c:FIG.mark,w:1.5,d:true}) });
+  (o.has||[]).forEach(v=>{ s+=ln([m,Y(v)],[W-m,Y(v)],{c:FIG.mark,w:1.5,d:true}) });
+  const clip=`<clipPath id="pc${o.id||0}"><rect x="${m}" y="${m}" width="${W-2*m}" height="${H-2*m}"/></clipPath>`;
+  let curves='';
+  const path=pts=>{ let d='', pen=false; for(const p of pts){ if(!p){ pen=false; continue } d+=(pen?'L':'M')+p[0].toFixed(1)+' '+p[1].toFixed(1); pen=true } return `<path d="${d}" class="accs" fill="none" stroke="${FIG.acc}" stroke-width="2.6" stroke-linejoin="round"/>` };
+  for(const f of (o.fns||[])){ const pts=[], N=500, span=yr[1]-yr[0]; let prev=null;
+    for(let k=0;k<=N;k++){ const x=xr[0]+(xr[1]-xr[0])*k/N, y=f(x); if(!Number.isFinite(y)||Math.abs(y)>1e4){ pts.push(null); prev=null; continue }
+      if(prev!=null&&Math.abs(y-prev)>span*1.5) pts.push(null); pts.push([X(x),Y(Math.max(yr[0]-span,Math.min(yr[1]+span,y)))]); prev=y }
+    curves+=path(pts) }
+  if(o.polar){ const pts=[]; const T=o.tmax||2*Math.PI; for(let k=0;k<=720;k++){ const t=T*k/720, r=o.polar(t); pts.push([X(r*Math.cos(t)),Y(r*Math.sin(t))]) } curves+=path(pts) }
+  s+=`<defs>${clip}</defs><g clip-path="url(#pc${o.id||0})">${curves}</g>`;
+  (o.pts||[]).forEach(([x,y,L])=>{ s+=dot([X(x),Y(y)],3.5,FIG.ink); if(L) s+=tx(X(x)+8,Y(y)-10,L,{fs:11,a:'start'}) });
+  return svgWrap(s,W,H);
+}
+function niceStep(r){ const span=r[1]-r[0]; return span<=14?1:span<=30?2:span<=70?5:span<=140?10:Math.pow(10,Math.floor(Math.log10(span/10))) }
+function fmtTick(v){ return isInt(v)?M(Math.round(v)):M(+v.toFixed(2)) }
+const piTick=v=>{ const k=Math.round(v/(Math.PI/2)); if(Math.abs(v-k*Math.PI/2)>1e-6) return ''; return k===0?'0':k===1?'π/2':k===-1?'−π/2':k%2===0?(k/2===1?'π':k/2===-1?'−π':`${M(k/2)}π`):`${M(k)}π/2` };
+
+/* ===== Multivariable practice — figures: vector fields, level curves, regions (uses draw.js + plot.js) ===== */
+const MVW=320, MVH=250, MVm=26;
+function mvAxes(xr,yr){ const X=x=>MVm+(x-xr[0])/(xr[1]-xr[0])*(MVW-2*MVm), Y=y=>MVH-MVm-(y-yr[0])/(yr[1]-yr[0])*(MVH-2*MVm);
+  let s=`<rect x="${MVm}" y="${MVm}" width="${MVW-2*MVm}" height="${MVH-2*MVm}" fill="#fff"/>`;
+  for(let v=Math.ceil(xr[0]/niceStep(xr))*niceStep(xr);v<=xr[1];v+=niceStep(xr)) s+=ln([X(v),MVm],[X(v),MVH-MVm],{c:'#eceff1',w:1});
+  for(let v=Math.ceil(yr[0]/niceStep(yr))*niceStep(yr);v<=yr[1];v+=niceStep(yr)) s+=ln([MVm,Y(v)],[MVW-MVm,Y(v)],{c:'#eceff1',w:1});
+  if(xr[0]<0&&xr[1]>0) s+=ln([X(0),MVm],[X(0),MVH-MVm],{c:'#90a4ae',w:1.3});
+  if(yr[0]<0&&yr[1]>0) s+=ln([MVm,Y(0)],[MVW-MVm,Y(0)],{c:'#90a4ae',w:1.3});
+  return {X,Y,s} }
+function mvTicks(A,xr,yr){ let s=''; const y0=yr[0]<0&&yr[1]>0?A.Y(0)+12:MVH-MVm+12, x0=xr[0]<0&&xr[1]>0?A.X(0)-6:MVm-6;
+  for(let v=Math.ceil(xr[0]/niceStep(xr))*niceStep(xr);v<=xr[1];v+=niceStep(xr)) if(v) s+=tx(A.X(v),y0,M(v),{fs:10,c:'#37474f'});
+  for(let v=Math.ceil(yr[0]/niceStep(yr))*niceStep(yr);v<=yr[1];v+=niceStep(yr)) if(v) s+=tx(x0,A.Y(v),M(v),{fs:10,c:'#37474f',a:'end'});
+  return s }
+// vector field F(x,y) -> [u,v]
+function quiverFig(F,o={}){ const xr=o.xr||[-3,3], yr=o.yr||[-3,3], A=mvAxes(xr,yr); let s=A.s, mx=0; const pts=[];
+  for(let x=xr[0]+0.5;x<xr[1];x+=1) for(let y=yr[0]+0.5;y<yr[1];y+=1){ const [u,v]=F(x,y); pts.push([x,y,u,v]); mx=Math.max(mx,Math.hypot(u,v)) }
+  mx=mx||1; const sc=0.42/mx;
+  for(const [x,y,u,v] of pts){ if(Math.hypot(u,v)<1e-9){ s+=`<circle cx="${A.X(x)}" cy="${A.Y(y)}" r="1.8" class="acc" fill="${FIG.acc}"/>`; continue }
+    const p=[A.X(x-u*sc),A.Y(y-v*sc)], q=[A.X(x+u*sc),A.Y(y+v*sc)], ang=Math.atan2(q[1]-p[1],q[0]-p[0]), h=5;
+    s+=`<line x1="${p[0].toFixed(1)}" y1="${p[1].toFixed(1)}" x2="${q[0].toFixed(1)}" y2="${q[1].toFixed(1)}" class="accs" stroke="${FIG.acc}" stroke-width="1.7"/>`;
+    s+=`<polygon class="acc" fill="${FIG.acc}" points="${q[0].toFixed(1)},${q[1].toFixed(1)} ${(q[0]-h*Math.cos(ang-0.45)).toFixed(1)},${(q[1]-h*Math.sin(ang-0.45)).toFixed(1)} ${(q[0]-h*Math.cos(ang+0.45)).toFixed(1)},${(q[1]-h*Math.sin(ang+0.45)).toFixed(1)}"/>` }
+  return svgWrap(s+mvTicks(A,xr,yr),MVW,MVH) }
+// level curves f(x,y)=c for each c in levels (marching squares)
+function contourFig(f,levels,o={}){ const xr=o.xr||[-3,3], yr=o.yr||[-3,3], A=mvAxes(xr,yr), N=90; let s=A.s, d='';
+  const gx=i=>xr[0]+(xr[1]-xr[0])*i/N, gy=j=>yr[0]+(yr[1]-yr[0])*j/N; const V=[]; for(let i=0;i<=N;i++){ V[i]=[]; for(let j=0;j<=N;j++) V[i][j]=f(gx(i),gy(j)) }
+  for(const c of levels) for(let i=0;i<N;i++) for(let j=0;j<N;j++){ const q=[[i,j],[i+1,j],[i+1,j+1],[i,j+1]], pts=[];
+    for(let k=0;k<4;k++){ const [a1,b1]=q[k],[a2,b2]=q[(k+1)%4], v1=V[a1][b1]-c, v2=V[a2][b2]-c; if(!Number.isFinite(v1)||!Number.isFinite(v2)) continue;
+      if((v1<0)!==(v2<0)){ const t=v1/(v1-v2); pts.push([A.X(gx(a1+(a2-a1)*t)),A.Y(gy(b1+(b2-b1)*t))]) } }
+    if(pts.length>=2) d+=`M${pts[0][0].toFixed(1)} ${pts[0][1].toFixed(1)}L${pts[1][0].toFixed(1)} ${pts[1][1].toFixed(1)}`;
+    if(pts.length===4) d+=`M${pts[2][0].toFixed(1)} ${pts[2][1].toFixed(1)}L${pts[3][0].toFixed(1)} ${pts[3][1].toFixed(1)}` }
+  s+=`<path d="${d}" class="accs" fill="none" stroke="${FIG.acc}" stroke-width="1.8" stroke-linecap="round"/>`;
+  return svgWrap(s+mvTicks(A,xr,yr),MVW,MVH) }
+// shaded region a ≤ x ≤ b, lo(x) ≤ y ≤ hi(x); curves = extra labelled curves [[fn,label]]
+function regionFig(lo,hi,a,b,o={}){ const xr=o.xr, yr=o.yr, A=mvAxes(xr,yr); let s=A.s; const N=80, top=[], bot=[];
+  for(let k=0;k<=N;k++){ const x=a+(b-a)*k/N; top.push(`${A.X(x).toFixed(1)},${A.Y(hi(x)).toFixed(1)}`); bot.unshift(`${A.X(x).toFixed(1)},${A.Y(lo(x)).toFixed(1)}`) }
+  s+=`<polygon points="${top.concat(bot).join(' ')}" fill="${FIG.fill||'#fce4ec'}" class="accs" stroke="${FIG.acc}" stroke-width="2" opacity="0.9"/>`;
+  for(const [fn,L,lx] of (o.labels||[])) s+=tx(A.X(lx),A.Y(fn(lx))-10,L,{fs:11,c:FIG.ink,b:1});
+  return svgWrap(s+mvTicks(A,xr,yr),MVW,MVH) }
+
+/* ===== Multivariable Calculus practice — 9 units (vectors → Stokes & divergence theorems) =====
+   chk = independent check data for the validator: {dv:[src,var]} partial derivative, {val:n} numeric value */
+const CHAPTERS=[
+  {id:'m1', icon:'🧭', title:'Unit 1: Vectors & the Geometry of Space', c:'#4527a0', s:'#ede7f6', b:'#b39ddb'},
+  {id:'m2', icon:'🌀', title:'Unit 2: Vector-Valued Functions & Motion', c:'#1565c0', s:'#e3f2fd', b:'#90caf9'},
+  {id:'m3', icon:'∂', title:'Unit 3: Partial Derivatives', c:'#00695c', s:'#e0f2f1', b:'#80cbc4'},
+  {id:'m4', icon:'⛰️', title:'Unit 4: Gradients, Directional Derivatives & Optimization', c:'#e65100', s:'#fff3e0', b:'#ffcc80'},
+  {id:'m5', icon:'∬', title:'Unit 5: Double & Triple Integrals', c:'#2e7d32', s:'#e8f5e9', b:'#a5d6a7'},
+  {id:'m6', icon:'🌐', title:'Unit 6: Polar, Cylindrical & Spherical Coordinates', c:'#00838f', s:'#e0f7fa', b:'#80deea'},
+  {id:'m7', icon:'🧲', title:'Unit 7: Vector Fields & Line Integrals', c:'#ad1457', s:'#fce4ec', b:'#f48fb1'},
+  {id:'m8', icon:'🔄', title:"Unit 8: Green's Theorem", c:'#6a1b9a', s:'#f3e5f5', b:'#ce93d8'},
+  {id:'m9', icon:'🫧', title:"Unit 9: Surface Integrals, Stokes' & Divergence Theorems", c:'#c62828', s:'#ffebee', b:'#ef9a9a'},
+];
+const R=(d,e,m,h)=>d==='easy'?e:d==='medium'?m:h;
+const neat=s=>typeof s!=='string'?s:s.replace(/(^|[\s(,=\/·*\[{])-(?=[\d.√a-zπ(])/gi,'$1−').replace(/− −(?=[\d.√a-zπ(])/g,'+ ').replace(/\+ −(?=[\d.√a-zπ(])/g,'− ').replace(/(^|[\s(=])[−-][−-](?=[\d.√a-zπ(])/g,'$1').replace(/(\d)\/−(\d+(?:\.\d+)?)/g,'$1/(−$2)');
+const neatR=r=>{ r.text=neat(r.text); r.hint=neat(r.hint); if(r.mcAns) r.mcAns=neat(r.mcAns); r.answers=r.answers.map(a=>typeof a==='string'?neat(a):a); if(r.wrong) r.wrong=r.wrong.map(neat); return r };
+const T=[]; const add=(ch,key,label,type,rule,raw,bc)=>T.push({ch,key,label,type,rule,bc:!!bc,gen:d=>{ for(let i=0;i<300;i++){ const r=raw(d); if(r) return neatR(r) } throw new Error('no problem for '+key) }});
+const piS=(n,d=1)=>{ if(d<0){n=-n;d=-d} const g=gcd(n,d)||1; n/=g; d/=g; if(n===0) return '0'; return d===1?(n===1?'π':n===-1?'−π':`${M(n)}π`):`${n===1?'':n===-1?'−':M(n)}π/${d}` };
+const sg=(v,s)=>v<0?` − ${s(Math.abs(v))}`:` + ${s(v)}`;
+const k1=(k,s)=>k===1?s:k===-1?'−'+s:M(k)+s;
+const nz2=(a,b)=>{let x;do{x=rnd(a,b)}while(Math.abs(x)<2);return x};
+function rad(n){ let k=1,r=n; for(let i=Math.floor(Math.sqrt(n));i>1;i--) if(n%(i*i)===0){ k=i; r=n/(i*i); break } return r===1?String(k):`${k===1?'':k}√${r}` }
+const v3=a=>`⟨${a.map(M).join(', ')}⟩`, v3f=a=>`⟨${a.map(ratS).join(', ')}⟩`;
+const dot3=(a,b)=>a.reduce((s,v,i)=>s+v*b[i],0), crs=(a,b)=>[a[1]*b[2]-a[2]*b[1],a[2]*b[0]-a[0]*b[2],a[0]*b[1]-a[1]*b[0]], sub3=(a,b)=>a.map((v,i)=>v-b[i]), nrm2=a=>dot3(a,a);
+const rv=(n=3,lo=-5,hi=5)=>Array.from({length:n},()=>rnd(lo,hi));
+// exact-looking fraction from a float (denominator ≤ 5000)
+function ratS(v){ if(isInt(Math.round(v*1e9)/1e9)) return M(Math.round(v)); for(let d=2;d<=5000;d++){ const n=Math.round(v*d); if(Math.abs(n/d-v)<1e-9) return fr(n,d) } return String(+v.toFixed(4)) }
+// √n·(p/q) shown exactly:  surd(num, den, n) = (num/den)√n
+function surd(num,den,n){ let k=1,r=n; for(let i=Math.floor(Math.sqrt(n));i>1;i--) if(r%(i*i)===0){ k*=i; r/=i*i; i=Math.floor(Math.sqrt(r))+1 } num*=k; const g=gcd(Math.abs(num),den)||1; num/=g; den/=g;
+  if(r===1) return fr(num,den); const top=`${num===1?'':num===-1?'−':M(num)}√${r}`; return den===1?top:`${top}/${den}` }
+/* polynomial terms [c,i,j,k] = c·xⁱyʲzᵏ */
+const mono=(i,j,k)=>(i?'x'+(i>1?sup(i):''):'')+(j?'y'+(j>1?sup(j):''):'')+(k?'z'+(k>1?sup(k):''):'');
+function tS(ts){ const t=ts.filter(t=>t[0]!==0); if(!t.length) return '0'; return t.map((t,n)=>{ const m=mono(t[1],t[2],t[3]||0), a=Math.abs(t[0]), body=(m&&a===1?'':ratS(a))+m; return (n===0?(t[0]<0?'−':''):(t[0]<0?' − ':' + '))+body }).join('') }
+const tSrc=ts=>ts.map(t=>`(${t[0]})*x^${t[1]}*y^${t[2]}*z^${t[3]||0}`).join('+')||'0';
+const tD=(ts,v)=>{ const ix=v==='x'?1:v==='y'?2:3; return ts.filter(t=>(t[ix]||0)>0).map(t=>{ const u=[t[0]*t[ix],t[1],t[2],t[3]||0]; u[ix]--; return u }) };
+const tE=(ts,x,y,z=0)=>ts.reduce((s,t)=>s+t[0]*Math.pow(x,t[1])*Math.pow(y,t[2])*Math.pow(z,t[3]||0),0);
+const tMerge=ts=>{ const m={}; ts.forEach(t=>{ const k=[t[1],t[2],t[3]||0].join(); m[k]=(m[k]||0)+t[0] }); return Object.entries(m).map(([k,c])=>[c,...k.split(',').map(Number)]).filter(t=>Math.abs(t[0])>1e-12).sort((a,b)=>(b[1]+b[2]+b[3])-(a[1]+a[2]+a[3])||b[1]-a[1]) };
+function randPoly(n,maxDeg,vars=2){ const out=[], seen=new Set(); while(out.length<n){ const i=rnd(0,maxDeg), j=rnd(0,maxDeg-i), k=vars===3?rnd(0,maxDeg-i-j):0; if(i+j+k===0||seen.has(i+','+j+','+k)) continue; seen.add(i+','+j+','+k); out.push([nz(-5,5),i,j,k]) } return tMerge(out) }
+const mixW=s=>[s.replace(/x/g,'#').replace(/y/g,'x').replace(/#/g,'y')];   // swap x↔y distractor
+
+/* ================= Unit 1: Vectors ================= */
+add('m1','vec_ops','Vector Operations','mat',
+ 'Add vectors component by component; a scalar multiplies every component.\n|⟨a, b, c⟩| = √(a² + b² + c²).',
+ d=>{ const u=rv(), v=rv(); if(d==='easy'){ const s=u.map((a,i)=>a+v[i]); return {type:'mat',vals:s,text:`u = ${v3(u)}, v = ${v3(v)}. Find u + v.`, answers:[v3(s)], wrong:[v3(sub3(u,v)),v3(u.map((a,i)=>a*v[i])),v3(s.map((a,i)=>i===1?-a:a))], fmt:'e.g. ⟨1, −2, 3⟩', hint:`Add matching components: ${v3(s)}`} }
+  const a=nz2(-3,3), b=nz2(-3,3); const s=u.map((x,i)=>a*x+b*v[i]);
+  if(d==='medium') return {type:'mat',vals:s,text:`u = ${v3(u)}, v = ${v3(v)}. Find ${M(a)}u ${b<0?'−':'+'} ${Math.abs(b)}v.`, answers:[v3(s)], wrong:[v3(u.map((x,i)=>a*x-b*v[i])),v3(u.map((x,i)=>a*x+v[i])),v3(u.map((x,i)=>x+b*v[i]))], fmt:'e.g. ⟨1, −2, 3⟩', hint:`${M(a)}u = ${v3(u.map(x=>a*x))}, ${M(b)}v = ${v3(v.map(x=>b*x))}\nSum: ${v3(s)}`};
+  const w=u.map((x,i)=>2*x-v[i]), n=nrm2(w); if(!n) return null; return {type:'exact',text:`u = ${v3(u)}, v = ${v3(v)}. Find |2u − v|.`, answers:[rad(n)], wrong:[String(n),rad(nrm2(u.map((x,i)=>2*x+v[i]))||3),rad(n+1)], fmt:'exact, e.g. 3√5', hint:`2u − v = ${v3(w)}\n|2u − v| = √(${w.map(x=>x*x).join(' + ')}) = √${n}${rad(n)!=='√'+n?' = '+rad(n):''}`, chk:{val:Math.sqrt(n)}} });
+add('m1','dot','Dot Product & Angles','num',
+ 'u·v = u₁v₁ + u₂v₂ + u₃v₃ = |u||v|cos θ.\nu ⟂ v exactly when u·v = 0.',
+ d=>{ const u=rv(), v=rv(); if(d==='easy'){ const p=dot3(u,v); return {text:`Find u·v for u = ${v3(u)} and v = ${v3(v)}.`, answers:[p], wrong:[p+2,-p||4,u.reduce((s,a)=>s+a,0)+v.reduce((s,a)=>s+a,0)], hint:`${u.map((a,i)=>`(${M(a)})(${M(v[i])})`).join(' + ')} = ${M(p)}`, chk:{val:p}} }
+  if(d==='medium'){ const a=nz(-4,4), b=nz(-4,4), c=nz(-4,4), p=nz(-4,4), q=nz(-4,4); if(c===0) return null; const k=-(a*p+b*q)/c; if(Math.abs(k*2)%1) return null;
+    return {text:`For what k are u = ⟨${M(a)}, ${M(b)}, ${M(c)}⟩ and v = ⟨${M(p)}, ${M(q)}, k⟩ orthogonal?`, answers:[ratS(k)], wrong:[ratS(-k||1),ratS((a*p+b*q)/c||2),ratS(k+1)], hint:`u·v = ${M(a*p)} + ${P_(b*q)} + ${M(c)}k = 0 → k = ${ratS(k)}`, chk:{val:k}} }
+  const P=[[[1,0,0],[1,1,0],45],[[1,1,0],[0,1,1],60],[[1,0,1],[0,1,0],90],[[1,1,0],[-1,0,1],120],[[2,0,0],[3,3,0],45],[[1,-1,0],[1,0,-1],60],[[1,1,1],[-1,-1,-1],180],[[1,0,0],[-1,1,0],135],[[3,0,0],[1,0,1],45]]; const [a0,b0,ang]=pick(P);
+  const s=pick([1,2,3]); const a1=a0.map(x=>x*s);
+  return {text:`Find the angle (in degrees) between u = ${v3(a1)} and v = ${v3(b0)}.`, answers:[ang], wrong:[180-ang||30,ang===90?0:90,ang+15], fmt:'degrees', hint:`cos θ = u·v / (|u||v|) = ${dot3(a1,b0)} / (√${nrm2(a1)}·√${nrm2(b0)})\nθ = ${ang}°`, chk:{val:ang}} });
+add('m1','cross','Cross Product','mat',
+ 'u × v = ⟨u₂v₃ − u₃v₂, u₃v₁ − u₁v₃, u₁v₂ − u₂v₁⟩ — perpendicular to both.\n|u × v| = area of the parallelogram; half of it is the triangle area.',
+ d=>{ const u=rv(3,-4,4), v=rv(3,-4,4); if(d==='easy'){ u[2]=0; v[2]=0 } const c=crs(u,v); if(c.every(x=>x===0)) return null;
+  if(d!=='hard') return {type:'mat',vals:c,text:`Find u × v for u = ${v3(u)} and v = ${v3(v)}.`, answers:[v3(c)], wrong:[v3(c.map(x=>-x)),v3([c[0],-c[1],c[2]]),v3(u.map((a,i)=>a*v[i]))], fmt:'e.g. ⟨1, −2, 3⟩', hint:`i: (${M(u[1])})(${M(v[2])}) − (${M(u[2])})(${M(v[1])}) = ${M(c[0])}\nj: (${M(u[2])})(${M(v[0])}) − (${M(u[0])})(${M(v[2])}) = ${M(c[1])}\nk: (${M(u[0])})(${M(v[1])}) − (${M(u[1])})(${M(v[0])}) = ${M(c[2])}`} ;
+  const n=nrm2(c), ans=surd(1,2,n); return {type:'exact',text:`Find the area of the triangle with vertices P(0, 0, 0), Q${'('+u.map(M).join(', ')+')'}, R${'('+v.map(M).join(', ')+')'}.`, answers:[ans], wrong:[rad(n),surd(1,4,n),String(n)], fmt:'exact, e.g. 3√5/2', hint:`PQ × PR = ${v3(c)}\nArea = ½|PQ × PR| = ½√${n} = ${ans}`, chk:{val:Math.sqrt(n)/2}} });
+const NICE=[[1,2,2,3],[2,1,2,3],[2,2,1,3],[2,3,6,7],[3,2,6,7],[6,2,3,7],[1,4,8,9],[4,4,7,9],[2,6,9,11]];
+add('m1','proj','Projections & Work','num',
+ 'Scalar projection of u onto v: comp = u·v / |v|.  Vector projection: (u·v / |v|²) v.\nWork done by a constant force F along displacement D: W = F·D.',
+ d=>{ const u=rv(); const [a,b,c,L]=pick(NICE), sg_=[pick([1,-1]),pick([1,-1]),pick([1,-1])], v=[a*sg_[0],b*sg_[1],c*sg_[2]];
+  if(d==='easy'){ const p=dot3(u,v); return {text:`Find the scalar projection of u = ${v3(u)} onto v = ${v3(v)}.`, answers:[ratS(p/L)], wrong:[ratS(p/(L*L)),String(p),ratS(p/L+1)].filter((w,i,A)=>A.indexOf(w)===i), hint:`u·v = ${p}, |v| = √${L*L} = ${L}\ncomp = ${p}/${L} = ${ratS(p/L)}`, chk:{val:p/L}} }
+  if(d==='medium'){ const w=[nz(-3,3),nz(-3,3),0], z=[nz(-3,3),nz(-3,3),0]; const p=dot3(w,z), n=nrm2(z), pr=z.map(x=>x*p/n); if(!p) return null; return {type:'mat',vals:pr,text:`Find the vector projection of u = ${v3(w)} onto v = ${v3(z)}.`, answers:[v3f(pr)], wrong:[v3f(w.map(x=>x*p/nrm2(w))),v3f(z.map(x=>x*p)),v3f(pr.map(x=>-x))], fmt:'e.g. ⟨6/5, 12/5, 0⟩', hint:`u·v = ${p}, |v|² = ${n}\nproj = (${p}/${n})v = ${v3f(pr)}`} }
+  const F=rv(3,1,9), A=rv(3,-3,3), B=rv(3,-3,6); const D=sub3(B,A), W=dot3(F,D); return {text:`A constant force F = ${v3(F)} N moves an object from (${A.map(M).join(', ')}) to (${B.map(M).join(', ')}) (meters). Find the work done (J).`, answers:[W], wrong:[dot3(F,B),dot3(F,A),W+F[0]], hint:`D = ${v3(D)}\nW = F·D = ${M(W)} J`, chk:{val:W}} });
+add('m1','plane','Equations of Planes','lineq',
+ 'Plane through P(x₀, y₀, z₀) with normal n = ⟨a, b, c⟩:  a(x − x₀) + b(y − y₀) + c(z − z₀) = 0.\nThrough three points: normal = PQ × PR.',
+ d=>{ const P=rv(3,-4,4); let n; let how;
+  if(d==='easy'){ n=rv(3,-5,5); if(n.some(x=>!x)) return null; how=`through (${P.map(M).join(', ')}) with normal vector ${v3(n)}` }
+  else if(d==='medium'){ n=rv(3,-5,5); if(n.some(x=>!x)) return null; const dd=nz(-9,9); how=`through (${P.map(M).join(', ')}) parallel to the plane ${planeS(n,dd)}` }
+  else { const Q=rv(3,-4,4), Rr=rv(3,-4,4); n=crs(sub3(Q,P),sub3(Rr,P)); if(n.some(x=>!x)) return null; const g=gcd(gcd(Math.abs(n[0]),Math.abs(n[1])),Math.abs(n[2])); n=n.map(x=>x/g); how=`through (${P.map(M).join(', ')}), (${Q.map(M).join(', ')}) and (${Rr.map(M).join(', ')})` }
+  const dd=dot3(n,P), ans=planeS(n,dd);
+  return {type:'lineq',text:`Find an equation of the plane ${how}.`, answers:[ans], wrong:[planeS(n,-dd||1),planeS(P.map(x=>x||1),dot3(P.map(x=>x||1),n)),planeS([n[0],-n[1],n[2]],dd)], fmt:'e.g. 2x − y + 3z = 7', hint:`Normal ${v3(n)} through (${P.map(M).join(', ')}):\n${M(n[0])}(x − ${P_(P[0])}) + ${P_(n[1])}(y − ${P_(P[1])}) + ${P_(n[2])}(z − ${P_(P[2])}) = 0\n${ans}`} });
+function planeS(n,dd){ const v=['x','y','z']; let s=''; n.forEach((c,i)=>{ if(!c) return; s+=s?(c<0?' − ':' + ')+(Math.abs(c)===1?'':Math.abs(c))+v[i]:(c===1?'':c===-1?'−':M(c))+v[i] }); return `${s} = ${M(dd)}` }
+add('m1','line3','Lines in Space','mat',
+ 'Line through P in direction v:  r(t) = P + t·v,  i.e. x = x₀ + at, y = y₀ + bt, z = z₀ + ct.\nThrough two points P, Q: v = Q − P.',
+ d=>{ const P=rv(3,-5,5), v=rv(3,-4,4); if(v.every(x=>!x)) return null; const lc=(c0,m)=>m===0?M(c0):c0===0?k1(m,'t'):`${M(c0)}${sg(m,x=>k1(x,'t'))}`, lineS=`x = ${lc(P[0],v[0])}, y = ${lc(P[1],v[1])}, z = ${lc(P[2],v[2])}`;
+  if(d==='easy'){ const Q=P.map((x,i)=>x+v[i]); return {type:'mat',vals:v,text:`Find a direction vector for the line through (${P.map(M).join(', ')}) and (${Q.map(M).join(', ')}).`, answers:[v3(v)], wrong:[v3(v.map(x=>-x).map((x,i)=>i?x:-x)),v3(P.map((x,i)=>x+Q[i])),v3(Q)], fmt:'Q − P, e.g. ⟨1, −2, 3⟩', hint:`v = Q − P = ${v3(v)}`} }
+  if(d==='medium'){ const t=nz(-3,3); const pt=P.map((x,i)=>x+t*v[i]); return {type:'mat',vals:pt,text:`The line is ${lineS}. Find the point at t = ${M(t)}.`, answers:[`(${pt.map(M).join(', ')})`], wrong:[`(${P.map((x,i)=>x-t*v[i]).map(M).join(', ')})`,`(${v.map(x=>x*t).map(M).join(', ')})`,`(${P.map((x,i)=>x*t+v[i]).map(M).join(', ')})`], fmt:'(x, y, z)', hint:`Substitute t = ${M(t)}: (${pt.map(M).join(', ')})`} }
+  const n=rv(3,-3,3), t=nz(-3,3), pt=P.map((x,i)=>x+t*v[i]), dn=dot3(n,v); if(!dn) return null; const dd=dot3(n,pt);
+  return {type:'mat',vals:pt,text:`Where does the line ${lineS} meet the plane ${planeS(n,dd)}?`, answers:[`(${pt.map(M).join(', ')})`], wrong:[`(${P.map(M).join(', ')})`,`(${P.map((x,i)=>x-t*v[i]).map(M).join(', ')})`,`(${P.map((x,i)=>x+(t+1)*v[i]).map(M).join(', ')})`], fmt:'(x, y, z)', hint:`Substitute the line into the plane and solve: t = ${M(t)}\nPoint: (${pt.map(M).join(', ')})`} });
+add('m1','dist_plane','Distance from a Point to a Plane','num',
+ 'Distance from (x₀, y₀, z₀) to ax + by + cz = d:  |ax₀ + by₀ + cz₀ − d| / √(a² + b² + c²).',
+ d=>{ const [a,b,c,L]=pick(NICE), s=[pick([1,-1]),pick([1,-1]),pick([1,-1])], n=[a*s[0],b*s[1],c*s[2]], dd=nz(-12,12), P=rv(3,-5,5); const top=Math.abs(dot3(n,P)-dd); if(!top) return null; const ans=ratS(top/L);
+  return {text:`Find the distance from (${P.map(M).join(', ')}) to the plane ${planeS(n,dd)}.`, answers:[ans], wrong:[String(top),ratS(top/(L*L)),ratS((top+2*Math.abs(dd))/L)].filter(w=>w!==ans), hint:`|${n.map((c,i)=>`(${M(c)})(${M(P[i])})`).join(' + ')} − ${P_(dd)}| = ${top}\n√(${a*a} + ${b*b} + ${c*c}) = ${L}\nDistance = ${top}/${L} = ${ans}`, chk:{val:top/L}} });
+
+/* ================= Unit 2: Vector-valued functions ================= */
+add('m2','vf_deriv','Velocity & Acceleration','mat',
+ 'For position r(t): velocity v(t) = r′(t), acceleration a(t) = r″(t). Differentiate each component.',
+ d=>{ const a=nz(-3,3), b=nz(-3,3), c=nz(-4,4), t=nz(-2,2); const rS=`⟨${k1(a,'t²')}, ${k1(b,'t³')}, ${k1(c,'t')}⟩`;
+  if(d==='easy'){ const v=[2*a*t,3*b*t*t,c]; return {type:'mat',vals:v,text:`r(t) = ${rS}. Find the velocity at t = ${M(t)}.`, answers:[v3(v)], wrong:[v3([a*t*t,b*t*t*t,c*t]),v3([2*a,6*b*t,0]),v3([2*a*t,3*b*t,c])], fmt:'⟨x, y, z⟩', hint:`r′(t) = ⟨${k1(2*a,'t')}, ${k1(3*b,'t²')}, ${M(c)}⟩ → ${v3(v)}`} }
+  if(d==='medium'){ const A=[2*a,6*b*t,0]; return {type:'mat',vals:A,text:`r(t) = ${rS}. Find the acceleration at t = ${M(t)}.`, answers:[v3(A)], wrong:[v3([2*a*t,3*b*t*t,c]),v3([2*a,3*b*t,0]),v3([2*a,6*b,0])], fmt:'⟨x, y, z⟩', hint:`r′ = ⟨${k1(2*a,'t')}, ${k1(3*b,'t²')}, ${M(c)}⟩,  r″ = ⟨${M(2*a)}, ${k1(6*b,'t')}, 0⟩ → ${v3(A)}`} }
+  const k=rnd(2,4), R_=rnd(1,5); const v=[0,R_*k,c]; return {type:'mat',vals:v,text:`r(t) = ⟨${R_===1?'':R_}cos(${k}t), ${R_===1?'':R_}sin(${k}t), ${k1(c,'t')}⟩. Find the velocity at t = 0.`, answers:[v3(v)], wrong:[v3([R_*k,0,c]),v3([0,R_,c]),v3([-R_*k,0,0])], fmt:'⟨x, y, z⟩', hint:`r′(t) = ⟨−${R_*k}sin(${k}t), ${R_*k}cos(${k}t), ${M(c)}⟩ → at t = 0: ${v3(v)}`} });
+add('m2','vf_integral','Integrating Vector Functions','mat',
+ 'Integrate each component. With an initial condition: r(t) = r(0) + ∫₀ᵗ r′(s) ds.',
+ d=>{ const a=nz(-3,3), b=nz(-3,3), c=nz(-4,4), T0=rnd(1,3);
+  if(d!=='hard'){ const vals=[a*T0*T0,b*T0*T0*T0,c*T0]; return {type:'mat',vals,text:`Evaluate ∫ from 0 to ${T0} of ⟨${k1(2*a,'t')}, ${k1(3*b,'t²')}, ${M(c)}⟩ dt.`, answers:[v3(vals)], wrong:[v3([2*a*T0,6*b*T0,0]),v3([a*T0,b*T0,c]),v3([2*a*T0*T0,3*b*T0*T0*T0,c*T0])], fmt:'⟨x, y, z⟩', hint:`Antiderivative ⟨${k1(a,'t²')}, ${k1(b,'t³')}, ${k1(c,'t')}⟩ from 0 to ${T0} → ${v3(vals)}`} }
+  const r0=rv(3,-5,5); const vals=[r0[0]+a*T0*T0,r0[1]+b*T0*T0*T0,r0[2]+c*T0]; return {type:'mat',vals,text:`r′(t) = ⟨${k1(2*a,'t')}, ${k1(3*b,'t²')}, ${M(c)}⟩ and r(0) = ${v3(r0)}. Find r(${T0}).`, answers:[v3(vals)], wrong:[v3([a*T0*T0,b*T0**3,c*T0]),v3(r0.map((x,i)=>x+[2*a*T0,3*b*T0*T0,c][i])),v3(vals.map((x,i)=>x-2*r0[i]))], fmt:'⟨x, y, z⟩', hint:`r(t) = ${v3(r0)} + ⟨${k1(a,'t²')}, ${k1(b,'t³')}, ${k1(c,'t')}⟩\nr(${T0}) = ${v3(vals)}`} });
+add('m2','vf_speed','Speed','exact',
+ 'Speed = |v(t)| = |r′(t)| = √((x′)² + (y′)² + (z′)²).',
+ d=>{ if(d==='hard'){ const [a,b]=pick([[3,4],[6,8],[5,12],[8,15],[1,1],[2,3]]), k=rnd(1,3); const n=a*a*k*k+b*b; return {text:`r(t) = ⟨${a===1?'':a}cos(${k===1?'':k}t), ${a===1?'':a}sin(${k===1?'':k}t), ${b===1?'':b}t⟩. Find the speed.`, answers:[rad(n)], wrong:[String(a*k+b),rad(a*a+b*b)===rad(n)?rad(n+1):rad(a*a+b*b),rad(a*a*k+b)], fmt:'exact, e.g. 5 or √13', hint:`r′ = ⟨−${a*k}sin(${k===1?'':k}t), ${a*k}cos(${k===1?'':k}t), ${b}⟩\n|r′| = √(${a*a*k*k}(sin² + cos²) + ${b*b}) = √${n}${rad(n)!=='√'+n?' = '+rad(n):''}`, chk:{val:Math.sqrt(n)}} }
+  const a=nz(-3,3), b=nz(-3,3), c=nz(-4,4), t=nz(-2,2); const v=[2*a*t,3*b*t*t,c], n=nrm2(v);
+  if(d==='easy'){ const p=rv(3,-6,6); const n2=nrm2(p); if(!n2) return null; const lc=(c0,m)=>m===0?M(c0):c0===0?k1(m,'t'):`${M(c0)}${sg(m,x=>k1(x,'t'))}`; return {text:`r(t) = ⟨${lc(rnd(-3,3),p[0])}, ${lc(rnd(-3,3),p[1])}, ${lc(rnd(-3,3),p[2])}⟩. Find the speed.`, answers:[rad(n2)], wrong:[String(Math.abs(p[0])+Math.abs(p[1])+Math.abs(p[2])),String(n2),rad(n2+1)], fmt:'exact, e.g. √14', hint:`v = ${v3(p)} (constant)\nspeed = √${n2}${rad(n2)!=='√'+n2?' = '+rad(n2):''}`, chk:{val:Math.sqrt(n2)}} }
+  return {text:`r(t) = ⟨${k1(a,'t²')}, ${k1(b,'t³')}, ${k1(c,'t')}⟩. Find the speed at t = ${M(t)}.`, answers:[rad(n)], wrong:[String(Math.abs(v[0])+Math.abs(v[1])+Math.abs(v[2])),String(n),rad(n+1)], fmt:'exact, e.g. 3√5', hint:`v(${M(t)}) = ${v3(v)}\nspeed = √${n}${rad(n)!=='√'+n?' = '+rad(n):''}`, chk:{val:Math.sqrt(n)}} });
+add('m2','arc_len3','Arc Length in Space','exact',
+ 'L = ∫ from a to b of |r′(t)| dt.',
+ d=>{ if(d==='easy'){ const [a,b,c,L]=pick(NICE), T0=rnd(1,5); return {text:`Find the length of r(t) = ⟨${a===1?'':a}t, ${b===1?'':b}t, ${c===1?'':c}t⟩ for 0 ≤ t ≤ ${T0}.`, answers:[String(L*T0)], wrong:[String((a+b+c)*T0),String(L),String(L*L*T0)], hint:`|r′| = √(${a*a} + ${b*b} + ${c*c}) = ${L}\nL = ${L} · ${T0} = ${L*T0}`, chk:{val:L*T0}} }
+  if(d==='medium'){ const A=rnd(1,4); const v=A*A*A/3+2*A; return {text:`Find the length of r(t) = ⟨2t, t², t³/3⟩ for 0 ≤ t ≤ ${A}.`, answers:[ratS(v)], wrong:[ratS(A*A*A/3),ratS(v+A),ratS(A*A+2)], hint:`r′ = ⟨2, 2t, t²⟩, |r′| = √(4 + 4t² + t⁴) = t² + 2\nL = ∫₀^${A} (t² + 2) dt = ${ratS(A*A*A/3)} + ${2*A} = ${ratS(v)}`, chk:{val:v}} }
+  const [a,b,L]=pick([[3,4,5],[6,8,10],[5,12,13],[8,6,10]]), k=pick([1,2]); return {type:'pi',text:`Find the length of the helix r(t) = ⟨${a}cos t, ${a}sin t, ${b}t⟩ for 0 ≤ t ≤ ${k===1?'':k}π.`, answers:[piS(L*k)], wrong:[piS(2*L*k),piS((a+b)*k),piS(a*k)], hint:`|r′| = √(${a*a} + ${b*b}) = ${L}\nL = ${L} · ${piS(k)} = ${piS(L*k)}`, chk:{val:L*k*Math.PI}} });
+add('m2','curvature','Curvature','exact',
+ 'κ = |r′ × r″| / |r′|³.  For y = f(x): κ = |f″| / (1 + f′²)^(3/2).\nA circle of radius R has κ = 1/R.',
+ d=>{ if(d==='easy'){ const R_=rnd(2,9); return {text:`Find the curvature of the circle r(t) = ⟨${R_}cos t, ${R_}sin t⟩.`, answers:[fr(1,R_)], wrong:[String(R_),fr(1,R_*R_),fr(2,R_)], hint:`A circle of radius ${R_} has κ = 1/${R_}.`, chk:{val:1/R_}} }
+  if(d==='medium'){ const [a,b]=pick([[3,4],[1,1],[2,1],[1,2],[4,3],[1,3],[2,2]]); return {text:`Find the curvature of the helix r(t) = ⟨${a===1?'':a}cos t, ${a===1?'':a}sin t, ${b===1?'':b}t⟩.`, answers:[fr(a,a*a+b*b)], wrong:[fr(1,a),fr(b,a*a+b*b),fr(a,b)], hint:`|r′| = √(${a*a + b*b}),  |r′ × r″| = ${a===1?'':a}√(${a*a+b*b})\nκ = a/(a² + b²) = ${fr(a,a*a+b*b)}`, chk:{val:a/(a*a+b*b)}} }
+  const a=nz(-5,5); return {text:`Find the curvature of y = ${k1(a,'x²')} at the origin.`, answers:[String(2*Math.abs(a))], wrong:[String(Math.abs(a)),fr(1,2*Math.abs(a)),String(4*Math.abs(a))], hint:`f′(0) = 0, f″ = ${2*a}\nκ = |${2*a}| / (1 + 0)^(3/2) = ${2*Math.abs(a)}`, chk:{val:2*Math.abs(a)}} });
+
+/* ================= Unit 3: Partial derivatives ================= */
+const LEVELS=[['x² + y²','circles centered at the origin',(x,y)=>x*x+y*y,[1,2,4,6]],['x² + 4y²','ellipses (wider than tall)',(x,y)=>x*x+4*y*y,[1,3,6]],['x² − y²','hyperbolas',(x,y)=>x*x-y*y,[-4,-1,1,4]],['xy','hyperbolas in the 1st & 3rd / 2nd & 4th quadrants',(x,y)=>x*y,[-4,-1,1,4]],['y − x²','parabolas opening up',(x,y)=>y-x*x,[-2,0,1,2]],['x + y','parallel lines',(x,y)=>x+y,[-3,-1,1,3]],['y/x','lines through the origin',(x,y)=>y/x,[-2,-0.5,0.5,2]]];
+add('m3','level_curves','Functions of Several Variables & Level Curves','text',
+ 'A level curve of f(x, y) is the set f(x, y) = c. Stacking level curves gives a contour map.\nf(a, b) means substitute x = a, y = b.',
+ d=>{ if(d==='easy'){ const ts=randPoly(3,2), a=nz(-3,3), b=nz(-3,3), v=tE(ts,a,b); return {type:'num',text:`f(x, y) = ${tS(ts)}. Find f(${M(a)}, ${M(b)}).`, answers:[v], wrong:[tE(ts,b,a)===v?v+2:tE(ts,b,a),v+1,-v||3], hint:`Substitute x = ${M(a)}, y = ${M(b)}: f = ${M(v)}`, chk:{val:v}} }
+  const i=rnd(0,LEVELS.length-1), [f,desc,F,lv]=LEVELS[i]; const others=LEVELS.filter((_,j)=>j!==i);
+  if(d==='medium') return {type:'text',mcOnly:true,text:`Describe the level curves of f(x, y) = ${f}.`, answers:[desc], mcAns:desc, wrong:shuffle(others).slice(0,3).map(o=>o[1]), hint:`Set ${f} = c and recognize the curve: ${desc}.`};
+  const svg=contourFig(F,lv,{xr:[-3,3],yr:[-3,3]}); return {type:'text',mcOnly:true,svg,text:`The figure shows several level curves of a function. Which function is it?`, answers:[`f(x, y) = ${f}`], mcAns:`f(x, y) = ${f}`, wrong:shuffle(others).slice(0,3).map(o=>`f(x, y) = ${o[0]}`), hint:`The curves are ${desc} → f(x, y) = ${f}.`} });
+add('m3','limit2','Limits in Two Variables','text',
+ 'If f is continuous at (a, b), just substitute.\nIf two different paths to (a, b) give different values, the limit does NOT exist.',
+ d=>{ if(d==='easy'){ const ts=randPoly(3,2), a=nz(-3,3), b=nz(-3,3), v=tE(ts,a,b); return {type:'num',text:`Find lim((x, y)→(${M(a)}, ${M(b)})) (${tS(ts)}).`, answers:[v], wrong:[v+1,-v||2,tE(ts,b,a)===v?v-2:tE(ts,b,a)], hint:`Polynomials are continuous: substitute → ${M(v)}`, chk:{val:v}} }
+  if(d==='medium'){ const a=nz(-4,4), b=nz(-4,4); if(a===b) return null; const k=pick([1,2]); if(k===1) return {type:'num',text:`Find lim((x, y)→(${M(a)}, ${M(a)})) (x² − y²)/(x − y).`, answers:[2*a], wrong:[0,a,'DNE'], hint:`(x² − y²)/(x − y) = x + y for x ≠ y → ${M(a)} + ${P_(a)} = ${M(2*a)}`, chk:{val:2*a}};
+    return {type:'num',text:`Find lim((x, y)→(0, 0)) (x²y)/(x² + y²).`, answers:[0], wrong:[1,'1/2','DNE'], hint:`|x²y/(x² + y²)| ≤ |y| → 0 (squeeze theorem). Limit = 0`} }
+  const opts=[['xy/(x² + y²)','Along y = mx the value is m/(1 + m²), which depends on m'],['(x² − y²)/(x² + y²)','Along y = 0 you get 1; along x = 0 you get −1'],['x²/(x² + y²)','Along y = 0 you get 1; along x = 0 you get 0'],['xy²/(x² + y⁴)','Along y = 0 you get 0; along x = y² you get 1/2']];
+  const [f,why]=pick(opts); return {type:'text',text:`Find lim((x, y)→(0, 0)) ${f}, or write DNE.`, answers:['DNE','does not exist'], mcAns:'Does not exist', wrong:['0','1','1/2'], fmt:'a number, or DNE', hint:`${why} → the limit does not exist.`} });
+add('m3','partials','Partial Derivatives','fx',
+ '∂f/∂x: differentiate in x, treating y (and z) as constants.  ∂f/∂y: treat x as constant.',
+ d=>{ if(d!=='hard'){ const ts=randPoly(R(d,3,4),R(d,3,4)), v=pick(['x','y']), D=tD(ts,v); if(!D.length) return null; const nm=v==='x'?'∂f/∂x':'∂f/∂y';
+    return {type:'fx',text:`f(x, y) = ${tS(ts)}. Find ${nm}.`, answers:[tS(D)], wrong:[tS(tD(ts,v==='x'?'y':'x')),tS(D.map(t=>[t[0],t[1]+(v==='x'),t[2]+(v==='y'),0]))], fmt:'e.g. 6xy² − 4', hint:`Treat ${v==='x'?'y':'x'} as a constant:\n${nm} = ${tS(D)}`, chk:{dv:[tSrc(ts),v]}} }
+  const a=nz2(-4,4), b=nz(-5,5), op=pick(['exp','sin','ln']), v=pick(['x','y']);
+  const F=op==='exp'?`e^(${k1(a,'xy')})`:op==='sin'?`sin(${k1(a,'x')}y)`:`ln(x² + ${Math.abs(b)}y²)`, src=op==='exp'?`exp(${a}*x*y)`:op==='sin'?`sin(${a}*x*y)`:`ln(x^2+${Math.abs(b)}*y^2)`;
+  const o=v==='x'?'y':'x', ans=op==='exp'?`${k1(a,o)}e^(${k1(a,'xy')})`:op==='sin'?`${k1(a,o)}cos(${k1(a,'x')}y)`:(v==='x'?`2x/(x² + ${Math.abs(b)}y²)`:`${2*Math.abs(b)}y/(x² + ${Math.abs(b)}y²)`);
+  return {type:'fx',text:`f(x, y) = ${F}. Find ∂f/∂${v}.`, answers:[ans], wrong:mixW(ans), fmt:'e.g. 3y·e^(3xy)', hint:`Chain rule, with ${o} held constant:\n∂f/∂${v} = ${ans}`, chk:{dv:[src,v]}} });
+add('m3','second_partials','Second Partial Derivatives','fx',
+ 'f_xx = ∂²f/∂x²,  f_yy = ∂²f/∂y²,  f_xy = ∂/∂y(∂f/∂x).\nClairaut: f_xy = f_yx for nice functions.',
+ d=>{ const ts=randPoly(4,4); const w=R(d,pick(['xx','yy']),'xy',pick(['xy','xx'])); const D=tD(tD(ts,w[0]),w[1]); if(!D.length) return null;
+  const nm={xx:'f_xx',yy:'f_yy',xy:'f_xy'}[w], alt=w==='xy'?tD(tD(ts,'x'),'x'):tD(tD(ts,'x'),'y');
+  return {type:'fx',text:`f(x, y) = ${tS(ts)}. Find ${nm}.`, answers:[tS(D)], wrong:[tS(alt),tS(tD(ts,w[0]))], fmt:'e.g. 12x²y − 6', hint:`${w[0]==='x'?'f_x':'f_y'} = ${tS(tD(ts,w[0]))}\n${nm} = ${tS(D)}`, chk:{dv2:[tSrc(ts),w]}} });
+add('m3','chain_multi','Chain Rule (Several Variables)','num',
+ 'z = f(x, y) with x = x(t), y = y(t):  dz/dt = f_x·dx/dt + f_y·dy/dt.',
+ d=>{ const ts=randPoly(3,R(d,2,3,3)), a=nz(-3,3), b=nz(-3,3), t0=R(d,1,rnd(1,2),rnd(-2,2));
+  const X=t=>t*t+a, Y=t=>b*t, x0=X(t0), y0=Y(t0), fx_=tE(tD(ts,'x'),x0,y0), fy_=tE(tD(ts,'y'),x0,y0), ans=fx_*2*t0+fy_*b;
+  return {text:`z = ${tS(ts)}, where x = t²${sg(a,v=>v)} and y = ${k1(b,'t')}. Find dz/dt at t = ${M(t0)}.`, answers:[ans], wrong:[fx_+fy_,fx_*2*t0,ans+fy_*(b-1)||ans+2], hint:`At t = ${M(t0)}: x = ${M(x0)}, y = ${M(y0)}, dx/dt = ${M(2*t0)}, dy/dt = ${M(b)}\nf_x = ${tS(tD(ts,'x'))} = ${M(fx_)},  f_y = ${tS(tD(ts,'y'))} = ${M(fy_)}\ndz/dt = (${M(fx_)})(${M(2*t0)}) + (${M(fy_)})(${M(b)}) = ${M(ans)}`, chk:{chain:[tSrc(ts),`x^2+${a}`,`${b}*x`,t0]}} });
+add('m3','implicit_partial','Implicit Partial Derivatives','num',
+ 'If F(x, y, z) = 0 defines z implicitly:  ∂z/∂x = −F_x / F_z,  ∂z/∂y = −F_y / F_z.',
+ d=>{ const ts=randPoly(R(d,3,4,4),3,3); if(!ts.some(t=>t[3])) return null; const P=rv(3,-2,2); const c=tE(ts,...P); const v=pick(['x','y']);
+  const Fv=tE(tD(ts,v),...P), Fz=tE(tD(ts,'z'),...P); if(!Fz) return null; const ans=-Fv/Fz;
+  return {text:`${tS(ts)} = ${M(c)} defines z as a function of x and y. Find ∂z/∂${v} at (${P.map(M).join(', ')}).`, answers:[ratS(ans)], wrong:[ratS(-ans||1),ratS(Fv),ratS(Fz/(Fv||1))].filter((w,i,A)=>A.indexOf(w)===i&&w!==ratS(ans)), hint:`F_${v} = ${tS(tD(ts,v))} = ${M(Fv)},  F_z = ${tS(tD(ts,'z'))} = ${M(Fz)}\n∂z/∂${v} = −F_${v}/F_z = ${ratS(ans)}`, chk:{val:ans}} });
+add('m3','tangent_plane','Tangent Planes','lineq',
+ 'Tangent plane to z = f(x, y) at (a, b):  z = f(a, b) + f_x(a, b)(x − a) + f_y(a, b)(y − b).\nFor a level surface F(x, y, z) = k: normal = ∇F at the point.',
+ d=>{ if(d!=='hard'){ const ts=randPoly(3,R(d,2,3)), a=nz(-2,2), b=nz(-2,2), z0=tE(ts,a,b), p=tE(tD(ts,'x'),a,b), q=tE(tD(ts,'y'),a,b); if(!p&&!q) return null; const n=[p,q,-1], dd=p*a+q*b-z0;
+    const ans=`z = ${tS([[p,1,0,0],[q,0,1,0],[z0-p*a-q*b,0,0,0]])}`; return {type:'lineq',text:`Find the tangent plane to z = ${tS(ts)} at the point where x = ${M(a)}, y = ${M(b)}.`, answers:[ans], wrong:[`z = ${tS([[p,1,0,0],[q,0,1,0],[z0,0,0,0]])}`,`z = ${tS([[q,1,0,0],[p,0,1,0],[z0-q*a-p*b,0,0,0]])}`,`z = ${tS([[p,1,0,0],[q,0,1,0],[z0+p*a+q*b,0,0,0]])}`,`z = ${tS([[p,1,0,0],[q,0,1,0],[z0-p*a-q*b+1,0,0,0]])}`,`z = ${tS([[p,1,0,0],[q,0,1,0],[z0-p*a-q*b-2,0,0,0]])}`], fmt:'e.g. z = 4x − 2y + 3', hint:`f(${M(a)}, ${M(b)}) = ${M(z0)},  f_x = ${M(p)},  f_y = ${M(q)}\nz = ${M(z0)} + ${P_(p)}(x − ${P_(a)}) + ${P_(q)}(y − ${P_(b)})\n${ans}`} }
+  const P=rv(3,-3,3); if(P.some(x=>!x)) return null; const k=nrm2(P), n=P.map(x=>2*x), g=gcd(gcd(Math.abs(n[0]),Math.abs(n[1])),Math.abs(n[2])); const nn=n.map(x=>x/g);
+  return {type:'lineq',text:`Find the tangent plane to the sphere x² + y² + z² = ${k} at (${P.map(M).join(', ')}).`, answers:[planeS(nn,dot3(nn,P))], wrong:[planeS(nn,-dot3(nn,P)),planeS(nn,k),planeS([nn[0],nn[1],-nn[2]],dot3([nn[0],nn[1],-nn[2]],P)+1)], fmt:'e.g. x + 2y − 2z = 9', hint:`∇F = ⟨2x, 2y, 2z⟩ = ${v3(n)} at the point\n${planeS(P,k)}`} });
+add('m3','linear_approx','Linear Approximation','num',
+ 'Near (a, b):  f(x, y) ≈ f(a, b) + f_x(a, b)Δx + f_y(a, b)Δy.',
+ d=>{ const ts=randPoly(3,2), a=nz(-2,2), b=nz(-2,2), dx=pick([0.1,-0.1,0.2,0.05]), dy=pick([0.1,-0.1,-0.2,0.05]); const z0=tE(ts,a,b), p=tE(tD(ts,'x'),a,b), q=tE(tD(ts,'y'),a,b); const L=Math.round((z0+p*dx+q*dy)*1000)/1000;
+  return {text:`f(x, y) = ${tS(ts)}. Use the linear approximation at (${M(a)}, ${M(b)}) to estimate f(${M(+(a+dx).toFixed(2))}, ${M(+(b+dy).toFixed(2))}).`, answers:[String(L)], wrong:[String(z0),String(Math.round((z0+p*dy+q*dx)*1000)/1000),String(Math.round((z0-p*dx-q*dy)*1000)/1000)], fmt:'decimal', hint:`f = ${M(z0)}, f_x = ${M(p)}, f_y = ${M(q)}, Δx = ${M(dx)}, Δy = ${M(dy)}\nL = ${M(z0)} + (${M(p)})(${M(dx)}) + (${M(q)})(${M(dy)}) = ${M(L)}`, chk:{val:L}} });
+
+/* ================= Unit 4: Gradients & optimization ================= */
+add('m4','gradient','The Gradient','mat',
+ '∇f = ⟨f_x, f_y⟩ (or ⟨f_x, f_y, f_z⟩). It points in the direction of fastest increase and is perpendicular to level curves.',
+ d=>{ const vars=d==='hard'?3:2, ts=randPoly(R(d,3,4,4),3,vars), P=rv(vars,-2,2); const g=['x','y','z'].slice(0,vars).map(v=>tE(tD(ts,v),P[0],P[1],P[2]||0)); if(g.every(x=>!x)) return null;
+  return {type:'mat',vals:g,text:`f(${vars===3?'x, y, z':'x, y'}) = ${tS(ts)}. Find ∇f at (${P.map(M).join(', ')}).`, answers:[`⟨${g.map(M).join(', ')}⟩`], wrong:[`⟨${g.slice().reverse().map(M).join(', ')}⟩`,`⟨${g.map(x=>-x).map(M).join(', ')}⟩`,`⟨${g.map((x,i)=>i?x:x+1).map(M).join(', ')}⟩`], fmt:'⟨a, b⟩ or ⟨a, b, c⟩', hint:['x','y','z'].slice(0,vars).map((v,i)=>`f_${v} = ${tS(tD(ts,v))} = ${M(g[i])}`).join('\n')} });
+add('m4','dir_deriv','Directional Derivatives','num',
+ 'D_u f = ∇f · u, where u is a UNIT vector. Normalize the direction first: u = v / |v|.',
+ d=>{ const ts=randPoly(3,R(d,2,3,3)), a=nz(-2,2), b=nz(-2,2); const p=tE(tD(ts,'x'),a,b), q=tE(tD(ts,'y'),a,b); const [vx,vy,L]=pick([[3,4,5],[4,3,5],[5,12,13],[12,5,13],[6,8,10],[8,15,17]]).map((v,i)=>i<2?v*pick([1,-1]):v);
+  if(d==='easy'){ const u=pick([[1,0,'⟨1, 0⟩ (the +x direction)'],[0,1,'⟨0, 1⟩ (the +y direction)']]); const ans=p*u[0]+q*u[1]; return {text:`f(x, y) = ${tS(ts)}. Find the directional derivative at (${M(a)}, ${M(b)}) in the direction ${u[2]}.`, answers:[ans], wrong:[u[0]?q:p,ans+1,-ans||2].filter(w=>w!==ans), hint:`∇f(${M(a)}, ${M(b)}) = ⟨${M(p)}, ${M(q)}⟩ → D_u f = ${M(ans)}`, chk:{val:ans}} }
+  const ans=(p*vx+q*vy)/L; return {text:`f(x, y) = ${tS(ts)}. Find the directional derivative at (${M(a)}, ${M(b)}) in the direction of v = ⟨${M(vx)}, ${M(vy)}⟩.`, answers:[ratS(ans)], wrong:[String(p*vx+q*vy),ratS((p*vy+q*vx)/L),ratS(-ans||1)].filter((w,i,A)=>A.indexOf(w)===i&&w!==ratS(ans)), hint:`∇f = ⟨${M(p)}, ${M(q)}⟩,  u = ⟨${M(vx)}/${L}, ${M(vy)}/${L}⟩\nD_u f = (${M(p*vx)} + ${P_(q*vy)})/${L} = ${ratS(ans)}`, chk:{val:ans}} });
+add('m4','max_rate','Maximum Rate of Change','exact',
+ 'The maximum rate of increase of f at a point is |∇f|, in the direction of ∇f. The minimum (fastest decrease) is −|∇f|.',
+ d=>{ const ts=randPoly(3,R(d,2,3,3),d==='hard'?3:2), P=rv(d==='hard'?3:2,-2,2); const g=['x','y','z'].slice(0,P.length).map(v=>tE(tD(ts,v),P[0],P[1],P[2]||0)), n=nrm2(g); if(!n) return null;
+  return {text:`f = ${tS(ts)}. What is the maximum rate of change of f at (${P.map(M).join(', ')})?`, answers:[rad(n)], wrong:[String(n),String(g.reduce((s,x)=>s+Math.abs(x),0)),rad(n+2)], fmt:'exact, e.g. 2√13', hint:`∇f = ⟨${g.map(M).join(', ')}⟩\n|∇f| = √${n}${rad(n)!=='√'+n?' = '+rad(n):''}`, chk:{val:Math.sqrt(n)}} });
+add('m4','crit_points','Critical Points','pair',
+ 'Critical points: solve f_x = 0 and f_y = 0 together.',
+ d=>{ const p=nz(-4,4), q=nz(-4,4); if(d==='easy'){ const a=rnd(1,3), b=rnd(1,3)*pick([1,-1]); const ts=tMerge([[a,2,0,0],[-2*a*p,1,0,0],[b,0,2,0],[-2*b*q,0,1,0],[rnd(-5,5),0,0,0]]);
+    return {type:'pair',vals:[p,q],text:`Find the critical point of f(x, y) = ${tS(ts)}.`, answers:[`(${M(p)}, ${M(q)})`], wrong:[`(${M(q)}, ${M(p)})`,`(${M(-p)}, ${M(-q)})`,`(${M(2*p)}, ${M(2*q)})`], fmt:'(x, y)', hint:`f_x = ${tS(tD(ts,'x'))} = 0 → x = ${M(p)}\nf_y = ${tS(tD(ts,'y'))} = 0 → y = ${M(q)}`} }
+  // f = x² + kxy + y² + cx + ey with critical point (p, q): f_x = 2x + ky + c, f_y = kx + 2y + e
+  const k=d==='medium'?pick([1,-1,3,-3]):pick([2,-2,4]); if(k*k===4) return null; const c=-(2*p+k*q), e=-(k*p+2*q); const ts=tMerge([[1,2,0,0],[k,1,1,0],[1,0,2,0],[c,1,0,0],[e,0,1,0]]);
+  return {type:'pair',vals:[p,q],text:`Find the critical point of f(x, y) = ${tS(ts)}.`, answers:[`(${M(p)}, ${M(q)})`], wrong:[`(${M(q)}, ${M(p)})`,`(${M(-p)}, ${M(-q)})`,`(${M(p)}, ${M(-q)})`], fmt:'(x, y)', hint:`f_x = ${tS(tD(ts,'x'))} = 0\nf_y = ${tS(tD(ts,'y'))} = 0\nSolve the system → (${M(p)}, ${M(q)})`} });
+const CLS=['Local minimum','Local maximum','Saddle point','Test is inconclusive'];
+add('m4','second_test','Second Derivative Test','text',
+ 'At a critical point let D = f_xx·f_yy − (f_xy)².\nD > 0 and f_xx > 0 → local min;  D > 0 and f_xx < 0 → local max;  D < 0 → saddle;  D = 0 → inconclusive.',
+ d=>{ if(d!=='hard'){ let A=nz(-6,6), B=nz(-6,6), C=rnd(-4,4); if(d==='easy'&&Math.random()<0.5) C=0; const D=A*B-C*C; const ans=D>0?(A>0?CLS[0]:CLS[1]):D<0?CLS[2]:CLS[3];
+    return {type:'text',mcOnly:true,text:`At a critical point, f_xx = ${M(A)}, f_yy = ${M(B)}, f_xy = ${M(C)}. Classify the point.`, answers:[ans], mcAns:ans, wrong:CLS.filter(c=>c!==ans), hint:`D = (${M(A)})(${M(B)}) − (${M(C)})² = ${M(D)}\n${ans}`} }
+  const opts=[['x² + y² − 4x + 6y','(2, −3)',CLS[0]],['x² − y²','(0, 0)',CLS[2]],['4 − x² − y²','(0, 0)',CLS[1]],['xy','(0, 0)',CLS[2]],['x² + 3xy + y²','(0, 0)',CLS[2]],['2x² + xy + y²','(0, 0)',CLS[0]],['−x² + xy − 2y²','(0, 0)',CLS[1]],['x³ − 3x + y²','(1, 0)',CLS[0]],['x³ − 3x + y²','(−1, 0)',CLS[2]],['x⁴ + y⁴','(0, 0)',CLS[3]]];
+  const [f,pt,ans]=pick(opts); return {type:'text',mcOnly:true,text:`f(x, y) = ${f} has a critical point at ${pt}. Classify it.`, answers:[ans], mcAns:ans, wrong:CLS.filter(c=>c!==ans), hint:`Compute f_xx, f_yy, f_xy at ${pt} and D = f_xx f_yy − f_xy².\n${ans}`} });
+add('m4','lagrange','Lagrange Multipliers','exact',
+ 'To optimize f subject to g = k: solve ∇f = λ∇g together with g = k, then compare f at the solutions.',
+ d=>{ if(d==='easy'){ const s=2*rnd(1,8); return {text:`Find the maximum of f(x, y) = xy subject to x + y = ${s}.`, answers:[String(s*s/4)], wrong:[String(s*s/2),String(s),String(s*s)], hint:`∇f = ⟨y, x⟩ = λ⟨1, 1⟩ → x = y = ${s/2}\nf = ${s/2}·${s/2} = ${s*s/4}`, chk:{val:s*s/4}} }
+  if(d==='medium'){ const [a,b]=pick([[1,1],[1,2],[2,1],[3,4],[1,3],[2,3]]), c=nz2(-9,9); const v=c*c/(a*a+b*b); return {text:`Find the minimum of f(x, y) = x² + y² subject to ${k1(a,'x')} + ${k1(b,'y')} = ${M(c)}.`, answers:[ratS(v)], wrong:[ratS(c*c/(a+b)/(a+b)),ratS(Math.abs(c)/Math.sqrt(a*a+b*b))===ratS(v)?String(c*c):ratS(c*c/(a*a+b*b)*2),String(c*c)], hint:`⟨2x, 2y⟩ = λ⟨${a}, ${b}⟩ → (x, y) = t⟨${a}, ${b}⟩ with t = ${ratS(c/(a*a+b*b))}\nf = t²(${a*a+b*b}) = ${ratS(v)}`, chk:{val:v}} }
+  const [a,b,n]=pick([[1,1,2],[1,2,5],[2,1,5],[3,4,25],[1,3,10],[2,3,13]]), r=rnd(1,5); return {text:`Find the maximum of f(x, y) = ${k1(a,'x')} + ${k1(b,'y')} on the circle x² + y² = ${r*r}.`, answers:[surd(r,1,n)], wrong:[String(r*(a+b)),surd(r*r,1,n),String(r*n)], fmt:'exact, e.g. 3√5', hint:`⟨${a}, ${b}⟩ = λ⟨2x, 2y⟩ → (x, y) points along ⟨${a}, ${b}⟩: (x, y) = (${r}/√${n})⟨${a}, ${b}⟩\nmax = ${r}·√${n} = ${surd(r,1,n)}`, chk:{val:r*Math.sqrt(n)}} });
+
+/* ================= Unit 5: Double & triple integrals ================= */
+const rectI=(ts,a,b,c=1)=>ts.reduce((s,t)=>s+t[0]*Math.pow(a,t[1]+1)/(t[1]+1)*Math.pow(b,t[2]+1)/(t[2]+1)*Math.pow(c,(t[3]||0)+1)/((t[3]||0)+1),0);
+add('m5','iter_rect','Double Integrals over Rectangles','exact',
+ 'Over a rectangle [a, b] × [c, d] you can integrate in either order (Fubini):\n∬ f dA = ∫ from a to b ∫ from c to d f(x, y) dy dx.',
+ d=>{ const ts=randPoly(R(d,2,3,3),R(d,2,3,4)).map(t=>[t[0]*pick([1,2,3]),t[1],t[2],0]), a=rnd(1,3), b=rnd(1,3); const v=rectI(ts,a,b);
+  return {text:`Evaluate ∬_R (${tS(ts)}) dA, where R = [0, ${a}] × [0, ${b}].`, answers:[ratS(v)], wrong:[ratS(rectI(ts,b,a)),ratS(tE(ts,a,b)*a*b),ratS(v*2)].filter((w,i,A)=>A.indexOf(w)===i&&w!==ratS(v)), hint:`Integrate in y from 0 to ${b}, then in x from 0 to ${a}, term by term:\n∫∫ c·xⁱyʲ = c·${a}^(i+1)/(i+1)·${b}^(j+1)/(j+1)\nTotal = ${ratS(v)}`, chk:{q2:[tSrc(ts),0,a,'0',String(b)]}} });
+add('m5','iter_general','Double Integrals over General Regions','exact',
+ 'Type I region: a ≤ x ≤ b, g₁(x) ≤ y ≤ g₂(x).  Integrate the inner (y) integral first, with limits in terms of x.',
+ d=>{ const a=rnd(1,3), up=R(d,'x',pick(['x','x²']),'x²'), ts=randPoly(R(d,1,2,2),2).map(t=>[t[0],t[1],t[2],0]);
+  const hi=up==='x'?(x=>x):(x=>x*x); let v=0; ts.forEach(([c,i,j])=>{ v+=up==='x'?c*Math.pow(a,i+j+2)/((j+1)*(i+j+2)):c*Math.pow(a,i+2*j+3)/((j+1)*(i+2*j+3)) });
+  const svg=regionFig(x=>0,hi,0,a,{xr:[-0.5,a+0.5],yr:[-0.5,(up==='x'?a:a*a)+0.5]});
+  return {svg,text:`Evaluate ∫ from 0 to ${a} ∫ from 0 to ${up} of (${tS(ts)}) dy dx.`, answers:[ratS(v)], wrong:[ratS(rectI(ts,a,up==='x'?a:a*a)),ratS(v*2),ratS(-v||1)].filter((w,i,A)=>A.indexOf(w)===i&&w!==ratS(v)), hint:`Inner: integrate in y from 0 to ${up} (treat x as constant).\nOuter: integrate the result in x from 0 to ${a}.\n= ${ratS(v)}`, chk:{q2:[tSrc(ts),0,a,'0',up==='x'?'x':'x^2']}} });
+const REV=[[a=>`∫ from 0 to ${a} ∫ from 0 to x f dy dx`,a=>`∫ from 0 to ${a} ∫ from y to ${a} f dx dy`,a=>[`∫ from 0 to ${a} ∫ from 0 to y f dx dy`,`∫ from 0 to x ∫ from 0 to ${a} f dx dy`,`∫ from 0 to ${a} ∫ from 0 to ${a} f dx dy`],a=>[x=>0,x=>x,0,a,[-0.5,a+0.5],[-0.5,a+0.5]]],
+ [a=>`∫ from 0 to ${a} ∫ from 0 to x² f dy dx`,a=>`∫ from 0 to ${a*a} ∫ from √y to ${a} f dx dy`,a=>[`∫ from 0 to ${a*a} ∫ from 0 to √y f dx dy`,`∫ from 0 to ${a} ∫ from y² to ${a} f dx dy`,`∫ from 0 to ${a*a} ∫ from y² to ${a} f dx dy`],a=>[x=>0,x=>x*x,0,a,[-0.5,a+0.5],[-0.5,a*a+0.5]]],
+ [a=>`∫ from 0 to ${a} ∫ from x to ${a} f dy dx`,a=>`∫ from 0 to ${a} ∫ from 0 to y f dx dy`,a=>[`∫ from 0 to ${a} ∫ from y to ${a} f dx dy`,`∫ from x to ${a} ∫ from 0 to ${a} f dx dy`,`∫ from 0 to ${a} ∫ from 0 to ${a} f dx dy`],a=>[x=>x,x=>a,0,a,[-0.5,a+0.5],[-0.5,a+0.5]]],
+ [a=>`∫ from 0 to ${a*a} ∫ from 0 to √x f dy dx`,a=>`∫ from 0 to ${a} ∫ from y² to ${a*a} f dx dy`,a=>[`∫ from 0 to ${a} ∫ from 0 to y² f dx dy`,`∫ from 0 to ${a*a} ∫ from y² to ${a} f dx dy`,`∫ from 0 to ${a} ∫ from √y to ${a*a} f dx dy`],a=>[x=>0,x=>Math.sqrt(x),0,a*a,[-0.5,a*a+0.5],[-0.5,a+0.5]]]];
+add('m5','reverse_order','Reversing the Order of Integration','text',
+ 'Sketch the region from the given limits, then describe the SAME region the other way:\nfor fixed y, x runs from the left boundary to the right boundary.',
+ d=>{ const [q,A,W,fig]=REV[R(d,pick([0,2]),pick([1,2]),pick([1,3]))], a=rnd(2,4), [lo,hi,x0,x1,xr,yr]=fig(a); const svg=regionFig(lo,hi,x0,x1,{xr,yr});
+  return {type:'text',mcOnly:true,svg,text:`Reverse the order of integration: ${q(a)}`, answers:[A(a)], mcAns:A(a), wrong:W(a), hint:`The shaded region is the region of integration. Read it with horizontal strips:\n${A(a)}`} });
+add('m5','volume_dbl','Volumes with Double Integrals','exact',
+ 'Volume under z = f(x, y) ≥ 0 over a region D:  V = ∬_D f dA.',
+ d=>{ if(d==='easy'){ const a=rnd(1,4), b=rnd(1,4), c=rnd(1,6), p=rnd(1,3); const v=c*a*b+p*a*a*b/2; return {text:`Find the volume under z = ${c} + ${p===1?'':p}x over the rectangle [0, ${a}] × [0, ${b}].`, answers:[ratS(v)], wrong:[ratS(c*a*b),ratS(v*2),ratS(c+p*a)], hint:`V = ∫₀^${a}∫₀^${b} (${c} + ${p===1?'':p}x) dy dx = ${b}(${c*a} + ${ratS(p*a*a/2)}) = ${ratS(v)}`, chk:{q2:[`${c}+${p}*x`,0,a,'0',String(b)]}} }
+  const a=rnd(1,6), b=rnd(1,6), c=rnd(1,6); const v=a*b*c/6; return {text:`Find the volume of the tetrahedron bounded by the coordinate planes and the plane x/${a} + y/${b} + z/${c} = 1.`.replace(/\/1 /g,' ').replace(/\/1 /g,' '), answers:[ratS(v)], wrong:[ratS(a*b*c/3),ratS(a*b*c/2),String(a*b*c)], hint:`V = ∬ ${c}(1 − x/${a} − y/${b}) dA over the triangle → abc/6 = ${ratS(v)}`, chk:{val:v}} });
+add('m5','triple_box','Triple Integrals','exact',
+ '∭ f dV over a box: three nested single integrals; integrate one variable at a time.',
+ d=>{ if(d==='hard'){ const a=rnd(1,4); const v=Math.pow(a,4)/24*4; return {text:`Evaluate ∫ from 0 to ${a} ∫ from 0 to x ∫ from 0 to y of 4 dz dy dx.`.replace('of 4','of 4'), answers:[ratS(4*Math.pow(a,3)/6)], wrong:[ratS(4*Math.pow(a,3)/2),ratS(4*Math.pow(a,3)/3),String(4*a*a*a)], hint:`∫₀^y 4 dz = 4y → ∫₀^x 4y dy = 2x² → ∫₀^${a} 2x² dx = ${ratS(2*a*a*a/3)}`, chk:{val:2*a*a*a/3}} }
+  const ts=randPoly(R(d,1,2),R(d,2,3),3), a=rnd(1,3), b=rnd(1,3), c=rnd(1,2); const v=rectI(ts,a,b,c);
+  return {text:`Evaluate ∭_B (${tS(ts)}) dV, where B = [0, ${a}] × [0, ${b}] × [0, ${c}].`, answers:[ratS(v)], wrong:[ratS(v*2),ratS(tE(ts,a,b,c)*a*b*c),ratS(rectI(ts,b,a,c))].filter((w,i,A)=>A.indexOf(w)===i&&w!==ratS(v)), hint:`Integrate term by term: c·xⁱyʲzᵏ → c·${a}^(i+1)/(i+1)·${b}^(j+1)/(j+1)·${c}^(k+1)/(k+1)\nTotal = ${ratS(v)}`, chk:{val:v}} });
+add('m5','avg_value2','Average Value & Mass','exact',
+ 'Average of f over D = (1/Area(D)) ∬_D f dA.\nMass of a lamina with density ρ(x, y): m = ∬_D ρ dA.',
+ d=>{ const ts=randPoly(2,2).map(t=>[Math.abs(t[0]),t[1],t[2],0]), a=rnd(1,4), b=rnd(1,4); const I=rectI(ts,a,b);
+  if(d==='hard') return {text:`A lamina occupies [0, ${a}] × [0, ${b}] with density ρ(x, y) = ${tS(ts)}. Find its mass.`, answers:[ratS(I)], wrong:[ratS(I/(a*b)),ratS(I*2),ratS(tE(ts,a,b))], hint:`m = ∬ ρ dA = ${ratS(I)}`, chk:{val:I}};
+  return {text:`Find the average value of f(x, y) = ${tS(ts)} over the rectangle [0, ${a}] × [0, ${b}].`, answers:[ratS(I/(a*b))], wrong:[ratS(I),ratS(tE(ts,a/2,b/2))===ratS(I/(a*b))?ratS(I/(a*b)+1):ratS(tE(ts,a/2,b/2)),ratS(I/(a+b))].filter((w,i,A)=>A.indexOf(w)===i&&w!==ratS(I/(a*b))), hint:`∬ f dA = ${ratS(I)}, Area = ${a*b}\nAverage = ${ratS(I)}/${a*b} = ${ratS(I/(a*b))}`, chk:{val:I/(a*b)}} });
+
+/* ================= Unit 6: Polar, cylindrical, spherical ================= */
+add('m6','convert_coords','Converting Coordinates','text',
+ 'Polar/cylindrical: x = r cos θ, y = r sin θ (z = z).\nSpherical: x = ρ sin φ cos θ, y = ρ sin φ sin θ, z = ρ cos φ, with ρ² = x² + y² + z².',
+ d=>{ const k=rnd(1,4); const opts=R(d,[[`(${k}, ${k}√3)`,'polar (r, θ)',`(${2*k}, π/3)`,[`(${2*k}, π/6)`,`(${k}, π/3)`,`(${4*k}, π/3)`]],[`(0, ${k})`,'polar (r, θ)',`(${k}, π/2)`,[`(${k}, 0)`,`(0, π/2)`,`(${k}, π)`]],[`(−${k}, ${k})`,'polar (r, θ)',`(${k}√2, 3π/4)`,[`(${k}√2, π/4)`,`(${2*k}, 3π/4)`,`(${k}√2, −π/4)`]]],
+    [[`(${k}, ${k}, ${k+1})`,'cylindrical (r, θ, z)',`(${k}√2, π/4, ${k+1})`,[`(${2*k}, π/4, ${k+1})`,`(${k}√2, π/2, ${k+1})`,`(${k}√2, π/4, ${k})`]],[`(0, ${-k}, 3)`,'cylindrical (r, θ, z)',`(${k}, 3π/2, 3)`,[`(${k}, π/2, 3)`,`(${-k}, π/2, 3)`,`(${k}, π, 3)`]]],
+    [[`(0, 0, ${k})`,'spherical (ρ, θ, φ)',`(${k}, 0, 0)`,[`(${k}, 0, π/2)`,`(0, 0, ${k})`,`(${k}, π/2, 0)`]],[`(${k}, 0, ${k})`,'spherical (ρ, θ, φ)',`(${k}√2, 0, π/4)`,[`(${2*k}, 0, π/4)`,`(${k}√2, π/4, 0)`,`(${k}√2, 0, π/2)`]],[`(0, ${k}, 0)`,'spherical (ρ, θ, φ)',`(${k}, π/2, π/2)`,[`(${k}, 0, π/2)`,`(${k}, π/2, 0)`,`(${k}, π, π/2)`]]]);
+  const [pt,sys,ans,wr]=pick(opts); const clean=s=>s.replace(/\(1√/g,'(√').replace(/ 1√/g,' √');
+  return {type:'text',mcOnly:true,text:`Convert the rectangular point ${clean(pt)} to ${sys} coordinates.`, answers:[clean(ans)], mcAns:clean(ans), wrong:wr.map(clean), hint:`${sys.startsWith('sph')?'ρ = √(x² + y² + z²), tan θ = y/x, cos φ = z/ρ':'r = √(x² + y²), tan θ = y/x (check the quadrant)'}\n→ ${clean(ans)}`} });
+add('m6','polar_double','Double Integrals in Polar Coordinates','exact',
+ 'dA = r dr dθ (don’t forget the extra r!). Use polar when the region is a disk, annulus or sector, or the integrand has x² + y².',
+ d=>{ const a=rnd(1,4); if(d==='easy'){ const b=a+rnd(1,3); return {type:'pi',text:`Use polar coordinates to find the area of the annulus ${a*a} ≤ x² + y² ≤ ${b*b}.`, answers:[piS(b*b-a*a)], wrong:[piS(b-a),piS(2*(b*b-a*a)),piS((b*b-a*a),2)], hint:`∫₀^2π ∫_${a}^${b} r dr dθ = 2π·(${b*b} − ${a*a})/2 = ${piS(b*b-a*a)}`, chk:{val:Math.PI*(b*b-a*a)}} }
+  if(d==='medium') return {type:'pi',text:`Evaluate ∬_D (x² + y²) dA, where D is the disk x² + y² ≤ ${a*a}.`, answers:[piS(Math.pow(a,4),2)], wrong:[piS(Math.pow(a,4),4),piS(Math.pow(a,3),3),piS(Math.pow(a,4))], hint:`∫₀^2π ∫₀^${a} r²·r dr dθ = 2π·${a}⁴/4 = ${piS(Math.pow(a,4),2)}`, chk:{val:Math.PI*Math.pow(a,4)/2}};
+  return {text:`Evaluate ∬_D e^(−(x² + y²)) dA, where D is the disk x² + y² ≤ ${a*a}.`, answers:[`π(1 − e^(−${a*a}))`], wrong:[`π e^(−${a*a})`,`2π(1 − e^(−${a*a}))`,`π(1 − e^(−${a}))`], fmt:'exact, e.g. π(1 − e^(−4))', hint:`∫₀^2π ∫₀^${a} e^(−r²) r dr dθ = 2π · ½(1 − e^(−${a*a})) = π(1 − e^(−${a*a}))`, chk:{val:Math.PI*(1-Math.exp(-a*a))}} });
+add('m6','cyl_int','Triple Integrals in Cylindrical Coordinates','pi',
+ 'Cylindrical: dV = r dz dr dθ. Great for cylinders, cones and paraboloids around the z-axis.',
+ d=>{ const a=rnd(1,4), h=rnd(1,6); if(d==='easy') return {type:'pi',text:`Use cylindrical coordinates to find the volume of the cylinder x² + y² ≤ ${a*a}, 0 ≤ z ≤ ${h}.`, answers:[piS(a*a*h)], wrong:[piS(a*h),piS(2*a*a*h),piS(a*a*h,2)], hint:`∫₀^2π ∫₀^${a} ∫₀^${h} r dz dr dθ = 2π · ${h} · ${a*a}/2 = ${piS(a*a*h)}`, chk:{val:Math.PI*a*a*h}};
+  if(d==='medium') return {type:'pi',text:`Find the volume of the solid under the paraboloid z = ${a*a} − x² − y² and above the xy-plane.`, answers:[piS(Math.pow(a,4),2)], wrong:[piS(Math.pow(a,4)),piS(Math.pow(a,4),4),piS(Math.pow(a,3),2)], hint:`V = ∫₀^2π ∫₀^${a} (${a*a} − r²) r dr dθ = 2π(${ratS(Math.pow(a,4)/2)} − ${ratS(Math.pow(a,4)/4)}) = ${piS(Math.pow(a,4),2)}`, chk:{val:Math.PI*Math.pow(a,4)/2}};
+  return {type:'pi',text:`Evaluate ∭_E z dV, where E is the cylinder x² + y² ≤ ${a*a}, 0 ≤ z ≤ ${h}.`, answers:[piS(a*a*h*h,2)], wrong:[piS(a*a*h*h),piS(a*a*h,2),piS(a*h*h,2)], hint:`∫₀^2π ∫₀^${a} ∫₀^${h} z·r dz dr dθ = 2π · ${a*a}/2 · ${h*h}/2 = ${piS(a*a*h*h,2)}`, chk:{val:Math.PI*a*a*h*h/2}} });
+add('m6','sph_int','Triple Integrals in Spherical Coordinates','pi',
+ 'Spherical: dV = ρ² sin φ dρ dφ dθ, with 0 ≤ φ ≤ π. Great for balls, cones about the z-axis, and integrands with x² + y² + z².',
+ d=>{ const a=rnd(1,4); if(d==='easy') return {type:'pi',text:`Use spherical coordinates to find the volume of the ball x² + y² + z² ≤ ${a*a}.`, answers:[piS(4*a*a*a,3)], wrong:[piS(2*a*a*a,3),piS(4*a*a,3),piS(a*a*a)], hint:`∫₀^2π ∫₀^π ∫₀^${a} ρ² sin φ dρ dφ dθ = 2π · 2 · ${a*a*a}/3 = ${piS(4*a*a*a,3)}`, chk:{val:4*Math.PI*a*a*a/3}};
+  if(d==='medium') return {type:'pi',text:`Evaluate ∭_B (x² + y² + z²) dV, where B is the ball of radius ${a} centered at the origin.`, answers:[piS(4*Math.pow(a,5),5)], wrong:[piS(4*Math.pow(a,5),3),piS(Math.pow(a,5),5),piS(4*Math.pow(a,4),5)], hint:`∫∫∫ ρ²·ρ² sin φ dρ dφ dθ = 2π · 2 · ${a}⁵/5 = ${piS(4*Math.pow(a,5),5)}`, chk:{val:4*Math.PI*Math.pow(a,5)/5}};
+  return {type:'pi',text:`Find the volume of the solid above the cone φ = π/3 and inside the sphere ρ = ${a}.`, answers:[piS(a*a*a,3)], wrong:[piS(2*a*a*a,3),piS(a*a*a,6),piS(4*a*a*a,3)], hint:`V = ∫₀^2π ∫₀^(π/3) ∫₀^${a} ρ² sin φ dρ dφ dθ = 2π · (1 − cos(π/3)) · ${a*a*a}/3 = 2π · ½ · ${a*a*a}/3 = ${piS(a*a*a,3)}`, chk:{val:Math.PI*a*a*a/3}} });
+add('m6','jacobian','Change of Variables (Jacobians)','num',
+ 'For x = x(u, v), y = y(u, v):  dA = |∂(x, y)/∂(u, v)| du dv, where the Jacobian is x_u y_v − x_v y_u.',
+ d=>{ if(d==='hard') return {type:'text',mcOnly:true,text:`Which is the Jacobian factor for spherical coordinates (dV = ? dρ dφ dθ)?`, answers:['ρ² sin φ'], mcAns:'ρ² sin φ', wrong:['ρ sin φ','ρ² cos φ','r'], hint:`|∂(x, y, z)/∂(ρ, φ, θ)| = ρ² sin φ`};
+  const a=nz(-4,4), b=nz(-4,4), c=nz(-4,4), e=nz(-4,4), J=a*e-b*c; if(!J) return null;
+  if(d==='easy') return {text:`x = ${k1(a,'u')}${sg(b,v=>k1(v,'v'))}, y = ${k1(c,'u')}${sg(e,v=>k1(v,'v'))}. Find the Jacobian ∂(x, y)/∂(u, v).`, answers:[J], wrong:[a*e+b*c,b*c-a*e,a+e], hint:`x_u y_v − x_v y_u = (${M(a)})(${M(e)}) − (${M(b)})(${M(c)}) = ${M(J)}`, chk:{val:J}};
+  const A=rnd(1,6); return {text:`Under x = ${k1(a,'u')}${sg(b,v=>k1(v,'v'))}, y = ${k1(c,'u')}${sg(e,v=>k1(v,'v'))}, a region in the uv-plane with area ${A} maps to a region R in the xy-plane. What is the area of R?`, answers:[Math.abs(J)*A], wrong:[A,Math.abs(a*e+b*c)*A||A+1,Math.abs(J)+A], hint:`|J| = |${M(J)}| = ${Math.abs(J)}\nArea(R) = |J| · ${A} = ${Math.abs(J)*A}`, chk:{val:Math.abs(J)*A}} });
+
+/* ================= Unit 7: Vector fields & line integrals ================= */
+const FIELDS=[['⟨x, y⟩',(x,y)=>[x,y]],['⟨−y, x⟩',(x,y)=>[-y,x]],['⟨y, −x⟩',(x,y)=>[y,-x]],['⟨1, 0⟩',(x,y)=>[1,0]],['⟨0, x⟩',(x,y)=>[0,x]],['⟨y, 0⟩',(x,y)=>[y,0]],['⟨−x, −y⟩',(x,y)=>[-x,-y]],['⟨1, y⟩',(x,y)=>[1,y]],['⟨y, x⟩',(x,y)=>[y,x]]];
+add('m7','field_match','Vector Fields','text',
+ 'F(x, y) = ⟨P, Q⟩ attaches an arrow to every point. Check a few points: e.g. on the positive x-axis, which way does the arrow point?',
+ d=>{ const i=rnd(0,FIELDS.length-1), [nm,F]=FIELDS[i], svg=quiverFig(F,{xr:[-3,3],yr:[-3,3]}); const others=shuffle(FIELDS.filter((_,j)=>j!==i)).slice(0,3).map(f=>`F = ${f[0]}`);
+  return {type:'text',mcOnly:true,svg,text:`Which vector field is shown?`, answers:[`F = ${nm}`], mcAns:`F = ${nm}`, wrong:others, hint:`Test a point: at (1, 0) the field ${nm} gives ⟨${F(1,0).map(M).join(', ')}⟩; at (0, 1) it gives ⟨${F(0,1).map(M).join(', ')}⟩. → F = ${nm}`} });
+add('m7','div_curl2','Divergence & Curl in the Plane','fx',
+ 'For F = ⟨P, Q⟩:  div F = P_x + Q_y (spreading out),  scalar curl = Q_x − P_y (rotation).\nOn a simply connected region, F is conservative ⇔ Q_x = P_y.',
+ d=>{ const Pt=randPoly(2,3), Qt=randPoly(2,3); const FS=`F = ⟨${tS(Pt)}, ${tS(Qt)}⟩`;
+  if(d==='easy'){ const D=tMerge([...tD(Pt,'x'),...tD(Qt,'y')]); if(!D.length) return null; return {type:'fx',text:`${FS}. Find div F.`, answers:[tS(D)], wrong:[tS(tMerge([...tD(Qt,'x'),...tD(Pt,'y').map(t=>[-t[0],t[1],t[2],0])]))], fmt:'an expression in x and y', hint:`P_x = ${tS(tD(Pt,'x'))},  Q_y = ${tS(tD(Qt,'y'))}\ndiv F = ${tS(D)}`, chk:{fn:`(${tSrc(tD(Pt,'x'))})+(${tSrc(tD(Qt,'y'))})`}} }
+  if(d==='medium'){ const C=tMerge([...tD(Qt,'x'),...tD(Pt,'y').map(t=>[-t[0],t[1],t[2],0])]); if(!C.length) return null; return {type:'fx',text:`${FS}. Find the scalar curl Q_x − P_y.`, answers:[tS(C)], wrong:[tS(tMerge([...tD(Pt,'x'),...tD(Qt,'y')]))||'1'], fmt:'an expression in x and y', hint:`Q_x = ${tS(tD(Qt,'x'))},  P_y = ${tS(tD(Pt,'y'))}\nQ_x − P_y = ${tS(C)}`, chk:{fn:`(${tSrc(tD(Qt,'x'))})-(${tSrc(tD(Pt,'y'))})`}} }
+  const f=randPoly(3,3), cons=Math.random()<0.5; let P2=tD(f,'x'), Q2=tD(f,'y'); if(!cons) Q2=tMerge([...Q2,[nz(-3,3),1,0,0]]); if(!P2.length||!Q2.length) return null;
+  const ans=cons?'Yes':'No'; return {type:'text',mcOnly:true,text:`Is F = ⟨${tS(P2)}, ${tS(Q2)}⟩ conservative on ℝ²?`, answers:[ans], mcAns:ans, wrong:[cons?'No':'Yes','Only on the x-axis','Cannot be determined'], hint:`P_y = ${tS(tD(P2,'y'))},  Q_x = ${tS(tD(Q2,'x'))}\n${cons?'Equal → conservative':'Not equal → not conservative'}`} });
+add('m7','potential','Potential Functions','fx',
+ 'If F = ∇f, then f_x = P and f_y = Q. Integrate P in x, then fix the "constant" (a function of y) using Q.',
+ d=>{ const f=randPoly(R(d,2,3,3),R(d,2,3,4)); const P2=tD(f,'x'), Q2=tD(f,'y'); if(!P2.length||!Q2.length) return null;
+  return {type:'fx',text:`F = ⟨${tS(P2)}, ${tS(Q2)}⟩ is conservative. Find the potential function f with f(0, 0) = 0.`, answers:[tS(f)], wrong:mixW(tS(f)).concat([tS(f.map(t=>[t[0]*2,t[1],t[2],0]))]), fmt:'an expression in x and y', hint:`∫ P dx = ${tS(f.filter(t=>t[1]>0))} + g(y)\nMatch f_y = Q to find g(y).\nf = ${tS(f)}`, chk:{pot:[tSrc(P2),tSrc(Q2)]}} });
+add('m7','line_scalar','Line Integrals of Functions','exact',
+ '∫_C f ds = ∫ from a to b of f(r(t)) |r′(t)| dt.  ds = |r′(t)| dt.',
+ d=>{ const [a,b,L]=pick([[3,4,5],[4,3,5],[6,8,10],[5,12,13],[8,6,10]]), p=rnd(1,3), q=rnd(1,3);
+  if(d!=='hard'){ const v=(p*a+q*b)*L/2; return {text:`Evaluate ∫_C (${k1(p,'x')} + ${k1(q,'y')}) ds, where C is the segment from (0, 0) to (${a}, ${b}).`, answers:[ratS(v)], wrong:[ratS(v/L),ratS(v*2),ratS((p*a+q*b)/2)], hint:`r(t) = ⟨${a}t, ${b}t⟩, 0 ≤ t ≤ 1, |r′| = ${L}\n∫₀¹ (${p*a+q*b})t · ${L} dt = ${ratS(v)}`, chk:{val:v}} }
+  const r=rnd(1,5); return {type:'pi',text:`Evaluate ∫_C (x² + y²) ds, where C is the circle of radius ${r} centered at the origin.`, answers:[piS(2*r*r*r)], wrong:[piS(2*r*r),piS(r*r*r),piS(r*r)], hint:`On C, x² + y² = ${r*r}, and the length is ${piS(2*r)}\n∫ = ${r*r} · ${piS(2*r)} = ${piS(2*r*r*r)}`, chk:{val:2*Math.PI*r*r*r}} });
+add('m7','work_line','Work: Line Integrals of Vector Fields','exact',
+ '∫_C F·dr = ∫ from a to b of F(r(t))·r′(t) dt  (= ∫ P dx + Q dy).',
+ d=>{ const Pt=randPoly(2,R(d,1,2,2)), Qt=randPoly(2,R(d,1,2,2)); const path=R(d,'seg','par','par');
+  // r(t) = ⟨t, t⟩ or ⟨t, t²⟩, 0 ≤ t ≤ 1
+  const Y=path==='seg'?(t=>t):(t=>t*t), dY=path==='seg'?(t=>1):(t=>2*t); let v=0; const N=2000; for(let k=0;k<N;k++){ const t=(k+0.5)/N; v+=(tE(Pt,t,Y(t))+tE(Qt,t,Y(t))*dY(t))/N }
+  const vx=ratS(Math.round(v*360360)/360360);
+  return {text:`F = ⟨${tS(Pt)}, ${tS(Qt)}⟩. Evaluate ∫_C F·dr along ${path==='seg'?'the segment r(t) = ⟨t, t⟩':'the parabola r(t) = ⟨t, t²⟩'}, 0 ≤ t ≤ 1.`, answers:[vx], wrong:[ratS(-v),ratS(Math.round(v*2*360360)/360360),ratS(Math.round((v+0.5)*360360)/360360)], hint:`Substitute x = t, y = ${path==='seg'?'t':'t²'}, dx = dt, dy = ${path==='seg'?'dt':'2t dt'}\nIntegrate the resulting polynomial in t from 0 to 1 → ${vx}`, chk:{work:[tSrc(Pt),tSrc(Qt),path]}} });
+add('m7','ftc_line','Fundamental Theorem for Line Integrals','num',
+ 'If F = ∇f, then ∫_C F·dr = f(end) − f(start), for ANY path. Around a closed loop it is 0.',
+ d=>{ const f=randPoly(3,R(d,2,3,3)), A=rv(2,-2,2), B=rv(2,-2,3); const v=tE(f,B[0],B[1])-tE(f,A[0],A[1]); const P2=tD(f,'x'), Q2=tD(f,'y'); if(!P2.length||!Q2.length) return null;
+  if(d==='hard') return {text:`F = ⟨${tS(P2)}, ${tS(Q2)}⟩. Evaluate ∮_C F·dr around the circle x² + y² = 4 (counterclockwise).`, answers:[0], wrong:[2,'4π','8π'], hint:`F is conservative (F = ∇f with f = ${tS(f)}), so the integral around any closed curve is 0.`, chk:{val:0}};
+  return {text:`F = ∇f with f(x, y) = ${tS(f)}. Evaluate ∫_C F·dr for any path C from (${A.map(M).join(', ')}) to (${B.map(M).join(', ')}).`.replace('F = ∇f with f(x, y)',d==='easy'?'F = ∇f with f(x, y)':`F = ⟨${tS(P2)}, ${tS(Q2)}⟩ = ∇f with f(x, y)`), answers:[v], wrong:[-v||1,tE(f,B[0],B[1]),tE(f,A[0],A[1])+tE(f,B[0],B[1])].filter((w,i,a)=>a.indexOf(w)===i&&w!==v), hint:`f(${B.map(M).join(', ')}) − f(${A.map(M).join(', ')}) = ${M(tE(f,B[0],B[1]))} − ${P_(tE(f,A[0],A[1]))} = ${M(v)}`, chk:{val:v}} });
+
+/* ================= Unit 8: Green's theorem ================= */
+add('m8','green_rect',"Green's Theorem (Circulation)",'exact',
+ "Green: ∮_C P dx + Q dy = ∬_D (Q_x − P_y) dA, with C counterclockwise around D.",
+ d=>{ const a=rnd(1,4), b=rnd(1,4); const Pt=randPoly(2,R(d,1,2,3)), Qt=randPoly(2,R(d,1,2,3)); const C=tMerge([...tD(Qt,'x'),...tD(Pt,'y').map(t=>[-t[0],t[1],t[2],0])]); if(!C.length) return null; const v=rectI(C,a,b);
+  return {text:`Use Green's theorem to evaluate ∮_C (${tS(Pt)}) dx + (${tS(Qt)}) dy, where C is the boundary of the rectangle [0, ${a}] × [0, ${b}], counterclockwise.`, answers:[ratS(v)], wrong:[ratS(-v),ratS(rectI(tMerge([...tD(Pt,'x'),...tD(Qt,'y')]),a,b))===ratS(v)?ratS(v+1):ratS(rectI(tMerge([...tD(Pt,'x'),...tD(Qt,'y')]),a,b)),ratS(v*2)].filter((w,i,A)=>A.indexOf(w)===i&&w!==ratS(v)), hint:`Q_x − P_y = ${tS(C)}\n∬ over [0, ${a}] × [0, ${b}] = ${ratS(v)}`, chk:{q2:[tSrc(C),0,a,'0',String(b)]}} });
+add('m8','green_disk',"Green's Theorem on a Disk",'pi',
+ 'If Q_x − P_y is constant k, then ∮_C P dx + Q dy = k · Area(D).',
+ d=>{ const a=nz(-4,4), b=nz(-4,4), r=rnd(1,4); const k=b-a; if(!k) return null; const pts=R(d,'circle','circle','ellipse');
+  if(pts==='circle') return {type:'pi',text:`Evaluate ∮_C (${k1(a,'y')}) dx + (${k1(b,'x')}) dy, where C is the circle x² + y² = ${r*r}, counterclockwise.`, answers:[piS(k*r*r)], wrong:[piS((a+b)*r*r)===piS(k*r*r)?piS(2*k*r*r):piS((a+b)*r*r),piS(-k*r*r),piS(k*2*r)], hint:`Q_x − P_y = ${M(b)} − ${P_(a)} = ${M(k)}\n∮ = ${M(k)} · π(${r})² = ${piS(k*r*r)}`, chk:{val:Math.PI*k*r*r}};
+  const p=rnd(1,4), q=rnd(1,4); return {type:'pi',text:`Evaluate ∮_C (${k1(a,'y')}) dx + (${k1(b,'x')}) dy, where C is the ellipse x²/${p*p} + y²/${q*q} = 1, counterclockwise.`.replace('x²/1 ','x² ').replace('y²/1 ','y² '), answers:[piS(k*p*q)], wrong:[piS(-k*p*q),piS(k*p*p*q*q),piS(k*(p+q))], hint:`Q_x − P_y = ${M(k)}, area of the ellipse = π·${p}·${q}\n∮ = ${piS(k*p*q)}`, chk:{val:Math.PI*k*p*q}} });
+add('m8','green_area',"Area with Green's Theorem",'pi',
+ 'Area(D) = ∮_C x dy = −∮_C y dx = ½ ∮_C (x dy − y dx).',
+ d=>{ const p=rnd(1,6), q=rnd(1,6); if(d==='hard') return {type:'exact',text:`Use Area = ½∮(x dy − y dx) to find the area of the triangle with vertices (0, 0), (${p}, 0), (0, ${q}).`, answers:[ratS(p*q/2)], wrong:[String(p*q),ratS(p*q/4),String(p+q)], hint:`Only the hypotenuse contributes: ½∮(x dy − y dx) = ½·${p*q} = ${ratS(p*q/2)}`, chk:{val:p*q/2}};
+  return {type:'pi',text:`Use Area = ½∮(x dy − y dx) with x = ${p===1?'':p}cos t, y = ${q===1?'':q}sin t, 0 ≤ t ≤ 2π, to find the area of the ellipse.`, answers:[piS(p*q)], wrong:[piS(2*p*q),piS(p*q,2),piS(p+q)], hint:`x dy − y dx = (${p*q}cos²t + ${p*q}sin²t) dt = ${p*q} dt\nArea = ½ · ${p*q} · 2π = ${piS(p*q)}`, chk:{val:Math.PI*p*q}} });
+add('m8','green_flux',"Green's Theorem (Flux Form)",'exact',
+ 'Outward flux: ∮_C F·n ds = ∮ P dy − Q dx = ∬_D (P_x + Q_y) dA = ∬ div F dA.',
+ d=>{ const a=rnd(1,4), b=rnd(1,4); const Pt=randPoly(2,R(d,1,2,3)), Qt=randPoly(2,R(d,1,2,3)); const D=tMerge([...tD(Pt,'x'),...tD(Qt,'y')]); if(!D.length) return null; const v=rectI(D,a,b);
+  return {text:`F = ⟨${tS(Pt)}, ${tS(Qt)}⟩. Find the outward flux of F across the boundary of the rectangle [0, ${a}] × [0, ${b}].`, answers:[ratS(v)], wrong:[ratS(-v),ratS(rectI(tMerge([...tD(Qt,'x'),...tD(Pt,'y').map(t=>[-t[0],t[1],t[2],0])]),a,b))===ratS(v)?ratS(v+2):ratS(rectI(tMerge([...tD(Qt,'x'),...tD(Pt,'y').map(t=>[-t[0],t[1],t[2],0])]),a,b)),ratS(v*2)].filter((w,i,A)=>A.indexOf(w)===i&&w!==ratS(v)), hint:`div F = P_x + Q_y = ${tS(D)}\n∬ over the rectangle = ${ratS(v)}`, chk:{q2:[tSrc(D),0,a,'0',String(b)]}} });
+
+/* ================= Unit 9: Surface integrals, Stokes, divergence ================= */
+add('m9','div3','Divergence in Space','fx',
+ 'div F = ∇·F = P_x + Q_y + R_z  (a scalar).',
+ d=>{ const [Pt,Qt,Rt]=[0,1,2].map(()=>randPoly(R(d,1,2,2),R(d,2,3,3),3)); const D=tMerge([...tD(Pt,'x'),...tD(Qt,'y'),...tD(Rt,'z')]); if(!D.length) return null;
+  return {type:'fx',text:`F = ⟨${tS(Pt)}, ${tS(Qt)}, ${tS(Rt)}⟩. Find div F.`, answers:[tS(D)], wrong:[tS(tMerge([...tD(Pt,'y'),...tD(Qt,'z'),...tD(Rt,'x')]))||'1'], fmt:'an expression in x, y, z', hint:`P_x = ${tS(tD(Pt,'x'))}, Q_y = ${tS(tD(Qt,'y'))}, R_z = ${tS(tD(Rt,'z'))}\ndiv F = ${tS(D)}`, chk:{fn:`(${tSrc(tD(Pt,'x'))})+(${tSrc(tD(Qt,'y'))})+(${tSrc(tD(Rt,'z'))})`}} });
+add('m9','curl3','Curl in Space','mat',
+ 'curl F = ∇ × F = ⟨R_y − Q_z, P_z − R_x, Q_x − P_y⟩.',
+ d=>{ const [Pt,Qt,Rt]=[0,1,2].map(()=>randPoly(2,R(d,2,3,3),3)); const P=rv(3,-2,2); const e=(ts,v)=>tE(tD(ts,v),...P);
+  const c=[e(Rt,'y')-e(Qt,'z'),e(Pt,'z')-e(Rt,'x'),e(Qt,'x')-e(Pt,'y')]; if(c.every(x=>!x)) return null;
+  return {type:'mat',vals:c,text:`F = ⟨${tS(Pt)}, ${tS(Qt)}, ${tS(Rt)}⟩. Find curl F at (${P.map(M).join(', ')}).`, answers:[v3(c)], wrong:[v3(c.map(x=>-x)),v3([c[0],-c[1],c[2]]),v3([e(Pt,'x'),e(Qt,'y'),e(Rt,'z')])], fmt:'⟨a, b, c⟩', hint:`R_y − Q_z = ${M(e(Rt,'y'))} − ${P_(e(Qt,'z'))} = ${M(c[0])}\nP_z − R_x = ${M(e(Pt,'z'))} − ${P_(e(Rt,'x'))} = ${M(c[1])}\nQ_x − P_y = ${M(e(Qt,'x'))} − ${P_(e(Pt,'y'))} = ${M(c[2])}`} });
+add('m9','surf_area','Surface Area','pi',
+ 'For z = f(x, y) over D:  Area = ∬_D √(1 + f_x² + f_y²) dA.\nFor a parametric surface r(u, v): Area = ∬ |r_u × r_v| dA.',
+ d=>{ if(d==='easy'){ const [a,b,L]=pick([[2,2,3],[4,8,9],[8,4,9],[12,12,17],[2,4,0]].slice(0,4)), p=rnd(1,4), q=rnd(1,4), h=rnd(1,30); return {type:'exact',text:`Find the area of the part of the plane z = ${h} − ${a}x − ${b}y above the rectangle [0, ${p}] × [0, ${q}].`, answers:[String(L*p*q)], wrong:[String(p*q),String((1+a+b)*p*q),String(L*L*p*q)], hint:`f_x = −${a}, f_y = −${b}\n√(1 + ${a*a} + ${b*b}) = √${1+a*a+b*b} = ${L}\nArea = ${L} · ${p*q} = ${L*p*q}`, chk:{val:L*p*q}} }
+  if(d==='medium'){ const r=rnd(1,5), h=rnd(1,8); return {type:'pi',text:`Find the surface area of the cylinder x² + y² = ${r*r} for 0 ≤ z ≤ ${h} (side only).`, answers:[piS(2*r*h)], wrong:[piS(r*r*h),piS(r*h),piS(2*r*h+2*r*r)], hint:`r(θ, z) = ⟨${r}cos θ, ${r}sin θ, z⟩, |r_θ × r_z| = ${r}\nArea = ∫₀^2π ∫₀^${h} ${r} dz dθ = ${piS(2*r*h)}`, chk:{val:2*Math.PI*r*h}} }
+  const [h,v]=pick([[2,[13,3]],[6,[62,3]],[12,[57,1]]]); return {type:'pi',text:`Find the area of the part of the paraboloid z = x² + y² that lies below the plane z = ${h}.`, answers:[piS(v[0],v[1])], wrong:[piS(v[0]*2,v[1]),piS(h*h,2),piS(h)], hint:`Area = ∫₀^2π ∫₀^√${h} √(1 + 4r²) r dr dθ = (π/6)[(1 + 4·${h})^(3/2) − 1] = ${piS(v[0],v[1])}`, chk:{val:Math.PI*v[0]/v[1]}} });
+add('m9','flux_surface','Flux Through a Surface','pi',
+ 'Flux of F through S = ∬_S F·n dS. For a flat surface with unit normal n and area A and constant F: flux = (F·n)·A.',
+ d=>{ const a=nz(-5,5), b=nz(-5,5), c=nz(-5,5), r=rnd(1,4), s=rnd(1,5);
+  if(d==='easy') return {type:'exact',text:`F = ⟨${M(a)}, ${M(b)}, ${M(c)}⟩ (constant). Find the upward flux of F through the square 0 ≤ x ≤ ${s}, 0 ≤ y ≤ ${s} in the plane z = ${rnd(0,5)}.`, answers:[String(c*s*s)], wrong:[String(a*s*s),String((a+b+c)*s*s),String(c*s)], hint:`n = ⟨0, 0, 1⟩, F·n = ${M(c)}, area = ${s*s}\nflux = ${M(c*s*s)}`, chk:{val:c*s*s}};
+  if(d==='medium') return {type:'pi',text:`F = ⟨${M(a)}, ${M(b)}, ${M(c)}⟩ (constant). Find the upward flux through the disk x² + y² ≤ ${r*r} in the plane z = 0.`, answers:[piS(c*r*r)], wrong:[piS(-c*r*r),piS((a+b+c)*r*r),piS(c*2*r)], hint:`F·k = ${M(c)}, area = ${piS(r*r)}\nflux = ${piS(c*r*r)}`, chk:{val:Math.PI*c*r*r}};
+  return {type:'pi',text:`Find the outward flux of F = ⟨x, y, z⟩ through the sphere x² + y² + z² = ${r*r}.`, answers:[piS(4*r*r*r)], wrong:[piS(4*r*r),piS(4*r*r*r,3),piS(r*r*r)], hint:`On the sphere n = ⟨x, y, z⟩/${r}, so F·n = ${r}\nflux = ${r} · 4π(${r})² = ${piS(4*r*r*r)}`, chk:{val:4*Math.PI*r*r*r}} });
+add('m9','divergence_thm','Divergence Theorem','pi',
+ 'Divergence theorem: outward flux through a closed surface S = ∭_E div F dV.',
+ d=>{ const a=rnd(1,4), b=rnd(1,4), c=rnd(0,4), r=rnd(1,3); const k=a+b+c;
+  if(d==='easy'){ const p=rnd(1,3), q=rnd(1,3), s=rnd(1,3); return {type:'exact',text:`Use the divergence theorem to find the outward flux of F = ⟨${k1(a,'x')}, ${k1(b,'y')}, ${c?k1(c,'z'):'0'}⟩ through the boundary of the box [0, ${p}] × [0, ${q}] × [0, ${s}].`, answers:[String(k*p*q*s)], wrong:[String(p*q*s),String(k*(p+q+s)),String(a*b*(c||1)*p*q*s)], hint:`div F = ${a} + ${b} + ${c} = ${k}\nflux = ${k} · volume = ${k} · ${p*q*s} = ${k*p*q*s}`, chk:{val:k*p*q*s}} }
+  if(d==='medium') return {type:'pi',text:`Use the divergence theorem to find the outward flux of F = ⟨${k1(a,'x')}, ${k1(b,'y')}, ${c?k1(c,'z'):'0'}⟩ through the sphere x² + y² + z² = ${r*r}.`, answers:[piS(4*k*r*r*r,3)], wrong:[piS(4*k*r*r),piS(4*r*r*r,3),piS(k*r*r*r)], hint:`div F = ${k}\nflux = ${k} · (4/3)π(${r})³ = ${piS(4*k*r*r*r,3)}`, chk:{val:4*Math.PI*k*r*r*r/3}};
+  return {type:'pi',text:`Use the divergence theorem to find the outward flux of F = ⟨x³, y³, z³⟩ through the sphere x² + y² + z² = ${r*r}.`, answers:[piS(12*Math.pow(r,5),5)], wrong:[piS(4*Math.pow(r,5),5),piS(12*Math.pow(r,5),3),piS(4*r*r*r)], hint:`div F = 3(x² + y² + z²) = 3ρ²\n∭ 3ρ²·ρ² sin φ dρ dφ dθ = 3 · 4π · ${r}⁵/5 = ${piS(12*Math.pow(r,5),5)}`, chk:{val:12*Math.PI*Math.pow(r,5)/5}} });
+add('m9','stokes',"Stokes' Theorem",'pi',
+ "Stokes: ∮_C F·dr = ∬_S (curl F)·n dS, where C is the boundary of S (oriented by the right-hand rule).",
+ d=>{ const k=nz(-4,4), r=rnd(1,4), h=rnd(0,5);
+  if(d!=='hard') return {type:'pi',text:`F = ⟨${k1(-k,'y')}, ${k1(k,'x')}, ${d==='easy'?'0':'z²'}⟩. Use Stokes' theorem to evaluate ∮_C F·dr, where C is the circle x² + y² = ${r*r}${h?`, z = ${h}`:''}, counterclockwise seen from above.`, answers:[piS(2*k*r*r)], wrong:[piS(k*r*r),piS(-2*k*r*r),piS(2*k*r)], hint:`curl F = ⟨0, 0, ${M(2*k)}⟩; over the flat disk n = k\n∬ ${M(2*k)} dA = ${M(2*k)} · π(${r})² = ${piS(2*k*r*r)}`, chk:{val:2*Math.PI*k*r*r}};
+  return {type:'pi',text:`F = ⟨${k1(-k,'y')}, ${k1(k,'x')}, xyz⟩. S is the upper hemisphere x² + y² + z² = ${r*r}, z ≥ 0, oriented upward. Find ∬_S (curl F)·n dS.`, answers:[piS(2*k*r*r)], wrong:[piS(4*k*r*r),piS(k*r*r),'0'], hint:`By Stokes, this equals ∮ around the boundary circle x² + y² = ${r*r}, z = 0, where F = ⟨${k1(-k,'y')}, ${k1(k,'x')}, 0⟩\n= ${M(2*k)} · π(${r})² = ${piS(2*k*r*r)}`, chk:{val:2*Math.PI*k*r*r}} });
+
+// extra distractors so every problem has four distinct choices
+function piR(c){ const r=ratS(c); if(r==='0') return '0'; const m=r.match(/^(−?)(\d+)(?:\/(\d+))?$/); if(!m) return r+'π'; const n=m[2]==='1'?'':m[2]; return `${m[1]}${n}π${m[3]?'/'+m[3]:''}` }
+T.forEach(t=>{ const g=t.gen; t.gen=d=>{ const r=g(d), ty=r.type||t.type, a=String(r.answers[0]); if(r.mcOnly) return r; let ex=[];
+  if(ty==='fx') ex=[a.startsWith('−')?a.slice(1):'−'+a, ...mixW(a), `2(${a})`];
+  else if(ty==='pi'||ty==='exact'||ty==='num'){ let v; try{ v=ev(parse(cleanIn(a)),{}) }catch(e){ v=NaN }
+    if(Number.isFinite(v)){ if(ty==='pi'||/π/.test(a)){ const c=v/Math.PI; if(Math.abs(c*360-Math.round(c*360))<1e-6) ex=[piR(c+1),piR(2*c),piR(c/2),piR(-c)] } else if(Math.abs(v*360-Math.round(v*360))<1e-6) ex=[ratS(v+1),ratS(v-1),ratS(2*v),ratS(-v)] } }
+  r.wrong=[...(r.wrong||[]),...ex.filter(w=>w&&w!==a)]; return r } });
+const topics={}; T.forEach(t=>topics[t.key]=t);
+
+/* ===== Algebra 1 practice — page logic (same behavior as the Algebra 2 app) ===== */
+const MAX_ATTEMPTS=2;
+let current=null,total=0,correct=0,difficulty='easy',currentTopic=T[0].key;
+let questionAnswered=false,attemptCount=0,triedMcIndices=new Set(),mcCorrect=null;
+let quizMode=false,quizQ=[],quizIdx=0,quizRes=[];
+const MCL=['A','B','C','D'];
+const $=id=>document.getElementById(id);
+const escH=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const chOf=key=>CHAPTERS.find(c=>c.id===topics[key].ch);
+const FMT={num:'e.g. 7, −3, or 3/4', set:'e.g. x = 2 or x = −3', pair:'e.g. (2, −3)', ineq:'e.g. x > 3  or  −2 < x ≤ 5   (>= and <= work too)',
+  eq:'e.g. y = 2x + 3', approx:'a decimal, e.g. 7.4', pi:'in terms of π, e.g. 16π (type pi for π)', expr:'e.g. 3x^2 − 2x + 1   (^ for powers)', mono:'e.g. 12x^7y^2', factor:'e.g. (x + 2)(x − 5)', rad:'e.g. 6√2 or 6sqrt2', sci:'e.g. 4.5 × 10^4 or 4.5*10^4'};
+const TEXT_FMT={f_relation:'yes or no', on_line:'yes or no', sys_count:'one, none, or infinitely many', poly_classify:'e.g. quadratic trinomial'};
+
+/* ---------- sidebar ---------- */
+// AP Calculus AB view (?level=ab): drop BC-only topics and units
+if(new URLSearchParams(location.search).get('level')==='ab'&&T.some(t=>t.bc)){
+  for(let i=T.length-1;i>=0;i--) if(T[i].bc){ delete topics[T[i].key]; T.splice(i,1) }
+  for(let i=CHAPTERS.length-1;i>=0;i--) if(!T.some(t=>t.ch===CHAPTERS[i].id)) CHAPTERS.splice(i,1) }
+function buildSidebar(){
+  const box=$('sidebar-box'); let html='<div class="sidebar-title">📋 Choose Topic</div>';
+  for(const c of CHAPTERS){
+    html+=`<div class="sidebar-group"><div class="sidebar-group-hdr" style="background:${c.c}" onclick="toggleGroup(this)">${c.icon} ${escH(c.title)}<span class="grp-toggle">+</span></div><div class="sidebar-group-body" id="grp-${c.id}">`;
+    for(const t of T.filter(t=>t.ch===c.id)) html+=`<div class="sidebar-item" id="sid-${t.key}" style="--gc:${c.c};--gs:${c.s}" onclick="setTopicSidebar('${t.key}')">${escH(t.label)}${t.bc&&!CHAPTERS.find(c=>c.id===t.ch).bc?' <span style="font-size:.7em;font-weight:700;color:#fff;background:#ad1457;border-radius:6px;padding:1px 6px;margin-left:4px">BC</span>':''}</div>`;
+    html+='</div></div>';
+  }
+  box.innerHTML=html;
+}
+function toggleGroup(hdr){ const body=hdr.nextElementSibling, open=body.classList.toggle('open'); hdr.parentElement.classList.toggle('wide',open); const t=hdr.querySelector('.grp-toggle'); if(t) t.textContent=open?'−':'+' }
+function openGroupFor(key){ const body=$('grp-'+topics[key].ch); if(body&&!body.classList.contains('open')) toggleGroup(body.previousElementSibling) }
+function setTopicSidebar(key){
+  if(!topics[key]) return; currentTopic=key; openGroupFor(key);
+  document.querySelectorAll('.sidebar-item').forEach(el=>el.classList.toggle('active',el.id==='sid-'+key));
+  const c=chOf(key), r=document.documentElement.style; r.setProperty('--gc',c.c); r.setProperty('--gs',c.s); r.setProperty('--gb',c.b);
+  renderConcept(key);
+  if(quizMode) showQProblem(); else newProblem();
+}
+function setDiff(d){ difficulty=d; document.querySelectorAll('.diff-btn').forEach(b=>b.classList.toggle('active',b.classList.contains(d))); if(quizMode) showQProblem(); else newProblem() }
+
+/* ---------- concept box: rule + a fresh worked example ---------- */
+function renderConcept(key){
+  const t=topics[key], ex=t.gen('easy'); ex.type=ex.type||t.type;
+  const steps=String(ex.hint).split('\n').map((s,i)=>`<li><span class="step-lbl">Step ${i+1}</span>${escH(s)}</li>`).join('');
+  $('concept-box').innerHTML=`<div class="concept-header">📚 ${escH(t.label)}</div><div class="concept-rule">${escH(t.rule)}</div>
+    <div class="concept-example-title">📖 Worked Example</div><div class="concept-example-prob">${escH(ex.text)}</div>${ex.svg?'<div class="concept-svg">'+ex.svg+'</div>':''}<ul class="concept-steps">${steps}</ul>
+    <div class="concept-answer">✓ Answer: ${escH(pretty(ex.mcAns||ex.answers[0]))}</div>`;
+}
+
+/* ---------- one problem ---------- */
+function resetPerQuestion(){ questionAnswered=false; attemptCount=0; triedMcIndices=new Set(); mcCorrect=null; $('next-row').style.display='none'; $('attempts-left-bar').style.display='none' }
+function showProblem(kind){
+  resetPerQuestion();
+  const t=topics[currentTopic]; current=t.gen(difficulty); current.type=current.type||t.type;
+  $('badge-topic').textContent=t.label;
+  const bd=$('badge-diff'); bd.className='badge badge-'+difficulty; bd.textContent=difficulty[0].toUpperCase()+difficulty.slice(1);
+  $('prob').textContent=current.text;
+  $('prob-svg').innerHTML=current.svg?current.svg+(current.notToScale?'<div class="nts">Figure not drawn to scale</div>':''):'';
+  $('feedback').className='feedback'; $('hint').style.display='none'; $('hint-link').style.display='inline';
+  if(kind==='fill'&&!current.mcOnly) renderFill(); else renderMC();
+}
+function newProblem(){ if(quizMode) return; showProblem('mc') }
+function renderMC(){
+  const {ans,opts}=buildMC(current); mcCorrect=ans;
+  const box=$('mc-options'); box.innerHTML='';
+  opts.forEach((opt,i)=>{
+    const div=document.createElement('div'); div.className='mc-opt'; div.dataset.val=opt;
+    div.innerHTML=`<span class="mc-label">${MCL[i]}</span><span>${escH(opt)}</span>`;
+    div.onclick=()=>{
+      if(questionAnswered||triedMcIndices.has(i)) return;
+      triedMcIndices.add(i); attemptCount++;
+      if(opt===mcCorrect){ div.classList.add('correct'); box.querySelectorAll('.mc-opt').forEach(e=>e.classList.add('locked')); $('attempts-left-bar').style.display='none';
+        showFeedback('correct',attemptCount===1?'✓ Correct! First try! 🌟':'✓ Correct on 2nd try! 👍'); resolveQuestion(true) }
+      else { div.classList.add('wrong','tried'); if(attemptCount>=MAX_ATTEMPTS) autoReveal(box); else { showFeedback('wrong','❌ Not quite — you have 1 more try! 💪'); updateAttemptsLeft() } }
+    };
+    box.appendChild(div);
+  });
+  updateAttemptsLeft();
+}
+function renderFill(){
+  const fmt=current.fmt||(current.type==='text'?(TEXT_FMT[currentTopic]||'type your answer'):FMT[current.type]);
+  const keys=['x²|^2','√|√','±|±','≤|≤','≥|≥','−|-','(|(',')|)'];
+  $('mc-options').innerHTML=`<div class="fill-row"><input class="answer-input" id="ans" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="Type your answer" onkeydown="if(event.key==='Enter')checkFill()"><button class="btn btn-primary" onclick="checkFill()">✓ Check</button></div>
+    <div class="fill-fmt">${escH(fmt)}</div><div class="sym-keys">${keys.map(k=>{ const [l,v]=k.split('|'); return `<button type="button" onclick="insertSym('${v}')">${l}</button>` }).join('')}</div>`;
+  setTimeout(()=>{ const a=$('ans'); if(a) a.focus() },50);
+  updateAttemptsLeft();
+}
+function insertSym(v){ const a=$('ans'); if(!a||a.disabled) return; const p=a.selectionStart??a.value.length, q=a.selectionEnd??a.value.length; a.value=a.value.slice(0,p)+v+a.value.slice(q); a.focus(); a.setSelectionRange(p+v.length,p+v.length) }
+function checkFill(){
+  if(!current||questionAnswered) return;
+  const raw=($('ans')||{value:''}).value.trim(); if(!raw) return;
+  attemptCount++;
+  if(check(current,raw)){ $('ans').disabled=true; $('attempts-left-bar').style.display='none'; showFeedback('correct',attemptCount===1?'✓ Correct! 🌟':'✓ Correct on 2nd try! 👍'); resolveQuestion(true) }
+  else if(attemptCount>=MAX_ATTEMPTS) autoReveal(null);
+  else { showFeedback('wrong','❌ Not quite — 1 more try! 💪 Check the format below the box.'); $('ans').select(); updateAttemptsLeft() }
+}
+function updateAttemptsLeft(){ const bar=$('attempts-left-bar'), t=$('attempts-left-txt'), left=MAX_ATTEMPTS-attemptCount;
+  if(questionAnswered){ bar.style.display='none'; return } bar.style.display='block'; t.textContent=left===1?'⚠ 1 try left':`${left} tries`; t.className='attempts-left'+(left===1?' warn':'') }
+function autoReveal(box){
+  if(box) box.querySelectorAll('.mc-opt').forEach(el=>{ el.classList.add('locked'); if(el.dataset.val===mcCorrect) el.classList.add('reveal') });
+  const a=$('ans'); if(a) a.disabled=true; $('attempts-left-bar').style.display='none';
+  showFeedback('reveal',`❌ Out of attempts. Correct answer: <b>${escH(pretty(current.mcAns||current.answers[0]))}</b>`);
+  $('hint').style.display='block'; $('hint').textContent=current.hint; $('hint-link').style.display='none';
+  resolveQuestion(false);
+}
+function showHint(){ $('hint').style.display='block'; $('hint').textContent=current.hint; $('hint-link').style.display='none' }
+function showFeedback(type,html){ const fb=$('feedback'); fb.className='feedback '+type; fb.innerHTML=html }
+function resolveQuestion(isOk){ if(questionAnswered) return; questionAnswered=true; total++; if(isOk) correct++; updateStats();
+  if(quizMode){ quizRes.push(isOk); renderDots() } $('next-row').style.display='flex' }
+function nextQ(){ if(quizMode){ quizIdx++; renderDots(); showQProblem() } else newProblem() }
+function updateStats(){ $('s-total').textContent=total; $('s-correct').textContent=correct; $('s-pct').textContent=total?Math.round(correct/total*100)+'%':'—' }
+function resetStats(){ total=0; correct=0; updateStats(); newProblem() }
+
+/* ---------- quiz mode ---------- */
+function qp(){ const mc=+$('mc-count').value, fi=+$('fill-count').value; $('mc-val').textContent=mc; $('fill-val').textContent=fi; const t=mc+fi;
+  $('quiz-preview').textContent=t===0?'Please select at least 1 problem':`${t} problems total: ${mc} Multiple Choice + ${fi} Fill-in` }
+function startQuiz(){ const mc=+$('mc-count').value, fi=+$('fill-count').value; if(mc+fi===0){ $('quiz-preview').textContent='Please select at least 1 problem'; return }
+  quizMode=true; quizQ=shuffle([...Array(mc).fill('mc'),...Array(fi).fill('fill')]); quizIdx=0; quizRes=[];
+  $('quiz-setup').style.display='none'; $('quiz-prog').style.display='flex'; renderDots(); showQProblem() }
+function renderDots(){ const c=$('quiz-dots'); c.innerHTML=''; quizQ.forEach((t,i)=>{ const d=document.createElement('div'); d.className='qd '+(i<quizRes.length?(quizRes[i]?'ok':'bad'):t); c.appendChild(d) });
+  $('quiz-label').textContent=quizIdx<quizQ.length?`Question ${quizIdx+1} / ${quizQ.length}  —  ${quizQ[quizIdx]==='mc'?'🔘 Multiple Choice':'✏️ Fill-in'}`:'✓ All done!' }
+function showQProblem(){ if(quizIdx>=quizQ.length){ showQuizSummary(); return } showProblem(quizQ[quizIdx]) }
+function showQuizSummary(){
+  $('quiz-prog').style.display='none'; $('next-row').style.display='none';
+  const right=quizRes.filter(Boolean).length, tot=quizRes.length, pct=tot?Math.round(right/tot*100):0, emoji=pct>=90?'🌟':pct>=70?'😊':pct>=50?'💪':'📚';
+  $('prob-svg').innerHTML='';
+  $('prob').textContent=`${emoji} Quiz Complete!\n\nScore: ${right} / ${tot} correct  (${pct}%)`;
+  $('mc-options').innerHTML='<button class="btn btn-primary" style="margin-top:12px" onclick="endQuiz()">↩ Back to Practice</button>';
+  $('feedback').className='feedback'; $('hint-link').style.display='none'; $('hint').style.display='none'; $('attempts-left-bar').style.display='none';
+  quizMode=false;
+}
+function endQuiz(){ quizMode=false; $('quiz-setup').style.display='block'; $('quiz-prog').style.display='none'; $('next-row').style.display='none'; newProblem() }
+
+buildSidebar();
+setTopicSidebar(currentTopic);
+
+</script>
+<script>
+/* ===== Prof. Fang Math bridge: lets the main site open a chapter/topic and saves scores =====
+   URL options: ?chapter=sys  (one chapter)  &topic=sys2_elim  &mode=learn|practice  &embed=1 (inside the site) */
+(function(){
+  const P=new URLSearchParams(location.search), embed=P.get('embed')==='1', ch=P.get('chapter'), mode=P.get('mode');
+  const inSite=embed&&window.parent!==window;
+  const send=m=>{ if(inSite) window.parent.postMessage(Object.assign({source:'fm-app'},m), location.origin); };
+  const css=[];
+  if(embed) css.push('.main-content>h1,.main-content>.subtitle,.main-content>.welcome-line,.name-bar,.main-content>.footer{display:none!important}body{background:transparent!important}');
+  if(mode==='practice') css.push('body:not(.fm-quizzing) .card,.controls,.stats,.concept-box,.hint-link,.hint,.strategy-tip{display:none!important}');
+  if(mode==='learn') css.push('#quiz-setup,#quiz-prog{display:none!important}');
+  if(css.length){ const st=document.createElement('style'); st.textContent=css.join('\n'); document.head.appendChild(st); }
+  if(mode==='practice') document.body.classList.add('fm-practice');
+  // show only the chosen chapter
+  if(ch){ const body=document.getElementById('grp-'+ch);
+    if(body) document.querySelectorAll('.sidebar-group').forEach(g=>{ if(!g.contains(body)) g.style.display='none'; }); }
+  // report answers and quiz results to the site
+  const _res=resolveQuestion;
+  resolveQuestion=function(ok){ const was=questionAnswered, q=quizMode; _res(ok);
+    if(!was) send({type:'answer', ok:!!ok, quiz:q, topic:currentTopic, label:topics[currentTopic].label, difficulty}); };
+  const _sum=showQuizSummary;
+  showQuizSummary=function(){ const right=quizRes.filter(Boolean).length, tot=quizRes.length; _sum();
+    if(tot) send({type:'quiz', right, total:tot, topic:currentTopic, label:topics[currentTopic].label, difficulty}); };
+  const _start=startQuiz; startQuiz=function(){ document.body.classList.add('fm-quizzing'); return _start.apply(this, arguments); };
+  const _end=endQuiz; endQuiz=function(){ document.body.classList.remove('fm-quizzing'); return _end.apply(this, arguments); };
+  // open the requested topic (or the chapter's first topic)
+  let start=P.get('topic'); if(!(start&&topics[start])) start=null;
+  if(!start&&ch){ const f=document.querySelector('#grp-'+ch+' .sidebar-item[id^="sid-"]'); if(f) start=f.id.slice(4); }
+  if(start) setTopicSidebar(start);
+  // keep the site's frame as tall as the page (no double scrollbars)
+  if(inSite){ let last=0; const tell=()=>{ const hh=document.documentElement.scrollHeight; if(Math.abs(hh-last)>4){ last=hh; send({type:'height', h:hh}); } };
+    new ResizeObserver(tell).observe(document.body); window.addEventListener('load', tell); tell(); }
+})();
+</script>
+</body>
+</html>

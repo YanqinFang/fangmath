@@ -1,0 +1,1176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Geometry Practice</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:system-ui,sans-serif;background:#f3f0ff;color:#111;min-height:100vh;padding:1.5rem 1rem;font-size:16px}
+.layout{max-width:1120px;margin:0 auto}
+.main-content{width:100%}
+.topic-sidebar{width:100%;margin-bottom:1.2rem}
+.sidebar-box{background:#fff;border:1px solid #ddd;border-radius:12px;padding:12px 14px 14px;display:flex;flex-wrap:wrap;gap:7px;align-items:flex-start}
+.sidebar-title{flex-basis:100%;font-size:13px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:#888;margin-bottom:1px}
+.sidebar-group{flex:0 0 auto}
+.sidebar-group.wide{flex-basis:100%;width:100%}
+.sidebar-group-hdr{font-size:12px;font-weight:700;padding:7px 14px;color:#fff;margin:0;cursor:pointer;display:inline-flex;gap:7px;align-items:center;user-select:none;border-radius:20px;white-space:nowrap}
+.grp-toggle{font-size:14px;font-weight:800;line-height:1}
+.sidebar-group-body{display:none}
+.sidebar-group-body.open{display:flex;flex-wrap:wrap;gap:6px;width:100%;padding:8px 2px 2px}
+.sidebar-item{font-size:13px;padding:6px 13px;cursor:pointer;color:#444;border:1.5px solid #ddd;border-radius:16px;background:#fafafa;transition:all .12s;line-height:1.3;white-space:nowrap}
+.sidebar-item:hover{background:#f0f0f0;border-color:#bbb}
+h1{font-size:26px;font-weight:700;color:#4527a0;margin-bottom:3px}
+.subtitle{font-size:14px;color:#666;margin-bottom:1.2rem}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:1.2rem}
+.stat{background:#fff;border:1px solid #ddd;border-radius:10px;padding:12px;text-align:center}
+.stat-num{font-size:26px;font-weight:700;color:#4527a0}
+.stat-lbl{font-size:13px;color:#999;margin-top:2px}
+.diff-row{display:flex;gap:8px;margin-bottom:1.2rem}
+.diff-btn{flex:1;padding:8px;border:2px solid #ddd;border-radius:8px;font-size:14px;font-weight:700;cursor:pointer;background:#fff}
+.diff-btn.easy{color:#2e7d32;border-color:#a5d6a7}
+.diff-btn.medium{color:#e65100;border-color:#ffcc80}
+.diff-btn.hard{color:#b71c1c;border-color:#ef9a9a}
+.diff-btn.easy.active{background:#e8f5e9;border-color:#2e7d32}
+.diff-btn.medium.active{background:#fff3e0;border-color:#e65100}
+.diff-btn.hard.active{background:#ffebee;border-color:#b71c1c}
+.controls{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:1.2rem}
+.btn{padding:9px 18px;border:1px solid #ccc;border-radius:8px;font-size:15px;cursor:pointer;background:#fff;color:#111}
+.btn:hover{background:#f0f0f0}
+.btn-primary{background:#4527a0;color:#fff;border-color:#4527a0}
+.btn-primary:hover{background:#512da8}
+.concept-box{background:#ede7f6;border:1.5px solid #b39ddb;border-radius:12px;padding:1.1rem 1.3rem;margin-bottom:1.2rem}
+.concept-header{font-size:16px;font-weight:700;color:#4527a0;margin-bottom:.7rem}
+.concept-rule{background:#fff;border-left:4px solid #4527a0;padding:9px 13px;border-radius:0 8px 8px 0;font-size:13px;color:#333;margin-bottom:.7rem;line-height:1.7;white-space:pre-line}
+.concept-example-title{font-size:13px;font-weight:700;color:#f57f17;margin:6px 0 4px}
+.concept-example-prob{font-size:14px;font-weight:500;color:#111;margin-bottom:5px;white-space:pre-line}
+.concept-steps{list-style:none}
+.concept-steps li{font-size:13px;padding:4px 0;border-bottom:1px dashed #d1c4e9;line-height:1.6;white-space:pre-line}
+.concept-steps li:last-child{border-bottom:none}
+.concept-answer{font-weight:700;color:#4527a0;font-size:14px;margin-top:7px}
+.name-bar{background:#fff;border:1px solid #ddd;border-radius:12px;padding:12px 16px;margin-bottom:1.1rem;display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.name-bar label{font-size:14px;font-weight:600;color:#4527a0;white-space:nowrap}
+.name-input{padding:8px 12px;border:1px solid #ccc;border-radius:8px;font-size:15px;flex:1;min-width:140px;max-width:240px}
+.name-input:focus{outline:none;border-color:#4527a0;box-shadow:0 0 0 2px rgba(69,39,160,.15)}
+.btn-submit{padding:8px 16px;border:none;border-radius:8px;font-size:14px;font-weight:700;cursor:pointer;background:#4527a0;color:#fff}
+.btn-submit:hover{background:#512da8}
+.btn-submit:disabled{background:#bbb;cursor:default}
+.submit-msg{font-size:13px;margin-top:4px;width:100%}
+.submit-msg.ok{color:#2e7d32}
+.submit-msg.err{color:#c62828}
+.card{background:#fff;border:1px solid #ddd;border-radius:12px;padding:1.4rem;margin-bottom:1rem}
+.badges{display:flex;gap:8px;margin-bottom:.9rem;flex-wrap:wrap;align-items:center}
+.badge{display:inline-block;font-size:12px;padding:3px 12px;border-radius:20px;font-weight:600}
+.badge-easy{background:#e8f5e9;color:#2e7d32}
+.badge-medium{background:#fff3e0;color:#e65100}
+.badge-hard{background:#ffebee;color:#b71c1c}
+.prob-svg-wrap{margin-bottom:1rem}
+.problem-text{font-size:21px;font-weight:500;color:#111;margin-bottom:1.1rem;line-height:1.7;white-space:pre-line}
+.answer-input{padding:10px 13px;border:1px solid #ccc;border-radius:8px;font-size:16px;min-width:200px;flex:1;max-width:320px}
+.answer-input:focus{outline:none;border-color:#4527a0;box-shadow:0 0 0 2px rgba(69,39,160,.15)}
+.hint-link{font-size:14px;color:#4527a0;cursor:pointer;text-decoration:underline;margin-top:9px;display:none}
+.hint{margin-top:9px;padding:11px 14px;border-left:3px solid #b39ddb;background:#f5f5f5;font-size:15px;color:#444;border-radius:0 8px 8px 0;display:none;white-space:pre-line}
+.feedback{margin-top:11px;padding:11px 14px;border-radius:8px;font-size:16px;display:none}
+.feedback.correct{background:#e8f5e9;color:#2e7d32;display:block}
+.feedback.wrong{background:#fff3e0;color:#e65100;display:block}
+.feedback.reveal{background:#ffebee;color:#c62828;display:block}
+.attempts-left{font-size:13px;color:#888;background:#f5f5f5;border-radius:20px;padding:3px 12px;display:inline-block;margin-top:7px}
+.attempts-left.warn{color:#e65100;background:#fff3e0;font-weight:600}
+.mc-options{display:flex;flex-direction:column;gap:9px;margin-bottom:.9rem}
+.mc-opt{display:flex;align-items:center;gap:13px;padding:12px 16px;border:2px solid #ddd;border-radius:10px;cursor:pointer;font-size:15px;transition:all .15s;background:#fff;line-height:1.5}
+.mc-opt:hover:not(.locked):not(.tried){border-color:#b39ddb;background:#f5f5f5}
+.mc-opt.correct{border-color:#2e7d32!important;background:#e8f5e9!important;font-weight:600;color:#2e7d32;cursor:default}
+.mc-opt.wrong{border-color:#e65100!important;background:#fff3e0!important;color:#e65100;cursor:default}
+.mc-opt.reveal{border-color:#2e7d32!important;background:#e8f5e9!important;cursor:default}
+.mc-opt.locked,.mc-opt.tried{cursor:default}
+.mc-label{display:inline-flex;align-items:center;justify-content:center;min-width:28px;height:28px;border-radius:50%;background:#ede7f6;color:#4527a0;font-weight:700;font-size:13px;flex-shrink:0}
+.mc-opt.correct .mc-label{background:#2e7d32;color:#fff}
+.mc-opt.wrong .mc-label{background:#e65100;color:#fff}
+.mc-opt.reveal .mc-label{background:#2e7d32;color:#fff}
+.quiz-setup{background:#fff;border:1.5px solid #b39ddb;border-radius:12px;padding:1.1rem 1.3rem;margin-bottom:1.2rem}
+.quiz-setup-title{font-size:15px;font-weight:700;color:#4527a0;margin-bottom:.9rem}
+.quiz-row{display:flex;align-items:center;gap:12px;margin-bottom:.7rem;flex-wrap:wrap}
+.quiz-row label{font-size:14px;color:#444;min-width:180px}
+.quiz-row input[type=range]{width:110px;accent-color:#4527a0}
+.quiz-count{font-size:19px;font-weight:700;color:#4527a0;min-width:28px;text-align:center}
+.quiz-preview{font-size:13px;color:#555;margin:.4rem 0 .9rem;padding:7px 11px;background:#ede7f6;border-radius:8px}
+.btn-quiz-start{padding:9px 24px;border:none;border-radius:8px;font-size:15px;font-weight:700;cursor:pointer;background:#4527a0;color:#fff}
+.btn-quiz-start:hover{background:#512da8}
+.quiz-progress{background:#fff;border:1px solid #ddd;border-radius:10px;padding:11px 16px;margin-bottom:.9rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:9px}
+.quiz-prog-label{font-size:14px;font-weight:700;color:#4527a0}
+.quiz-dots{display:flex;gap:5px;flex-wrap:wrap}
+.qd{width:16px;height:16px;border-radius:50%;border:2px solid transparent}
+.qd.mc{background:#d1c4e9;border-color:#9575cd}
+.qd.fill{background:#fff9c4;border-color:#f9a825}
+.qd.ok{background:#2e7d32;border-color:#2e7d32}
+.qd.bad{background:#c62828;border-color:#c62828}
+.next-row{display:none;gap:10px;margin-top:13px;align-items:center}
+.footer{text-align:center;margin-top:1.5rem;font-size:13px;color:#bbb}
+.welcome-line{font-size:14.5px;color:#4527a0;background:#ede7f6;border:1px solid #d1c4e9;border-radius:10px;padding:10px 14px;margin-bottom:1rem;line-height:1.5}
+.strategy-tip{font-size:13px;color:#00695c;background:#e0f2f1;border-left:3px solid #00897b;border-radius:0 8px 8px 0;padding:8px 12px;margin-top:11px;line-height:1.55}
+math{font-size:1.05em;vertical-align:-.08em}
+math msqrt{padding-top:1px}
+@media(max-width:700px){.sidebar-group-hdr{font-size:11.5px;padding:6px 11px}.sidebar-item{font-size:12.5px;padding:5px 11px}}
+:root{--gc:#e65100;--gs:#fff3e0;--gb:#ffcc80}
+.sidebar-item.active{background:var(--gs);border-color:var(--gc);color:var(--gc);font-weight:700}
+.btn-primary{background:var(--gc);border-color:var(--gc)}
+.btn-primary:hover{background:var(--gc);filter:brightness(1.1)}
+.concept-box{background:var(--gs);border-color:var(--gb)}
+.concept-header,.concept-answer{color:var(--gc)}
+.concept-rule{border-left-color:var(--gc)}
+.concept-steps li{border-bottom-color:var(--gb)}
+.step-lbl{display:inline-block;background:#fff;border:1px solid var(--gb);border-radius:6px;font-size:12px;font-weight:700;color:var(--gc);padding:1px 8px;margin-right:7px}
+.badge-topic{background:var(--gs);color:var(--gc)}
+.badge-easy{background:#e8f5e9;color:#2e7d32}.badge-medium{background:#fff3e0;color:#e65100}.badge-hard{background:#ffebee;color:#b71c1c}
+.problem-text{white-space:pre-wrap;font-variant-numeric:tabular-nums}
+.fill-row{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:4px}
+.fill-fmt{font-size:13px;color:#888;margin-top:6px}
+.sym-keys{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+.sym-keys button{min-width:40px;height:34px;border:1px solid #ddd;border-radius:8px;background:#fafafa;font-size:15px;cursor:pointer}
+.sym-keys button:hover{background:#f0f0f0}
+h1,.stat-num,.quiz-prog-label,.quiz-count,.quiz-setup-title,.hint-link{color:var(--gc)}
+.btn-quiz-start{background:var(--gc)}
+.quiz-setup{border-color:var(--gb)}.quiz-preview{background:var(--gs)}
+.welcome-line{color:#333;background:var(--gs);border-color:var(--gb)}
+.mc-opt:hover:not(.locked):not(.tried){border-color:var(--gb)}
+.mc-label{background:var(--gs);color:var(--gc)}
+.answer-input:focus{border-color:var(--gc)}
+#prob-svg:empty{display:none}
+#prob-svg{margin:0 0 1rem}
+.fig{max-width:100%;height:auto;display:block}
+.fig .acc{fill:var(--gc)} .fig .accs{stroke:var(--gc)} .fig polygon{fill:var(--gs)}
+.nts{font-size:12px;color:#999;margin-top:2px}
+.concept-svg{margin:4px 0 6px}.concept-svg .fig{max-width:260px}
+</style>
+</head>
+<body>
+<div class="layout">
+<div class="topic-sidebar"><div class="sidebar-box" id="sidebar-box"></div></div>
+<div class="main-content">
+  <h1>📐 Geometry</h1>
+  <p class="subtitle">13 chapters · 69 topics · figures drawn to scale · Easy to Hard</p>
+  <p class="welcome-line">👋 Welcome! Pick a chapter and topic, read the concept box, then practice. Look at the figure first — then the numbers. You get two tries on every problem.</p>
+  <div class="stats">
+    <div class="stat"><div class="stat-num" id="s-total">0</div><div class="stat-lbl">attempted</div></div>
+    <div class="stat"><div class="stat-num" id="s-correct">0</div><div class="stat-lbl">correct</div></div>
+    <div class="stat"><div class="stat-num" id="s-pct">—</div><div class="stat-lbl">accuracy</div></div>
+  </div>
+  <div class="diff-row">
+    <button class="diff-btn easy active" onclick="setDiff('easy')">⭐ Easy</button>
+    <button class="diff-btn medium" onclick="setDiff('medium')">⭐⭐ Medium</button>
+    <button class="diff-btn hard" onclick="setDiff('hard')">⭐⭐⭐ Hard</button>
+  </div>
+  <div class="controls">
+    <button class="btn btn-primary" id="new-btn" onclick="newProblem()">↻ New Problem</button>
+    <button class="btn" onclick="resetStats()">✕ Reset</button>
+  </div>
+  <div class="concept-box" id="concept-box"></div>
+  <div class="quiz-setup" id="quiz-setup">
+    <div class="quiz-setup-title">📝 Quiz Mode — Mix MC &amp; Fill-in</div>
+    <div class="quiz-row"><label for="mc-count">🔘 Multiple Choice problems:</label><input type="range" id="mc-count" min="0" max="10" value="5" oninput="qp()"><span class="quiz-count" id="mc-val">5</span></div>
+    <div class="quiz-row"><label for="fill-count">✏️ Fill-in problems:</label><input type="range" id="fill-count" min="0" max="10" value="3" oninput="qp()"><span class="quiz-count" id="fill-val">3</span></div>
+    <div class="quiz-preview" id="quiz-preview">8 problems total: 5 Multiple Choice + 3 Fill-in</div>
+    <button class="btn-quiz-start" onclick="startQuiz()">▶ Start Quiz</button>
+  </div>
+  <div id="quiz-prog" style="display:none" class="quiz-progress">
+    <div><div class="quiz-prog-label" id="quiz-label">Question 1 / 8</div><div class="quiz-dots" id="quiz-dots" style="margin-top:5px"></div></div>
+    <button class="btn" onclick="endQuiz()" style="font-size:12px;padding:5px 12px">✕ End Quiz</button>
+  </div>
+  <div class="card">
+    <div class="badges"><span class="badge badge-topic" id="badge-topic">Topic</span><span class="badge badge-easy" id="badge-diff">Easy</span></div>
+    <div id="prob-svg"></div>
+    <div class="problem-text" id="prob"></div>
+    <div class="mc-options" id="mc-options"></div>
+    <div id="attempts-left-bar" style="margin-top:5px;display:none"><span class="attempts-left" id="attempts-left-txt"></span></div>
+    <span class="hint-link" id="hint-link" onclick="showHint()">💡 Show hint</span>
+    <div class="hint" id="hint"></div>
+    <div class="strategy-tip">🧭 <b>Stuck? Try 3-S:</b> <b>Simple</b> small numbers → <b>Specific</b> one worked example → <b>Systematic</b> same steps on the real problem.</div>
+    <div class="feedback" id="feedback"></div>
+    <div class="next-row" id="next-row"><button class="btn btn-primary" onclick="nextQ()">Next Question →</button></div>
+  </div>
+  <div class="footer">Geometry &nbsp;·&nbsp; © 2026 Prof. Fang Math · All rights reserved.</div>
+</div>
+</div>
+<script>
+/* ===== Algebra 1 practice — core helpers and answer checking (no page code here) ===== */
+const rnd=(a,b)=>Math.floor(Math.random()*(b-a+1))+a;
+const pick=a=>a[Math.floor(Math.random()*a.length)];
+const nz=(a,b)=>{let x;do{x=rnd(a,b)}while(x===0);return x};
+const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
+const gcd=(a,b)=>{a=Math.abs(a);b=Math.abs(b);while(b){[a,b]=[b,a%b]}return a};
+const SUP={0:'⁰',1:'¹',2:'²',3:'³',4:'⁴',5:'⁵',6:'⁶',7:'⁷',8:'⁸',9:'⁹','-':'⁻'};
+const sup=n=>String(n).split('').map(c=>SUP[c]||c).join('');
+const M=n=>n<0?'−'+Math.abs(n):String(n);                 // display a number with a real minus sign
+const P_=n=>n<0?`(${M(n)})`:String(n);                       // number in parentheses when negative
+function fr(n,d){ if(d===0) return 'undefined'; if(d<0){n=-n;d=-d} const g=gcd(n,d)||1; n/=g; d/=g; return d===1?M(n):`${M(n)}/${d}` }
+const isInt=x=>Math.abs(x-Math.round(x))<1e-9;
+// polynomial from coefficients (highest power first): P([2,-3,1]) → 2x² − 3x + 1
+function P(cs,v='x'){
+  const deg=cs.length-1; let out='';
+  cs.forEach((c,i)=>{ if(!c) return; const p=deg-i, a=Math.abs(c);
+    const vv=p===0?'':p===1?v:v+sup(p), cs_=(a===1&&p>0)?'':String(a);
+    out+= out===''? (c<0?'−':'')+cs_+vv : (c<0?' − ':' + ')+cs_+vv; });
+  return out||'0';
+}
+// a sum of terms [[coef,'x²y'],...] keeping the given order
+function S(terms){ let out=''; for(const [c,v] of terms){ if(!c) continue; const a=Math.abs(c), cs_=(a===1&&v)?'':String(a);
+  out+= out===''? (c<0?'−':'')+cs_+v : (c<0?' − ':' + ')+cs_+v; } return out||'0'; }
+// coefficient times x that may be a fraction: (2/3)x
+function FX(n,d,v='x'){ if(d<0){n=-n;d=-d} const g=gcd(n,d)||1; n/=g; d/=g; if(d===1) return P([n,0],v).trim(); return (n<0?'−':'')+`(${Math.abs(n)}/${d})${v}` }
+function lineStr(mn,md,bn,bd=1){ // y = (m)x + b
+  const g=gcd(bn,bd)||1; bn/=g; bd/=g; if(bd<0){bn=-bn;bd=-bd}
+  let s=mn===0?'':FX(mn,md);
+  if(bn!==0){ const bs=bd===1?String(Math.abs(bn)):`${Math.abs(bn)}/${bd}`; s+= s===''? (bn<0?'−':'')+bs : (bn<0?' − ':' + ')+bs; }
+  return 'y = '+(s||'0');
+}
+function distinct(ans, list, fallback){ // three distractors that differ from the answer and each other
+  const seen=new Set([key(ans)]), out=[];
+  for(const c of list){ const s=String(c); if(s.includes('NaN')||s.includes('undefined')||s.includes('Infinity')) continue; const k=key(s); if(!seen.has(k)){ seen.add(k); out.push(s) } if(out.length===3) break; }
+  let i=1; while(out.length<3 && fallback && i<40){ const s=String(fallback(i++)); const k=key(s); if(!seen.has(k)){ seen.add(k); out.push(s) } }
+  return out;
+}
+const key=s=>String(s).replace(/\s+/g,'').replace(/−/g,'-').toLowerCase();
+const numFall=ans=>i=>{ const v=numVal(ans); return Number.isFinite(v)? M((isInt(v)?v:Math.round(v*100)/100)+(i%2?i:-i)) : ans+' + '+i };
+
+/* ---------- a small, safe expression parser ---------- */
+function cleanIn(s){
+  return String(s).toLowerCase()
+    .replace(/[−–—]/g,'-').replace(/[×·∙]/g,'*').replace(/ˣ/g,'^x').replace(/ᵗ/g,'^t').replace(/÷/g,'/')
+    .replace(/[⁰¹²³⁴⁵⁶⁷⁸⁹⁻]+/g,m=>'^'+m.split('').map(c=>({'⁰':0,'¹':1,'²':2,'³':3,'⁴':4,'⁵':5,'⁶':6,'⁷':7,'⁸':8,'⁹':9,'⁻':'-'})[c]).join(''))
+    .replace(/sqrt/g,'√').replace(/pi/g,'π').replace(/\s+/g,'');
+}
+const FNS=['arcsin','arccos','arctan','asin','acos','atan','sinh','cosh','sin','cos','tan','sec','csc','cot','exp','abs','ln','log'];
+const FNA={asin:'arcsin',acos:'arccos',atan:'arctan'};
+const FEV={sin:Math.sin,cos:Math.cos,tan:Math.tan,sec:x=>1/Math.cos(x),csc:x=>1/Math.sin(x),cot:x=>1/Math.tan(x),arcsin:Math.asin,arccos:Math.acos,arctan:Math.atan,
+  exp:Math.exp,abs:Math.abs,ln:Math.log,log:Math.log10,sinh:Math.sinh,cosh:Math.cosh};
+const FINV={sin:'arcsin',cos:'arccos',tan:'arctan'};
+function tokenize(s){
+  const t=[]; let i=0;
+  while(i<s.length){ const c=s[i];
+    if(/[0-9.]/.test(c)){ let j=i; while(j<s.length&&/[0-9.]/.test(s[j])) j++; const n=s.slice(i,j); if((n.match(/\./g)||[]).length>1) throw 0; t.push({k:'n',v:parseFloat(n),s:n}); i=j; }
+    else if(c==='π'){ t.push({k:'n',v:Math.PI,s:'π',pi:true}); i++; }
+    else if(/[a-z]/.test(c)){ const w=FNS.find(f=>s.startsWith(f,i));
+      if(w){ t.push({k:'fn',v:FNA[w]||w}); i+=w.length }
+      else if(c==='e'){ t.push({k:'n',v:Math.E,s:'e',pi:true}); i++ }      // e is Euler's number
+      else { t.push({k:'v',v:c}); i++ } }
+    else if('+-*/^()√|'.includes(c)){ t.push({k:c}); i++; }
+    else throw 0;
+  } return t;
+}
+function parse(str){
+  const t=tokenize(cleanIn(str)); let p=0;
+  const peek=()=>t[p], eat=k=>{ if(!t[p]||t[p].k!==k) throw 0; return t[p++] };
+  function expr(){ let a=term(); while(peek()&&(peek().k==='+'||peek().k==='-')){ const op=t[p++].k; a={t:'add',op,a,b:term()} } return a }
+  function term(){ let a=unary(); for(;;){ const k=peek()&&peek().k;
+      if(k==='*'||k==='/'){ p++; a={t:'mul',op:k,a,b:unary()} }
+      else if(k==='v'||k==='('||k==='√'||k==='fn'||(k==='n'&&(a.endsParen||peek().pi||a.t==='fn'))){ a={t:'mul',op:'*',a,b:unary(),imp:true} }
+      else break; } return a }
+  function unary(){ if(peek()&&peek().k==='-'){ p++; return {t:'neg',a:unary()} } if(peek()&&peek().k==='+'){ p++; return unary() } return power() }
+  function power(){ const a=atom(); if(peek()&&peek().k==='^'){ p++; return {t:'pow',a,b:unary()} } return a }
+  function atom(){ const x=peek(); if(!x) throw 0;
+    if(x.k==='n'){ p++; return {t:'num',v:x.v} }
+    if(x.k==='v'){ p++; return {t:'var',n:x.v} }
+    if(x.k==='('){ p++; const e=expr(); eat(')'); e.endsParen=true; return Object.assign({},e,{paren:true,endsParen:true}) }
+    if(x.k==='√'){ p++; return {t:'sqrt',a:atom()} }
+    if(x.k==='|'){ p++; const e=expr(); eat('|'); return {t:'fn',f:'abs',a:e,endsParen:true} }
+    if(x.k==='fn'){ p++; let f=x.v, ex=null;
+      if(peek()&&peek().k==='^'){ p++; const e=unary(); if(e.t==='neg'&&e.a.t==='num'&&e.a.v===1&&FINV[f]) f=FINV[f]; else ex=e }
+      let arg; if(peek()&&peek().k==='('){ arg=atom() }
+      else { arg=power(); while(peek()&&(peek().k==='v'||peek().k==='√'||(peek().k==='n'&&peek().pi))) arg={t:'mul',op:'*',a:arg,b:power(),imp:true} }
+      const node={t:'fn',f,a:arg}; return ex?{t:'pow',a:node,b:ex}:node }
+    throw 0 }
+  const e=expr(); if(p!==t.length) throw 0; return e;
+}
+function ev(n,env){
+  switch(n.t){ case'num':return n.v; case'var':return n.n in env?env[n.n]:NaN; case'neg':return -ev(n.a,env);
+    case'add':return n.op==='+'?ev(n.a,env)+ev(n.b,env):ev(n.a,env)-ev(n.b,env);
+    case'mul':return n.op==='*'?ev(n.a,env)*ev(n.b,env):ev(n.a,env)/ev(n.b,env);
+    case'pow':{ const A=ev(n.a,env), B=ev(n.b,env); if(A<0&&B!==0&&Math.abs(1/B-Math.round(1/B))<1e-9&&Math.round(1/B)%2) return -Math.pow(-A,B); return Math.pow(A,B) } case'sqrt':return Math.sqrt(ev(n.a,env)); case'fn':return FEV[n.f](ev(n.a,env)); }
+  return NaN;
+}
+function varsOf(n,s=new Set()){ if(!n) return s; if(n.t==='var') s.add(n.n); ['a','b'].forEach(k=>n[k]&&varsOf(n[k],s)); return s }
+const tryParse=s=>{ try{ return parse(s) }catch(e){ return null } };
+function numVal(s){ const n=tryParse(String(s).replace(/^[a-z]=/i,'')); if(!n||varsOf(n).size) return NaN; return ev(n,{}) }
+const close=(a,b)=>Math.abs(a-b)<=1e-7*Math.max(1,Math.abs(a),Math.abs(b));
+function equiv(A,B){
+  const vs=[...new Set([...varsOf(A),...varsOf(B)])], pts=[[1.37,-0.61,2.11],[-1.83,1.29,0.47],[2.71,0.93,-1.17],[0.59,2.33,1.61],[-2.47,-1.41,2.89],[3.13,1.77,-0.83],[0.31,-0.43,0.77],[-0.68,0.52,-0.29],[0.11,0.21,-0.13],[-0.19,0.07,0.17],[0.23,-0.09,0.12],[0.04,0.15,-0.21],[0.07,0.33,-0.05],[-0.1,0.27,0.09]];
+  let ok=0; for(const pt of pts){ const env={}; vs.forEach((v,i)=>env[v]=pt[i%3]*(1+i*0.37)); const a=ev(A,env), b=ev(B,env);
+    if(!Number.isFinite(a)||!Number.isFinite(b)) continue; if(!close(a,b)) return false; ok++; } return ok>=3;
+}
+function flat(n,type,out=[]){ if(n.t===type&&(type!=='mul'||n.op==='*')&&!n.paren){ flat(n.a,type,out); if(type==='add'&&n.op==='-') out.push({t:'neg',a:n.b}); else flat(n.b,type,out) } else out.push(n); return out }
+const termCount=n=>flat(n,'add').length;
+const numTokens=s=>(cleanIn(s).match(/\d+(\.\d+)?/g)||[]).length;
+// polynomial coefficients of a one-variable node (degree ≤ 4) by sampling
+function coefs(node,v='x'){
+  const X=[0,1,2,3,4], Y=X.map(x=>ev(node,{[v]:x})); if(Y.some(y=>!Number.isFinite(y))) return null;
+  const n=5, c=Y.slice(); for(let j=1;j<n;j++) for(let i=n-1;i>=j;i--) c[i]=(c[i]-c[i-1])/(X[i]-X[i-j]);
+  let poly=[c[n-1]]; for(let i=n-2;i>=0;i--){ const nx=new Array(poly.length+1).fill(0); for(let k=0;k<poly.length;k++){ nx[k+1]+=poly[k]; nx[k]-=poly[k]*X[i] } nx[0]+=c[i]; poly=nx }
+  if(!close(ev(node,{[v]:5.5}),poly.reduce((s,a,k)=>s+a*Math.pow(5.5,k),0))) return null;
+  return poly.map(a=>Math.abs(a-Math.round(a))<1e-7?Math.round(a):a);
+}
+const deg=c=>{ for(let k=c.length-1;k>=0;k--) if(Math.abs(c[k])>1e-9) return k; return -1 };
+function sumFactors(node){ // factors of a product that are sums (count (x+1)^2 as two)
+  let n=node; while(n.t==='neg') n=n.a; const fs=flat(n,'mul'); let out=[];
+  for(const f of fs){ if(f.t==='add') out.push(f); else if(f.t==='pow'&&f.a.t==='add'&&f.b.t==='num'&&isInt(f.b.v)) for(let i=0;i<f.b.v;i++) out.push(f.a); else if(f.t==='neg'&&f.a.t==='add') out.push(f.a) }
+  return out;
+}
+
+/* ---------- checking a typed answer (cur = the generated problem) ---------- */
+function stripLead(s,v){ const c=cleanIn(s); const m=c.match(/^([a-z]|[a-z]\([a-z]\))=(.*)$/); return m?m[2]:c }
+function solSet(s){ // "x = 2 or x = -3", "-3, 2", "±4", "1 ± √3" → sorted numbers
+  let c=cleanIn(s).replace(/[{}]/g,'').replace(/±|\+\/-|\+-/g,'±'); const parts=c.split(/,|;|or|and/).map(x=>x.replace(/^[a-z]=/,'')).filter(Boolean); const vals=[];
+  for(const part of parts){ if(part.includes('±')){ let [a,b]=part.split('±'); let den=null;
+      const m=part.match(/^\((.*)±(.*)\)\/(.*)$/); if(m){ a=m[1]; b=m[2]; den=m[3] }
+      const A=a===''?0:numVal(a), B=numVal(b), D=den?numVal(den):1; if(!Number.isFinite(A)||!Number.isFinite(B)||!Number.isFinite(D)) return null; vals.push((A-B)/D,(A+B)/D) }
+    else { const v=numVal(part); if(!Number.isFinite(v)) return null; vals.push(v) } }
+  return vals.sort((a,b)=>a-b).filter((v,i,a)=>i===0||!close(v,a[i-1]));
+}
+function ineqCanon(s){
+  let c=cleanIn(s).replace(/≥|=>/g,'>=').replace(/≤|=</g,'<=');
+  const num='(-?[0-9.]+(?:/[0-9]+)?)', op='(<=|>=|<|>)', pieces=c.split(/or/), ors=[];
+  for(const pc of pieces){ let I={lo:-Infinity,loI:false,hi:Infinity,hiI:false};
+    for(const q of pc.split(/and/)){ let m, J={lo:-Infinity,loI:false,hi:Infinity,hiI:false};
+      if((m=q.match(new RegExp('^'+num+op+'x'+op+num+'$')))){ const a=numVal(m[1]), b=numVal(m[4]); if(m[2][0]!==m[3][0]) return null;
+        if(m[2][0]==='<'){ J={lo:a,loI:m[2]==='<=',hi:b,hiI:m[3]==='<='} } else { J={lo:b,loI:m[3]==='>=',hi:a,hiI:m[2]==='>='} } }
+      else if((m=q.match(new RegExp('^x'+op+num+'$')))){ const a=numVal(m[2]); if(m[1][0]==='<') J.hi=a, J.hiI=m[1]==='<='; else J.lo=a, J.loI=m[1]==='>=' }
+      else if((m=q.match(new RegExp('^'+num+op+'x$')))){ const a=numVal(m[1]); if(m[2][0]==='<') J.lo=a, J.loI=m[2]==='<='; else J.hi=a, J.hiI=m[2]==='>=' }
+      else return null;
+      if(J.lo>I.lo||(J.lo===I.lo&&!J.loI)) I.lo=J.lo, I.loI=J.loI; if(J.hi<I.hi||(J.hi===I.hi&&!J.hiI)) I.hi=J.hi, I.hiI=J.hiI; }
+    ors.push(I) }
+  return ors.map(I=>`${I.loI?'[':'('}${+I.lo.toFixed(9)},${+I.hi.toFixed(9)}${I.hiI?']':')'}`).sort().join('U');
+}
+const radNorm=s=>cleanIn(s).replace(/\*/g,'').replace(/√\((\d+)\)/g,'√$1');
+function check(cur,raw){
+  const type=cur.type||'num', ans=cur.answers;
+  try{
+    switch(type){
+      case 'mat': { const g=(String(raw).replace(/[−–—]/g,'-').match(/-?\d+(\.\d+)?(\/\d+)?/g)||[]).map(numVal); return g.length===cur.vals.length&&g.every((v,i)=>close(v,cur.vals[i])) }
+      case 'lineq': { const lin=str=>{ const c=cleanIn(str); if((c.match(/=/g)||[]).length!==1) return null; const [l,r]=c.split('='); const L=parse(l), Rr=parse(r); const h=(x,y,z)=>ev(L,{x,y,z})-ev(Rr,{x,y,z});
+          const c0=h(0,0,0), v=[h(1,0,0)-c0,h(0,1,0)-c0,h(0,0,1)-c0,c0]; if(!close(h(1.3,-0.7,2.1),c0+1.3*v[0]-0.7*v[1]+2.1*v[2])) return null; return v };
+        const G=lin(raw), K=lin(ans[0]); if(!G||!K) return false; const i=K.findIndex(v=>Math.abs(v)>1e-9); if(Math.abs(G[i])<1e-12) return false; const k=G[i]/K[i]; return G.every((v,j)=>close(v,k*K[j])) }
+      case 'fx': { const g=cleanIn(raw); const G=parse(g.includes('=')?g.slice(g.lastIndexOf('=')+1):g), K=parse(cleanIn(ans[0]).replace(/^.*=/,'')); return equiv(G,K) }
+      case 'exact': { const G=parse(stripLead(raw)), K=parse(cleanIn(ans[0])); if(varsOf(G).size) return false; return close(ev(G,{}),ev(K,{})) }
+      case 'anti': { const g=cleanIn(raw); const G=parse(g.includes('=')?g.slice(g.lastIndexOf('=')+1):g); if(!varsOf(G).has('c')) return false;
+        const K=parse(cleanIn(ans[0]).replace(/\+c$/,'')), v=cur.v||'x', pts=[0.37,0.71,1.13,1.62,2.27,2.93,0.53,1.37,0.11,0.19,0.23,0.29]; let d0=null, ok=0;
+        for(const x of pts){ const a=ev(G,{[v]:x,c:0}), b=ev(K,{[v]:x}); if(!Number.isFinite(a)||!Number.isFinite(b)) continue; const dd=a-b; if(d0==null) d0=dd; else if(!close(dd,d0)) return false; ok++ }
+        return ok>=3 }
+      case 'approx': { const s=stripLead(raw).replace(/°$/,''); if(!/^-?\d+(\.\d+)?$/.test(s)) return false; return Math.abs(parseFloat(s)-numVal(ans[0]))<=(cur.tol||0.05)+1e-9 }
+      case 'pi': { const s=stripLead(raw), k=cleanIn(ans[0]); if(k.includes('π')&&!s.includes('π')) return false; if(numTokens(s)>numTokens(k)) return false; return close(numVal(s),numVal(k)) }
+      case 'num': { const s=stripLead(raw).replace(/°$/,''); if(!/^-?\d+(\.\d+)?(\/\d+)?$/.test(s)) return false; return close(numVal(s),numVal(ans[0])) }
+      case 'set': { const a=solSet(raw), b=cur.vals.slice().sort((x,y)=>x-y); return !!a&&a.length===b.length&&a.every((v,i)=>close(v,b[i])) }
+      case 'pair': { const c=cleanIn(raw); let x,y; const mx=c.match(/x=([^,;]+)/), my=c.match(/y=([^,;)]+)/);
+        if(mx&&my){ x=numVal(mx[1]); y=numVal(my[1]) } else { const m=c.replace(/[()⟨⟩<>\[\]]/g,'').split(','); if(m.length!==2) return false; x=numVal(m[0]); y=numVal(m[1]) }
+        return close(x,cur.vals[0])&&close(y,cur.vals[1]) }
+      case 'ineq': { const a=ineqCanon(raw); return !!a&&a===ineqCanon(ans[0]) }
+      case 'text': { const g=key(raw).replace(/[.!]/g,''); if(ans.some(a=>key(a)===g)) return true; return !!cur.words&&key(ans[0]).length>0&&String(ans[0]).toLowerCase().split(/\s+/).every(w=>g.includes(w)) }
+      case 'rad': { if(isInt(numVal(ans[0]))&&/^-?\d+$/.test(stripLead(raw))) return close(numVal(stripLead(raw)),numVal(ans[0])); const g=radNorm(stripLead(raw)); return ans.some(a=>radNorm(a)===g) }
+      case 'sci': { const c=cleanIn(raw).replace(/x10/,'*10'); const m=c.match(/^(-?\d+(?:\.\d+)?)\*10\^(-?\d+)$/)||c.match(/^(-?\d+(?:\.\d+)?)e(-?\d+)$/); if(!m) return false;
+        const mant=parseFloat(m[1]); if(Math.abs(mant)<1||Math.abs(mant)>=10) return false; return close(mant,cur.vals[0])&&+m[2]===cur.vals[1] }
+      case 'eq': { const g=cleanIn(raw), k=cleanIn(ans[0]); const lv=k.split('=')[0]; if(!g.startsWith(lv+'=')&&!(lv==='y'&&/^(f\(x\)|g\(x\)|h\(x\)|f\^-1\(x\))=/.test(g))) return false;
+        const G=parse(g.slice(g.indexOf('=')+1)), K=parse(k.slice(k.indexOf('=')+1)); return equiv(G,K) }
+      case 'expr': case 'mono': case 'factor': {
+        const g=stripLead(raw), G=parse(g), K=parse(cleanIn(ans[0])); if(!equiv(G,K)) return false;
+        const kc=cleanIn(ans[0]);
+        if(type!=='factor'&&!cur.anyForm){ if(!kc.includes('(')&&g.includes('(')) return false; if(!kc.includes('/')&&g.includes('/')) return false; if(termCount(G)>termCount(K)) return false }
+        if(type==='mono'){ const vs=g.match(/[a-z]/g)||[]; if(new Set(vs).size!==vs.length) return false; if(numTokens(g)>numTokens(kc)) return false }
+        if(type==='factor'){ const gs=sumFactors(G), ks=sumFactors(K); if(termCount(G)>1) return false; if(gs.length<ks.length) return false;
+          for(const f of gs){ const c=coefs(f); if(!c||deg(c)<1) return false; if(c.reduce((a,b)=>gcd(a,Math.round(b)),0)!==1) return false } }
+        return true }
+    }
+  }catch(e){ return false }
+  return false;
+}
+
+// near-miss versions of an answer: one number changed by ±1, or one sign flipped
+function perturb(a){
+  const out=[], nums=[...a.matchAll(/\d+(\.\d+)?/g)];
+  nums.forEach(m=>{ const v=parseFloat(m[0]); for(const dv of [1,-1,2]){ const nv=+(v+dv).toFixed(4); if(nv<=0&&m.index>0&&/[a-z√(]/i.test(a[m.index+m[0].length]||'')) continue; if(nv<0) continue;
+      out.push(a.slice(0,m.index)+nv+a.slice(m.index+m[0].length)) } });
+  [...a.matchAll(/ [+−] /g)].forEach(m=>out.push(a.slice(0,m.index)+(m[0]===' + '?' − ':' + ')+a.slice(m.index+3)));
+  const SD='⁰¹²³⁴⁵⁶⁷⁸⁹'; [...a.matchAll(/[⁰¹²³⁴⁵⁶⁷⁸⁹]+/g)].forEach(m=>{ const v=+m[0].split('').map(c=>SD.indexOf(c)).join(''); for(const nv of [v+1,v-1,v*2]) if(nv>1) out.push(a.slice(0,m.index)+String(nv).split('').map(c=>SD[c]).join('')+a.slice(m.index+m[0].length)) });
+  if(/^y = /.test(a)){ out.push(a.startsWith('y = −')?a.replace('y = −','y = '):a.replace('y = ','y = −'), a+' + 1', a+' − 1') }
+  if(/^[a-z] [<>≤≥] /.test(a)) out.push(a.replace(/[<>≤≥]/,c=>({'<':'>','>':'<','≤':'≥','≥':'≤'})[c]));
+  return shuffle(out).filter(w=>!/(^|[^0-9.])0[a-z√(\/·]|(^|[^0-9.])1[a-z√(·]|[−-] ?0(?![.\d])|\+ 0(?![.\d])|\(1\/1\)|(^|[^0-9.])1\/1(?![0-9])|√[01](?![0-9])|\^1(?![0-9])/i.test(w)&&!/\(\)/.test(w));
+}
+const pretty=s=>String(s).replace(/(^|[\s(,=])-(?=[\d.√a-z(])/g,'$1−');
+/* multiple-choice options for a problem — a distractor is never something the checker would accept */
+function buildMC(cur){
+  const ans=String(cur.mcAns||cur.answers[0]);
+  let cands=(cur.wrong||[]).map(String);
+  if(!cur.mcAns){
+    const fb=[]; const v0=numVal(cur.answers[0]);
+    if(Number.isFinite(v0)&&cur.type==='num') for(let i=1;i<10;i++) fb.push(numFall(cur.answers[0])(i));
+    if(cur.type==='set') for(let i=1;i<8;i++) fb.push('x = '+cur.vals.map(v=>M(Math.round((v+(i%2?i:-i))*100)/100)).join(' or x = '));
+    if(cur.type==='pair') for(let i=1;i<8;i++) fb.push(`(${M(cur.vals[0]+(i%2?i:0))}, ${M(cur.vals[1]+(i%2?0:i))})`);
+    if(cur.type!=='text') fb.push(...perturb(String(cur.answers[0])));
+    cands=[...cands,...fb].filter(w=>!check(cur,w));
+    if(cur.type==='rad'){ const v=numVal(cur.answers[0]); cands=cands.filter(w=>!close(numVal(w),v)) }
+  }
+  cands=cands.map(w=>w.replace(/-?\d+\.\d{3,}/g,m=>String(Math.round(parseFloat(m)*100)/100)));
+  const wrong=distinct(ans,cands,null);
+  return {ans:pretty(ans), opts:shuffle([ans,...wrong.slice(0,3)]).map(pretty)};
+}
+
+/* ===== Geometry practice — figure drawing (SVG) ===== */
+const escX=s=>String(s).replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
+const FIG={ink:'#263238', fill:'#ede7f6', acc:'#4527a0', mark:'#c62828'};   // page CSS recolors .acc/.accs/polygons to the chapter color
+const svgWrap=(inner,w=320,h=210)=>`<svg class="fig" viewBox="0 0 ${w} ${h}" width="${w}" height="${h}" role="img" aria-label="figure for the problem">${inner}</svg>`;
+const tx=(x,y,s,o={})=>`<text x="${(+x).toFixed(1)}" y="${(+y).toFixed(1)}" font-size="${o.fs||14}" text-anchor="${o.a||'middle'}" dominant-baseline="central" ${o.c===FIG.acc?'class="acc" ':''}fill="${o.c||FIG.ink}" font-weight="${o.b?700:500}" font-family="system-ui,sans-serif"${o.i?' font-style="italic"':''}>${escX(s)}</text>`;
+const ln=(a,b,o={})=>`<line x1="${a[0].toFixed(1)}" y1="${a[1].toFixed(1)}" x2="${b[0].toFixed(1)}" y2="${b[1].toFixed(1)}" stroke="${o.c||FIG.ink}" stroke-width="${o.w||2}"${o.d?' stroke-dasharray="5 4"':''} stroke-linecap="round"/>`;
+const dot=(p,r=3,c=FIG.ink)=>`<circle cx="${p[0].toFixed(1)}" cy="${p[1].toFixed(1)}" r="${r}" fill="${c}"/>`;
+const V={add:(a,b)=>[a[0]+b[0],a[1]+b[1]], sub:(a,b)=>[a[0]-b[0],a[1]-b[1]], mul:(a,k)=>[a[0]*k,a[1]*k], len:a=>Math.hypot(a[0],a[1]), unit:a=>{const l=Math.hypot(a[0],a[1])||1;return [a[0]/l,a[1]/l]}, mid:(a,b)=>[(a[0]+b[0])/2,(a[1]+b[1])/2], perp:a=>[-a[1],a[0]]};
+// fit a list of points into the drawing box (keeps proportions)
+function fit(pts,W=320,H=210,m=34){ const mx=Array.isArray(m)?m[0]:m, my=Array.isArray(m)?m[1]:m, xs=pts.map(p=>p[0]), ys=pts.map(p=>p[1]), x0=Math.min(...xs), y0=Math.min(...ys), w=Math.max(...xs)-x0||1, h=Math.max(...ys)-y0||1, k=Math.min((W-2*mx)/w,(H-2*my)/h);
+  const ox=(W-w*k)/2, oy=(H-h*k)/2; return pts.map(p=>[ox+(p[0]-x0)*k, oy+(p[1]-y0)*k]) }
+const D2R=Math.PI/180;
+// triangle with base AB horizontal and angles A, B (degrees) — drawn to scale
+function triPts(A,B){ const C=180-A-B, ac=Math.sin(B*D2R)/Math.sin(C*D2R); return [[0,0],[1,0],[ac*Math.cos(A*D2R),-ac*Math.sin(A*D2R)]] }
+function triFromSides(a,b,c){ // a = BC, b = CA, c = AB
+  const A=Math.acos((b*b+c*c-a*a)/(2*b*c))/D2R, B=Math.acos((a*a+c*c-b*b)/(2*a*c))/D2R; return triPts(A,B) }
+function arcAt(P,Q,R,r=17,n=1,c=FIG.ink){ // small arc(s) at vertex P between rays PQ and PR
+  let a1=Math.atan2(Q[1]-P[1],Q[0]-P[0]), a2=Math.atan2(R[1]-P[1],R[0]-P[0]); let d=a2-a1; while(d>Math.PI) d-=2*Math.PI; while(d<-Math.PI) d+=2*Math.PI;
+  let s=''; for(let i=0;i<n;i++){ const rr=r+i*4, p1=[P[0]+rr*Math.cos(a1),P[1]+rr*Math.sin(a1)], p2=[P[0]+rr*Math.cos(a1+d),P[1]+rr*Math.sin(a1+d)];
+    s+=`<path d="M${p1[0].toFixed(1)} ${p1[1].toFixed(1)} A${rr} ${rr} 0 0 ${d>0?1:0} ${p2[0].toFixed(1)} ${p2[1].toFixed(1)}" fill="none" stroke="${c}" stroke-width="1.6"/>` } return s }
+function rightMark(P,Q,R,s=11){ const u=V.mul(V.unit(V.sub(Q,P)),s), v=V.mul(V.unit(V.sub(R,P)),s); const a=V.add(P,u), b=V.add(V.add(P,u),v), c=V.add(P,v);
+  return `<path d="M${a[0].toFixed(1)} ${a[1].toFixed(1)} L${b[0].toFixed(1)} ${b[1].toFixed(1)} L${c[0].toFixed(1)} ${c[1].toFixed(1)}" fill="none" stroke="${FIG.ink}" stroke-width="1.5"/>` }
+function ticks(P,Q,n,c=FIG.mark){ if(!n) return ''; const m=V.mid(P,Q), u=V.unit(V.sub(Q,P)), p=V.perp(u); let s='';
+  for(let i=0;i<n;i++){ const o=V.add(m,V.mul(u,(i-(n-1)/2)*5)); s+=ln(V.add(o,V.mul(p,6)),V.add(o,V.mul(p,-6)),{c,w:1.8}) } return s }
+/* triangle: o = {v:[labels], s:[label AB, BC, CA], a:[label at A,B,C], right:index, t:[ticks AB,BC,CA], arcs:[n at A,B,C]} */
+function triSVG(P,o={}){
+  const G=[(P[0][0]+P[1][0]+P[2][0])/3,(P[0][1]+P[1][1]+P[2][1])/3]; let s=`<polygon points="${P.map(p=>p.map(v=>v.toFixed(1)).join(',')).join(' ')}" fill="${FIG.fill}" stroke="${FIG.ink}" stroke-width="2" stroke-linejoin="round"/>`;
+  for(let i=0;i<3;i++){ const A=P[i], B=P[(i+1)%3], C=P[(i+2)%3];
+    if(o.t&&o.t[i]) s+=ticks(A,B,o.t[i]);
+    if(o.s&&o.s[i]!=null&&o.s[i]!==''){ const m=V.mid(A,B), out=V.unit(V.sub(m,G)); s+=tx(...V.add(m,V.mul(out,15)),o.s[i],{c:FIG.acc,b:true}) }
+    if(o.right===i) s+=rightMark(A,B,C); else if(o.arcs&&o.arcs[i]) s+=arcAt(A,B,C,16,o.arcs[i],FIG.mark);
+    if(o.a&&o.a[i]!=null&&o.a[i]!==''){ const u1=V.unit(V.sub(B,A)), u2=V.unit(V.sub(C,A)), bis=V.unit(V.add(u1,u2)), half=Math.acos(Math.max(-1,Math.min(1,u1[0]*u2[0]+u1[1]*u2[1])))/2;
+      const L=String(o.a[i]), cap=0.42*Math.min(V.len(V.sub(B,A)),V.len(V.sub(C,A))), dist=Math.max(24,(9+3.6*L.length)/Math.sin(half||0.3));
+      if(L.length<=5) s+=tx(...V.add(A,V.mul(bis,Math.max(22,Math.min(dist,cap)))),L,{fs:13,c:FIG.acc,b:true});
+      else { // long label: outside the vertex, with an arc showing which angle
+        if(!(o.arcs&&o.arcs[i])&&o.right!==i) s+=arcAt(A,B,C,15,1,FIG.acc);
+        const out=V.mul(bis,-1); s+=tx(A[0]+out[0]*22,A[1]+(out[1]>0?24:-22),L,{fs:13,c:FIG.acc,b:true}) } }
+    if(o.v){ const out=V.unit(V.sub(A,G)); s+=tx(...V.add(A,V.mul(out,13)),o.v[i],{i:true}) } }
+  return s;
+}
+const triFig=(P,o,W=320,H=210)=>{ const long=(o.a||[]).some(L=>L&&String(L).length>5); return svgWrap(triSVG(fit(P,W,H,o.m||(long?[72,40]:36)),o),W,H) };
+function twoTriFig(P,o1,o2){ // second triangle = o2.pts (default P), scaled by o2.k, mirrored if o2.mirror
+  const k=o2.k||1, base=o2.pts||P; let Q=base.map(p=>[(o2.mirror?-p[0]:p[0])*k,p[1]*k]);
+  const w1=Math.max(...P.map(p=>p[0]))-Math.min(...P.map(p=>p[0])), qx=Math.min(...Q.map(p=>p[0])); Q=Q.map(p=>[p[0]-qx+Math.max(...P.map(q=>q[0]))+1.0*Math.max(w1,0.6),p[1]]);
+  const all=fit([...P,...Q],320,200,30); return svgWrap(triSVG(all.slice(0,3),o1)+triSVG(all.slice(3),o2),320,200) }
+/* two parallel lines cut by a transversal, angles numbered 1–8 */
+function parallelFig(show,acute=65){ // show: {n: label}; acute = the acute angle the transversal makes
+  const W=320,H=210, y1=70, y2=145, d=[Math.cos(acute*D2R),Math.sin(acute*D2R)], I1=[140,y1], I2=[140+(y2-y1)*d[0]/d[1],y2];
+  let s=ln([20,y1],[300,y1])+ln([20,y2],[300,y2])+ln(V.add(I1,V.mul(d,-55)),V.add(I2,V.mul(d,55)));
+  s+=tx(305,y1,'ℓ',{a:'start',i:true})+tx(305,y2,'m',{a:'start',i:true})+tx(...V.add(V.add(I2,V.mul(d,55)),[10,0]),'t',{i:true,a:'start'});
+  const up=V.mul(d,-1), dirs=[[[-1,0],up],[[1,0],up],[[-1,0],d],[[1,0],d]];
+  [I1,I2].forEach((I,j)=>dirs.forEach(([a,b],k)=>{ const n=j*4+k+1; if(show[n]==null) return; const ang=Math.acos(a[0]*b[0]+a[1]*b[1]), pos=V.add(I,V.mul(V.unit(V.add(a,b)),Math.min(46,(10+3.4*show[n].length)/Math.sin(ang/2)))); s+=tx(...pos,show[n],{fs:13,c:FIG.acc,b:true}) }));
+  s+=`<path d="M60 ${y1-4} l8 4 l-8 4 M60 ${y2-4} l8 4 l-8 4" fill="none" stroke="${FIG.mark}" stroke-width="1.8"/>`; // parallel arrows
+  return svgWrap(s,W,H)
+}
+/* two lines crossing (vertical angles / linear pairs) */
+function crossFig(labels,deg=55){ // labels at [right-top, top, left, bottom] regions
+  const C=[160,105], a=deg*D2R, u=[Math.cos(a),-Math.sin(a)], h=[1,0]; let s=ln(V.add(C,V.mul(h,-130)),V.add(C,V.mul(h,130)))+ln(V.add(C,V.mul(u,-110)),V.add(C,V.mul(u,110)));
+  const bis=[V.unit(V.add(h,u)),V.unit(V.add(u,[-1,0])),V.unit(V.add([-1,0],V.mul(u,-1))),V.unit(V.add(V.mul(u,-1),h))];
+  const wed=[a,Math.PI-a,a,Math.PI-a]; labels.forEach((L,i)=>{ if(L) s+=tx(...V.add(C,V.mul(bis[i],Math.min(90,(10+3.4*L.length)/Math.sin(wed[i]/2)))),L,{fs:13,c:FIG.acc,b:true}) }); return svgWrap(s+dot(C,2.5)) }
+/* points on a segment with labels on the pieces */
+function segFig(names,pieces){ const n=names.length, xs=[20]; const tot=pieces.reduce((a,b)=>a+b.w,0); pieces.forEach(p=>xs.push(xs[xs.length-1]+280*p.w/tot));
+  let s=ln([xs[0],100],[xs[n-1],100]); names.forEach((nm,i)=>{ s+=dot([xs[i],100],4)+tx(xs[i],122,nm,{i:true}) }); pieces.forEach((p,i)=>{ s+=tx((xs[i]+xs[i+1])/2,80,p.label,{fs:13,c:FIG.acc,b:true}) }); return svgWrap(s,320,150) }
+/* rays from a vertex with angle labels between them */
+function raysFig(angles,labels,names){ const O=[60,175], R=200; let s='', acc=0; const dirs=[0];
+  angles.forEach(a=>{ acc+=a; dirs.push(acc) });
+  dirs.forEach((dg,i)=>{ const p=[O[0]+R*Math.cos(-dg*D2R),O[1]+R*Math.sin(-dg*D2R)]; s+=ln(O,fitClip(O,p)); s+=tx(...V.add(fitClip(O,p),V.mul(V.unit(V.sub(p,O)),12)),names[i+1],{i:true}) });
+  angles.forEach((a,i)=>{ const mdg=dirs[i]+a/2; s+=tx(O[0]+(i?95:118)*Math.cos(-mdg*D2R),O[1]+(i?95:118)*Math.sin(-mdg*D2R),labels[i],{fs:13,c:FIG.acc,b:true}) });
+  return svgWrap(s+dot(O,3)+tx(O[0]-12,O[1]+8,names[0],{i:true}),320,210) }
+function fitClip(O,p){ const d=V.sub(p,O); let t=1; if(O[0]+d[0]>300) t=Math.min(t,(300-O[0])/d[0]); if(O[1]+d[1]<20) t=Math.min(t,(20-O[1])/d[1]); return V.add(O,V.mul(d,t)) }
+/* circle pictures */
+function circleBase(){ return {C:[160,105], r:78} }
+const onC=(C,r,deg)=>[C[0]+r*Math.cos(-deg*D2R),C[1]+r*Math.sin(-deg*D2R)];
+function inscribedFig(arcDeg,labelArc,labelIns){ const {C,r}=circleBase(), a0=270-arcDeg/2, A=onC(C,r,a0), B=onC(C,r,a0+arcDeg), P=onC(C,r,90);
+  let s=`<circle cx="${C[0]}" cy="${C[1]}" r="${r}" fill="none" stroke="${FIG.ink}" stroke-width="2"/>`+ln(P,A)+ln(P,B)+dot(A)+dot(B)+dot(P);
+  s+=`<path d="M${A[0].toFixed(1)} ${A[1].toFixed(1)} A${r} ${r} 0 0 0 ${B[0].toFixed(1)} ${B[1].toFixed(1)}" class="accs" fill="none" stroke="${FIG.acc}" stroke-width="4"/>`;
+  s+=tx(...onC(C,r+16,a0),'A',{i:true})+tx(...onC(C,r+16,a0+arcDeg),'B',{i:true})+tx(...onC(C,r+14,90),'P',{i:true});
+  s+=tx(...onC(C,r+30,270),labelArc,{fs:13,c:FIG.acc,b:true})+tx(P[0],P[1]+(labelIns.length>4?62:48),labelIns,{fs:13,c:FIG.acc,b:true}); return svgWrap(s,320,230) }
+function chordsFig(lab){ const {C,r}=circleBase(), A=onC(C,r,150), B=onC(C,r,-20), Cc=onC(C,r,60), Dd=onC(C,r,230);
+  const den=(A[0]-B[0])*(Cc[1]-Dd[1])-(A[1]-B[1])*(Cc[0]-Dd[0]), t=((A[0]-Cc[0])*(Cc[1]-Dd[1])-(A[1]-Cc[1])*(Cc[0]-Dd[0]))/den, E=[A[0]+t*(B[0]-A[0]),A[1]+t*(B[1]-A[1])];
+  let s=`<circle cx="${C[0]}" cy="${C[1]}" r="${r}" fill="none" stroke="${FIG.ink}" stroke-width="2"/>`+ln(A,B)+ln(Cc,Dd)+[A,B,Cc,Dd,E].map(p=>dot(p)).join('');
+  s+=tx(...onC(C,r+14,150),'A',{i:true})+tx(...onC(C,r+14,-20),'B',{i:true})+tx(...onC(C,r+14,60),'C',{i:true})+tx(...onC(C,r+14,230),'D',{i:true})+tx(E[0]+4,E[1]+16,'E',{i:true});
+  const lb=(P,Q,L,side)=>{ const m=V.mid(P,Q), n=V.perp(V.unit(V.sub(Q,P))); return tx(...V.add(m,V.mul(n,side*13)),L,{fs:13,c:FIG.acc,b:true}) };
+  s+=lb(A,E,lab.AE,-1)+lb(E,B,lab.EB,-1)+lb(Cc,E,lab.CE,1)+lb(E,Dd,lab.ED,1); return svgWrap(s,320,220) }
+function tangentFig(lab,ratio=2){ // ratio = TP / OT, drawn to scale
+  const T0=[Math.cos(60*D2R),-Math.sin(60*D2R)], u0=[Math.sin(60*D2R),Math.cos(60*D2R)], P0=V.add(T0,V.mul(u0,ratio));
+  const pts=fit([[-1,-1],[1,1],P0,T0,[0,0]],320,220,30), k=(pts[1][0]-pts[0][0])/2, C=pts[4], T=pts[3], P=pts[2], r=k;
+  let s=`<circle cx="${C[0].toFixed(1)}" cy="${C[1].toFixed(1)}" r="${r.toFixed(1)}" fill="none" stroke="${FIG.ink}" stroke-width="2"/>`+ln(C,T)+ln(T,P)+ln(C,P,{d:true})+dot(C)+dot(T)+dot(P)+rightMark(T,C,P,10);
+  s+=tx(C[0]-12,C[1]+6,'O',{i:true})+tx(...V.add(T,[-4,-14]),'T',{i:true})+tx(P[0]+10,P[1]+8,'P',{i:true});
+  const G=V.mid(V.mid(C,T),P), lb=(A,B,L)=>{ const m=V.mid(A,B), out=V.unit(V.sub(m,G)); return tx(...V.add(m,V.mul(out,14)),L,{fs:13,c:FIG.acc,b:true}) };
+  s+=lb(C,T,lab.OT)+lb(T,P,lab.TP)+lb(C,P,lab.OP); return svgWrap(s,320,220) }
+function polyFig(n,label){ const C=[160,105], r=80, pts=[...Array(n)].map((_,i)=>onC(C,r,90+360*i/n)); let s=`<polygon points="${pts.map(p=>p.map(v=>v.toFixed(1)).join(',')).join(' ')}" fill="${FIG.fill}" stroke="${FIG.ink}" stroke-width="2"/>`;
+  if(label) s+=arcAt(pts[0],pts[1],pts[n-1],16,1,FIG.mark)+tx(pts[0][0],pts[0][1]+34,label,{fs:13,c:FIG.acc,b:true}); return svgWrap(s,320,210) }
+function quadFig(P,o={}){ const Q=fit(P,320,200,o.a?[92,40]:36); let s=`<polygon points="${Q.map(p=>p.map(v=>v.toFixed(1)).join(',')).join(' ')}" fill="${FIG.fill}" stroke="${FIG.ink}" stroke-width="2"/>`;
+  const G=[Q.reduce((a,p)=>a+p[0],0)/4,Q.reduce((a,p)=>a+p[1],0)/4];
+  if(o.diag){ s+=ln(Q[0],Q[2],{w:1.5})+ln(Q[1],Q[3],{w:1.5}) }
+  Q.forEach((A,i)=>{ const B=Q[(i+1)%4], D=Q[(i+3)%4];
+    if(o.s&&o.s[i]){ const m=V.mid(A,B), out=V.unit(V.sub(m,G)); s+=tx(...V.add(m,V.mul(out,15)),o.s[i],{c:FIG.acc,b:true,fs:13}) }
+    if(o.a&&o.a[i]){ const bis=V.unit(V.add(V.unit(V.sub(B,A)),V.unit(V.sub(D,A)))), out=V.mul(bis,-1), p=V.add(A,V.mul(out,18)); s+=arcAt(A,B,D,15,1,FIG.acc)+tx(p[0],p[1]+(out[1]>0?10:-4),o.a[i],{fs:13,c:FIG.acc,b:true,a:out[0]>0.3?'start':out[0]<-0.3?'end':'middle'}) }
+    if(o.v){ const out=V.unit(V.sub(A,G)); s+=tx(...V.add(A,V.mul(out,13)),o.v[i],{i:true}) } });
+  if(o.diag){ const E=V.mid(Q[0],Q[2]); s+=dot(E)+tx(E[0],E[1]-13,'E',{i:true}) }
+  return svgWrap(s,320,200) }
+
+/* ===== Geometry practice — chapters and problem generators ===== */
+const CHAPTERS=[
+  {id:'g1', icon:'📏', title:'Chapter 1: Tools of Geometry', c:'#2e7d32', s:'#e8f5e9', b:'#a5d6a7'},
+  {id:'g2', icon:'🧠', title:'Chapter 2: Reasoning & Proof', c:'#4527a0', s:'#ede7f6', b:'#b39ddb'},
+  {id:'g3', icon:'🛤️', title:'Chapter 3: Parallel & Perpendicular Lines', c:'#1565c0', s:'#e3f2fd', b:'#90caf9'},
+  {id:'g4', icon:'🔺', title:'Chapter 4: Congruent Triangles', c:'#c2185b', s:'#fce4ec', b:'#f48fb1'},
+  {id:'g5', icon:'📐', title:'Chapter 5: Relationships Within Triangles', c:'#e65100', s:'#fff3e0', b:'#ffcc80'},
+  {id:'g6', icon:'⬡', title:'Chapter 6: Polygons & Quadrilaterals', c:'#00695c', s:'#e0f2f1', b:'#80cbc4'},
+  {id:'g7', icon:'🔍', title:'Chapter 7: Similarity', c:'#6a1b9a', s:'#f3e5f5', b:'#ce93d8'},
+  {id:'g8', icon:'📐', title:'Chapter 8: Right Triangles & Trigonometry', c:'#b71c1c', s:'#ffebee', b:'#ef9a9a'},
+  {id:'g9', icon:'🔄', title:'Chapter 9: Transformations', c:'#00838f', s:'#e0f7fa', b:'#80deea'},
+  {id:'g10',icon:'⭕', title:'Chapter 10: Circles', c:'#303f9f', s:'#e8eaf6', b:'#9fa8da'},
+  {id:'g11',icon:'🟩', title:'Chapter 11: Area', c:'#33691e', s:'#f1f8e9', b:'#c5e1a5'},
+  {id:'g12',icon:'🧊', title:'Chapter 12: Surface Area & Volume', c:'#4e342e', s:'#efebe9', b:'#bcaaa4'},
+  {id:'g13',icon:'🎲', title:'Chapter 13: Probability', c:'#37474f', s:'#eceff1', b:'#b0bec5'},
+];
+const R=(d,e,m,h)=>d==='easy'?e:d==='medium'?m:h;
+const T=[]; const add=(ch,key,label,type,rule,raw)=>T.push({ch,key,label,type,rule,gen:d=>{ for(let i=0;i<200;i++){ const r=raw(d); if(r) return r } throw new Error('no problem generated for '+key) }});
+const pairS=(x,y)=>`(${M(x)}, ${M(y)})`;
+const r1=x=>Math.round(x*10)/10, xe=(a,b)=>`${a===1?'':a===-1?'−':a}x`+(b===0?'':` ${b<0?'−':'+'} ${Math.abs(b)}`); // "3x + 5"
+const solveX=(lhsA,lhsB,val)=>(val-lhsB)/lhsA;
+function rad(n){ let k=1,r=n; for(let i=Math.floor(Math.sqrt(n));i>1;i--) if(n%(i*i)===0){ k=i; r=n/(i*i); break } return r===1?String(k):`${k===1?'':k}√${r}` }
+const piS=(n,d=1)=>{ const g=gcd(n,d)||1; n/=g; d/=g; if(n===0) return '0'; return (d===1?(n===1?'':n===-1?'−':String(n))+'π':`${n===1?'':n}π/${d}`) };
+
+
+/* ================= Chapter 1: Tools ================= */
+add('g1','midpoint','Midpoint Formula','pair',
+ 'Midpoint of (x₁, y₁) and (x₂, y₂):\nM = ((x₁ + x₂)/2, (y₁ + y₂)/2) — average the x’s, average the y’s.',
+ d=>{ let x1=rnd(-9,9),y1=rnd(-9,9),x2=x1+2*nz(-6,6),y2=y1+2*nz(-6,6); if(d==='hard'){ x2=x1+nz(-9,9); y2=y1+nz(-9,9) }
+  const mx=(x1+x2)/2, my=(y1+y2)/2, f=v=>isInt(v)?M(v):String(v).replace('-','−');
+  return {type:'pair',vals:[mx,my],text:`Find the midpoint of (${M(x1)}, ${M(y1)}) and (${M(x2)}, ${M(y2)}).`, answers:[`(${f(mx)}, ${f(my)})`], wrong:[`(${f((x2-x1)/2)}, ${f((y2-y1)/2)})`,`(${f(x1+x2)}, ${f(y1+y2)})`,`(${f(my)}, ${f(mx)})`],
+    hint:`x: (${M(x1)} + ${P_(x2)})/2 = ${f(mx)}\ny: (${M(y1)} + ${P_(y2)})/2 = ${f(my)}\nM = (${f(mx)}, ${f(my)})`} });
+add('g1','endpoint','Find an Endpoint','pair',
+ 'If M is the midpoint of AB, then B = (2·Mx − Ax, 2·My − Ay).\nThink: the jump from A to M is repeated from M to B.',
+ d=>{ const ax=rnd(-8,8),ay=rnd(-8,8),bx=ax+2*nz(-5,5),by=ay+2*nz(-5,5), mx=(ax+bx)/2,my=(ay+by)/2;
+  return {type:'pair',vals:[bx,by],text:`M(${M(mx)}, ${M(my)}) is the midpoint of AB, and A = (${M(ax)}, ${M(ay)}). Find B.`, answers:[pairS(bx,by)], wrong:[pairS((ax+mx)/2,(ay+my)/2), pairS(mx-ax,my-ay), pairS(2*ax-mx,2*ay-my)],
+    hint:`From A to M: x changes by ${M(mx-ax)}, y changes by ${M(my-ay)}\nDo it again from M: B = (${M(mx)} ${mx-ax<0?'−':'+'} ${Math.abs(mx-ax)}, ${M(my)} ${my-ay<0?'−':'+'} ${Math.abs(my-ay)}) = ${pairS(bx,by)}`} });
+add('g1','distance','Distance Formula','rad',
+ 'd = √((x₂ − x₁)² + (y₂ − y₁)²) — it is the Pythagorean theorem on the grid.\nSimplify the square root (type √ as sqrt).',
+ d=>{ let dx,dy; if(d==='easy'){ [dx,dy]=pick([[3,4],[6,8],[5,12],[8,15],[4,3],[12,5]]) } else { dx=rnd(1,9); dy=rnd(1,9) }
+  const x1=rnd(-7,5),y1=rnd(-7,5),sx=pick([1,-1]),sy=pick([1,-1]),x2=x1+sx*dx,y2=y1+sy*dy, s2=dx*dx+dy*dy, ans=rad(s2);
+  return {type:'rad',text:`Find the distance between (${M(x1)}, ${M(y1)}) and (${M(x2)}, ${M(y2)}).`, answers:[ans], wrong:[String(dx+dy), rad(Math.abs(dx*dx-dy*dy)||2), String(s2)],
+    hint:`Δx = ${dx}, Δy = ${dy}\nd = √(${dx}² + ${dy}²) = √${s2}${ans!==('√'+s2)?' = '+ans:''}`} });
+add('g1','seg_add','Segment Addition','num',
+ 'Segment Addition Postulate: if B is between A and C, then AB + BC = AC.\nWrite the equation, solve for x, then answer what is asked.',
+ d=>{ const x=rnd(2,12); let a=rnd(1,5),b=nz(-6,9),c=rnd(1,5),e=nz(-6,9); if(a*x+b<=0||c*x+e<=0) return null;
+  const AB=a*x+b, BC=c*x+e, AC=AB+BC, askX=d==='easy';
+  const svg=segFig(['A','B','C'],[{w:AB,label:xe(a,b)},{w:BC,label:xe(c,e)}]);
+  return {svg,toScale:true,text:`B is between A and C. AB = ${xe(a,b)}, BC = ${xe(c,e)}, and AC = ${AC}.\nFind ${askX?'x':'BC'}.`, answers:[askX?x:BC], wrong:askX?[AC-b-e, x+1, Math.round(AC/(a+c))===x?x-1:Math.round(AC/(a+c))]:[AB, x, AC-x],
+    hint:`AB + BC = AC\n${xe(a,b)} + ${xe(c,e)} = ${AC}\n${xe(a+c,b+e)} = ${AC} → x = ${x}${askX?'':`\nBC = ${c}(${x}) ${e<0?'−':'+'} ${Math.abs(e)} = ${BC}`}`} });
+add('g1','angle_add','Angle Addition','num',
+ 'Angle Addition Postulate: if point D is in the interior of ∠ABC, then m∠ABD + m∠DBC = m∠ABC.',
+ d=>{ const x=rnd(3,15); let a=rnd(1,5),b=rnd(-5,15),c=rnd(1,5),e=rnd(-5,15); const A1=a*x+b, A2=c*x+e; if(A1<15||A2<15||A1+A2>150) return null;
+  const tot=A1+A2, askX=d!=='hard';
+  return {svg:raysFig([A1,A2],[`(${xe(a,b)})°`,`(${xe(c,e)})°`],['B','A','D','C']),toScale:true,text:`m∠ABD = (${xe(a,b)})°, m∠DBC = (${xe(c,e)})°, and m∠ABC = ${tot}°.\nFind ${askX?'x':'m∠ABD'}.`, answers:[askX?x:A1], wrong:askX?[tot-b-e,x+2,x-1]:[A2,x,tot-x],
+    hint:`m∠ABD + m∠DBC = m∠ABC\n${xe(a+c,b+e)} = ${tot} → x = ${x}${askX?'':`\nm∠ABD = ${a}(${x}) ${b<0?'−':'+'} ${Math.abs(b)} = ${A1}°`}`} });
+add('g1','comp_supp','Complementary & Supplementary','num',
+ 'Complementary angles add to 90°. Supplementary angles add to 180°.\nComplement of 35° = 55°; supplement of 35° = 145°.',
+ d=>{ const sup=Math.random()<.5, T_=sup?180:90;
+  if(d==='easy'){ const a=rnd(5,T_-5); return {text:`What is the ${sup?'supplement':'complement'} of a ${a}° angle?`, answers:[T_-a], wrong:[(sup?90:180)-a>0?(sup?90:180)-a:a+90, a, 360-a], hint:`${sup?'Supplementary':'Complementary'} angles add to ${T_}°.\n${T_} − ${a} = ${T_-a}°`} }
+  const x=rnd(5,30), k=rnd(2,4), b=d==='hard'?nz(-10,10):0; // angle = x, other = kx + b
+  const X=(T_-b)/(k+1); if(!isInt(X)||X<=0||k*X+b<=0) return null;
+  return {text:`Two angles are ${sup?'supplementary':'complementary'}. One angle is ${b===0?k+' times':''}${b===0?' the other':`${b>0?b+'° more':Math.abs(b)+'° less'} than ${k} times the other`}. Find the smaller angle.`, answers:[Math.min(X,k*X+b)], wrong:[Math.max(X,k*X+b), (sup?90:180)/(k+1)|0, T_-X], hint:`Let the other angle be x: x + (${k}x ${b<0?'−':'+'} ${Math.abs(b)}) = ${T_}\n${k+1}x = ${T_-b} → x = ${X}\nThe angles are ${X}° and ${k*X+b}°.`} });
+
+/* ================= Chapter 2: Reasoning ================= */
+add('g2','pattern','Patterns & Inductive Reasoning','num',
+ 'Inductive reasoning: find the rule from examples, then predict.\nCheck differences (add the same?) or ratios (multiply the same?).\nIf the differences change, look at the differences of the differences.',
+ d=>{ let seq,next,rule;
+  if(d==='easy'){ const a=rnd(-10,20),k=nz(-9,9); seq=[0,1,2,3,4].map(i=>a+k*i); next=a+5*k; rule=`add ${M(k)} each time` }
+  else if(d==='medium'){ const a=rnd(1,5),r=pick([2,3,-2]); seq=[0,1,2,3].map(i=>a*Math.pow(r,i)); next=a*Math.pow(r,4); rule=`multiply by ${M(r)} each time` }
+  else { const a=rnd(1,5),b=rnd(1,4),c=pick([1,2]); seq=[0,1,2,3,4].map(i=>a+b*i+c*i*(i-1)/2); next=a+5*b+c*10; rule=`the differences grow by ${c} each time` }
+  return {text:`Find the next number:\n  ${seq.map(M).join(', ')}, …`, answers:[next], wrong:[2*seq[seq.length-1]-seq[seq.length-2], next+1, seq[seq.length-1]+seq[0]], hint:`Rule: ${rule}.\nNext: ${M(next)}`} });
+const CONDS=[['∠A and ∠B are vertical angles','∠A and ∠B are congruent','∠A and ∠B are not vertical angles','∠A and ∠B are not congruent'],
+ ['polygon P is a triangle','polygon P has three sides','polygon P is not a triangle','polygon P does not have three sides'],
+ ['m∠A = 90°','∠A is a right angle','m∠A ≠ 90°','∠A is not a right angle'],
+ ['n is divisible by 4','n is even','n is not divisible by 4','n is not even'],
+ ['lines ℓ and m are perpendicular','lines ℓ and m form right angles','lines ℓ and m are not perpendicular','lines ℓ and m do not form right angles'],
+ ['ABCD is a square','ABCD is a rectangle','ABCD is not a square','ABCD is not a rectangle'],
+ ['you live in Irvine','you live in California','you do not live in Irvine','you do not live in California']];
+add('g2','conditional','Converse, Inverse, Contrapositive','text',
+ 'Conditional: If p, then q.\nConverse: If q, then p.      Inverse: If not p, then not q.\nContrapositive: If not q, then not p — always has the same truth value as the conditional.',
+ d=>{ const [p,q,np,nq]=pick(CONDS), kind=pick(['converse','inverse','contrapositive']);
+  const form={converse:`If ${q}, then ${p}.`,inverse:`If ${np}, then ${nq}.`,contrapositive:`If ${nq}, then ${np}.`}[kind];
+  const Name=k=>k[0].toUpperCase()+k.slice(1);
+  return {type:'text',text:`Conditional: "If ${p}, then ${q}."\nWhich statement is this?\n  "${form}"`, answers:[kind,`the ${kind}`], mcAns:Name(kind), wrong:['Converse','Inverse','Contrapositive','Biconditional'].filter(w=>w!==Name(kind)), fmt:'converse, inverse, or contrapositive',
+    hint:`${kind==='converse'?'The parts are swapped but not negated':kind==='inverse'?'Both parts are negated but not swapped':'The parts are swapped AND negated'} → ${kind}.`} });
+add('g2','vertical','Vertical Angles','num',
+ 'Vertical angles are opposite each other where two lines cross. They are CONGRUENT.\nSet the expressions equal and solve.',
+ d=>{ const x=rnd(4,20); let a,b,c,e; do{ a=rnd(2,6); c=rnd(1,a-1||1); b=rnd(-10,20); e=(a-c)*x+b }while(a===c); const ang=a*x+b; if(ang<20||ang>160) return null;
+  const ask=d==='easy'?'x':'the angle';
+  return {svg:crossFig([`(${xe(a,b)})°`,'',`(${xe(c,e)})°`,''],ang),toScale:true,text:`The two marked angles are vertical angles:\n(${xe(a,b)})° and (${xe(c,e)})°. Find ${ask==='x'?'x':'the measure of each angle'}.`, answers:[ask==='x'?x:ang], wrong:ask==='x'?[x+1,(180-b-e)/(a+c)|0||x+2,ang]:[180-ang,x,ang+a],
+    hint:`Vertical angles are congruent:\n${xe(a,b)} = ${xe(c,e)}\n${a-c===1?'':a-c}x = ${e-b} → x = ${x}${ask==='x'?'':`\nAngle = ${a}(${x}) ${b<0?'−':'+'} ${Math.abs(b)} = ${ang}°`}`} });
+add('g2','linear_pair','Linear Pairs','num',
+ 'A linear pair is two adjacent angles that form a straight line. They are SUPPLEMENTARY (add to 180°).',
+ d=>{ const x=rnd(4,25); let a=rnd(1,5),b=rnd(-10,20),c=rnd(1,5),e; const A1=a*x+b; e=180-A1-c*x; const A2=c*x+e; if(A1<20||A2<20) return null;
+  return {svg:crossFig([`(${xe(a,b)})°`,`(${xe(c,e)})°`,'',''],A1),toScale:true,text:`The two marked angles form a linear pair:\n(${xe(a,b)})° and (${xe(c,e)})°. Find ${d==='easy'?'x':'the larger angle'}.`, answers:[d==='easy'?x:Math.max(A1,A2)], wrong:d==='easy'?[x+2,(180+b+e)/(a+c)|0||x-1,A1]:[Math.min(A1,A2),x,180-x],
+    hint:`A linear pair adds to 180°:\n(${xe(a,b)}) + (${xe(c,e)}) = 180\n${xe(a+c,b+e)} = 180 → x = ${x}\nAngles: ${A1}° and ${A2}°`} });
+const SYL=[['If a figure is a square, then it has four right angles.','ABCD is a square.','ABCD has four right angles.',['ABCD is a rectangle.','ABCD has no right angles.','No conclusion is possible.']],
+ ['If it rains, then the game is canceled.','It is raining.','The game is canceled.',['It is not raining.','The game is played.','No conclusion is possible.']],
+ ['If an angle is acute, then it measures less than 90°.','∠Q measures 50°.','No conclusion is possible.',['∠Q is acute.','∠Q is obtuse.','∠Q measures 90°.']],
+ ['If two angles form a linear pair, then they are supplementary.','∠1 and ∠2 form a linear pair.','∠1 and ∠2 are supplementary.',['∠1 and ∠2 are congruent.','∠1 and ∠2 are complementary.','No conclusion is possible.']],
+ ['If a number ends in 0, then it is divisible by 5.','The number 85 is divisible by 5.','No conclusion is possible.',['85 ends in 0.','85 is not divisible by 5.','85 is divisible by 10.']]];
+add('g2','detachment','Deductive Reasoning','text',
+ 'Law of Detachment: if "p → q" is true and p is true, then q is true.\nCareful: if q is true, you CANNOT conclude p (that would be assuming the converse).',
+ d=>{ const [st,fact,concl,wr]=pick(SYL);
+  return {type:'text',mcOnly:true,text:`Given:\n  ${st}\n  ${fact}\nWhat can you conclude?`, answers:[concl], mcAns:concl, wrong:wr, hint:concl==='No conclusion is possible.'?'The fact matches the "then" part, not the "if" part — the Law of Detachment does not apply.':'The fact matches the "if" part, so the "then" part must be true.'} });
+
+/* ================= Chapter 3: Parallel lines ================= */
+const PAIRS={'corresponding angles':[[1,5],[2,6],[3,7],[4,8]],'alternate interior angles':[[3,6],[4,5]],'alternate exterior angles':[[1,8],[2,7]],'same-side interior angles':[[3,5],[4,6]],'vertical angles':[[1,4],[2,3],[5,8],[6,7]],'a linear pair':[[1,2],[1,3],[2,4],[3,4],[5,6],[5,7],[6,8],[7,8]]};
+const ACUTE=new Set([1,4,5,8]);
+add('g3','angle_pair','Name the Angle Pair','text',
+ 'Lines ℓ ∥ m cut by transversal t make 8 angles.\nCorresponding: same position at each crossing.   Alternate interior: between the lines, opposite sides of t.\nAlternate exterior: outside the lines, opposite sides.   Same-side interior: between the lines, same side of t.',
+ d=>{ const names=d==='easy'?['corresponding angles','alternate interior angles','vertical angles']:Object.keys(PAIRS); const name=pick(names), [p,q]=pick(PAIRS[name]);
+  const show={}; show[p]=String(p); show[q]=String(q);
+  return {type:'text',words:true,svg:parallelFig(show,rnd(55,72)),toScale:true,text:`ℓ ∥ m. What kind of angle pair are ∠${p} and ∠${q}?`, answers:[name.replace(/^a /,''),name,name.replace(/^a /,'').replace(/ angles$/,'')], mcAns:name[0].toUpperCase()+name.slice(1), wrong:Object.keys(PAIRS).filter(n=>n!==name).map(n=>n[0].toUpperCase()+n.slice(1)), fmt:'e.g. alternate interior',
+    hint:`Look at where each angle sits: ∠${p} is ${p<=4?'at the top crossing':'at the bottom crossing'}, ${[1,2,5,6].includes(p)?'above':'below'} its line, ${p%2?'left':'right'} of t; ∠${q} is ${q<=4?'at the top crossing':'at the bottom crossing'}, ${[1,2,5,6].includes(q)?'above':'below'} its line, ${q%2?'left':'right'} of t.\nAnswer: ${name}`} });
+add('g3','parallel_angle','Find an Angle (Parallel Lines)','num',
+ 'When ℓ ∥ m: corresponding, alternate interior, alternate exterior and vertical angles are CONGRUENT.\nSame-side interior angles and linear pairs are SUPPLEMENTARY.\nHere all the acute angles are equal and all the obtuse angles are equal.',
+ d=>{ const g=rnd(35,80), p=pick([1,2,3,4,5,6,7,8]); let q; do{ q=rnd(1,8) }while(q===p); const val=n=>ACUTE.has(n)?g:180-g;
+  const show={}; show[p]=val(p)+'°'; show[q]='?';
+  return {svg:parallelFig(show,g),toScale:true,text:`ℓ ∥ m and m∠${p} = ${val(p)}°. Find m∠${q}.`, answers:[val(q)], wrong:[180-val(q), 90-g>0?90-g:g+10, 360-val(q)], hint:`∠${p} is ${ACUTE.has(p)?'acute':'obtuse'}; ∠${q} is ${ACUTE.has(q)?'acute':'obtuse'}.\n${ACUTE.has(p)===ACUTE.has(q)?'Same type → congruent':'Different types → supplementary'}: m∠${q} = ${val(q)}°`} });
+add('g3','parallel_x','Solve for x (Parallel Lines)','num',
+ 'Decide first: are the two angles CONGRUENT (set equal) or SUPPLEMENTARY (add to 180)?\nThen solve the equation.',
+ d=>{ const g=rnd(40,80), x=rnd(4,20), name=pick(d==='easy'?['corresponding angles','alternate interior angles']:Object.keys(PAIRS).filter(n=>n!=='vertical angles')), [p,q]=pick(PAIRS[name]);
+  const vp=ACUTE.has(p)?g:180-g, vq=ACUTE.has(q)?g:180-g; const a=rnd(2,6), b=vp-a*x, c=rnd(1,5), e=vq-c*x; if(c===a&&vp===vq) return null;
+  const show={}; show[p]=`${xe(a,b)}`; show[q]=`${xe(c,e)}`; const cong=vp===vq;
+  return {svg:parallelFig(show,g),toScale:true,text:`ℓ ∥ m. m∠${p} = (${xe(a,b)})° and m∠${q} = (${xe(c,e)})°. Find x.`, answers:[x], wrong:[cong?(180-b-e)/(a+c):(e-b)/(a-c||1), x+3, vp].map(v=>isInt(v)?v:r1(v)),
+    hint:`∠${p} and ∠${q} are ${name} → ${cong?'congruent':'supplementary'}.\n${cong?`${xe(a,b)} = ${xe(c,e)}`:`${xe(a,b)} + ${xe(c,e)} = 180`}\nx = ${x}`} });
+add('g3','slopes_pp','Parallel, Perpendicular, or Neither?','text',
+ 'Parallel lines have EQUAL slopes.\nPerpendicular lines have slopes that multiply to −1 (opposite reciprocals).\nOtherwise: neither.',
+ d=>{ const p=nz(-5,5), q=pick([1,2,3]), kind=pick(['parallel','perpendicular','neither']); let p2,q2; if(kind==='parallel'){ p2=p*2; q2=q*2 } else if(kind==='perpendicular'){ p2=-q; q2=p } else { p2=p+pick([1,-1]); q2=q; if(p2*p===-q*q2) p2+=1 }
+  const sl=(n,dd)=>fr(n,dd);
+  const L1=d==='easy'?`y = ${FX(p,q)} + ${rnd(1,9)}`:`slope of line 1 = ${sl(p,q)}`, L2=d==='easy'?`y = ${FX(p2,q2)} − ${rnd(1,9)}`:`slope of line 2 = ${sl(p2,q2)}`;
+  return {type:'text',text:`Are the lines parallel, perpendicular, or neither?\n  ${L1}\n  ${L2}`, answers:[kind], mcAns:kind[0].toUpperCase()+kind.slice(1), wrong:['Parallel','Perpendicular','Neither','Both parallel and perpendicular'].filter(w=>w.toLowerCase()!==kind), fmt:'parallel, perpendicular, or neither',
+    hint:`Slopes: ${sl(p,q)} and ${sl(p2,q2)}\n${kind==='parallel'?'Equal slopes → parallel':kind==='perpendicular'?`Product = ${sl(p*p2,q*q2)} = −1 → perpendicular`:'Not equal, product ≠ −1 → neither'}`} });
+add('g3','perp_slope','Perpendicular Slope','num',
+ 'To get the perpendicular slope: flip the fraction and change the sign.\n2/3 → −3/2,   −4 → 1/4,   1 → −1.',
+ d=>{ const p=nz(-6,6), q=R(d,1,pick([1,2,3]),pick([2,3,4,5])); if(gcd(p,q)!==1) return null; const ans=fr(-q,p);
+  return {text:`A line has slope ${fr(p,q)}. What is the slope of a line perpendicular to it?`, answers:[ans], wrong:[fr(q,p), fr(-p,q), fr(p,q)], hint:`Flip ${fr(p,q)} → ${fr(q,p)}, then change the sign → ${ans}`} });
+
+/* ================= Chapter 4: Congruent triangles ================= */
+add('g4','tri_sum','Triangle Angle Sum','num',
+ 'The three angles of any triangle add to 180°.',
+ d=>{ let A=rnd(25,95),B=rnd(25,95); if(A+B>155) return null; const C=180-A-B;
+  if(d==='hard'){ const x=rnd(5,20),a=rnd(2,5),b=A-a*x; const c=rnd(1,4),e=B-c*x; return {svg:triFig(triPts(A,B),{v:['A','B','C'],a:[`(${xe(a,b)})°`,`(${xe(c,e)})°`,`${C}°`]}),toScale:true,text:`In △ABC, m∠A = (${xe(a,b)})°, m∠B = (${xe(c,e)})°, m∠C = ${C}°. Find x.`, answers:[x], wrong:[x+2,(180-b-e)/(a+c)|0===x?x-1:(180-b-e)/(a+c)|0,A], hint:`${xe(a,b)} + ${xe(c,e)} + ${C} = 180\n${xe(a+c,b+e+C)} = 180 → x = ${x}`} }
+  return {svg:triFig(triPts(A,B),{v:['A','B','C'],a:[`${A}°`,`${B}°`,'?']}),toScale:true,text:`In △ABC, m∠A = ${A}° and m∠B = ${B}°. Find m∠C.`, answers:[C], wrong:[360-A-B, 90-Math.abs(A-B), A+B], hint:`${A} + ${B} + m∠C = 180\nm∠C = 180 − ${A+B} = ${C}°`} });
+add('g4','ext_angle','Exterior Angle Theorem','num',
+ 'An exterior angle equals the SUM of the two remote interior angles (the two not next to it).\nIt is also supplementary to the adjacent interior angle.',
+ d=>{ const A=rnd(30,75), B=rnd(40,100), C=180-A-B; if(C<25) return null; const ext=A+C;  // exterior angle at B
+  const R0=triPts(A,B), all=fit([...R0,[1.6,0]],320,210,40), P=all.slice(0,3), X=all[3];
+  const lab=(L1,L3,Le)=>svgWrap(triSVG(P,{v:['A','B','C'],a:[L1,'',L3]})+ln(P[1],X)+arcAt(P[1],X,P[2],18,1,FIG.mark)+tx(...V.add(V.mid(P[1],X),[6,-18]),Le,{c:FIG.acc,b:true,fs:13}));
+  if(d==='easy') return {svg:lab(`${A}°`,`${C}°`,'?'),toScale:true,text:`m∠A = ${A}° and m∠C = ${C}°. Find the exterior angle at B.`, answers:[ext], wrong:[180-ext,B,180-A], hint:`Exterior angle = sum of the remote interior angles\n= ${A} + ${C} = ${ext}°`};
+  if(d==='medium') return {svg:lab(`${A}°`,'?',`${ext}°`),toScale:true,text:`The exterior angle at B is ${ext}° and m∠A = ${A}°. Find m∠C.`, answers:[C], wrong:[180-ext,ext+A,B], hint:`${ext} = ${A} + m∠C\nm∠C = ${ext} − ${A} = ${C}°`};
+  const x=rnd(4,15), a=rnd(2,5), b=ext-a*x;
+  return {svg:lab(`${A}°`,`${C}°`,`(${xe(a,b)})°`),toScale:true,text:`The exterior angle at B is (${xe(a,b)})°, m∠A = ${A}°, and m∠C = ${C}°. Find x.`, answers:[x], wrong:[x+2,(180-b)%a===0?(180-b)/a:x-1,ext], hint:`${xe(a,b)} = ${A} + ${C} = ${ext}\n${a}x = ${ext-b} → x = ${x}`} });
+add('g4','isosceles','Isosceles Triangles','num',
+ 'Isosceles Triangle Theorem: the angles opposite the two congruent sides (the base angles) are congruent.\nVertex angle + 2 × base angle = 180°.',
+ d=>{ const base=rnd(25,80), vert=180-2*base, P=triPts(base,base);
+  if(d==='easy') return {svg:triFig(P,{v:['A','B','C'],t:[0,1,1],a:[`${base}°`,'?','']}),toScale:true,text:`AC = BC. m∠A = ${base}°. Find m∠B.`, answers:[base], wrong:[vert,180-base,90-base], hint:`The congruent sides are AC and BC, so the base angles ∠A and ∠B are congruent.\nm∠B = ${base}°`};
+  if(d==='medium') return {svg:triFig(P,{v:['A','B','C'],t:[0,1,1],a:['','',`${vert}°`]}),toScale:true,text:`AC = BC and the vertex angle ∠C measures ${vert}°. Find m∠A.`, answers:[base], wrong:[vert,180-vert,180-base],
+    hint:`Base angles are equal: 2·m∠A + ${vert} = 180\nm∠A = (180 − ${vert})/2 = ${base}°`};
+  const x=rnd(5,20),a=rnd(2,5),b=base-a*x;
+  return {svg:triFig(P,{v:['A','B','C'],t:[0,1,1],a:[`(${xe(a,b)})°`,`${base}°`,'']}),toScale:true,text:`AC = BC. m∠A = (${xe(a,b)})° and m∠B = ${base}°. Find x.`, answers:[x], wrong:[x+2,(180-b)/a|0||x-1,base], hint:`Base angles are congruent: ${xe(a,b)} = ${base}\n${a}x = ${base-b} → x = ${x}`} });
+const CRIT={SSS:{t:[1,2,3],arcs:[0,0,0]},SAS:{t:[1,2,0],arcs:[0,1,0]},ASA:{t:[1,0,0],arcs:[1,2,0]},AAS:{t:[0,1,0],arcs:[1,2,0]},HL:{t:[1,0,2],arcs:[0,0,0],right:1},SSA:{t:[1,2,0],arcs:[1,0,0]},AAA:{t:[0,0,0],arcs:[1,2,3]}};
+add('g4','congruence','Which Congruence Rule?','text',
+ 'Triangles are congruent by SSS, SAS (angle BETWEEN the sides), ASA (side BETWEEN the angles), AAS, or HL (right triangles).\nSSA and AAA do NOT prove congruence.',
+ d=>{ const pool=d==='easy'?['SSS','SAS','ASA']:['SSS','SAS','ASA','AAS','HL','SSA','AAA']; const k=pick(pool), c=CRIT[k];
+  const A=k==='HL'?rnd(30,60):rnd(40,75), B=k==='HL'?90:rnd(40,70), P=triPts(A,B), Q=P.map(p=>[-p[0],p[1]]);
+  const valid=!['SSA','AAA'].includes(k), ans=valid?k:'not enough information';
+  return {type:'text',svg:twoTriFig(P,{t:c.t,arcs:c.arcs,right:c.right,v:['A','B','C']},{mirror:true,t:c.t,arcs:c.arcs,right:c.right,v:['D','E','F']}),toScale:true,
+    text:`The marks show which parts are congruent. Which rule proves △ABC ≅ △DEF?`, answers:valid?[k]:['not enough information','none','not enough info','cannot be determined'], mcAns:valid?k:'Not enough information',
+    wrong:distinct(valid?k:'Not enough information',['SSS','SAS','ASA','AAS','HL','Not enough information'].filter(w=>w!==(valid?k:'Not enough information'))), fmt:'SSS, SAS, ASA, AAS, HL, or "not enough information"',
+    hint:`Marked: ${c.t.filter(Boolean).length} pairs of sides, ${c.arcs.filter(Boolean).length+(c.right!=null?1:0)} pair(s) of angles${c.right!=null?' (a right angle)':''}.\n${{SSS:'Three pairs of sides → SSS',SAS:'Two sides and the angle between them → SAS',ASA:'Two angles and the side between them → ASA',AAS:'Two angles and a side that is not between them → AAS',HL:'Right triangles with hypotenuse and a leg → HL',SSA:'Two sides and an angle NOT between them (SSA) does not prove congruence',AAA:'Three angles (AAA) only proves the shapes are similar, not congruent'}[k]}\nAnswer: ${ans}`} });
+add('g4','cpctc','Corresponding Parts','text',
+ 'In △ABC ≅ △DEF the ORDER of the letters tells which parts match:\nA ↔ D, B ↔ E, C ↔ F, so AB ≅ DE, BC ≅ EF, ∠C ≅ ∠F.\nCPCTC: Corresponding Parts of Congruent Triangles are Congruent.',
+ d=>{ const L1=shuffle(['A','B','C']), L2=shuffle(['P','Q','R']), map={}; L1.forEach((l,i)=>map[l]=L2[i]);
+  const askSide=Math.random()<.6, i=rnd(0,2), j=(i+1)%3;
+  const q=askSide?`${L1[i]}${L1[j]}`:`∠${L1[i]}`, ans=askSide?`${L2[i]}${L2[j]}`:`∠${L2[i]}`, alt=askSide?`${L2[j]}${L2[i]}`:L2[i];
+  const wr=askSide?[`${L2[j]}${L2[(j+1)%3]}`,`${L2[(i+2)%3]}${L2[i]}`,`${L2[(i+1)%3]}${L2[(i+2)%3]}`,`${L1[j]}${L1[(j+1)%3]}`]:[`∠${L2[j]}`,`∠${L2[(i+2)%3]}`,`∠${L1[j]}`];
+  return {type:'text',text:`△${L1.join('')} ≅ △${L2.join('')}. Which part is congruent to ${q}?`, answers:[ans,alt,ans.replace('∠','angle ')], wrong:wr, fmt:askSide?'a side, e.g. QR':'an angle, e.g. ∠Q (or just Q)',
+    hint:`Match letters by position: ${L1.map((l,k)=>`${l} ↔ ${L2[k]}`).join(', ')}\n${q} ↔ ${ans}`} });
+
+/* ================= Chapter 5: Within triangles ================= */
+add('g5','midsegment','Midsegment Theorem','num',
+ 'A midsegment joins the midpoints of two sides of a triangle.\nIt is PARALLEL to the third side and HALF as long.',
+ d=>{ const side=2*rnd(4,15);
+  if(d!=='hard'){ const askSide=d==='medium'; const P=fit(triPts(rnd(45,75),rnd(45,70))); const M1=V.mid(P[0],P[2]), M2=V.mid(P[1],P[2]);
+    const svg=svgWrap(triSVG(P,{v:['A','B','C'],s:[askSide?'?':String(side),'','']})+ln(M1,M2,{c:FIG.acc})+dot(M1)+dot(M2)+tx(M1[0]-12,M1[1],'D',{i:true})+tx(M2[0]+12,M2[1],'E',{i:true})+tx(V.mid(M1,M2)[0],V.mid(M1,M2)[1]-12,askSide?String(side/2):'?',{c:FIG.acc,b:true,fs:13}));
+    return {svg,toScale:true,text:`D and E are the midpoints of AC and BC. ${askSide?`DE = ${side/2}. Find AB.`:`AB = ${side}. Find DE.`}`, answers:[askSide?side:side/2], wrong:askSide?[side/2,side/4,side+side/2]:[side,side*2,side/4], hint:`Midsegment = ½ × third side.\n${askSide?`AB = 2 × ${side/2} = ${side}`:`DE = ½ × ${side} = ${side/2}`}`} }
+  const x=rnd(2,10), a=rnd(1,4), b=rnd(1,9), ms=a*x+b, c=2*a+rnd(1,3)-0, e=2*ms-c*x; // AB = cx + e = 2(ax + b)
+  if(c===2*a) return null;
+  return {text:`DE is a midsegment of △ABC parallel to AB. DE = ${xe(a,b)} and AB = ${xe(c,e)}. Find x.`, answers:[x], wrong:[x+1,(e-b)/(a-c)|0||x+2,ms], hint:`AB = 2 · DE\n${xe(c,e)} = 2(${xe(a,b)}) = ${xe(2*a,2*b)}\nx = ${x}`} });
+add('g5','tri_ineq','Triangle Inequality','ineq',
+ 'Any two sides of a triangle add to MORE than the third side.\nIf two sides are a and b, the third side x satisfies |a − b| < x < a + b.',
+ d=>{ const a=rnd(3,15), b=rnd(3,15); if(a===b&&d!=='easy') return null; const lo=Math.abs(a-b), hi=a+b, ans=`${lo} < x < ${hi}`;
+  return {type:'ineq',text:`Two sides of a triangle are ${a} and ${b}. Write an inequality for the possible lengths x of the third side.`, answers:[ans], wrong:[`${lo} ≤ x ≤ ${hi}`,`x < ${hi}`,`${Math.min(a,b)} < x < ${Math.max(a,b)}`].map(w=>w===ans?`0 < x < ${hi}`:w), fmt:'e.g. 3 < x < 11',
+    hint:`Larger than the difference: ${Math.max(a,b)} − ${Math.min(a,b)} = ${lo}\nSmaller than the sum: ${a} + ${b} = ${hi}\n${ans}`} });
+add('g5','side_angle','Biggest Side ↔ Biggest Angle','text',
+ 'In a triangle, the LONGEST side is opposite the LARGEST angle, and the shortest side is opposite the smallest angle.',
+ d=>{ let A,B,C; do{ A=rnd(30,100); B=rnd(30,100); C=180-A-B }while(C<20||new Set([A,B,C]).size<3||Math.min(Math.abs(A-B),Math.abs(B-C),Math.abs(A-C))<8);
+  const angs={A,B,C}, opp={A:'BC',B:'AC',C:'AB'}, big=Object.keys(angs).reduce((x,y)=>angs[x]>angs[y]?x:y), small=Object.keys(angs).reduce((x,y)=>angs[x]<angs[y]?x:y), askLong=Math.random()<.5;
+  const want=askLong?opp[big]:opp[small], rev=want.split('').reverse().join('');
+  return {type:'text',svg:triFig(triPts(A,B),{v:['A','B','C'],a:[`${A}°`,`${B}°`,`${C}°`]}),toScale:true,text:`In △ABC, m∠A = ${A}°, m∠B = ${B}°, m∠C = ${C}°. Which side is the ${askLong?'longest':'shortest'}?`, answers:[want,rev], wrong:Object.values(opp).filter(s=>s!==want).concat(['They are all equal']), fmt:'a side, e.g. AB',
+    hint:`The ${askLong?'largest':'smallest'} angle is ∠${askLong?big:small} (${angs[askLong?big:small]}°).\nThe side opposite it is ${want}.`} });
+add('g5','centroid','Centroid (Medians)','num',
+ 'The medians of a triangle meet at the centroid G.\nG is 2/3 of the way from each vertex: AG = 2·GM, and AM = 3·GM.',
+ d=>{ const gm=rnd(2,12), ag=2*gm, am=3*gm, kind=R(d,'AG',pick(['GM','AM']),'x');
+  if(kind==='x'){ const x=rnd(2,9),a=rnd(1,3),b=rnd(1,9); const g_=a*x+b, c=2*a, e=2*b; const k=rnd(1,2); // AG = 2·GM
+    return {text:`G is the centroid of △ABC and AM is a median. GM = ${xe(a,b)} and AG = ${xe(c+k,e-k*x)}. Find x.`, answers:[x], wrong:[x+1,x*2,g_], hint:`AG = 2 · GM\n${xe(c+k,e-k*x)} = 2(${xe(a,b)}) = ${xe(c,e)}\nx = ${x}`} }
+  return {text:`G is the centroid of △ABC and AM is a median. ${kind==='AG'?`GM = ${gm}. Find AG.`:kind==='GM'?`AG = ${ag}. Find GM.`:`GM = ${gm}. Find AM.`}`, answers:[kind==='AG'?ag:kind==='GM'?gm:am], wrong:kind==='AG'?[gm,am,gm/2]:kind==='GM'?[ag,ag*2,am]:[ag,gm*2+1,gm*4], hint:`Centroid splits each median 2 : 1 (vertex side is longer).\nAG = 2·GM, AM = 3·GM.`} });
+add('g5','perp_bis','Perpendicular Bisectors','num',
+ 'Any point on the perpendicular bisector of a segment is EQUIDISTANT from the segment’s endpoints.\nIf P is on the perpendicular bisector of AB, then PA = PB.',
+ d=>{ const x=rnd(2,12); let a,b,c,e; do{ a=rnd(2,7); c=rnd(1,a-1||1); b=rnd(-5,12); e=(a-c)*x+b }while(a===c||a*x+b<=0);
+  return {text:`P lies on the perpendicular bisector of AB. PA = ${xe(a,b)} and PB = ${xe(c,e)}. Find ${d==='easy'?'x':'PA'}.`, answers:[d==='easy'?x:a*x+b], wrong:d==='easy'?[x+1,(e+b)/(a+c)|0||x+2,a*x+b]:[x,2*(a*x+b),a*x+b+a], hint:`PA = PB: ${xe(a,b)} = ${xe(c,e)}\nx = ${x}${d==='easy'?'':`\nPA = ${a}(${x}) ${b<0?'−':'+'} ${Math.abs(b)} = ${a*x+b}`}`} });
+
+/* ================= Chapter 6: Polygons ================= */
+const PN={3:'triangle',4:'quadrilateral',5:'pentagon',6:'hexagon',7:'heptagon',8:'octagon',9:'nonagon',10:'decagon',12:'dodecagon'};
+add('g6','int_sum','Interior Angle Sum','num',
+ 'Sum of interior angles of an n-gon: (n − 2) · 180°.\nTriangle 180°, quadrilateral 360°, pentagon 540°, hexagon 720°.',
+ d=>{ const n=R(d,pick([4,5,6]),pick([7,8,9,10,12]),rnd(5,10)); const S_=(n-2)*180;
+  if(d==='hard'){ const ang=[...Array(n-1)].map(()=>rnd(100,160)); const last=S_-ang.reduce((a,b)=>a+b,0); if(last<60||last>178) return null;
+    return {text:`A ${PN[n]||n+'-gon'} has ${n-1} angles measuring ${ang.join('°, ')}°. Find the last angle.`, answers:[last], wrong:[360-ang.slice(0,3).reduce((a,b)=>a+b,0)%180+last%7||last+20, last+180, 360-last].filter(v=>v>0), hint:`Total: (${n} − 2) · 180 = ${S_}°\n${S_} − ${ang.reduce((a,b)=>a+b,0)} = ${last}°`} }
+  return {svg:polyFig(n),toScale:true,text:`Find the sum of the interior angles of a ${PN[n]}.`, answers:[S_], wrong:[n*180,(n-1)*180,360], hint:`(n − 2) · 180 = (${n} − 2) · 180 = ${S_}°`} });
+add('g6','reg_int','Regular Polygon Angles','num',
+ 'Regular polygon: all angles equal.\nEach interior angle = (n − 2) · 180° / n.   Each exterior angle = 360° / n.\nInterior + exterior = 180°.',
+ d=>{ const n=pick([3,4,5,6,8,9,10,12]), ext=360/n, int=180-ext;
+  if(d==='easy') return {svg:polyFig(n,'?'),toScale:true,text:`Find the measure of each interior angle of a regular ${PN[n]}.`, answers:[int], wrong:[ext,(n-2)*180,int+ext/2], hint:`Sum = (${n} − 2) · 180 = ${(n-2)*180}°\nEach = ${(n-2)*180} ÷ ${n} = ${int}°`};
+  if(d==='medium') return {svg:polyFig(n),toScale:true,text:`Find the measure of each exterior angle of a regular ${PN[n]}.`, answers:[ext], wrong:[int,360,180/n|0||ext+5], hint:`Exterior angles always add to 360°.\n360 ÷ ${n} = ${ext}°`};
+  const askInt=Math.random()<.5;
+  return {text:`Each ${askInt?'interior':'exterior'} angle of a regular polygon measures ${askInt?int:ext}°. How many sides does it have?`, answers:[n], wrong:[n+1,n-1,Math.round(360/(askInt?int:ext+1))===n?n+2:Math.round(360/(askInt?int:ext+1))], hint:`${askInt?`Exterior angle = 180 − ${int} = ${ext}°\n`:''}n = 360 ÷ ${ext} = ${n}`} });
+add('g6','parallelogram','Parallelogram Properties','num',
+ 'In a parallelogram: opposite sides are congruent, opposite angles are congruent,\nconsecutive angles are supplementary, and the diagonals BISECT each other.',
+ d=>{ const x=rnd(3,15), kind=R(d,'side',pick(['angle','cons']),'diag'); const P=[[0,0],[5,0],[6.6,-3],[1.6,-3]];
+  if(kind==='side'){ let a,b,c,e; do{ a=rnd(2,6); c=rnd(1,a-1||1); b=rnd(-5,10); e=(a-c)*x+b }while(a===c||a*x+b<=0);
+    return {notToScale:true,svg:quadFig(P,{v:['A','B','C','D'],s:[xe(a,b),'',xe(c,e),'']}),text:`ABCD is a parallelogram. AB = ${xe(a,b)} and CD = ${xe(c,e)}. Find x.`, answers:[x], wrong:[x+1,(180-b-e)/(a+c)|0||x+3,a*x+b], hint:`Opposite sides are congruent: ${xe(a,b)} = ${xe(c,e)}\nx = ${x}`} }
+  if(kind==='angle'||kind==='cons'){ const A=rnd(55,80); const a=rnd(2,5), b=A-a*x; const other=kind==='angle'?A:180-A, c=rnd(1,4), e=other-c*x;
+    return {notToScale:true,svg:quadFig(P,{v:['A','B','C','D'],a:[`(${xe(a,b)})°`,kind==='cons'?`(${xe(c,e)})°`:'',kind==='angle'?`(${xe(c,e)})°`:'','']}),text:`ABCD is a parallelogram. m∠A = (${xe(a,b)})° and m∠${kind==='angle'?'C':'B'} = (${xe(c,e)})°. Find x.`, answers:[x], wrong:[x+2,kind==='angle'?(180-b-e)/(a+c)|0||x-1:(e-b)/(a-c||1)|0||x+1,A],
+      hint:`∠A and ∠${kind==='angle'?'C':'B'} are ${kind==='angle'?'opposite → congruent':'consecutive → supplementary'}.\n${kind==='angle'?`${xe(a,b)} = ${xe(c,e)}`:`${xe(a,b)} + ${xe(c,e)} = 180`}\nx = ${x}`} }
+  const a=rnd(1,4),b=rnd(1,9),h=a*x+b,c=rnd(1,3),e=h-c*x;
+  return {notToScale:true,svg:quadFig(P,{v:['A','B','C','D'],diag:true}),text:`ABCD is a parallelogram with diagonals meeting at E. AE = ${xe(a,b)} and EC = ${xe(c,e)}. Find AC.`, answers:[2*h], wrong:[h,x,2*h+2], hint:`Diagonals bisect each other: AE = EC\n${xe(a,b)} = ${xe(c,e)} → x = ${x}\nAE = ${h}, so AC = 2 · ${h} = ${2*h}`} });
+add('g6','trap_mid','Trapezoid Midsegment','num',
+ 'The midsegment of a trapezoid is parallel to the bases and its length is the AVERAGE of the bases:\nmidsegment = (base₁ + base₂) / 2.',
+ d=>{ const b1=rnd(4,20), b2=b1+2*rnd(1,8), m=(b1+b2)/2;
+  const svg=quadFig([[0,0],[b2,0],[b2-(b2-b1)/2,-6],[(b2-b1)/2,-6]],{s:[d==='medium'?'?':String(b2),'',String(b1),'']});
+  if(d==='medium') return {svg,text:`A trapezoid has a midsegment of ${m} and one base of ${b1}. Find the other base.`, answers:[b2], wrong:[m-b1+m>0?m+b1:b2+1,2*m+b1,m-b1], hint:`(${b1} + b) / 2 = ${m}\n${b1} + b = ${2*m} → b = ${b2}`};
+  if(d==='hard'){ const x=rnd(2,8),a=rnd(1,4),c=rnd(1,4),B1=a*x+b1,B2=c*x+b2; const M_=(B1+B2)/2; if(!isInt(M_)) return null; const p=rnd(1,a+c), q=M_-p*x; if(p===a||p===c) return null;
+    return {text:`A trapezoid has bases ${xe(a,b1)} and ${xe(c,b2)}, and midsegment ${xe(p,q)}. Find x.`, answers:[x], wrong:[x+1,x*2,M_], hint:`(${xe(a,b1)} + ${xe(c,b2)}) / 2 = ${xe(p,q)}\n${xe(a+c,b1+b2)} = ${xe(2*p,2*q)}\nx = ${x}`} }
+  return {svg,text:`The bases of a trapezoid are ${b1} and ${b2}. Find the length of the midsegment.`, answers:[m], wrong:[b1+b2,b2-b1,(b2-b1)/2], hint:`(${b1} + ${b2}) / 2 = ${m}`} });
+add('g6','quad_classify','Classify the Quadrilateral','text',
+ 'Parallelogram: both pairs of opposite sides parallel.   Rectangle: parallelogram with 4 right angles.\nRhombus: parallelogram with 4 congruent sides.   Square: rectangle AND rhombus.\nTrapezoid: exactly one pair of parallel sides.   Kite: two pairs of consecutive congruent sides.',
+ d=>{ const F=[['a parallelogram with four right angles','rectangle'],['a parallelogram with four congruent sides','rhombus'],['a quadrilateral with four congruent sides and four right angles','square'],['a quadrilateral with exactly one pair of parallel sides','trapezoid'],['a parallelogram whose diagonals are perpendicular','rhombus'],['a parallelogram whose diagonals are congruent','rectangle'],['a quadrilateral with two pairs of consecutive congruent sides and no parallel sides','kite']];
+  const [desc,name]=pick(F);
+  return {type:'text',text:`What is the most specific name for ${desc}?`, answers:[name,'a '+name], mcAns:name[0].toUpperCase()+name.slice(1), wrong:['Rectangle','Rhombus','Square','Trapezoid','Kite','Parallelogram'].filter(w=>w.toLowerCase()!==name).slice(0,5), fmt:'e.g. rhombus', hint:`${desc[0].toUpperCase()+desc.slice(1)} → ${name}.`} });
+
+/* ================= Chapter 7: Similarity ================= */
+add('g7','sim_side','Similar Triangles: Missing Side','num',
+ 'Similar figures have proportional sides. Write a proportion with MATCHING sides:\nsmall/large = small/large.  Then cross-multiply.',
+ d=>{ const k=R(d,rnd(2,3),pick([1.5,2.5,3]),pick([4/3,5/2,3/2])), a=2*rnd(2,6), b=2*rnd(2,7), A=rnd(40,70), B=rnd(40,70); const ka=a*k, kb=b*k; if(!isInt(ka)||!isInt(kb)) return null;
+  const P=triPts(A,B); const svg=twoTriFig(P,{v:['A','B','C'],s:[String(a),'',String(b)]},{k,v:['D','E','F'],s:[String(ka),'','x']});
+  return {svg,text:`△ABC ~ △DEF. AB = ${a}, CA = ${b}, DE = ${ka}. Find FD (x).`, answers:[kb], wrong:[b+ka-a, a*ka/b, kb+k], hint:`Scale factor = ${ka}/${a} = ${fr(Math.round(ka*6),a*6)}\nx = ${b} × ${fr(Math.round(ka*6),a*6)} = ${kb}`} });
+add('g7','scale','Scale Factor','num',
+ 'Scale factor (from figure 1 to figure 2) = length in figure 2 ÷ matching length in figure 1.\nA factor > 1 enlarges; between 0 and 1 shrinks.',
+ d=>{ const p=rnd(1,6),q=rnd(1,6); if(p===q||gcd(p,q)!==1) return null; const m=rnd(2,5), s1=q*m, s2=p*m;
+  return {text:`Two similar rectangles have matching sides ${s1} cm and ${s2} cm. What is the scale factor from the first to the second?`, answers:[fr(s2,s1)], wrong:[fr(s1,s2), String(s2-s1), fr(s2*s2,s1*s1)], hint:`${s2} ÷ ${s1} = ${fr(s2,s1)}`} });
+add('g7','area_ratio','Perimeter & Area Ratios','num',
+ 'If the scale factor of similar figures is a : b, then\nperimeters are in ratio a : b and AREAS are in ratio a² : b².',
+ d=>{ const a=rnd(1,4),b=rnd(2,6); if(a>=b||gcd(a,b)!==1) return null; const base=rnd(2,6)*a*a;
+  if(d==='easy') return {text:`Two similar triangles have scale factor ${a} : ${b}. The smaller has perimeter ${base}. Find the perimeter of the larger.`, answers:[base*b/a], wrong:[base*b*b/(a*a), base+b-a, base*b], hint:`Perimeters scale by ${b}/${a}: ${base} × ${b}/${a} = ${base*b/a}`};
+  if(d==='hard') return {text:`Two similar triangles have areas ${base} and ${base*b*b/(a*a)}. What is the ratio of their perimeters (smaller : larger), as a fraction?`, answers:[fr(a,b)], wrong:[fr(a*a,b*b),fr(b,a),fr(a,b*b)], hint:`Area ratio ${base} : ${base*b*b/(a*a)} = ${a*a} : ${b*b}\nTake square roots: ${a} : ${b} → ${fr(a,b)}`};
+  return {text:`Two similar triangles have scale factor ${a} : ${b}. The smaller has area ${base}. Find the area of the larger.`, answers:[base*b*b/(a*a)], wrong:[base*b/a, base*b*b, base+b*b-a*a], hint:`Areas scale by (${b}/${a})² = ${b*b}/${a*a}\n${base} × ${b*b}/${a*a} = ${base*b*b/(a*a)}`} });
+add('g7','side_split','Side-Splitter Theorem','num',
+ 'If a line is parallel to one side of a triangle and crosses the other two sides, it divides them PROPORTIONALLY:\nAD/DB = AE/EC.',
+ d=>{ const ad=rnd(2,9), k=pick([1,2,3,1.5]), db=ad*k, ae=rnd(2,9), ec=ae*k; if(!isInt(db)||!isInt(ec)) return null;
+  const P=fit(triPts(rnd(50,70),rnd(50,70))); const t=1/(1+k), D=V.add(P[2],V.mul(V.sub(P[0],P[2]),t)), E=V.add(P[2],V.mul(V.sub(P[1],P[2]),t));
+  const G=[(P[0][0]+P[1][0]+P[2][0])/3,(P[0][1]+P[1][1]+P[2][1])/3], lab=(A,B,L)=>{ const m=V.mid(A,B); let n=V.unit(V.perp(V.sub(B,A))); if(n[0]*(m[0]-G[0])+n[1]*(m[1]-G[1])<0) n=V.mul(n,-1); return tx(...V.add(m,V.mul(n,14)),L,{c:FIG.acc,b:true,fs:13}) };
+  const svg=svgWrap(triSVG(P,{v:['B','C','A']})+ln(D,E,{c:FIG.acc})+dot(D)+dot(E)+tx(D[0]-12,D[1],'D',{i:true})+tx(E[0]+12,E[1],'E',{i:true})+lab(P[2],D,String(ad))+lab(D,P[0],String(db))+lab(P[2],E,String(ae))+lab(E,P[1],'x'));
+  return {svg,toScale:true,text:`DE ∥ BC. AD = ${ad}, DB = ${db}, AE = ${ae}. Find EC (x).`, answers:[ec], wrong:[ae+db-ad, ae*ad/db, ec+ae], hint:`${ad}/${db} = ${ae}/x\n${ad}x = ${db*ae} → x = ${ec}`} });
+add('g7','shadow','Indirect Measurement','num',
+ 'Shadows at the same time of day make similar triangles:\nheight₁ / shadow₁ = height₂ / shadow₂.',
+ d=>{ const h1=R(d,pick([5,6]),rnd(4,7),rnd(5,7)), s1=R(d,pick([2,3,4]),rnd(2,9),rnd(3,9)), k=rnd(3,12), s2=s1*k, h2=h1*k;
+  return {text:`A ${h1}-ft person casts a ${s1}-ft shadow. At the same time, a tree casts a ${s2}-ft shadow. How tall is the tree (ft)?`, answers:[h2], wrong:[s2*s1/h1|0||h2+1, s2+h1-s1, h2+h1], hint:`${h1}/${s1} = h/${s2}\nh = ${h1} × ${s2} ÷ ${s1} = ${h2} ft`} });
+
+/* ================= Chapter 8: Right triangles & trig ================= */
+const TRIPLES=[[3,4,5],[5,12,13],[8,15,17],[7,24,25],[6,8,10],[9,12,15],[20,21,29]];
+// right angle at C: BC = a, CA = b, hypotenuse AB; labels o.s = [AB, BC, CA]
+const rightTri=(a,b,o)=>triFig(triFromSides(a,b,Math.hypot(a,b)),Object.assign({right:2,v:['A','B','C']},o));
+add('g8','pythag','Pythagorean Theorem','rad',
+ 'In a right triangle: a² + b² = c², where c is the HYPOTENUSE (the side across from the right angle).\nMissing leg: b = √(c² − a²).',
+ d=>{ let a,b,c; if(d==='easy'){ [a,b,c]=pick(TRIPLES); } else { a=rnd(2,10); b=rnd(2,10); c=Math.sqrt(a*a+b*b) }
+  const leg=d==='hard'; const ans=leg?rad(a*a):(isInt(c)?String(c):rad(a*a+b*b));
+  if(leg){ const C2=a*a+b*b; return {type:'rad',svg:rightTri(a,b,{s:[`√${C2}`,'?',String(b)]}),text:`A right triangle has a leg of ${b} and a hypotenuse of √${C2}. Find the other leg.`, answers:[String(a)], wrong:[rad(C2+b*b),String(C2-b),rad(C2)], hint:`a² + ${b}² = (√${C2})²\na² = ${C2} − ${b*b} = ${a*a}\na = ${a}`} }
+  return {type:'rad',svg:rightTri(a,b,{s:['?',String(a),String(b)]}),text:`The legs of a right triangle are ${a} and ${b}. Find the hypotenuse.`, answers:[ans], wrong:[String(a+b), rad(Math.abs(b*b-a*a)||3), String(a*a+b*b)], hint:`c² = ${a}² + ${b}² = ${a*a+b*b}\nc = √${a*a+b*b}${ans.includes('√')&&ans!=='√'+(a*a+b*b)?' = '+ans:isInt(c)?' = '+c:''}`} });
+add('g8','classify_tri','Acute, Right, or Obtuse?','text',
+ 'With longest side c:\nc² = a² + b² → right      c² < a² + b² → acute      c² > a² + b² → obtuse\n(And the sides must make a triangle: a + b > c.)',
+ d=>{ let a,b,c; do{ a=rnd(3,15); b=rnd(a,16); c=rnd(b,Math.min(a+b-1,25)) }while(c<b); if(Math.random()<.3){ const t=pick(TRIPLES); [a,b,c]=t.map(v=>v*(d==='hard'?pick([1,2]):1)) }
+  const L=c*c, Rs=a*a+b*b, kind=L===Rs?'right':L<Rs?'acute':'obtuse';
+  return {type:'text',text:`A triangle has sides ${a}, ${b}, and ${c}. Is it acute, right, or obtuse?`, answers:[kind], mcAns:kind[0].toUpperCase()+kind.slice(1), wrong:['Acute','Right','Obtuse','Not a triangle'].filter(w=>w.toLowerCase()!==kind), fmt:'acute, right, or obtuse',
+    hint:`c² = ${c}² = ${L}\na² + b² = ${a*a} + ${b*b} = ${Rs}\n${L} ${L===Rs?'=':L<Rs?'<':'>'} ${Rs} → ${kind}`} });
+add('g8','s45','45°-45°-90° Triangles','rad',
+ '45°-45°-90°: legs are equal, hypotenuse = leg · √2.\nGoing back: leg = hypotenuse / √2 = (hypotenuse · √2)/2.',
+ d=>{ const n=rnd(2,12);
+  if(d==='easy') return {type:'rad',svg:rightTri(4,4,{a:['45°','45°',''],s:['?',String(n),String(n)]}),text:`A 45°-45°-90° triangle has legs of length ${n}. Find the hypotenuse.`, answers:[`${n}√2`], wrong:[`${n}√3`,String(2*n),`${n*2}√2`], hint:`hypotenuse = leg · √2 = ${n}√2`};
+  if(d==='medium') return {type:'rad',svg:rightTri(4,4,{a:['45°','45°',''],s:[`${n}√2`,'?','']}),text:`The hypotenuse of a 45°-45°-90° triangle is ${n}√2. Find a leg.`, answers:[String(n)], wrong:[`${n}√2`,String(2*n),`${n}√3`], hint:`leg = hypotenuse / √2 = ${n}√2 / √2 = ${n}`};
+  const m=2*rnd(1,8); return {type:'rad',text:`The hypotenuse of a 45°-45°-90° triangle is ${m}. Find a leg (simplify).`, answers:[rad(m*m/2)], wrong:[String(m/2),`${m}√2`,rad(m*m*2)], hint:`leg = ${m}/√2 = ${m}√2/2 = ${rad(m*m/2)}`} });
+add('g8','s30','30°-60°-90° Triangles','rad',
+ '30°-60°-90°: short leg = s, long leg = s√3, hypotenuse = 2s.\nThe short leg is across from the 30° angle.',
+ d=>{ const s=rnd(2,10), kind=R(d,pick(['hyp','long']),'fromhyp','fromlong');
+  const svg=rightTri(1,Math.sqrt(3),{a:['30°','60°',''],s:[kind==='hyp'?'?':kind==='fromhyp'?String(2*s):'', ['hyp','long'].includes(kind)?String(s):kind==='fromhyp'?'?':'', kind==='long'?'?':kind==='fromlong'?`${s}√3`:'']});
+  if(kind==='hyp') return {type:'rad',svg,text:`In a 30°-60°-90° triangle the short leg is ${s}. Find the hypotenuse.`, answers:[String(2*s)], wrong:[`${s}√3`,`${s}√2`,String(3*s)], hint:`hypotenuse = 2 · short leg = ${2*s}`};
+  if(kind==='long') return {type:'rad',svg,text:`In a 30°-60°-90° triangle the short leg is ${s}. Find the long leg.`, answers:[`${s}√3`], wrong:[String(2*s),`${s}√2`,`${2*s}√3`], hint:`long leg = short leg · √3 = ${s}√3`};
+  if(kind==='fromhyp') return {type:'rad',svg,text:`In a 30°-60°-90° triangle the hypotenuse is ${2*s}. Find the short leg.`, answers:[String(s)], wrong:[`${s}√3`,String(4*s),`${2*s}√3`], hint:`short leg = hypotenuse ÷ 2 = ${s}`};
+  return {type:'rad',svg,text:`In a 30°-60°-90° triangle the long leg is ${s}√3. Find the hypotenuse.`, answers:[String(2*s)], wrong:[String(s),`${2*s}√3`,`${s}√3`], hint:`short leg = ${s}√3 ÷ √3 = ${s}\nhypotenuse = 2 · ${s} = ${2*s}`} });
+add('g8','trig_ratio','Trig Ratios (SOH-CAH-TOA)','num',
+ 'SOH: sin = opposite / hypotenuse    CAH: cos = adjacent / hypotenuse    TOA: tan = opposite / adjacent\n"Opposite" and "adjacent" depend on which angle you are standing at.',
+ d=>{ const [a,b,c]=pick(TRIPLES), fn=pick(R(d,['sin','cos'],['sin','cos','tan'],['sin','cos','tan'])), at=d==='hard'?pick(['A','B']):'A';
+  // right angle at C; BC = a (opposite A), AC = b, AB = c
+  const opp=at==='A'?a:b, adj=at==='A'?b:a, val={sin:fr(opp,c),cos:fr(adj,c),tan:fr(opp,adj)}[fn];
+  return {svg:triFig(triFromSides(a,b,c),{v:['A','B','C'],s:[String(c),String(a),String(b)],right:2}),toScale:true,text:`Right △ABC has ∠C = 90°, BC = ${a}, AC = ${b}, AB = ${c}. Find ${fn} ${at}.`, answers:[val], wrong:distinct(val,[fr(adj,c),fr(opp,c),fr(opp,adj),fr(adj,opp),fr(c,opp)]),
+    hint:`From ∠${at}: opposite = ${opp}, adjacent = ${adj}, hypotenuse = ${c}\n${fn} ${at} = ${{sin:'opp/hyp',cos:'adj/hyp',tan:'opp/adj'}[fn]} = ${val}`} });
+add('g8','trig_side','Find a Side with Trig','approx',
+ 'Pick the ratio that uses the side you KNOW and the side you WANT:\nsin (opp/hyp), cos (adj/hyp), tan (opp/adj).\nSolve, then round to the nearest tenth.',
+ d=>{ const A=rnd(20,70), known=rnd(5,30), mode=R(d,pick(['oppFromHyp','adjFromHyp']),pick(['oppFromAdj','adjFromHyp']),pick(['hypFromOpp','adjFromOpp','hypFromAdj']));
+  const s=Math.sin(A*D2R), c=Math.cos(A*D2R), t=Math.tan(A*D2R);
+  const M_={oppFromHyp:[known*s,'hypotenuse','opposite leg',`sin ${A}° = x/${known} → x = ${known}·sin ${A}°`],adjFromHyp:[known*c,'hypotenuse','adjacent leg',`cos ${A}° = x/${known} → x = ${known}·cos ${A}°`],oppFromAdj:[known*t,'adjacent leg','opposite leg',`tan ${A}° = x/${known} → x = ${known}·tan ${A}°`],
+    hypFromOpp:[known/s,'opposite leg','hypotenuse',`sin ${A}° = ${known}/x → x = ${known}/sin ${A}°`],adjFromOpp:[known/t,'opposite leg','adjacent leg',`tan ${A}° = ${known}/x → x = ${known}/tan ${A}°`],hypFromAdj:[known/c,'adjacent leg','hypotenuse',`cos ${A}° = ${known}/x → x = ${known}/cos ${A}°`]}[mode];
+  const ans=r1(M_[0]); const others=[known*s,known*c,known*t,known/s,known/c,known/t].map(r1).filter(v=>Math.abs(v-ans)>0.15);
+  return {type:'approx',tol:0.1,text:`In a right triangle, one acute angle is ${A}° and the ${M_[1]} (relative to that angle) is ${known}. Find the ${M_[2]}. Round to the nearest tenth.`, answers:[String(ans)], wrong:distinct(String(ans),others.map(String)), hint:`${M_[3]}\nx ≈ ${ans}`} });
+add('g8','trig_angle','Find an Angle with Trig','approx',
+ 'Use the INVERSE trig functions to find an angle:\n∠A = sin⁻¹(opp/hyp), cos⁻¹(adj/hyp), or tan⁻¹(opp/adj).\nRound to the nearest degree.',
+ d=>{ const o=rnd(3,20), h=o+rnd(2,20), a=rnd(3,20), fn=R(d,'tan',pick(['sin','cos']),pick(['sin','cos','tan']));
+  const val=fn==='tan'?Math.atan(o/a):fn==='sin'?Math.asin(o/h):Math.acos(a/(a+rnd(2,15)||1)); const dd=fn==='cos'?Math.round(Math.cos(val)*1000)/1000:0;
+  const deg=Math.round(val/D2R), desc=fn==='tan'?`the opposite leg is ${o} and the adjacent leg is ${a}`:fn==='sin'?`the opposite leg is ${o} and the hypotenuse is ${h}`:null;
+  if(fn==='cos'){ const adj=a, hyp=a+rnd(2,15), g=Math.round(Math.acos(adj/hyp)/D2R); return {type:'approx',tol:0.5,text:`In right △ABC with ∠C = 90°, the side adjacent to ∠A is ${adj} and the hypotenuse is ${hyp}. Find m∠A to the nearest degree.`, answers:[String(g)], wrong:[String(90-g),String(Math.round(Math.asin(adj/hyp)/D2R)===90-g?g+5:Math.round(Math.asin(adj/hyp)/D2R)),String(Math.round(Math.atan(adj/hyp)/D2R))], hint:`cos A = ${adj}/${hyp}\nA = cos⁻¹(${adj}/${hyp}) ≈ ${g}°`} }
+  return {type:'approx',tol:0.5,text:`In right △ABC with ∠C = 90°, for ∠A ${desc}. Find m∠A to the nearest degree.`, answers:[String(deg)], wrong:distinct(String(deg),[90-deg, fn==='tan'?Math.round(Math.asin(Math.min(1,o/(o+a)))/D2R):Math.round(Math.atan(o/h)/D2R), deg+10].map(String)), hint:`${fn} A = ${fn==='tan'?`${o}/${a}`:`${o}/${h}`}\nA = ${fn}⁻¹(${fn==='tan'?`${o}/${a}`:`${o}/${h}`}) ≈ ${deg}°`} });
+
+/* ================= Chapter 9: Transformations ================= */
+add('g9','translate','Translations','pair',
+ 'Translation (x, y) → (x + a, y + b): slide every point the same way.\n"Left" subtracts from x, "down" subtracts from y.',
+ d=>{ const x=rnd(-8,8),y=rnd(-8,8),a=nz(-7,7),b=nz(-7,7);
+  const words=`${Math.abs(a)} unit${Math.abs(a)>1?'s':''} ${a<0?'left':'right'} and ${Math.abs(b)} unit${Math.abs(b)>1?'s':''} ${b<0?'down':'up'}`;
+  return {type:'pair',vals:[x+a,y+b],text:d==='easy'?`Translate A(${M(x)}, ${M(y)}) ${words}. Find A′.`:`Apply (x, y) → (x ${a<0?'−':'+'} ${Math.abs(a)}, y ${b<0?'−':'+'} ${Math.abs(b)}) to A(${M(x)}, ${M(y)}). Find A′.`, answers:[pairS(x+a,y+b)], wrong:[pairS(x-a,y-b),pairS(x+b,y+a),pairS(x+a,y-b)], hint:`x: ${M(x)} ${a<0?'−':'+'} ${Math.abs(a)} = ${M(x+a)}\ny: ${M(y)} ${b<0?'−':'+'} ${Math.abs(b)} = ${M(y+b)}\nA′ = ${pairS(x+a,y+b)}`} });
+add('g9','reflect','Reflections','pair',
+ 'Over the x-axis: (x, y) → (x, −y)      Over the y-axis: (x, y) → (−x, y)\nOver y = x: (x, y) → (y, x)            Over y = −x: (x, y) → (−y, −x)',
+ d=>{ const x=nz(-9,9),y=nz(-9,9); const L=R(d,pick(['the x-axis','the y-axis']),pick(['the x-axis','the y-axis','the line y = x']),pick(['the line y = x','the line y = −x','the line x = 2','the line y = −1']));
+  const f={'the x-axis':[x,-y],'the y-axis':[-x,y],'the line y = x':[y,x],'the line y = −x':[-y,-x],'the line x = 2':[4-x,y],'the line y = −1':[x,-2-y]}[L];
+  return {type:'pair',vals:f,text:`Reflect P(${M(x)}, ${M(y)}) over ${L}. Find P′.`, answers:[pairS(...f)], wrong:[pairS(-x,y),pairS(x,-y),pairS(-x,-y),pairS(y,x),pairS(-y,-x)].filter(s=>s!==pairS(...f)), hint:`Rule for ${L}: ${{'the x-axis':'(x, y) → (x, −y)','the y-axis':'(x, y) → (−x, y)','the line y = x':'(x, y) → (y, x)','the line y = −x':'(x, y) → (−y, −x)','the line x = 2':'same distance on the other side of x = 2: x′ = 4 − x','the line y = −1':'same distance on the other side of y = −1: y′ = −2 − y'}[L]}\nP′ = ${pairS(...f)}`} });
+add('g9','rotate','Rotations About the Origin','pair',
+ 'Counterclockwise about the origin:\n90°: (x, y) → (−y, x)     180°: (x, y) → (−x, −y)     270°: (x, y) → (y, −x)\nClockwise 90° is the same as counterclockwise 270°.',
+ d=>{ const x=nz(-9,9),y=nz(-9,9), deg=R(d,pick([90,180]),pick([90,180,270]),pick([270,'90° clockwise'])); const dg=deg==='90° clockwise'?270:deg;
+  const f={90:[-y,x],180:[-x,-y],270:[y,-x]}[dg];
+  return {type:'pair',vals:f,text:`Rotate Q(${M(x)}, ${M(y)}) ${deg==='90° clockwise'?'90° clockwise':deg+'° counterclockwise'} about the origin. Find Q′.`, answers:[pairS(...f)], wrong:[pairS(-y,x),pairS(-x,-y),pairS(y,-x),pairS(-x,y)].filter(s=>s!==pairS(...f)), hint:`${dg}° rule: ${{90:'(x, y) → (−y, x)',180:'(x, y) → (−x, −y)',270:'(x, y) → (y, −x)'}[dg]}\nQ′ = ${pairS(...f)}`} });
+add('g9','dilate','Dilations','pair',
+ 'Dilation centered at the origin with scale factor k: (x, y) → (kx, ky).\nk > 1 enlarges, 0 < k < 1 shrinks.',
+ d=>{ const k=R(d,rnd(2,4),pick([0.5,3,1.5]),pick([0.5,2.5,1.5])), x=2*nz(-6,6), y=2*nz(-6,6), f=[k*x,k*y];
+  if(d==='hard'){ const cx=rnd(-4,4), cy=rnd(-4,4), g=[cx+k*(x-cx),cy+k*(y-cy)]; if(!isInt(g[0])||!isInt(g[1])) return null;
+    return {type:'pair',vals:g,text:`Dilate A(${M(x)}, ${M(y)}) by scale factor ${k} centered at C(${M(cx)}, ${M(cy)}). Find A′.`, answers:[pairS(...g)], wrong:[pairS(...f),pairS(x+k,y+k),pairS(cx+(x-cx)/k,cy+(y-cy)/k)], hint:`From C to A: (${M(x-cx)}, ${M(y-cy)})\nScale by ${k}: (${M(k*(x-cx))}, ${M(k*(y-cy))})\nAdd back C: A′ = ${pairS(...g)}`} }
+  return {type:'pair',vals:f,text:`Dilate A(${M(x)}, ${M(y)}) by scale factor ${k} centered at the origin. Find A′.`, answers:[pairS(...f)], wrong:[pairS(x+k,y+k),pairS(x/k,y/k),pairS(k*x,y)], hint:`Multiply both coordinates by ${k}:\n(${k}·${P_(x)}, ${k}·${P_(y)}) = ${pairS(...f)}`} });
+add('g9','compose','Compositions','pair',
+ 'Do the transformations IN ORDER: the first one gives a new point, then apply the second to THAT point.',
+ d=>{ const x=nz(-7,7),y=nz(-7,7),a=nz(-5,5),b=nz(-5,5); const steps=[['translate (x, y) → (x '+(a<0?'− ':'+ ')+Math.abs(a)+', y '+(b<0?'− ':'+ ')+Math.abs(b)+')',p=>[p[0]+a,p[1]+b]],['reflect over the x-axis',p=>[p[0],-p[1]]],['reflect over the y-axis',p=>[-p[0],p[1]]],['rotate 90° counterclockwise about the origin',p=>[-p[1],p[0]]]];
+  const s1=steps[0], s2=pick(steps.slice(1)), order=d==='hard'?shuffle([s1,s2]):[s1,s2]; const mid=order[0][1]([x,y]), f=order[1][1](mid), rev=order[0][1](order[1][1]([x,y]));
+  return {type:'pair',vals:f,text:`Start with P(${M(x)}, ${M(y)}). First ${order[0][0]}, then ${order[1][0]}. Find P″.`, answers:[pairS(...f)], wrong:[pairS(...rev),pairS(...mid),pairS(-f[0],-f[1])].filter(s=>s!==pairS(...f)), hint:`Step 1: P′ = ${pairS(...mid)}\nStep 2: P″ = ${pairS(...f)}`} });
+
+/* ================= Chapter 10: Circles ================= */
+add('g10','circ_area','Circumference & Area','pi',
+ 'Circumference C = 2πr = πd.     Area A = πr².\nLeave answers in terms of π (type pi for π) unless asked to round.',
+ d=>{ const r=rnd(2,15), useD=d!=='easy'&&Math.random()<.5, askA=d==='hard'?true:Math.random()<.5;
+  if(d==='hard'){ const C_=2*r; return {type:'pi',text:`A circle has circumference ${C_}π. Find its area.`, answers:[piS(r*r)], wrong:[piS(C_*C_),piS(2*r*r),piS(r)], hint:`2πr = ${C_}π → r = ${r}\nA = π(${r})² = ${piS(r*r)}`} }
+  const given=useD?`diameter ${2*r}`:`radius ${r}`;
+  return {type:'pi',text:`A circle has ${given}. Find its ${askA?'area':'circumference'} in terms of π.`, answers:[askA?piS(r*r):piS(2*r)], wrong:askA?[piS(2*r),piS(4*r*r),piS(r*r*2)]:[piS(r*r),piS(r),piS(4*r)], hint:`${useD?`r = ${2*r} ÷ 2 = ${r}\n`:''}${askA?`A = πr² = π(${r})² = ${piS(r*r)}`:`C = 2πr = 2π(${r}) = ${piS(2*r)}`}`} });
+add('g10','arc_length','Arc Length','pi',
+ 'Arc length = (central angle / 360°) · 2πr.\nIt is the fraction of the whole circumference that the arc covers.',
+ d=>{ const r=R(d,pick([6,9,12,18]),rnd(3,15),rnd(4,20)), ang=pick([30,45,60,90,120,135,150,180,240,270]); const n=ang*2*r, den=360;
+  if(d==='hard'){ const L=piS(n,den); return {type:'num',text:`An arc of a circle with radius ${r} has length ${L}. Find the central angle in degrees.`, answers:[ang], wrong:[ang/2,360-ang,ang*2], hint:`(θ/360) · 2π(${r}) = ${L}\nθ = ${ang}°`} }
+  return {type:'pi',text:`Find the length of a ${ang}° arc in a circle with radius ${r}, in terms of π.`, answers:[piS(n,den)], wrong:[piS(ang*r*r,360),piS(n,180),piS(2*r),piS(ang*r,360),piS(ang*r*r,180),piS(360,ang)].filter(s=>s!==piS(n,den)), hint:`(${ang}/360) · 2π(${r}) = ${fr(ang,360)} · ${2*r}π = ${piS(n,den)}`} });
+add('g10','inscribed','Central & Inscribed Angles','num',
+ 'A central angle equals its intercepted arc.\nAn INSCRIBED angle is HALF its intercepted arc.\nAn inscribed angle in a semicircle is 90°.',
+ d=>{ const arc=2*rnd(20,80), ins=arc/2;
+  if(d==='easy') return {svg:inscribedFig(arc,`arc AB = ${arc}°`,'?'),text:`Arc AB measures ${arc}°. Find the inscribed angle ∠APB.`, answers:[ins], wrong:[arc,2*arc,180-ins], hint:`Inscribed angle = ½ × arc = ½ × ${arc} = ${ins}°`};
+  if(d==='medium') return {svg:inscribedFig(arc,'arc AB = ?',`${ins}°`),text:`Inscribed angle ∠APB measures ${ins}°. Find the measure of arc AB.`, answers:[arc], wrong:[ins,arc/4,180-ins], hint:`Arc = 2 × inscribed angle = 2 × ${ins} = ${arc}°`};
+  const x=rnd(4,15),a=rnd(2,5),b=ins-a*x;
+  return {svg:inscribedFig(arc,`arc AB = ${arc}°`,`(${xe(a,b)})°`),text:`Arc AB = ${arc}° and inscribed angle ∠APB = (${xe(a,b)})°. Find x.`, answers:[x], wrong:[(arc-b)/a,x+2,ins].map(v=>isInt(v)?v:r1(v)), hint:`${xe(a,b)} = ½ · ${arc} = ${ins}\n${a}x = ${ins-b} → x = ${x}`} });
+add('g10','chords','Intersecting Chords','num',
+ 'When two chords cross at E: AE · EB = CE · ED (the products of the pieces are equal).',
+ d=>{ let ae=rnd(2,12),eb=rnd(2,12),ce,ed; const P_=ae*eb; const divs=[...Array(P_)].map((_,i)=>i+1).filter(k=>P_%k===0&&k!==ae&&k!==eb&&k<P_); if(!divs.length) return null; ce=pick(divs); ed=P_/ce;
+  if(d==='hard'){ const x=rnd(2,8); const a=rnd(1,3); const ce2=a*x; ed=P_/ce2; if(!isInt(ed)) return null;
+    return {notToScale:true,svg:chordsFig({AE:String(ae),EB:String(eb),CE:`${a===1?'':a}x`,ED:String(ed)}),text:`Chords AB and CD meet at E. AE = ${ae}, EB = ${eb}, CE = ${a===1?'':a}x, ED = ${ed}. Find x.`, answers:[x], wrong:[ce2,x+1,2*x], hint:`${ae} · ${eb} = ${a===1?'':a}x · ${ed}\n${P_} = ${a*ed}x → x = ${x}`} }
+  return {notToScale:true,svg:chordsFig({AE:String(ae),EB:String(eb),CE:String(ce),ED:'x'}),text:`Chords AB and CD meet at E. AE = ${ae}, EB = ${eb}, CE = ${ce}. Find ED (x).`, answers:[ed], wrong:[ae+eb-ce>0?ae+eb-ce:ed+3, ce*eb/ae, ed+ce].map(v=>isInt(v)?v:r1(v)), hint:`AE · EB = CE · ED\n${ae} · ${eb} = ${ce} · x\nx = ${P_} ÷ ${ce} = ${ed}`} });
+add('g10','tangent','Tangent Lines','rad',
+ 'A tangent line is PERPENDICULAR to the radius at the point of tangency.\nSo radius, tangent segment, and the line to the center make a right triangle — use a² + b² = c².',
+ d=>{ let r,t,o; if(d==='easy'){ [r,t,o]=pick(TRIPLES) } else { r=rnd(3,12); t=rnd(4,15); o=Math.sqrt(r*r+t*t) }
+  if(d==='hard'){ const [a,b,c]=pick(TRIPLES); return {type:'rad',svg:tangentFig({OT:String(a),TP:'?',OP:String(c)},b/a),toScale:true,text:`PT is tangent to circle O at T. OT = ${a} and OP = ${c}. Find PT.`, answers:[String(b)], wrong:[String(c-a),String(c+a),rad(c*c+a*a)], hint:`OT ⊥ PT, so OT² + PT² = OP²\nPT² = ${c*c} − ${a*a} = ${b*b} → PT = ${b}`} }
+  const ans=isInt(o)?String(o):rad(r*r+t*t);
+  return {type:'rad',svg:tangentFig({OT:String(r),TP:String(t),OP:'?'},t/r),toScale:true,text:`PT is tangent to circle O at T. OT = ${r} and PT = ${t}. Find OP.`, answers:[ans], wrong:[String(r+t),rad(Math.abs(t*t-r*r)||2),String(r*r+t*t)], hint:`The radius is perpendicular to the tangent: OT² + PT² = OP²\nOP² = ${r*r} + ${t*t} = ${r*r+t*t}\nOP = ${ans}`} });
+add('g10','circle_eq','Equation of a Circle','pair',
+ 'Standard form: (x − h)² + (y − k)² = r²\ncenter (h, k), radius r. Watch the signs: (x + 3)² means h = −3.',
+ d=>{ const h=nz(-9,9),k=nz(-9,9),r=rnd(1,10); const sx=h<0?`(x + ${-h})²`:`(x − ${h})²`, sy=k<0?`(y + ${-k})²`:`(y − ${k})²`;
+  if(d==='hard'){ const D=-2*h,E=-2*k,F=h*h+k*k-r*r; return {type:'pair',vals:[h,k],text:`Find the center of the circle:\n  x² + y² ${D<0?'−':'+'} ${Math.abs(D)}x ${E<0?'−':'+'} ${Math.abs(E)}y ${F<0?'−':'+'} ${Math.abs(F)} = 0`, answers:[pairS(h,k)], wrong:[pairS(-h,-k),pairS(D,E),pairS(k,h)], hint:`Complete the square: (x ${-h<0?'−':'+'} ${Math.abs(h)})² + (y ${-k<0?'−':'+'} ${Math.abs(k)})² = ${r*r}\nCenter ${pairS(h,k)}, radius ${r}`} }
+  return {type:'pair',vals:[h,k],text:`Find the center of the circle ${sx} + ${sy} = ${r*r}.`, answers:[pairS(h,k)], wrong:[pairS(-h,-k),pairS(h,-k),pairS(-h,k)], hint:`(x − h)² + (y − k)² = r²\n${sx} → h = ${M(h)},  ${sy} → k = ${M(k)}\nCenter ${pairS(h,k)}, radius ${r}`} });
+
+/* ================= Chapter 11: Area ================= */
+add('g11','tri_area','Area of a Triangle','num',
+ 'A = ½ · base · height, where the height is PERPENDICULAR to the base.\nA slanted side is not the height!',
+ d=>{ const b=rnd(3,20), h=rnd(2,16)*(b%2?2:1); const A=b*h/2;
+  if(d==='hard'){ return {text:`A triangle has area ${A} and base ${b}. Find its height.`, answers:[h], wrong:[A/b, 2*A, h+2], hint:`${A} = ½ · ${b} · h\nh = 2 · ${A} ÷ ${b} = ${h}`} }
+  const slant=d==='medium'?Math.round(Math.hypot(h,rnd(1,5))+1):0;
+  return {text:`Find the area of a triangle with base ${b} and height ${h}${slant?` (its slanted side is ${slant})`:''}.`, answers:[A], wrong:[b*h, b*(slant||h)/2===A?b*h+1:b*(slant||h)/2, b+h], hint:`A = ½ · ${b} · ${h} = ${A}${slant?'\n(The slanted side is not the height.)':''}`} });
+add('g11','para_area','Parallelograms & Trapezoids','num',
+ 'Parallelogram: A = base · height.\nTrapezoid: A = ½ (b₁ + b₂) · h — average the bases, times the height.',
+ d=>{ const h=rnd(2,12);
+  if(d==='easy'){ const b=rnd(3,20); return {text:`Find the area of a parallelogram with base ${b} and height ${h}.`, answers:[b*h], wrong:[b*h/2,2*(b+h),b+h], hint:`A = b · h = ${b} · ${h} = ${b*h}`} }
+  const b1=rnd(3,15), b2=b1+rnd(1,10); const A=(b1+b2)*h/2; if(!isInt(A)) return null;
+  if(d==='hard') return {text:`A trapezoid has area ${A}, height ${h}, and one base ${b1}. Find the other base.`, answers:[b2], wrong:[2*A/h, A/h-b1, b2+h], hint:`${A} = ½(${b1} + b)(${h})\n${2*A/h} = ${b1} + b → b = ${b2}`};
+  return {svg:quadFig([[0,0],[b2,0],[b2-(b2-b1)/2,-h],[(b2-b1)/2,-h]],{s:[String(b2),'',String(b1),'']}),text:`Find the area of a trapezoid with bases ${b1} and ${b2} and height ${h}.`, answers:[A], wrong:[(b1+b2)*h, b1*b2*h/2, (b1+b2)/2+h], hint:`A = ½(${b1} + ${b2})(${h}) = ½(${b1+b2})(${h}) = ${A}`} });
+add('g11','kite_area','Rhombus & Kite Area','num',
+ 'Rhombus or kite: A = ½ · d₁ · d₂ (half the product of the diagonals).',
+ d=>{ const d1=2*rnd(2,10), d2=rnd(3,20), A=d1*d2/2;
+  if(d==='hard') return {text:`A rhombus has area ${A} and one diagonal ${d1}. Find the other diagonal.`, answers:[d2], wrong:[A/d1,2*A,d2+2], hint:`${A} = ½ · ${d1} · d\nd = 2 · ${A} ÷ ${d1} = ${d2}`};
+  return {text:`Find the area of a ${d==='easy'?'rhombus':'kite'} with diagonals ${d1} and ${d2}.`, answers:[A], wrong:[d1*d2,d1+d2,(d1+d2)*2], hint:`A = ½ · ${d1} · ${d2} = ${A}`} });
+add('g11','sector','Area of a Sector','pi',
+ 'Sector area = (central angle / 360°) · πr².\nIt is the fraction of the whole circle’s area.',
+ d=>{ const r=R(d,pick([6,12]),rnd(3,12),rnd(4,15)), ang=pick([30,45,60,90,120,150,180,270]); const n=ang*r*r, den=360;
+  return {type:'pi',text:`Find the area of a ${ang}° sector of a circle with radius ${r}, in terms of π.`, answers:[piS(n,den)], wrong:[piS(ang*2*r,360),piS(r*r),piS(n,180)].filter(s=>s!==piS(n,den)), hint:`(${ang}/360) · π(${r})² = ${fr(ang,360)} · ${r*r}π = ${piS(n,den)}`} });
+add('g11','composite','Composite Figures','num',
+ 'Break the shape into rectangles, triangles, and other simple shapes.\nADD the pieces — or SUBTRACT a missing piece from a bigger shape.',
+ d=>{ const W=rnd(6,15), H=rnd(5,12), w=rnd(2,W-2), h=rnd(2,H-2);
+  if(d==='easy') return {text:`An L-shaped room is a ${W} × ${H} rectangle with a ${w} × ${h} rectangle cut from one corner. Find its area.`, answers:[W*H-w*h], wrong:[W*H, W*H+w*h, (W-w)*(H-h)], hint:`Big rectangle − cut-out = ${W*H} − ${w*h} = ${W*H-w*h}`};
+  const th=2*rnd(1,5); if(d==='medium') return {text:`A shape is a ${W} × ${H} rectangle with a triangle on top. The triangle’s base is the top side (${W}) and its height is ${th}. Find the total area.`, answers:[W*H+W*th/2], wrong:[W*H+W*th, W*H, W*(H+th)], hint:`Rectangle: ${W*H}\nTriangle: ½ · ${W} · ${th} = ${W*th/2}\nTotal: ${W*H+W*th/2}`};
+  return {type:'pi',text:`A ${2*W} × ${H} rectangle has a semicircle on one ${2*W}-side, with that side as its diameter. Find the total area in terms of π.`, answers:[`${2*W*H} + ${piS(W*W,2)}`], wrong:[`${2*W*H} + ${piS(W*W)}`,`${2*W*H} + ${piS(4*W*W,2)}`,`${2*W*H} + ${piS(W,1)}`], fmt:'e.g. 96 + 18π', hint:`Rectangle: ${2*W} · ${H} = ${2*W*H}\nSemicircle (r = ${W}): ½π(${W})² = ${piS(W*W,2)}\nTotal: ${2*W*H} + ${piS(W*W,2)}`} });
+
+/* ================= Chapter 12: Surface area & volume ================= */
+add('g12','prism_vol','Volume of a Prism','num',
+ 'Prism volume V = B · h, where B is the area of the BASE.\nRectangular box: V = l · w · h.',
+ d=>{ const l=rnd(2,12),w=rnd(2,10),h=rnd(2,12);
+  if(d==='hard'){ const b=2*rnd(2,6),th=rnd(2,8),L=rnd(3,12); return {text:`A triangular prism has a triangular base with base ${b} and height ${th}. The prism is ${L} long. Find its volume.`, answers:[b*th/2*L], wrong:[b*th*L,b+th+L,b*th/2+L], hint:`B = ½ · ${b} · ${th} = ${b*th/2}\nV = B · h = ${b*th/2} · ${L} = ${b*th/2*L}`} }
+  if(d==='medium'){ const V_=l*w*h; return {text:`A box has volume ${V_}, length ${l}, and width ${w}. Find its height.`, answers:[h], wrong:[V_/l, V_-l*w, h+1], hint:`${V_} = ${l} · ${w} · h\nh = ${V_} ÷ ${l*w} = ${h}`} }
+  return {text:`Find the volume of a box ${l} by ${w} by ${h}.`, answers:[l*w*h], wrong:[2*(l*w+w*h+l*h), l+w+h, l*w+h], hint:`V = ${l} · ${w} · ${h} = ${l*w*h}`} });
+add('g12','cyl_vol','Volume of a Cylinder','pi',
+ 'Cylinder: V = πr²h (base area times height). Leave answers in terms of π.',
+ d=>{ const r=rnd(2,10),h=rnd(2,15), useD=d!=='easy';
+  if(d==='hard'){ const V_=r*r*h; return {type:'num',text:`A cylinder has volume ${V_}π and radius ${r}. Find its height.`, answers:[h], wrong:[V_/r,V_/(2*r),h+r], hint:`${V_}π = π(${r})² · h\nh = ${V_} ÷ ${r*r} = ${h}`} }
+  return {type:'pi',text:`Find the volume of a cylinder with ${useD?`diameter ${2*r}`:`radius ${r}`} and height ${h}, in terms of π.`, answers:[piS(r*r*h)], wrong:[piS(4*r*r*h),piS(2*r*h),piS(r*h)], hint:`${useD?`r = ${r}\n`:''}V = π(${r})²(${h}) = ${piS(r*r*h)}`} });
+add('g12','cone_pyr','Cones & Pyramids','pi',
+ 'Cone and pyramid volume = ⅓ · B · h — exactly one third of the matching prism or cylinder.\nCone: V = ⅓πr²h.   Pyramid: V = ⅓ · (base area) · h.',
+ d=>{ if(d!=='hard'){ const s=rnd(2,10), h=3*rnd(1,6); if(d==='easy') return {type:'num',text:`A square pyramid has base edge ${s} and height ${h}. Find its volume.`, answers:[s*s*h/3], wrong:[s*s*h, s*s*h/2, s*h], hint:`V = ⅓ · ${s}² · ${h} = ⅓ · ${s*s} · ${h} = ${s*s*h/3}`};
+    const r=rnd(2,9); return {type:'pi',text:`Find the volume of a cone with radius ${r} and height ${h}, in terms of π.`, answers:[piS(r*r*h,3)], wrong:[piS(r*r*h),piS(r*r*h,2),piS(2*r*h,3)].filter(x=>x!==piS(r*r*h,3)), hint:`V = ⅓π(${r})²(${h}) = ⅓ · ${r*r*h}π = ${piS(r*r*h,3)}`} }
+  const r=rnd(2,9), h=3*rnd(1,6), V_=r*r*h/3; return {type:'num',text:`A cone has volume ${piS(r*r*h,3)} and radius ${r}. Find its height.`, answers:[h], wrong:[h/3, V_/r|0||h+1, h+3], hint:`${piS(r*r*h,3)} = ⅓π(${r})²h\nh = 3 · ${V_} ÷ ${r*r} = ${h}`} });
+add('g12','sphere','Spheres','pi',
+ 'Sphere: surface area S = 4πr²,   volume V = (4/3)πr³.',
+ d=>{ const r=R(d,pick([3,6,9]),rnd(2,9),rnd(2,12)), askV=d==='easy'?true:Math.random()<.5;
+  return {type:'pi',text:`Find the ${askV?'volume':'surface area'} of a sphere with ${d==='hard'?`diameter ${2*r}`:`radius ${r}`}, in terms of π.`, answers:[askV?piS(4*r*r*r,3):piS(4*r*r)], wrong:askV?[piS(4*r*r),piS(r*r*r),piS(4*r*r*r)]:[piS(4*r*r*r,3),piS(r*r),piS(2*r*r)], hint:`${d==='hard'?`r = ${r}\n`:''}${askV?`V = (4/3)π(${r})³ = (4/3)(${r*r*r})π = ${piS(4*r*r*r,3)}`:`S = 4π(${r})² = ${piS(4*r*r)}`}`} });
+add('g12','surface','Surface Area','pi',
+ 'Box: S = 2(lw + lh + wh) — add the areas of all 6 faces.\nCylinder: S = 2πr² + 2πrh (two circles + the label around the side).',
+ d=>{ if(d==='easy'){ const l=rnd(2,10),w=rnd(2,10),h=rnd(2,10); return {type:'num',text:`Find the surface area of a box ${l} by ${w} by ${h}.`, answers:[2*(l*w+l*h+w*h)], wrong:[l*w*h, l*w+l*h+w*h, 2*(l+w+h)], hint:`2(${l}·${w} + ${l}·${h} + ${w}·${h}) = 2(${l*w} + ${l*h} + ${w*h}) = ${2*(l*w+l*h+w*h)}`} }
+  const r=rnd(2,9),h=rnd(2,12); return {type:'pi',text:`Find the total surface area of a cylinder with radius ${r} and height ${h}, in terms of π.`, answers:[piS(2*r*r+2*r*h)], wrong:[piS(r*r*h),piS(2*r*h),piS(r*r+2*r*h)], hint:`2πr² = ${piS(2*r*r)},  2πrh = ${piS(2*r*h)}\nS = ${piS(2*r*r+2*r*h)}`} });
+
+/* ================= Chapter 13: Probability ================= */
+add('g13','simple_prob','Probability of an Event','num',
+ 'P(event) = (number of favorable outcomes) / (total number of outcomes).\nWrite as a fraction in lowest terms.',
+ d=>{ const r_=rnd(1,9),b=rnd(1,9),g=rnd(1,9), tot=r_+b+g, c=pick([['red',r_],['blue',b],['green',g]]);
+  if(d==='easy') return {text:`A bag has ${r_} red, ${b} blue, and ${g} green marbles. One is drawn at random. Find P(${c[0]}).`, answers:[fr(c[1],tot)], wrong:[fr(c[1],tot-c[1]),fr(tot-c[1],tot),fr(1,3)], hint:`${c[1]} ${c[0]} out of ${tot} total → ${fr(c[1],tot)}`};
+  const n=pick([6,8,10,12,20]), k=rnd(2,n-1);
+  if(d==='medium') return {text:`A fair ${n}-sided die (1 to ${n}) is rolled. Find P(a number greater than ${k}).`, answers:[fr(n-k,n)], wrong:[fr(k,n),fr(n-k+1,n),fr(n-k,k)], hint:`Numbers greater than ${k}: ${k+1} … ${n} → ${n-k} outcomes\n${n-k}/${n} = ${fr(n-k,n)}`};
+  const evens=Math.floor(n/2), m3=Math.floor(n/3), both=Math.floor(n/6), cnt=evens+m3-both;
+  return {text:`A fair ${n}-sided die (1 to ${n}) is rolled. Find P(even OR a multiple of 3).`, answers:[fr(cnt,n)], wrong:[fr(evens+m3,n),fr(both,n),fr(evens,n)].filter(w=>w!==fr(cnt,n)), hint:`Even: ${evens}, multiples of 3: ${m3}, both (multiples of 6): ${both}\n${evens} + ${m3} − ${both} = ${cnt} → ${fr(cnt,n)}`} });
+add('g13','complement','Complements','num',
+ 'P(not A) = 1 − P(A).\nThe probabilities of an event and its complement always add to 1.',
+ d=>{ const n=R(d,pick([5,10,20]),pick([8,12,25]),pick([36,40,50])), k=rnd(1,n-1);
+  return {text:`The probability of rain tomorrow is ${fr(k,n)}. What is the probability it does NOT rain?`, answers:[fr(n-k,n)], wrong:[fr(k,n),fr(n-k,k),fr(1,n)], hint:`1 − ${fr(k,n)} = ${fr(n-k,n)}`} });
+add('g13','independent','Independent & Dependent Events','num',
+ 'Independent: P(A and B) = P(A) · P(B).\nDependent (no replacement): P(A and B) = P(A) · P(B after A).',
+ d=>{ const r_=rnd(2,7),b=rnd(2,7), tot=r_+b;
+  if(d==='easy'){ const c1=rnd(1,6); return {text:`Flip a fair coin and roll a fair 6-sided die. Find P(heads and a ${c1}).`, answers:['1/12'], wrong:['1/8','2/3','1/6'], hint:`P(heads) · P(${c1}) = 1/2 · 1/6 = 1/12`} }
+  if(d==='medium') return {text:`A bag has ${r_} red and ${b} blue marbles. You draw one, PUT IT BACK, and draw again. Find P(red, then red).`, answers:[fr(r_*r_,tot*tot)], wrong:[fr(r_*(r_-1),tot*(tot-1)),fr(2*r_,tot),fr(r_,tot)], hint:`With replacement: ${r_}/${tot} · ${r_}/${tot} = ${fr(r_*r_,tot*tot)}`};
+  return {text:`A bag has ${r_} red and ${b} blue marbles. You draw two WITHOUT replacement. Find P(both red).`, answers:[fr(r_*(r_-1),tot*(tot-1))], wrong:[fr(r_*r_,tot*tot),fr(r_-1,tot-1),fr(2*r_-1,2*tot-1)], hint:`First red: ${r_}/${tot}. Then ${r_-1} red of ${tot-1} left: ${r_-1}/${tot-1}\n${r_}/${tot} · ${r_-1}/${tot-1} = ${fr(r_*(r_-1),tot*(tot-1))}`} });
+add('g13','geo_prob','Geometric Probability','num',
+ 'Geometric probability = (favorable length or area) / (total length or area).\nA random point lands in a region with probability equal to its share of the area.',
+ d=>{ if(d==='easy'){ const L=rnd(10,30), a=rnd(1,L-3), b=a+rnd(1,L-a); return {text:`A point is chosen at random on a segment from 0 to ${L}. Find the probability it lies between ${a} and ${b}.`, answers:[fr(b-a,L)], wrong:[fr(b,L),fr(a,L),fr(b-a,L-(b-a))], hint:`Favorable length: ${b} − ${a} = ${b-a}\n${b-a}/${L} = ${fr(b-a,L)}`} }
+  const s=2*rnd(2,8), w=rnd(1,s/2), A=s*s, a=w*w;
+  if(d==='medium') return {text:`A dart lands at random on a ${s} × ${s} square board. A ${w} × ${w} square in the middle is the bullseye. Find P(bullseye).`, answers:[fr(a,A)], wrong:[fr(w,s),fr(A-a,A),fr(a,A-a)], hint:`Bullseye area ${a}, board area ${A}\n${a}/${A} = ${fr(a,A)}`};
+  const r=s/2; return {type:'pi',text:`A circle of radius ${r} is inscribed in a ${s} × ${s} square. A point is chosen at random in the square. Find the probability it is inside the circle.`, answers:['π/4'], wrong:['1/4','π/2','4/π'], fmt:'e.g. π/4', hint:`Circle: π(${r})² = ${r*r}π.  Square: ${s*s}\n${r*r}π / ${s*s} = π/4`} });
+add('g13','counting','Permutations & Combinations','num',
+ 'Order matters → permutation: nPr = n! / (n − r)!\nOrder does NOT matter → combination: nCr = n! / (r!(n − r)!)\nPicking a president and VP: order matters. Picking a team of 2: it does not.',
+ d=>{ const n=rnd(4,10), r=R(d,2,pick([2,3]),pick([3,4])); if(r>=n) return null; const f=k=>k<=1?1:k*f(k-1), Pn=f(n)/f(n-r), Cn=Pn/f(r);
+  const ord=Math.random()<.5; const what=ord?`In how many ways can ${n} students fill ${r===2?'president and vice president':r===3?'1st, 2nd, and 3rd place':'4 different jobs'}?`:`How many ${r}-person teams can be chosen from ${n} students?`;
+  return {text:what, answers:[ord?Pn:Cn], wrong:[ord?Cn:Pn, Math.pow(n,r), n*r].filter(v=>v!==(ord?Pn:Cn)), hint:`${ord?'Order matters → permutation':'Order does not matter → combination'}\n${ord?`${n}P${r} = ${[...Array(r)].map((_,i)=>n-i).join(' · ')} = ${Pn}`:`${n}C${r} = ${Pn} ÷ ${r}! = ${Cn}`}`} });
+
+const topics={}; T.forEach(t=>topics[t.key]=t);
+
+/* ===== Algebra 1 practice — page logic (same behavior as the Algebra 2 app) ===== */
+const MAX_ATTEMPTS=2;
+let current=null,total=0,correct=0,difficulty='easy',currentTopic=T[0].key;
+let questionAnswered=false,attemptCount=0,triedMcIndices=new Set(),mcCorrect=null;
+let quizMode=false,quizQ=[],quizIdx=0,quizRes=[];
+const MCL=['A','B','C','D'];
+const $=id=>document.getElementById(id);
+const escH=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const chOf=key=>CHAPTERS.find(c=>c.id===topics[key].ch);
+const FMT={num:'e.g. 7, −3, or 3/4', set:'e.g. x = 2 or x = −3', pair:'e.g. (2, −3)', ineq:'e.g. x > 3  or  −2 < x ≤ 5   (>= and <= work too)',
+  eq:'e.g. y = 2x + 3', approx:'a decimal, e.g. 7.4', pi:'in terms of π, e.g. 16π (type pi for π)', expr:'e.g. 3x^2 − 2x + 1   (^ for powers)', mono:'e.g. 12x^7y^2', factor:'e.g. (x + 2)(x − 5)', rad:'e.g. 6√2 or 6sqrt2', sci:'e.g. 4.5 × 10^4 or 4.5*10^4'};
+const TEXT_FMT={f_relation:'yes or no', on_line:'yes or no', sys_count:'one, none, or infinitely many', poly_classify:'e.g. quadratic trinomial'};
+
+/* ---------- sidebar ---------- */
+// AP Calculus AB view (?level=ab): drop BC-only topics and units
+if(new URLSearchParams(location.search).get('level')==='ab'&&T.some(t=>t.bc)){
+  for(let i=T.length-1;i>=0;i--) if(T[i].bc){ delete topics[T[i].key]; T.splice(i,1) }
+  for(let i=CHAPTERS.length-1;i>=0;i--) if(!T.some(t=>t.ch===CHAPTERS[i].id)) CHAPTERS.splice(i,1) }
+function buildSidebar(){
+  const box=$('sidebar-box'); let html='<div class="sidebar-title">📋 Choose Topic</div>';
+  for(const c of CHAPTERS){
+    html+=`<div class="sidebar-group"><div class="sidebar-group-hdr" style="background:${c.c}" onclick="toggleGroup(this)">${c.icon} ${escH(c.title)}<span class="grp-toggle">+</span></div><div class="sidebar-group-body" id="grp-${c.id}">`;
+    for(const t of T.filter(t=>t.ch===c.id)) html+=`<div class="sidebar-item" id="sid-${t.key}" style="--gc:${c.c};--gs:${c.s}" onclick="setTopicSidebar('${t.key}')">${escH(t.label)}${t.bc&&!CHAPTERS.find(c=>c.id===t.ch).bc?' <span style="font-size:.7em;font-weight:700;color:#fff;background:#ad1457;border-radius:6px;padding:1px 6px;margin-left:4px">BC</span>':''}</div>`;
+    html+='</div></div>';
+  }
+  box.innerHTML=html;
+}
+function toggleGroup(hdr){ const body=hdr.nextElementSibling, open=body.classList.toggle('open'); hdr.parentElement.classList.toggle('wide',open); const t=hdr.querySelector('.grp-toggle'); if(t) t.textContent=open?'−':'+' }
+function openGroupFor(key){ const body=$('grp-'+topics[key].ch); if(body&&!body.classList.contains('open')) toggleGroup(body.previousElementSibling) }
+function setTopicSidebar(key){
+  if(!topics[key]) return; currentTopic=key; openGroupFor(key);
+  document.querySelectorAll('.sidebar-item').forEach(el=>el.classList.toggle('active',el.id==='sid-'+key));
+  const c=chOf(key), r=document.documentElement.style; r.setProperty('--gc',c.c); r.setProperty('--gs',c.s); r.setProperty('--gb',c.b);
+  renderConcept(key);
+  if(quizMode) showQProblem(); else newProblem();
+}
+function setDiff(d){ difficulty=d; document.querySelectorAll('.diff-btn').forEach(b=>b.classList.toggle('active',b.classList.contains(d))); if(quizMode) showQProblem(); else newProblem() }
+
+/* ---------- concept box: rule + a fresh worked example ---------- */
+function renderConcept(key){
+  const t=topics[key], ex=t.gen('easy'); ex.type=ex.type||t.type;
+  const steps=String(ex.hint).split('\n').map((s,i)=>`<li><span class="step-lbl">Step ${i+1}</span>${escH(s)}</li>`).join('');
+  $('concept-box').innerHTML=`<div class="concept-header">📚 ${escH(t.label)}</div><div class="concept-rule">${escH(t.rule)}</div>
+    <div class="concept-example-title">📖 Worked Example</div><div class="concept-example-prob">${escH(ex.text)}</div>${ex.svg?'<div class="concept-svg">'+ex.svg+'</div>':''}<ul class="concept-steps">${steps}</ul>
+    <div class="concept-answer">✓ Answer: ${escH(pretty(ex.mcAns||ex.answers[0]))}</div>`;
+}
+
+/* ---------- one problem ---------- */
+function resetPerQuestion(){ questionAnswered=false; attemptCount=0; triedMcIndices=new Set(); mcCorrect=null; $('next-row').style.display='none'; $('attempts-left-bar').style.display='none' }
+function showProblem(kind){
+  resetPerQuestion();
+  const t=topics[currentTopic]; current=t.gen(difficulty); current.type=current.type||t.type;
+  $('badge-topic').textContent=t.label;
+  const bd=$('badge-diff'); bd.className='badge badge-'+difficulty; bd.textContent=difficulty[0].toUpperCase()+difficulty.slice(1);
+  $('prob').textContent=current.text;
+  $('prob-svg').innerHTML=current.svg?current.svg+(current.notToScale?'<div class="nts">Figure not drawn to scale</div>':''):'';
+  $('feedback').className='feedback'; $('hint').style.display='none'; $('hint-link').style.display='inline';
+  if(kind==='fill'&&!current.mcOnly) renderFill(); else renderMC();
+}
+function newProblem(){ if(quizMode) return; showProblem('mc') }
+function renderMC(){
+  const {ans,opts}=buildMC(current); mcCorrect=ans;
+  const box=$('mc-options'); box.innerHTML='';
+  opts.forEach((opt,i)=>{
+    const div=document.createElement('div'); div.className='mc-opt'; div.dataset.val=opt;
+    div.innerHTML=`<span class="mc-label">${MCL[i]}</span><span>${escH(opt)}</span>`;
+    div.onclick=()=>{
+      if(questionAnswered||triedMcIndices.has(i)) return;
+      triedMcIndices.add(i); attemptCount++;
+      if(opt===mcCorrect){ div.classList.add('correct'); box.querySelectorAll('.mc-opt').forEach(e=>e.classList.add('locked')); $('attempts-left-bar').style.display='none';
+        showFeedback('correct',attemptCount===1?'✓ Correct! First try! 🌟':'✓ Correct on 2nd try! 👍'); resolveQuestion(true) }
+      else { div.classList.add('wrong','tried'); if(attemptCount>=MAX_ATTEMPTS) autoReveal(box); else { showFeedback('wrong','❌ Not quite — you have 1 more try! 💪'); updateAttemptsLeft() } }
+    };
+    box.appendChild(div);
+  });
+  updateAttemptsLeft();
+}
+function renderFill(){
+  const fmt=current.fmt||(current.type==='text'?(TEXT_FMT[currentTopic]||'type your answer'):FMT[current.type]);
+  const keys=['x²|^2','√|√','±|±','≤|≤','≥|≥','−|-','(|(',')|)'];
+  $('mc-options').innerHTML=`<div class="fill-row"><input class="answer-input" id="ans" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="Type your answer" onkeydown="if(event.key==='Enter')checkFill()"><button class="btn btn-primary" onclick="checkFill()">✓ Check</button></div>
+    <div class="fill-fmt">${escH(fmt)}</div><div class="sym-keys">${keys.map(k=>{ const [l,v]=k.split('|'); return `<button type="button" onclick="insertSym('${v}')">${l}</button>` }).join('')}</div>`;
+  setTimeout(()=>{ const a=$('ans'); if(a) a.focus() },50);
+  updateAttemptsLeft();
+}
+function insertSym(v){ const a=$('ans'); if(!a||a.disabled) return; const p=a.selectionStart??a.value.length, q=a.selectionEnd??a.value.length; a.value=a.value.slice(0,p)+v+a.value.slice(q); a.focus(); a.setSelectionRange(p+v.length,p+v.length) }
+function checkFill(){
+  if(!current||questionAnswered) return;
+  const raw=($('ans')||{value:''}).value.trim(); if(!raw) return;
+  attemptCount++;
+  if(check(current,raw)){ $('ans').disabled=true; $('attempts-left-bar').style.display='none'; showFeedback('correct',attemptCount===1?'✓ Correct! 🌟':'✓ Correct on 2nd try! 👍'); resolveQuestion(true) }
+  else if(attemptCount>=MAX_ATTEMPTS) autoReveal(null);
+  else { showFeedback('wrong','❌ Not quite — 1 more try! 💪 Check the format below the box.'); $('ans').select(); updateAttemptsLeft() }
+}
+function updateAttemptsLeft(){ const bar=$('attempts-left-bar'), t=$('attempts-left-txt'), left=MAX_ATTEMPTS-attemptCount;
+  if(questionAnswered){ bar.style.display='none'; return } bar.style.display='block'; t.textContent=left===1?'⚠ 1 try left':`${left} tries`; t.className='attempts-left'+(left===1?' warn':'') }
+function autoReveal(box){
+  if(box) box.querySelectorAll('.mc-opt').forEach(el=>{ el.classList.add('locked'); if(el.dataset.val===mcCorrect) el.classList.add('reveal') });
+  const a=$('ans'); if(a) a.disabled=true; $('attempts-left-bar').style.display='none';
+  showFeedback('reveal',`❌ Out of attempts. Correct answer: <b>${escH(pretty(current.mcAns||current.answers[0]))}</b>`);
+  $('hint').style.display='block'; $('hint').textContent=current.hint; $('hint-link').style.display='none';
+  resolveQuestion(false);
+}
+function showHint(){ $('hint').style.display='block'; $('hint').textContent=current.hint; $('hint-link').style.display='none' }
+function showFeedback(type,html){ const fb=$('feedback'); fb.className='feedback '+type; fb.innerHTML=html }
+function resolveQuestion(isOk){ if(questionAnswered) return; questionAnswered=true; total++; if(isOk) correct++; updateStats();
+  if(quizMode){ quizRes.push(isOk); renderDots() } $('next-row').style.display='flex' }
+function nextQ(){ if(quizMode){ quizIdx++; renderDots(); showQProblem() } else newProblem() }
+function updateStats(){ $('s-total').textContent=total; $('s-correct').textContent=correct; $('s-pct').textContent=total?Math.round(correct/total*100)+'%':'—' }
+function resetStats(){ total=0; correct=0; updateStats(); newProblem() }
+
+/* ---------- quiz mode ---------- */
+function qp(){ const mc=+$('mc-count').value, fi=+$('fill-count').value; $('mc-val').textContent=mc; $('fill-val').textContent=fi; const t=mc+fi;
+  $('quiz-preview').textContent=t===0?'Please select at least 1 problem':`${t} problems total: ${mc} Multiple Choice + ${fi} Fill-in` }
+function startQuiz(){ const mc=+$('mc-count').value, fi=+$('fill-count').value; if(mc+fi===0){ $('quiz-preview').textContent='Please select at least 1 problem'; return }
+  quizMode=true; quizQ=shuffle([...Array(mc).fill('mc'),...Array(fi).fill('fill')]); quizIdx=0; quizRes=[];
+  $('quiz-setup').style.display='none'; $('quiz-prog').style.display='flex'; renderDots(); showQProblem() }
+function renderDots(){ const c=$('quiz-dots'); c.innerHTML=''; quizQ.forEach((t,i)=>{ const d=document.createElement('div'); d.className='qd '+(i<quizRes.length?(quizRes[i]?'ok':'bad'):t); c.appendChild(d) });
+  $('quiz-label').textContent=quizIdx<quizQ.length?`Question ${quizIdx+1} / ${quizQ.length}  —  ${quizQ[quizIdx]==='mc'?'🔘 Multiple Choice':'✏️ Fill-in'}`:'✓ All done!' }
+function showQProblem(){ if(quizIdx>=quizQ.length){ showQuizSummary(); return } showProblem(quizQ[quizIdx]) }
+function showQuizSummary(){
+  $('quiz-prog').style.display='none'; $('next-row').style.display='none';
+  const right=quizRes.filter(Boolean).length, tot=quizRes.length, pct=tot?Math.round(right/tot*100):0, emoji=pct>=90?'🌟':pct>=70?'😊':pct>=50?'💪':'📚';
+  $('prob-svg').innerHTML='';
+  $('prob').textContent=`${emoji} Quiz Complete!\n\nScore: ${right} / ${tot} correct  (${pct}%)`;
+  $('mc-options').innerHTML='<button class="btn btn-primary" style="margin-top:12px" onclick="endQuiz()">↩ Back to Practice</button>';
+  $('feedback').className='feedback'; $('hint-link').style.display='none'; $('hint').style.display='none'; $('attempts-left-bar').style.display='none';
+  quizMode=false;
+}
+function endQuiz(){ quizMode=false; $('quiz-setup').style.display='block'; $('quiz-prog').style.display='none'; $('next-row').style.display='none'; newProblem() }
+
+buildSidebar();
+setTopicSidebar(currentTopic);
+
+</script>
+<script>
+/* ===== Prof. Fang Math bridge: lets the main site open a chapter/topic and saves scores =====
+   URL options: ?chapter=sys  (one chapter)  &topic=sys2_elim  &mode=learn|practice  &embed=1 (inside the site) */
+(function(){
+  const P=new URLSearchParams(location.search), embed=P.get('embed')==='1', ch=P.get('chapter'), mode=P.get('mode');
+  const inSite=embed&&window.parent!==window;
+  const send=m=>{ if(inSite) window.parent.postMessage(Object.assign({source:'fm-app'},m), location.origin); };
+  const css=[];
+  if(embed) css.push('.main-content>h1,.main-content>.subtitle,.main-content>.welcome-line,.name-bar,.main-content>.footer{display:none!important}body{background:transparent!important}');
+  if(mode==='practice') css.push('body:not(.fm-quizzing) .card,.controls,.stats,.concept-box,.hint-link,.hint,.strategy-tip{display:none!important}');
+  if(mode==='learn') css.push('#quiz-setup,#quiz-prog{display:none!important}');
+  if(css.length){ const st=document.createElement('style'); st.textContent=css.join('\n'); document.head.appendChild(st); }
+  if(mode==='practice') document.body.classList.add('fm-practice');
+  // show only the chosen chapter
+  if(ch){ const body=document.getElementById('grp-'+ch);
+    if(body) document.querySelectorAll('.sidebar-group').forEach(g=>{ if(!g.contains(body)) g.style.display='none'; }); }
+  // report answers and quiz results to the site
+  const _res=resolveQuestion;
+  resolveQuestion=function(ok){ const was=questionAnswered, q=quizMode; _res(ok);
+    if(!was) send({type:'answer', ok:!!ok, quiz:q, topic:currentTopic, label:topics[currentTopic].label, difficulty}); };
+  const _sum=showQuizSummary;
+  showQuizSummary=function(){ const right=quizRes.filter(Boolean).length, tot=quizRes.length; _sum();
+    if(tot) send({type:'quiz', right, total:tot, topic:currentTopic, label:topics[currentTopic].label, difficulty}); };
+  const _start=startQuiz; startQuiz=function(){ document.body.classList.add('fm-quizzing'); return _start.apply(this, arguments); };
+  const _end=endQuiz; endQuiz=function(){ document.body.classList.remove('fm-quizzing'); return _end.apply(this, arguments); };
+  // open the requested topic (or the chapter's first topic)
+  let start=P.get('topic'); if(!(start&&topics[start])) start=null;
+  if(!start&&ch){ const f=document.querySelector('#grp-'+ch+' .sidebar-item[id^="sid-"]'); if(f) start=f.id.slice(4); }
+  if(start) setTopicSidebar(start);
+  // keep the site's frame as tall as the page (no double scrollbars)
+  if(inSite){ let last=0; const tell=()=>{ const hh=document.documentElement.scrollHeight; if(Math.abs(hh-last)>4){ last=hh; send({type:'height', h:hh}); } };
+    new ResizeObserver(tell).observe(document.body); window.addEventListener('load', tell); tell(); }
+})();
+</script>
+</body>
+</html>

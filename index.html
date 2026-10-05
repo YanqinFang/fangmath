@@ -502,7 +502,7 @@ function pageLesson(v, cid, ui, li, mode){
   const base = `#/lesson/${c.id}/${ui}/${li}/`;
   const resRow = ([k, ic, t, s]) => h("a", { class:"res", href:l[k], target:"_blank", rel:"noopener" }, h("span", { class:"ic" }, ic), h("div", {}, h("b", {}, t), h("span", {}, s + " · PDF")));
   const RES = { notes:["notes", "📘", "Class notes", "Read and follow along"], worksheet:["worksheet", "✏️", "Worksheet", "Printable practice"], answers:["answers", "✅", "Answer key", "Check your work"] };
-  const res = (mode === "learn" ? ["notes"] : ["worksheet", "answers"]).filter(k => l[k]).map(k => resRow(RES[k]));
+  const res = (mode === "learn" ? ["notes", "answers"] : ["worksheet", "answers"]).filter(k => l[k]).map(k => resRow(RES[k]));
   const hasQuiz = l.quiz && l.quiz.length;
   const head = h("div", { class:"page-head" }, h("div", { class:"crumbs" }, h("a", { href:"#/course/" + c.id }, c.title), " / " + u.title), h("h1", {}, l.title), l.summary ? mathEl("p", l.summary) : null);
   const side = h("div", {}, h("div", { class:"card" }, h("h3", { style:"font-size:20px;margin-bottom:12px" }, mode === "learn" ? "Learn materials" : "Practice materials"),

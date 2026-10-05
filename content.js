@@ -137,7 +137,8 @@ const COURSES = [
       { title: "3. Linear Systems", app: "practice/algebra2.html?chapter=sys", appTopics: 6, lessons: [] },
       { title: "4. Quadratic Functions & Equations", app: "practice/algebra2.html?chapter=qt", appTopics: 16, lessons: [
         { title:"4-1 Quadratic Functions & Transformations",
-          notes:"materials/algebra2/ch04/alg2-4-1-notes.pdf",
+          notes:"materials/algebra2/ch04/Alg2_4-1_Notes.pdf",
+          answers:"materials/algebra2/ch04/Alg2_4-1_Notes_Key.pdf",
           example:{ q:"Describe $f(x)=-2(x-1)^2+5$.",
             steps:["$a=-2$: reflect in the $x$-axis, vertical stretch by 2",
                    "$h=1$: right 1; $k=5$: up 5",

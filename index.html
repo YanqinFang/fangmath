@@ -473,6 +473,10 @@ function pageHome(v){
 function pageGroup(v, group, title, intro){
   v.append(h("div", { class:"wrap" },
     h("div", { class:"page-head" }, h("h1", {}, title), h("p", {}, intro)),
+    ((GROUPS[group] || {}).downloads || []).map(d => h("a", { class:"solve-hero", style:"margin:0 0 18px;max-width:none", href:d.file, target:"_blank", rel:"noopener" },
+      h("span", { class:"ic", "aria-hidden":"true" }, "📅"),
+      h("span", { class:"txt" }, h("b", {}, d.title), h("span", {}, d.text)),
+      h("span", { class:"btn teal" }, "Download PDF"))),
     h("div", { class:"grid" }, COURSES.filter(c => c.group === group).map(courseCard))));
 }
 function pageCourse(v, id){

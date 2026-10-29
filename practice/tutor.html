@@ -98,6 +98,17 @@ table.rec{border-collapse:collapse;font-size:14px;margin-top:6px;width:100%}
 table.rec th,table.rec td{text-align:left;padding:4px 8px;border-bottom:1px solid var(--line)}
 table.rec td.n{text-align:center;font-variant-numeric:tabular-nums}
 .endbtns{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.weak{display:flex;flex-direction:column;gap:6px;margin-top:14px}
+.weak .wi{display:flex;align-items:center;justify-content:space-between;gap:8px;font-size:14px;background:var(--gold-soft);border-radius:10px;padding:6px 6px 6px 10px}
+.weak .wi span b{display:block;font-size:14px} .weak .wi span small{color:var(--muted);font-size:12px}
+.boost .card{width:min(560px,100%);max-height:92vh;overflow:auto;display:flex;flex-direction:column;gap:14px;background:var(--surface);border-radius:var(--radius);padding:22px;box-shadow:0 20px 50px rgba(22,35,59,.25)}
+.modal{position:fixed;inset:0;background:rgba(22,35,59,.45);display:grid;place-items:center;padding:16px;z-index:60}
+.boost h2{font-size:24px}
+.boost .cheer{font-size:16px;line-height:1.6}
+.boost .tip{background:var(--teal-soft);border-radius:12px;padding:10px 14px;font-size:15px}
+.boost .dq{font-size:22px;background:var(--bg);border-radius:12px;padding:14px 16px;overflow-x:auto}
+.bprog{display:flex;gap:6px} .bprog i{flex:1;height:6px;border-radius:3px;background:var(--line)} .bprog i.ok{background:var(--green)} .bprog i.no{background:var(--gold)} .bprog i.now{background:var(--teal)}
+.fb2{border-radius:10px;padding:8px 12px;font-size:15px} .fb2.good{background:var(--green-soft)} .fb2.bad{background:var(--red-soft)} .fb2.hint{background:var(--gold-soft)}
 footer{text-align:center;color:var(--faint);font-size:13px;padding:24px}
 </style>
 </head>
@@ -123,6 +134,7 @@ footer{text-align:center;color:var(--faint);font-size:13px;padding:24px}
           <option value="type">Typing only</option>
         </select>
       </div>
+      <div class="weak" id="weak"></div>
     </aside>
     <section class="card main">
       <div class="problem"><div class="q" id="q"></div><div class="ladder" id="ladder"></div></div>
@@ -274,7 +286,7 @@ const BANK=[
   hints:["Divide by $5$.","$25 \\div 5$","$x = 5$"],show:"$x = 5$",
   choices:[["$x = 5$",1,"Check: $3(5) + 2(5) - 4 = 21$ ✓"],["$x = 20$",0,"That's $25 - 5$. Divide."],["$x = 125$",0,"That's $25 \\times 5$. Divide."]]}]},
 {level:"Level 4 · Combine & distribute",id:"m2",eq:"7 + 2(x - 1) = 19",verify:["7+2(x-1)-19",{x:7}],steps:[
- {ask:"First distribute: $2(x - 1) = \;?$",check:{type:"expr",value:"2x-2",form:"expanded"},
+ {ask:"First distribute: $2(x - 1) = \\;?$",check:{type:"expr",value:"2x-2",form:"expanded"},
   hints:["Multiply $2$ by each term inside.","$2 \\cdot x$ and $2 \\cdot (-1)$.","$2x - 2$."],show:"$2(x - 1) = 2x - 2$",
   choices:[["$2x - 2$",1,"Yes."],["$9(x - 1)$",0,"You can't add $7 + 2$ first: multiplication comes before addition."],["$2x - 1$",0,"Multiply the $2$ by BOTH terms."],["$2x + 2$",0,"$2 \\times (-1) = -2$."]],mistakes:[["9(x-1)","Order of operations: the $2$ multiplies $(x - 1)$ before anything is added."]]},
  {ask:"Now $7 + 2x - 2 = 19$. Combine the numbers on the left. What is the new equation?",check:{type:"expr",value:"2x+5=19",form:"combined"},
@@ -287,7 +299,7 @@ const BANK=[
   hints:["Divide by $2$.","$14 \\div 2$","$x = 7$"],show:"$x = 7$",
   choices:[["$x = 7$",1,"Check: $7 + 2(7 - 1) = 19$ ✓"],["$x = 12$",0,"That's $14 - 2$. Divide."],["$x = 28$",0,"That's $14 \\times 2$. Divide."]]}]},
 {level:"Level 4 · Combine & distribute",id:"m3",eq:"4(x + 2) - x = 23",verify:["4(x+2)-x-23",{x:5}],steps:[
- {ask:"First distribute: $4(x + 2) = \;?$",check:{type:"expr",value:"4x+8",form:"expanded"},
+ {ask:"First distribute: $4(x + 2) = \\;?$",check:{type:"expr",value:"4x+8",form:"expanded"},
   hints:["Multiply $4$ by each term.","$4 \\cdot x$ and $4 \\cdot 2$.","$4x + 8$."],show:"$4(x + 2) = 4x + 8$",
   choices:[["$4x + 8$",1,"Yes."],["$4x + 2$",0,"Multiply the $4$ by BOTH terms."],["$x + 8$",0,"Multiply $x$ by $4$ too."],["$4x + 6$",0,"$4 \\times 2 = 8$."]]},
  {ask:"Now $4x + 8 - x = 23$. Combine like terms. What is the new equation?",check:{type:"expr",value:"3x+8=23",form:"combined"},
@@ -300,7 +312,7 @@ const BANK=[
   hints:["Divide by $3$.","$15 \\div 3$","$x = 5$"],show:"$x = 5$",
   choices:[["$x = 5$",1,"Check: $4(5 + 2) - 5 = 23$ ✓"],["$x = 12$",0,"That's $15 - 3$. Divide."],["$x = 45$",0,"That's $15 \\times 3$. Divide."]]}]},
 {level:"Level 4 · Combine & distribute",id:"m4",eq:"2x + 3(x - 4) = 18",verify:["2x+3(x-4)-18",{x:6}],steps:[
- {ask:"First distribute: $3(x - 4) = \;?$",check:{type:"expr",value:"3x-12",form:"expanded"},
+ {ask:"First distribute: $3(x - 4) = \\;?$",check:{type:"expr",value:"3x-12",form:"expanded"},
   hints:["Multiply $3$ by each term inside.","$3 \\cdot x$ and $3 \\cdot (-4)$.","$3x - 12$."],show:"$3(x - 4) = 3x - 12$",
   choices:[["$3x - 12$",1,"Yes."],["$5(x - 4)$",0,"You can't add $2x$ and $3$ — the $3$ multiplies the parentheses first."],["$3x - 4$",0,"Multiply the $3$ by BOTH terms."],["$3x + 12$",0,"$3 \\times (-4) = -12$."]]},
  {ask:"Now $2x + 3x - 12 = 18$. Combine like terms. What is the new equation?",check:{type:"expr",value:"5x-12=18",form:"combined"},
@@ -313,7 +325,7 @@ const BANK=[
   hints:["Divide by $5$.","$30 \\div 5$","$x = 6$"],show:"$x = 6$",
   choices:[["$x = 6$",1,"Check: $2(6) + 3(6 - 4) = 18$ ✓"],["$x = 25$",0,"That's $30 - 5$. Divide."],["$x = 150$",0,"That's $30 \\times 5$. Divide."]]}]},
 {level:"Level 4 · Combine & distribute",id:"m5",eq:"-2(x + 1) + 4x = 14",verify:["-2(x+1)+4x-14",{x:8}],steps:[
- {ask:"First distribute: $-2(x + 1) = \;?$",check:{type:"expr",value:"-2x-2",form:"expanded"},
+ {ask:"First distribute: $-2(x + 1) = \\;?$",check:{type:"expr",value:"-2x-2",form:"expanded"},
   hints:["Multiply $-2$ by each term inside.","$-2 \\cdot x$ and $-2 \\cdot 1$.","$-2x - 2$."],show:"$-2(x + 1) = -2x - 2$",
   choices:[["$-2x - 2$",1,"Yes — the negative goes to both terms."],["$-2x + 1$",0,"Multiply $-2$ by the $1$ too."],["$-2x + 2$",0,"$-2 \\times 1 = -2$."],["$2x - 2$",0,"$-2 \\times x = -2x$."]],mistakes:[["-2x+2","$-2 \\times (+1) = -2$. The sign carries to every term."]]},
  {ask:"Now $-2x - 2 + 4x = 14$. Combine like terms. What is the new equation?",check:{type:"expr",value:"2x-2=14",form:"combined"},
@@ -339,7 +351,7 @@ const BANK=[
   hints:["Divide by $2$.","$12 \\div 2$","$x = 6$"],show:"$x = 6$",
   choices:[["$x = 6$",1,"Check: $6(6) - 3 = 33$ and $4(6) + 9 = 33$ ✓"],["$x = 10$",0,"That's $12 - 2$. Divide."],["$x = 24$",0,"That's $12 \\times 2$. Divide."]]}]},
 {level:"Level 5 · Both sides & fractions",id:"m7",eq:"5(x - 2) = 3x + 4",verify:["5(x-2)-(3x+4)",{x:7}],steps:[
- {ask:"First distribute: $5(x - 2) = \;?$",check:{type:"expr",value:"5x-10",form:"expanded"},
+ {ask:"First distribute: $5(x - 2) = \\;?$",check:{type:"expr",value:"5x-10",form:"expanded"},
   hints:["Multiply $5$ by each term.","$5 \\cdot x$ and $5 \\cdot (-2)$.","$5x - 10$."],show:"$5(x - 2) = 5x - 10$",
   choices:[["$5x - 10$",1,"Yes."],["$5x - 2$",0,"Multiply the $5$ by BOTH terms."],["$5x + 10$",0,"$5 \\times (-2) = -10$."],["$x - 10$",0,"Multiply $x$ by $5$ too."]]},
  {ask:"Now $5x - 10 = 3x + 4$. Subtract $3x$ from both sides. What is the new equation?",check:{type:"expr",value:"2x-10=4",form:"oneside"},
@@ -352,10 +364,10 @@ const BANK=[
   hints:["Divide by $2$.","$14 \\div 2$","$x = 7$"],show:"$x = 7$",
   choices:[["$x = 7$",1,"Check: $5(5) = 25$ and $3(7) + 4 = 25$ ✓"],["$x = 12$",0,"That's $14 - 2$. Divide."],["$x = 28$",0,"That's $14 \\times 2$. Divide."]]}]},
 {level:"Level 5 · Both sides & fractions",id:"m8",eq:"3(2x - 1) = 2(x + 5) + 3",verify:["3(2x-1)-(2(x+5)+3)",{x:4}],steps:[
- {ask:"Distribute the left side: $3(2x - 1) = \;?$",check:{type:"expr",value:"6x-3",form:"expanded"},
+ {ask:"Distribute the left side: $3(2x - 1) = \\;?$",check:{type:"expr",value:"6x-3",form:"expanded"},
   hints:["Multiply $3$ by each term.","$3 \\cdot 2x$ and $3 \\cdot (-1)$.","$6x - 3$."],show:"$3(2x - 1) = 6x - 3$",
   choices:[["$6x - 3$",1,"Yes."],["$6x - 1$",0,"Multiply the $3$ by BOTH terms."],["$5x - 3$",0,"$3 \\cdot 2x = 6x$ — multiply, don't add."],["$6x + 3$",0,"$3 \\times (-1) = -3$."]]},
- {ask:"Simplify the right side: $2(x + 5) + 3 = \;?$",check:{type:"expr",value:"2x+13",form:"combined"},
+ {ask:"Simplify the right side: $2(x + 5) + 3 = \\;?$",check:{type:"expr",value:"2x+13",form:"combined"},
   hints:["Distribute first: $2(x + 5)$.","$2x + 10 + 3$.","$2x + 13$."],show:"$2(x + 5) + 3 = 2x + 10 + 3 = 2x + 13$",
   choices:[["$2x + 13$",1,"Right."],["$2x + 8$",0,"$2 \\times 5 = 10$, then add $3$."],["$2x + 10$",0,"Don't forget the $+3$."]]},
  {ask:"Now $6x - 3 = 2x + 13$. Subtract $2x$ from both sides. What is the new equation?",check:{type:"expr",value:"4x-3=13",form:"oneside"},
@@ -471,7 +483,7 @@ function ladder(){ const l=$("ladder"); l.innerHTML=""; P.steps.forEach((s,i)=>{
   x.className=(i<idx||finished)?(r.shown?"shown":"done"):i===idx?"now":""; x.title="Step "+(i+1); l.appendChild(x); }); }
 function load(p){
   P=p; idx=0; wrong=0; hintLevel=0; finished=false; record=P.steps.map(()=>({wrong:0,hints:0,shown:false,picks:[]}));
-  P.steps.forEach(s=>{ s._order=null; (s.choices||[]).forEach(c=>c._picked=false); });
+  P.steps.forEach(s=>{ s._order=null; s._offered=false; (s.choices||[]).forEach(c=>c._picked=false); });
   chat.innerHTML=""; $("q").textContent="Solve $"+P.eq+"$"; render($("q")); padClear();
   addMsg("tutor","Let's solve this one step at a time. "+P.steps[0].ask);
   buildList(); ladder(); renderChoices(); ans.value=""; $("preview").textContent="";
@@ -503,6 +515,7 @@ function pick(c){
   if(c[1]){ correct(c[2]||PRAISE[0]); return; }
   c._picked=true; wrong++; record[idx].wrong++; record[idx].picks.push(c[0]);
   addMsg("tutor bad",c[2]||"Not quite.","Not yet");
+  if(noteMiss()) return;
   if(wrong>=3){ reveal(true); return; } renderChoices();
 }
 function submit(){
@@ -516,6 +529,7 @@ function submit(){
   wrong++; record[idx].wrong++; record[idx].picks.push(text);
   const h=s.hints[Math.min(wrong,s.hints.length)-1];
   addMsg("tutor bad",m?m[1]:"Not quite. "+(h||""),"Not yet");
+  if(noteMiss()) return;
   if(wrong>=3){ reveal(true); return; } renderChoices();
 }
 function hint(){ const s=P.steps[idx]; if(hintLevel>=s.hints.length) return; hintLevel++; record[idx].hints++; addMsg("tutor hint",s.hints[hintLevel-1],"Hint "+hintLevel); setControls(); }
@@ -528,13 +542,77 @@ function finish(){
   addMsg("tutor good",clean_?"You solved it! 🎉":"Done! Try this one again later to do it on your own.","Finished");
   const d=addMsg("tutor","Your steps:");
   const tb=document.createElement("table"); tb.className="rec"; tb.innerHTML="<tr><th>Step</th><th>Wrong</th><th>Hints</th><th>Shown</th><th>Wrong answers</th></tr>";
+  const boosts=[...new Set(record.map(r=>r.boost).filter(Boolean))];
   record.forEach((r,i)=>{ const tr=document.createElement("tr"); tr.innerHTML=`<td>${i+1}</td><td class="n">${r.wrong}</td><td class="n">${r.hints}</td><td class="n">${r.shown?"✓":""}</td><td></td>`; tr.lastChild.textContent=r.picks.join("; "); tb.appendChild(tr); });
   d.appendChild(tb); render(tb);
+  if(boosts.length) d.insertAdjacentHTML("beforeend",`<p style="margin:8px 0 0">💪 Skill boost${boosts.length>1?"s":""} done: <b>${boosts.join(", ")}</b></p>`);
   const bx=document.createElement("div"); bx.className="endbtns"; const i=BANK.indexOf(P);
   if(i<BANK.length-1&&BANK[i+1].unit===P.unit){ const b=document.createElement("button"); b.className="btn teal"; b.textContent="Next problem →"; b.onclick=()=>load(BANK[i+1]); bx.appendChild(b); }
   const r=document.createElement("button"); r.className="btn ghost"; r.textContent="Try again"; r.onclick=()=>load(P); bx.appendChild(r);
   d.appendChild(bx); chat.scrollTop=chat.scrollHeight;
 }
+/* ---- skill boost: notice a weak skill, practice it, come back ---- */
+const rnd=(a,b)=>a+Math.floor(Math.random()*(b-a+1)); const nz=(a,b)=>{let x;do{x=rnd(a,b)}while(x===0);return x}; const pick1=a=>a[Math.floor(Math.random()*a.length)];
+const sgn=(k)=>k>=0?"+ "+k:"- "+(-k); const co=(a)=>a===1?"":a===-1?"-":String(a);
+const SKILLS={
+ distribute:{name:"Distributing",tip:"Multiply the number outside by <b>every</b> term inside the parentheses — and keep the signs.",ex:"$-3(x - 4) = -3x + 12$",
+  gen:()=>{const a=pick1([2,3,4,5,6,-2,-3,-4,-5]),b=nz(-9,9);return{q:`Distribute: $${a}(x ${sgn(b)})$`,check:{type:"expr",value:`${a}*x${a*b>=0?"+":""}${a*b}`,form:"expanded"},ans:`$${a}x ${sgn(a*b)}$`,hint:`Multiply $${a}$ by $x$, then $${a}$ by $${b}$.`}}},
+ combine:{name:"Combining like terms",tip:"Add or subtract the numbers in front of $x$. The $x$ stays the same.",ex:"$4x - x + 3 = 3x + 3$",
+  gen:()=>{let p,q;do{p=nz(-7,9);q=nz(-7,9)}while(p+q===0);const c=nz(-9,9);return{q:`Simplify: $${co(p)}x ${q<0?"- "+co(-q):"+ "+co(q)}x ${sgn(c)}$`,check:{type:"expr",value:`${p+q}*x${c>=0?"+":""}${c}`,form:"combined"},ans:`$${co(p+q)}x ${sgn(c)}$`,hint:`Add the coefficients: $${p} + (${q})$.`}}},
+ inverse:{name:"Undoing with opposite operations",tip:"Do the <b>opposite</b> operation to both sides: $+$ ↔ $-$, $\\times$ ↔ $\\div$.",ex:"$x + 7 = 12 \\Rightarrow x = 12 - 7 = 5$",
+  gen:()=>{const k=pick1([0,1,2]);if(k<2){const b=nz(-9,9),x=nz(-9,12);return{q:`Solve $x ${sgn(b)} = ${x+b}$`,check:{type:"set",values:[String(x)]},ans:`$x = ${x}$`,hint:`Undo $${sgn(b).replace(" ","")}$ by doing the opposite to both sides.`}}const a=rnd(2,9),x=nz(-9,9);return{q:`Solve $${a}x = ${a*x}$`,check:{type:"set",values:[String(x)]},ans:`$x = ${x}$`,hint:`Divide both sides by $${a}$.`}}},
+ negatives:{name:"Dividing with negatives",tip:"Same signs → positive. Different signs → negative.",ex:"$-3x = 12 \\Rightarrow x = \\frac{12}{-3} = -4$",
+  gen:()=>{const a=-rnd(2,9),x=nz(-9,9);return{q:`Solve $${a}x = ${a*x}$`,check:{type:"set",values:[String(x)]},ans:`$x = ${x}$`,hint:`Divide both sides by $${a}$. ${a*x>0?"Positive":"Negative"} ÷ negative is ${a*x>0?"negative":"positive"}.`}}},
+ fractions:{name:"Clearing fractions",tip:"Multiply <b>both sides</b> by the denominator to get rid of the fraction.",ex:"$\\frac{x}{4} = 3 \\Rightarrow x = 12$",
+  gen:()=>{const a=rnd(2,9),b=nz(-9,9),c=pick1([0,0,1]);if(!c)return{q:`Solve $\\frac{x}{${a}} = ${b}$`,check:{type:"set",values:[String(a*b)]},ans:`$x = ${a*b}$`,hint:`Multiply both sides by $${a}$.`};const d=nz(-6,6);return{q:`Solve $\\frac{x ${sgn(d)}}{${a}} = ${b}$`,check:{type:"set",values:[String(a*b-d)]},ans:`$x = ${a*b-d}$`,hint:`Multiply both sides by $${a}$ first: $x ${sgn(d)} = ${a*b}$.`}}},
+ bothsides:{name:"Variables on both sides",tip:"Move the <b>smaller</b> $x$ term by subtracting it from both sides.",ex:"$5x = 2x + 9 \\Rightarrow 3x = 9 \\Rightarrow x = 3$",
+  gen:()=>{const q=rnd(1,5),p=q+rnd(1,4),x=nz(-6,6),c=(p-q)*x;return{q:`Solve $${co(p)}x = ${co(q)}x ${sgn(c)}$`,check:{type:"set",values:[String(x)]},ans:`$x = ${x}$`,hint:`Subtract $${co(q)}x$ from both sides: $${co(p-q)}x = ${c}$.`}}}
+};
+function skillOf(st_){ const c=st_.check;
+  if(c.form==="expanded") return "distribute"; if(c.form==="combined") return "combine"; if(c.form==="oneside") return "bothsides";
+  if(c.form==="nofrac"||(c.type==="text"&&c.keywords.some(k=>/multiply|times/.test(k)))) return "fractions";
+  if(c.type==="set"&&Number(c.values[0])<0&&/-\d+x|-x/.test(P.eq)) return "negatives";
+  return "inverse"; }
+let SK={}; try{ SK=JSON.parse(localStorage.getItem("fm-tutor-skills")||"{}"); }catch(e){}
+const saveSK=()=>{ try{ localStorage.setItem("fm-tutor-skills",JSON.stringify(SK)); }catch(e){} };
+function noteMiss(){
+  const step=P.steps[idx], k=skillOf(step); SK[k]=SK[k]||{miss:0,base:0,boosts:0};
+  if(wrong===1){ SK[k].miss++; saveSK(); weak(); }
+  if(step._offered) return false;
+  if(wrong>=2||SK[k].miss-SK[k].base>=2){ step._offered=true; renderChoices(); openBoost(k,true); return true; }
+  return false;
+}
+function weak(){ const w=$("weak"); w.innerHTML=""; const list=Object.keys(SK).filter(k=>SK[k].miss>0&&SKILLS[k]).sort((a,b)=>SK[b].miss-SK[a].miss).slice(0,3);
+  if(!list.length) return; w.insertAdjacentHTML("beforeend",'<span class="label">My skills to work on</span>');
+  list.forEach(k=>{ const d=document.createElement("div"); d.className="wi"; d.innerHTML=`<span><b>${SKILLS[k].name}</b><small>${SK[k].miss} miss${SK[k].miss>1?"es":""}${SK[k].boosts?" · practiced ✓":""}</small></span>`; const b=document.createElement("button"); b.className="btn sm teal"; b.textContent="Practice"; b.onclick=()=>openBoost(k,false); d.appendChild(b); w.appendChild(d); }); render(w); }
+function openBoost(k,fromProblem){
+  const S=SKILLS[k], N=4; let i=0, res=[], cur=null, tries=0;
+  const m=document.createElement("div"); m.className="modal boost"; document.body.appendChild(m);
+  const intro=()=>{ m.innerHTML=`<div class="card" role="dialog" aria-modal="true"><span class="label">Skill boost</span><h2>Let's power up: ${S.name}</h2>
+    <div class="cheer">${fromProblem?`You're working hard on this — and <b>${S.name.toLowerCase()}</b> is the part that keeps tripping you up. That's completely normal, and it's one of the quickest skills to fix!`:`Great idea to practice <b>${S.name.toLowerCase()}</b> on its own.`} Let's do <b>${N} quick warm-ups</b> (about 2 minutes)${fromProblem?", then come right back to your problem. Your work is saved.":"."}</div>
+    <div class="tip"><b>Remember:</b> ${S.tip}<br>Example: ${S.ex}</div>
+    <div class="row"><button class="btn teal" id="bGo">Let's do it 💪</button>${fromProblem?'<button class="btn ghost" id="bSkip">Keep going on my problem</button>':'<button class="btn ghost" id="bSkip">Not now</button>'}</div></div>`;
+    render(m); m.querySelector("#bGo").onclick=()=>{ i=0; res=[]; ask(); }; m.querySelector("#bSkip").onclick=()=>{ SK[k].base=SK[k].miss; saveSK(); close(false); }; m.querySelector("#bGo").focus(); };
+  const ask=()=>{ cur=S.gen(); tries=0; m.innerHTML=`<div class="card" role="dialog" aria-modal="true"><span class="label">Skill boost · ${S.name} · ${i+1} of ${N}</span><div class="bprog">${Array.from({length:N},(_,j)=>`<i class="${j<res.length?(res[j]?"ok":"no"):j===i?"now":""}"></i>`).join("")}</div>
+    <div class="dq">${cur.q}</div><div class="row"><input type="text" id="bA" autocomplete="off" placeholder="Your answer" aria-label="Your answer"><button class="btn" id="bC">Check</button><button class="btn ghost" id="bH">Hint</button></div><div id="bF"></div></div>`;
+    render(m); const inp=m.querySelector("#bA"); inp.focus();
+    const fb=(c,h)=>{ m.querySelector("#bF").innerHTML=`<div class="fb2 ${c}">${h}</div>`; render(m.querySelector("#bF")); };
+    const nextBtn=()=>{ const b=document.createElement("button"); b.className="btn teal"; b.style.marginTop="8px"; b.textContent=i+1<N?"Next →":"Finish"; b.onclick=()=>{ i++; i<N?ask():done(); }; m.querySelector("#bF").appendChild(b); b.focus(); inp.disabled=true; m.querySelector("#bC").disabled=true; m.querySelector("#bH").disabled=true; };
+    const go=()=>{ const v=inp.value.trim(); if(!v||inp.disabled) return; const r=localCheck({check:cur.check},v);
+      if(r===true){ res.push(tries===0); fb("good",pick1(["Nice!","Yes!","Exactly.","You've got it."])+" "+cur.ans); nextBtn(); return; }
+      if(r===null){ fb("hint","I couldn't read that — try something like 3x - 12 or x = 4."); return; }
+      tries++; if(tries<2) fb("bad","Not yet. "+cur.hint); else { res.push(false); fb("hint","The answer is "+cur.ans+". You'll get the next one!"); nextBtn(); } };
+    m.querySelector("#bC").onclick=go; inp.addEventListener("keydown",e=>{ if(e.key==="Enter"){ e.preventDefault(); go(); } }); m.querySelector("#bH").onclick=()=>fb("hint",cur.hint); };
+  const done=()=>{ const score=res.filter(Boolean).length; SK[k].base=SK[k].miss; SK[k].boosts++; saveSK(); weak();
+    m.innerHTML=`<div class="card" role="dialog" aria-modal="true"><span class="label">Skill boost complete</span><h2>${score>=3?"Awesome work! 🎉":"Good effort — practice makes it stick!"}</h2>
+    <div class="cheer">You got <b>${score} of ${N}</b> right on the first try.${fromProblem?" Now let's go back and use it on your problem.":""}</div>
+    <div class="row"><button class="btn teal" id="bBack">${fromProblem?"Back to my problem →":"Done"}</button><button class="btn ghost" id="bMore">4 more</button></div></div>`;
+    m.querySelector("#bBack").onclick=()=>close(true); m.querySelector("#bMore").onclick=()=>{ i=0; res=[]; ask(); }; m.querySelector("#bBack").focus(); };
+  const close=(practiced)=>{ m.remove(); if(fromProblem&&!finished){ if(practiced){ wrong=0; hintLevel=0; record[idx].boost=S.name; addMsg("tutor good","Welcome back! Now try this step again: "+P.steps[idx].ask,"Skill boosted"); } renderChoices(); ans.focus(); } };
+  m.addEventListener("keydown",e=>{ if(e.key==="Escape") close(false); });
+  intro();
+}
+
 /* ---- scratch pad ---- */
 const cv=$("padCanvas"), cx=cv.getContext("2d"); let strokes=[], cur=null, tool="pen";
 function padSize(){ const r=cv.getBoundingClientRect(); if(!r.width) return; const d=window.devicePixelRatio||1; cv.width=Math.round(r.width*d); cv.height=Math.round(r.height*d); cx.setTransform(d,0,0,d,0,0); padDraw(); }
@@ -561,7 +639,7 @@ ans.addEventListener("input",()=>{ const v=ans.value.trim(),pv=$("preview"); if(
   try{ const tex=clean(v).split("=").map(x=>math.parse(x).toTex({parenthesis:"auto",implicit:"hide"})).join(" = "); pv.innerHTML='<span class="pl">You wrote</span><span class="pm"></span>'; katex.render(tex,pv.querySelector(".pm"),{throwOnError:false}); }catch(e){ pv.textContent=""; } });
 $("sendBtn").onclick=submit; $("hintBtn").onclick=hint; $("showBtn").onclick=()=>reveal(false);
 $("mode").value=mode; $("mode").onchange=e=>{ mode=e.target.value; try{ localStorage.setItem("fm-tutor-mode",mode); }catch(x){} if(P&&!finished) renderChoices(); };
-window.addEventListener("load",()=>{ const h=location.hash.slice(1); load(BANK.find(p=>p.id===h)||BANK.find(p=>!progress[p.id])||BANK[0]); });
+window.addEventListener("load",()=>{ weak(); const h=location.hash.slice(1); load(BANK.find(p=>p.id===h)||BANK.find(p=>!progress[p.id])||BANK[0]); });
 </script>
 </body>
 </html>

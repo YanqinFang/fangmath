@@ -84,7 +84,15 @@ header.top .in{max-width:1120px;margin:0 auto;padding:0 20px;height:64px;display
 .btn.teal{background:var(--teal)}
 .btn:disabled{opacity:.45;cursor:not-allowed}
 input:focus,button:focus-visible,select:focus{outline:2px solid var(--teal);outline-offset:1px}
-.preview{font-size:14px;color:var(--muted);min-height:1.3em}
+.preview{font-size:18px;color:var(--ink);min-height:1.3em}
+.preview .pl{font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--faint);font-weight:700;margin-right:8px}
+.pad{display:flex;flex-direction:column;gap:8px}
+.padbar{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.tool{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:6px 12px;font-size:14px;font-weight:600;cursor:pointer}
+.tool.on{background:var(--navy);border-color:var(--navy);color:#fff}
+.padnote{font-size:13px;color:var(--faint)}
+.padwrap{border:1px solid var(--line);border-radius:14px;overflow:hidden;background-color:#fff;background-image:linear-gradient(#EEF1F6 1px,transparent 1px),linear-gradient(90deg,#EEF1F6 1px,transparent 1px);background-size:24px 24px}
+#padCanvas{display:block;width:100%;height:280px;touch-action:none;cursor:crosshair}
 .howto{font-size:13px;color:var(--faint)}
 table.rec{border-collapse:collapse;font-size:14px;margin-top:6px;width:100%}
 table.rec th,table.rec td{text-align:left;padding:4px 8px;border-bottom:1px solid var(--line)}
@@ -126,6 +134,18 @@ footer{text-align:center;color:var(--faint);font-size:13px;padding:24px}
           <button class="btn" id="sendBtn">Check</button>
           <button class="btn ghost" id="hintBtn">Hint</button>
           <button class="btn ghost" id="showBtn" hidden>Show me</button>
+          <button class="btn ghost" id="padBtn" aria-expanded="false">✏️ Scratch pad</button>
+        </div>
+        <div class="pad" id="pad" hidden>
+          <div class="padbar">
+            <button class="tool on" id="penBtn" type="button">Pen</button>
+            <button class="tool" id="eraseBtn" type="button">Eraser</button>
+            <button class="tool" id="undoBtn" type="button">Undo</button>
+            <button class="tool" id="clearBtn" type="button">Clear</button>
+            <button class="tool" id="saveBtn" type="button">Save picture</button>
+            <span class="padnote">Show your work here, then type or pick your answer.</span>
+          </div>
+          <div class="padwrap" id="padwrap"><canvas id="padCanvas" aria-label="Scratch pad for writing your work"></canvas></div>
         </div>
         <div class="preview" id="preview"></div>
         <div class="howto" id="howto">Type like a calculator: <b>3x-12</b>, <b>x/4</b>, <b>x^2</b>. Just a number is fine too: <b>12</b> or <b>x = 12</b>.</div>
@@ -452,7 +472,7 @@ function ladder(){ const l=$("ladder"); l.innerHTML=""; P.steps.forEach((s,i)=>{
 function load(p){
   P=p; idx=0; wrong=0; hintLevel=0; finished=false; record=P.steps.map(()=>({wrong:0,hints:0,shown:false,picks:[]}));
   P.steps.forEach(s=>{ s._order=null; (s.choices||[]).forEach(c=>c._picked=false); });
-  chat.innerHTML=""; $("q").textContent="Solve $"+P.eq+"$"; render($("q"));
+  chat.innerHTML=""; $("q").textContent="Solve $"+P.eq+"$"; render($("q")); padClear();
   addMsg("tutor","Let's solve this one step at a time. "+P.steps[0].ask);
   buildList(); ladder(); renderChoices(); ans.value=""; $("preview").textContent="";
   try{ history.replaceState(null,"","#"+P.id); }catch(e){}
@@ -515,10 +535,30 @@ function finish(){
   const r=document.createElement("button"); r.className="btn ghost"; r.textContent="Try again"; r.onclick=()=>load(P); bx.appendChild(r);
   d.appendChild(bx); chat.scrollTop=chat.scrollHeight;
 }
+/* ---- scratch pad ---- */
+const cv=$("padCanvas"), cx=cv.getContext("2d"); let strokes=[], cur=null, tool="pen";
+function padSize(){ const r=cv.getBoundingClientRect(); if(!r.width) return; const d=window.devicePixelRatio||1; cv.width=Math.round(r.width*d); cv.height=Math.round(r.height*d); cx.setTransform(d,0,0,d,0,0); padDraw(); }
+function drawStroke(st){ cx.save(); cx.globalCompositeOperation=st.erase?"destination-out":"source-over"; cx.strokeStyle="#16233B"; cx.lineWidth=st.erase?22:2.6; cx.lineCap="round"; cx.lineJoin="round";
+  cx.beginPath(); st.pts.forEach((q,i)=>{ if(i===0) cx.moveTo(q[0],q[1]); else { const pr=st.pts[i-1]; cx.quadraticCurveTo(pr[0],pr[1],(pr[0]+q[0])/2,(pr[1]+q[1])/2); } }); if(st.pts.length===1){ cx.lineTo(st.pts[0][0]+.1,st.pts[0][1]); } cx.stroke(); cx.restore(); }
+function padDraw(){ cx.clearRect(0,0,cv.width,cv.height); strokes.forEach(drawStroke); if(cur) drawStroke(cur); }
+function padClear(){ strokes=[]; cur=null; padDraw(); }
+const pt=e=>{ const r=cv.getBoundingClientRect(); return [e.clientX-r.left,e.clientY-r.top]; };
+cv.addEventListener("pointerdown",e=>{ e.preventDefault(); cv.setPointerCapture(e.pointerId); cur={erase:tool==="erase",pts:[pt(e)]}; padDraw(); });
+cv.addEventListener("pointermove",e=>{ if(!cur) return; e.preventDefault(); (e.getCoalescedEvents?e.getCoalescedEvents():[e]).forEach(ev=>cur.pts.push(pt(ev))); padDraw(); });
+const endStroke=()=>{ if(cur){ strokes.push(cur); cur=null; padDraw(); } };
+cv.addEventListener("pointerup",endStroke); cv.addEventListener("pointercancel",endStroke);
+const setTool=t=>{ tool=t; $("penBtn").classList.toggle("on",t==="pen"); $("eraseBtn").classList.toggle("on",t==="erase"); };
+$("penBtn").onclick=()=>setTool("pen"); $("eraseBtn").onclick=()=>setTool("erase");
+$("undoBtn").onclick=()=>{ strokes.pop(); padDraw(); }; $("clearBtn").onclick=padClear;
+$("padBtn").onclick=()=>{ const pad=$("pad"); pad.hidden=!pad.hidden; $("padBtn").setAttribute("aria-expanded",String(!pad.hidden)); if(!pad.hidden) padSize(); };
+window.addEventListener("resize",()=>{ if(!$("pad").hidden) padSize(); });
+$("saveBtn").onclick=()=>{ const r=cv.getBoundingClientRect(), d=2, out=document.createElement("canvas"); out.width=r.width*d; out.height=(r.height+50)*d; const o=out.getContext("2d"); o.scale(d,d);
+  o.fillStyle="#fff"; o.fillRect(0,0,r.width,r.height+50); o.fillStyle="#16233B"; o.font="600 18px Inter, sans-serif"; o.fillText("Prof. Fang Math — Solve "+P.eq.replace(/\\frac\{([^}]*)\}\{([^}]*)\}/g,"($1)/($2)"),14,30);
+  o.drawImage(cv,0,50,r.width,r.height); const a=document.createElement("a"); a.download="my-work-"+P.id+".png"; a.href=out.toDataURL("image/png"); a.click(); };
 /* ---- events ---- */
 ans.addEventListener("keydown",e=>{ if(e.key==="Enter"){ e.preventDefault(); submit(); } });
 ans.addEventListener("input",()=>{ const v=ans.value.trim(),pv=$("preview"); if(!v||!window.katex){ pv.textContent=""; return; }
-  try{ const tex=clean(v).split("=").map(x=>math.parse(x).toTex({parenthesis:"auto",implicit:"hide"})).join(" = "); katex.render(tex,pv,{throwOnError:false}); }catch(e){ pv.textContent=""; } });
+  try{ const tex=clean(v).split("=").map(x=>math.parse(x).toTex({parenthesis:"auto",implicit:"hide"})).join(" = "); pv.innerHTML='<span class="pl">You wrote</span><span class="pm"></span>'; katex.render(tex,pv.querySelector(".pm"),{throwOnError:false}); }catch(e){ pv.textContent=""; } });
 $("sendBtn").onclick=submit; $("hintBtn").onclick=hint; $("showBtn").onclick=()=>reveal(false);
 $("mode").value=mode; $("mode").onchange=e=>{ mode=e.target.value; try{ localStorage.setItem("fm-tutor-mode",mode); }catch(x){} if(P&&!finished) renderChoices(); };
 window.addEventListener("load",()=>{ const h=location.hash.slice(1); load(BANK.find(p=>p.id===h)||BANK.find(p=>!progress[p.id])||BANK[0]); });

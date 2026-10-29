@@ -1,0 +1,331 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Quadratics at Your Level — Prof. Fang Math</title>
+<meta name="description" content="Algebra 2 quadratics practice in five levels, from Foundation to Competition, with a placement check, hints and worked solutions.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/mathjs@14.9.1/lib/browser/math.js"></script>
+<style>
+:root{
+  --bg:#FBF8F3; --surface:#FFFFFF; --ink:#16233B; --muted:#5B6474; --faint:#8C93A0; --line:#E8E2D8;
+  --navy:#1F3A68; --teal:#0F7C7C; --teal-soft:#DDF0EE; --gold:#C9962B; --gold-soft:#FBF1DC; --red:#B3261E; --red-soft:#FBE7E5; --green:#1E7A45; --green-soft:#DDF4E6;
+  --l1:#2E8B57; --l2:#0F7C7C; --l3:#1F3A68; --l4:#B7472A; --l5:#6A4BD8;
+  --radius:18px; --shadow:0 8px 26px rgba(22,35,59,.07);
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 Inter,system-ui,-apple-system,sans-serif;-webkit-font-smoothing:antialiased}
+a{color:var(--teal)}
+h1,h2,h3{font-family:Fraunces,Georgia,serif;font-weight:600;letter-spacing:-.01em;margin:0;line-height:1.15}
+button,input{font:inherit;color:inherit}
+[hidden]{display:none!important}
+header.top{position:sticky;top:0;z-index:40;background:rgba(255,255,255,.96);border-bottom:1px solid var(--line)}
+header.top .in{max-width:1120px;margin:0 auto;padding:0 20px;height:64px;display:flex;align-items:center;gap:24px}
+.brand{font-weight:700;font-size:19px;text-decoration:none;color:var(--ink);white-space:nowrap}
+.brand span{color:var(--teal)}
+.back{margin-left:auto;font-size:15px;text-decoration:none;color:var(--muted);font-weight:500}
+.wrap{max-width:1120px;margin:0 auto;padding:24px 20px 48px;display:flex;flex-direction:column;gap:20px}
+.intro h1{font-size:clamp(28px,4vw,40px)}
+.intro p{color:var(--muted);margin:6px 0 0;max-width:680px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:20px}
+.label{font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--faint);font-weight:700}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:10px 18px;border-radius:999px;font-weight:600;border:1px solid transparent;cursor:pointer;background:var(--navy);color:#fff;text-decoration:none}
+.btn.teal{background:var(--teal)} .btn.ghost{background:var(--surface);color:var(--ink);border-color:var(--line)}
+.btn.sm{padding:7px 14px;font-size:14px}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+button:focus-visible,input:focus{outline:2px solid var(--teal);outline-offset:1px}
+/* level legend */
+.legend{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px}
+@media (max-width:760px){.legend{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.lg{border-radius:12px;padding:10px 12px;background:var(--bg);border-left:4px solid var(--c)}
+.lg b{display:block;font-size:14px;color:var(--c)} .lg span{font-size:13px;color:var(--muted)}
+/* placement */
+.place{display:flex;flex-wrap:wrap;gap:14px;align-items:center;justify-content:space-between;background:linear-gradient(120deg,var(--teal-soft),#fff 70%);border:1.5px solid var(--teal)}
+.place .t b{font-family:Fraunces,Georgia,serif;font-size:20px;display:block}
+.place .t span{color:var(--muted);font-size:15px}
+.rec{font-weight:600;color:var(--teal)}
+/* topics */
+.topics{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+@media (max-width:760px){.topics{grid-template-columns:minmax(0,1fr)}}
+.topic{display:flex;flex-direction:column;gap:12px}
+.topic h2{font-size:22px}
+.idea{color:var(--muted);font-size:15px;margin:0}
+.example{background:var(--bg);border-radius:12px;padding:12px 14px;font-size:15px;overflow-x:auto}
+.example .q{font-size:17px;margin-bottom:4px}
+.pills{display:flex;flex-wrap:wrap;gap:6px}
+.pill{position:relative;border:1.5px solid var(--line);background:var(--surface);border-radius:999px;padding:6px 12px;font-size:13px;font-weight:600;cursor:pointer;color:var(--ink)}
+.pill:hover{border-color:var(--c)}
+.pill.on{background:var(--c);border-color:var(--c);color:#fff}
+.pill .n{font-weight:500;opacity:.75;margin-left:4px}
+.pill.star::after{content:"★";position:absolute;top:-8px;right:-4px;font-size:12px;color:var(--gold)}
+/* practice */
+.practice{display:flex;flex-direction:column;gap:14px;scroll-margin-top:80px}
+.phead{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between}
+.phead h2{font-size:24px}
+.problem{font-size:clamp(19px,2.6vw,24px);padding:16px 18px;border-radius:14px;background:var(--bg);overflow-x:auto;line-height:1.7}
+.row{display:flex;gap:8px;flex-wrap:wrap}
+.row input{flex:1 1 240px;border:1px solid var(--line);border-radius:999px;padding:11px 16px;background:var(--bg)}
+.preview{font-size:18px;min-height:1.4em}
+.preview .pl{font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--faint);font-weight:700;margin-right:8px}
+.howto{font-size:13px;color:var(--faint)}
+.fb{border-radius:12px;padding:10px 14px;font-size:15px;overflow-x:auto}
+.fb.good{background:var(--green-soft)} .fb.bad{background:var(--red-soft)} .fb.hint{background:var(--gold-soft)}
+.fb .tag{display:block;font-size:11px;text-transform:uppercase;letter-spacing:.08em;font-weight:700}
+.fb.good .tag{color:var(--green)} .fb.bad .tag{color:var(--red)} .fb.hint .tag{color:var(--gold)}
+.sol{margin:6px 0 0;padding-left:20px} .sol li{margin:2px 0}
+.suggest{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;border:1.5px dashed var(--c);border-radius:12px;padding:10px 14px}
+.streak{display:flex;gap:4px;align-items:center;font-size:13px;color:var(--faint)}
+.streak i{width:10px;height:10px;border-radius:50%;background:var(--line)} .streak i.ok{background:var(--green)} .streak i.no{background:var(--red)}
+/* modal quiz */
+.modal{position:fixed;inset:0;background:rgba(22,35,59,.45);display:grid;place-items:center;padding:16px;z-index:60}
+.modal .card{width:min(620px,100%);max-height:90vh;overflow:auto;display:flex;flex-direction:column;gap:14px}
+.qprog{display:flex;gap:6px} .qprog i{flex:1;height:6px;border-radius:3px;background:var(--line)} .qprog i.ok{background:var(--green)} .qprog i.no{background:var(--red)} .qprog i.now{background:var(--teal)}
+footer{text-align:center;color:var(--faint);font-size:13px;padding:24px}
+</style>
+</head>
+<body>
+<header class="top"><div class="in">
+  <a class="brand" href="../index.html#/">Prof. Fang <span>Math</span></a>
+  <a class="back" href="../index.html#/highschool">← Back to lessons</a>
+</div></header>
+
+<div class="wrap">
+  <div class="intro">
+    <span class="label">Algebra 2 · Quadratics</span>
+    <h1>Quadratics at Your Level</h1>
+    <p>Start from the simplest example, pick the level that fits you, and move up when you're ready. Every problem is new each time.</p>
+  </div>
+
+  <div class="legend" id="legend"></div>
+
+  <div class="card place">
+    <div class="t"><b>Not sure where to start?</b><span id="recText">Answer up to 5 questions and we'll suggest a level.</span></div>
+    <button class="btn teal" id="placeBtn">Take the 5-question check</button>
+  </div>
+
+
+  <div class="card practice" id="practice" hidden>
+    <div class="phead"><h2 id="pTitle"></h2><button class="btn ghost sm" id="closeP">All topics</button></div>
+    <div class="pills" id="pLevels"></div>
+    <div class="problem" id="pQ"></div>
+    <div class="row">
+      <input type="text" id="pAns" autocomplete="off" placeholder="Your answer" aria-label="Your answer">
+      <button class="btn" id="pCheck">Check</button>
+      <button class="btn ghost" id="pHint">Hint</button>
+      <button class="btn ghost" id="pShow">Show solution</button>
+      <button class="btn teal" id="pNext" hidden>Next problem →</button>
+    </div>
+    <div class="preview" id="pPrev"></div>
+    <div class="howto" id="pHow"></div>
+    <div id="pFb"></div>
+    <div id="pSuggest"></div>
+    <div class="streak" id="pStreak"></div>
+  </div>
+  <div class="topics" id="topics"></div>
+</div>
+<footer>© 2026 Prof. Fang Math</footer>
+
+<script>
+"use strict";
+/* ================= helpers ================= */
+const $=id=>document.getElementById(id);
+const rnd=(a,b)=>a+Math.floor(Math.random()*(b-a+1));
+const nz=(a,b)=>{let x;do{x=rnd(a,b)}while(x===0);return x};
+const pick=a=>a[Math.floor(Math.random()*a.length)];
+const gcd=(a,b)=>{a=Math.abs(a);b=Math.abs(b);while(b){[a,b]=[b,a%b]}return a};
+const isSq=n=>n>=0&&Math.round(Math.sqrt(n))**2===n;
+function frac(n,d){ if(d<0){n=-n;d=-d} const g=gcd(n,d)||1; n/=g; d/=g; return d===1?String(n):(n<0?"-":"")+"\\frac{"+Math.abs(n)+"}{"+d+"}"; }
+function term(c,v,first){ if(c===0) return ""; const s=c<0?(first?"-":" - "):(first?"":" + "); const a=Math.abs(c); return s+(v&&a===1?"":a)+v; }
+function poly(a,b,c,x="x"){ let s=term(a,x+"^2",true); s+=term(b,x,!s); s+=term(c,"",!s); return s||"0"; }
+function bin(h,x="x"){ return h===0?x:"("+x+(h>0?" - "+h:" + "+(-h))+")"; }
+function sq(h,x="x"){ return h===0?x+"^2":bin(h,x)+"^2"; }
+function coef(a){ return a===1?"":a===-1?"-":String(a); }
+function plus(k){ return k===0?"":k>0?" + "+k:" - "+(-k); }
+const LEVELS=[
+ {n:1,name:"Foundation",zh:"起步",desc:"Review the basics first",c:"var(--l1)"},
+ {n:2,name:"Basic",zh:"基础",desc:"Textbook examples",c:"var(--l2)"},
+ {n:3,name:"Standard",zh:"标准",desc:"School test level",c:"var(--l3)"},
+ {n:4,name:"Challenge",zh:"挑战",desc:"Honors / hard SAT",c:"var(--l4)"},
+ {n:5,name:"Competition",zh:"竞赛",desc:"AMC 10/12 style",c:"var(--l5)"}];
+const HOW={set:"Give every solution, separated by commas: 3, -2 · Use sqrt(5) for √5 and ± is fine: 2±sqrt(3) · Fractions: 3/2",number:"Type a number. Fractions like 9/4 are fine.",point:"Type the vertex as a point, like (2, -5)."};
+
+/* ================= problem generators =================
+   each returns {q, type, ans, ansTex, hint, sol:[steps], f?} */
+const TOPICS=[
+{id:"sqrt",title:"Solve by Square Roots",ex:{q:"Solve $x^2 = 25$.",sol:["Take the square root of both sides: $x = \\pm\\sqrt{25}$.","$x = 5$ or $x = -5$."]},idea:"If $x^2 = k$, then $x = \\pm\\sqrt{k}$ — always two answers when $k > 0$.",
+ gen:[
+ ()=>{const n=rnd(2,12),N=n*n;return{q:`Solve $x^2 = ${N}$.`,type:"set",ans:[n,-n],ansTex:`x = \\pm ${n}`,f:x=>x*x-N,
+   hint:`Which number times itself is $${N}$? Don't forget the negative one.`,sol:[`Take the square root of both sides: $x = \\pm\\sqrt{${N}}$.`,`$x = ${n}$ or $x = -${n}$.`]}},
+ ()=>{const a=rnd(2,5),n=rnd(2,6),R=a*n*n;return{q:`Solve $${a}x^2 = ${R}$.`,type:"set",ans:[n,-n],ansTex:`x = \\pm ${n}`,f:x=>a*x*x-R,
+   hint:`Get $x^2$ alone first: divide both sides by $${a}$.`,sol:[`Divide by $${a}$: $x^2 = ${n*n}$.`,`Square root: $x = \\pm ${n}$.`]}},
+ ()=>{const h=nz(-6,6),k=rnd(1,6);return{q:`Solve $${sq(h)} = ${k*k}$.`,type:"set",ans:[h+k,h-k],ansTex:`x = ${h+k}$ or $x = ${h-k}`,f:x=>(x-h)**2-k*k,
+   hint:`Take the square root of both sides: $${bin(h).replace(/[()]/g,"")} = \\pm ${k}$.`,sol:[`Square root: $${bin(h).replace(/[()]/g,"")} = \\pm ${k}$.`,`$x = ${h} + ${k} = ${h+k}$ or $x = ${h} - ${k} = ${h-k}$.`]}},
+ ()=>{const h=nz(-5,5),m=pick([2,3,5,6,7,10,11]),a=pick([1,2,3]),c=rnd(-6,6),d=a*m+c;return{q:`Solve $${coef(a)}${sq(h)}${plus(c)} = ${d}$.`,type:"set",ans:[h+Math.sqrt(m),h-Math.sqrt(m)],ansTex:`x = ${h} \\pm \\sqrt{${m}}`,f:x=>a*(x-h)**2+c-d,
+   hint:`Isolate the squared part first: undo $${plus(c).trim()||"+0"}$${a>1?`, then divide by $${a}$`:""}.`,sol:[`Isolate: $${sq(h)} = ${m}$.`,`Square root: $${bin(h).replace(/[()]/g,"")} = \\pm\\sqrt{${m}}$.`,`$x = ${h} \\pm \\sqrt{${m}}$.`]}},
+ ()=>{const h=nz(-5,5),t=rnd(1,6);return{q:`The equation $(x - h)^2 = k$ has two solutions. Their sum is $${2*h}$ and their positive difference is $${2*t}$. Find $h + k$.`,type:"number",ans:h+t*t,ansTex:`h + k = ${h+t*t}`,
+   hint:`The solutions are $h + \\sqrt{k}$ and $h - \\sqrt{k}$. What are their sum and difference?`,sol:[`Sum $= 2h = ${2*h}$, so $h = ${h}$.`,`Difference $= 2\\sqrt{k} = ${2*t}$, so $\\sqrt{k} = ${t}$ and $k = ${t*t}$.`,`$h + k = ${h+t*t}$.`]}}
+ ]},
+{id:"factor",title:"Solve by Factoring",ex:{q:"Solve $(x - 3)(x + 5) = 0$.",sol:["Set each factor to $0$: $x - 3 = 0$ or $x + 5 = 0$.","$x = 3$ or $x = -5$."]},idea:"Factor, then use the zero product property: if $AB = 0$, then $A = 0$ or $B = 0$.",
+ gen:[
+ ()=>{let a=nz(-9,9),b;do{b=nz(-9,9)}while(b===a);return{q:`Solve $${bin(a)}${bin(b)} = 0$.`,type:"set",ans:[a,b],ansTex:`x = ${a}$ or $x = ${b}`,f:x=>(x-a)*(x-b),
+   hint:`If a product is $0$, one of the factors must be $0$.`,sol:[`Set each factor to $0$: $${bin(a).replace(/[()]/g,"")} = 0$ or $${bin(b).replace(/[()]/g,"")} = 0$.`,`$x = ${a}$ or $x = ${b}$.`]}},
+ ()=>{let r,s;do{r=nz(-9,9);s=nz(-9,9)}while(r===s||r+s===0);return{q:`Solve $${poly(1,-(r+s),r*s)} = 0$.`,type:"set",ans:[r,s],ansTex:`x = ${r}$ or $x = ${s}`,f:x=>x*x-(r+s)*x+r*s,
+   hint:`Find two numbers that multiply to $${r*s}$ and add to $${-(r+s)}$.`,sol:[`Two numbers with product $${r*s}$ and sum $${-(r+s)}$: $${-r}$ and $${-s}$.`,`Factor: $${bin(r)}${bin(s)} = 0$.`,`$x = ${r}$ or $x = ${s}$.`]}},
+ ()=>{let p,q,r;do{p=rnd(2,5);q=nz(-7,7);r=nz(-6,6)}while(gcd(p,q)!==1||q===p*r);const A=p,B=-(p*r+q),C=q*r;return{q:`Solve $${poly(A,B,C)} = 0$.`,type:"set",ans:[q/p,r],ansTex:`x = ${frac(q,p)}$ or $x = ${r}`,f:x=>A*x*x+B*x+C,
+   hint:`Try the ac-method: find two numbers that multiply to $${A*C}$ and add to $${B}$.`,sol:[`Factor: $(${p}x ${q>0?"- "+q:"+ "+(-q)})${bin(r)} = 0$.`,`$${p}x ${q>0?"- "+q:"+ "+(-q)} = 0 \\Rightarrow x = ${frac(q,p)}$, or $x = ${r}$.`]}},
+ ()=>{let r,s;do{r=nz(-8,8);s=nz(-8,8)}while(r===s||r+s===0);const m=-(r+s),c=-r*s;return{q:`Solve $x(x ${m>0?"+ "+m:"- "+(-m)}) = ${c}$.`,type:"set",ans:[r,s],ansTex:`x = ${r}$ or $x = ${s}`,f:x=>x*(x+m)-c,
+   hint:`It's not $= 0$ yet! Expand and move everything to one side first.`,sol:[`Expand: $${poly(1,m,0)} = ${c}$.`,`Move to one side: $${poly(1,m,-c)} = 0$.`,`Factor: $${bin(r)}${bin(s)} = 0$, so $x = ${r}$ or $x = ${s}$.`]}},
+ ()=>{const r=nz(-9,9),s=nz(-9,9),S=r+s,P=r*s;return{q:`The solutions of a quadratic equation are $r$ and $s$, where $r + s = ${S}$ and $rs = ${P}$. Find $r^2 + s^2$ without finding $r$ and $s$.`,type:"number",ans:S*S-2*P,ansTex:`r^2 + s^2 = ${S*S-2*P}`,
+   hint:`Expand $(r + s)^2$. What's missing to get $r^2 + s^2$?`,sol:[`$(r+s)^2 = r^2 + 2rs + s^2$.`,`$r^2 + s^2 = (r+s)^2 - 2rs = ${S}^2 - 2(${P})$.`,`$= ${S*S} ${-2*P>=0?"+ "+(-2*P):"- "+(2*P)} = ${S*S-2*P}$.`]}}
+ ]},
+{id:"formula",title:"Quadratic Formula & Discriminant",ex:{q:"Find the discriminant of $x^2 + 6x + 5 = 0$.",sol:["$a = 1,\\ b = 6,\\ c = 5$.","$b^2 - 4ac = 36 - 20 = 16$. Positive, so there are $2$ real solutions."]},idea:"$x = \\dfrac{-b \\pm \\sqrt{b^2 - 4ac}}{2a}$. The discriminant $b^2 - 4ac$ tells you how many real solutions.",
+ gen:[
+ ()=>{const a=rnd(1,4),b=rnd(-9,9),c=nz(-9,9),D=b*b-4*a*c;return{q:`Find the discriminant of $${poly(a,b,c)} = 0$.`,type:"number",ans:D,ansTex:`b^2 - 4ac = ${D}`,
+   hint:`Here $a = ${a}$, $b = ${b}$, $c = ${c}$. Compute $b^2 - 4ac$.`,sol:[`$a = ${a},\\ b = ${b},\\ c = ${c}$.`,`$b^2 - 4ac = (${b})^2 - 4(${a})(${c}) = ${b*b} ${-4*a*c>=0?"+ "+(-4*a*c):"- "+(4*a*c)} = ${D}$.`]}},
+ ()=>{const kind=pick([0,1,2]);let a=rnd(1,3),b,c;if(kind===1){const m=nz(-5,5);b=-2*a*m;c=a*m*m;}else if(kind===0){b=rnd(-6,6);c=Math.floor(b*b/(4*a))+rnd(1,6);}else{do{b=rnd(-9,9);c=nz(-9,9)}while(b*b-4*a*c<=0);}const D=b*b-4*a*c;
+   return{q:`How many real solutions does $${poly(a,b,c)} = 0$ have?`,type:"number",ans:kind,ansTex:`${kind}\\text{ real solution${kind===1?"":"s"}}`,
+   hint:`Compute $b^2 - 4ac$. Positive → $2$, zero → $1$, negative → $0$.`,sol:[`$b^2 - 4ac = (${b})^2 - 4(${a})(${c}) = ${D}$.`,`${D>0?"Positive":D===0?"Zero":"Negative"}, so there ${kind===1?"is $1$ real solution":"are $"+kind+"$ real solutions"}.`]}},
+ ()=>{const h=nz(-5,5),m=pick([2,3,5,6,7,10]);const b=-2*h,c=h*h-m;return{q:`Solve $${poly(1,b,c)} = 0$ with the quadratic formula.`,type:"set",ans:[h+Math.sqrt(m),h-Math.sqrt(m)],ansTex:`x = ${h} \\pm \\sqrt{${m}}`,f:x=>x*x+b*x+c,
+   hint:`$a = 1$, $b = ${b}$, $c = ${c}$. Start with $b^2 - 4ac$.`,sol:[`$b^2 - 4ac = ${b*b} - 4(${c}) = ${4*m}$.`,`$x = \\dfrac{${-b} \\pm \\sqrt{${4*m}}}{2} = \\dfrac{${-b} \\pm 2\\sqrt{${m}}}{2}$.`,`$x = ${h} \\pm \\sqrt{${m}}$.`]}},
+ ()=>{let a,b,c,D;do{a=pick([2,3]);b=nz(-7,7);c=nz(-6,6);D=b*b-4*a*c}while(D<=0||isSq(D));return{q:`Solve $${poly(a,b,c)} = 0$. Give exact answers.`,type:"set",ans:[(-b+Math.sqrt(D))/(2*a),(-b-Math.sqrt(D))/(2*a)],ansTex:`x = \\dfrac{${-b} \\pm \\sqrt{${D}}}{${2*a}}`,f:x=>a*x*x+b*x+c,
+   hint:`$a = ${a}$, $b = ${b}$, $c = ${c}$. The discriminant is not a perfect square, so keep the square root.`,sol:[`$b^2 - 4ac = ${b*b} - 4(${a})(${c}) = ${D}$.`,`$x = \\dfrac{${-b} \\pm \\sqrt{${D}}}{${2*a}}$.`]}},
+ ()=>{if(Math.random()<.5){const m=rnd(2,9);return{q:`Find the positive value of $k$ so that $x^2 + kx + ${m*m} = 0$ has exactly one real solution.`,type:"number",ans:2*m,ansTex:`k = ${2*m}`,
+   hint:`Exactly one solution means the discriminant is $0$.`,sol:[`$k^2 - 4(1)(${m*m}) = 0$.`,`$k^2 = ${4*m*m}$, so $k = ${2*m}$ (positive).`]};}
+   const b=2*nz(-7,7);return{q:`For what value of $k$ does $x^2 ${b>0?"+ "+b:"- "+(-b)}x + k = 0$ have exactly one real solution?`,type:"number",ans:b*b/4,ansTex:`k = ${b*b/4}`,
+   hint:`Set the discriminant equal to $0$.`,sol:[`$(${b})^2 - 4k = 0$.`,`$k = ${b*b}/4 = ${b*b/4}$.`]};}
+ ]},
+{id:"vertex",title:"Vertex of a Parabola",ex:{q:"Find the vertex of $y = (x - 3)^2 + 2$.",sol:["It matches $(x - h)^2 + k$ with $h = 3$, $k = 2$.","Vertex: $(3, 2)$."]},idea:"In $y = a(x - h)^2 + k$ the vertex is $(h, k)$. In $y = ax^2 + bx + c$ the vertex is at $x = -\\dfrac{b}{2a}$.",
+ gen:[
+ ()=>{const h=nz(-8,8),k=rnd(-8,8);return{q:`Find the vertex of $y = ${sq(h)}${plus(k)}$.`,type:"point",ans:[h,k],ansTex:`(${h}, ${k})`,
+   hint:`Compare with $y = (x - h)^2 + k$. The vertex is $(h, k)$.`,sol:[`$y = ${sq(h)}${plus(k)}$ matches $(x - h)^2 + k$ with $h = ${h}$, $k = ${k}$.`,`Vertex: $(${h}, ${k})$.`]}},
+ ()=>{const a=pick([-3,-2,2,3,4,-1]),h=nz(-6,6),k=nz(-9,9);return{q:`Find the vertex of $y = ${coef(a)}${sq(h)}${plus(k)}$.`,type:"point",ans:[h,k],ansTex:`(${h}, ${k})`,
+   hint:`Watch the sign inside: $(x + 3)$ means $h = -3$. The number $a$ in front doesn't move the vertex.`,sol:[`$${bin(h)}$ means $h = ${h}$.`,`The vertex is $(${h}, ${k})$.`]}},
+ ()=>{const h=nz(-6,6),k=rnd(-9,9),b=-2*h,c=h*h+k;return{q:`Find the vertex of $y = ${poly(1,b,c)}$.`,type:"point",ans:[h,k],ansTex:`(${h}, ${k})`,
+   hint:`Use $x = -\\dfrac{b}{2a}$, then plug that $x$ back in to find $y$.`,sol:[`$x = -\\dfrac{${b}}{2(1)} = ${h}$.`,`$y = (${h})^2 ${b>=0?"+":"-"} ${Math.abs(b)}(${h}) + ${c} = ${k}$.`,`Vertex: $(${h}, ${k})$.`]}},
+ ()=>{const a=pick([-3,-2,2,3]),h=nz(-4,4),k=rnd(-9,9),b=-2*a*h,c=a*h*h+k;return{q:`Find the vertex of $y = ${poly(a,b,c)}$.`,type:"point",ans:[h,k],ansTex:`(${h}, ${k})`,
+   hint:`$x = -\\dfrac{b}{2a}$ with $a = ${a}$ and $b = ${b}$.`,sol:[`$x = -\\dfrac{${b}}{2(${a})} = ${h}$.`,`$y = ${a}(${h})^2 ${b>=0?"+":"-"} ${Math.abs(b)}(${h}) ${c>=0?"+ "+c:"- "+(-c)} = ${k}$.`,`Vertex: $(${h}, ${k})$.`]}},
+ ()=>{const a=nz(-3,3),h=nz(-5,5),k=rnd(-8,8),d=nz(-3,3),p=h+d,q=a*d*d+k;return{q:`A parabola has vertex $(${h}, ${k})$ and passes through $(${p}, ${q})$. Find $a$ in $y = a${sq(h)}${plus(k)}$.`,type:"number",ans:a,ansTex:`a = ${a}`,
+   hint:`Substitute the point $(${p}, ${q})$ for $x$ and $y$, then solve for $a$.`,sol:[`$${q} = a(${p} - ${h<0?"("+h+")":h})^2${plus(k)}$.`,`$${q} = ${d*d}a${plus(k)}$, so $${d*d}a = ${q-k}$.`,`$a = ${a}$.`]}}
+ ]}
+];
+
+/* ================= checking (math.js) ================= */
+function clean(s){ return String(s).replace(/[−–]/g,"-").replace(/×|·/g,"*").replace(/÷/g,"/").replace(/π/g,"pi").replace(/√\s*(\d+(?:\.\d+)?|\([^)]*\)|[a-z])/g,"sqrt($1)").replace(/\+\/-|\+-/g,"±").trim(); }
+function val(s){ try{ const r=math.evaluate(s); const v=typeof r==="number"?r:(r&&typeof r.valueOf()==="number"?r.valueOf():NaN); return isFinite(v)?v:NaN; }catch(e){ return NaN; } }
+const close=(a,b)=>Math.abs(a-b)<1e-6*Math.max(1,Math.abs(b));
+function parseList(s){
+  s=clean(s).replace(/\b(or|and)\b/gi,",").replace(/;/g,","); const out=[];
+  for(let part of s.split(",")){ part=part.trim(); if(!part) continue; if(part.includes("=")) part=part.split("=").pop().trim();
+    if(part.includes("±")){ const i=part.indexOf("±"); const L=part.slice(0,i).trim(), R=part.slice(i+1).trim();
+      // handle (a ± b)/c
+      const m=/^\((.*)$/.exec(L)&&/\)\s*\/\s*(.+)$/.exec(R);
+      if(m){ const den=R.slice(R.lastIndexOf(")")+1); const inner=R.slice(0,R.lastIndexOf(")")); const l=L.slice(1);
+        [l+"+"+inner,l+"-"+inner].forEach(e=>out.push(val("("+(e.startsWith("+")?e.slice(1):e||"0")+")"+den))); }
+      else { const l=L||"0"; out.push(val(l+"+("+R+")"),val(l+"-("+R+")")); } }
+    else out.push(val(part)); }
+  return out.length&&out.every(v=>!isNaN(v))?out:null;
+}
+function check(pr,input){
+  if(pr.type==="number"){ const v=val(clean(input).split("=").pop()); if(isNaN(v)) return null; return close(v,pr.ans); }
+  if(pr.type==="point"){ const m=/^\(?\s*([^,]+),([^)]+)\)?$/.exec(clean(input)); if(!m) return null; const x=val(m[1]),y=val(m[2]); if(isNaN(x)||isNaN(y)) return null; return close(x,pr.ans[0])&&close(y,pr.ans[1]); }
+  const s=parseList(input); if(!s) return null; const u=a=>a.filter((x,i)=>a.findIndex(y=>close(x,y))===i);
+  const su=u(s),eu=u(pr.ans); return su.length===eu.length&&eu.every(x=>su.some(y=>close(x,y)));
+}
+function render(el){ if(window.renderMathInElement) renderMathInElement(el,{delimiters:[{left:"$",right:"$",display:false}],throwOnError:false}); }
+
+/* ================= state ================= */
+let st={rec:null,level:{},solved:{}};
+try{ Object.assign(st,JSON.parse(localStorage.getItem("fm-quad")||"{}")); }catch(e){}
+const save=()=>{ try{ localStorage.setItem("fm-quad",JSON.stringify(st)); }catch(e){} };
+let T=null, L=1, P=null, tries=0, done=false, firstTry=true, streak=[], hintShown=false;
+
+/* ================= page ================= */
+function legend(){ $("legend").innerHTML=""; LEVELS.forEach(l=>{ const d=document.createElement("div"); d.className="lg"; d.style.setProperty("--c",l.c); d.innerHTML=`<b>${l.n} · ${l.name} ${l.zh}</b><span>${l.desc}</span>`; $("legend").appendChild(d); }); }
+function recText(){ $("recText").innerHTML=st.rec?`Suggested starting level: <span class="rec">${st.rec} · ${LEVELS[st.rec-1].name}</span> ★ — you can always change it.`:"Answer up to 5 questions and we'll suggest a level."; $("placeBtn").textContent=st.rec?"Retake the check":"Take the 5-question check"; }
+function pillsFor(t,cur,onPick){
+  const w=document.createElement("div"); w.className="pills";
+  LEVELS.forEach(l=>{ const b=document.createElement("button"); b.type="button"; b.className="pill"+(l.n===cur?" on":"")+(st.rec===l.n?" star":""); b.style.setProperty("--c",l.c);
+    const n=(st.solved[t.id+l.n]||0); b.innerHTML=`${l.n} ${l.name}`+(n?`<span class="n">✓${n}</span>`:""); b.onclick=()=>onPick(l.n); w.appendChild(b); });
+  return w;
+}
+function topics(){
+  const box=$("topics"); box.innerHTML="";
+  TOPICS.forEach(t=>{ const c=document.createElement("div"); c.className="card topic";
+    const ex=t.ex; const lvl=st.level[t.id]||st.rec||1;
+    c.innerHTML=`<h2>${t.title}</h2><p class="idea">${t.idea}</p><div class="example"><span class="label">Simplest example</span><div class="q">${ex.q}</div><div>${ex.sol.map(x=>"<div>"+x+"</div>").join("")}</div></div><span class="label">Practice at level</span>`;
+    c.appendChild(pillsFor(t,lvl,n=>startPractice(t,n)));
+    const go=document.createElement("button"); go.className="btn teal sm"; go.style.alignSelf="flex-start"; go.textContent=`Practice level ${lvl} →`; go.onclick=()=>startPractice(t,lvl); c.appendChild(go);
+    box.appendChild(c); });
+  render(box);
+}
+/* ---- practice ---- */
+function startPractice(t,n){ T=t; L=n; st.level[t.id]=n; save(); streak=[]; $("practice").hidden=false; $("pTitle").textContent=t.title; newProblem(); $("practice").scrollIntoView({behavior:"smooth",block:"start"}); topics(); }
+function levelPills(){ const p=$("pLevels"); p.replaceWith(Object.assign(pillsFor(T,L,n=>{ L=n; st.level[T.id]=n; save(); streak=[]; newProblem(); topics(); }),{id:"pLevels"})); }
+function newProblem(){
+  P=T.gen[L-1](); tries=0; done=false; firstTry=true; hintShown=false;
+  $("pQ").innerHTML=`<span class="label" style="color:${LEVELS[L-1].c}">Level ${L} · ${LEVELS[L-1].name}</span><div>${P.q}</div>`; render($("pQ"));
+  $("pAns").value=""; $("pAns").disabled=false; $("pPrev").textContent=""; $("pHow").textContent=HOW[P.type]; $("pFb").innerHTML=""; $("pSuggest").innerHTML="";
+  $("pCheck").hidden=false; $("pNext").hidden=true; $("pHint").disabled=false; $("pShow").hidden=true; levelPills(); drawStreak(); $("pAns").focus({preventScroll:true});
+}
+function fb(kind,tag,html){ $("pFb").innerHTML=`<div class="fb ${kind}"><span class="tag">${tag}</span>${html}</div>`; render($("pFb")); }
+function solHtml(){ return `<ol class="sol">${P.sol.map(s=>`<li>${s}</li>`).join("")}</ol>`; }
+function finish(correct){
+  done=true; $("pAns").disabled=true; $("pCheck").hidden=true; $("pNext").hidden=false; $("pShow").hidden=true; $("pHint").disabled=true;
+  if(correct){ st.solved[T.id+L]=(st.solved[T.id+L]||0)+1; save(); }
+  streak.push(correct&&firstTry); if(streak.length>6) streak.shift(); drawStreak(); suggest(); levelPills(); $("pNext").focus({preventScroll:true});
+}
+function submit(){
+  if(done||!P) return; const v=$("pAns").value.trim(); if(!v) return;
+  const r=check(P,v);
+  if(r===null){ fb("hint","Try again","I couldn't read that. "+HOW[P.type]); return; }
+  if(r){ fb("good","Correct"+(firstTry?" on the first try!":""),`$${P.ansTex}$`+solHtml()); finish(true); return; }
+  tries++; firstTry=false;
+  if(tries===1) fb("bad","Not yet",P.hint+" Try again.");
+  else { fb("bad","Not yet","Here's how it works:"+solHtml()); finish(false); return; }
+  $("pShow").hidden=false;
+}
+function drawStreak(){ const s=$("pStreak"); s.innerHTML="Recent: "; streak.forEach(x=>{ const i=document.createElement("i"); i.className=x?"ok":"no"; s.appendChild(i); }); if(!streak.length) s.innerHTML="Get 3 right on the first try in a row to unlock a suggestion to move up."; }
+function suggest(){
+  const box=$("pSuggest"); box.innerHTML=""; const last=streak.slice(-3), last2=streak.slice(-2);
+  let to=null,msg="";
+  if(L<5&&last.length===3&&last.every(Boolean)){ to=L+1; msg=`3 in a row on the first try! Ready for <b>Level ${L+1} · ${LEVELS[L].name}</b>?`; }
+  else if(L>1&&last2.length===2&&last2.every(x=>!x)){ to=L-1; msg=`These are tough. Want to practice <b>Level ${L-1} · ${LEVELS[L-2].name}</b> first, then come back?`; }
+  if(!to) return;
+  const d=document.createElement("div"); d.className="suggest"; d.style.setProperty("--c",LEVELS[to-1].c);
+  d.innerHTML=`<span>${msg}</span>`; const b=document.createElement("button"); b.className="btn sm"; b.style.background=LEVELS[to-1].c; b.textContent=to>L?"Move up ↑":"Go to Level "+to;
+  b.onclick=()=>{ L=to; st.level[T.id]=to; save(); streak=[]; newProblem(); topics(); }; d.appendChild(b); box.appendChild(d);
+}
+$("pCheck").onclick=submit; $("pAns").addEventListener("keydown",e=>{ if(e.key==="Enter"){ e.preventDefault(); done?newProblem():submit(); } });
+$("pNext").onclick=newProblem; $("closeP").onclick=()=>{ $("practice").hidden=true; window.scrollTo({top:0,behavior:"smooth"}); };
+$("pHint").onclick=()=>{ if(done) return; hintShown=true; firstTry=false; fb("hint","Hint",P.hint); };
+$("pShow").onclick=()=>{ fb("hint","Solution",`$${P.ansTex}$`+solHtml()); finish(false); };
+$("pAns").addEventListener("input",()=>{ const v=$("pAns").value.trim(),pv=$("pPrev"); if(!v||!window.katex){ pv.textContent=""; return; }
+  try{ const tex=clean(v).split(/,|\bor\b/).map(x=>{ x=x.trim(); if(!x) return ""; const parts=x.split("±"); return parts.map(y=>y.trim()?math.parse(y.split("=").pop()).toTex({parenthesis:"auto",implicit:"hide"}):"").join(" \\pm ").replace(/^ \\pm/,"\\pm"); }).filter(Boolean).join(",\\ ");
+    pv.innerHTML='<span class="pl">You wrote</span><span class="pm"></span>'; katex.render(tex,pv.querySelector(".pm"),{throwOnError:false}); }catch(e){ pv.textContent=""; } });
+
+/* ---- placement check ---- */
+const PLACE=[["sqrt",1],["factor",2],["formula",3],["vertex",4],["factor",5]];
+$("placeBtn").onclick=()=>{
+  let i=0, res=[]; const m=document.createElement("div"); m.className="modal"; m.innerHTML=`<div class="card"><div class="phead"><h2>Where should I start?</h2><button class="btn ghost sm" id="qx">Close</button></div><div class="qprog" id="qp"></div><div class="problem" id="qq"></div><div class="row"><input id="qa" type="text" autocomplete="off" placeholder="Your answer" aria-label="Your answer"><button class="btn" id="qc">Check</button><button class="btn ghost" id="qs">I don't know</button></div><div class="howto" id="qh"></div><div id="qf"></div></div>`;
+  document.body.appendChild(m); const q=id=>m.querySelector("#"+id); let pr;
+  const prog=()=>{ q("qp").innerHTML=PLACE.map((_,k)=>`<i class="${k<res.length?(res[k]?"ok":"no"):k===i?"now":""}"></i>`).join(""); };
+  const ask=()=>{ const [tid,lv]=PLACE[i]; pr=TOPICS.find(t=>t.id===tid).gen[lv-1](); q("qq").innerHTML=`<span class="label">Question ${i+1} of 5 · Level ${lv}</span><div>${pr.q}</div>`; render(q("qq")); q("qa").value=""; q("qh").textContent=HOW[pr.type]; q("qf").innerHTML=""; prog(); q("qa").focus(); };
+  const end=()=>{ const lvl=res.indexOf(false)===-1?5:res.indexOf(false)+1; st.rec=lvl; save(); recText(); topics(); prog();
+    q("qq").innerHTML=`<span class="label">Result</span><div>Start at <b style="color:${LEVELS[lvl-1].c}">Level ${lvl} · ${LEVELS[lvl-1].name}</b>.</div><div style="font-size:15px;color:var(--muted)">${lvl===5?"You answered every question correctly — go for Competition!":lvl===1?"Foundation builds the base everything else needs. Move up whenever you get 3 in a row.":"You got the first "+(lvl-1)+" level"+(lvl===2?"":"s")+" right. Level "+lvl+" is the right challenge for you."}</div>`;
+    m.querySelector(".row").hidden=true; q("qh").textContent=""; q("qf").innerHTML=""; const b=document.createElement("button"); b.className="btn teal"; b.textContent="See the topics"; b.onclick=()=>m.remove(); q("qf").appendChild(b); };
+  const answer=r=>{ res.push(r); if(!r){ end(); return; } i++; if(i>=PLACE.length) end(); else ask(); };
+  q("qc").onclick=()=>{ const v=q("qa").value.trim(); if(!v) return; const r=check(pr,v); if(r===null){ q("qf").innerHTML=`<div class="fb hint">I couldn't read that. ${HOW[pr.type]}</div>`; return; } answer(r); };
+  q("qa").addEventListener("keydown",e=>{ if(e.key==="Enter"){ e.preventDefault(); q("qc").click(); } });
+  q("qs").onclick=()=>answer(false); q("qx").onclick=()=>m.remove(); m.addEventListener("click",e=>{ if(e.target===m) m.remove(); });
+  ask();
+};
+window.addEventListener("load",()=>{ legend(); recText(); topics(); });
+</script>
+</body>
+</html>

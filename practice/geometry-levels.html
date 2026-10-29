@@ -1,0 +1,475 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Geometry: Learn &amp; Practice — Prof. Fang Math</title>
+<meta name="description" content="Geometry chapter by chapter: learn each idea from the simplest example, then practice in five levels from Foundation to Competition.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/mathjs@14.9.1/lib/browser/math.js"></script>
+<style>
+:root{
+  --bg:#FBF8F3; --surface:#FFFFFF; --ink:#16233B; --muted:#5B6474; --faint:#8C93A0; --line:#E8E2D8;
+  --navy:#1F3A68; --teal:#0F7C7C; --teal-soft:#DDF0EE; --gold:#C9962B; --gold-soft:#FBF1DC; --red:#B3261E; --red-soft:#FBE7E5; --green:#1E7A45; --green-soft:#DDF4E6;
+  --l1:#2E8B57; --l2:#0F7C7C; --l3:#1F3A68; --l4:#B7472A; --l5:#6A4BD8;
+  --radius:18px; --shadow:0 8px 26px rgba(22,35,59,.07);
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 Inter,system-ui,-apple-system,sans-serif;-webkit-font-smoothing:antialiased}
+a{color:var(--teal)}
+h1,h2,h3{font-family:Fraunces,Georgia,serif;font-weight:600;letter-spacing:-.01em;margin:0;line-height:1.15}
+button,input{font:inherit;color:inherit}
+[hidden]{display:none!important}
+header.top{position:sticky;top:0;z-index:40;background:rgba(255,255,255,.96);border-bottom:1px solid var(--line)}
+header.top .in{max-width:1120px;margin:0 auto;padding:0 20px;height:64px;display:flex;align-items:center;gap:24px}
+.brand{font-weight:700;font-size:19px;text-decoration:none;color:var(--ink);white-space:nowrap}
+.brand span{color:var(--teal)}
+.back{margin-left:auto;font-size:15px;text-decoration:none;color:var(--muted);font-weight:500}
+.wrap{max-width:1120px;margin:0 auto;padding:24px 20px 48px;display:flex;flex-direction:column;gap:20px}
+.intro h1{font-size:clamp(28px,4vw,40px)}
+.intro p{color:var(--muted);margin:6px 0 0;max-width:680px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:20px}
+.label{font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--faint);font-weight:700}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:10px 18px;border-radius:999px;font-weight:600;border:1px solid transparent;cursor:pointer;background:var(--navy);color:#fff;text-decoration:none}
+.btn.teal{background:var(--teal)} .btn.ghost{background:var(--surface);color:var(--ink);border-color:var(--line)}
+.btn.sm{padding:7px 14px;font-size:14px}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+button:focus-visible,input:focus{outline:2px solid var(--teal);outline-offset:1px}
+/* level legend */
+.legend{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px}
+@media (max-width:760px){.legend{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.lg{border-radius:12px;padding:10px 12px;background:var(--bg);border-left:4px solid var(--c)}
+.lg b{display:block;font-size:14px;color:var(--c)} .lg span{font-size:13px;color:var(--muted)}
+/* placement */
+.place{display:flex;flex-wrap:wrap;gap:14px;align-items:center;justify-content:space-between;background:linear-gradient(120deg,var(--teal-soft),#fff 70%);border:1.5px solid var(--teal)}
+.place .t b{font-family:Fraunces,Georgia,serif;font-size:20px;display:block}
+.place .t span{color:var(--muted);font-size:15px}
+.rec{font-weight:600;color:var(--teal)}
+/* topics */
+.topics{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+@media (max-width:760px){.topics{grid-template-columns:minmax(0,1fr)}}
+.topic{display:flex;flex-direction:column;gap:12px}
+.topic h2{font-size:22px}
+.idea{color:var(--muted);font-size:15px;margin:0}
+.example{background:var(--bg);border-radius:12px;padding:12px 14px;font-size:15px;overflow-x:auto}
+.example .q{font-size:17px;margin-bottom:4px}
+.pills{display:flex;flex-wrap:wrap;gap:6px}
+.pill{position:relative;border:1.5px solid var(--line);background:var(--surface);border-radius:999px;padding:6px 12px;font-size:13px;font-weight:600;cursor:pointer;color:var(--ink)}
+.pill:hover{border-color:var(--c)}
+.pill.on{background:var(--c);border-color:var(--c);color:#fff}
+.pill .n{font-weight:500;opacity:.75;margin-left:4px}
+.pill.star::after{content:"★";position:absolute;top:-8px;right:-4px;font-size:12px;color:var(--gold)}
+/* practice */
+.practice{display:flex;flex-direction:column;gap:14px;scroll-margin-top:80px}
+.phead{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between}
+.phead h2{font-size:24px}
+.problem{font-size:clamp(19px,2.6vw,24px);padding:16px 18px;border-radius:14px;background:var(--bg);overflow-x:auto;line-height:1.7}
+.row{display:flex;gap:8px;flex-wrap:wrap}
+.row input{flex:1 1 240px;border:1px solid var(--line);border-radius:999px;padding:11px 16px;background:var(--bg)}
+.preview{font-size:18px;min-height:1.4em}
+.preview .pl{font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--faint);font-weight:700;margin-right:8px}
+.howto{font-size:13px;color:var(--faint)}
+.fb{border-radius:12px;padding:10px 14px;font-size:15px;overflow-x:auto}
+.fb.good{background:var(--green-soft)} .fb.bad{background:var(--red-soft)} .fb.hint{background:var(--gold-soft)}
+.fb .tag{display:block;font-size:11px;text-transform:uppercase;letter-spacing:.08em;font-weight:700}
+.fb.good .tag{color:var(--green)} .fb.bad .tag{color:var(--red)} .fb.hint .tag{color:var(--gold)}
+.sol{margin:6px 0 0;padding-left:20px} .sol li{margin:2px 0}
+.suggest{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;border:1.5px dashed var(--c);border-radius:12px;padding:10px 14px}
+.streak{display:flex;gap:4px;align-items:center;font-size:13px;color:var(--faint)}
+.streak i{width:10px;height:10px;border-radius:50%;background:var(--line)} .streak i.ok{background:var(--green)} .streak i.no{background:var(--red)}
+/* modal quiz */
+.modal{position:fixed;inset:0;background:rgba(22,35,59,.45);display:grid;place-items:center;padding:16px;z-index:60}
+.modal .card{width:min(620px,100%);max-height:90vh;overflow:auto;display:flex;flex-direction:column;gap:14px}
+.qprog{display:flex;gap:6px} .qprog i{flex:1;height:6px;border-radius:3px;background:var(--line)} .qprog i.ok{background:var(--green)} .qprog i.no{background:var(--red)} .qprog i.now{background:var(--teal)}
+.tabs{display:flex;gap:6px;flex-wrap:wrap;border-bottom:1px solid var(--line);padding-bottom:0}
+.tab{border:none;background:none;padding:10px 16px;font-weight:600;font-size:16px;color:var(--muted);cursor:pointer;border-bottom:3px solid transparent;margin-bottom:-1px}
+.tab.on{color:var(--teal);border-bottom-color:var(--teal)}
+.learn,.pview{display:flex;flex-direction:column;gap:20px}
+.road{display:flex;gap:8px;flex-wrap:wrap}
+.stop{display:flex;align-items:center;gap:8px;border:1.5px solid var(--line);background:var(--surface);border-radius:999px;padding:6px 14px 6px 6px;cursor:pointer;font-size:14px;font-weight:600;color:var(--ink)}
+.stop i{font-style:normal;width:24px;height:24px;border-radius:50%;display:grid;place-items:center;background:var(--bg);font-size:12px;border:1.5px solid var(--line)}
+.stop.done i{background:var(--green);border-color:var(--green);color:#fff}
+.stop.on{border-color:var(--teal);background:var(--teal-soft)}
+.lesson{display:flex;flex-direction:column;gap:16px;scroll-margin-top:80px}
+.lesson h2{font-size:clamp(24px,3vw,30px)}
+.big{font-size:18px;background:var(--teal-soft);border-radius:14px;padding:14px 16px;overflow-x:auto}
+.big b{color:var(--teal)}
+.steps{display:flex;flex-direction:column;gap:8px;margin:0;padding:0;list-style:none;counter-reset:k}
+.steps li{counter-increment:k;display:grid;grid-template-columns:30px minmax(0,1fr);gap:10px;align-items:start;background:var(--bg);border-radius:12px;padding:10px 12px;animation:pop .25s ease}
+.steps li::before{content:counter(k);width:26px;height:26px;border-radius:50%;background:var(--navy);color:#fff;display:grid;place-items:center;font-size:13px;font-weight:700}
+.steps .m{font-size:19px;overflow-x:auto} .steps .w{font-size:14px;color:var(--muted)}
+@keyframes pop{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){.steps li{animation:none}}
+.warn{background:var(--red-soft);border-radius:14px;padding:12px 16px;font-size:15px;overflow-x:auto}
+.warn b{color:var(--red)}
+.turn{border:1.5px solid var(--gold);border-radius:14px;padding:14px 16px;display:flex;flex-direction:column;gap:10px}
+.turn .q{font-size:19px;overflow-x:auto}
+.lnav{display:flex;gap:8px;flex-wrap:wrap;justify-content:space-between}
+footer{text-align:center;color:var(--faint);font-size:13px;padding:24px}
+.chapters{display:flex;flex-wrap:wrap;gap:8px}
+.chap{display:flex;align-items:center;gap:8px;border:1.5px solid var(--line);background:var(--surface);border-radius:999px;padding:5px 14px 5px 5px;font-size:14px;font-weight:600;color:var(--ink);cursor:pointer}
+.chap i{font-style:normal;width:24px;height:24px;border-radius:50%;display:grid;place-items:center;background:var(--bg);font-size:12px}
+.chap.on{background:var(--navy);border-color:var(--navy);color:#fff} .chap.on i{background:rgba(255,255,255,.2)}
+.chap.soon{opacity:.45;cursor:default}
+.fig{display:block;width:100%;max-width:360px;height:auto;margin:4px 0 8px}
+.problem .fig{max-width:340px}
+</style>
+</head>
+<body>
+<header class="top"><div class="in">
+  <a class="brand" href="../index.html#/">Prof. Fang <span>Math</span></a>
+  <a class="back" href="../index.html#/highschool">← Back to lessons</a>
+</div></header>
+
+<div class="wrap">
+  <div class="intro">
+    <span class="label">Geometry · Learn &amp; Practice at Your Level</span>
+    <h1 id="chTitle">Geometry</h1>
+    <p>Pick a chapter. First learn each idea from the simplest example, then practice at the level that fits you and move up when you're ready.</p>
+  </div>
+
+  <div class="chapters" id="chapters" aria-label="Chapters"></div>
+
+  <div class="tabs" role="tablist">
+    <button class="tab" id="tabLearn" role="tab">① Learn the ideas</button>
+    <button class="tab" id="tabPractice" role="tab">② Practice at your level</button>
+  </div>
+
+  <div id="learnView" class="learn">
+    <div class="road" id="road"></div>
+    <div class="card lesson" id="lesson"></div>
+  </div>
+
+  <div id="practiceView" class="pview">
+    <div class="legend" id="legend"></div>
+    <div class="card place">
+      <div class="t"><b>Not sure where to start?</b><span id="recText"></span></div>
+      <button class="btn teal" id="placeBtn">Take the 5-question check</button>
+    </div>
+    <div class="card practice" id="practice" hidden>
+      <div class="phead"><h2 id="pTitle"></h2><button class="btn ghost sm" id="closeP">All topics</button></div>
+      <div class="pills" id="pLevels"></div>
+      <div class="problem" id="pQ"></div>
+      <div class="row">
+        <input type="text" id="pAns" autocomplete="off" placeholder="Your answer" aria-label="Your answer">
+        <button class="btn" id="pCheck">Check</button>
+        <button class="btn ghost" id="pHint">Hint</button>
+        <button class="btn ghost" id="pShow" hidden>Show solution</button>
+        <button class="btn teal" id="pNext" hidden>Next problem →</button>
+      </div>
+      <div class="preview" id="pPrev"></div>
+      <div class="howto" id="pHow"></div>
+      <div id="pFb"></div>
+      <div id="pSuggest"></div>
+      <div class="streak" id="pStreak"></div>
+    </div>
+    <div class="topics" id="topics"></div>
+  </div>
+</div>
+<footer>© 2026 Prof. Fang Math</footer>
+
+<script>
+"use strict";
+/* ================= helpers ================= */
+const $=id=>document.getElementById(id);
+const rnd=(a,b)=>a+Math.floor(Math.random()*(b-a+1));
+const nz=(a,b)=>{let x;do{x=rnd(a,b)}while(x===0);return x};
+const pick=a=>a[Math.floor(Math.random()*a.length)];
+const gcd=(a,b)=>{a=Math.abs(a);b=Math.abs(b);while(b){[a,b]=[b,a%b]}return a};
+const sg=k=>k>=0?"+ "+k:"- "+(-k);            // "+ 3" / "- 3"
+const P=n=>n<0?"("+n+")":String(n);            // wrap negatives
+function co(a,v){ return (a===1?"":a===-1?"-":String(a))+v; }   // coefficient with variable
+function lin(a,b,v="x"){ if(a===0) return String(b); let s=co(a,v); if(b) s+=" "+sg(b); return s; }
+function cterm(a,v){ return (a<0?"- ":"+ ")+(Math.abs(a)===1?"":Math.abs(a))+v; } // signed term for middle
+function frac(n,d){ if(d<0){n=-n;d=-d} const g=gcd(n,d)||1; n/=g; d/=g; return d===1?String(n):(n<0?"-":"")+"\\frac{"+Math.abs(n)+"}{"+d+"}"; }
+const OPT={"<":"<","<=":"\\le",">":">",">=":"\\ge"}; const FLIP={"<":">","<=":">=",">":"<",">=":"<="};
+const divisors=n=>{n=Math.abs(n);const d=[];for(let i=1;i<=n;i++) if(n%i===0) d.push(i);return d;};
+const LEVELS=[
+ {n:1,name:"Foundation",zh:"起步",desc:"Review the basics first",c:"var(--l1)"},
+ {n:2,name:"Basic",zh:"基础",desc:"Textbook examples",c:"var(--l2)"},
+ {n:3,name:"Standard",zh:"标准",desc:"School test level",c:"var(--l3)"},
+ {n:4,name:"Challenge",zh:"挑战",desc:"Honors / hard SAT",c:"var(--l4)"},
+ {n:5,name:"Competition",zh:"竞赛",desc:"MATHCOUNTS / AMC 8–10 style",c:"var(--l5)"}];
+const HOW={point:"Type a point like (2, -5).",word:"Type SSS, SAS, ASA, AAS, HL — or none.",number:"Type a number. Fractions like 9/4 are fine.",set:"Type the value, like 4 or x = 4.",expr:"Type an expression like 7x - 1 or (c - b)/a.",
+  ineq:"Type like x > 3 or x <= -2 (≤ and ≥ work too).",between:"Type like -2 < x <= 4.",or:"Type like x < -5 or x > 3."};
+const ineqTex=(op,v)=>`x ${OPT[op]} ${v}`;
+
+/* ================= chapters =================
+   generators return {q, type, ans, ansTex, hint, sol[]} */
+function rad(n){ let k=1,m=n; for(let i=Math.floor(Math.sqrt(n));i>1;i--){ if(n%(i*i)===0){ k=i; m=n/(i*i); break; } } return m===1?String(k):(k===1?"":k)+"\\sqrt{"+m+"}"; }
+const pt=(x,y)=>`(${x}, ${y})`;
+const deg=v=>`${v}^\\circ`;
+/* parallel lines cut by a transversal; angles 1-4 at top intersection, 5-8 at bottom.
+   1 top-left, 2 top-right, 3 bottom-left, 4 bottom-right (same pattern below).
+   acute: 2,3,6,7   obtuse: 1,4,5,8 */
+function figParallel(hi){
+  hi=hi||{}; const P=[[191.1,60],[128.9,140]]; const off=[[-10.5,-21.6],[21.6,-10.5],[-21.6,10.5],[10.5,21.6]];
+  let lab=""; P.forEach((c,j)=>off.forEach((o,i)=>{ const n=j*4+i+1, h=hi[n]; lab+=`<text x="${(c[0]+o[0]).toFixed(1)}" y="${(c[1]+o[1]+5).toFixed(1)}" text-anchor="middle" font-size="${h?16:13}" font-weight="${h?700:500}" fill="${h==="?"?"#B3261E":h?"#0F7C7C":"#5B6474"}">${h&&h!==true&&String(h).length<=5?h:n}</text>`; }));
+  const chev=(x,y)=>`<path d="M${x-5} ${y-5} L${x} ${y} L${x-5} ${y+5}" fill="none" stroke="#16233B" stroke-width="1.6"/>`;
+  return `<svg class="fig" viewBox="0 0 320 200" role="img" aria-label="Two parallel lines cut by a transversal, angles numbered 1 to 8"><line x1="12" y1="60" x2="308" y2="60" stroke="#16233B" stroke-width="2"/><line x1="12" y1="140" x2="308" y2="140" stroke="#16233B" stroke-width="2"/>${chev(280,60)}${chev(280,140)}<line x1="90" y1="190" x2="230" y2="10" stroke="#1F3A68" stroke-width="2"/><text x="300" y="52" font-size="13" fill="#5B6474" font-style="italic">ℓ</text><text x="300" y="132" font-size="13" fill="#5B6474" font-style="italic">m</text><text x="236" y="20" font-size="13" fill="#5B6474" font-style="italic">t</text>${lab}</svg>`;
+}
+const ACUTE=new Set([2,3,6,7]);
+const PAIRNAME=(a,b)=>{ const s=[a,b].sort((x,y)=>x-y).join("-");
+  const M={"1-4":"vertical","2-3":"vertical","5-8":"vertical","6-7":"vertical","1-2":"a linear pair","1-3":"a linear pair","2-4":"a linear pair","3-4":"a linear pair","5-6":"a linear pair","5-7":"a linear pair","6-8":"a linear pair","7-8":"a linear pair",
+   "1-5":"corresponding","2-6":"corresponding","3-7":"corresponding","4-8":"corresponding","3-6":"alternate interior","4-5":"alternate interior","1-8":"alternate exterior","2-7":"alternate exterior","3-5":"same-side interior","4-6":"same-side interior","1-7":"same-side exterior","2-8":"same-side exterior"};
+  return M[s]||null; };
+const angRel=(a,b)=>ACUTE.has(a)===ACUTE.has(b)?"equal":"supp";
+function pairGen(rel){ // pick a pair with a known name; rel: "equal" | "supp" | null
+  let a,b; do{ a=rnd(1,8); b=rnd(1,8); }while(a===b||!PAIRNAME(a,b)||(rel&&angRel(a,b)!==rel)); return [a,b]; }
+
+const CHAPTERS=[
+{id:"ch1",title:"Tools of Geometry",topics:[
+ {id:"seg",title:"Segments & Midpoints",idea:"The <b>midpoint</b> is the average of the endpoints: $M = \\left(\\dfrac{x_1 + x_2}{2}, \\dfrac{y_1 + y_2}{2}\\right)$.",
+  lesson:{steps:[["A(2, 3),\\ B(8, 7)","Find the midpoint of $\\overline{AB}$."],["\\dfrac{2 + 8}{2} = 5","Average the $x$-coordinates."],["\\dfrac{3 + 7}{2} = 5","Average the $y$-coordinates."],["M = (5, 5)","Write the point."]],warn:"Add the coordinates, don't subtract: the midpoint uses $x_1 + x_2$, the distance uses $x_2 - x_1$."},
+  gen:[
+  ()=>{const a=rnd(-9,9);let b;do{b=rnd(-12,12)}while(b===a);return{q:`On a number line, point $A$ is at $${a}$ and point $B$ is at $${b}$. Find $AB$.`,type:"number",ans:Math.abs(b-a),ansTex:`AB = ${Math.abs(b-a)}`,hint:"Length is the distance between the points: subtract and take the absolute value.",sol:[`$AB = |${b} - ${P(a)}| = ${Math.abs(b-a)}$.`]}},
+  ()=>{const x1=rnd(-8,8),y1=rnd(-8,8),x2=x1+2*nz(-5,5),y2=y1+2*nz(-5,5),mx=(x1+x2)/2,my=(y1+y2)/2;return{q:`Find the midpoint of $A${pt(x1,y1)}$ and $B${pt(x2,y2)}$.`,type:"point",ans:[mx,my],ansTex:pt(mx,my),hint:"Average the $x$'s and average the $y$'s.",sol:[`$x = \\dfrac{${x1} + ${P(x2)}}{2} = ${mx}$, $y = \\dfrac{${y1} + ${P(y2)}}{2} = ${my}$.`,`$M = ${pt(mx,my)}$.`]}},
+  ()=>{const ax=rnd(-8,8),ay=rnd(-8,8),mx=rnd(-6,6),my=rnd(-6,6),bx=2*mx-ax,by=2*my-ay;return{q:`$M${pt(mx,my)}$ is the midpoint of $\\overline{AB}$, and $A = ${pt(ax,ay)}$. Find $B$.`,type:"point",ans:[bx,by],ansTex:`B = ${pt(bx,by)}`,hint:"From $A$ to $M$ is half the trip. Go the same distance again from $M$.",sol:[`From $A$ to $M$: $x$ changes by $${mx-ax}$, $y$ changes by $${my-ay}$.`,`Do it again from $M$: $B = ${pt(bx,by)}$.`]}},
+  ()=>{let a,b,c,d,x;do{a=rnd(2,5);b=nz(-6,8);c=rnd(2,6);d=nz(-8,6);x=rnd(2,9)}while(a*x+b<=0||c*x+d<=0);const tot=(a+c)*x+b+d;return{q:`$B$ is between $A$ and $C$. If $AB = ${lin(a,b)}$, $BC = ${lin(c,d)}$, and $AC = ${tot}$, find $x$.`,type:"number",ans:x,ansTex:`x = ${x}`,hint:"Segment Addition: $AB + BC = AC$.",sol:[`$(${lin(a,b)}) + (${lin(c,d)}) = ${tot}$.`,`$${lin(a+c,b+d)} = ${tot}$, so $x = ${x}$.`]}},
+  ()=>{const p=rnd(1,4),q=rnd(1,5),r=rnd(1,5),s=p+q+r,k=rnd(2,6),AD=s*k;return{q:`Points $A, B, C, D$ lie on a line in that order with $AB : BC : CD = ${p} : ${q} : ${r}$ and $AD = ${AD}$. Find $BD$.`,type:"number",ans:(q+r)*k,ansTex:`BD = ${(q+r)*k}`,hint:`Split $AD$ into $${p} + ${q} + ${r} = ${s}$ equal parts.`,sol:[`Each part is $${AD} \\div ${s} = ${k}$.`,`$BD = BC + CD = (${q} + ${r}) \\cdot ${k} = ${(q+r)*k}$.`]}}
+ ]},
+ {id:"dist",title:"The Distance Formula",idea:"$d = \\sqrt{(x_2 - x_1)^2 + (y_2 - y_1)^2}$ — it's the Pythagorean Theorem on the coordinate plane.",
+  lesson:{steps:[["A(1, 2),\\ B(4, 6)","Find $AB$."],["\\Delta x = 3,\\ \\Delta y = 4","Horizontal and vertical changes."],["\\sqrt{3^2 + 4^2} = \\sqrt{25}","Square, add, square root."],["AB = 5","Done."]],warn:"Square <b>each</b> difference before adding: $\\sqrt{3^2 + 4^2} = 5$, not $3 + 4 = 7$."},
+  gen:[
+  ()=>{const y=rnd(-8,8),x1=rnd(-9,5),x2=x1+rnd(2,12);return Math.random()<.5?{q:`Find the distance between $${pt(x1,y)}$ and $${pt(x2,y)}$.`,type:"number",ans:x2-x1,ansTex:`${x2-x1}`,hint:"Same $y$, so just count across.",sol:[`$|${x2} - ${P(x1)}| = ${x2-x1}$.`]}:{q:`Find the distance between $${pt(y,x1)}$ and $${pt(y,x2)}$.`,type:"number",ans:x2-x1,ansTex:`${x2-x1}`,hint:"Same $x$, so just count up.",sol:[`$|${x2} - ${P(x1)}| = ${x2-x1}$.`]}},
+  ()=>{const T=pick([[3,4,5],[6,8,10],[5,12,13],[8,15,17]]),sx=pick([-1,1]),sy=pick([-1,1]),x1=rnd(-6,6),y1=rnd(-6,6),sw=Math.random()<.5,dx=(sw?T[1]:T[0])*sx,dy=(sw?T[0]:T[1])*sy;return{q:`Find the distance between $A${pt(x1,y1)}$ and $B${pt(x1+dx,y1+dy)}$.`,type:"number",ans:T[2],ansTex:`AB = ${T[2]}`,hint:`$\\Delta x = ${dx}$ and $\\Delta y = ${dy}$. Square them, add, take the square root.`,sol:[`$\\sqrt{(${dx})^2 + (${dy})^2} = \\sqrt{${dx*dx} + ${dy*dy}} = \\sqrt{${T[2]*T[2]}} = ${T[2]}$.`]}},
+  ()=>{let dx,dy,n;do{dx=nz(-7,7);dy=nz(-7,7);n=dx*dx+dy*dy}while(Number.isInteger(Math.sqrt(n)));const x1=rnd(-5,5),y1=rnd(-5,5);return{q:`Find the exact distance between $${pt(x1,y1)}$ and $${pt(x1+dx,y1+dy)}$.`,type:"number",ans:Math.sqrt(n),ansTex:rad(n),hint:"Leave it as a square root. Type sqrt(...) for √.",sol:[`$\\sqrt{(${dx})^2 + (${dy})^2} = \\sqrt{${n}}${rad(n)!=="\\sqrt{"+n+"}"?" = "+rad(n):""}$.`]}},
+  ()=>{const T=pick([[3,4,5],[6,8,10],[5,12,13]]),x1=rnd(-5,5),y1=rnd(-5,5),dy=T[1]*pick([-1,1]);return{q:`The distance from $${pt(x1,y1)}$ to $(x, ${y1+dy})$ is $${T[2]}$, and $x > ${x1}$. Find $x$.`,type:"number",ans:x1+T[0],ansTex:`x = ${x1+T[0]}`,hint:`Set up $(x - ${P(x1)})^2 + (${dy})^2 = ${T[2]}^2$.`,sol:[`$(x - ${P(x1)})^2 + ${dy*dy} = ${T[2]*T[2]}$.`,`$(x - ${P(x1)})^2 = ${T[0]*T[0]}$, so $x - ${P(x1)} = ${T[0]}$ (since $x > ${x1}$).`,`$x = ${x1+T[0]}$.`]}},
+  ()=>{let A,B,C,S;do{A=[rnd(-6,6),rnd(-6,6)];B=[rnd(-6,6),rnd(-6,6)];C=[rnd(-6,6),rnd(-6,6)];S=A[0]*(B[1]-C[1])+B[0]*(C[1]-A[1])+C[0]*(A[1]-B[1])}while(S===0);const ar=Math.abs(S)/2;return{q:`Find the area of the triangle with vertices $${pt(A[0],A[1])}$, $${pt(B[0],B[1])}$, and $${pt(C[0],C[1])}$.`,type:"number",ans:ar,ansTex:`${ar}`,hint:"Use the Shoelace formula, or draw a rectangle around the triangle and subtract the extra right triangles.",sol:[`Shoelace: $\\tfrac12\\left|x_1(y_2 - y_3) + x_2(y_3 - y_1) + x_3(y_1 - y_2)\\right|$.`,`$= \\tfrac12|${S}| = ${ar}$.`]}}
+ ]},
+ {id:"ang",title:"Angle Pairs",idea:"<b>Complementary</b> angles add to $90^\\circ$. <b>Supplementary</b> angles add to $180^\\circ$. <b>Vertical</b> angles are equal.",
+  lesson:{steps:[["\\text{Supplement of } 65^\\circ","Supplementary means they add to $180^\\circ$."],["180 - 65","Subtract from $180$."],["= 115^\\circ","That's the supplement."]],warn:"<b>C</b>omplementary comes before <b>S</b>upplementary in the alphabet, just like $90$ comes before $180$."},
+  gen:[
+  ()=>{const a=rnd(5,85);return{q:`Find the complement of a $${deg(a)}$ angle.`,type:"number",ans:90-a,ansTex:deg(90-a),hint:"Complementary angles add to $90^\\circ$.",sol:[`$90 - ${a} = ${90-a}$.`]}},
+  ()=>{const a=rnd(10,170);return Math.random()<.6?{q:`Find the supplement of a $${deg(a)}$ angle.`,type:"number",ans:180-a,ansTex:deg(180-a),hint:"Supplementary angles add to $180^\\circ$.",sol:[`$180 - ${a} = ${180-a}$.`]}:{q:`Two lines intersect. One angle measures $${deg(a)}$. What is the measure of its vertical angle?`,type:"number",ans:a,ansTex:deg(a),hint:"Vertical angles are equal.",sol:[`Vertical angles are congruent, so it's $${deg(a)}$.`]}},
+  ()=>{let a,b,c,d,x,tot;do{tot=pick([90,180]);a=rnd(2,6);c=rnd(1,5);x=rnd(5,30);b=nz(-20,30);d=tot-(a+c)*x-b}while(a*x+b<=0||c*x+d<=0);const kind=tot===90?"complementary":"supplementary";return{q:`Two angles are ${kind}. One measures $(${lin(a,b)})^\\circ$ and the other measures $(${lin(c,d)})^\\circ$. Find $x$.`,type:"number",ans:x,ansTex:`x = ${x}`,hint:`${kind[0].toUpperCase()+kind.slice(1)} means the sum is $${tot}^\\circ$.`,sol:[`$(${lin(a,b)}) + (${lin(c,d)}) = ${tot}$.`,`$${lin(a+c,b+d)} = ${tot}$, so $x = ${x}$.`]}},
+  ()=>{let k,A,c,tot,r;do{tot=pick([90,180]);k=rnd(2,4);A=rnd(20,tot-10);c=A-k*(tot-A)}while(c===0||Math.abs(c)>60||A<=0);const word=tot===90?"complement":"supplement";return{q:`An angle measures $${Math.abs(c)}^\\circ$ ${c>0?"more":"less"} than ${k===2?"twice":k===3?"three times":"four times"} its ${word}. Find the angle.`,type:"number",ans:A,ansTex:deg(A),hint:`Let the angle be $a$. Its ${word} is $${tot} - a$.`,sol:[`$a = ${k}(${tot} - a) ${sg(c)}$.`,`$a = ${k*tot} - ${k}a ${sg(c)}$, so $${k+1}a = ${k*tot+c}$.`,`$a = ${A}$.`]}},
+  ()=>{let h,m,a;do{h=rnd(1,12);m=pick([0,5,10,15,20,25,30,35,40,45,50,55,12,24,36,48]);a=Math.abs(30*(h%12)-5.5*m);if(a>180)a=360-a}while(a===0);return{q:`What is the smaller angle between the hour hand and the minute hand of a clock at ${h}:${String(m).padStart(2,"0")}?`,type:"number",ans:a,ansTex:deg(a),hint:"The minute hand moves $6^\\circ$ per minute. The hour hand moves $30^\\circ$ per hour plus $0.5^\\circ$ per minute.",sol:[`Minute hand: $6 \\times ${m} = ${6*m}^\\circ$. Hour hand: $30 \\times ${h%12} + 0.5 \\times ${m} = ${30*(h%12)+0.5*m}^\\circ$.`,`Difference: $${Math.abs(30*(h%12)-5.5*m)}^\\circ$${Math.abs(30*(h%12)-5.5*m)>180?`, so the smaller angle is $360 - ${Math.abs(30*(h%12)-5.5*m)} = ${a}^\\circ$`:""}.`]}}
+ ]}
+]},
+{id:"ch3",title:"Parallel & Perpendicular Lines",topics:[
+ {id:"par",title:"Parallel Lines & Transversals",idea:"When parallel lines are cut by a transversal, the angles are either <b>equal</b> or <b>supplementary</b>: two acute angles are equal, two obtuse angles are equal, and an acute + an obtuse add to $180^\\circ$.",
+  lesson:{fig:figParallel({1:"110°",5:"?"}),steps:[["\\ell \\parallel m,\\ m\\angle 1 = 110^\\circ","Find $m\\angle 5$."],["\\angle 1 \\text{ and } \\angle 5 \\text{ are corresponding}","Same position at each intersection."],["m\\angle 5 = 110^\\circ","Corresponding angles are congruent."]],warn:"Same-side interior angles (like $\\angle 3$ and $\\angle 5$) are <b>supplementary</b>, not equal."},
+  gen:[
+  ()=>{const a=rnd(1,4),b=a+4,v=ACUTE.has(a)?rnd(35,80):rnd(100,145);return{q:`${figParallel({[a]:v+"°",[b]:"?"})}<div>Lines $\\ell$ and $m$ are parallel. If $m\\angle ${a} = ${deg(v)}$, find $m\\angle ${b}$.</div>`,type:"number",ans:v,ansTex:deg(v),hint:`$\\angle ${a}$ and $\\angle ${b}$ are corresponding angles.`,sol:[`$\\angle ${a}$ and $\\angle ${b}$ are corresponding, so they are congruent.`,`$m\\angle ${b} = ${deg(v)}$.`]}},
+  ()=>{const [a,b]=pairGen("equal"),v=ACUTE.has(a)?rnd(35,80):rnd(100,145);return{q:`${figParallel({[a]:v+"°",[b]:"?"})}<div>$\\ell \\parallel m$ and $m\\angle ${a} = ${deg(v)}$. Find $m\\angle ${b}$.</div>`,type:"number",ans:v,ansTex:deg(v),hint:`What kind of pair are $\\angle ${a}$ and $\\angle ${b}$?`,sol:[`$\\angle ${a}$ and $\\angle ${b}$ are ${PAIRNAME(a,b)} angles, which are congruent.`,`$m\\angle ${b} = ${deg(v)}$.`]}},
+  ()=>{const [a,b]=pairGen(Math.random()<.65?"supp":"equal"),v=ACUTE.has(a)?rnd(35,80):rnd(100,145),r=angRel(a,b),ans=r==="equal"?v:180-v;return{q:`${figParallel({[a]:v+"°",[b]:"?"})}<div>$\\ell \\parallel m$ and $m\\angle ${a} = ${deg(v)}$. Find $m\\angle ${b}$.</div>`,type:"number",ans,ansTex:deg(ans),hint:"Is one angle acute and the other obtuse? Then they add to $180^\\circ$.",sol:[`$\\angle ${a}$ and $\\angle ${b}$ are ${PAIRNAME(a,b)}${r==="equal"?" angles, so they are congruent":" angles, so they are supplementary"}.`,`$m\\angle ${b} = ${r==="equal"?deg(v):"180 - "+v+" = "+deg(ans)}$.`]}},
+  ()=>{const r=Math.random()<.5?"supp":"equal",[a,b]=pairGen(r);let p,q,c,d,x,va;do{x=rnd(5,30);p=rnd(2,6);q=rnd(2,6);va=ACUTE.has(a)?rnd(35,80):rnd(100,145);c=va-p*x;const vb=r==="equal"?va:180-va;d=vb-q*x}while(c===0||d===0||(r==="equal"&&p===q));return{q:`${figParallel({[a]:"("+lin(p,c)+")°",[b]:"("+lin(q,d)+")°"})}<div>$\\ell \\parallel m$, $m\\angle ${a} = (${lin(p,c)})^\\circ$ and $m\\angle ${b} = (${lin(q,d)})^\\circ$. Find $x$.</div>`,type:"number",ans:x,ansTex:`x = ${x}`,hint:`$\\angle ${a}$ and $\\angle ${b}$ are ${PAIRNAME(a,b)} angles. Are they equal or supplementary?`,sol:[r==="equal"?`They are congruent: $${lin(p,c)} = ${lin(q,d)}$.`:`They are supplementary: $(${lin(p,c)}) + (${lin(q,d)}) = 180$.`,`$x = ${x}$.`]}},
+  ()=>{const [a,b]=pairGen("supp");let p,q,c,d,x,va;do{x=rnd(5,30);p=rnd(2,7);q=rnd(2,7);va=ACUTE.has(a)?rnd(35,80):rnd(100,145);c=va-p*x;d=(180-va)-q*x}while(c===0||d===0);const big=Math.max(va,180-va);return{q:`${figParallel({[a]:"("+lin(p,c)+")°",[b]:"("+lin(q,d)+")°"})}<div>$\\ell \\parallel m$, $m\\angle ${a} = (${lin(p,c)})^\\circ$ and $m\\angle ${b} = (${lin(q,d)})^\\circ$. Find the measure of the <b>larger</b> of the two angles.</div>`,type:"number",ans:big,ansTex:deg(big),hint:"First decide equal or supplementary, solve for $x$, then substitute.",sol:[`They are ${PAIRNAME(a,b)} angles, so supplementary: $${lin(p+q,c+d)} = 180$, so $x = ${x}$.`,`$m\\angle ${a} = ${va}^\\circ$, $m\\angle ${b} = ${180-va}^\\circ$. Larger: $${deg(big)}$.`]}}
+ ]},
+ {id:"slope",title:"Slopes of Parallel & Perpendicular Lines",idea:"<b>Parallel</b> lines have the <b>same</b> slope. <b>Perpendicular</b> lines have slopes that are <b>negative reciprocals</b> (they multiply to $-1$).",
+  lesson:{steps:[["y = \\tfrac{2}{3}x + 1","Slope $m = \\tfrac{2}{3}$."],["\\text{Parallel slope} = \\tfrac{2}{3}","Same slope."],["\\text{Perpendicular slope} = -\\tfrac{3}{2}","Flip the fraction and change the sign."]],warn:"Perpendicular needs <b>both</b> steps: flip <b>and</b> change the sign. The perpendicular slope of $2$ is $-\\tfrac{1}{2}$."},
+  gen:[
+  ()=>{const m=nz(-8,8),b=nz(-9,9);return{q:`What is the slope of a line parallel to $y = ${lin(m,b)}$?`,type:"number",ans:m,ansTex:`m = ${m}`,hint:"Parallel lines have the same slope.",sol:[`The slope of $y = ${lin(m,b)}$ is $${m}$.`,`Parallel slope: $${m}$.`]}},
+  ()=>{let p,q;do{p=nz(-6,6);q=rnd(1,6)}while(gcd(p,q)!==1);const b=nz(-9,9),m=frac(p,q);return{q:`What is the slope of a line perpendicular to $y = ${q===1?co(p,"x"):(p<0?"-":"")+"\\tfrac{"+Math.abs(p)+"}{"+q+"}x"} ${sg(b)}$?`,type:"number",ans:-q/p,ansTex:frac(-q,p),hint:"Flip the slope and change its sign.",sol:[`Slope $= ${m}$.`,`Negative reciprocal: $${frac(-q,p)}$.`]}},
+  ()=>{let x1,y1,x2,y2;do{x1=rnd(-8,8);y1=rnd(-8,8);x2=rnd(-8,8);y2=rnd(-8,8)}while(x1===x2);return{q:`Find the slope of the line through $${pt(x1,y1)}$ and $${pt(x2,y2)}$.`,type:"number",ans:(y2-y1)/(x2-x1),ansTex:frac(y2-y1,x2-x1),hint:"$m = \\dfrac{y_2 - y_1}{x_2 - x_1}$.",sol:[`$m = \\dfrac{${y2} - ${P(y1)}}{${x2} - ${P(x1)}} = \\dfrac{${y2-y1}}{${x2-x1}} = ${frac(y2-y1,x2-x1)}$.`]}},
+  ()=>{const m=nz(-5,5),b=nz(-9,9),x0=nz(-5,5),y0=rnd(-9,9),c=y0-m*x0;return{q:`Write the equation of the line parallel to $y = ${lin(m,b)}$ that passes through $${pt(x0,y0)}$.`,type:"expr",ans:`${m}*x+(${c})`,ansTex:`y = ${lin(m,c)}`,hint:`Use slope $${m}$, then plug in the point to find $b$.`,sol:[`$y = ${m}x + b$, and $${y0} = ${m}(${x0}) + b$.`,`$b = ${c}$, so $y = ${lin(m,c)}$.`]}},
+  ()=>{const m=nz(-4,4),b=nz(-9,9),x1=rnd(-5,5),dx=2*Math.abs(m)*rnd(1,2)||2,x2=x1+dx,y2=rnd(-8,8),k=y2+dx/m;return{q:`The line through $(${x1}, k)$ and $${pt(x2,y2)}$ is perpendicular to $y = ${lin(m,b)}$. Find $k$.`,type:"number",ans:k,ansTex:`k = ${k}`,hint:`The slope must be $${frac(-1,m)}$. Set $\\dfrac{${y2} - k}{${x2} - ${P(x1)}}$ equal to it.`,sol:[`Perpendicular slope: $${frac(-1,m)}$.`,`$\\dfrac{${y2} - k}{${dx}} = ${frac(-1,m)}$, so $${y2} - k = ${-dx/m}$.`,`$k = ${k}$.`]}}
+ ]}
+]},
+{id:"ch4",title:"Congruent Triangles",topics:[
+ {id:"tri",title:"Triangle Angle Sum & Exterior Angles",idea:"The angles of a triangle add to $180^\\circ$. An <b>exterior angle</b> equals the sum of the two <b>remote interior</b> angles.",
+  lesson:{steps:[["50^\\circ,\\ 70^\\circ,\\ x^\\circ","Two angles of a triangle are known."],["50 + 70 + x = 180","All three add to $180$."],["x = 60","Subtract."]],warn:"The exterior angle equals the two angles <b>not next to it</b> — not all three."},
+  gen:[
+  ()=>{let a,b;do{a=rnd(20,110);b=rnd(20,110)}while(a+b>=170);return{q:`Two angles of a triangle measure $${deg(a)}$ and $${deg(b)}$. Find the third angle.`,type:"number",ans:180-a-b,ansTex:deg(180-a-b),hint:"The three angles add to $180^\\circ$.",sol:[`$180 - ${a} - ${b} = ${180-a-b}$.`]}},
+  ()=>{let a,b;do{a=rnd(20,90);b=rnd(20,90)}while(a+b>=175);const r=rnd(15,75);return Math.random()<.5?{q:`One acute angle of a right triangle measures $${deg(r)}$. Find the other acute angle.`,type:"number",ans:90-r,ansTex:deg(90-r),hint:"The two acute angles of a right triangle add to $90^\\circ$.",sol:[`$90 - ${r} = ${90-r}$.`]}:{q:`The two remote interior angles of a triangle measure $${deg(a)}$ and $${deg(b)}$. Find the exterior angle.`,type:"number",ans:a+b,ansTex:deg(a+b),hint:"Exterior angle = sum of the two remote interior angles.",sol:[`$${a} + ${b} = ${a+b}$.`]}},
+  ()=>{const M=pick([[1,2,3],[2,3,4],[1,3,5],[3,4,5],[1,1,2],[2,3,5],[1,4,7],[4,5,6]]),s=M[0]+M[1]+M[2];const u=180/s;return{q:`The angles of a triangle are in the ratio $${M.join(" : ")}$. Find the largest angle.`,type:"number",ans:M[2]*u,ansTex:deg(M[2]*u),hint:`Call the angles $${M[0]}k, ${M[1]}k, ${M[2]}k$. They add to $180$.`,sol:[`$${s}k = 180$, so $k = ${u}$.`,`Largest: $${M[2]} \\cdot ${u} = ${M[2]*u}^\\circ$.`]}},
+  ()=>{let p,q,r,a,b,c,x;do{x=rnd(5,25);p=rnd(1,4);q=rnd(1,4);r=p+q+rnd(1,3);a=rnd(-10,30);b=rnd(-10,30);c=(p+q-r)*x+a+b}while(p*x+a<=10||q*x+b<=10||r*x+c>=180||r*x+c<=0);return{q:`In a triangle, the remote interior angles measure $(${lin(p,a)})^\\circ$ and $(${lin(q,b)})^\\circ$, and the exterior angle measures $(${lin(r,c)})^\\circ$. Find $x$.`,type:"number",ans:x,ansTex:`x = ${x}`,hint:"Exterior angle = sum of the remote interior angles.",sol:[`$(${lin(p,a)}) + (${lin(q,b)}) = ${lin(r,c)}$.`,`$${lin(p+q,a+b)} = ${lin(r,c)}$, so $x = ${x}$.`]}},
+  ()=>{let k,A,d;do{k=pick([1,2]);A=rnd(30,70);d=A*(2+k)-180}while(d<=0||d>=A);const C=k*A;return{q:`In $\\triangle ABC$, $\\angle A$ is $${deg(d)}$ more than $\\angle B$, and $\\angle C$ is ${k===1?"equal to":"twice"} $\\angle A$. Find $m\\angle C$.`,type:"number",ans:C,ansTex:deg(C),hint:"Write everything in terms of $\\angle A$, then use the angle sum.",sol:[`$\\angle B = A - ${d}$, $\\angle C = ${k===1?"A":"2A"}$.`,`$A + (A - ${d}) + ${k===1?"A":"2A"} = 180$, so $${2+k}A = ${180+d}$ and $A = ${A}$.`,`$m\\angle C = ${C}^\\circ$.`]}}
+ ]},
+ {id:"iso",title:"Isosceles & Equilateral Triangles",idea:"In an <b>isosceles</b> triangle, the base angles are equal. An <b>equilateral</b> triangle has all sides equal and all angles $60^\\circ$.",
+  lesson:{steps:[["\\text{Vertex angle} = 40^\\circ","An isosceles triangle."],["180 - 40 = 140","The two base angles share what's left."],["140 \\div 2 = 70^\\circ","Each base angle is $70^\\circ$."]],warn:"Read carefully: is the given angle the <b>vertex</b> angle or a <b>base</b> angle? The answers are different."},
+  gen:[
+  ()=>{const v=2*rnd(10,80);return{q:`The vertex angle of an isosceles triangle measures $${deg(v)}$. Find each base angle.`,type:"number",ans:(180-v)/2,ansTex:deg((180-v)/2),hint:"The two base angles are equal and share $180 - $ vertex.",sol:[`$(180 - ${v}) \\div 2 = ${(180-v)/2}$.`]}},
+  ()=>{const b=rnd(20,85);return{q:`Each base angle of an isosceles triangle measures $${deg(b)}$. Find the vertex angle.`,type:"number",ans:180-2*b,ansTex:deg(180-2*b),hint:"Subtract both base angles from $180^\\circ$.",sol:[`$180 - 2(${b}) = ${180-2*b}$.`]}},
+  ()=>{let a,b,c,d,x;do{x=rnd(2,10);a=rnd(2,6);c=rnd(2,6);b=nz(-9,9);d=(a-c)*x+b}while(a===c||a*x+b<=0||d===0);return{q:`In isosceles $\\triangle ABC$, $AB = AC$. If $AB = ${lin(a,b)}$ and $AC = ${lin(c,d)}$, find $x$.`,type:"number",ans:x,ansTex:`x = ${x}`,hint:"The legs are equal: set the expressions equal.",sol:[`$${lin(a,b)} = ${lin(c,d)}$.`,`$${co(a-c,"x")} = ${d-b}$, so $x = ${x}$.`]}},
+  ()=>{let a,b,c,d,x;do{x=rnd(2,9);a=rnd(2,6);c=rnd(1,5);b=nz(-8,8);d=(a-c)*x+b}while(a===c||a*x+b<=0||d===0);const s=a*x+b;return{q:`An equilateral triangle has sides $${lin(a,b)}$ and $${lin(c,d)}$. Find its perimeter.`,type:"number",ans:3*s,ansTex:`${3*s}`,hint:"All sides are equal. Solve for $x$, find one side, then multiply by $3$.",sol:[`$${lin(a,b)} = ${lin(c,d)}$, so $x = ${x}$.`,`Side $= ${s}$, perimeter $= 3 \\cdot ${s} = ${3*s}$.`]}},
+  ()=>{const a=2*rnd(10,40),opts=[180-2*a,(180-a)/2,a],best=Math.max(180-2*a,(180-a)/2);return{q:`One angle of an isosceles triangle measures $${deg(a)}$. What is the <b>largest possible</b> measure of another angle of the triangle?`,type:"number",ans:best,ansTex:deg(best),hint:`Try both cases: $${a}^\\circ$ is a base angle, or $${a}^\\circ$ is the vertex angle.`,sol:[`If $${a}^\\circ$ is a base angle: angles $${a}, ${a}, ${180-2*a}$.`,`If $${a}^\\circ$ is the vertex angle: angles $${a}, ${(180-a)/2}, ${(180-a)/2}$.`,`Largest possible: $${deg(best)}$.`]}}
+ ]},
+ {id:"cong",title:"Proving Triangles Congruent",idea:"Five shortcuts: <b>SSS</b>, <b>SAS</b> (angle between the sides), <b>ASA</b> (side between the angles), <b>AAS</b>, and <b>HL</b> (right triangles). SSA and AAA do <b>not</b> work.",
+  lesson:{steps:[["\\overline{AB} \\cong \\overline{DE},\\ \\angle B \\cong \\angle E,\\ \\overline{BC} \\cong \\overline{EF}","What's given?"],["\\text{Side, Angle, Side}","$\\angle B$ is between sides $\\overline{AB}$ and $\\overline{BC}$."],["\\triangle ABC \\cong \\triangle DEF \\text{ by SAS}","The angle is included, so SAS works."]],warn:"For SAS the angle must be <b>between</b> the two sides. If it isn't, that's SSA — not enough to prove congruence."},
+  gen:[
+  ()=>congProb(pick(["SSS","SAS"])),
+  ()=>congProb(pick(["ASA","AAS","SAS"])),
+  ()=>congProb(pick(["SSS","SAS","ASA","AAS","HL"])),
+  ()=>congProb(pick(["SAS","ASA","AAS","HL","SSA","AAA"])),
+  ()=>{const A=rnd(30,80),B=rnd(30,80),x=rnd(3,12),p=rnd(2,5),q=nz(-9,9),s=p*x+q;if(Math.random()<.5)return{q:`$\\triangle ABC \\cong \\triangle DEF$. If $AB = ${lin(p,q)}$ and $DE = ${s}$, find $x$.`,type:"number",ans:x,ansTex:`x = ${x}`,hint:"Corresponding parts of congruent triangles are congruent (CPCTC). $AB$ matches $DE$.",sol:[`$${lin(p,q)} = ${s}$, so $x = ${x}$.`]};
+    return{q:`$\\triangle ABC \\cong \\triangle DEF$, $m\\angle A = ${deg(A)}$ and $m\\angle E = ${deg(B)}$. Find $m\\angle F$.`,type:"number",ans:180-A-B,ansTex:deg(180-A-B),hint:"$\\angle A$ matches $\\angle D$. Use the angle sum in $\\triangle DEF$.",sol:[`$m\\angle D = m\\angle A = ${A}^\\circ$.`,`$m\\angle F = 180 - ${A} - ${B} = ${180-A-B}^\\circ$.`]}}
+ ]}
+]}
+];
+function congProb(kind){
+  const T1=pick([["A","B","C"],["B","C","A"],["C","A","B"]]),M={A:"D",B:"E",C:"F"},[X,Y,Z]=T1,m=v=>M[v];
+  const S=(u,v)=>`\\overline{${u}${v}} \\cong \\overline{${m(u)}${m(v)}}`, A=u=>`\\angle ${u} \\cong \\angle ${m(u)}`;
+  const G={SSS:[S(X,Y),S(Y,Z),S(Z,X)],SAS:[S(X,Y),A(Y),S(Y,Z)],ASA:[A(X),S(X,Y),A(Y)],AAS:[A(X),A(Y),S(Y,Z)],HL:[`\\angle ${Z} \\text{ and } \\angle ${m(Z)} \\text{ are right angles}`,S(X,Y),S(Y,Z)],SSA:[S(X,Y),S(Y,Z),A(Z)],AAA:[A(X),A(Y),A(Z)]}[kind].slice();
+  G.sort(()=>Math.random()-.5); const ans=kind==="SSA"||kind==="AAA"?"NONE":kind;
+  const why={SSS:"All three pairs of sides are congruent.",SAS:`$\\angle ${Y}$ is between $\\overline{${X}${Y}}$ and $\\overline{${Y}${Z}}$ — an included angle.`,ASA:`$\\overline{${X}${Y}}$ is between $\\angle ${X}$ and $\\angle ${Y}$ — an included side.`,AAS:`Two angles and a side that is <b>not</b> between them.`,HL:`Right triangles with congruent hypotenuses ($\\overline{${X}${Y}}$) and a congruent leg.`,SSA:`$\\angle ${Z}$ is not between the two sides: that's SSA, which doesn't prove congruence.`,AAA:"Three angles only give the same shape, not the same size."}[kind];
+  return{q:`Given: $${G.join("$, $")}$. Which shortcut proves $\\triangle ABC \\cong \\triangle DEF$? (Type <b>none</b> if it can't be proven.)`,type:"word",ans,ansTex:`\\text{${ans==="NONE"?"cannot be proven":ans}}`,hint:"List what you have in order around the triangle: S for a side, A for an angle. Is the angle between the sides, or the side between the angles?",sol:[why,ans==="NONE"?"Congruence cannot be proven.":`$\\triangle ABC \\cong \\triangle DEF$ by ${ans}.`]};
+}
+const ALLCH=[[1,"Tools of Geometry","ch1"],[2,"Reasoning & Proof"],[3,"Parallel & Perpendicular Lines","ch3"],[4,"Congruent Triangles","ch4"],[5,"Relationships Within Triangles"],[6,"Polygons & Quadrilaterals"],[7,"Similarity"],[8,"Right Triangles & Trigonometry"],[9,"Transformations"],[10,"Circles"],[11,"Area"],[12,"Surface Area & Volume"],[13,"Probability"]];
+const COMING=[];
+
+
+/* ================= checking ================= */
+const CONST=new Set(["pi","e","E","PI","Infinity"]);
+function clean(s){ return String(s).replace(/[−–]/g,"-").replace(/×|·/g,"*").replace(/÷/g,"/").replace(/π/g,"pi").replace(/≤|=</g,"<=").replace(/≥|=>/g,">=").replace(/√\s*(\d+(?:\.\d+)?|\([^)]*\)|[a-z])/g,"sqrt($1)").trim(); }
+function val(s){ try{ const r=math.evaluate(s); const v=typeof r==="number"?r:(r&&typeof r.valueOf()==="number"?r.valueOf():NaN); return isFinite(v)?v:NaN; }catch(e){ return NaN; } }
+const close=(a,b)=>Math.abs(a-b)<1e-6*Math.max(1,Math.abs(b));
+function varsOf(node){ const v=new Set(); node.traverse((n,path,parent)=>{ if(n.isSymbolNode&&!(parent&&parent.isFunctionNode&&path==="fn")&&!CONST.has(n.name)&&typeof math[n.name]!=="function") v.add(n.name); }); return [...v]; }
+function evalAt(node,sc){ try{ const r=node.evaluate(sc); const v=typeof r==="number"?r:(r&&typeof r.valueOf()==="number"?r.valueOf():NaN); return isFinite(v)?v:NaN; }catch(e){ return NaN; } }
+function exprEq(student,expected,form){
+  let s=clean(student); if(s.includes("=")) s=s.split("=").pop();
+  let S,E; try{ S=math.parse(s); E=math.parse(expected); }catch(e){ return null; }
+  if(form==="combined"){ if(s.includes("(")) return false; const cnt={}; S.traverse((n,path,parent)=>{ if(n.isSymbolNode&&!(parent&&parent.isFunctionNode&&path==="fn")&&!CONST.has(n.name)) cnt[n.name]=(cnt[n.name]||0)+1; }); if(Object.values(cnt).some(c=>c>1)) return false; }
+  const vars=[...new Set([...varsOf(S),...varsOf(E)])]; let t=0;
+  for(let k=0;k<12&&t<6;k++){ const sc={}; vars.forEach(v=>sc[v]=Math.round((Math.random()*6-3)*1000)/1000+0.137+(k%2)); const a=evalAt(S,sc),b=evalAt(E,sc); if(isNaN(a)||isNaN(b)) continue; t++; if(!close(a,b)) return false; }
+  return t>=3?true:null;
+}
+/* inequalities → list of intervals {lo,li,hi,hiI} */
+function ray(op,v){ return op===">"?{lo:v,li:false,hi:Infinity,hiI:false}:op===">="?{lo:v,li:true,hi:Infinity,hiI:false}:op==="<"?{lo:-Infinity,li:false,hi:v,hiI:false}:{lo:-Infinity,li:false,hi:v,hiI:true}; }
+function parseIneqPart(str){
+  const t=str.replace(/\s+/g,"").split(/(<=|>=|<|>)/); const isV=x=>/^[a-z]$/i.test(x);
+  if(t.length===3){ if(isV(t[0])){ const v=val(t[2]); return isNaN(v)?null:ray(t[1],v); } if(isV(t[2])){ const v=val(t[0]); return isNaN(v)?null:ray(FLIP[t[1]],v); } return null; }
+  if(t.length===5&&isV(t[2])){ const A=val(t[0]),B=val(t[4]); if(isNaN(A)||isNaN(B)) return null; const up=o=>o==="<"||o==="<=";
+    if(up(t[1])&&up(t[3])) return {lo:A,li:t[1]==="<=",hi:B,hiI:t[3]==="<="}; if(!up(t[1])&&!up(t[3])) return {lo:B,li:t[3]===">=",hi:A,hiI:t[1]===">="}; }
+  return null;
+}
+function parseIneq(s){ s=clean(s).toLowerCase(); const out=[];
+  for(const part of s.split(/\bor\b|∪|\|\|/)){ if(!part.trim()) continue;
+    const ands=part.split(/\band\b|,|&&/).filter(x=>x.trim()); let iv={lo:-Infinity,li:false,hi:Infinity,hiI:false};
+    for(const a of ands){ const r=parseIneqPart(a); if(!r) return null; if(r.lo>iv.lo||(r.lo===iv.lo&&!r.li)){ iv.lo=r.lo; iv.li=r.li; } if(r.hi<iv.hi||(r.hi===iv.hi&&!r.hiI)){ iv.hi=r.hi; iv.hiI=r.hiI; } }
+    out.push(iv); }
+  return out.length?out:null; }
+function sameIv(a,b){ const e=(x,y)=>(x===y)||(isFinite(x)&&isFinite(y)&&close(x,y)); return e(a.lo,b.lo)&&e(a.hi,b.hi)&&(!isFinite(a.lo)||a.li===b.li)&&(!isFinite(a.hi)||a.hiI===b.hiI); }
+function check(pr,input){
+  if(pr.type==="number"){ const v=val(clean(input).split("=").pop()); return isNaN(v)?null:close(v,pr.ans); }
+  if(pr.type==="set"){ const v=val(clean(input).split("=").pop()); return isNaN(v)?null:close(v,pr.ans[0]); }
+  if(pr.type==="expr") return exprEq(input,pr.ans,pr.form);
+  if(pr.type==="point"){ const m=/^\(?\s*([^,]+),([^)]+)\)?$/.exec(clean(input).split("=").pop().trim()); if(!m) return null; const x=val(m[1]),y=val(m[2]); if(isNaN(x)||isNaN(y)) return null; return close(x,pr.ans[0])&&close(y,pr.ans[1]); }
+  if(pr.type==="word"){ const w=String(input).toUpperCase().replace(/[^A-Z]/g,""); if(!w) return null; const n=/NONE|NOT|CANNOT|CANT|NEITHER/.test(w)||w==="NO"?"NONE":w; if(!["SSS","SAS","ASA","AAS","HL","NONE"].includes(n)) return null; return n===pr.ans; }
+  const want=pr.type==="ineq"?[ray(pr.ans.op,pr.ans.v)]:pr.type==="between"?[pr.ans]:pr.ans.map(r=>ray(r.op,r.v));
+  const got=parseIneq(input); if(!got) return null;
+  const srt=a=>a.slice().sort((x,y)=>x.lo-y.lo); const g=srt(got),w=srt(want);
+  return g.length===w.length&&g.every((x,i)=>sameIv(x,w[i]));
+}
+function render(el){ if(window.renderMathInElement) renderMathInElement(el,{delimiters:[{left:"$",right:"$",display:false}],throwOnError:false}); }
+
+/* ================= state ================= */
+let ST={cur:"ch1",ch:{}}; try{ Object.assign(ST,JSON.parse(localStorage.getItem("fm-geo")||"{}")); }catch(e){}
+const save=()=>{ try{ localStorage.setItem("fm-geo",JSON.stringify(ST)); }catch(e){} };
+let CH=null, st=null, T=null, L=1, PR=null, tries=0, done=false, firstTry=true, streak=[];
+function useChapter(id){ CH=CHAPTERS.find(c=>c.id===id)||CHAPTERS[0]; ST.cur=CH.id; ST.ch[CH.id]=ST.ch[CH.id]||{rec:null,level:{},solved:{},learned:{}}; st=ST.ch[CH.id]; save(); }
+
+/* ================= page ================= */
+function chapters(){ const b=$("chapters"); b.innerHTML="";
+  ALLCH.forEach(([n,t,id])=>{ if(id){ const x=document.createElement("button"); x.type="button"; x.className="chap"+(id===CH.id?" on":""); x.innerHTML=`<i>${n}</i>${t}`; x.onclick=()=>{ if(id!==CH.id) openChapter(id,"learn"); }; b.appendChild(x); }
+    else { const x=document.createElement("span"); x.className="chap soon"; x.title="Coming soon"; x.innerHTML=`<i>${n}</i>${t}`; b.appendChild(x); } }); }
+function legend(){ $("legend").innerHTML=""; LEVELS.forEach(l=>{ const d=document.createElement("div"); d.className="lg"; d.style.setProperty("--c",l.c); d.innerHTML=`<b>${l.n} · ${l.name} ${l.zh}</b><span>${l.desc}</span>`; $("legend").appendChild(d); }); }
+function recText(){ $("recText").innerHTML=st.rec?`Suggested starting level for this chapter: <span class="rec">${st.rec} · ${LEVELS[st.rec-1].name}</span> ★ — you can always change it.`:"Answer up to 5 questions and we'll suggest a level for this chapter."; $("placeBtn").textContent=st.rec?"Retake the check":"Take the 5-question check"; }
+function pillsFor(t,cur,onPick){ const w=document.createElement("div"); w.className="pills";
+  LEVELS.forEach(l=>{ const b=document.createElement("button"); b.type="button"; b.className="pill"+(l.n===cur?" on":"")+(st.rec===l.n?" star":""); b.style.setProperty("--c",l.c); const n=st.solved[t.id+l.n]||0; b.innerHTML=`${l.n} ${l.name}`+(n?`<span class="n">✓${n}</span>`:""); b.onclick=()=>onPick(l.n); w.appendChild(b); }); return w; }
+function topics(){ const box=$("topics"); box.innerHTML="";
+  CH.topics.forEach(t=>{ const c=document.createElement("div"); c.className="card topic"; const lvl=st.level[t.id]||st.rec||1;
+    c.innerHTML=`<h2>${t.title}</h2><p class="idea">${t.idea}</p><div class="example"><span class="label">Simplest example</span>${t.lesson.steps.map(s=>`<div class="q">$${s[0]}$</div>`).join("")}</div><span class="label">Practice at level</span>`;
+    c.appendChild(pillsFor(t,lvl,n=>startPractice(t,n)));
+    const go=document.createElement("button"); go.className="btn teal sm"; go.style.alignSelf="flex-start"; go.textContent=`Practice level ${lvl} →`; go.onclick=()=>startPractice(t,lvl); c.appendChild(go); box.appendChild(c); });
+  render(box); }
+function startPractice(t,n){ T=t; L=n; st.level[t.id]=n; save(); streak=[]; $("practice").hidden=false; $("pTitle").textContent=t.title; newProblem(); $("practice").scrollIntoView({behavior:"smooth",block:"start"}); topics(); }
+function levelPills(){ $("pLevels").replaceWith(Object.assign(pillsFor(T,L,n=>{ L=n; st.level[T.id]=n; save(); streak=[]; newProblem(); topics(); }),{id:"pLevels"})); }
+function newProblem(){
+  PR=T.gen[L-1](); tries=0; done=false; firstTry=true;
+  $("pQ").innerHTML=`<span class="label" style="color:${LEVELS[L-1].c}">Level ${L} · ${LEVELS[L-1].name}</span><div>${PR.q}</div>`; render($("pQ"));
+  $("pAns").value=""; $("pAns").disabled=false; $("pPrev").textContent=""; $("pHow").textContent=HOW[PR.type]; $("pFb").innerHTML=""; $("pSuggest").innerHTML="";
+  $("pCheck").hidden=false; $("pNext").hidden=true; $("pHint").disabled=false; $("pShow").hidden=true; levelPills(); drawStreak(); $("pAns").focus({preventScroll:true}); }
+function fb(kind,tag,html){ $("pFb").innerHTML=`<div class="fb ${kind}"><span class="tag">${tag}</span>${html}</div>`; render($("pFb")); }
+const solHtml=()=>`<ol class="sol">${PR.sol.map(s=>`<li>${s}</li>`).join("")}</ol>`;
+function finish(correct){ done=true; $("pAns").disabled=true; $("pCheck").hidden=true; $("pNext").hidden=false; $("pShow").hidden=true; $("pHint").disabled=true;
+  if(correct){ st.solved[T.id+L]=(st.solved[T.id+L]||0)+1; save(); }
+  streak.push(correct&&firstTry); if(streak.length>6) streak.shift(); drawStreak(); suggest(); levelPills(); $("pNext").focus({preventScroll:true}); }
+function submit(){ if(done||!PR) return; const v=$("pAns").value.trim(); if(!v) return; const r=check(PR,v);
+  if(r===null){ fb("hint","Try again","I couldn't read that. "+HOW[PR.type]); return; }
+  if(r){ fb("good","Correct"+(firstTry?" on the first try!":""),`$${PR.ansTex}$`+solHtml()); finish(true); return; }
+  tries++; firstTry=false;
+  if(tries===1){ fb("bad","Not yet",PR.hint+" Try again."); $("pShow").hidden=false; }
+  else { fb("bad","Not yet","Here's how it works:"+solHtml()); finish(false); } }
+function drawStreak(){ const s=$("pStreak"); s.innerHTML="Recent: "; streak.forEach(x=>{ const i=document.createElement("i"); i.className=x?"ok":"no"; s.appendChild(i); }); if(!streak.length) s.textContent="Get 3 right on the first try in a row to unlock a suggestion to move up."; }
+function suggest(){ const box=$("pSuggest"); box.innerHTML=""; const last=streak.slice(-3),last2=streak.slice(-2); let to=null,msg="";
+  if(L<5&&last.length===3&&last.every(Boolean)){ to=L+1; msg=`3 in a row on the first try! Ready for <b>Level ${L+1} · ${LEVELS[L].name}</b>?`; }
+  else if(L>1&&last2.length===2&&last2.every(x=>!x)){ to=L-1; msg=`These are tough — that's okay! Practice <b>Level ${L-1} · ${LEVELS[L-2].name}</b> first, then come back stronger.`; }
+  if(!to) return; const d=document.createElement("div"); d.className="suggest"; d.style.setProperty("--c",LEVELS[to-1].c); d.innerHTML=`<span>${msg}</span>`;
+  const b=document.createElement("button"); b.className="btn sm"; b.style.background=LEVELS[to-1].c; b.textContent=to>L?"Move up ↑":"Go to Level "+to; b.onclick=()=>{ L=to; st.level[T.id]=to; save(); streak=[]; newProblem(); topics(); }; d.appendChild(b); box.appendChild(d); }
+$("pCheck").onclick=submit; $("pAns").addEventListener("keydown",e=>{ if(e.key==="Enter"){ e.preventDefault(); done?newProblem():submit(); } });
+$("pNext").onclick=newProblem; $("closeP").onclick=()=>{ $("practice").hidden=true; };
+$("pHint").onclick=()=>{ if(done) return; firstTry=false; fb("hint","Hint",PR.hint); };
+$("pShow").onclick=()=>{ fb("hint","Solution",`$${PR.ansTex}$`+solHtml()); finish(false); };
+$("pAns").addEventListener("input",()=>{ const v=$("pAns").value.trim(),pv=$("pPrev"); if(!v||!window.katex){ pv.textContent=""; return; }
+  try{ let tex; const c=clean(v);
+    if(/<|>/.test(c)) tex=c.replace(/<=/g,"\\le ").replace(/>=/g,"\\ge ").replace(/\bor\b/gi,"\\text{ or }").replace(/\band\b/gi,"\\text{ and }");
+    else tex=c.split("=").map(x=>math.parse(x).toTex({parenthesis:"auto",implicit:"hide"})).join(" = ");
+    pv.innerHTML='<span class="pl">You wrote</span><span class="pm"></span>'; katex.render(tex,pv.querySelector(".pm"),{throwOnError:false}); }catch(e){ pv.textContent=""; } });
+
+/* ---- placement ---- */
+$("placeBtn").onclick=()=>{
+  const PL=[0,1,2,0,1].map((ti,k)=>[CH.topics[ti%CH.topics.length],k+1]); let i=0,res=[],pr;
+  const m=document.createElement("div"); m.className="modal"; m.innerHTML=`<div class="card"><div class="phead"><h2>Where should I start?</h2><button class="btn ghost sm" id="qx">Close</button></div><div class="qprog" id="qp"></div><div class="problem" id="qq"></div><div class="row" id="qr"><input id="qa" type="text" autocomplete="off" placeholder="Your answer" aria-label="Your answer"><button class="btn" id="qc">Check</button><button class="btn ghost" id="qs">I don't know</button></div><div class="howto" id="qh"></div><div id="qf"></div></div>`;
+  document.body.appendChild(m); const q=id=>m.querySelector("#"+id);
+  const prog=()=>{ q("qp").innerHTML=PL.map((_,k)=>`<i class="${k<res.length?(res[k]?"ok":"no"):k===i?"now":""}"></i>`).join(""); };
+  const ask=()=>{ const [t,lv]=PL[i]; pr=t.gen[lv-1](); q("qq").innerHTML=`<span class="label">Question ${i+1} of 5 · Level ${lv}</span><div>${pr.q}</div>`; render(q("qq")); q("qa").value=""; q("qh").textContent=HOW[pr.type]; q("qf").innerHTML=""; prog(); q("qa").focus(); };
+  const end=()=>{ const lvl=res.indexOf(false)===-1?5:res.indexOf(false)+1; st.rec=lvl; save(); recText(); topics(); prog();
+    q("qq").innerHTML=`<span class="label">Result</span><div>Start at <b style="color:${LEVELS[lvl-1].c}">Level ${lvl} · ${LEVELS[lvl-1].name}</b>.</div><div style="font-size:15px;color:var(--muted)">${lvl===5?"You answered every question correctly — go for Competition!":lvl===1?"Foundation builds the base everything else needs. Move up whenever you get 3 in a row.":"You got the first "+(lvl-1)+" level"+(lvl===2?"":"s")+" right. Level "+lvl+" is the right challenge for you."}</div>`;
+    q("qr").hidden=true; q("qh").textContent=""; q("qf").innerHTML=""; const b=document.createElement("button"); b.className="btn teal"; b.textContent="See the topics"; b.onclick=()=>m.remove(); q("qf").appendChild(b); };
+  const answer=r=>{ res.push(r); if(!r){ end(); return; } i++; i>=PL.length?end():ask(); };
+  q("qc").onclick=()=>{ const v=q("qa").value.trim(); if(!v) return; const r=check(pr,v); if(r===null){ q("qf").innerHTML=`<div class="fb hint">I couldn't read that. ${HOW[pr.type]}</div>`; return; } answer(r); };
+  q("qa").addEventListener("keydown",e=>{ if(e.key==="Enter"){ e.preventDefault(); q("qc").click(); } });
+  q("qs").onclick=()=>answer(false); q("qx").onclick=()=>m.remove(); m.addEventListener("click",e=>{ if(e.target===m) m.remove(); });
+  ask(); };
+
+/* ---- learn ---- */
+let LI=0, shown=1, TP=null, tDone=false, tTries=0;
+function road(){ const r=$("road"); r.innerHTML=""; CH.topics.forEach((t,i)=>{ const b=document.createElement("button"); b.type="button"; b.className="stop"+(st.learned[t.id]?" done":"")+(i===LI?" on":""); b.innerHTML=`<i>${st.learned[t.id]?"✓":i+1}</i>${t.title}`; b.onclick=()=>openLesson(i); r.appendChild(b); }); }
+function openLesson(i,scroll){ LI=i; shown=1; tDone=false; tTries=0; TP=null; road(); drawLesson(); if(scroll) $("lesson").scrollIntoView({behavior:"smooth",block:"start"}); }
+function drawLesson(){
+  const t=CH.topics[LI], l=t.lesson, box=$("lesson");
+  box.innerHTML=`<span class="label">Lesson ${LI+1} of ${CH.topics.length}</span><h2>${t.title}</h2><div class="big">${t.idea}</div>${l.fig||""}<span class="label">Simplest example — one step at a time</span><ol class="steps">${l.steps.slice(0,shown).map(s=>`<li><div><div class="m">$${s[0]}$</div><div class="w">${s[1]}</div></div></li>`).join("")}</ol>`;
+  if(shown<l.steps.length){ const b=document.createElement("button"); b.className="btn"; b.style.alignSelf="flex-start"; b.textContent="Next step →"; b.onclick=()=>{ shown++; drawLesson(); }; box.appendChild(b);
+    const s=document.createElement("button"); s.className="btn ghost sm"; s.style.alignSelf="flex-start"; s.textContent="Show all steps"; s.onclick=()=>{ shown=l.steps.length; drawLesson(); }; box.appendChild(s); }
+  else {
+    box.insertAdjacentHTML("beforeend",`<div class="warn"><b>Watch out: </b>${l.warn}</div>`);
+    if(!TP) TP=t.gen[0]();
+    const w=document.createElement("div"); w.className="turn";
+    w.innerHTML=`<span class="label" style="color:var(--gold)">Your turn</span><div class="q">${TP.q}</div><div class="row"><input type="text" id="tAns" autocomplete="off" placeholder="Your answer" aria-label="Your answer"><button class="btn" id="tChk">Check</button><button class="btn ghost" id="tHint">Hint</button></div><div class="howto">${HOW[TP.type]}</div><div id="tFb"></div>`;
+    box.appendChild(w);
+    const nav=document.createElement("div"); nav.className="lnav"; const left=document.createElement("div"); left.className="row";
+    if(LI>0){ const pv=document.createElement("button"); pv.className="btn ghost sm"; pv.textContent="← Previous lesson"; pv.onclick=()=>openLesson(LI-1,true); left.appendChild(pv); }
+    const right=document.createElement("div"); right.className="row"; right.id="tNext"; nav.append(left,right); box.appendChild(nav);
+    const fbx=(k,tag,h)=>{ $("tFb").innerHTML=`<div class="fb ${k}"><span class="tag">${tag}</span>${h}</div>`; render($("tFb")); };
+    const win=()=>{ tDone=true; st.learned[t.id]=true; save(); road(); $("tAns").disabled=true; $("tChk").disabled=true; $("tHint").disabled=true; showNext(); };
+    const go=()=>{ if(tDone) return; const v=$("tAns").value.trim(); if(!v) return; const r=check(TP,v);
+      if(r===null){ fbx("hint","Try again","I couldn't read that. "+HOW[TP.type]); return; }
+      if(r){ fbx("good","Correct — you've got it!",`$${TP.ansTex}$`); win(); return; }
+      tTries++; if(tTries<2) fbx("bad","Not yet",TP.hint+" Try again."); else { fbx("hint","Answer",`$${TP.ansTex}$. Try another one to make sure.`); const a=document.createElement("button"); a.className="btn ghost sm"; a.textContent="Try another"; a.onclick=()=>{ TP=t.gen[0](); tTries=0; drawLesson(); }; $("tFb").appendChild(a); } };
+    $("tChk").onclick=go; $("tAns").addEventListener("keydown",e=>{ if(e.key==="Enter"){ e.preventDefault(); go(); } }); $("tHint").onclick=()=>fbx("hint","Hint",TP.hint);
+    if(st.learned[t.id]) showNext();
+  }
+  render(box);
+}
+function showNext(){ const r=$("tNext"); if(!r) return; r.innerHTML=""; const t=CH.topics[LI];
+  const pr=document.createElement("button"); pr.className="btn ghost sm"; pr.textContent="Practice this topic"; pr.onclick=()=>{ setTab("practice"); startPractice(t,st.level[t.id]||st.rec||1); }; r.appendChild(pr);
+  const n=document.createElement("button"); n.className="btn teal sm";
+  if(LI<CH.topics.length-1){ n.textContent="Next lesson →"; n.onclick=()=>openLesson(LI+1,true); } else { n.textContent="Start practicing →"; n.onclick=()=>{ setTab("practice"); window.scrollTo({top:0,behavior:"smooth"}); }; }
+  r.appendChild(n); }
+function setTab(t){ $("learnView").hidden=t!=="learn"; $("practiceView").hidden=t!=="practice"; $("tabLearn").classList.toggle("on",t==="learn"); $("tabPractice").classList.toggle("on",t==="practice"); try{ history.replaceState(null,"","#"+CH.id+"-"+t); }catch(e){} }
+function openChapter(id,tab){
+  useChapter(id); $("chTitle").textContent="Chapter "+ALLCH.find(c=>c[2]===CH.id)[0]+": "+CH.title; $("practice").hidden=true;
+  chapters(); recText(); topics(); const first=CH.topics.findIndex(t=>!st.learned[t.id]); openLesson(first<0?0:first);
+  setTab(tab||(first<0?"practice":"learn")); }
+$("tabLearn").onclick=()=>setTab("learn"); $("tabPractice").onclick=()=>setTab("practice");
+window.addEventListener("load",()=>{ legend(); const m=/^#(ch\d+)(?:-(learn|practice))?$/.exec(location.hash); openChapter(m?m[1]:ST.cur,m?m[2]:null); });
+</script>
+</body>
+</html>

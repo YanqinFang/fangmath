@@ -491,7 +491,7 @@ function pageGroup(v, group, title, intro){
       h("div", { class:"levels-row" },
         [["practice/algebra1-levels.html", "📘", "Algebra 1", "All 12 chapters · from expressions to quadratics"],
          ["practice/geometry-levels.html", "📐", "Geometry", "All 13 chapters · from tools of geometry to probability"],
-         ["practice/quadratics.html", "📈", "Algebra 2 · Quadratics", "Square roots, factoring, formula, vertex"],
+         ["practice/algebra2-levels.html", "📗", "Algebra 2", "All 14 chapters · from functions to trigonometry"],
          ["practice/tutor.html", "🧭", "Step-by-Step Tutor", "20 equations broken into small guided steps"]]
         .map(([href, ic, t, d]) => h("a", { class:"lv-card", href }, h("span", { class:"ic", "aria-hidden":"true" }, ic), h("b", {}, t), h("span", {}, d))))) : null,
     h("div", { class:"grid" }, COURSES.filter(c => c.group === group).map(courseCard))));

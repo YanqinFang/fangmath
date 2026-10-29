@@ -51,7 +51,13 @@ const GROUPS = {
         text:"Free · 34 weeks · Monday–Friday · 10 problems a day. Follows the California Common Core standards for Grade 8.",
         file:"materials/grade8/grade8_math_daily_calendar.pdf" },
     ] },
-  "High School":       { key:"highschool", title:"High School",       intro:"Algebra 1, Geometry, Algebra 2 and Precalculus, chapter by chapter.", alias:["algebra"] },
+  "High School":       { key:"highschool", title:"High School",       intro:"Algebra 1, Geometry, Algebra 2 and Precalculus, chapter by chapter.", alias:["algebra"],
+    /* FREE DOWNLOADS: shown at the top of this page. Add more { title, text, file } items to list more PDFs. */
+    downloads: [
+      { title:"Grade 9 Math: Algebra 1 — Daily Practice Calendar (2027–28)",
+        text:"Free · 34 weeks · Monday–Friday · 10 problems a day. Follows the California Common Core standards for Algebra 1.",
+        file:"materials/grade9/grade9_algebra1_daily_calendar.pdf" },
+    ] },
   "Calculus & Beyond": { key:"calculus",   title:"Calculus & Beyond", intro:"AP Calculus AB and BC, then college math: Linear Algebra and Multivariable Calculus." },
   "Competition":       { key:"competition", title:"Competition Math", intro:"A step-by-step pathway from AMC 8 and MATHCOUNTS to AMC 10/12, AIME and Olympiad proofs. (Not affiliated with the MAA or MATHCOUNTS.)", alias:["amc"],
     /* FREE DOWNLOADS: shown at the top of this page. Add more { title, text, file } items to list more PDFs. */

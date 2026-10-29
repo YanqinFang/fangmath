@@ -1,0 +1,527 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Step-by-Step Tutor — Prof. Fang Math</title>
+<meta name="description" content="Solve equations one step at a time with hints and instant checking — Prof. Fang Math.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/mathjs@14.9.1/lib/browser/math.js"></script>
+<style>
+:root{
+  --bg:#FBF8F3; --surface:#FFFFFF; --ink:#16233B; --muted:#5B6474; --faint:#8C93A0; --line:#E8E2D8;
+  --navy:#1F3A68; --teal:#0F7C7C; --teal-soft:#DDF0EE; --gold:#C9962B; --gold-soft:#FBF1DC; --red:#B3261E; --red-soft:#FBE7E5; --green:#1E7A45; --green-soft:#DDF4E6;
+  --radius:18px; --shadow:0 8px 26px rgba(22,35,59,.07);
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 Inter,system-ui,-apple-system,sans-serif;-webkit-font-smoothing:antialiased}
+a{color:var(--teal)}
+h1,h2,h3{font-family:Fraunces,Georgia,serif;font-weight:600;letter-spacing:-.01em;margin:0;line-height:1.15}
+button,input,select{font:inherit;color:inherit}
+[hidden]{display:none!important}
+header.top{position:sticky;top:0;z-index:40;background:rgba(255,255,255,.96);border-bottom:1px solid var(--line)}
+header.top .in{max-width:1120px;margin:0 auto;padding:0 20px;height:64px;display:flex;align-items:center;gap:24px}
+.brand{font-weight:700;font-size:19px;text-decoration:none;color:var(--ink);white-space:nowrap}
+.brand span{color:var(--teal)}
+.back{margin-left:auto;font-size:15px;text-decoration:none;color:var(--muted);font-weight:500}
+.back:hover{color:var(--teal)}
+.wrap{max-width:1120px;margin:0 auto;padding:24px 20px 48px}
+.intro h1{font-size:clamp(28px,4vw,38px)}
+.intro p{color:var(--muted);margin:6px 0 0;max-width:640px}
+.layout{display:grid;grid-template-columns:270px minmax(0,1fr);gap:22px;margin-top:22px;align-items:start}
+@media (max-width:860px){.layout{grid-template-columns:minmax(0,1fr)}}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:18px}
+.label{font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--faint);font-weight:700}
+/* problem list */
+.plist{display:flex;flex-direction:column;gap:14px}
+.lvl{display:flex;flex-direction:column;gap:6px}
+.units{display:flex;flex-wrap:wrap;gap:6px}
+.unit{border:1px solid var(--line);background:var(--bg);border-radius:999px;padding:6px 12px;font-size:13px;font-weight:600;cursor:pointer;color:var(--muted)}
+.unit.on{background:var(--navy);border-color:var(--navy);color:#fff}
+.lvl h3{font-family:Inter,sans-serif;font-size:13px;font-weight:700;color:var(--navy)}
+.pbtn{display:flex;align-items:center;gap:10px;width:100%;text-align:left;background:none;border:1px solid transparent;border-radius:12px;padding:8px 10px;cursor:pointer}
+.pbtn:hover{background:var(--bg)}
+.pbtn.cur{border-color:var(--teal);background:var(--teal-soft)}
+.pbtn .dot{flex:none;width:22px;height:22px;border-radius:50%;border:2px solid var(--line);display:grid;place-items:center;font-size:12px;font-weight:700;color:#fff}
+.pbtn.done .dot{background:var(--green);border-color:var(--green)}
+.pbtn .eq{font-size:15px;min-width:0;overflow-x:auto}
+.mode{display:flex;flex-direction:column;gap:6px;margin-top:4px}
+.mode select{border:1px solid var(--line);border-radius:10px;padding:8px 10px;background:var(--bg)}
+@media (max-width:860px){.units{flex:none;flex-direction:column}.plist{flex-direction:row;overflow-x:auto;gap:10px}.lvl{flex:none}.lvl .pbtns{display:flex;gap:6px}.pbtn{width:auto;white-space:nowrap}}
+/* main */
+.main{display:flex;flex-direction:column;gap:14px;min-width:0}
+.problem{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px}
+.problem .q{font-size:clamp(22px,3.4vw,30px);font-family:Fraunces,Georgia,serif}
+.ladder{display:flex;gap:6px;align-items:center}
+.ladder i{width:28px;height:6px;border-radius:3px;background:var(--line)}
+.ladder i.now{background:var(--teal)} .ladder i.done{background:var(--green)} .ladder i.shown{background:var(--gold)}
+.chat{display:flex;flex-direction:column;gap:10px;min-height:300px;max-height:60vh;overflow-y:auto;padding:4px 2px}
+.msg{flex-shrink:0;max-width:88%;padding:10px 14px;border-radius:16px;line-height:1.55;overflow-x:auto}
+.msg.tutor{background:var(--bg);align-self:flex-start;border-top-left-radius:4px}
+.msg.student{background:var(--navy);color:#fff;align-self:flex-end;border-top-right-radius:4px}
+.msg.good{background:var(--green-soft)} .msg.hint{background:var(--gold-soft)} .msg.bad{background:var(--red-soft)}
+.msg.note{align-self:center;background:none;color:var(--faint);font-size:14px}
+.msg .tag{display:block;font-size:11px;text-transform:uppercase;letter-spacing:.08em;font-weight:700;margin-bottom:1px}
+.msg.good .tag{color:var(--green)} .msg.hint .tag{color:var(--gold)} .msg.bad .tag{color:var(--red)}
+@media (max-width:860px){.chat{min-height:160px}}
+.composer{display:flex;flex-direction:column;gap:10px;border-top:1px solid var(--line);padding-top:14px}
+.choices{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+@media (max-width:520px){.choices{grid-template-columns:minmax(0,1fr)}}
+.choices .clabel{grid-column:1/-1}
+.choice{display:flex;gap:10px;align-items:center;text-align:left;background:var(--surface);border:1.5px solid var(--line);border-radius:12px;padding:10px 12px;cursor:pointer;min-width:0;overflow-x:auto}
+.choice:hover:not(:disabled){border-color:var(--teal)}
+.choice b{flex:none;width:24px;height:24px;border-radius:50%;display:grid;place-items:center;border:1.5px solid var(--line);font-size:12px}
+.choice:disabled{opacity:.5;cursor:not-allowed;border-color:var(--red)}
+.row{display:flex;gap:8px;flex-wrap:wrap}
+.row input{flex:1 1 220px;border:1px solid var(--line);border-radius:999px;padding:11px 16px;background:var(--bg)}
+.btn{display:inline-flex;align-items:center;justify-content:center;padding:10px 18px;border-radius:999px;font-weight:600;border:1px solid transparent;cursor:pointer;background:var(--navy);color:#fff}
+.btn.ghost{background:var(--surface);color:var(--ink);border-color:var(--line)}
+.btn.teal{background:var(--teal)}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+input:focus,button:focus-visible,select:focus{outline:2px solid var(--teal);outline-offset:1px}
+.preview{font-size:14px;color:var(--muted);min-height:1.3em}
+.howto{font-size:13px;color:var(--faint)}
+table.rec{border-collapse:collapse;font-size:14px;margin-top:6px;width:100%}
+table.rec th,table.rec td{text-align:left;padding:4px 8px;border-bottom:1px solid var(--line)}
+table.rec td.n{text-align:center;font-variant-numeric:tabular-nums}
+.endbtns{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+footer{text-align:center;color:var(--faint);font-size:13px;padding:24px}
+</style>
+</head>
+<body>
+<header class="top"><div class="in">
+  <a class="brand" href="../index.html#/" aria-label="Prof. Fang Math — home">Prof. Fang <span>Math</span></a>
+  <a class="back" href="../index.html#/highschool">← Back to lessons</a>
+</div></header>
+
+<div class="wrap">
+  <div class="intro">
+    <h1>Step-by-Step Tutor</h1>
+    <p>Solve each equation one small step at a time. Answer each question, ask for a hint when you're stuck, and check your work as you go.</p>
+  </div>
+  <div class="layout">
+    <aside class="card">
+      <div class="plist" id="plist"></div>
+      <div class="mode">
+        <span class="label">Answer style</span>
+        <select id="mode" aria-label="Answer style">
+          <option value="auto">Type first, choices after a miss</option>
+          <option value="choice">Multiple choice</option>
+          <option value="type">Typing only</option>
+        </select>
+      </div>
+    </aside>
+    <section class="card main">
+      <div class="problem"><div class="q" id="q"></div><div class="ladder" id="ladder"></div></div>
+      <div class="chat" id="chat" aria-live="polite"></div>
+      <div class="composer">
+        <div class="choices" id="choices" hidden></div>
+        <div class="row" id="typeRow">
+          <input type="text" id="ans" placeholder="Type your answer" autocomplete="off" aria-label="Your answer">
+          <button class="btn" id="sendBtn">Check</button>
+          <button class="btn ghost" id="hintBtn">Hint</button>
+          <button class="btn ghost" id="showBtn" hidden>Show me</button>
+        </div>
+        <div class="preview" id="preview"></div>
+        <div class="howto" id="howto">Type like a calculator: <b>3x-12</b>, <b>x/4</b>, <b>x^2</b>. Just a number is fine too: <b>12</b> or <b>x = 12</b>.</div>
+      </div>
+    </section>
+  </div>
+</div>
+<footer>© 2026 Prof. Fang Math</footer>
+
+<script>
+"use strict";
+/* ====================== PROBLEM BANK ======================
+   Each step: ask, check, hints[3], show, choices [[text, isCorrect, why]], mistakes [[answer, reply]]
+   check types: number {value} | set {values} | expr {value, form: expanded | oneside} | text {keywords}  */
+const BANK=[
+{level:"Level 1 · One step",id:"a1",eq:"x + 7 = 15",verify:["x+7-15",{x:8}],steps:[
+ {ask:"To get $x$ by itself, what should you do to both sides?",check:{type:"text",keywords:["subtract 7","minus 7","-7","take away 7"]},
+  hints:["What is being done to $x$ right now?","$7$ is being added to $x$. What is the opposite of adding?","Do the opposite: subtract $7$ from both sides."],
+  show:"Subtract $7$ from both sides: $x + 7 - 7 = 15 - 7$.",
+  choices:[["Subtract $7$ from both sides",1,"Yes — subtracting $7$ undoes $+7$."],["Add $7$ to both sides",0,"That gives $x + 14$. We need to undo the $+7$."],["Divide both sides by $7$",0,"Dividing undoes multiplication, but here $7$ is added to $x$."]]},
+ {ask:"Now what is $x$?",check:{type:"set",values:["8"]},
+  hints:["Work out the right side: $15 - 7$.","Count back $7$ from $15$.","$15 - 7 = 8$."],show:"$x = 15 - 7 = 8$",
+  choices:[["$x = 8$",1,"Check: $8 + 7 = 15$ ✓"],["$x = 22$",0,"That's $15 + 7$. We subtract $7$."],["$x = -8$",0,"$15 - 7$ is positive."]],mistakes:[["22","That's $15 + 7$. We subtracted $7$ from both sides."]]}]},
+{level:"Level 1 · One step",id:"a2",eq:"3x = 21",verify:["3x-21",{x:7}],steps:[
+ {ask:"$3x$ means $3$ times $x$. What should you do to both sides?",check:{type:"text",keywords:["divide","÷","/3","/ 3"]},
+  hints:["What operation connects $3$ and $x$?","It's multiplication. What undoes multiplication?","Divide both sides by $3$."],show:"Divide both sides by $3$: $\\frac{3x}{3} = \\frac{21}{3}$.",
+  choices:[["Divide both sides by $3$",1,"Yes — dividing undoes multiplying."],["Subtract $3$ from both sides",0,"$3x$ means $3$ times $x$, so we undo multiplication, not addition."],["Multiply both sides by $3$",0,"That gives $9x$. Use the opposite operation."]]},
+ {ask:"What is $x$?",check:{type:"set",values:["7"]},
+  hints:["Compute $21 \\div 3$.","How many $3$s make $21$?","$3 \\times 7 = 21$."],show:"$x = 21 \\div 3 = 7$",
+  choices:[["$x = 7$",1,"Check: $3(7) = 21$ ✓"],["$x = 18$",0,"That's $21 - 3$. We divide."],["$x = 63$",0,"That's $21 \\times 3$. We divide."]],mistakes:[["18","That's $21 - 3$. Remember $3x$ means $3$ times $x$."],["63","That's $21 \\times 3$. Divide instead."]]}]},
+{level:"Level 1 · One step",id:"a3",eq:"\\frac{x}{4} = 5",verify:["x/4-5",{x:20}],steps:[
+ {ask:"$x$ is divided by $4$. What should you do to both sides?",check:{type:"text",keywords:["multiply","times 4","×4","*4","x4"]},
+  hints:["What undoes division?","Multiplication undoes division.","Multiply both sides by $4$."],show:"Multiply both sides by $4$: $4 \\cdot \\frac{x}{4} = 4 \\cdot 5$.",
+  choices:[["Multiply both sides by $4$",1,"Yes — multiplying undoes dividing."],["Divide both sides by $4$",0,"That gives $\\frac{x}{16}$. Use the opposite of dividing."],["Subtract $4$ from both sides",0,"$x$ is divided by $4$, not added to $4$."]]},
+ {ask:"What is $x$?",check:{type:"set",values:["20"]},
+  hints:["Compute $4 \\times 5$.","Four groups of five.","$4 \\times 5 = 20$."],show:"$x = 4 \\times 5 = 20$",
+  choices:[["$x = 20$",1,"Check: $\\frac{20}{4} = 5$ ✓"],["$x = 1.25$",0,"That's $5 \\div 4$. Multiply instead."],["$x = 9$",0,"That's $5 + 4$. Multiply instead."]]}]},
+{level:"Level 2 · Two steps",id:"b1",eq:"2x + 5 = 17",verify:["2x+5-17",{x:6}],steps:[
+ {ask:"Two things happen to $x$: times $2$, then plus $5$. Which do you undo first?",check:{type:"text",keywords:["subtract 5","minus 5","-5","5 first","plus 5","+5"]},
+  hints:["Undo in the reverse order of how it was built.","The last thing done to $x$ was $+5$.","Subtract $5$ from both sides first."],show:"Undo $+5$ first: subtract $5$ from both sides.",
+  choices:[["Subtract $5$ from both sides",1,"Yes — undo the addition first, then the multiplication."],["Divide both sides by $2$",0,"Possible, but every term is divided: $x + 2.5 = 8.5$. Undoing $+5$ first is cleaner."],["Subtract $2$ from both sides",0,"The $2$ multiplies $x$; it isn't added."]]},
+ {ask:"After subtracting $5$ from both sides, $2x$ equals what?",check:{type:"number",value:"12"},
+  hints:["Do the same thing to the right side.","Compute $17 - 5$.","$17 - 5 = 12$, so $2x = 12$."],show:"$2x = 17 - 5 = 12$",
+  choices:[["$2x = 12$",1,"Right."],["$2x = 22$",0,"That's $17 + 5$. We subtract."],["$2x = 17$",0,"Don't forget to subtract $5$ from the right side too."]],mistakes:[["22","That's $17 + 5$. We subtracted $5$."]]},
+ {ask:"So what is $x$?",check:{type:"set",values:["6"]},
+  hints:["$2x = 12$. What undoes times $2$?","Divide both sides by $2$.","$12 \\div 2 = 6$."],show:"$x = 12 \\div 2 = 6$",
+  choices:[["$x = 6$",1,"Check: $2(6) + 5 = 17$ ✓"],["$x = 24$",0,"That's $12 \\times 2$. Divide."],["$x = 10$",0,"That's $12 - 2$. $2x$ means $2$ times $x$."]]}]},
+{level:"Level 2 · Two steps",id:"b2",eq:"5x - 8 = 27",verify:["5x-8-27",{x:7}],steps:[
+ {ask:"What should you do first to both sides?",check:{type:"text",keywords:["add 8","plus 8","+8","+ 8"]},
+  hints:["Undo the $-8$ first.","What is the opposite of subtracting $8$?","Add $8$ to both sides."],show:"Add $8$ to both sides.",
+  choices:[["Add $8$ to both sides",1,"Yes — adding $8$ undoes $-8$."],["Subtract $8$ from both sides",0,"That gives $5x - 16$. Use the opposite operation."],["Divide both sides by $5$",0,"Possible, but you'd get decimals. Undo $-8$ first."]]},
+ {ask:"After adding $8$, what does $5x$ equal?",check:{type:"number",value:"35"},
+  hints:["Add $8$ to the right side.","$27 + 8 = ?$","$27 + 8 = 35$."],show:"$5x = 27 + 8 = 35$",
+  choices:[["$5x = 35$",1,"Right."],["$5x = 19$",0,"That's $27 - 8$. We add $8$ to undo $-8$."],["$5x = 27$",0,"Add $8$ to the right side too."]],mistakes:[["19","That's $27 - 8$. To undo $-8$ we add $8$."]]},
+ {ask:"What is $x$?",check:{type:"set",values:["7"]},
+  hints:["Undo times $5$.","Divide both sides by $5$.","$35 \\div 5 = 7$."],show:"$x = 35 \\div 5 = 7$",
+  choices:[["$x = 7$",1,"Check: $5(7) - 8 = 27$ ✓"],["$x = 30$",0,"That's $35 - 5$. Divide."],["$x = 175$",0,"That's $35 \\times 5$. Divide."]]}]},
+{level:"Level 2 · Two steps",id:"b3",eq:"-3x + 4 = 19",verify:["-3x+4-19",{x:-5}],steps:[
+ {ask:"What should you do first to both sides?",check:{type:"text",keywords:["subtract 4","minus 4","-4","- 4"]},
+  hints:["Undo the $+4$ first.","The opposite of adding $4$ is…","Subtract $4$ from both sides."],show:"Subtract $4$ from both sides.",
+  choices:[["Subtract $4$ from both sides",1,"Yes."],["Add $4$ to both sides",0,"That gives $-3x + 8$. Use the opposite."],["Divide both sides by $3$",0,"Undo the $+4$ first — and notice the coefficient is $-3$, not $3$."]]},
+ {ask:"After subtracting $4$, what does $-3x$ equal?",check:{type:"number",value:"15"},
+  hints:["Subtract $4$ from the right side.","$19 - 4 = ?$","$19 - 4 = 15$."],show:"$-3x = 19 - 4 = 15$",
+  choices:[["$-3x = 15$",1,"Right."],["$-3x = 23$",0,"That's $19 + 4$. Subtract."],["$-3x = -15$",0,"$19 - 4$ is positive $15$."]]},
+ {ask:"What is $x$? Watch the sign!",check:{type:"set",values:["-5"]},
+  hints:["Divide both sides by $-3$, not $3$.","A positive divided by a negative is negative.","$15 \\div (-3) = -5$."],show:"$x = 15 \\div (-3) = -5$",
+  choices:[["$x = -5$",1,"Check: $-3(-5) + 4 = 15 + 4 = 19$ ✓"],["$x = 5$",0,"Divide by $-3$, not $3$. Positive ÷ negative is negative."],["$x = -45$",0,"That's $15 \\times (-3)$. Divide."]],mistakes:[["5","Close! Divide $15$ by $-3$. Positive divided by negative is…?"]]}]},
+{level:"Level 3 · Distribute & both sides",id:"c1",eq:"3(x - 4) = 18",verify:["3(x-4)-18",{x:10}],steps:[
+ {ask:"First distribute: $3(x - 4) = \\;?$",check:{type:"expr",value:"3x-12",form:"expanded"},
+  hints:["Multiply $3$ by each term inside the parentheses.","$3 \\cdot x$ and $3 \\cdot (-4)$.","$3x$ and $-12$."],show:"$3(x-4) = 3x - 12$",
+  choices:[["$3x - 12$",1,"Yes — $3$ multiplies both terms."],["$3x - 4$",0,"Multiply the $3$ by BOTH terms inside."],["$3x + 12$",0,"$3 \\times (-4) = -12$."],["$x - 12$",0,"Multiply $x$ by $3$ too."]],mistakes:[["3x-4","Multiply the $3$ by both $x$ AND $-4$."]]},
+ {ask:"Now $3x - 12 = 18$. What does $3x$ equal?",check:{type:"number",value:"30"},
+  hints:["Undo the $-12$.","Add $12$ to both sides.","$18 + 12 = 30$."],show:"$3x = 18 + 12 = 30$",
+  choices:[["$3x = 30$",1,"Right."],["$3x = 6$",0,"That's $18 - 12$. Add $12$ to undo $-12$."],["$3x = 18$",0,"Add $12$ to the right side too."]]},
+ {ask:"What is $x$?",check:{type:"set",values:["10"]},
+  hints:["Undo times $3$.","Divide by $3$.","$30 \\div 3 = 10$."],show:"$x = 10$",
+  choices:[["$x = 10$",1,"Check: $3(10 - 4) = 18$ ✓"],["$x = 27$",0,"That's $30 - 3$. Divide."],["$x = 90$",0,"That's $30 \\times 3$. Divide."]]}]},
+{level:"Level 3 · Distribute & both sides",id:"c2",eq:"\\frac{x}{3} + 2 = 6",verify:["x/3+2-6",{x:12}],steps:[
+ {ask:"What should you do first to both sides?",check:{type:"text",keywords:["subtract 2","minus 2","-2","- 2"]},
+  hints:["Undo the $+2$ first.","The opposite of adding $2$…","Subtract $2$ from both sides."],show:"Subtract $2$ from both sides.",
+  choices:[["Subtract $2$ from both sides",1,"Yes."],["Multiply only $\\frac{x}{3}$ by $3$",0,"Whatever you do must be done to every term on both sides."],["Add $2$ to both sides",0,"That gives $+4$. Use the opposite."]]},
+ {ask:"After subtracting $2$, what does $\\frac{x}{3}$ equal?",check:{type:"number",value:"4"},
+  hints:["$6 - 2 = ?$","Subtract on the right side.","$6 - 2 = 4$."],show:"$\\frac{x}{3} = 4$",
+  choices:[["$\\frac{x}{3} = 4$",1,"Right."],["$\\frac{x}{3} = 8$",0,"That's $6 + 2$. Subtract."],["$\\frac{x}{3} = 6$",0,"Subtract $2$ from the right side too."]]},
+ {ask:"What is $x$?",check:{type:"set",values:["12"]},
+  hints:["Undo divide by $3$.","Multiply both sides by $3$.","$4 \\times 3 = 12$."],show:"$x = 12$",
+  choices:[["$x = 12$",1,"Check: $\\frac{12}{3} + 2 = 6$ ✓"],["$x = \\frac{4}{3}$",0,"That's $4 \\div 3$. Multiply instead."],["$x = 7$",0,"That's $4 + 3$. Multiply."]]}]},
+{level:"Level 3 · Distribute & both sides",id:"c3",eq:"4x + 3 = 2x + 11",verify:["4x+3-(2x+11)",{x:4}],steps:[
+ {ask:"$x$ is on both sides. What should you do first?",check:{type:"text",keywords:["subtract 2x","minus 2x","-2x","- 2x"]},
+  hints:["Get all the $x$ terms on one side.","The smaller $x$ term is $2x$.","Subtract $2x$ from both sides."],show:"Subtract $2x$ from both sides.",
+  choices:[["Subtract $2x$ from both sides",1,"Yes — now $x$ is only on the left."],["Add $2x$ to both sides",0,"That gives $6x$ and $4x$ — still $x$ on both sides."],["Subtract $3$ from both sides",0,"Useful later, but $x$ is still on both sides. Move the $x$ terms first."]]},
+ {ask:"After subtracting $2x$ from both sides, what is the new equation?",check:{type:"expr",value:"2x+3=11",form:"oneside"},
+  hints:["$4x - 2x = ?$","The right side becomes just $11$.","$2x + 3 = 11$."],show:"$2x + 3 = 11$",
+  choices:[["$2x + 3 = 11$",1,"Right."],["$6x + 3 = 11$",0,"$4x - 2x = 2x$, not $6x$."],["$2x = 11$",0,"The $+3$ is still there — you only subtracted $2x$."]],mistakes:[["6x+3=11","$4x - 2x$ is $2x$."]]},
+ {ask:"What does $2x$ equal?",check:{type:"number",value:"8"},
+  hints:["Undo the $+3$.","$11 - 3 = ?$","$11 - 3 = 8$."],show:"$2x = 8$",
+  choices:[["$2x = 8$",1,"Right."],["$2x = 14$",0,"That's $11 + 3$. Subtract."],["$2x = 11$",0,"Subtract $3$ from the right side too."]]},
+ {ask:"What is $x$?",check:{type:"set",values:["4"]},
+  hints:["Divide by $2$.","$8 \\div 2$","$x = 4$"],show:"$x = 4$",
+  choices:[["$x = 4$",1,"Check: $4(4)+3 = 19$ and $2(4)+11 = 19$ ✓"],["$x = 6$",0,"That's $8 - 2$. Divide."],["$x = 16$",0,"That's $8 \\times 2$. Divide."]]}]},
+{level:"Level 3 · Distribute & both sides",id:"c4",eq:"2(x + 3) = 5x - 9",verify:["2(x+3)-(5x-9)",{x:5}],steps:[
+ {ask:"First distribute: $2(x + 3) = \\;?$",check:{type:"expr",value:"2x+6",form:"expanded"},
+  hints:["Multiply $2$ by each term inside.","$2 \\cdot x$ and $2 \\cdot 3$.","$2x + 6$."],show:"$2(x+3) = 2x + 6$",
+  choices:[["$2x + 6$",1,"Yes."],["$2x + 3$",0,"Multiply the $2$ by BOTH terms."],["$x + 6$",0,"Multiply $x$ by $2$ too."]],mistakes:[["2x+3","Multiply $2$ by the $3$ as well."]]},
+ {ask:"Now $2x + 6 = 5x - 9$. Subtract $2x$ from both sides. What is the new equation?",check:{type:"expr",value:"6=3x-9",form:"oneside"},
+  hints:["$5x - 2x = ?$","The left side becomes just $6$.","$6 = 3x - 9$."],show:"$6 = 3x - 9$",
+  choices:[["$6 = 3x - 9$",1,"Right."],["$6 = 7x - 9$",0,"$5x - 2x = 3x$, not $7x$."],["$4x + 6 = 5x - 9$",0,"Subtract $2x$, don't add it."]]},
+ {ask:"What does $3x$ equal?",check:{type:"number",value:"15"},
+  hints:["Undo the $-9$.","Add $9$ to both sides.","$6 + 9 = 15$."],show:"$3x = 15$",
+  choices:[["$3x = 15$",1,"Right."],["$3x = -3$",0,"That's $6 - 9$. Add $9$ to undo $-9$."],["$3x = 6$",0,"Add $9$ to the left side too."]]},
+ {ask:"What is $x$?",check:{type:"set",values:["5"]},
+  hints:["Divide by $3$.","$15 \\div 3$","$x = 5$"],show:"$x = 5$",
+  choices:[["$x = 5$",1,"Check: $2(5+3) = 16$ and $5(5) - 9 = 16$ ✓"],["$x = 12$",0,"That's $15 - 3$. Divide."],["$x = 45$",0,"That's $15 \\times 3$. Divide."]]}]},
+/* ---------- Unit 2: multi-step equations ---------- */
+{level:"Level 4 · Combine & distribute",id:"m1",eq:"3x + 2x - 4 = 21",verify:["3x+2x-4-21",{x:5}],steps:[
+ {ask:"What can you do first to make this simpler?",check:{type:"text",keywords:["combine","like terms","5x"]},
+  hints:["Look at the left side. Are there terms that are alike?","$3x$ and $2x$ are like terms.","Combine like terms: $3x + 2x$."],show:"Combine like terms: $3x + 2x = 5x$.",
+  choices:[["Combine like terms: $3x + 2x$",1,"Yes — always simplify each side first."],["Divide both sides by $3$",0,"You'd have to divide every term. Simplify the left side first."],["Subtract $2x$ from both sides",0,"$2x$ is on the same side as $3x$ — just combine them."]]},
+ {ask:"Combine like terms. What is the new equation?",check:{type:"expr",value:"5x-4=21",form:"combined"},
+  hints:["Add the coefficients of the $x$ terms.","$3 + 2 = 5$.","$5x - 4 = 21$."],show:"$5x - 4 = 21$",
+  choices:[["$5x - 4 = 21$",1,"Right."],["$6x - 4 = 21$",0,"$3x + 2x = 5x$ — add the coefficients, don't multiply."],["$5x^2 - 4 = 21$",0,"Adding like terms doesn't change the power: $3x + 2x = 5x$."],["$x - 4 = 21$",0,"Add the coefficients: $3 + 2$."]],mistakes:[["6x-4=21","Add the coefficients: $3 + 2 = 5$."]]},
+ {ask:"What does $5x$ equal?",check:{type:"number",value:"25"},
+  hints:["Undo the $-4$.","Add $4$ to both sides.","$21 + 4 = 25$."],show:"$5x = 25$",
+  choices:[["$5x = 25$",1,"Right."],["$5x = 17$",0,"That's $21 - 4$. Add $4$ to undo $-4$."],["$5x = 21$",0,"Add $4$ to the right side too."]]},
+ {ask:"What is $x$?",check:{type:"set",values:["5"]},
+  hints:["Divide by $5$.","$25 \\div 5$","$x = 5$"],show:"$x = 5$",
+  choices:[["$x = 5$",1,"Check: $3(5) + 2(5) - 4 = 21$ ✓"],["$x = 20$",0,"That's $25 - 5$. Divide."],["$x = 125$",0,"That's $25 \\times 5$. Divide."]]}]},
+{level:"Level 4 · Combine & distribute",id:"m2",eq:"7 + 2(x - 1) = 19",verify:["7+2(x-1)-19",{x:7}],steps:[
+ {ask:"First distribute: $2(x - 1) = \;?$",check:{type:"expr",value:"2x-2",form:"expanded"},
+  hints:["Multiply $2$ by each term inside.","$2 \\cdot x$ and $2 \\cdot (-1)$.","$2x - 2$."],show:"$2(x - 1) = 2x - 2$",
+  choices:[["$2x - 2$",1,"Yes."],["$9(x - 1)$",0,"You can't add $7 + 2$ first: multiplication comes before addition."],["$2x - 1$",0,"Multiply the $2$ by BOTH terms."],["$2x + 2$",0,"$2 \\times (-1) = -2$."]],mistakes:[["9(x-1)","Order of operations: the $2$ multiplies $(x - 1)$ before anything is added."]]},
+ {ask:"Now $7 + 2x - 2 = 19$. Combine the numbers on the left. What is the new equation?",check:{type:"expr",value:"2x+5=19",form:"combined"},
+  hints:["Combine $7$ and $-2$.","$7 - 2 = 5$.","$2x + 5 = 19$."],show:"$2x + 5 = 19$",
+  choices:[["$2x + 5 = 19$",1,"Right."],["$2x + 9 = 19$",0,"$7 - 2 = 5$, not $9$."],["$2x - 5 = 19$",0,"$7 - 2 = +5$."]]},
+ {ask:"What does $2x$ equal?",check:{type:"number",value:"14"},
+  hints:["Undo the $+5$.","$19 - 5$","$2x = 14$"],show:"$2x = 14$",
+  choices:[["$2x = 14$",1,"Right."],["$2x = 24$",0,"That's $19 + 5$. Subtract."],["$2x = 19$",0,"Subtract $5$ from the right side too."]]},
+ {ask:"What is $x$?",check:{type:"set",values:["7"]},
+  hints:["Divide by $2$.","$14 \\div 2$","$x = 7$"],show:"$x = 7$",
+  choices:[["$x = 7$",1,"Check: $7 + 2(7 - 1) = 19$ ✓"],["$x = 12$",0,"That's $14 - 2$. Divide."],["$x = 28$",0,"That's $14 \\times 2$. Divide."]]}]},
+{level:"Level 4 · Combine & distribute",id:"m3",eq:"4(x + 2) - x = 23",verify:["4(x+2)-x-23",{x:5}],steps:[
+ {ask:"First distribute: $4(x + 2) = \;?$",check:{type:"expr",value:"4x+8",form:"expanded"},
+  hints:["Multiply $4$ by each term.","$4 \\cdot x$ and $4 \\cdot 2$.","$4x + 8$."],show:"$4(x + 2) = 4x + 8$",
+  choices:[["$4x + 8$",1,"Yes."],["$4x + 2$",0,"Multiply the $4$ by BOTH terms."],["$x + 8$",0,"Multiply $x$ by $4$ too."],["$4x + 6$",0,"$4 \\times 2 = 8$."]]},
+ {ask:"Now $4x + 8 - x = 23$. Combine like terms. What is the new equation?",check:{type:"expr",value:"3x+8=23",form:"combined"},
+  hints:["Which terms have $x$?","$4x - x$. Remember $x$ means $1x$.","$3x + 8 = 23$."],show:"$3x + 8 = 23$",
+  choices:[["$3x + 8 = 23$",1,"Right."],["$5x + 8 = 23$",0,"$4x - x = 3x$ — you added instead of subtracting."],["$4x + 7 = 23$",0,"$-x$ is an $x$ term, not the number $-1$."]],mistakes:[["4x+7=23","$-x$ means $-1x$. Combine it with $4x$, not with $8$."]]},
+ {ask:"What does $3x$ equal?",check:{type:"number",value:"15"},
+  hints:["Undo the $+8$.","$23 - 8$","$3x = 15$"],show:"$3x = 15$",
+  choices:[["$3x = 15$",1,"Right."],["$3x = 31$",0,"That's $23 + 8$. Subtract."],["$3x = 23$",0,"Subtract $8$ from the right side too."]]},
+ {ask:"What is $x$?",check:{type:"set",values:["5"]},
+  hints:["Divide by $3$.","$15 \\div 3$","$x = 5$"],show:"$x = 5$",
+  choices:[["$x = 5$",1,"Check: $4(5 + 2) - 5 = 23$ ✓"],["$x = 12$",0,"That's $15 - 3$. Divide."],["$x = 45$",0,"That's $15 \\times 3$. Divide."]]}]},
+{level:"Level 4 · Combine & distribute",id:"m4",eq:"2x + 3(x - 4) = 18",verify:["2x+3(x-4)-18",{x:6}],steps:[
+ {ask:"First distribute: $3(x - 4) = \;?$",check:{type:"expr",value:"3x-12",form:"expanded"},
+  hints:["Multiply $3$ by each term inside.","$3 \\cdot x$ and $3 \\cdot (-4)$.","$3x - 12$."],show:"$3(x - 4) = 3x - 12$",
+  choices:[["$3x - 12$",1,"Yes."],["$5(x - 4)$",0,"You can't add $2x$ and $3$ — the $3$ multiplies the parentheses first."],["$3x - 4$",0,"Multiply the $3$ by BOTH terms."],["$3x + 12$",0,"$3 \\times (-4) = -12$."]]},
+ {ask:"Now $2x + 3x - 12 = 18$. Combine like terms. What is the new equation?",check:{type:"expr",value:"5x-12=18",form:"combined"},
+  hints:["Combine $2x$ and $3x$.","$2 + 3 = 5$.","$5x - 12 = 18$."],show:"$5x - 12 = 18$",
+  choices:[["$5x - 12 = 18$",1,"Right."],["$6x - 12 = 18$",0,"Add the coefficients: $2 + 3 = 5$."],["$x - 12 = 18$",0,"Add the coefficients: $2 + 3 = 5$."]]},
+ {ask:"What does $5x$ equal?",check:{type:"number",value:"30"},
+  hints:["Undo the $-12$.","Add $12$ to both sides.","$5x = 30$"],show:"$5x = 30$",
+  choices:[["$5x = 30$",1,"Right."],["$5x = 6$",0,"That's $18 - 12$. Add $12$ to undo $-12$."],["$5x = 18$",0,"Add $12$ to the right side too."]]},
+ {ask:"What is $x$?",check:{type:"set",values:["6"]},
+  hints:["Divide by $5$.","$30 \\div 5$","$x = 6$"],show:"$x = 6$",
+  choices:[["$x = 6$",1,"Check: $2(6) + 3(6 - 4) = 18$ ✓"],["$x = 25$",0,"That's $30 - 5$. Divide."],["$x = 150$",0,"That's $30 \\times 5$. Divide."]]}]},
+{level:"Level 4 · Combine & distribute",id:"m5",eq:"-2(x + 1) + 4x = 14",verify:["-2(x+1)+4x-14",{x:8}],steps:[
+ {ask:"First distribute: $-2(x + 1) = \;?$",check:{type:"expr",value:"-2x-2",form:"expanded"},
+  hints:["Multiply $-2$ by each term inside.","$-2 \\cdot x$ and $-2 \\cdot 1$.","$-2x - 2$."],show:"$-2(x + 1) = -2x - 2$",
+  choices:[["$-2x - 2$",1,"Yes — the negative goes to both terms."],["$-2x + 1$",0,"Multiply $-2$ by the $1$ too."],["$-2x + 2$",0,"$-2 \\times 1 = -2$."],["$2x - 2$",0,"$-2 \\times x = -2x$."]],mistakes:[["-2x+2","$-2 \\times (+1) = -2$. The sign carries to every term."]]},
+ {ask:"Now $-2x - 2 + 4x = 14$. Combine like terms. What is the new equation?",check:{type:"expr",value:"2x-2=14",form:"combined"},
+  hints:["Combine $-2x$ and $4x$.","$-2 + 4 = 2$.","$2x - 2 = 14$."],show:"$2x - 2 = 14$",
+  choices:[["$2x - 2 = 14$",1,"Right."],["$6x - 2 = 14$",0,"$-2x + 4x = 2x$, not $6x$."],["$-6x - 2 = 14$",0,"$-2 + 4 = +2$."]]},
+ {ask:"What does $2x$ equal?",check:{type:"number",value:"16"},
+  hints:["Undo the $-2$.","Add $2$ to both sides.","$2x = 16$"],show:"$2x = 16$",
+  choices:[["$2x = 16$",1,"Right."],["$2x = 12$",0,"That's $14 - 2$. Add $2$ to undo $-2$."],["$2x = 14$",0,"Add $2$ to the right side too."]]},
+ {ask:"What is $x$?",check:{type:"set",values:["8"]},
+  hints:["Divide by $2$.","$16 \\div 2$","$x = 8$"],show:"$x = 8$",
+  choices:[["$x = 8$",1,"Check: $-2(9) + 32 = 14$ ✓"],["$x = 14$",0,"That's $16 - 2$. Divide."],["$x = 32$",0,"That's $16 \\times 2$. Divide."]]}]},
+{level:"Level 5 · Both sides & fractions",id:"m6",eq:"6x - 3 = 4x + 9",verify:["6x-3-(4x+9)",{x:6}],steps:[
+ {ask:"$x$ is on both sides. What should you do first?",check:{type:"text",keywords:["subtract 4x","minus 4x","-4x","- 4x"]},
+  hints:["Get the $x$ terms on one side.","The smaller $x$ term is $4x$.","Subtract $4x$ from both sides."],show:"Subtract $4x$ from both sides.",
+  choices:[["Subtract $4x$ from both sides",1,"Yes — now $x$ is only on the left."],["Add $4x$ to both sides",0,"That gives $10x$ and $8x$ — still $x$ on both sides."],["Divide both sides by $6$",0,"You'd divide every term and $x$ would still be on both sides."]]},
+ {ask:"After subtracting $4x$, what is the new equation?",check:{type:"expr",value:"2x-3=9",form:"oneside"},
+  hints:["$6x - 4x = ?$","The right side becomes $9$.","$2x - 3 = 9$."],show:"$2x - 3 = 9$",
+  choices:[["$2x - 3 = 9$",1,"Right."],["$10x - 3 = 9$",0,"$6x - 4x = 2x$."],["$2x - 3 = 4x + 9$",0,"Subtract $4x$ from BOTH sides."]]},
+ {ask:"What does $2x$ equal?",check:{type:"number",value:"12"},
+  hints:["Undo the $-3$.","$9 + 3$","$2x = 12$"],show:"$2x = 12$",
+  choices:[["$2x = 12$",1,"Right."],["$2x = 6$",0,"That's $9 - 3$. Add $3$ to undo $-3$."],["$2x = 9$",0,"Add $3$ to the right side too."]]},
+ {ask:"What is $x$?",check:{type:"set",values:["6"]},
+  hints:["Divide by $2$.","$12 \\div 2$","$x = 6$"],show:"$x = 6$",
+  choices:[["$x = 6$",1,"Check: $6(6) - 3 = 33$ and $4(6) + 9 = 33$ ✓"],["$x = 10$",0,"That's $12 - 2$. Divide."],["$x = 24$",0,"That's $12 \\times 2$. Divide."]]}]},
+{level:"Level 5 · Both sides & fractions",id:"m7",eq:"5(x - 2) = 3x + 4",verify:["5(x-2)-(3x+4)",{x:7}],steps:[
+ {ask:"First distribute: $5(x - 2) = \;?$",check:{type:"expr",value:"5x-10",form:"expanded"},
+  hints:["Multiply $5$ by each term.","$5 \\cdot x$ and $5 \\cdot (-2)$.","$5x - 10$."],show:"$5(x - 2) = 5x - 10$",
+  choices:[["$5x - 10$",1,"Yes."],["$5x - 2$",0,"Multiply the $5$ by BOTH terms."],["$5x + 10$",0,"$5 \\times (-2) = -10$."],["$x - 10$",0,"Multiply $x$ by $5$ too."]]},
+ {ask:"Now $5x - 10 = 3x + 4$. Subtract $3x$ from both sides. What is the new equation?",check:{type:"expr",value:"2x-10=4",form:"oneside"},
+  hints:["$5x - 3x = ?$","The right side becomes $4$.","$2x - 10 = 4$."],show:"$2x - 10 = 4$",
+  choices:[["$2x - 10 = 4$",1,"Right."],["$8x - 10 = 4$",0,"$5x - 3x = 2x$."],["$2x = 4$",0,"The $-10$ is still on the left — you only subtracted $3x$."]]},
+ {ask:"What does $2x$ equal?",check:{type:"number",value:"14"},
+  hints:["Undo the $-10$.","Add $10$ to both sides.","$2x = 14$"],show:"$2x = 14$",
+  choices:[["$2x = 14$",1,"Right."],["$2x = -6$",0,"That's $4 - 10$. Add $10$ to undo $-10$."],["$2x = 4$",0,"Add $10$ to the right side too."]]},
+ {ask:"What is $x$?",check:{type:"set",values:["7"]},
+  hints:["Divide by $2$.","$14 \\div 2$","$x = 7$"],show:"$x = 7$",
+  choices:[["$x = 7$",1,"Check: $5(5) = 25$ and $3(7) + 4 = 25$ ✓"],["$x = 12$",0,"That's $14 - 2$. Divide."],["$x = 28$",0,"That's $14 \\times 2$. Divide."]]}]},
+{level:"Level 5 · Both sides & fractions",id:"m8",eq:"3(2x - 1) = 2(x + 5) + 3",verify:["3(2x-1)-(2(x+5)+3)",{x:4}],steps:[
+ {ask:"Distribute the left side: $3(2x - 1) = \;?$",check:{type:"expr",value:"6x-3",form:"expanded"},
+  hints:["Multiply $3$ by each term.","$3 \\cdot 2x$ and $3 \\cdot (-1)$.","$6x - 3$."],show:"$3(2x - 1) = 6x - 3$",
+  choices:[["$6x - 3$",1,"Yes."],["$6x - 1$",0,"Multiply the $3$ by BOTH terms."],["$5x - 3$",0,"$3 \\cdot 2x = 6x$ — multiply, don't add."],["$6x + 3$",0,"$3 \\times (-1) = -3$."]]},
+ {ask:"Simplify the right side: $2(x + 5) + 3 = \;?$",check:{type:"expr",value:"2x+13",form:"combined"},
+  hints:["Distribute first: $2(x + 5)$.","$2x + 10 + 3$.","$2x + 13$."],show:"$2(x + 5) + 3 = 2x + 10 + 3 = 2x + 13$",
+  choices:[["$2x + 13$",1,"Right."],["$2x + 8$",0,"$2 \\times 5 = 10$, then add $3$."],["$2x + 10$",0,"Don't forget the $+3$."]]},
+ {ask:"Now $6x - 3 = 2x + 13$. Subtract $2x$ from both sides. What is the new equation?",check:{type:"expr",value:"4x-3=13",form:"oneside"},
+  hints:["$6x - 2x = ?$","The right side becomes $13$.","$4x - 3 = 13$."],show:"$4x - 3 = 13$",
+  choices:[["$4x - 3 = 13$",1,"Right."],["$8x - 3 = 13$",0,"$6x - 2x = 4x$."],["$4x = 13$",0,"The $-3$ is still on the left."]]},
+ {ask:"What does $4x$ equal?",check:{type:"number",value:"16"},
+  hints:["Undo the $-3$.","$13 + 3$","$4x = 16$"],show:"$4x = 16$",
+  choices:[["$4x = 16$",1,"Right."],["$4x = 10$",0,"That's $13 - 3$. Add $3$."],["$4x = 13$",0,"Add $3$ to the right side too."]]},
+ {ask:"What is $x$?",check:{type:"set",values:["4"]},
+  hints:["Divide by $4$.","$16 \\div 4$","$x = 4$"],show:"$x = 4$",
+  choices:[["$x = 4$",1,"Check: $3(7) = 21$ and $2(9) + 3 = 21$ ✓"],["$x = 12$",0,"That's $16 - 4$. Divide."],["$x = 64$",0,"That's $16 \\times 4$. Divide."]]}]},
+{level:"Level 5 · Both sides & fractions",id:"m9",eq:"\\frac{x + 4}{3} = 5",verify:["(x+4)/3-5",{x:11}],steps:[
+ {ask:"The whole $x + 4$ is divided by $3$. What should you do first?",check:{type:"text",keywords:["multiply","times 3","*3","×3","x3"]},
+  hints:["Clear the fraction first.","What undoes dividing by $3$?","Multiply both sides by $3$."],show:"Multiply both sides by $3$.",
+  choices:[["Multiply both sides by $3$",1,"Yes — that clears the fraction."],["Subtract $4$ from both sides",0,"The $4$ is inside the fraction. Undo the division first."],["Divide both sides by $3$",0,"That makes it $\\frac{x+4}{9}$. Use the opposite."]]},
+ {ask:"After multiplying both sides by $3$, what is the new equation?",check:{type:"expr",value:"x+4=15",form:"nofrac"},
+  hints:["$3 \\cdot \\frac{x+4}{3} = x + 4$.","$3 \\cdot 5 = 15$.","$x + 4 = 15$."],show:"$x + 4 = 15$",
+  choices:[["$x + 4 = 15$",1,"Right."],["$x + 4 = 5$",0,"Multiply the right side by $3$ too."],["$x + 12 = 15$",0,"The $3$ cancels the denominator; it doesn't multiply the $4$."]]},
+ {ask:"What is $x$?",check:{type:"set",values:["11"]},
+  hints:["Undo the $+4$.","$15 - 4$","$x = 11$"],show:"$x = 11$",
+  choices:[["$x = 11$",1,"Check: $\\frac{11 + 4}{3} = 5$ ✓"],["$x = 19$",0,"That's $15 + 4$. Subtract."],["$x = 1$",0,"That's $5 - 4$ — multiply by $3$ first."]]}]},
+{level:"Level 5 · Both sides & fractions",id:"m10",eq:"\\frac{2x - 1}{5} = x - 5",verify:["(2x-1)/5-(x-5)",{x:8}],steps:[
+ {ask:"What should you do first?",check:{type:"text",keywords:["multiply","times 5","*5","×5","x5"]},
+  hints:["Clear the fraction first.","What undoes dividing by $5$?","Multiply both sides by $5$."],show:"Multiply both sides by $5$.",
+  choices:[["Multiply both sides by $5$",1,"Yes — clear the fraction first."],["Add $1$ to both sides",0,"The $-1$ is inside the fraction. Clear the fraction first."],["Divide both sides by $5$",0,"Use the opposite of dividing."]]},
+ {ask:"After multiplying both sides by $5$, what is the new equation?",check:{type:"expr",value:"2x-1=5x-25",form:"nofrac"},
+  hints:["The left side becomes $2x - 1$.","Multiply BOTH terms on the right by $5$.","$2x - 1 = 5x - 25$."],show:"$2x - 1 = 5x - 25$",
+  choices:[["$2x - 1 = 5x - 25$",1,"Right."],["$2x - 1 = 5x - 5$",0,"Multiply BOTH terms on the right by $5$."],["$10x - 5 = 5x - 25$",0,"The $5$ cancels the denominator; don't also multiply the top."]],mistakes:[["2x-1=5x-5","Multiply the $-5$ by $5$ too."]]},
+ {ask:"Subtract $2x$ from both sides. What is the new equation?",check:{type:"expr",value:"-1=3x-25",form:"oneside"},
+  hints:["$5x - 2x = ?$","The left side becomes $-1$.","$-1 = 3x - 25$."],show:"$-1 = 3x - 25$",
+  choices:[["$-1 = 3x - 25$",1,"Right."],["$-1 = 7x - 25$",0,"$5x - 2x = 3x$."],["$-1 = 3x - 5$",0,"The $-25$ doesn't change."]]},
+ {ask:"What does $3x$ equal?",check:{type:"number",value:"24"},
+  hints:["Undo the $-25$.","Add $25$ to both sides.","$-1 + 25 = 24$."],show:"$3x = 24$",
+  choices:[["$3x = 24$",1,"Right."],["$3x = -26$",0,"That's $-1 - 25$. Add $25$ to undo $-25$."],["$3x = -24$",0,"$-1 + 25$ is positive."]]},
+ {ask:"What is $x$?",check:{type:"set",values:["8"]},
+  hints:["Divide by $3$.","$24 \\div 3$","$x = 8$"],show:"$x = 8$",
+  choices:[["$x = 8$",1,"Check: $\\frac{15}{5} = 3$ and $8 - 5 = 3$ ✓"],["$x = 21$",0,"That's $24 - 3$. Divide."],["$x = 72$",0,"That's $24 \\times 3$. Divide."]]}]}
+];
+
+BANK.forEach(p=>p.unit=p.id.startsWith("m")?"Multi-step equations":"One- & two-step equations");
+const UNITS=[...new Set(BANK.map(p=>p.unit))];
+/* ====================== engine ====================== */
+const $=id=>document.getElementById(id);
+const chat=$("chat"), ans=$("ans");
+const PRAISE=["Nice work!","Exactly right.","Yes — that's it.","Great, that's correct.","Perfect."];
+let P=null, idx=0, wrong=0, hintLevel=0, record=[], finished=false, mode="auto", choicesOn=false;
+let progress={}; try{ progress=JSON.parse(localStorage.getItem("fm-tutor")||"{}"); }catch(e){}
+const saveProgress=()=>{ try{ localStorage.setItem("fm-tutor",JSON.stringify(progress)); }catch(e){} };
+try{ const m=localStorage.getItem("fm-tutor-mode"); if(m) mode=m; }catch(e){}
+
+function render(el){ if(window.renderMathInElement) renderMathInElement(el,{delimiters:[{left:"$",right:"$",display:false}],throwOnError:false}); }
+function addMsg(kind,text,tag){
+  const d=document.createElement("div"); d.className="msg "+kind;
+  if(tag){ const t=document.createElement("span"); t.className="tag"; t.textContent=tag; d.appendChild(t); }
+  const b=document.createElement("span"); b.textContent=text; d.appendChild(b);
+  chat.appendChild(d); render(d); chat.scrollTop=chat.scrollHeight; return d;
+}
+/* ---- checking with math.js ---- */
+const CONST=new Set(["pi","e","i","E","PI","Infinity"]);
+function clean(s){ return String(s).replace(/[−–]/g,"-").replace(/×|·/g,"*").replace(/÷/g,"/").replace(/π/g,"pi").trim(); }
+function toNode(s){ s=clean(s); const p=s.split("="); if(p.length>2) throw 0;
+  if(p.length===2){ if(!p[0].trim()||!p[1].trim()) throw 0; return {node:math.parse("("+p[0]+")-("+p[1]+")"),eq:true,lhs:math.parse(p[0]),rhs:math.parse(p[1])}; }
+  return {node:math.parse(s),eq:false,lhs:math.parse(s),rhs:null}; }
+function varsOf(node){ const v=new Set(); node.traverse((n,path,parent)=>{ if(n.isSymbolNode&&!(parent&&parent.isFunctionNode&&path==="fn")&&!CONST.has(n.name)&&typeof math[n.name]!=="function") v.add(n.name); }); return [...v]; }
+function evalAt(node,scope){ try{ const r=node.evaluate(scope); const x=typeof r==="number"?r:(r&&r.re!==undefined&&Math.abs(r.im)<1e-12?r.re:(r&&typeof r.valueOf()==="number"?r.valueOf():NaN)); return isFinite(x)?x:NaN; }catch(e){ return NaN; } }
+const close=(a,b)=>Math.abs(a-b)<1e-6*Math.max(1,Math.abs(b));
+function checkExpr(student,expected,form){
+  let S,E; try{ S=toNode(student); E=toNode(expected); }catch(e){ return null; }
+  if(E.eq&&!S.eq) return false;
+  if(form==="expanded"&&clean(student).includes("(")) return false;
+  if(form==="nofrac"&&clean(student).includes("/")) return false;
+  if(form==="combined"){ if(clean(student).includes("(")) return false; const cnt={}; S.node.traverse((n,path,parent)=>{ if(n.isSymbolNode&&!(parent&&parent.isFunctionNode&&path==="fn")&&!CONST.has(n.name)) cnt[n.name]=(cnt[n.name]||0)+1; }); if(Object.values(cnt).some(c=>c>1)) return false; }
+  if(form==="oneside"&&S.eq){ const a=varsOf(S.lhs).length>0,b=varsOf(S.rhs).length>0; if(a===b) return false; }
+  const vars=[...new Set([...varsOf(S.node),...varsOf(E.node)])]; let ratio=null,t=0;
+  for(let k=0;k<12&&t<6;k++){ const sc={}; vars.forEach(v=>sc[v]=Math.round((Math.random()*6-3)*1000)/1000+0.137);
+    const a=evalAt(S.node,sc),b=evalAt(E.node,sc); if(isNaN(a)||isNaN(b)) continue; t++;
+    if(E.eq){ if(Math.abs(b)<1e-9){ if(Math.abs(a)>1e-6) return false; continue; } const r=a/b; if(Math.abs(r)<1e-9) return false; if(ratio===null) ratio=r; else if(!close(r,ratio)) return false; }
+    else if(!close(a,b)) return false; }
+  return t>=3?true:null;
+}
+function parseSet(s){ s=clean(s).replace(/\b(or|and)\b/gi,",").replace(/;/g,","); const out=[];
+  for(let part of s.split(",")){ part=part.trim(); if(!part) continue; if(part.includes("=")) part=part.split("=").pop().trim();
+    const pm=/^(±|\+-|\+\/-)/.test(part); part=part.replace(/^(±|\+-|\+\/-)/,"");
+    const v=evalAt(math.parse(part),{}); if(isNaN(v)) return null; out.push(v); if(pm) out.push(-v); }
+  return out.length?out:null; }
+function checkSet(student,values){ let s; try{ s=parseSet(student); }catch(e){ return null; } if(!s) return null;
+  const exp=values.map(v=>evalAt(math.parse(clean(v)),{})); const u=a=>a.filter((x,i)=>a.findIndex(y=>close(x,y))===i);
+  const su=u(s),eu=u(exp); return su.length===eu.length&&eu.every(x=>su.some(y=>close(x,y))); }
+function checkNumber(student,value){ try{ const a=evalAt(math.parse(clean(student.split("=").pop())),{}),b=evalAt(math.parse(clean(value)),{}); if(isNaN(a)) return null; return close(a,b); }catch(e){ return null; } }
+function localCheck(step,student){ const c=step.check;
+  if(c.type==="expr") return checkExpr(student,c.value,c.form);
+  if(c.type==="set") return checkSet(student,c.values);
+  if(c.type==="number") return checkNumber(student,c.value);
+  if(c.type==="text"){ const s=student.toLowerCase().replace(/\s+/g," "); return c.keywords.some(k=>s.includes(k.toLowerCase()))?true:null; }
+  return null; }
+
+/* ---- flow ---- */
+function buildList(){
+  const box=$("plist"); box.innerHTML=""; const cu=P?P.unit:UNITS[0];
+  const tabs=document.createElement("div"); tabs.className="units";
+  UNITS.forEach(u=>{ const b=document.createElement("button"); b.type="button"; b.className="unit"+(u===cu?" on":""); b.textContent=u; b.onclick=()=>{ if(u!==cu) load(BANK.find(p=>p.unit===u&&!progress[p.id])||BANK.find(p=>p.unit===u)); }; tabs.appendChild(b); });
+  box.appendChild(tabs);
+  const levels=[...new Set(BANK.filter(p=>p.unit===cu).map(p=>p.level))];
+  levels.forEach(L=>{ const g=document.createElement("div"); g.className="lvl"; const h=document.createElement("h3"); h.textContent=L; g.appendChild(h);
+    const w=document.createElement("div"); w.className="pbtns";
+    BANK.filter(p=>p.level===L).forEach(p=>{ const b=document.createElement("button"); b.className="pbtn"+(P&&P.id===p.id?" cur":"")+(progress[p.id]?" done":""); b.type="button";
+      const d=document.createElement("span"); d.className="dot"; d.textContent=progress[p.id]?"✓":""; const e=document.createElement("span"); e.className="eq"; e.textContent="$"+p.eq+"$";
+      b.append(d,e); b.onclick=()=>load(p); w.appendChild(b); });
+    g.appendChild(w); box.appendChild(g); });
+  render(box);
+}
+function ladder(){ const l=$("ladder"); l.innerHTML=""; P.steps.forEach((s,i)=>{ const x=document.createElement("i"); const r=record[i];
+  x.className=(i<idx||finished)?(r.shown?"shown":"done"):i===idx?"now":""; x.title="Step "+(i+1); l.appendChild(x); }); }
+function load(p){
+  P=p; idx=0; wrong=0; hintLevel=0; finished=false; record=P.steps.map(()=>({wrong:0,hints:0,shown:false,picks:[]}));
+  P.steps.forEach(s=>{ s._order=null; (s.choices||[]).forEach(c=>c._picked=false); });
+  chat.innerHTML=""; $("q").textContent="Solve $"+P.eq+"$"; render($("q"));
+  addMsg("tutor","Let's solve this one step at a time. "+P.steps[0].ask);
+  buildList(); ladder(); renderChoices(); ans.value=""; $("preview").textContent="";
+  try{ history.replaceState(null,"","#"+P.id); }catch(e){}
+}
+function wantChoices(s){ if(!s.choices||mode==="type"&&s.check.type!=="text") return false; return mode==="choice"||s.check.type==="text"||wrong>=1; }
+function setControls(){
+  const active=P&&!finished, s=active?P.steps[idx]:null;
+  $("sendBtn").disabled=!active; ans.disabled=!active; $("hintBtn").disabled=!active||hintLevel>=s.hints.length;
+  $("showBtn").hidden=!(active&&(hintLevel>=2||wrong>=2));
+  const onlyChoice=active&&choicesOn&&(mode==="choice"||s.check.type==="text");
+  ans.hidden=onlyChoice; $("sendBtn").hidden=onlyChoice; $("preview").hidden=onlyChoice; $("howto").hidden=onlyChoice;
+  $("choices").hidden=!(active&&choicesOn);
+}
+function renderChoices(){
+  const s=P.steps[idx], cs=$("choices"); cs.innerHTML=""; choicesOn=!finished&&wantChoices(s);
+  if(choicesOn){
+    const l=document.createElement("div"); l.className="label clabel"; l.textContent=(mode==="choice"||s.check.type==="text")?"Choose one":"Need help? Pick one"; cs.appendChild(l);
+    if(!s._order) s._order=s.choices.map((c,i)=>i).sort(()=>Math.random()-.5);
+    s._order.forEach((ci,k)=>{ const c=s.choices[ci]; const b=document.createElement("button"); b.type="button"; b.className="choice"; b.disabled=!!c._picked;
+      const n=document.createElement("b"); n.textContent="ABCD"[k]; const t=document.createElement("span"); t.textContent=c[0]; b.append(n,t); b.onclick=()=>pick(c); cs.appendChild(b); });
+    render(cs);
+  }
+  setControls();
+}
+function correct(msg){ addMsg("tutor good",msg,"Correct"); nextStep(); }
+function pick(c){
+  if(finished) return; addMsg("student",c[0]);
+  if(c[1]){ correct(c[2]||PRAISE[0]); return; }
+  c._picked=true; wrong++; record[idx].wrong++; record[idx].picks.push(c[0]);
+  addMsg("tutor bad",c[2]||"Not quite.","Not yet");
+  if(wrong>=3){ reveal(true); return; } renderChoices();
+}
+function submit(){
+  const text=ans.value.trim(); if(!text||!P||finished) return; const s=P.steps[idx];
+  addMsg("student",text); ans.value=""; $("preview").textContent="";
+  const ok=localCheck(s,text);
+  if(ok===true){ correct(PRAISE[Math.floor(Math.random()*PRAISE.length)]); return; }
+  const norm=x=>clean(x).replace(/\s+/g,"").toLowerCase();
+  const m=(s.mistakes||[]).find(x=>norm(x[0])===norm(text));
+  if(ok===null&&!m){ addMsg("tutor hint",s.check.type==="text"?"Tell me in words, like “subtract 7 from both sides” — or pick a choice below.":"I couldn't read that. Try something like 3x-12, x = 4, or just 12.","Try again"); if(s.check.type==="text"){ wrong=Math.max(wrong,1); renderChoices(); } return; }
+  wrong++; record[idx].wrong++; record[idx].picks.push(text);
+  const h=s.hints[Math.min(wrong,s.hints.length)-1];
+  addMsg("tutor bad",m?m[1]:"Not quite. "+(h||""),"Not yet");
+  if(wrong>=3){ reveal(true); return; } renderChoices();
+}
+function hint(){ const s=P.steps[idx]; if(hintLevel>=s.hints.length) return; hintLevel++; record[idx].hints++; addMsg("tutor hint",s.hints[hintLevel-1],"Hint "+hintLevel); setControls(); }
+function reveal(auto){ record[idx].shown=true; addMsg("tutor hint",(auto?"Let's look at this step together. ":"")+P.steps[idx].show,"Worked step"); nextStep(); }
+function nextStep(){ idx++; wrong=0; hintLevel=0; if(idx>=P.steps.length){ finish(); return; } addMsg("tutor",P.steps[idx].ask); ladder(); renderChoices(); }
+function finish(){
+  finished=true; choicesOn=false; ladder(); setControls();
+  const clean_=record.every(r=>!r.shown);
+  progress[P.id]={done:true,wrong:record.reduce((a,r)=>a+r.wrong,0),hints:record.reduce((a,r)=>a+r.hints,0)}; saveProgress(); buildList();
+  addMsg("tutor good",clean_?"You solved it! 🎉":"Done! Try this one again later to do it on your own.","Finished");
+  const d=addMsg("tutor","Your steps:");
+  const tb=document.createElement("table"); tb.className="rec"; tb.innerHTML="<tr><th>Step</th><th>Wrong</th><th>Hints</th><th>Shown</th><th>Wrong answers</th></tr>";
+  record.forEach((r,i)=>{ const tr=document.createElement("tr"); tr.innerHTML=`<td>${i+1}</td><td class="n">${r.wrong}</td><td class="n">${r.hints}</td><td class="n">${r.shown?"✓":""}</td><td></td>`; tr.lastChild.textContent=r.picks.join("; "); tb.appendChild(tr); });
+  d.appendChild(tb); render(tb);
+  const bx=document.createElement("div"); bx.className="endbtns"; const i=BANK.indexOf(P);
+  if(i<BANK.length-1&&BANK[i+1].unit===P.unit){ const b=document.createElement("button"); b.className="btn teal"; b.textContent="Next problem →"; b.onclick=()=>load(BANK[i+1]); bx.appendChild(b); }
+  const r=document.createElement("button"); r.className="btn ghost"; r.textContent="Try again"; r.onclick=()=>load(P); bx.appendChild(r);
+  d.appendChild(bx); chat.scrollTop=chat.scrollHeight;
+}
+/* ---- events ---- */
+ans.addEventListener("keydown",e=>{ if(e.key==="Enter"){ e.preventDefault(); submit(); } });
+ans.addEventListener("input",()=>{ const v=ans.value.trim(),pv=$("preview"); if(!v||!window.katex){ pv.textContent=""; return; }
+  try{ const tex=clean(v).split("=").map(x=>math.parse(x).toTex({parenthesis:"auto",implicit:"hide"})).join(" = "); katex.render(tex,pv,{throwOnError:false}); }catch(e){ pv.textContent=""; } });
+$("sendBtn").onclick=submit; $("hintBtn").onclick=hint; $("showBtn").onclick=()=>reveal(false);
+$("mode").value=mode; $("mode").onchange=e=>{ mode=e.target.value; try{ localStorage.setItem("fm-tutor-mode",mode); }catch(x){} if(P&&!finished) renderChoices(); };
+window.addEventListener("load",()=>{ const h=location.hash.slice(1); load(BANK.find(p=>p.id===h)||BANK.find(p=>!progress[p.id])||BANK[0]); });
+</script>
+</body>
+</html>

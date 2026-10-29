@@ -29,6 +29,8 @@
   button,input,select{font:inherit;color:inherit}
   .wrap{max-width:1120px;margin:0 auto;padding:0 20px}
   .hidden{display:none!important}
+  .tutor-link{margin:10px 0 0;font-size:15px;color:var(--muted)}
+  .tutor-link a{font-weight:600}
 
   /* header */
   header.top{position:sticky;top:0;z-index:40;background:rgba(255,255,255,.96);border-bottom:1px solid var(--line)}
@@ -446,6 +448,7 @@ function pageHome(v){
       h("span", { class:"ic", "aria-hidden":"true" }, "📸"),
       h("span", { class:"txt" }, h("b", {}, "Stuck on a homework problem?"), h("span", {}, "Type it in and solve it yourself, one step at a time — I'll check every step and give hints.")),
       h("span", { class:"btn teal" }, "Start solving →")),
+    h("p", { class:"tutor-link" }, "New to equations? Practice with hints and choices in the ", h("a", { href:"practice/tutor.html" }, "Step-by-Step Tutor →")),
     ch ? h("div", { class:"card problem", style:"margin-top:22px" },
       h("span", { class:"lbl" }, "Weekly Challenge · " + ch.level),
       mathEl("div", ch.q, { class:"q" }),
@@ -1434,7 +1437,8 @@ function pageSolve(v){
   v.append(wrap);
   if (!window.math) { wrap.append(h("div", { class:"page-head" }, h("h1", {}, "Step-by-Step Solver"), h("p", {}, "Loading… please refresh the page if this doesn't go away."))); setTimeout(() => { if (location.hash.startsWith("#/solve")) route(); }, 1500); return; }
   wrap.append(h("div", { class:"page-head" }, h("h1", {}, "Step-by-Step Solver"),
-    h("p", {}, "You do the math. I check every step — and give a hint when you're stuck.")));
+    h("p", {}, "You do the math. I check every step — and give a hint when you're stuck."),
+    h("p", { class:"tutor-link" }, "Want more guidance? Try the ", h("a", { href:"practice/tutor.html" }, "Step-by-Step Tutor"), " — 20 equations broken into small steps, with hints, multiple choice and a scratch pad.")));
   const card = h("div", { class:"card" });
   wrap.append(card);
   setup();

@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Quadratics at Your Level — Prof. Fang Math</title>
+<title>Quadratics: Learn &amp; Practice — Prof. Fang Math</title>
 <meta name="description" content="Algebra 2 quadratics practice in five levels, from Foundation to Competition, with a placement check, hints and worked solutions.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -86,6 +86,30 @@ button:focus-visible,input:focus{outline:2px solid var(--teal);outline-offset:1p
 .modal{position:fixed;inset:0;background:rgba(22,35,59,.45);display:grid;place-items:center;padding:16px;z-index:60}
 .modal .card{width:min(620px,100%);max-height:90vh;overflow:auto;display:flex;flex-direction:column;gap:14px}
 .qprog{display:flex;gap:6px} .qprog i{flex:1;height:6px;border-radius:3px;background:var(--line)} .qprog i.ok{background:var(--green)} .qprog i.no{background:var(--red)} .qprog i.now{background:var(--teal)}
+.tabs{display:flex;gap:6px;flex-wrap:wrap;border-bottom:1px solid var(--line);padding-bottom:0}
+.tab{border:none;background:none;padding:10px 16px;font-weight:600;font-size:16px;color:var(--muted);cursor:pointer;border-bottom:3px solid transparent;margin-bottom:-1px}
+.tab.on{color:var(--teal);border-bottom-color:var(--teal)}
+.learn,.pview{display:flex;flex-direction:column;gap:20px}
+.road{display:flex;gap:8px;flex-wrap:wrap}
+.stop{display:flex;align-items:center;gap:8px;border:1.5px solid var(--line);background:var(--surface);border-radius:999px;padding:6px 14px 6px 6px;cursor:pointer;font-size:14px;font-weight:600;color:var(--ink)}
+.stop i{font-style:normal;width:24px;height:24px;border-radius:50%;display:grid;place-items:center;background:var(--bg);font-size:12px;border:1.5px solid var(--line)}
+.stop.done i{background:var(--green);border-color:var(--green);color:#fff}
+.stop.on{border-color:var(--teal);background:var(--teal-soft)}
+.lesson{display:flex;flex-direction:column;gap:16px;scroll-margin-top:80px}
+.lesson h2{font-size:clamp(24px,3vw,30px)}
+.big{font-size:18px;background:var(--teal-soft);border-radius:14px;padding:14px 16px;overflow-x:auto}
+.big b{color:var(--teal)}
+.steps{display:flex;flex-direction:column;gap:8px;margin:0;padding:0;list-style:none;counter-reset:k}
+.steps li{counter-increment:k;display:grid;grid-template-columns:30px minmax(0,1fr);gap:10px;align-items:start;background:var(--bg);border-radius:12px;padding:10px 12px;animation:pop .25s ease}
+.steps li::before{content:counter(k);width:26px;height:26px;border-radius:50%;background:var(--navy);color:#fff;display:grid;place-items:center;font-size:13px;font-weight:700}
+.steps .m{font-size:19px;overflow-x:auto} .steps .w{font-size:14px;color:var(--muted)}
+@keyframes pop{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){.steps li{animation:none}}
+.warn{background:var(--red-soft);border-radius:14px;padding:12px 16px;font-size:15px;overflow-x:auto}
+.warn b{color:var(--red)}
+.turn{border:1.5px solid var(--gold);border-radius:14px;padding:14px 16px;display:flex;flex-direction:column;gap:10px}
+.turn .q{font-size:19px;overflow-x:auto}
+.lnav{display:flex;gap:8px;flex-wrap:wrap;justify-content:space-between}
 footer{text-align:center;color:var(--faint);font-size:13px;padding:24px}
 </style>
 </head>
@@ -98,10 +122,21 @@ footer{text-align:center;color:var(--faint);font-size:13px;padding:24px}
 <div class="wrap">
   <div class="intro">
     <span class="label">Algebra 2 · Quadratics</span>
-    <h1>Quadratics at Your Level</h1>
-    <p>Start from the simplest example, pick the level that fits you, and move up when you're ready. Every problem is new each time.</p>
+    <h1>Quadratics: Learn &amp; Practice</h1>
+    <p>First learn each idea from the simplest example. Then practice at the level that fits you and move up when you're ready.</p>
   </div>
 
+  <div class="tabs" role="tablist">
+    <button class="tab" id="tabLearn" role="tab">① Learn the ideas</button>
+    <button class="tab" id="tabPractice" role="tab">② Practice at your level</button>
+  </div>
+
+  <div id="learnView" class="learn">
+    <div class="road" id="road"></div>
+    <div class="card lesson" id="lesson"></div>
+  </div>
+
+  <div id="practiceView" class="pview">
   <div class="legend" id="legend"></div>
 
   <div class="card place">
@@ -128,6 +163,7 @@ footer{text-align:center;color:var(--faint);font-size:13px;padding:24px}
     <div class="streak" id="pStreak"></div>
   </div>
   <div class="topics" id="topics"></div>
+  </div>
 </div>
 <footer>© 2026 Prof. Fang Math</footer>
 
@@ -215,6 +251,65 @@ const TOPICS=[
  ]}
 ];
 
+/* ================= lessons: learn from the simplest example ================= */
+const LESSONS=[
+{id:"what",title:"What is a quadratic?",idea:"A <b>quadratic</b> has $x^2$ as its highest power. Standard form: $ax^2 + bx + c = 0$ with $a \\ne 0$.",
+ steps:[["2x^2 - 3x + 1 = 0","Highest power is $x^2$, so it's quadratic."],["a = 2","$a$ is the number in front of $x^2$."],["b = -3","$b$ is the number in front of $x$ — keep its sign!"],["c = 1","$c$ is the number with no $x$."]],
+ warn:"In $x^2 - 4x + 7 = 0$, $b$ is $-4$, not $4$. And in $x^2 = 5x$, move everything to one side first: $x^2 - 5x = 0$, so $b = -5$ and $c = 0$.",
+ turn:()=>{const a=nz(-5,5),b=nz(-9,9),c=nz(-9,9),w=pick(["b","c"]);return{q:`In $${poly(a,b,c)} = 0$, what is $${w}$?`,type:"number",ans:w==="b"?b:c,ansTex:`${w} = ${w==="b"?b:c}`,hint:w==="b"?"$b$ is the number in front of $x$, with its sign.":"$c$ is the number without any $x$, with its sign.",sol:[]}},topic:null},
+{id:"sqrt",title:"Solve by square roots",idea:"If $x^2 = k$ (with $k > 0$), then $x = \\pm\\sqrt{k}$. <b>Always two answers.</b>",
+ steps:[["x^2 = 25","$x^2$ is already alone."],["x = \\pm\\sqrt{25}","Take the square root of both sides. Write $\\pm$!"],["x = 5 \\text{ or } x = -5","Both work."],["5^2 = 25,\\ (-5)^2 = 25 \\checkmark","Check both answers."]],
+ warn:"Forgetting the negative answer. $x^2 = 25$ has <b>two</b> solutions, $5$ and $-5$.",turn:()=>TOPICS[0].gen[0](),topic:"sqrt"},
+{id:"factor",title:"Solve by factoring",idea:"Factor, then use the <b>zero product property</b>: if $A \\cdot B = 0$, then $A = 0$ or $B = 0$.",
+ steps:[["x^2 + 5x + 6 = 0","It must equal $0$ first."],["2 \\cdot 3 = 6,\\ 2 + 3 = 5","Find two numbers: multiply to $c = 6$, add to $b = 5$."],["(x + 2)(x + 3) = 0","Write the factors."],["x + 2 = 0 \\text{ or } x + 3 = 0","Set each factor to $0$."],["x = -2 \\text{ or } x = -3","Solve each one."]],
+ warn:"The sign flips: the factor $(x + 2)$ gives $x = -2$, not $x = 2$.",turn:()=>TOPICS[1].gen[1](),topic:"factor"},
+{id:"formula",title:"The quadratic formula",idea:"Works for <b>every</b> quadratic: $x = \\dfrac{-b \\pm \\sqrt{b^2 - 4ac}}{2a}$.",
+ steps:[["x^2 - 2x - 3 = 0","Read off $a = 1,\\ b = -2,\\ c = -3$."],["b^2 - 4ac = 4 + 12 = 16","Compute the part under the square root first."],["x = \\dfrac{2 \\pm \\sqrt{16}}{2} = \\dfrac{2 \\pm 4}{2}","$-b = -(-2) = 2$."],["x = 3 \\text{ or } x = -1","$\\frac{2+4}{2} = 3$ and $\\frac{2-4}{2} = -1$."]],
+ warn:"When $b$ is negative, $-b$ is positive: $b = -2$ gives $-b = 2$. And $(-2)^2 = 4$, not $-4$.",
+ turn:()=>{let r,s;do{r=nz(-6,6);s=nz(-6,6)}while(r===s);const b=-(r+s),c=r*s;return{q:`Use the quadratic formula to solve $${poly(1,b,c)} = 0$.`,type:"set",ans:[r,s],ansTex:`x = ${r}$ or $x = ${s}`,hint:`$a = 1,\\ b = ${b},\\ c = ${c}$. First find $b^2 - 4ac$.`,sol:[]}},topic:"formula"},
+{id:"disc",title:"How many solutions? (the discriminant)",idea:"$D = b^2 - 4ac$. <b>Positive</b> → 2 solutions, <b>zero</b> → 1 solution, <b>negative</b> → no real solutions.",
+ steps:[["x^2 + 6x + 9 = 0","$a = 1,\\ b = 6,\\ c = 9$."],["D = 6^2 - 4(1)(9) = 36 - 36 = 0","Compute $b^2 - 4ac$."],["D = 0 \\Rightarrow 1 \\text{ solution}","Zero means exactly one solution."],["(x + 3)^2 = 0 \\Rightarrow x = -3","Check: it's a perfect square."]],
+ warn:"Square the whole $b$: if $b = -6$, then $b^2 = 36$, not $-36$.",turn:()=>TOPICS[2].gen[1](),topic:"formula"},
+{id:"vertex",title:"The vertex of a parabola",idea:"In vertex form $y = a(x - h)^2 + k$, the vertex is $(h, k)$ — the turning point of the graph.",
+ steps:[["y = (x - 3)^2 + 2","This is vertex form."],["h = 3,\\ k = 2","Match it with $(x - h)^2 + k$."],["\\text{Vertex} = (3, 2)","The lowest point of this parabola."]],
+ warn:"Watch the sign: $(x + 3)^2$ means $h = -3$, because $x + 3 = x - (-3)$.",turn:()=>TOPICS[3].gen[0](),topic:"vertex"}
+];
+let LI=0, shown=1, TP=null, tDone=false, tTries=0;
+function road(){ const r=$("road"); r.innerHTML=""; LESSONS.forEach((l,i)=>{ const b=document.createElement("button"); b.type="button"; b.className="stop"+(st.learned[l.id]?" done":"")+(i===LI?" on":""); b.innerHTML=`<i>${st.learned[l.id]?"✓":i+1}</i>${l.title}`; b.onclick=()=>openLesson(i); r.appendChild(b); }); }
+function openLesson(i,scroll){ LI=i; shown=1; tDone=false; tTries=0; TP=null; road(); drawLesson(); if(scroll) $("lesson").scrollIntoView({behavior:"smooth",block:"start"}); }
+function drawLesson(){
+  const l=LESSONS[LI], box=$("lesson");
+  box.innerHTML=`<span class="label">Lesson ${LI+1} of ${LESSONS.length}</span><h2>${l.title}</h2><div class="big">${l.idea}</div><span class="label">Simplest example — one step at a time</span><ol class="steps">${l.steps.slice(0,shown).map(s=>`<li><div><div class="m">$${s[0]}$</div><div class="w">${s[1]}</div></div></li>`).join("")}</ol>`;
+  if(shown<l.steps.length){ const b=document.createElement("button"); b.className="btn"; b.style.alignSelf="flex-start"; b.textContent="Next step →"; b.onclick=()=>{ shown++; drawLesson(); }; box.appendChild(b); const s=document.createElement("button"); s.className="btn ghost sm"; s.style.alignSelf="flex-start"; s.textContent="Show all steps"; s.onclick=()=>{ shown=l.steps.length; drawLesson(); }; box.appendChild(s); }
+  else {
+    box.insertAdjacentHTML("beforeend",`<div class="warn"><b>Watch out: </b>${l.warn}</div>`);
+    if(!TP) TP=l.turn();
+    const t=document.createElement("div"); t.className="turn";
+    t.innerHTML=`<span class="label" style="color:var(--gold)">Your turn</span><div class="q">${TP.q}</div><div class="row"><input type="text" id="tAns" autocomplete="off" placeholder="Your answer" aria-label="Your answer"><button class="btn" id="tChk">Check</button><button class="btn ghost" id="tHint">Hint</button></div><div class="howto">${HOW[TP.type]}</div><div id="tFb"></div>`;
+    box.appendChild(t);
+    const nav=document.createElement("div"); nav.className="lnav";
+    const left=document.createElement("div"); left.className="row";
+    if(LI>0){ const pv=document.createElement("button"); pv.className="btn ghost sm"; pv.textContent="← Previous lesson"; pv.onclick=()=>openLesson(LI-1,true); left.appendChild(pv); }
+    const right=document.createElement("div"); right.className="row"; right.id="tNext"; nav.append(left,right); box.appendChild(nav);
+    const fbx=(k,tag,h)=>{ $("tFb").innerHTML=`<div class="fb ${k}"><span class="tag">${tag}</span>${h}</div>`; render($("tFb")); };
+    const win=()=>{ tDone=true; st.learned[l.id]=true; save(); road(); $("tAns").disabled=true; $("tChk").disabled=true; $("tHint").disabled=true; showNext(); };
+    const go=()=>{ if(tDone) return; const v=$("tAns").value.trim(); if(!v) return; const r=check(TP,v);
+      if(r===null){ fbx("hint","Try again","I couldn't read that. "+HOW[TP.type]); return; }
+      if(r){ fbx("good","Correct — you've got it!",`$${TP.ansTex}$`); win(); return; }
+      tTries++; if(tTries<2) fbx("bad","Not yet",TP.hint+" Try again."); else { fbx("hint","Answer",`$${TP.ansTex}$. Try another one to make sure.`); const a=document.createElement("button"); a.className="btn ghost sm"; a.textContent="Try another"; a.onclick=()=>{ TP=l.turn(); tTries=0; drawLesson(); }; $("tFb").appendChild(a); } };
+    $("tChk").onclick=go; $("tAns").addEventListener("keydown",e=>{ if(e.key==="Enter"){ e.preventDefault(); go(); } });
+    $("tHint").onclick=()=>fbx("hint","Hint",TP.hint);
+    if(st.learned[l.id]) showNext();
+  }
+  render(box);
+}
+function showNext(){ const r=$("tNext"); if(!r) return; r.innerHTML=""; const l=LESSONS[LI];
+  if(l.topic){ const pr=document.createElement("button"); pr.className="btn ghost sm"; pr.textContent="Practice this topic"; pr.onclick=()=>{ setTab("practice"); startPractice(TOPICS.find(t=>t.id===l.topic),st.level[l.topic]||st.rec||1); }; r.appendChild(pr); }
+  const n=document.createElement("button"); n.className="btn teal sm";
+  if(LI<LESSONS.length-1){ n.textContent="Next lesson →"; n.onclick=()=>openLesson(LI+1,true); } else { n.textContent="Start practicing →"; n.onclick=()=>{ setTab("practice"); window.scrollTo({top:0,behavior:"smooth"}); }; }
+  r.appendChild(n); }
+function setTab(t){ $("learnView").hidden=t!=="learn"; $("practiceView").hidden=t!=="practice"; $("tabLearn").classList.toggle("on",t==="learn"); $("tabPractice").classList.toggle("on",t==="practice"); $("tabLearn").setAttribute("aria-selected",t==="learn"); $("tabPractice").setAttribute("aria-selected",t==="practice"); try{ history.replaceState(null,"","#"+t); }catch(e){} }
+
 /* ================= checking (math.js) ================= */
 function clean(s){ return String(s).replace(/[−–]/g,"-").replace(/×|·/g,"*").replace(/÷/g,"/").replace(/π/g,"pi").replace(/√\s*(\d+(?:\.\d+)?|\([^)]*\)|[a-z])/g,"sqrt($1)").replace(/\+\/-|\+-/g,"±").trim(); }
 function val(s){ try{ const r=math.evaluate(s); const v=typeof r==="number"?r:(r&&typeof r.valueOf()==="number"?r.valueOf():NaN); return isFinite(v)?v:NaN; }catch(e){ return NaN; } }
@@ -240,7 +335,7 @@ function check(pr,input){
 function render(el){ if(window.renderMathInElement) renderMathInElement(el,{delimiters:[{left:"$",right:"$",display:false}],throwOnError:false}); }
 
 /* ================= state ================= */
-let st={rec:null,level:{},solved:{}};
+let st={rec:null,level:{},solved:{},learned:{}};
 try{ Object.assign(st,JSON.parse(localStorage.getItem("fm-quad")||"{}")); }catch(e){}
 const save=()=>{ try{ localStorage.setItem("fm-quad",JSON.stringify(st)); }catch(e){} };
 let T=null, L=1, P=null, tries=0, done=false, firstTry=true, streak=[], hintShown=false;
@@ -325,7 +420,10 @@ $("placeBtn").onclick=()=>{
   q("qs").onclick=()=>answer(false); q("qx").onclick=()=>m.remove(); m.addEventListener("click",e=>{ if(e.target===m) m.remove(); });
   ask();
 };
-window.addEventListener("load",()=>{ legend(); recText(); topics(); });
+$("tabLearn").onclick=()=>setTab("learn"); $("tabPractice").onclick=()=>setTab("practice");
+window.addEventListener("load",()=>{ if(!st.learned) st.learned={}; legend(); recText(); topics();
+  const first=LESSONS.findIndex(l=>!st.learned[l.id]); openLesson(first<0?0:first);
+  setTab(location.hash==="#practice"?"practice":location.hash==="#learn"?"learn":(first<0?"practice":"learn")); });
 </script>
 </body>
 </html>

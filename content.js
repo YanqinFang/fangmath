@@ -47,6 +47,9 @@ const GROUPS = {
       { title:"Pre-Algebra Competition Math (Grade 6) — Daily Practice Calendar (2027–28)",
         text:"Free · 34 weeks · Monday–Friday · 10 problems a day. Builds on Grade 5 and leads into AMC 8 & MATHCOUNTS.",
         file:"materials/competition/prealgebra/prealgebra_competition_daily_calendar.pdf" },
+      { title:"Algebra 1 Competition Math (Grade 7) — Daily Practice Calendar (2027–28)",
+        text:"Free · 34 weeks · Monday–Friday · 10 problems a day. Sharpens AMC 8 & MATHCOUNTS skills and previews AMC 10.",
+        file:"materials/competition/algebra1/algebra1_competition_daily_calendar.pdf" },
     ] },
 };
 

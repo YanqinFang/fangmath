@@ -1,0 +1,454 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Algebra 1: Learn &amp; Practice — Prof. Fang Math</title>
+<meta name="description" content="Algebra 1 chapter by chapter: learn each idea from the simplest example, then practice in five levels from Foundation to Competition.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/mathjs@14.9.1/lib/browser/math.js"></script>
+<style>
+:root{
+  --bg:#FBF8F3; --surface:#FFFFFF; --ink:#16233B; --muted:#5B6474; --faint:#8C93A0; --line:#E8E2D8;
+  --navy:#1F3A68; --teal:#0F7C7C; --teal-soft:#DDF0EE; --gold:#C9962B; --gold-soft:#FBF1DC; --red:#B3261E; --red-soft:#FBE7E5; --green:#1E7A45; --green-soft:#DDF4E6;
+  --l1:#2E8B57; --l2:#0F7C7C; --l3:#1F3A68; --l4:#B7472A; --l5:#6A4BD8;
+  --radius:18px; --shadow:0 8px 26px rgba(22,35,59,.07);
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 Inter,system-ui,-apple-system,sans-serif;-webkit-font-smoothing:antialiased}
+a{color:var(--teal)}
+h1,h2,h3{font-family:Fraunces,Georgia,serif;font-weight:600;letter-spacing:-.01em;margin:0;line-height:1.15}
+button,input{font:inherit;color:inherit}
+[hidden]{display:none!important}
+header.top{position:sticky;top:0;z-index:40;background:rgba(255,255,255,.96);border-bottom:1px solid var(--line)}
+header.top .in{max-width:1120px;margin:0 auto;padding:0 20px;height:64px;display:flex;align-items:center;gap:24px}
+.brand{font-weight:700;font-size:19px;text-decoration:none;color:var(--ink);white-space:nowrap}
+.brand span{color:var(--teal)}
+.back{margin-left:auto;font-size:15px;text-decoration:none;color:var(--muted);font-weight:500}
+.wrap{max-width:1120px;margin:0 auto;padding:24px 20px 48px;display:flex;flex-direction:column;gap:20px}
+.intro h1{font-size:clamp(28px,4vw,40px)}
+.intro p{color:var(--muted);margin:6px 0 0;max-width:680px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:20px}
+.label{font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--faint);font-weight:700}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:10px 18px;border-radius:999px;font-weight:600;border:1px solid transparent;cursor:pointer;background:var(--navy);color:#fff;text-decoration:none}
+.btn.teal{background:var(--teal)} .btn.ghost{background:var(--surface);color:var(--ink);border-color:var(--line)}
+.btn.sm{padding:7px 14px;font-size:14px}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+button:focus-visible,input:focus{outline:2px solid var(--teal);outline-offset:1px}
+/* level legend */
+.legend{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px}
+@media (max-width:760px){.legend{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.lg{border-radius:12px;padding:10px 12px;background:var(--bg);border-left:4px solid var(--c)}
+.lg b{display:block;font-size:14px;color:var(--c)} .lg span{font-size:13px;color:var(--muted)}
+/* placement */
+.place{display:flex;flex-wrap:wrap;gap:14px;align-items:center;justify-content:space-between;background:linear-gradient(120deg,var(--teal-soft),#fff 70%);border:1.5px solid var(--teal)}
+.place .t b{font-family:Fraunces,Georgia,serif;font-size:20px;display:block}
+.place .t span{color:var(--muted);font-size:15px}
+.rec{font-weight:600;color:var(--teal)}
+/* topics */
+.topics{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+@media (max-width:760px){.topics{grid-template-columns:minmax(0,1fr)}}
+.topic{display:flex;flex-direction:column;gap:12px}
+.topic h2{font-size:22px}
+.idea{color:var(--muted);font-size:15px;margin:0}
+.example{background:var(--bg);border-radius:12px;padding:12px 14px;font-size:15px;overflow-x:auto}
+.example .q{font-size:17px;margin-bottom:4px}
+.pills{display:flex;flex-wrap:wrap;gap:6px}
+.pill{position:relative;border:1.5px solid var(--line);background:var(--surface);border-radius:999px;padding:6px 12px;font-size:13px;font-weight:600;cursor:pointer;color:var(--ink)}
+.pill:hover{border-color:var(--c)}
+.pill.on{background:var(--c);border-color:var(--c);color:#fff}
+.pill .n{font-weight:500;opacity:.75;margin-left:4px}
+.pill.star::after{content:"★";position:absolute;top:-8px;right:-4px;font-size:12px;color:var(--gold)}
+/* practice */
+.practice{display:flex;flex-direction:column;gap:14px;scroll-margin-top:80px}
+.phead{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between}
+.phead h2{font-size:24px}
+.problem{font-size:clamp(19px,2.6vw,24px);padding:16px 18px;border-radius:14px;background:var(--bg);overflow-x:auto;line-height:1.7}
+.row{display:flex;gap:8px;flex-wrap:wrap}
+.row input{flex:1 1 240px;border:1px solid var(--line);border-radius:999px;padding:11px 16px;background:var(--bg)}
+.preview{font-size:18px;min-height:1.4em}
+.preview .pl{font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--faint);font-weight:700;margin-right:8px}
+.howto{font-size:13px;color:var(--faint)}
+.fb{border-radius:12px;padding:10px 14px;font-size:15px;overflow-x:auto}
+.fb.good{background:var(--green-soft)} .fb.bad{background:var(--red-soft)} .fb.hint{background:var(--gold-soft)}
+.fb .tag{display:block;font-size:11px;text-transform:uppercase;letter-spacing:.08em;font-weight:700}
+.fb.good .tag{color:var(--green)} .fb.bad .tag{color:var(--red)} .fb.hint .tag{color:var(--gold)}
+.sol{margin:6px 0 0;padding-left:20px} .sol li{margin:2px 0}
+.suggest{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;border:1.5px dashed var(--c);border-radius:12px;padding:10px 14px}
+.streak{display:flex;gap:4px;align-items:center;font-size:13px;color:var(--faint)}
+.streak i{width:10px;height:10px;border-radius:50%;background:var(--line)} .streak i.ok{background:var(--green)} .streak i.no{background:var(--red)}
+/* modal quiz */
+.modal{position:fixed;inset:0;background:rgba(22,35,59,.45);display:grid;place-items:center;padding:16px;z-index:60}
+.modal .card{width:min(620px,100%);max-height:90vh;overflow:auto;display:flex;flex-direction:column;gap:14px}
+.qprog{display:flex;gap:6px} .qprog i{flex:1;height:6px;border-radius:3px;background:var(--line)} .qprog i.ok{background:var(--green)} .qprog i.no{background:var(--red)} .qprog i.now{background:var(--teal)}
+.tabs{display:flex;gap:6px;flex-wrap:wrap;border-bottom:1px solid var(--line);padding-bottom:0}
+.tab{border:none;background:none;padding:10px 16px;font-weight:600;font-size:16px;color:var(--muted);cursor:pointer;border-bottom:3px solid transparent;margin-bottom:-1px}
+.tab.on{color:var(--teal);border-bottom-color:var(--teal)}
+.learn,.pview{display:flex;flex-direction:column;gap:20px}
+.road{display:flex;gap:8px;flex-wrap:wrap}
+.stop{display:flex;align-items:center;gap:8px;border:1.5px solid var(--line);background:var(--surface);border-radius:999px;padding:6px 14px 6px 6px;cursor:pointer;font-size:14px;font-weight:600;color:var(--ink)}
+.stop i{font-style:normal;width:24px;height:24px;border-radius:50%;display:grid;place-items:center;background:var(--bg);font-size:12px;border:1.5px solid var(--line)}
+.stop.done i{background:var(--green);border-color:var(--green);color:#fff}
+.stop.on{border-color:var(--teal);background:var(--teal-soft)}
+.lesson{display:flex;flex-direction:column;gap:16px;scroll-margin-top:80px}
+.lesson h2{font-size:clamp(24px,3vw,30px)}
+.big{font-size:18px;background:var(--teal-soft);border-radius:14px;padding:14px 16px;overflow-x:auto}
+.big b{color:var(--teal)}
+.steps{display:flex;flex-direction:column;gap:8px;margin:0;padding:0;list-style:none;counter-reset:k}
+.steps li{counter-increment:k;display:grid;grid-template-columns:30px minmax(0,1fr);gap:10px;align-items:start;background:var(--bg);border-radius:12px;padding:10px 12px;animation:pop .25s ease}
+.steps li::before{content:counter(k);width:26px;height:26px;border-radius:50%;background:var(--navy);color:#fff;display:grid;place-items:center;font-size:13px;font-weight:700}
+.steps .m{font-size:19px;overflow-x:auto} .steps .w{font-size:14px;color:var(--muted)}
+@keyframes pop{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){.steps li{animation:none}}
+.warn{background:var(--red-soft);border-radius:14px;padding:12px 16px;font-size:15px;overflow-x:auto}
+.warn b{color:var(--red)}
+.turn{border:1.5px solid var(--gold);border-radius:14px;padding:14px 16px;display:flex;flex-direction:column;gap:10px}
+.turn .q{font-size:19px;overflow-x:auto}
+.lnav{display:flex;gap:8px;flex-wrap:wrap;justify-content:space-between}
+footer{text-align:center;color:var(--faint);font-size:13px;padding:24px}
+.chapters{display:flex;flex-wrap:wrap;gap:8px}
+.chap{display:flex;align-items:center;gap:8px;border:1.5px solid var(--line);background:var(--surface);border-radius:999px;padding:5px 14px 5px 5px;font-size:14px;font-weight:600;color:var(--ink);cursor:pointer}
+.chap i{font-style:normal;width:24px;height:24px;border-radius:50%;display:grid;place-items:center;background:var(--bg);font-size:12px}
+.chap.on{background:var(--navy);border-color:var(--navy);color:#fff} .chap.on i{background:rgba(255,255,255,.2)}
+.chap.soon{opacity:.45;cursor:default}
+</style>
+</head>
+<body>
+<header class="top"><div class="in">
+  <a class="brand" href="../index.html#/">Prof. Fang <span>Math</span></a>
+  <a class="back" href="../index.html#/highschool">← Back to lessons</a>
+</div></header>
+
+<div class="wrap">
+  <div class="intro">
+    <span class="label">Algebra 1 · Learn &amp; Practice at Your Level</span>
+    <h1 id="chTitle">Algebra 1</h1>
+    <p>Pick a chapter. First learn each idea from the simplest example, then practice at the level that fits you and move up when you're ready.</p>
+  </div>
+
+  <div class="chapters" id="chapters" aria-label="Chapters"></div>
+
+  <div class="tabs" role="tablist">
+    <button class="tab" id="tabLearn" role="tab">① Learn the ideas</button>
+    <button class="tab" id="tabPractice" role="tab">② Practice at your level</button>
+  </div>
+
+  <div id="learnView" class="learn">
+    <div class="road" id="road"></div>
+    <div class="card lesson" id="lesson"></div>
+  </div>
+
+  <div id="practiceView" class="pview">
+    <div class="legend" id="legend"></div>
+    <div class="card place">
+      <div class="t"><b>Not sure where to start?</b><span id="recText"></span></div>
+      <button class="btn teal" id="placeBtn">Take the 5-question check</button>
+    </div>
+    <div class="card practice" id="practice" hidden>
+      <div class="phead"><h2 id="pTitle"></h2><button class="btn ghost sm" id="closeP">All topics</button></div>
+      <div class="pills" id="pLevels"></div>
+      <div class="problem" id="pQ"></div>
+      <div class="row">
+        <input type="text" id="pAns" autocomplete="off" placeholder="Your answer" aria-label="Your answer">
+        <button class="btn" id="pCheck">Check</button>
+        <button class="btn ghost" id="pHint">Hint</button>
+        <button class="btn ghost" id="pShow" hidden>Show solution</button>
+        <button class="btn teal" id="pNext" hidden>Next problem →</button>
+      </div>
+      <div class="preview" id="pPrev"></div>
+      <div class="howto" id="pHow"></div>
+      <div id="pFb"></div>
+      <div id="pSuggest"></div>
+      <div class="streak" id="pStreak"></div>
+    </div>
+    <div class="topics" id="topics"></div>
+  </div>
+</div>
+<footer>© 2026 Prof. Fang Math</footer>
+
+<script>
+"use strict";
+/* ================= helpers ================= */
+const $=id=>document.getElementById(id);
+const rnd=(a,b)=>a+Math.floor(Math.random()*(b-a+1));
+const nz=(a,b)=>{let x;do{x=rnd(a,b)}while(x===0);return x};
+const pick=a=>a[Math.floor(Math.random()*a.length)];
+const gcd=(a,b)=>{a=Math.abs(a);b=Math.abs(b);while(b){[a,b]=[b,a%b]}return a};
+const sg=k=>k>=0?"+ "+k:"- "+(-k);            // "+ 3" / "- 3"
+const P=n=>n<0?"("+n+")":String(n);            // wrap negatives
+function co(a,v){ return (a===1?"":a===-1?"-":String(a))+v; }   // coefficient with variable
+function lin(a,b,v="x"){ if(a===0) return String(b); let s=co(a,v); if(b) s+=" "+sg(b); return s; }
+function cterm(a,v){ return (a<0?"- ":"+ ")+(Math.abs(a)===1?"":Math.abs(a))+v; } // signed term for middle
+function frac(n,d){ if(d<0){n=-n;d=-d} const g=gcd(n,d)||1; n/=g; d/=g; return d===1?String(n):(n<0?"-":"")+"\\frac{"+Math.abs(n)+"}{"+d+"}"; }
+const OPT={"<":"<","<=":"\\le",">":">",">=":"\\ge"}; const FLIP={"<":">","<=":">=",">":"<",">=":"<="};
+const divisors=n=>{n=Math.abs(n);const d=[];for(let i=1;i<=n;i++) if(n%i===0) d.push(i);return d;};
+const LEVELS=[
+ {n:1,name:"Foundation",zh:"起步",desc:"Review the basics first",c:"var(--l1)"},
+ {n:2,name:"Basic",zh:"基础",desc:"Textbook examples",c:"var(--l2)"},
+ {n:3,name:"Standard",zh:"标准",desc:"School test level",c:"var(--l3)"},
+ {n:4,name:"Challenge",zh:"挑战",desc:"Honors / hard SAT",c:"var(--l4)"},
+ {n:5,name:"Competition",zh:"竞赛",desc:"MATHCOUNTS / AMC 8–10 style",c:"var(--l5)"}];
+const HOW={number:"Type a number. Fractions like 9/4 are fine.",set:"Type the value, like 4 or x = 4.",expr:"Type an expression like 7x - 1 or (c - b)/a.",
+  ineq:"Type like x > 3 or x <= -2 (≤ and ≥ work too).",between:"Type like -2 < x <= 4.",or:"Type like x < -5 or x > 3."};
+const ineqTex=(op,v)=>`x ${OPT[op]} ${v}`;
+
+/* ================= chapters =================
+   generators return {q, type, ans, ansTex, hint, sol[]} */
+const CHAPTERS=[
+{id:"ch1",title:"Foundations of Algebraic Thinking",topics:[
+ {id:"ops",title:"Order of Operations",idea:"<b>P</b>arentheses → <b>E</b>xponents → <b>M</b>ultiply/<b>D</b>ivide (left to right) → <b>A</b>dd/<b>S</b>ubtract (left to right).",
+  lesson:{steps:[["3 + 4 \\times 2","Multiplication comes before addition."],["= 3 + 8","Multiply first: $4 \\times 2 = 8$."],["= 11","Then add."]],warn:"Don't just go left to right: $3 + 4 \\times 2$ is $11$, not $14$."},
+  gen:[
+  ()=>{const a=rnd(2,9),b=rnd(2,9),c=rnd(2,9);return{q:`Evaluate $${a} + ${b} \\times ${c}$.`,type:"number",ans:a+b*c,ansTex:`${a+b*c}`,hint:"Multiplication comes before addition.",sol:[`Multiply first: $${b} \\times ${c} = ${b*c}$.`,`Add: $${a} + ${b*c} = ${a+b*c}$.`]}},
+  ()=>{const a=rnd(1,9),b=rnd(1,9),c=rnd(2,6),d=rnd(1,20),v=(a+b)*c-d;return{q:`Evaluate $(${a} + ${b}) \\times ${c} - ${d}$.`,type:"number",ans:v,ansTex:`${v}`,hint:"Parentheses first.",sol:[`Parentheses: $${a} + ${b} = ${a+b}$.`,`Multiply: $${a+b} \\times ${c} = ${(a+b)*c}$.`,`Subtract: $${(a+b)*c} - ${d} = ${v}$.`]}},
+  ()=>{const b=rnd(2,6),c=pick(divisors(b*b).filter(x=>x>1)),a=rnd(1,20),d=nz(-9,9),v=a-b*b/c+d;return{q:`Evaluate $${a} - ${b}^2 \\div ${c} ${sg(d)}$.`,type:"number",ans:v,ansTex:`${v}`,hint:"Exponent first, then divide, then add and subtract from left to right.",sol:[`Exponent: $${b}^2 = ${b*b}$.`,`Divide: $${b*b} \\div ${c} = ${b*b/c}$.`,`Left to right: $${a} - ${b*b/c} ${sg(d)} = ${v}$.`]}},
+  ()=>{let m,b,c,a,d;do{m=nz(-6,6);b=rnd(1,9);c=rnd(1,9);a=m-2*(b-c);d=pick(divisors(m*m))}while(a===0);const v=m*m/d;return{q:`Evaluate $\\left[${a} + 2(${b} - ${c})\\right]^2 \\div ${d}$.`,type:"number",ans:v,ansTex:`${v}`,hint:"Work from the innermost parentheses outward.",sol:[`Inner: $${b} - ${c} = ${b-c}$, so $2(${b-c}) = ${2*(b-c)}$.`,`Bracket: $${a} + ${P(2*(b-c))} = ${m}$.`,`Square and divide: $${P(m)}^2 \\div ${d} = ${m*m} \\div ${d} = ${v}$.`]}},
+  ()=>{const p=rnd(2,4),x=rnd(1,6),y=rnd(1,9),z=rnd(1,9),f=p*x-y,v=p*f-z;return{q:`Define $a \\star b = ${p}a - b$. Find $(${x} \\star ${y}) \\star ${z}$.`,type:"number",ans:v,ansTex:`${v}`,hint:"Work out the parentheses first: replace $a$ with the first number and $b$ with the second.",sol:[`$${x} \\star ${y} = ${p}(${x}) - ${y} = ${f}$.`,`$${P(f)} \\star ${z} = ${p}(${f}) - ${z} = ${v}$.`]}}
+ ]},
+ {id:"eval",title:"Evaluating Expressions",idea:"Replace each variable with its value <b>in parentheses</b>, then follow the order of operations.",
+  lesson:{steps:[["3x + 2 \\text{ when } x = 4","Put $4$ in place of $x$."],["3(4) + 2","Use parentheses when you substitute."],["= 12 + 2 = 14","Multiply, then add."]],warn:"With negatives, always use parentheses: if $x = -3$, then $x^2 = (-3)^2 = 9$, not $-9$."},
+  gen:[
+  ()=>{const a=rnd(2,9),b=rnd(1,9),v=rnd(1,9);return{q:`Evaluate $${a}x + ${b}$ when $x = ${v}$.`,type:"number",ans:a*v+b,ansTex:`${a*v+b}`,hint:`Replace $x$ with $${v}$: $${a}(${v}) + ${b}$.`,sol:[`$${a}(${v}) + ${b} = ${a*v} + ${b} = ${a*v+b}$.`]}},
+  ()=>{const a=rnd(2,5),b=nz(-9,9),v=-rnd(1,6);return{q:`Evaluate $${a}x^2 ${sg(b)}$ when $x = ${v}$.`,type:"number",ans:a*v*v+b,ansTex:`${a*v*v+b}`,hint:`Square first: $(${v})^2 = ${v*v}$ — positive!`,sol:[`$(${v})^2 = ${v*v}$.`,`$${a}(${v*v}) ${sg(b)} = ${a*v*v+b}$.`]}},
+  ()=>{const k=rnd(2,4),x=nz(-4,5),y=nz(-5,5),v=x*x-k*x*y+y;return{q:`Evaluate $x^2 - ${k}xy + y$ when $x = ${x}$ and $y = ${y}$.`,type:"number",ans:v,ansTex:`${v}`,hint:"Substitute both values in parentheses, then do exponents, multiplication, and finally addition/subtraction.",sol:[`$(${x})^2 - ${k}(${x})(${y}) + (${y})$.`,`$= ${x*x} ${sg(-k*x*y)} ${sg(y)} = ${v}$.`]}},
+  ()=>{let x,y;do{x=nz(-6,6);y=nz(-9,9)}while(x+y===0||(x*x-y)%(x+y)!==0||(x*x-y)===0);const v=(x*x-y)/(x+y);return{q:`Evaluate $\\dfrac{x^2 - y}{x + y}$ when $x = ${x}$ and $y = ${y}$.`,type:"number",ans:v,ansTex:`${v}`,hint:"Work out the top and the bottom separately, then divide.",sol:[`Top: $(${x})^2 - (${y}) = ${x*x-y}$.`,`Bottom: $${x} + (${y}) = ${x+y}$.`,`$${x*x-y} \\div ${P(x+y)} = ${v}$.`]}},
+  ()=>{const p=rnd(2,5),q=rnd(1,4),s=rnd(5,20),k=rnd(2,4),c=nz(-9,9),v=k*s+c;return{q:`If $${p}x + ${q===1?"":q}y = ${s}$, what is the value of $${k*p}x + ${k*q}y ${sg(c)}$?`,type:"number",ans:v,ansTex:`${v}`,hint:`Look for a multiple: $${k*p}x + ${k*q}y$ is ${k} times $${p}x + ${q===1?"":q}y$.`,sol:[`$${k*p}x + ${k*q}y = ${k}(${p}x + ${q===1?"":q}y) = ${k}(${s}) = ${k*s}$.`,`$${k*s} ${sg(c)} = ${v}$.`]}}
+ ]},
+ {id:"simp",title:"Distribute & Combine Like Terms",idea:"<b>Distribute</b>: multiply the outside number by every term inside. <b>Combine</b>: add the numbers in front of the same variable.",
+  lesson:{steps:[["2(x + 3) + 4x","Start with the parentheses."],["= 2x + 6 + 4x","Distribute: $2 \\cdot x$ and $2 \\cdot 3$."],["= 6x + 6","Combine like terms: $2x + 4x = 6x$."]],warn:"A minus in front of parentheses changes <b>every</b> sign inside: $-(x + 4) = -x - 4$."},
+  gen:[
+  ()=>{let p,q;do{p=rnd(1,9);q=rnd(1,9)}while(p+q===0);const c=rnd(1,9);return{q:`Simplify $${co(p,"x")} + ${c} + ${co(q,"x")}$.`,type:"expr",form:"combined",ans:`${p+q}*x+${c}`,ansTex:lin(p+q,c),hint:`Add the $x$ terms: $${p} + ${q}$.`,sol:[`$${co(p,"x")} + ${co(q,"x")} = ${co(p+q,"x")}$.`,`Answer: $${lin(p+q,c)}$.`]}},
+  ()=>{const a=rnd(2,9),b=nz(-9,9);return{q:`Simplify $${a}(x ${sg(b)})$.`,type:"expr",form:"combined",ans:`${a}*x+(${a*b})`,ansTex:lin(a,a*b),hint:`Multiply $${a}$ by $x$ and by $${b}$.`,sol:[`$${a} \\cdot x = ${a}x$ and $${a} \\cdot ${P(b)} = ${a*b}$.`,`Answer: $${lin(a,a*b)}$.`]}},
+  ()=>{let a,b,c;do{a=nz(-6,6);b=nz(-9,9);c=nz(-9,9)}while(a+c===0||Math.abs(a)===1);return{q:`Simplify $${a}(x ${sg(b)}) ${cterm(c,"x")}$.`,type:"expr",form:"combined",ans:`${a+c}*x+(${a*b})`,ansTex:lin(a+c,a*b),hint:"Distribute first, then combine the $x$ terms.",sol:[`Distribute: $${lin(a,a*b)} ${cterm(c,"x")}$.`,`Combine: $${lin(a+c,a*b)}$.`]}},
+  ()=>{let a,p,q,r;do{a=rnd(2,5);p=rnd(1,4);q=nz(-6,6);r=nz(-9,9)}while(-a*p-1===0);const X=-a*p-1,C=-a*q-r;return{q:`Simplify $-${a}(${co(p,"x")} ${sg(q)}) - (x ${sg(r)})$.`,type:"expr",form:"combined",ans:`${X}*x+(${C})`,ansTex:lin(X,C),hint:"The minus signs change every sign inside their parentheses.",sol:[`$-${a}(${co(p,"x")} ${sg(q)}) = ${lin(-a*p,-a*q)}$.`,`$-(x ${sg(r)}) = ${lin(-1,-r)}$.`,`Combine: $${lin(X,C)}$.`]}},
+  ()=>{let a,b,c,d,X,Y;do{a=rnd(2,5);b=rnd(1,4);c=rnd(2,5);d=rnd(1,3);X=a-c*d;Y=-a*b+c}while(X===0||Y===0);const yt=Y===1?"+ y":Y===-1?"- y":(Y<0?"- "+(-Y):"+ "+Y)+"y";return{q:`Simplify $${a}(x - ${co(b,"y")}) - ${c}(${co(d,"x")} - y)$.`,type:"expr",form:"combined",ans:`${X}*x+(${Y})*y`,ansTex:`${co(X,"x")} ${yt}`,hint:"Distribute both parts (watch the minus!), then combine $x$ terms and $y$ terms separately.",sol:[`$${a}(x - ${co(b,"y")}) = ${co(a,"x")} - ${a*b}y$.`,`$-${c}(${co(d,"x")} - y) = -${c*d}x + ${c}y$.`,`Combine: $${co(X,"x")} ${yt}$.`]}}
+ ]}
+]},
+{id:"ch2",title:"Solving Linear Equations",topics:[
+ {id:"two",title:"One- and Two-Step Equations",idea:"Do the <b>opposite</b> operation to <b>both sides</b>. Undo addition/subtraction first, then multiplication/division.",
+  lesson:{steps:[["2x + 5 = 17","Two things happen to $x$: times $2$, then $+5$."],["2x = 12","Undo $+5$: subtract $5$ from both sides."],["x = 6","Undo $\\times 2$: divide both sides by $2$."],["2(6) + 5 = 17 \\checkmark","Check by substituting."]],warn:"Whatever you do to one side, do to the <b>other side</b> too."},
+  gen:[
+  ()=>{const b=nz(-9,9),x=nz(-9,12);return{q:`Solve $x ${sg(b)} = ${x+b}$.`,type:"set",ans:[x],ansTex:`x = ${x}`,hint:`Undo $${sg(b).replace(" ","")}$ by doing the opposite to both sides.`,sol:[`${b>0?"Subtract":"Add"} $${Math.abs(b)}$ on both sides: $x = ${x+b} ${sg(-b)} = ${x}$.`]}},
+  ()=>{let a;do{a=nz(-9,9)}while(Math.abs(a)===1);const x=nz(-9,9);return{q:`Solve $${a}x = ${a*x}$.`,type:"set",ans:[x],ansTex:`x = ${x}`,hint:`Divide both sides by $${a}$. Watch the signs.`,sol:[`$x = \\dfrac{${a*x}}{${a}} = ${x}$.`]}},
+  ()=>{let a;do{a=nz(-9,9)}while(Math.abs(a)===1);const b=nz(-12,12),x=nz(-9,9),c=a*x+b;return{q:`Solve $${lin(a,b)} = ${c}$.`,type:"set",ans:[x],ansTex:`x = ${x}`,hint:`Undo $${sg(b).replace(" ","")}$ first, then divide by $${a}$.`,sol:[`$${co(a,"x")} = ${c} ${sg(-b)} = ${c-b}$.`,`$x = ${c-b} \\div ${P(a)} = ${x}$.`]}},
+  ()=>{const a=rnd(2,6),k=nz(-6,6),x=a*k,b=nz(-9,9),c=k+b;return{q:`Solve $\\dfrac{x}{${a}} ${sg(b)} = ${c}$.`,type:"set",ans:[x],ansTex:`x = ${x}`,hint:`Undo $${sg(b).replace(" ","")}$ first, then multiply both sides by $${a}$.`,sol:[`$\\dfrac{x}{${a}} = ${c} ${sg(-b)} = ${k}$.`,`$x = ${a} \\cdot ${P(k)} = ${x}$.`]}},
+  ()=>{const a=rnd(2,6),x=nz(-6,9),b=nz(-9,9),c=a*x+b,k=rnd(2,3),d=nz(-9,9),v=k*a*x+d;return{q:`If $${lin(a,b)} = ${c}$, what is the value of $${lin(k*a,d)}$?`,type:"number",ans:v,ansTex:`${v}`,hint:`You can find $x$ first — or notice that $${co(k*a,"x")}$ is ${k} times $${co(a,"x")}$.`,sol:[`$${co(a,"x")} = ${c-b}$, so $${co(k*a,"x")} = ${k*(c-b)}$.`,`$${k*(c-b)} ${sg(d)} = ${v}$.`]}}
+ ]},
+ {id:"multi",title:"Multi-Step Equations",idea:"<b>Simplify each side first</b> (distribute, combine like terms), then solve like a two-step equation.",
+  lesson:{steps:[["2(x + 3) = 14","Parentheses on the left."],["2x + 6 = 14","Distribute."],["2x = 8","Subtract $6$ from both sides."],["x = 4","Divide by $2$."]],warn:"Distribute to <b>every</b> term: $2(x + 3)$ is $2x + 6$, not $2x + 3$."},
+  gen:[
+  ()=>{let p,q;do{p=rnd(1,7);q=rnd(1,7)}while(p+q<2);const x=nz(-9,9);return{q:`Solve $${co(p,"x")} + ${co(q,"x")} = ${(p+q)*x}$.`,type:"set",ans:[x],ansTex:`x = ${x}`,hint:"Combine like terms first.",sol:[`$${co(p+q,"x")} = ${(p+q)*x}$.`,`$x = ${x}$.`]}},
+  ()=>{const a=rnd(2,7),b=nz(-9,9),x=nz(-9,9),c=a*(x+b);return{q:`Solve $${a}(x ${sg(b)}) = ${c}$.`,type:"set",ans:[x],ansTex:`x = ${x}`,hint:`Distribute first (or divide both sides by $${a}$).`,sol:[`$${lin(a,a*b)} = ${c}$.`,`$${a}x = ${c-a*b}$, so $x = ${x}$.`]}},
+  ()=>{let a,b,c,x;do{a=rnd(2,6);b=nz(-6,6);c=nz(-5,5);x=nz(-8,8)}while(a+c===0);const d=a*(x+b)+c*x;return{q:`Solve $${a}(x ${sg(b)}) ${cterm(c,"x")} = ${d}$.`,type:"set",ans:[x],ansTex:`x = ${x}`,hint:"Distribute, then combine the $x$ terms.",sol:[`$${lin(a,a*b)} ${cterm(c,"x")} = ${d}$.`,`$${lin(a+c,a*b)} = ${d}$.`,`$${co(a+c,"x")} = ${d-a*b}$, so $x = ${x}$.`]}},
+  ()=>{let a,b,c,d,x;do{a=rnd(2,6);c=rnd(2,6);b=nz(-6,6);d=nz(-6,6);x=nz(-8,8)}while(a===c);const e=a*(x+b)-c*(x+d);return{q:`Solve $${a}(x ${sg(b)}) - ${c}(x ${sg(d)}) = ${e}$.`,type:"set",ans:[x],ansTex:`x = ${x}`,hint:"Distribute both parentheses. The minus sign changes both signs in the second one.",sol:[`$${lin(a,a*b)} ${sg(-c).replace(" ","")}x ${sg(-c*d)} = ${e}$.`,`$${lin(a-c,a*b-c*d)} = ${e}$.`,`$x = ${x}$.`]}},
+  ()=>{let m,n,p,q,x;do{m=pick([2,3,4,5]);n=pick([2,3,4,5,6]);p=nz(-6,6);q=nz(-6,6);x=nz(-12,12)}while(m===n||(x+p)%m!==0||(x+q)%n!==0);const r=(x+p)/m+(x+q)/n;return{q:`Solve $\\dfrac{x ${sg(p)}}{${m}} + \\dfrac{x ${sg(q)}}{${n}} = ${r}$.`,type:"set",ans:[x],ansTex:`x = ${x}`,hint:`Multiply every term by the LCD, $${m*n/gcd(m,n)}$, to clear the fractions.`,sol:[`Multiply both sides by $${m*n/gcd(m,n)}$.`,`$${m*n/gcd(m,n)/m}(x ${sg(p)}) + ${m*n/gcd(m,n)/n}(x ${sg(q)}) = ${r*m*n/gcd(m,n)}$.`,`Solve: $x = ${x}$.`]}}
+ ]},
+ {id:"both",title:"Variables on Both Sides & Literal Equations",idea:"Move all $x$ terms to one side (subtract the <b>smaller</b> one), numbers to the other side, then solve.",
+  lesson:{steps:[["5x + 2 = 3x + 10","$x$ is on both sides."],["2x + 2 = 10","Subtract $3x$ from both sides."],["2x = 8","Subtract $2$."],["x = 4","Divide by $2$."]],warn:"Subtract the $x$ term from <b>both</b> sides — don't just cross it out on one side."},
+  gen:[
+  ()=>{const q=rnd(1,6),p=q+rnd(1,5),x=nz(-9,9),c=(p-q)*x;return{q:`Solve $${co(p,"x")} = ${lin(q,c)}$.`,type:"set",ans:[x],ansTex:`x = ${x}`,hint:`Subtract $${co(q,"x")}$ from both sides.`,sol:[`$${co(p-q,"x")} = ${c}$.`,`$x = ${x}$.`]}},
+  ()=>{const q=rnd(1,6),p=q+rnd(1,5),x=nz(-9,9),b=nz(-9,9),d=(p-q)*x+b;return{q:`Solve $${lin(p,b)} = ${lin(q,d)}$.`,type:"set",ans:[x],ansTex:`x = ${x}`,hint:`Subtract $${co(q,"x")}$ from both sides, then undo $${sg(b).replace(" ","")}$.`,sol:[`$${lin(p-q,b)} = ${d}$.`,`$${co(p-q,"x")} = ${d-b}$, so $x = ${x}$.`]}},
+  ()=>{const p=rnd(1,5),q=p+rnd(1,5),x=nz(-9,9),b=nz(-9,9),d=(p-q)*x+b;return{q:`Solve $${lin(p,b)} = ${lin(q,d)}$.`,type:"set",ans:[x],ansTex:`x = ${x}`,hint:`Subtract $${co(p,"x")}$ (the smaller $x$ term) from both sides.`,sol:[`$${b} = ${lin(q-p,d)}$.`,`$${co(q-p,"x")} = ${b-d}$, so $x = ${x}$.`]}},
+  ()=>{let a,b,p,x;do{a=rnd(2,6);b=nz(-6,6);p=nz(-6,8);x=nz(-8,8)}while(a===p);const d=a*(x+b)-p*x;return{q:`Solve $${a}(x ${sg(b)}) = ${lin(p,d)}$.`,type:"set",ans:[x],ansTex:`x = ${x}`,hint:"Distribute first, then get the $x$ terms on one side.",sol:[`$${lin(a,a*b)} = ${lin(p,d)}$.`,`$${co(a-p,"x")} = ${d-a*b}$.`,`$x = ${x}$.`]}},
+  ()=>pick([
+   ()=>({q:"Solve for $x$: $ax + b = c$.",type:"expr",ans:"(c-b)/a",ansTex:"x = \\dfrac{c - b}{a}",hint:"Treat $a$, $b$, $c$ like numbers: subtract $b$, then divide by $a$.",sol:["$ax = c - b$.","$x = \\dfrac{c - b}{a}$."]}),
+   ()=>({q:"Solve for $w$: $P = 2l + 2w$.",type:"expr",v:"w",ans:"(P-2*l)/2",ansTex:"w = \\dfrac{P - 2l}{2}",hint:"Subtract $2l$ from both sides, then divide by $2$.",sol:["$P - 2l = 2w$.","$w = \\dfrac{P - 2l}{2}$."]}),
+   ()=>({q:"Solve for $h$: $A = \\frac{1}{2}bh$.",type:"expr",v:"h",ans:"2*A/b",ansTex:"h = \\dfrac{2A}{b}",hint:"Multiply both sides by $2$, then divide by $b$.",sol:["$2A = bh$.","$h = \\dfrac{2A}{b}$."]}),
+   ()=>{const a=rnd(2,5),c=rnd(2,9),b=rnd(2,5);return{q:`Solve for $y$: $${a}x + ${b}y = ${c}$.`,type:"expr",v:"y",ans:`(${c}-${a}*x)/${b}`,ansTex:`y = \\dfrac{${c} - ${a}x}{${b}}`,hint:`Subtract $${a}x$ from both sides, then divide by $${b}$.`,sol:[`$${b}y = ${c} - ${a}x$.`,`$y = \\dfrac{${c} - ${a}x}{${b}}$.`]}},
+   ()=>({q:"Solve for $x$: $a(x - b) = c$.",type:"expr",ans:"c/a+b",ansTex:"x = \\dfrac{c}{a} + b",hint:"Divide both sides by $a$, then add $b$.",sol:["$x - b = \\dfrac{c}{a}$.","$x = \\dfrac{c}{a} + b$."]})
+  ])()
+ ]}
+]},
+{id:"ch3",title:"Linear Inequalities",topics:[
+ {id:"one",title:"Solving Inequalities",idea:"Solve like an equation — but if you <b>multiply or divide by a negative</b>, <b>flip</b> the inequality sign.",
+  lesson:{steps:[["-2x < 8","We need to divide by $-2$."],["x > -4","Divide by $-2$ and flip $<$ to $>$."],["x = 0:\\ -2(0) = 0 < 8 \\checkmark","Check a number from your answer."]],warn:"Forgetting to flip! Dividing by $-2$ turns $<$ into $>$."},
+  gen:[
+  ()=>{const op=pick(["<","<=",">",">="]),b=nz(-9,9),v=nz(-9,9);return{q:`Solve $x ${sg(b)} ${OPT[op]} ${v+b}$.`,type:"ineq",ans:{op,v},ansTex:ineqTex(op,v),hint:`Undo $${sg(b).replace(" ","")}$ on both sides. Adding or subtracting never flips the sign.`,sol:[`$x ${OPT[op]} ${v+b} ${sg(-b)}$.`,`$${ineqTex(op,v)}$.`]}},
+  ()=>{const op=pick(["<","<=",">",">="]),a=rnd(2,9),v=nz(-9,9);return{q:`Solve $${a}x ${OPT[op]} ${a*v}$.`,type:"ineq",ans:{op,v},ansTex:ineqTex(op,v),hint:`Divide both sides by $${a}$ (positive, so no flip).`,sol:[`$${ineqTex(op,v)}$.`]}},
+  ()=>{const op=pick(["<","<=",">",">="]),a=-rnd(2,9),v=nz(-9,9),f=FLIP[op];return{q:`Solve $${a}x ${OPT[op]} ${a*v}$.`,type:"ineq",ans:{op:f,v},ansTex:ineqTex(f,v),hint:`Divide by $${a}$ — it's negative, so flip the sign!`,sol:[`Divide by $${a}$ and flip: $${ineqTex(f,v)}$.`]}},
+  ()=>{const op=pick(["<","<=",">",">="]),a=-rnd(2,6),c=nz(-6,6),f=FLIP[op],v=a*c;return{q:`Solve $\\dfrac{x}{${a}} ${OPT[op]} ${c}$.`,type:"ineq",ans:{op:f,v},ansTex:ineqTex(f,v),hint:`Multiply both sides by $${a}$ — negative, so flip!`,sol:[`Multiply by $${a}$ and flip: $x ${OPT[f]} ${a}(${c})$.`,`$${ineqTex(f,v)}$.`]}},
+  ()=>{const a=rnd(2,7),b=nz(-9,9),c=nz(-20,30),bound=(c-b)/a,big=Math.random()<.5;const v=big?Math.ceil(bound)-1:Math.floor(bound)+1;return{q:`What is the ${big?"largest":"smallest"} integer $x$ such that $${lin(a,b)} ${big?"<":">"} ${c}$?`,type:"number",ans:v,ansTex:`x = ${v}`,hint:"Solve the inequality first, then think about which integers fit.",sol:[`$x ${big?"<":">"} ${frac(c-b,a)}$.`,`The ${big?"largest":"smallest"} integer that works is $${v}$.`]}}
+ ]},
+ {id:"multi",title:"Multi-Step & Compound Inequalities",idea:"Simplify first, then isolate $x$. For $a < \\ldots < b$, do the same thing to <b>all three parts</b>.",
+  lesson:{steps:[["-3 < 2x + 1 \\le 9","A compound inequality has three parts."],["-4 < 2x \\le 8","Subtract $1$ from all three parts."],["-2 < x \\le 2","Divide all three parts by $2$."]],warn:"In a compound inequality, every step happens to <b>all three</b> parts."},
+  gen:[
+  ()=>{const op=pick(["<","<=",">",">="]),a=rnd(2,7),b=nz(-9,9),v=nz(-8,8);return{q:`Solve $${lin(a,b)} ${OPT[op]} ${a*v+b}$.`,type:"ineq",ans:{op,v},ansTex:ineqTex(op,v),hint:`Undo $${sg(b).replace(" ","")}$, then divide by $${a}$.`,sol:[`$${a}x ${OPT[op]} ${a*v}$.`,`$${ineqTex(op,v)}$.`]}},
+  ()=>{const op=pick(["<","<=",">",">="]),a=-rnd(2,7),b=nz(-9,9),v=nz(-8,8),f=FLIP[op];return{q:`Solve $${lin(a,b)} ${OPT[op]} ${a*v+b}$.`,type:"ineq",ans:{op:f,v},ansTex:ineqTex(f,v),hint:`Undo $${sg(b).replace(" ","")}$, then divide by $${a}$ and flip.`,sol:[`$${a}x ${OPT[op]} ${a*v}$.`,`Divide by $${a}$, flip: $${ineqTex(f,v)}$.`]}},
+  ()=>{let a,b,p,x0;do{a=rnd(2,6);b=nz(-5,5);p=nz(-6,8);x0=nz(-8,8)}while(a===p);const op=pick(["<","<=",">",">="]),d=(a-p)*x0+a*b,f=a-p<0?FLIP[op]:op;return{q:`Solve $${a}(x ${sg(b)}) ${OPT[op]} ${lin(p,d)}$.`,type:"ineq",ans:{op:f,v:x0},ansTex:ineqTex(f,x0),hint:`Distribute, then get the $x$ terms on one side.${a-p<0?" Watch for dividing by a negative!":""}`,sol:[`$${lin(a,a*b)} ${OPT[op]} ${lin(p,d)}$.`,`$${co(a-p,"x")} ${OPT[op]} ${(a-p)*x0}$.`,`$${ineqTex(f,x0)}$.`]}},
+  ()=>{const op=pick(["<","<=",">",">="]),a=pick([-5,-4,-3,-2,2,3,4,5]),m=rnd(2,5),x0=nz(-8,8),c=nz(-6,6),b=m*c-a*x0,f=a<0?FLIP[op]:op;return{q:`Solve $\\dfrac{${lin(a,b)}}{${m}} ${OPT[op]} ${c}$.`,type:"ineq",ans:{op:f,v:x0},ansTex:ineqTex(f,x0),hint:`Multiply both sides by $${m}$ first.${a<0?" Later you'll divide by a negative — flip!":""}`,sol:[`$${lin(a,b)} ${OPT[op]} ${m*c}$.`,`$${co(a,"x")} ${OPT[op]} ${m*c-b}$.`,`$${ineqTex(f,x0)}$.`]}},
+  ()=>{const lo=nz(-8,3),hi=lo+rnd(2,8),a=rnd(2,5),b=nz(-9,9),li=Math.random()<.5,hiI=Math.random()<.5;return{q:`Solve $${a*lo+b} ${li?"\\le":"<"} ${lin(a,b)} ${hiI?"\\le":"<"} ${a*hi+b}$.`,type:"between",ans:{lo,li,hi,hiI},ansTex:`${lo} ${li?"\\le":"<"} x ${hiI?"\\le":"<"} ${hi}`,hint:`Subtract $${b}$ from all three parts, then divide all three by $${a}$.`,sol:[`$${a*lo} ${li?"\\le":"<"} ${a}x ${hiI?"\\le":"<"} ${a*hi}$.`,`$${lo} ${li?"\\le":"<"} x ${hiI?"\\le":"<"} ${hi}$.`]}}
+ ]},
+ {id:"abs",title:"Absolute Value Inequalities",idea:"$|x| < k$ means <b>between</b>: $-k < x < k$. $|x| > k$ means <b>outside</b>: $x < -k$ or $x > k$.",
+  lesson:{steps:[["|x - 2| \\le 5","Distance from $2$ is at most $5$."],["-5 \\le x - 2 \\le 5","\"Less than\" → a between inequality."],["-3 \\le x \\le 7","Add $2$ to all three parts."]],warn:"$|x| > 3$ is <b>two</b> pieces: $x < -3$ <b>or</b> $x > 3$ — not $-3 > x > 3$."},
+  gen:[
+  ()=>{const k=rnd(1,9),inc=Math.random()<.5;return{q:`Solve $|x| ${inc?"\\le":"<"} ${k}$.`,type:"between",ans:{lo:-k,li:inc,hi:k,hiI:inc},ansTex:`-${k} ${inc?"\\le":"<"} x ${inc?"\\le":"<"} ${k}`,hint:"Less than means between.",sol:[`$-${k} ${inc?"\\le":"<"} x ${inc?"\\le":"<"} ${k}$.`]}},
+  ()=>{const h=nz(-6,6),k=rnd(1,8),inc=Math.random()<.5,s=inc?"\\le":"<";return{q:`Solve $|x ${sg(-h)}| ${s} ${k}$.`,type:"between",ans:{lo:h-k,li:inc,hi:h+k,hiI:inc},ansTex:`${h-k} ${s} x ${s} ${h+k}`,hint:`Write $-${k} ${s} x ${sg(-h)} ${s} ${k}$, then ${h>0?"add":"subtract"} $${Math.abs(h)}$.`,sol:[`$-${k} ${s} x ${sg(-h)} ${s} ${k}$.`,`$${h-k} ${s} x ${s} ${h+k}$.`]}},
+  ()=>{const h=nz(-6,6),k=rnd(1,8),inc=Math.random()<.5,g=inc?">=":">",l=inc?"<=":"<";return{q:`Solve $|x ${sg(-h)}| ${OPT[g]} ${k}$.`,type:"or",ans:[{op:l,v:h-k},{op:g,v:h+k}],ansTex:`${ineqTex(l,h-k)} \\text{ or } ${ineqTex(g,h+k)}`,hint:"Greater than means two pieces joined by \"or\".",sol:[`$x ${sg(-h)} ${OPT[l]} -${k}$ or $x ${sg(-h)} ${OPT[g]} ${k}$.`,`$${ineqTex(l,h-k)}$ or $${ineqTex(g,h+k)}$.`]}},
+  ()=>{let a,lo,hi;do{a=rnd(2,4);lo=nz(-6,2);hi=lo+rnd(2,7)}while((a*(lo+hi))%2!==0);const b=a*(lo+hi)/2,c=a*(hi-lo)/2;return{q:`Solve $|${a}x ${sg(-b)}| < ${c}$.`,type:"between",ans:{lo,li:false,hi,hiI:false},ansTex:`${lo} < x < ${hi}`,hint:`Write $-${c} < ${a}x ${sg(-b)} < ${c}$, then solve all three parts.`,sol:[`$-${c} < ${a}x ${sg(-b)} < ${c}$.`,`$${-c+b} < ${a}x < ${c+b}$.`,`$${lo} < x < ${hi}$.`]}},
+  ()=>{const h=nz(-9,9),k=rnd(2,9),inc=Math.random()<.6,v=inc?2*k+1:2*k-1;return{q:`How many integers $x$ satisfy $|x ${sg(-h)}| ${inc?"\\le":"<"} ${k}$?`,type:"number",ans:v,ansTex:`${v}`,hint:"Solve it as a between inequality, then count the integers from the smallest to the largest.",sol:[`$${h-k} ${inc?"\\le":"<"} x ${inc?"\\le":"<"} ${h+k}$.`,`Integers from $${inc?h-k:h-k+1}$ to $${inc?h+k:h+k-1}$: that's $${v}$.`]}}
+ ]}
+]}
+];
+const COMING=["Functions & Function Notation","Linear Functions & Graphing","Writing Linear Equations","Systems of Linear Equations","Exponents & Exponent Rules","Polynomials: Operations","Factoring Polynomials","Quadratic Functions & Equations","Radicals, Rational Expressions & Capstone"];
+
+/* ================= checking ================= */
+const CONST=new Set(["pi","e","E","PI","Infinity"]);
+function clean(s){ return String(s).replace(/[−–]/g,"-").replace(/×|·/g,"*").replace(/÷/g,"/").replace(/π/g,"pi").replace(/≤|=</g,"<=").replace(/≥|=>/g,">=").replace(/√\s*(\d+(?:\.\d+)?|\([^)]*\)|[a-z])/g,"sqrt($1)").trim(); }
+function val(s){ try{ const r=math.evaluate(s); const v=typeof r==="number"?r:(r&&typeof r.valueOf()==="number"?r.valueOf():NaN); return isFinite(v)?v:NaN; }catch(e){ return NaN; } }
+const close=(a,b)=>Math.abs(a-b)<1e-6*Math.max(1,Math.abs(b));
+function varsOf(node){ const v=new Set(); node.traverse((n,path,parent)=>{ if(n.isSymbolNode&&!(parent&&parent.isFunctionNode&&path==="fn")&&!CONST.has(n.name)&&typeof math[n.name]!=="function") v.add(n.name); }); return [...v]; }
+function evalAt(node,sc){ try{ const r=node.evaluate(sc); const v=typeof r==="number"?r:(r&&typeof r.valueOf()==="number"?r.valueOf():NaN); return isFinite(v)?v:NaN; }catch(e){ return NaN; } }
+function exprEq(student,expected,form){
+  let s=clean(student); if(s.includes("=")) s=s.split("=").pop();
+  let S,E; try{ S=math.parse(s); E=math.parse(expected); }catch(e){ return null; }
+  if(form==="combined"){ if(s.includes("(")) return false; const cnt={}; S.traverse((n,path,parent)=>{ if(n.isSymbolNode&&!(parent&&parent.isFunctionNode&&path==="fn")&&!CONST.has(n.name)) cnt[n.name]=(cnt[n.name]||0)+1; }); if(Object.values(cnt).some(c=>c>1)) return false; }
+  const vars=[...new Set([...varsOf(S),...varsOf(E)])]; let t=0;
+  for(let k=0;k<12&&t<6;k++){ const sc={}; vars.forEach(v=>sc[v]=Math.round((Math.random()*6-3)*1000)/1000+0.137+(k%2)); const a=evalAt(S,sc),b=evalAt(E,sc); if(isNaN(a)||isNaN(b)) continue; t++; if(!close(a,b)) return false; }
+  return t>=3?true:null;
+}
+/* inequalities → list of intervals {lo,li,hi,hiI} */
+function ray(op,v){ return op===">"?{lo:v,li:false,hi:Infinity,hiI:false}:op===">="?{lo:v,li:true,hi:Infinity,hiI:false}:op==="<"?{lo:-Infinity,li:false,hi:v,hiI:false}:{lo:-Infinity,li:false,hi:v,hiI:true}; }
+function parseIneqPart(str){
+  const t=str.replace(/\s+/g,"").split(/(<=|>=|<|>)/); const isV=x=>/^[a-z]$/i.test(x);
+  if(t.length===3){ if(isV(t[0])){ const v=val(t[2]); return isNaN(v)?null:ray(t[1],v); } if(isV(t[2])){ const v=val(t[0]); return isNaN(v)?null:ray(FLIP[t[1]],v); } return null; }
+  if(t.length===5&&isV(t[2])){ const A=val(t[0]),B=val(t[4]); if(isNaN(A)||isNaN(B)) return null; const up=o=>o==="<"||o==="<=";
+    if(up(t[1])&&up(t[3])) return {lo:A,li:t[1]==="<=",hi:B,hiI:t[3]==="<="}; if(!up(t[1])&&!up(t[3])) return {lo:B,li:t[3]===">=",hi:A,hiI:t[1]===">="}; }
+  return null;
+}
+function parseIneq(s){ s=clean(s).toLowerCase(); const out=[];
+  for(const part of s.split(/\bor\b|∪|\|\|/)){ if(!part.trim()) continue;
+    const ands=part.split(/\band\b|,|&&/).filter(x=>x.trim()); let iv={lo:-Infinity,li:false,hi:Infinity,hiI:false};
+    for(const a of ands){ const r=parseIneqPart(a); if(!r) return null; if(r.lo>iv.lo||(r.lo===iv.lo&&!r.li)){ iv.lo=r.lo; iv.li=r.li; } if(r.hi<iv.hi||(r.hi===iv.hi&&!r.hiI)){ iv.hi=r.hi; iv.hiI=r.hiI; } }
+    out.push(iv); }
+  return out.length?out:null; }
+function sameIv(a,b){ const e=(x,y)=>(x===y)||(isFinite(x)&&isFinite(y)&&close(x,y)); return e(a.lo,b.lo)&&e(a.hi,b.hi)&&(!isFinite(a.lo)||a.li===b.li)&&(!isFinite(a.hi)||a.hiI===b.hiI); }
+function check(pr,input){
+  if(pr.type==="number"){ const v=val(clean(input).split("=").pop()); return isNaN(v)?null:close(v,pr.ans); }
+  if(pr.type==="set"){ const v=val(clean(input).split("=").pop()); return isNaN(v)?null:close(v,pr.ans[0]); }
+  if(pr.type==="expr") return exprEq(input,pr.ans,pr.form);
+  const want=pr.type==="ineq"?[ray(pr.ans.op,pr.ans.v)]:pr.type==="between"?[pr.ans]:pr.ans.map(r=>ray(r.op,r.v));
+  const got=parseIneq(input); if(!got) return null;
+  const srt=a=>a.slice().sort((x,y)=>x.lo-y.lo); const g=srt(got),w=srt(want);
+  return g.length===w.length&&g.every((x,i)=>sameIv(x,w[i]));
+}
+function render(el){ if(window.renderMathInElement) renderMathInElement(el,{delimiters:[{left:"$",right:"$",display:false}],throwOnError:false}); }
+
+/* ================= state ================= */
+let ST={cur:"ch1",ch:{}}; try{ Object.assign(ST,JSON.parse(localStorage.getItem("fm-alg1")||"{}")); }catch(e){}
+const save=()=>{ try{ localStorage.setItem("fm-alg1",JSON.stringify(ST)); }catch(e){} };
+let CH=null, st=null, T=null, L=1, PR=null, tries=0, done=false, firstTry=true, streak=[];
+function useChapter(id){ CH=CHAPTERS.find(c=>c.id===id)||CHAPTERS[0]; ST.cur=CH.id; ST.ch[CH.id]=ST.ch[CH.id]||{rec:null,level:{},solved:{},learned:{}}; st=ST.ch[CH.id]; save(); }
+
+/* ================= page ================= */
+function chapters(){ const b=$("chapters"); b.innerHTML="";
+  CHAPTERS.forEach((c,i)=>{ const x=document.createElement("button"); x.type="button"; x.className="chap"+(c.id===CH.id?" on":""); x.innerHTML=`<i>${i+1}</i>${c.title}`; x.onclick=()=>{ if(c.id!==CH.id) openChapter(c.id,"learn"); }; b.appendChild(x); });
+  COMING.forEach((t,i)=>{ const x=document.createElement("span"); x.className="chap soon"; x.title="Coming soon"; x.innerHTML=`<i>${CHAPTERS.length+i+1}</i>${t}`; b.appendChild(x); }); }
+function legend(){ $("legend").innerHTML=""; LEVELS.forEach(l=>{ const d=document.createElement("div"); d.className="lg"; d.style.setProperty("--c",l.c); d.innerHTML=`<b>${l.n} · ${l.name} ${l.zh}</b><span>${l.desc}</span>`; $("legend").appendChild(d); }); }
+function recText(){ $("recText").innerHTML=st.rec?`Suggested starting level for this chapter: <span class="rec">${st.rec} · ${LEVELS[st.rec-1].name}</span> ★ — you can always change it.`:"Answer up to 5 questions and we'll suggest a level for this chapter."; $("placeBtn").textContent=st.rec?"Retake the check":"Take the 5-question check"; }
+function pillsFor(t,cur,onPick){ const w=document.createElement("div"); w.className="pills";
+  LEVELS.forEach(l=>{ const b=document.createElement("button"); b.type="button"; b.className="pill"+(l.n===cur?" on":"")+(st.rec===l.n?" star":""); b.style.setProperty("--c",l.c); const n=st.solved[t.id+l.n]||0; b.innerHTML=`${l.n} ${l.name}`+(n?`<span class="n">✓${n}</span>`:""); b.onclick=()=>onPick(l.n); w.appendChild(b); }); return w; }
+function topics(){ const box=$("topics"); box.innerHTML="";
+  CH.topics.forEach(t=>{ const c=document.createElement("div"); c.className="card topic"; const lvl=st.level[t.id]||st.rec||1;
+    c.innerHTML=`<h2>${t.title}</h2><p class="idea">${t.idea}</p><div class="example"><span class="label">Simplest example</span>${t.lesson.steps.map(s=>`<div class="q">$${s[0]}$</div>`).join("")}</div><span class="label">Practice at level</span>`;
+    c.appendChild(pillsFor(t,lvl,n=>startPractice(t,n)));
+    const go=document.createElement("button"); go.className="btn teal sm"; go.style.alignSelf="flex-start"; go.textContent=`Practice level ${lvl} →`; go.onclick=()=>startPractice(t,lvl); c.appendChild(go); box.appendChild(c); });
+  render(box); }
+function startPractice(t,n){ T=t; L=n; st.level[t.id]=n; save(); streak=[]; $("practice").hidden=false; $("pTitle").textContent=t.title; newProblem(); $("practice").scrollIntoView({behavior:"smooth",block:"start"}); topics(); }
+function levelPills(){ $("pLevels").replaceWith(Object.assign(pillsFor(T,L,n=>{ L=n; st.level[T.id]=n; save(); streak=[]; newProblem(); topics(); }),{id:"pLevels"})); }
+function newProblem(){
+  PR=T.gen[L-1](); tries=0; done=false; firstTry=true;
+  $("pQ").innerHTML=`<span class="label" style="color:${LEVELS[L-1].c}">Level ${L} · ${LEVELS[L-1].name}</span><div>${PR.q}</div>`; render($("pQ"));
+  $("pAns").value=""; $("pAns").disabled=false; $("pPrev").textContent=""; $("pHow").textContent=HOW[PR.type]; $("pFb").innerHTML=""; $("pSuggest").innerHTML="";
+  $("pCheck").hidden=false; $("pNext").hidden=true; $("pHint").disabled=false; $("pShow").hidden=true; levelPills(); drawStreak(); $("pAns").focus({preventScroll:true}); }
+function fb(kind,tag,html){ $("pFb").innerHTML=`<div class="fb ${kind}"><span class="tag">${tag}</span>${html}</div>`; render($("pFb")); }
+const solHtml=()=>`<ol class="sol">${PR.sol.map(s=>`<li>${s}</li>`).join("")}</ol>`;
+function finish(correct){ done=true; $("pAns").disabled=true; $("pCheck").hidden=true; $("pNext").hidden=false; $("pShow").hidden=true; $("pHint").disabled=true;
+  if(correct){ st.solved[T.id+L]=(st.solved[T.id+L]||0)+1; save(); }
+  streak.push(correct&&firstTry); if(streak.length>6) streak.shift(); drawStreak(); suggest(); levelPills(); $("pNext").focus({preventScroll:true}); }
+function submit(){ if(done||!PR) return; const v=$("pAns").value.trim(); if(!v) return; const r=check(PR,v);
+  if(r===null){ fb("hint","Try again","I couldn't read that. "+HOW[PR.type]); return; }
+  if(r){ fb("good","Correct"+(firstTry?" on the first try!":""),`$${PR.ansTex}$`+solHtml()); finish(true); return; }
+  tries++; firstTry=false;
+  if(tries===1){ fb("bad","Not yet",PR.hint+" Try again."); $("pShow").hidden=false; }
+  else { fb("bad","Not yet","Here's how it works:"+solHtml()); finish(false); } }
+function drawStreak(){ const s=$("pStreak"); s.innerHTML="Recent: "; streak.forEach(x=>{ const i=document.createElement("i"); i.className=x?"ok":"no"; s.appendChild(i); }); if(!streak.length) s.textContent="Get 3 right on the first try in a row to unlock a suggestion to move up."; }
+function suggest(){ const box=$("pSuggest"); box.innerHTML=""; const last=streak.slice(-3),last2=streak.slice(-2); let to=null,msg="";
+  if(L<5&&last.length===3&&last.every(Boolean)){ to=L+1; msg=`3 in a row on the first try! Ready for <b>Level ${L+1} · ${LEVELS[L].name}</b>?`; }
+  else if(L>1&&last2.length===2&&last2.every(x=>!x)){ to=L-1; msg=`These are tough — that's okay! Practice <b>Level ${L-1} · ${LEVELS[L-2].name}</b> first, then come back stronger.`; }
+  if(!to) return; const d=document.createElement("div"); d.className="suggest"; d.style.setProperty("--c",LEVELS[to-1].c); d.innerHTML=`<span>${msg}</span>`;
+  const b=document.createElement("button"); b.className="btn sm"; b.style.background=LEVELS[to-1].c; b.textContent=to>L?"Move up ↑":"Go to Level "+to; b.onclick=()=>{ L=to; st.level[T.id]=to; save(); streak=[]; newProblem(); topics(); }; d.appendChild(b); box.appendChild(d); }
+$("pCheck").onclick=submit; $("pAns").addEventListener("keydown",e=>{ if(e.key==="Enter"){ e.preventDefault(); done?newProblem():submit(); } });
+$("pNext").onclick=newProblem; $("closeP").onclick=()=>{ $("practice").hidden=true; };
+$("pHint").onclick=()=>{ if(done) return; firstTry=false; fb("hint","Hint",PR.hint); };
+$("pShow").onclick=()=>{ fb("hint","Solution",`$${PR.ansTex}$`+solHtml()); finish(false); };
+$("pAns").addEventListener("input",()=>{ const v=$("pAns").value.trim(),pv=$("pPrev"); if(!v||!window.katex){ pv.textContent=""; return; }
+  try{ let tex; const c=clean(v);
+    if(/<|>/.test(c)) tex=c.replace(/<=/g,"\\le ").replace(/>=/g,"\\ge ").replace(/\bor\b/gi,"\\text{ or }").replace(/\band\b/gi,"\\text{ and }");
+    else tex=c.split("=").map(x=>math.parse(x).toTex({parenthesis:"auto",implicit:"hide"})).join(" = ");
+    pv.innerHTML='<span class="pl">You wrote</span><span class="pm"></span>'; katex.render(tex,pv.querySelector(".pm"),{throwOnError:false}); }catch(e){ pv.textContent=""; } });
+
+/* ---- placement ---- */
+$("placeBtn").onclick=()=>{
+  const PL=[0,1,2,0,1].map((ti,k)=>[CH.topics[ti],k+1]); let i=0,res=[],pr;
+  const m=document.createElement("div"); m.className="modal"; m.innerHTML=`<div class="card"><div class="phead"><h2>Where should I start?</h2><button class="btn ghost sm" id="qx">Close</button></div><div class="qprog" id="qp"></div><div class="problem" id="qq"></div><div class="row" id="qr"><input id="qa" type="text" autocomplete="off" placeholder="Your answer" aria-label="Your answer"><button class="btn" id="qc">Check</button><button class="btn ghost" id="qs">I don't know</button></div><div class="howto" id="qh"></div><div id="qf"></div></div>`;
+  document.body.appendChild(m); const q=id=>m.querySelector("#"+id);
+  const prog=()=>{ q("qp").innerHTML=PL.map((_,k)=>`<i class="${k<res.length?(res[k]?"ok":"no"):k===i?"now":""}"></i>`).join(""); };
+  const ask=()=>{ const [t,lv]=PL[i]; pr=t.gen[lv-1](); q("qq").innerHTML=`<span class="label">Question ${i+1} of 5 · Level ${lv}</span><div>${pr.q}</div>`; render(q("qq")); q("qa").value=""; q("qh").textContent=HOW[pr.type]; q("qf").innerHTML=""; prog(); q("qa").focus(); };
+  const end=()=>{ const lvl=res.indexOf(false)===-1?5:res.indexOf(false)+1; st.rec=lvl; save(); recText(); topics(); prog();
+    q("qq").innerHTML=`<span class="label">Result</span><div>Start at <b style="color:${LEVELS[lvl-1].c}">Level ${lvl} · ${LEVELS[lvl-1].name}</b>.</div><div style="font-size:15px;color:var(--muted)">${lvl===5?"You answered every question correctly — go for Competition!":lvl===1?"Foundation builds the base everything else needs. Move up whenever you get 3 in a row.":"You got the first "+(lvl-1)+" level"+(lvl===2?"":"s")+" right. Level "+lvl+" is the right challenge for you."}</div>`;
+    q("qr").hidden=true; q("qh").textContent=""; q("qf").innerHTML=""; const b=document.createElement("button"); b.className="btn teal"; b.textContent="See the topics"; b.onclick=()=>m.remove(); q("qf").appendChild(b); };
+  const answer=r=>{ res.push(r); if(!r){ end(); return; } i++; i>=PL.length?end():ask(); };
+  q("qc").onclick=()=>{ const v=q("qa").value.trim(); if(!v) return; const r=check(pr,v); if(r===null){ q("qf").innerHTML=`<div class="fb hint">I couldn't read that. ${HOW[pr.type]}</div>`; return; } answer(r); };
+  q("qa").addEventListener("keydown",e=>{ if(e.key==="Enter"){ e.preventDefault(); q("qc").click(); } });
+  q("qs").onclick=()=>answer(false); q("qx").onclick=()=>m.remove(); m.addEventListener("click",e=>{ if(e.target===m) m.remove(); });
+  ask(); };
+
+/* ---- learn ---- */
+let LI=0, shown=1, TP=null, tDone=false, tTries=0;
+function road(){ const r=$("road"); r.innerHTML=""; CH.topics.forEach((t,i)=>{ const b=document.createElement("button"); b.type="button"; b.className="stop"+(st.learned[t.id]?" done":"")+(i===LI?" on":""); b.innerHTML=`<i>${st.learned[t.id]?"✓":i+1}</i>${t.title}`; b.onclick=()=>openLesson(i); r.appendChild(b); }); }
+function openLesson(i,scroll){ LI=i; shown=1; tDone=false; tTries=0; TP=null; road(); drawLesson(); if(scroll) $("lesson").scrollIntoView({behavior:"smooth",block:"start"}); }
+function drawLesson(){
+  const t=CH.topics[LI], l=t.lesson, box=$("lesson");
+  box.innerHTML=`<span class="label">Lesson ${LI+1} of ${CH.topics.length}</span><h2>${t.title}</h2><div class="big">${t.idea}</div><span class="label">Simplest example — one step at a time</span><ol class="steps">${l.steps.slice(0,shown).map(s=>`<li><div><div class="m">$${s[0]}$</div><div class="w">${s[1]}</div></div></li>`).join("")}</ol>`;
+  if(shown<l.steps.length){ const b=document.createElement("button"); b.className="btn"; b.style.alignSelf="flex-start"; b.textContent="Next step →"; b.onclick=()=>{ shown++; drawLesson(); }; box.appendChild(b);
+    const s=document.createElement("button"); s.className="btn ghost sm"; s.style.alignSelf="flex-start"; s.textContent="Show all steps"; s.onclick=()=>{ shown=l.steps.length; drawLesson(); }; box.appendChild(s); }
+  else {
+    box.insertAdjacentHTML("beforeend",`<div class="warn"><b>Watch out: </b>${l.warn}</div>`);
+    if(!TP) TP=t.gen[0]();
+    const w=document.createElement("div"); w.className="turn";
+    w.innerHTML=`<span class="label" style="color:var(--gold)">Your turn</span><div class="q">${TP.q}</div><div class="row"><input type="text" id="tAns" autocomplete="off" placeholder="Your answer" aria-label="Your answer"><button class="btn" id="tChk">Check</button><button class="btn ghost" id="tHint">Hint</button></div><div class="howto">${HOW[TP.type]}</div><div id="tFb"></div>`;
+    box.appendChild(w);
+    const nav=document.createElement("div"); nav.className="lnav"; const left=document.createElement("div"); left.className="row";
+    if(LI>0){ const pv=document.createElement("button"); pv.className="btn ghost sm"; pv.textContent="← Previous lesson"; pv.onclick=()=>openLesson(LI-1,true); left.appendChild(pv); }
+    const right=document.createElement("div"); right.className="row"; right.id="tNext"; nav.append(left,right); box.appendChild(nav);
+    const fbx=(k,tag,h)=>{ $("tFb").innerHTML=`<div class="fb ${k}"><span class="tag">${tag}</span>${h}</div>`; render($("tFb")); };
+    const win=()=>{ tDone=true; st.learned[t.id]=true; save(); road(); $("tAns").disabled=true; $("tChk").disabled=true; $("tHint").disabled=true; showNext(); };
+    const go=()=>{ if(tDone) return; const v=$("tAns").value.trim(); if(!v) return; const r=check(TP,v);
+      if(r===null){ fbx("hint","Try again","I couldn't read that. "+HOW[TP.type]); return; }
+      if(r){ fbx("good","Correct — you've got it!",`$${TP.ansTex}$`); win(); return; }
+      tTries++; if(tTries<2) fbx("bad","Not yet",TP.hint+" Try again."); else { fbx("hint","Answer",`$${TP.ansTex}$. Try another one to make sure.`); const a=document.createElement("button"); a.className="btn ghost sm"; a.textContent="Try another"; a.onclick=()=>{ TP=t.gen[0](); tTries=0; drawLesson(); }; $("tFb").appendChild(a); } };
+    $("tChk").onclick=go; $("tAns").addEventListener("keydown",e=>{ if(e.key==="Enter"){ e.preventDefault(); go(); } }); $("tHint").onclick=()=>fbx("hint","Hint",TP.hint);
+    if(st.learned[t.id]) showNext();
+  }
+  render(box);
+}
+function showNext(){ const r=$("tNext"); if(!r) return; r.innerHTML=""; const t=CH.topics[LI];
+  const pr=document.createElement("button"); pr.className="btn ghost sm"; pr.textContent="Practice this topic"; pr.onclick=()=>{ setTab("practice"); startPractice(t,st.level[t.id]||st.rec||1); }; r.appendChild(pr);
+  const n=document.createElement("button"); n.className="btn teal sm";
+  if(LI<CH.topics.length-1){ n.textContent="Next lesson →"; n.onclick=()=>openLesson(LI+1,true); } else { n.textContent="Start practicing →"; n.onclick=()=>{ setTab("practice"); window.scrollTo({top:0,behavior:"smooth"}); }; }
+  r.appendChild(n); }
+function setTab(t){ $("learnView").hidden=t!=="learn"; $("practiceView").hidden=t!=="practice"; $("tabLearn").classList.toggle("on",t==="learn"); $("tabPractice").classList.toggle("on",t==="practice"); try{ history.replaceState(null,"","#"+CH.id+"-"+t); }catch(e){} }
+function openChapter(id,tab){
+  useChapter(id); $("chTitle").textContent="Chapter "+(CHAPTERS.indexOf(CH)+1)+": "+CH.title; $("practice").hidden=true;
+  chapters(); recText(); topics(); const first=CH.topics.findIndex(t=>!st.learned[t.id]); openLesson(first<0?0:first);
+  setTab(tab||(first<0?"practice":"learn")); }
+$("tabLearn").onclick=()=>setTab("learn"); $("tabPractice").onclick=()=>setTab("practice");
+window.addEventListener("load",()=>{ legend(); const m=/^#(ch\d+)(?:-(learn|practice))?$/.exec(location.hash); openChapter(m?m[1]:ST.cur,m?m[2]:null); });
+</script>
+</body>
+</html>

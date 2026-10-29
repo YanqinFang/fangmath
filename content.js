@@ -50,6 +50,9 @@ const GROUPS = {
       { title:"Algebra 1 Competition Math (Grade 7) — Daily Practice Calendar (2027–28)",
         text:"Free · 34 weeks · Monday–Friday · 10 problems a day. Sharpens AMC 8 & MATHCOUNTS skills and previews AMC 10.",
         file:"materials/competition/algebra1/algebra1_competition_daily_calendar.pdf" },
+      { title:"Geometry Competition Math (Grade 8) — Daily Practice Calendar (2027–28)",
+        text:"Free · 34 weeks · Monday–Friday · 10 problems a day. Contest geometry for AMC 8 & MATHCOUNTS, preparing for AMC 10.",
+        file:"materials/competition/geometry/geometry_competition_daily_calendar.pdf" },
     ] },
 };
 

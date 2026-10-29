@@ -186,6 +186,8 @@ function lin(a,b,v="x"){ if(a===0) return String(b); let s=co(a,v); if(b) s+=" "
 function cterm(a,v){ return (a<0?"- ":"+ ")+(Math.abs(a)===1?"":Math.abs(a))+v; } // signed term for middle
 function frac(n,d){ if(d<0){n=-n;d=-d} const g=gcd(n,d)||1; n/=g; d/=g; return d===1?String(n):(n<0?"-":"")+"\\frac{"+Math.abs(n)+"}{"+d+"}"; }
 const OPT={"<":"<","<=":"\\le",">":">",">=":"\\ge"}; const FLIP={"<":">","<=":">=",">":"<",">=":"<="};
+const pt=(x,y)=>`(${x}, ${y})`;
+const sq2=h=>`(x ${sg(-h)})^2`;
 const divisors=n=>{n=Math.abs(n);const d=[];for(let i=1;i<=n;i++) if(n%i===0) d.push(i);return d;};
 const LEVELS=[
  {n:1,name:"Foundation",zh:"起步",desc:"Review the basics first",c:"var(--l1)"},
@@ -193,7 +195,7 @@ const LEVELS=[
  {n:3,name:"Standard",zh:"标准",desc:"School test level",c:"var(--l3)"},
  {n:4,name:"Challenge",zh:"挑战",desc:"Honors / hard SAT",c:"var(--l4)"},
  {n:5,name:"Competition",zh:"竞赛",desc:"MATHCOUNTS / AMC 8–10 style",c:"var(--l5)"}];
-const HOW={number:"Type a number. Fractions like 9/4 are fine.",set:"Type the value, like 4 or x = 4.",expr:"Type an expression like 7x - 1 or (c - b)/a.",
+const HOW={point:"Type a point like (2, -5).",yn:"Type yes or no.",list:"List the values separated by commas, like -2, 0, 5.",line:"Type an equation like y = 2x + 3 (any correct form works).",number:"Type a number. Fractions like 9/4 are fine.",set:"Type the value, like 4 or x = 4.",expr:"Type an expression like 7x - 1 or (c - b)/a.",
   ineq:"Type like x > 3 or x <= -2 (≤ and ≥ work too).",between:"Type like -2 < x <= 4.",or:"Type like x < -5 or x > 3."};
 const ineqTex=(op,v)=>`x ${OPT[op]} ${v}`;
 
@@ -292,9 +294,97 @@ const CHAPTERS=[
   ()=>{let a,lo,hi;do{a=rnd(2,4);lo=nz(-6,2);hi=lo+rnd(2,7)}while((a*(lo+hi))%2!==0);const b=a*(lo+hi)/2,c=a*(hi-lo)/2;return{q:`Solve $|${a}x ${sg(-b)}| < ${c}$.`,type:"between",ans:{lo,li:false,hi,hiI:false},ansTex:`${lo} < x < ${hi}`,hint:`Write $-${c} < ${a}x ${sg(-b)} < ${c}$, then solve all three parts.`,sol:[`$-${c} < ${a}x ${sg(-b)} < ${c}$.`,`$${-c+b} < ${a}x < ${c+b}$.`,`$${lo} < x < ${hi}$.`]}},
   ()=>{const h=nz(-9,9),k=rnd(2,9),inc=Math.random()<.6,v=inc?2*k+1:2*k-1;return{q:`How many integers $x$ satisfy $|x ${sg(-h)}| ${inc?"\\le":"<"} ${k}$?`,type:"number",ans:v,ansTex:`${v}`,hint:"Solve it as a between inequality, then count the integers from the smallest to the largest.",sol:[`$${h-k} ${inc?"\\le":"<"} x ${inc?"\\le":"<"} ${h+k}$.`,`Integers from $${inc?h-k:h-k+1}$ to $${inc?h+k:h+k-1}$: that's $${v}$.`]}}
  ]}
+]},
+{id:"ch4",title:"Functions & Function Notation",topics:[
+ {id:"feval",title:"Evaluating Functions",idea:"$f(x)$ is read \"$f$ of $x$\". To find $f(3)$, replace <b>every</b> $x$ with $3$.",
+  lesson:{steps:[["f(x) = 2x + 1","A rule that turns an input into an output."],["f(3) = 2(3) + 1","Replace $x$ with $3$."],["f(3) = 7","Input $3$, output $7$."]],warn:"$f(3)$ does <b>not</b> mean $f$ times $3$. It means \"the output when the input is $3$\"."},
+  gen:[
+  ()=>{const a=nz(-6,6),b=nz(-9,9),k=nz(-6,8);return{q:`If $f(x) = ${lin(a,b)}$, find $f(${k})$.`,type:"number",ans:a*k+b,ansTex:`f(${k}) = ${a*k+b}`,hint:`Replace $x$ with $${k}$.`,sol:[`$f(${k}) = ${a}(${k}) ${sg(b)} = ${a*k+b}$.`]}},
+  ()=>{const a=pick([1,2,3,-1,-2]),b=nz(-6,6),c=nz(-9,9),k=-rnd(1,5),v=a*k*k+b*k+c;return{q:`If $g(x) = ${co(a,"x^2")} ${cterm(b,"x")} ${sg(c)}$, find $g(${k})$.`,type:"number",ans:v,ansTex:`g(${k}) = ${v}`,hint:`Use parentheses: $(${k})^2 = ${k*k}$.`,sol:[`$g(${k}) = ${a===1?"":a===-1?"-":a}(${k})^2 ${sg(b)}(${k}) ${sg(c)}$.`,`$= ${a*k*k} ${sg(b*k)} ${sg(c)} = ${v}$.`]}},
+  ()=>{let a;do{a=nz(-7,7)}while(Math.abs(a)===1);const b=nz(-9,9),x=nz(-8,8),k=a*x+b;return{q:`If $f(x) = ${lin(a,b)}$, for what value of $x$ is $f(x) = ${k}$?`,type:"set",ans:[x],ansTex:`x = ${x}`,hint:`Set $${lin(a,b)} = ${k}$ and solve.`,sol:[`$${lin(a,b)} = ${k}$.`,`$${co(a,"x")} = ${k-b}$, so $x = ${x}$.`]}},
+  ()=>{const c=nz(-3,3),a=nz(-4,4),b=nz(-6,6),d=nz(-4,4),e=nz(-6,6),k=nz(-6,6),v=k<c?a*k+b:d*k*k+e;return{q:`$f(x) = \\begin{cases} ${lin(a,b)} & \\text{if } x < ${c} \\\\ ${co(d,"x^2")} ${sg(e)} & \\text{if } x \\ge ${c} \\end{cases}$ <br>Find $f(${k})$.`,type:"number",ans:v,ansTex:`f(${k}) = ${v}`,hint:`Is $${k}$ less than $${c}$? That decides which rule to use.`,sol:[`$${k} ${k<c?"<":"\\ge"} ${c}$, so use $${k<c?lin(a,b):co(d,"x^2")+" "+sg(e)}$.`,`$f(${k}) = ${v}$.`]}},
+  ()=>{const a=rnd(2,5),b=nz(-9,9),s=nz(-3,3),k=rnd(4,12);return{q:`If $f(x ${sg(s)}) = ${lin(a,b)}$ for all $x$, find $f(${k})$.`,type:"number",ans:a*(k-s)+b,ansTex:`f(${k}) = ${a*(k-s)+b}`,hint:`Which $x$ makes $x ${sg(s)} = ${k}$?`,sol:[`$x ${sg(s)} = ${k}$ when $x = ${k-s}$.`,`$f(${k}) = ${a}(${k-s}) ${sg(b)} = ${a*(k-s)+b}$.`]}}
+ ]},
+ {id:"dom",title:"Functions, Domain & Range",idea:"A <b>function</b> gives each input exactly <b>one</b> output. The <b>domain</b> is all inputs; the <b>range</b> is all outputs.",
+  lesson:{steps:[["\\{(1, 4), (2, 5), (3, 4)\\}","A relation as ordered pairs."],["\\text{inputs } 1, 2, 3 \\text{ never repeat}","Each input has one output — it's a function."],["\\text{Domain } \\{1, 2, 3\\},\\ \\text{Range } \\{4, 5\\}","Outputs may repeat; that's fine."]],warn:"Repeated <b>outputs</b> are okay. A repeated <b>input</b> with different outputs means it is <b>not</b> a function."},
+  gen:[
+  ()=>{const xs=[...new Set(Array.from({length:4},()=>rnd(-5,6)))];while(xs.length<4)xs.push(xs.length+7);const isF=Math.random()<.5;const pts=xs.map(x=>[x,rnd(-6,9)]);if(!isF){pts[3]=[pts[0][0],pts[0][1]+rnd(1,4)];}pts.sort(()=>Math.random()-.5);return{q:`Is this relation a function? $\\{${pts.map(p=>pt(p[0],p[1])).join(", ")}\\}$ (Type yes or no.)`,type:"yn",ans:isF?"YES":"NO",ansTex:`\\text{${isF?"Yes":"No"}}`,hint:"Look at the inputs (first numbers). Does any input appear twice with different outputs?",sol:[isF?"No input repeats, so each input has exactly one output: it is a function.":`The input $${pts.find(p=>pts.filter(q=>q[0]===p[0]).length>1)[0]}$ has two different outputs, so it is not a function.`]}},
+  ()=>{const xs=[...new Set(Array.from({length:5},()=>rnd(-6,8)))];const pts=xs.map(x=>[x,rnd(-5,9)]);const d=Math.random()<.5;const vals=[...new Set(pts.map(p=>d?p[0]:p[1]))].sort((a,b)=>a-b);return{q:`List the ${d?"domain":"range"} of $\\{${pts.map(p=>pt(p[0],p[1])).join(", ")}\\}$.`,type:"list",ans:vals,ansTex:`\\{${vals.join(", ")}\\}`,hint:d?"The domain is the set of first coordinates (inputs).":"The range is the set of second coordinates (outputs). List each value once.",sol:[`${d?"Inputs":"Outputs"}: $\\{${vals.join(", ")}\\}$.`]}},
+  ()=>{const a=nz(-8,8);return{q:`Find the domain of $f(x) = \\sqrt{x ${sg(-a)}}$. Write it as an inequality.`,type:"ineq",ans:{op:">=",v:a},ansTex:`x \\ge ${a}`,hint:"You can't take the square root of a negative number: the inside must be $\\ge 0$.",sol:[`$x ${sg(-a)} \\ge 0$.`,`$x \\ge ${a}$.`]}},
+  ()=>{const a=rnd(1,4),b=nz(-9,9);return{q:`Which value of $x$ is <b>not</b> in the domain of $f(x) = \\dfrac{5}{${lin(a,b)}}$?`,type:"number",ans:-b/a,ansTex:`x = ${frac(-b,a)}`,hint:"You can't divide by zero. When is the denominator $0$?",sol:[`$${lin(a,b)} = 0$ when $x = ${frac(-b,a)}$.`]}},
+  ()=>{const h=nz(-6,6),k=nz(-9,9),up=Math.random()<.6;return{q:`Find the range of $f(x) = ${up?"":"-"}${sq2(h)} ${sg(k)}$. Write it as an inequality in $y$.`,type:"ineq",ans:{op:up?">=":"<=",v:k},ansTex:`y ${up?"\\ge":"\\le"} ${k}`,hint:`A square is never negative, so $${up?"":"-"}${sq2(h)}$ is always ${up?"$\\ge 0$":"$\\le 0$"}.`,sol:[`$${up?"":"-"}${sq2(h)} ${up?"\\ge":"\\le"} 0$, so $f(x) ${up?"\\ge":"\\le"} ${k}$.`,`Range: $y ${up?"\\ge":"\\le"} ${k}$.`]}}
+ ]},
+ {id:"model",title:"Functions from Situations",idea:"Many situations follow a <b>starting amount + rate × time</b> rule: $f(x) = mx + b$.",
+  lesson:{steps:[["\\text{Taxi: } \\$3 \\text{ plus } \\$2 \\text{ per mile}","Start $\\$3$, rate $\\$2$ per mile."],["C(m) = 2m + 3","Rate times miles, plus the start."],["C(5) = 2(5) + 3 = 13","5 miles cost $\\$13$."]],warn:"The <b>starting amount</b> is added once; the <b>rate</b> is multiplied by the input."},
+  gen:[
+  ()=>{const s=rnd(2,15),r=rnd(2,9),n=rnd(2,12);return{q:`A gym charges a $\\$${s}$ sign-up fee plus $\\$${r}$ per visit. How much do $${n}$ visits cost in total?`,type:"number",ans:s+r*n,ansTex:`\\$${s+r*n}`,hint:"Fee + rate × visits.",sol:[`$${s} + ${r}(${n}) = ${s+r*n}$.`]}},
+  ()=>{const s=rnd(2,15),r=rnd(2,9);return{q:`A phone plan costs $\\$${s}$ per month plus $\\$${r}$ per gigabyte. Write the monthly cost $C$ as a function of gigabytes $g$.`,type:"expr",ans:`${r}*g+${s}`,ansTex:`C(g) = ${r}g + ${s}`,hint:"Rate × gigabytes + monthly charge.",sol:[`$C(g) = ${r}g + ${s}$.`]}},
+  ()=>{const s=rnd(5,30),r=rnd(2,9),n=rnd(3,15),tot=s+r*n;return{q:`A plant is $${s}$ cm tall and grows $${r}$ cm per week. After how many weeks will it be $${tot}$ cm tall?`,type:"number",ans:n,ansTex:`${n}\\text{ weeks}`,hint:`Solve $${s} + ${r}w = ${tot}$.`,sol:[`$${r}w = ${tot-s}$.`,`$w = ${n}$.`]}},
+  ()=>{const r=rnd(2,8),s=rnd(5,40),a=rnd(1,5),b=a+rnd(2,6),n=rnd(b+2,20);return{q:`A tank holds $${s+r*a}$ liters after $${a}$ minutes and $${s+r*b}$ liters after $${b}$ minutes, filling at a constant rate. How many liters will it hold after $${n}$ minutes?`,type:"number",ans:s+r*n,ansTex:`${s+r*n}`,hint:"Find the rate (change in liters ÷ change in minutes), then the starting amount.",sol:[`Rate: $\\dfrac{${s+r*b} - ${s+r*a}}{${b} - ${a}} = ${r}$ L/min.`,`Start: $${s+r*a} - ${r}(${a}) = ${s}$.`,`After $${n}$ min: $${s} + ${r}(${n}) = ${s+r*n}$.`]}},
+  ()=>{const a1=nz(-9,12),d=nz(-6,7),n=rnd(20,100);return{q:`An arithmetic sequence starts $${a1}, ${a1+d}, ${a1+2*d}, ${a1+3*d}, \\ldots$ Find the $${n}$th term.`,type:"number",ans:a1+(n-1)*d,ansTex:`a_{${n}} = ${a1+(n-1)*d}`,hint:"$a_n = a_1 + (n - 1)d$.",sol:[`$d = ${d}$.`,`$a_{${n}} = ${a1} + (${n} - 1)(${d}) = ${a1+(n-1)*d}$.`]}}
+ ]}
+]},
+{id:"ch5",title:"Linear Functions & Graphing",topics:[
+ {id:"slope",title:"Slope",idea:"Slope $= \\dfrac{\\text{rise}}{\\text{run}} = \\dfrac{y_2 - y_1}{x_2 - x_1}$ — how much $y$ changes for each step in $x$.",
+  lesson:{steps:[["(1, 2) \\text{ and } (3, 8)","Two points on a line."],["\\text{rise} = 8 - 2 = 6,\\ \\text{run} = 3 - 1 = 2","Change in $y$, change in $x$."],["m = \\dfrac{6}{2} = 3","Rise over run."]],warn:"Keep the same order on top and bottom: $\\dfrac{y_2 - y_1}{x_2 - x_1}$, never $\\dfrac{y_2 - y_1}{x_1 - x_2}$."},
+  gen:[
+  ()=>{const x1=rnd(-5,5),y1=rnd(-5,5),dx=rnd(1,5),m=rnd(1,4);return{q:`Find the slope of the line through $${pt(x1,y1)}$ and $${pt(x1+dx,y1+m*dx)}$.`,type:"number",ans:m,ansTex:`m = ${m}`,hint:"Rise over run: change in $y$ ÷ change in $x$.",sol:[`$m = \\dfrac{${y1+m*dx} - ${P(y1)}}{${x1+dx} - ${P(x1)}} = \\dfrac{${m*dx}}{${dx}} = ${m}$.`]}},
+  ()=>{let x1,y1,x2,y2;do{x1=rnd(-8,8);y1=rnd(-8,8);x2=rnd(-8,8);y2=rnd(-8,8)}while(x1===x2||y1===y2);return{q:`Find the slope of the line through $${pt(x1,y1)}$ and $${pt(x2,y2)}$.`,type:"number",ans:(y2-y1)/(x2-x1),ansTex:`m = ${frac(y2-y1,x2-x1)}`,hint:"$m = \\dfrac{y_2 - y_1}{x_2 - x_1}$. Fractions are fine.",sol:[`$m = \\dfrac{${y2} - ${P(y1)}}{${x2} - ${P(x1)}} = \\dfrac{${y2-y1}}{${x2-x1}} = ${frac(y2-y1,x2-x1)}$.`]}},
+  ()=>{let a,b;do{a=nz(-7,7);b=nz(-7,7)}while(gcd(a,b)!==1);const c=nz(-12,12);return{q:`Find the slope of the line $${co(a,"x")} ${cterm(b,"y")} = ${c}$.`,type:"number",ans:-a/b,ansTex:`m = ${frac(-a,b)}`,hint:"Solve for $y$, or use $m = -\\dfrac{A}{B}$ for $Ax + By = C$.",sol:[`$${co(b,"y")} = ${lin(-a,c)}$.`,`$m = ${frac(-a,b)}$.`]}},
+  ()=>{const x1=rnd(-5,5),y1=rnd(-5,5),m=nz(-4,4),dx=nz(-5,5);return{q:`A line with slope $${m}$ passes through $${pt(x1,y1)}$ and $(${x1+dx}, k)$. Find $k$.`,type:"number",ans:y1+m*dx,ansTex:`k = ${y1+m*dx}`,hint:`$\\dfrac{k - ${P(y1)}}{${x1+dx} - ${P(x1)}} = ${m}$.`,sol:[`$\\dfrac{k - ${P(y1)}}{${dx}} = ${m}$.`,`$k - ${P(y1)} = ${m*dx}$, so $k = ${y1+m*dx}$.`]}},
+  ()=>{const m=nz(-3,4),x1=rnd(-4,2),y1=rnd(-5,5),d1=rnd(1,3),d2=d1+rnd(1,4);return{q:`The points $${pt(x1,y1)}$, $${pt(x1+d1,y1+m*d1)}$, and $(${x1+d2}, k)$ lie on the same line. Find $k$.`,type:"number",ans:y1+m*d2,ansTex:`k = ${y1+m*d2}`,hint:"Points on one line have the same slope between every pair. Find the slope from the first two points.",sol:[`Slope $= \\dfrac{${m*d1}}{${d1}} = ${m}$.`,`$k = ${y1} + ${m}(${d2}) = ${y1+m*d2}$.`]}}
+ ]},
+ {id:"int",title:"Intercepts",idea:"The <b>$y$-intercept</b> is where the line crosses the $y$-axis ($x = 0$). The <b>$x$-intercept</b> is where it crosses the $x$-axis ($y = 0$).",
+  lesson:{steps:[["2x + 3y = 12","Find both intercepts."],["x = 0:\\ 3y = 12 \\Rightarrow y = 4","$y$-intercept: $(0, 4)$."],["y = 0:\\ 2x = 12 \\Rightarrow x = 6","$x$-intercept: $(6, 0)$."]],warn:"To find the $x$-intercept, set $y = 0$ (not $x = 0$)."},
+  gen:[
+  ()=>{const m=nz(-6,6),b=nz(-9,9);return{q:`What is the $y$-intercept of $y = ${lin(m,b)}$? (Give the $y$-value.)`,type:"number",ans:b,ansTex:`${b}`,hint:"In $y = mx + b$, the $y$-intercept is $b$.",sol:[`$x = 0$ gives $y = ${b}$.`]}},
+  ()=>{const m=nz(-5,5),b=nz(-9,9);return{q:`What is the $x$-intercept of $y = ${lin(m,b)}$? (Give the $x$-value.)`,type:"number",ans:-b/m,ansTex:`${frac(-b,m)}`,hint:"Set $y = 0$ and solve for $x$.",sol:[`$0 = ${lin(m,b)}$, so $${co(m,"x")} = ${-b}$.`,`$x = ${frac(-b,m)}$.`]}},
+  ()=>{const a=nz(-6,6),b=nz(-6,6),k=nz(-4,4),c=a*b*k,X=Math.random()<.5;return{q:`Find the ${X?"$x$":"$y$"}-intercept of $${co(a,"x")} ${cterm(b,"y")} = ${c}$. Give it as a point.`,type:"point",ans:X?[c/a,0]:[0,c/b],ansTex:X?pt(c/a,0):pt(0,c/b),hint:`Set ${X?"$y = 0$":"$x = 0$"} and solve.`,sol:[X?`$${co(a,"x")} = ${c}$, $x = ${c/a}$.`:`$${co(b,"y")} = ${c}$, $y = ${c/b}$.`,`Point: $${X?pt(c/a,0):pt(0,c/b)}$.`]}},
+  ()=>{const a=rnd(1,6),b=rnd(1,6),k=rnd(1,4),c=a*b*k,X=c/a,Y=c/b;return{q:`Find the area of the triangle formed by the line $${co(a,"x")} + ${co(b,"y")} = ${c}$ and the two coordinate axes.`,type:"number",ans:X*Y/2,ansTex:`${X*Y/2}`,hint:"The intercepts give the two legs of a right triangle.",sol:[`$x$-intercept $${X}$, $y$-intercept $${Y}$.`,`Area $= \\tfrac12 \\cdot ${X} \\cdot ${Y} = ${X*Y/2}$.`]}},
+  ()=>{const p=nz(-6,6),q=nz(-6,6),t=pick([-2,-1,2,3]),x=p*t,y=q*(1-t);return{q:`A line has $x$-intercept $${p}$ and $y$-intercept $${q}$. Find $k$ if $(${x}, k)$ is on the line.`,type:"number",ans:y,ansTex:`k = ${y}`,hint:"Intercept form: $\\dfrac{x}{a} + \\dfrac{y}{b} = 1$.",sol:[`$\\dfrac{${x}}{${p}} + \\dfrac{k}{${q}} = 1$.`,`$${t} + \\dfrac{k}{${q}} = 1$, so $k = ${y}$.`]}}
+ ]},
+ {id:"si",title:"Slope-Intercept Form",idea:"$y = mx + b$: $m$ is the <b>slope</b>, $b$ is the <b>$y$-intercept</b>.",
+  lesson:{steps:[["4x + 2y = 6","Get $y$ by itself."],["2y = -4x + 6","Subtract $4x$ from both sides."],["y = -2x + 3","Divide everything by $2$: slope $-2$, $y$-intercept $3$."]],warn:"When you divide to get $y$ alone, divide <b>every</b> term — including the constant."},
+  gen:[
+  ()=>{const m=nz(-7,7),b=nz(-9,9);return{q:`Write the equation of the line with slope $${m}$ and $y$-intercept $${b}$.`,type:"line",ans:`y=${m}*x+(${b})`,ansTex:`y = ${lin(m,b)}`,hint:"$y = mx + b$.",sol:[`$y = ${lin(m,b)}$.`]}},
+  ()=>{let a,b;do{a=nz(-6,6);b=nz(-6,6)}while(Math.abs(b)===1);const k=nz(-4,4),c=b*k;return{q:`Write $${co(a,"x")} ${cterm(b,"y")} = ${c}$ in slope-intercept form.`,type:"line",form:"si",ans:`y=${-a}/${b}*x+(${k})`,ansTex:`y = ${frac(-a,b)==="0"?"":(frac(-a,b)==="1"?"":frac(-a,b)==="-1"?"-":frac(-a,b))}x ${sg(k)}`,hint:`Move the $x$ term, then divide every term by $${b}$.`,sol:[`$${co(b,"y")} = ${lin(-a,c)}$.`,`$y = ${frac(-a,b)}x ${sg(k)}$.`]}},
+  ()=>{const m=nz(-6,6),b=nz(-9,9),w=Math.random()<.5;return{q:`What is the ${w?"slope":"$y$-intercept"} of $y ${sg(b)} = ${co(m,"x")}$?`,type:"number",ans:w?m:-b,ansTex:`${w?m:-b}`,hint:"Rewrite it as $y = mx + b$ first.",sol:[`$y = ${lin(m,-b)}$.`,`${w?"Slope":"$y$-intercept"}: $${w?m:-b}$.`]}},
+  ()=>{const m=nz(-5,5),x0=nz(-5,5),y0=rnd(-9,9),b=y0-m*x0;return{q:`Write the equation of the line with slope $${m}$ through $${pt(x0,y0)}$ in slope-intercept form.`,type:"line",ans:`y=${m}*x+(${b})`,ansTex:`y = ${lin(m,b)}`,hint:`Substitute the point into $y = ${m}x + b$ to find $b$.`,sol:[`$${y0} = ${m}(${x0}) + b$.`,`$b = ${b}$, so $y = ${lin(m,b)}$.`]}},
+  ()=>{const s=rnd(2,20),r=pick([0.5,1.5,2,2.5,3,4]),n=rnd(4,16),tot=s+r*n;return{q:`A plant is $${s}$ cm tall and grows $${r}$ cm per week. After how many weeks will it be $${tot}$ cm tall?`,type:"number",ans:n,ansTex:`${n}\\text{ weeks}`,hint:`Write $h = ${r}w + ${s}$ and set $h = ${tot}$.`,sol:[`$${r}w + ${s} = ${tot}$.`,`$${r}w = ${tot-s}$, so $w = ${n}$.`]}}
+ ]}
+]},
+{id:"ch6",title:"Writing Linear Equations",topics:[
+ {id:"write",title:"Equations from Points & Slopes",idea:"Point-slope form: $y - y_1 = m(x - x_1)$. Find the slope first, then use any point.",
+  lesson:{steps:[["(1, 3) \\text{ and } (3, 7)","Two points."],["m = \\dfrac{7 - 3}{3 - 1} = 2","Slope first."],["y - 3 = 2(x - 1)","Point-slope form with $(1, 3)$."],["y = 2x + 1","Simplify to slope-intercept form."]],warn:"In $y - y_1 = m(x - x_1)$, a negative coordinate becomes a plus: through $(-2, 5)$ gives $y - 5 = m(x + 2)$."},
+  gen:[
+  ()=>{const m=nz(-6,6),x0=nz(-5,5),y0=rnd(-8,8);return{q:`Write an equation of the line with slope $${m}$ through $${pt(x0,y0)}$.`,type:"line",ans:`y-(${y0})=${m}*(x-(${x0}))`,ansTex:`y = ${lin(m,y0-m*x0)}`,hint:"Point-slope form: $y - y_1 = m(x - x_1)$. Any correct form is accepted.",sol:[`$y ${sg(-y0)} = ${m}(x ${sg(-x0)})$.`,`$y = ${lin(m,y0-m*x0)}$.`]}},
+  ()=>{const m=nz(-5,5),x1=rnd(-5,3),y1=rnd(-6,6),dx=rnd(1,4);return{q:`Write an equation of the line through $${pt(x1,y1)}$ and $${pt(x1+dx,y1+m*dx)}$.`,type:"line",ans:`y-(${y1})=${m}*(x-(${x1}))`,ansTex:`y = ${lin(m,y1-m*x1)}`,hint:"Find the slope first, then use point-slope form.",sol:[`$m = \\dfrac{${m*dx}}{${dx}} = ${m}$.`,`$y = ${lin(m,y1-m*x1)}$.`]}},
+  ()=>{let x1,y1,x2,y2;do{x1=rnd(-6,6);y1=rnd(-6,6);x2=rnd(-6,6);y2=rnd(-6,6)}while(x1===x2||y1===y2||Number.isInteger((y2-y1)/(x2-x1)));return{q:`Write an equation of the line through $${pt(x1,y1)}$ and $${pt(x2,y2)}$.`,type:"line",ans:`(y-(${y1}))*(${x2-x1})=(${y2-y1})*(x-(${x1}))`,ansTex:`y ${sg(-y1)} = ${frac(y2-y1,x2-x1)}(x ${sg(-x1)})`,hint:"The slope is a fraction — that's fine. Use point-slope form.",sol:[`$m = \\dfrac{${y2-y1}}{${x2-x1}} = ${frac(y2-y1,x2-x1)}$.`,`$y ${sg(-y1)} = ${frac(y2-y1,x2-x1)}(x ${sg(-x1)})$.`]}},
+  ()=>{const m=nz(-5,5),b=nz(-9,9),x0=nz(-5,5),y0=rnd(-8,8);return{q:`Write an equation of the line parallel to $y = ${lin(m,b)}$ through $${pt(x0,y0)}$.`,type:"line",ans:`y-(${y0})=${m}*(x-(${x0}))`,ansTex:`y = ${lin(m,y0-m*x0)}`,hint:`Parallel means the same slope, $${m}$.`,sol:[`$y ${sg(-y0)} = ${m}(x ${sg(-x0)})$.`,`$y = ${lin(m,y0-m*x0)}$.`]}},
+  ()=>{const m=pick([1,2,3,-1,-2,-3,4,-4]),b=nz(-9,9),x0=m*nz(-3,3),y0=rnd(-8,8);return{q:`Write an equation of the line perpendicular to $y = ${lin(m,b)}$ through $${pt(x0,y0)}$.`,type:"line",ans:`(y-(${y0}))*(${m})=-(x-(${x0}))`,ansTex:`y = ${frac(-1,m)}x ${sg(y0+x0/m)}`,hint:`Perpendicular slope: $${frac(-1,m)}$.`,sol:[`Slope $${frac(-1,m)}$: $y ${sg(-y0)} = ${frac(-1,m)}(x ${sg(-x0)})$.`,`$y = ${frac(-1,m)}x ${sg(y0+x0/m)}$.`]}}
+ ]},
+ {id:"std",title:"Standard Form & Special Lines",idea:"Standard form: $Ax + By = C$. Horizontal lines are $y = k$; vertical lines are $x = h$.",
+  lesson:{steps:[["y = \\tfrac{2}{3}x + 1","Clear the fraction."],["3y = 2x + 3","Multiply every term by $3$."],["-2x + 3y = 3 \\;\\text{ or }\\; 2x - 3y = -3","Move $x$ to the left side."]],warn:"A horizontal line is $y = $ number (slope $0$). A vertical line is $x = $ number (undefined slope)."},
+  gen:[
+  ()=>{const a=rnd(-8,8),b=rnd(-8,8),hz=Math.random()<.5;return{q:`Write the equation of the ${hz?"horizontal":"vertical"} line through $${pt(a,b)}$.`,type:"line",ans:hz?`y=${b}`:`x=${a}`,ansTex:hz?`y = ${b}`:`x = ${a}`,hint:hz?"A horizontal line keeps the same $y$-value.":"A vertical line keeps the same $x$-value.",sol:[hz?`Every point has $y = ${b}$.`:`Every point has $x = ${a}$.`]}},
+  ()=>{let p,q;do{p=nz(-5,5);q=rnd(2,5)}while(gcd(p,q)!==1);const b=nz(-6,6);return{q:`Write $y = ${p<0?"-":""}\\tfrac{${Math.abs(p)}}{${q}}x ${sg(b)}$ in standard form $Ax + By = C$ with integer coefficients.`,type:"line",form:"std",ans:`y=${p}/${q}*x+(${b})`,ansTex:`${co(-p,"x")} + ${q}y = ${q*b}`,hint:`Multiply every term by $${q}$, then move the $x$ term to the left.`,sol:[`$${q}y = ${co(p,"x")} ${sg(q*b)}$.`,`$${co(-p,"x")} + ${q}y = ${q*b}$.`]}},
+  ()=>{let x1,y1,x2,y2;do{x1=rnd(-6,6);y1=rnd(-6,6);x2=rnd(-6,6);y2=rnd(-6,6)}while(x1===x2||y1===y2);const A=y2-y1,B=x1-x2,C=A*x1+B*y1;return{q:`Write an equation in standard form for the line through $${pt(x1,y1)}$ and $${pt(x2,y2)}$.`,type:"line",form:"std",ans:`${A}*x+(${B})*y=${C}`,ansTex:`${co(A,"x")} ${cterm(B,"y")} = ${C}`,hint:"Find the slope, write point-slope form, then rearrange to $Ax + By = C$.",sol:[`$m = \\dfrac{${y2-y1}}{${x2-x1}}$.`,`Rearranged: $${co(A,"x")} ${cterm(B,"y")} = ${C}$.`]}},
+  ()=>{const a=nz(-6,6),b=nz(-6,6);return{q:`Write an equation of the line with $x$-intercept $${a}$ and $y$-intercept $${b}$.`,type:"line",ans:`x/(${a})+y/(${b})=1`,ansTex:`\\dfrac{x}{${a}} + \\dfrac{y}{${b}} = 1`,hint:`The line passes through $${pt(a,0)}$ and $${pt(0,b)}$.`,sol:[`Slope $= \\dfrac{${b} - 0}{0 - ${P(a)}} = ${frac(-b,a)}$, $y$-intercept $${b}$.`,`$y = ${frac(-b,a)}x ${sg(b)}$.`]}},
+  ()=>{const r=rnd(3,12),s=rnd(5,30),a=rnd(2,5),b=a+rnd(2,5),n=rnd(b+2,15);return{q:`A store charges a flat fee plus a fixed price per shirt. $${a}$ shirts cost $\\$${s+r*a}$ and $${b}$ shirts cost $\\$${s+r*b}$. How much do $${n}$ shirts cost?`,type:"number",ans:s+r*n,ansTex:`\\$${s+r*n}`,hint:"The price per shirt is the slope: change in cost ÷ change in shirts.",sol:[`Per shirt: $\\dfrac{${s+r*b} - ${s+r*a}}{${b-a}} = ${r}$.`,`Flat fee: $${s+r*a} - ${r}(${a}) = ${s}$.`,`$${n}$ shirts: $${s} + ${r}(${n}) = ${s+r*n}$.`]}}
+ ]},
+ {id:"apply",title:"Linear Models & Comparisons",idea:"When two linear plans are compared, set their costs <b>equal</b> to find the break-even point.",
+  lesson:{steps:[["A: 20 + 5v,\\quad B: 10 + 7v","Two gym plans, $v$ visits."],["20 + 5v = 10 + 7v","Set the costs equal."],["10 = 2v \\Rightarrow v = 5","At $5$ visits the plans cost the same."]],warn:"Check which plan is cheaper <b>after</b> the break-even point — the one with the smaller rate."},
+  gen:[
+  ()=>{const s=rnd(10,40),r=rnd(2,9),n=rnd(3,15);return{q:`A rental costs $\\$${s}$ plus $\\$${r}$ per hour. What is the total for $${n}$ hours?`,type:"number",ans:s+r*n,ansTex:`\\$${s+r*n}`,hint:"Start + rate × hours.",sol:[`$${s} + ${r}(${n}) = ${s+r*n}$.`]}},
+  ()=>{const s=rnd(100,500),r=rnd(10,40);return{q:`You have $\\$${s}$ saved and spend $\\$${r}$ each week. Write the amount left, $A$, after $w$ weeks.`,type:"expr",ans:`${s}-${r}*w`,ansTex:`A = ${s} - ${r}w`,hint:"Spending makes the amount go down, so the rate is negative.",sol:[`$A(w) = ${s} - ${r}w$.`]}},
+  ()=>{const r=rnd(2,15),a=rnd(1,6),b=a+rnd(1,6),s=rnd(10,80);return{q:`A car's fuel log shows $${s+r*a}$ miles after $${a}$ hours and $${s+r*b}$ miles after $${b}$ hours, at a constant speed. What is the speed in miles per hour?`,type:"number",ans:r,ansTex:`${r}`,hint:"Speed is the rate of change: change in miles ÷ change in hours.",sol:[`$\\dfrac{${s+r*b} - ${s+r*a}}{${b} - ${a}} = ${r}$ mph.`]}},
+  ()=>{let s1,r1,s2,r2,v;do{s1=rnd(10,60);s2=rnd(5,50);r1=rnd(2,9);r2=rnd(2,9);v=(s1-s2)/(r2-r1)}while(r1===r2||!Number.isInteger(v)||v<=0);return{q:`Plan A costs $\\$${s1}$ plus $\\$${r1}$ per visit. Plan B costs $\\$${s2}$ plus $\\$${r2}$ per visit. After how many visits do the plans cost the same?`,type:"number",ans:v,ansTex:`${v}\\text{ visits}`,hint:"Set the two cost expressions equal and solve.",sol:[`$${s1} + ${r1}v = ${s2} + ${r2}v$.`,`$${s1-s2} = ${r2-r1}v$, so $v = ${v}$.`]}},
+  ()=>{let s1,r1,s2,r2,v;do{s1=pick([20,25,30,40,50]);s2=pick([5,10,15]);r1=pick([0.05,0.1,0.15]);r2=pick([0.2,0.25,0.3,0.4]);v=Math.round((s1-s2)/(r2-r1)*1000)/1000}while(!Number.isInteger(v)||v<=0);return{q:`Phone plan A costs $\\$${s1}$ per month plus $\\$${r1}$ per minute. Plan B costs $\\$${s2}$ per month plus $\\$${r2}$ per minute. For how many minutes do the plans cost exactly the same?`,type:"number",ans:v,ansTex:`${v}\\text{ minutes}`,hint:"Set the costs equal. Multiply by 100 to clear the decimals.",sol:[`$${s1} + ${r1}m = ${s2} + ${r2}m$.`,`$${s1-s2} = ${Math.round((r2-r1)*100)/100}m$, so $m = ${v}$.`]}}
+ ]}
 ]}
+
 ];
-const COMING=["Functions & Function Notation","Linear Functions & Graphing","Writing Linear Equations","Systems of Linear Equations","Exponents & Exponent Rules","Polynomials: Operations","Factoring Polynomials","Quadratic Functions & Equations","Radicals, Rational Expressions & Capstone"];
+const COMING=["Systems of Linear Equations","Exponents & Exponent Rules","Polynomials: Operations","Factoring Polynomials","Quadratic Functions & Equations","Radicals, Rational Expressions & Capstone"];
 
 /* ================= checking ================= */
 const CONST=new Set(["pi","e","E","PI","Infinity"]);
@@ -309,6 +399,17 @@ function exprEq(student,expected,form){
   if(form==="combined"){ if(s.includes("(")) return false; const cnt={}; S.traverse((n,path,parent)=>{ if(n.isSymbolNode&&!(parent&&parent.isFunctionNode&&path==="fn")&&!CONST.has(n.name)) cnt[n.name]=(cnt[n.name]||0)+1; }); if(Object.values(cnt).some(c=>c>1)) return false; }
   const vars=[...new Set([...varsOf(S),...varsOf(E)])]; let t=0;
   for(let k=0;k<12&&t<6;k++){ const sc={}; vars.forEach(v=>sc[v]=Math.round((Math.random()*6-3)*1000)/1000+0.137+(k%2)); const a=evalAt(S,sc),b=evalAt(E,sc); if(isNaN(a)||isNaN(b)) continue; t++; if(!close(a,b)) return false; }
+  return t>=3?true:null;
+}
+function lineEq(student,expected,form){
+  const s=clean(student); if(s.split("=").length!==2) return null;
+  const [L,R]=s.split("="); if(!L.trim()||!R.trim()) return null;
+  let S,E; try{ S=math.parse("("+L+")-("+R+")"); const [eL,eR]=expected.split("="); E=math.parse("("+eL+")-("+eR+")"); }catch(e){ return null; }
+  if(form==="si"&&L.replace(/\s/g,"")!=="y") return false;
+  if(form==="std"){ if(s.includes("/")) return false; try{ if(varsOf(math.parse(R)).length) return false; }catch(e){ return null; } }
+  let ratio=null,t=0;
+  for(let k=0;k<14&&t<6;k++){ const sc={x:Math.round((Math.random()*8-4)*1000)/1000+0.31,y:Math.round((Math.random()*8-4)*1000)/1000+0.17}; const a=evalAt(S,sc),b=evalAt(E,sc); if(isNaN(a)||isNaN(b)) continue; t++;
+    if(Math.abs(b)<1e-9){ if(Math.abs(a)>1e-6) return false; continue; } const r=a/b; if(Math.abs(r)<1e-9) return false; if(ratio===null) ratio=r; else if(!close(r,ratio)) return false; }
   return t>=3?true:null;
 }
 /* inequalities → list of intervals {lo,li,hi,hiI} */
@@ -331,6 +432,10 @@ function check(pr,input){
   if(pr.type==="number"){ const v=val(clean(input).split("=").pop()); return isNaN(v)?null:close(v,pr.ans); }
   if(pr.type==="set"){ const v=val(clean(input).split("=").pop()); return isNaN(v)?null:close(v,pr.ans[0]); }
   if(pr.type==="expr") return exprEq(input,pr.ans,pr.form);
+  if(pr.type==="line") return lineEq(input,pr.ans,pr.form);
+  if(pr.type==="point"){ const m=/^\(?\s*([^,]+),([^)]+)\)?$/.exec(clean(input).split("=").pop().trim()); if(!m) return null; const x=val(m[1]),y=val(m[2]); if(isNaN(x)||isNaN(y)) return null; return close(x,pr.ans[0])&&close(y,pr.ans[1]); }
+  if(pr.type==="yn"){ const w=String(input).trim().toUpperCase(); if(/^(Y|YES|YEAH|IS)/.test(w)) return pr.ans==="YES"; if(/^(N|NO|NOT)/.test(w)) return pr.ans==="NO"; return null; }
+  if(pr.type==="list"){ const parts=clean(input).replace(/[{}]/g,"").split(/,|;|\s+and\s+/).map(x=>x.trim()).filter(Boolean); if(!parts.length) return null; const v=parts.map(val); if(v.some(isNaN)) return null; const u=a=>a.filter((x,i)=>a.findIndex(y=>close(x,y))===i); const su=u(v),eu=u(pr.ans); return su.length===eu.length&&eu.every(x=>su.some(y=>close(x,y))); }
   const want=pr.type==="ineq"?[ray(pr.ans.op,pr.ans.v)]:pr.type==="between"?[pr.ans]:pr.ans.map(r=>ray(r.op,r.v));
   const got=parseIneq(input); if(!got) return null;
   const srt=a=>a.slice().sort((x,y)=>x.lo-y.lo); const g=srt(got),w=srt(want);
@@ -363,7 +468,7 @@ function levelPills(){ $("pLevels").replaceWith(Object.assign(pillsFor(T,L,n=>{ 
 function newProblem(){
   PR=T.gen[L-1](); tries=0; done=false; firstTry=true;
   $("pQ").innerHTML=`<span class="label" style="color:${LEVELS[L-1].c}">Level ${L} · ${LEVELS[L-1].name}</span><div>${PR.q}</div>`; render($("pQ"));
-  $("pAns").value=""; $("pAns").disabled=false; $("pPrev").textContent=""; $("pHow").textContent=HOW[PR.type]; $("pFb").innerHTML=""; $("pSuggest").innerHTML="";
+  $("pAns").value=""; $("pAns").disabled=false; $("pPrev").textContent=""; $("pHow").textContent=PR.form==="si"?"Type it as y = mx + b, like y = -2x + 5.":PR.form==="std"?"Type it as Ax + By = C with whole numbers, like 3x - 2y = 6.":HOW[PR.type]; $("pFb").innerHTML=""; $("pSuggest").innerHTML="";
   $("pCheck").hidden=false; $("pNext").hidden=true; $("pHint").disabled=false; $("pShow").hidden=true; levelPills(); drawStreak(); $("pAns").focus({preventScroll:true}); }
 function fb(kind,tag,html){ $("pFb").innerHTML=`<div class="fb ${kind}"><span class="tag">${tag}</span>${html}</div>`; render($("pFb")); }
 const solHtml=()=>`<ol class="sol">${PR.sol.map(s=>`<li>${s}</li>`).join("")}</ol>`;

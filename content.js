@@ -67,7 +67,13 @@ const GROUPS = {
         text:"Free · 34 weeks · Monday–Friday · 10 problems a day. Follows the AP Precalculus course framework.",
         file:"materials/precalculus/precalculus_daily_calendar.pdf" },
     ] },
-  "Calculus & Beyond": { key:"calculus",   title:"Calculus & Beyond", intro:"AP Calculus AB and BC, then college math: Linear Algebra and Multivariable Calculus." },
+  "Calculus & Beyond": { key:"calculus",   title:"Calculus & Beyond", intro:"AP Calculus AB and BC, then college math: Linear Algebra and Multivariable Calculus.",
+    /* FREE DOWNLOADS: shown at the top of this page. Add more { title, text, file } items to list more PDFs. */
+    downloads: [
+      { title:"AP Calculus AB — Daily Practice Calendar (2027–28)",
+        text:"Free · 34 weeks · Monday–Friday · 10 problems a day. Follows the AP Calculus AB course framework (Units 1–8).",
+        file:"materials/calculus/ap_calculus_ab_daily_calendar.pdf" },
+    ] },
   "Competition":       { key:"competition", title:"Competition Math", intro:"A step-by-step pathway from AMC 8 and MATHCOUNTS to AMC 10/12, AIME and Olympiad proofs. (Not affiliated with the MAA or MATHCOUNTS.)", alias:["amc"],
     /* FREE DOWNLOADS: shown at the top of this page. Add more { title, text, file } items to list more PDFs. */
     downloads: [

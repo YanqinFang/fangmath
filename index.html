@@ -16,6 +16,7 @@
 <script src="content.js"></script>
 <script src="testprep.js"></script>
 <script src="calendar.js"></script>
+<script src="mistakes.js"></script>
 <style>
   :root{
     --bg:#FBF8F3; --surface:#FFFFFF; --ink:#16233B; --muted:#5B6474; --faint:#8C93A0; --line:#E8E2D8;
@@ -354,6 +355,27 @@
   .cal-link{background:none;border:0;color:var(--teal);font-weight:600;cursor:pointer;padding:6px 0 0;font-size:14px}
   .cal-box{display:inline-block;width:1.1em;height:1.2em;border:1.5px solid var(--ink);vertical-align:-3px;margin:0 2px}
   @media (max-width:640px){.cal-row{grid-template-columns:26px 1fr}.cal-main{grid-column:2}.dl-btns{width:100%}.dl-btns .btn{flex:1}}
+  /* mistake log */
+  .cal-rowbtns{display:flex;gap:16px;flex-wrap:wrap}
+  .mk-rule{margin-bottom:18px;border-left:6px solid var(--gold)} .mk-rule p{margin:6px 0 10px}
+  .mk-steps{display:flex;gap:8px;flex-wrap:wrap} .mk-gold{background:var(--green-soft);color:var(--green)}
+  .mk-late{background:#FDE7E5;color:var(--red)}
+  .mk-dots{display:inline-flex;gap:4px} .mk-dots i{width:11px;height:11px;border-radius:50%;background:var(--line);display:inline-block} .mk-dots i.on{background:var(--green)}
+  .mk-queue,.mk-list{display:flex;flex-direction:column;gap:12px}
+  .mk-card{border-left:6px solid var(--teal)} .mk-top{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:8px}
+  .mk-where{font-size:13px;color:var(--muted);font-weight:600}
+  .mk-q{font-size:17px;line-height:1.6;background:var(--bg);border-radius:12px;padding:10px 14px;white-space:pre-wrap}
+  .mk-tip{font-size:14px;background:var(--gold-soft);border-radius:10px;padding:8px 12px;margin:10px 0 0}
+  .mk-feedback{margin-bottom:22px;border-left:6px solid var(--green)} .mk-feedback h2{font-size:22px;margin:0 0 8px}
+  .mk-fbg{margin-top:10px} .mk-fbg ul{margin:6px 0 0;padding-left:20px} .mk-fbg li{margin:6px 0} .mk-fbg small{display:block;color:var(--muted)}
+  .mk-ok>b{color:var(--green)} .mk-bad>b{color:var(--red)} .mk-q1{font-weight:600}
+  .mk-advice{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:14px;margin-bottom:8px}
+  .mk-ol{margin:8px 0 0;padding-left:20px} .mk-ol li{margin:8px 0} .mk-ol small{display:block;color:var(--muted)}
+  .mk-bars{display:flex;flex-direction:column;gap:8px;margin-top:10px}
+  .mk-bar{display:grid;grid-template-columns:200px 1fr 28px;gap:8px;align-items:center;font-size:14px} .mk-bar i{display:block;height:10px;background:var(--teal);border-radius:6px}
+  .mk-row .mk-meta{display:flex;gap:14px;align-items:center;flex-wrap:wrap;margin-top:10px;font-size:14px} .mk-sel{width:auto;padding:6px 10px;font-size:14px}
+  .mk-causes{display:flex;gap:6px;flex-wrap:wrap} .mk-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px}
+  @media (max-width:640px){.mk-grid{grid-template-columns:1fr}.mk-bar{grid-template-columns:1fr 60px 24px}}
   .muted{color:var(--muted)}
 </style>
 </head>
@@ -371,6 +393,7 @@
     <a href="#/games" data-nav="games">Games</a>
     <a href="#/flashcards" data-nav="flashcards">Flashcards</a>
     <a href="#/calendar" data-nav="calendar">Practice Calendar</a>
+    <a href="#/mistakes" data-nav="mistakes">Mistake Log</a>
     <a href="#/login" data-nav="account" id="acctLink" class="acct hidden">Sign in</a>
   </nav>
 </div></header>
@@ -474,7 +497,8 @@ function routeInner(){
   else if (page === "dashboard") pageDashboard(v);
   else if (page === "student") pageStudent(v, parts[1]);
   else if (page === "privacy") pagePrivacy(v);
-  else if (page === "calendar") { if (typeof pageCalendar === "undefined") notFound(v); else pageCalendar(v, parts[1]); }
+  else if (page === "calendar") { if (typeof pageCalendar === "undefined") notFound(v); else pageCalendar(v, parts[1], parts[2]); }
+  else if (page === "mistakes") { if (typeof pageMistakes === "undefined") notFound(v); else pageMistakes(v); }
   else if (page === "app") pageApp(v, parts[1], parts[2], parts[3]);
   else pageHome(v);
   document.title = (page === "home" ? "" : (v.querySelector("h1") ? v.querySelector("h1").textContent + " — " : "")) + "Prof. Fang Math" + (page === "home" ? " — " + SITE.tagline : "");
@@ -837,6 +861,14 @@ function quizCard(qs, item, title, mode){
     check.replaceWith(h("div", { style:"margin-top:12px" }, h("b", { style:"font-size:20px" }, `Score: ${right} / ${qs.length}`),
       h("button", { class:"btn sm ghost", style:"margin-left:10px", onclick:() => { const n = quizCard(qs, item, title, "practice"); box.replaceWith(n); renderMath(n); } }, "Try again")));
     record("quiz", item, title, right, qs.length, { missed }, null, note);
+    if (missed.length && window.fmMistakes) {   // collect missed questions into the student's Mistake Log
+      const [cid, ui, li] = String(item).replace(/^quiz:/, "").split("/"), c = courseById(cid);
+      missed.forEach(n => { const q = qs[n - 1], a = answers[n - 1];
+        fmMistakes.add({ src: "quiz", course: "lesson:" + cid + "/" + ui + "/" + li, courseTitle: c ? c.title : "", topic: title, where: "Lesson quiz",
+          link: "#/lesson/" + cid + "/" + ui + "/" + li + "/learn", q: { type: "tex", v: q.q },
+          mine: a == null ? "" : q.choices ? String(q.choices[a] || "") : String(a), ans: { type: "tex", v: q.choices ? q.choices[q.answer] : String(q.answer) } }); });
+      note.after(h("p", { class: "muted", style: "font-size:14px;margin:8px 0 0" }, "📒 " + missed.length + " missed question" + (missed.length === 1 ? " was" : "s were") + " added to your ", h("a", { href: "#/mistakes" }, "Mistake Log"), " to review."));
+    }
   };
   add(box, h("span", { class:"tag", style:"background:var(--gold-soft);color:#8A6415" }, "Practice quiz"),
     h("p", { class:"muted", style:"margin:8px 0 0;font-size:14px" }, `${qs.length} questions — no hints, checked at the end. Your score is saved.`), qEls, check, note);

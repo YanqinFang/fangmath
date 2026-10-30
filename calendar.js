@@ -55,8 +55,18 @@
   }
   const rich = (tag, html, attrs) => h(tag, Object.assign({ html }, attrs || {}));
 
+  /* ---------- mistake log hook ---------- */
+  function logMistake(C, s, pd) {
+    if (!window.fmMistakeForm) return;
+    const plainTopic = (() => { const d = document.createElement("div"); d.innerHTML = s.d.focus; return d.textContent; })();
+    fmMistakeForm({ course: C.id, courseTitle: C.title, week: s.w.n, topic: plainTopic, where: "Week " + s.w.n + " · " + fmt(parse(pd)),
+      link: "#/calendar/" + C.id + "/" + s.w.n,
+      tryQ: s.d.kind === "try" ? { type: "html", v: s.d.text } : null, tryAns: s.d.ans ? { type: "html", v: s.d.ans } : null });
+  }
+  const mistakeBtn = (cls, label, fn) => window.fmMistakeForm ? h("button", { type: "button", class: cls, onclick: fn }, label) : null;
+
   /* ---------- page ---------- */
-  window.pageCalendar = function (v, id) {
+  window.pageCalendar = function (v, id, week) {
     const wrap = h("div", { class: "wrap" },
       h("div", { class: "page-head" }, h("h1", {}, "Online Practice Calendar"),
         h("p", {}, "Pick a course, a start date and your practice days. Every practice day gets a date, school breaks are skipped, and you can check off each day as you finish it. Your progress is saved in this browser.")));
@@ -64,15 +74,17 @@
     wrap.append(body); v.append(wrap);
     if (!DATA) {
       loading = loading || fetch("calendars.json", { cache: "no-cache" }).then(r => { if (!r.ok) throw new Error(r.status); return r.json(); });
-      loading.then(d => { DATA = d; if (body.isConnected) build(body, id); })
+      loading.then(d => { DATA = d; if (body.isConnected) build(body, id, week); })
         .catch(() => { loading = null; body.replaceChildren(h("p", { class: "muted" }, "The calendars could not load. Please refresh the page.")); });
-    } else build(body, id);
+    } else build(body, id, week);
   };
 
-  function build(body, id) {
+  function build(body, id, week) {
     let last = null; try { last = localStorage.getItem("fmcal:last"); } catch (e) {}
-    if (!DATA[id]) id = DATA[last] ? last : "grade3";
-    if (location.hash !== "#/calendar/" + id) history.replaceState(null, "", "#/calendar/" + id);
+    if (!DATA[id]) { id = DATA[last] ? last : "grade3"; week = null; }
+    const wantWeek = +week || 0;
+    const hashNow = "#/calendar/" + id + (wantWeek ? "/" + wantWeek : "");
+    if (location.hash !== hashNow) history.replaceState(null, "", hashNow);
     const C = DATA[id], st = load(id);
     const sessions = [];
     C.weeks.forEach((w, wi) => w.days.forEach((d, di) => sessions.push({ w, wi, d, i: sessions.length })));
@@ -158,13 +170,14 @@
           h("p", { class: "muted", style: "font-size:14px;margin:8px 0 0" }, next.d.kind === "try" ? "Warm up with this Try problem, then do the day's 10 problems (8 new + 2 review)." : "Today's work is listed above."),
           h("div", { class: "cal-actions" },
             ans ? h("button", { type: "button", class: "btn sm ghost", onclick: e => { ans.hidden = !ans.hidden; e.target.textContent = ans.hidden ? "Show answer" : "Hide answer"; } }, "Show answer") : null,
-            h("button", { type: "button", class: "btn sm teal", onclick: () => { st.done.add(next.i); save(id, st); render(); } }, "✓ Mark this day done")),
+            h("button", { type: "button", class: "btn sm teal", onclick: () => { st.done.add(next.i); save(id, st); render(); } }, "✓ Mark this day done"),
+            mistakeBtn("btn sm ghost", "📒 Log a mistake", () => logMistake(C, next, pd))),
           ans));
         typeset(todayBox);
       }
 
       /* full schedule */
-      const openWeek = next ? next.wi : -1;
+      const openWeek = wantWeek && C.weeks[wantWeek - 1] ? wantWeek - 1 : next ? next.wi : -1;
       list.replaceChildren(...C.weeks.map((w, wi) => {
         const rows = sessions.filter(s => s.wi === wi);
         const wd = rows.map(s => plan[s.i]);
@@ -191,13 +204,16 @@
                   rich("div", s.d.focus, { class: "cal-focus" }),
                   HOLIDAYS[pd] ? h("div", { class: "cal-hol" }, "🏖 " + HOLIDAYS[pd] + ": do this one on the weekend") : null,
                   s.d.kind === "try" ? h("div", { class: "cal-try" }, h("span", { class: "cal-trylbl" }, "TRY"), rich("span", s.d.text)) : rich("div", s.d.text, { class: "cal-task" }),
-                  ans ? h("button", { type: "button", class: "cal-link", onclick: e => { ans.hidden = !ans.hidden; e.target.textContent = ans.hidden ? "Show answer" : "Hide answer"; } }, "Show answer") : null,
+                  h("div", { class: "cal-rowbtns" },
+                    ans ? h("button", { type: "button", class: "cal-link", onclick: e => { ans.hidden = !ans.hidden; e.target.textContent = ans.hidden ? "Show answer" : "Hide answer"; } }, "Show answer") : null,
+                    mistakeBtn("cal-link", "📒 Log a mistake", () => logMistake(C, s, pd))),
                   ans));
             }));
           typeset(box);
         };
         det.addEventListener("toggle", () => { if (det.open) fill(); });
         if (det.open) fill();
+        if (wantWeek && wi === wantWeek - 1) setTimeout(() => det.scrollIntoView({ behavior: "smooth", block: "start" }), 300);
         return det;
       }));
     }

@@ -444,6 +444,7 @@ const COURSES = [
     calcab: [P + "calculus-ab-levels.html", same(8)],
     grade3: [P + "grade3-levels.html", [[[1, "Place Value, Addition & Subtraction"]], [[2, "Multiplication & Division Facts"]], [[3, "Multiplication Strategies & Word Problems"]], [[4, "Fractions"]], [[5, "Time, Measurement, Data & Area"]], [[6, "Perimeter, Shapes & Problem Solving"]]]],
     grade4: [P + "grade4-levels.html", [[[1, "Place Value & Multi-Digit Addition"]], [[2, "Multiplication & Division"]], [[3, "Factors, Patterns & Equivalent Fractions"]], [[4, "Fraction Operations & Decimals"]], [[5, "Measurement & Data"]], [[6, "Angles, Lines & Shapes"]]]],
+    grade6: [P + "grade6-levels.html", [[[1, "Number Operations"]], [[2, "Fraction Division, Ratios & Rates"]], [[3, "Rational Numbers & the Coordinate Plane"]], [[4, "Expressions, Equations & Inequalities"]], [[5, "Area, Surface Area & Volume"]], [[6, "Statistics & Data"]]]],
     precalc:[P + "precalculus-levels.html", [
       [[1, "Functions and Their Graphs"], [2, "Polynomial and Rational Functions"]],
       [[3, "Exponential and Logarithmic Functions"], [11, "Sequences, Series & Binomial Theorem"]],

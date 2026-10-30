@@ -1,0 +1,895 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Grade 6 Math: Learn &amp; Practice — Prof. Fang Math</title>
+<meta name="description" content="Grade 6 math unit by unit: learn each idea from the simplest example, then practice in five levels from Foundation to Competition.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/mathjs@14.9.1/lib/browser/math.js"></script>
+<script defer src="grade6-stories.js"></script>
+<style>
+:root{
+  --bg:#FBF8F3; --surface:#FFFFFF; --ink:#16233B; --muted:#5B6474; --faint:#8C93A0; --line:#E8E2D8;
+  --navy:#1F3A68; --teal:#0F7C7C; --teal-soft:#DDF0EE; --gold:#C9962B; --gold-soft:#FBF1DC; --red:#B3261E; --red-soft:#FBE7E5; --green:#1E7A45; --green-soft:#DDF4E6;
+  --l1:#2E8B57; --l2:#0F7C7C; --l3:#1F3A68; --l4:#B7472A; --l5:#6A4BD8;
+  --radius:18px; --shadow:0 8px 26px rgba(22,35,59,.07);
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 Inter,system-ui,-apple-system,sans-serif;-webkit-font-smoothing:antialiased}
+a{color:var(--teal)}
+h1,h2,h3{font-family:Fraunces,Georgia,serif;font-weight:600;letter-spacing:-.01em;margin:0;line-height:1.15}
+button,input{font:inherit;color:inherit}
+[hidden]{display:none!important}
+header.top{position:sticky;top:0;z-index:40;background:rgba(255,255,255,.96);border-bottom:1px solid var(--line)}
+header.top .in{max-width:1120px;margin:0 auto;padding:0 20px;height:64px;display:flex;align-items:center;gap:24px}
+.brand{font-weight:700;font-size:19px;text-decoration:none;color:var(--ink);white-space:nowrap}
+.brand span{color:var(--teal)}
+.back{margin-left:auto;font-size:15px;text-decoration:none;color:var(--muted);font-weight:500}
+.wrap{max-width:1120px;margin:0 auto;padding:24px 20px 48px;display:flex;flex-direction:column;gap:20px}
+.intro h1{font-size:clamp(28px,4vw,40px)}
+.intro p{color:var(--muted);margin:6px 0 0;max-width:680px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:20px}
+.label{font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--faint);font-weight:700}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:10px 18px;border-radius:999px;font-weight:600;border:1px solid transparent;cursor:pointer;background:var(--navy);color:#fff;text-decoration:none}
+.btn.teal{background:var(--teal)} .btn.ghost{background:var(--surface);color:var(--ink);border-color:var(--line)}
+.btn.sm{padding:7px 14px;font-size:14px}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+button:focus-visible,input:focus{outline:2px solid var(--teal);outline-offset:1px}
+/* level legend */
+.legend{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px}
+@media (max-width:760px){.legend{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.lg{border-radius:12px;padding:10px 12px;background:var(--bg);border-left:4px solid var(--c)}
+.lg b{display:block;font-size:14px;color:var(--c)} .lg span{font-size:13px;color:var(--muted)}
+/* placement */
+.place{display:flex;flex-wrap:wrap;gap:14px;align-items:center;justify-content:space-between;background:linear-gradient(120deg,var(--teal-soft),#fff 70%);border:1.5px solid var(--teal)}
+.place .t b{font-family:Fraunces,Georgia,serif;font-size:20px;display:block}
+.place .t span{color:var(--muted);font-size:15px}
+.rec{font-weight:600;color:var(--teal)}
+/* topics */
+.topics{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+@media (max-width:760px){.topics{grid-template-columns:minmax(0,1fr)}}
+.topic{display:flex;flex-direction:column;gap:12px}
+.topic h2{font-size:22px}
+.idea{color:var(--muted);font-size:15px;margin:0}
+.example{background:var(--bg);border-radius:12px;padding:12px 14px;font-size:15px;overflow-x:auto}
+.example .q{font-size:17px;margin-bottom:4px}
+.pills{display:flex;flex-wrap:wrap;gap:6px}
+.pill{position:relative;border:1.5px solid var(--line);background:var(--surface);border-radius:999px;padding:6px 12px;font-size:13px;font-weight:600;cursor:pointer;color:var(--ink)}
+.pill:hover{border-color:var(--c)}
+.pill.on{background:var(--c);border-color:var(--c);color:#fff}
+.pill .n{font-weight:500;opacity:.75;margin-left:4px}
+.pill.star::after{content:"★";position:absolute;top:-8px;right:-4px;font-size:12px;color:var(--gold)}
+/* practice */
+.practice{display:flex;flex-direction:column;gap:14px;scroll-margin-top:80px}
+.phead{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between}
+.phead h2{font-size:24px}
+.problem{font-size:clamp(19px,2.6vw,24px);padding:16px 18px;border-radius:14px;background:var(--bg);overflow-x:auto;line-height:1.7}
+.row{display:flex;gap:8px;flex-wrap:wrap}
+.row input{flex:1 1 240px;border:1px solid var(--line);border-radius:999px;padding:11px 16px;background:var(--bg)}
+.preview{font-size:18px;min-height:1.4em}
+.preview .pl{font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--faint);font-weight:700;margin-right:8px}
+.howto{font-size:13px;color:var(--faint)}
+.fb{border-radius:12px;padding:10px 14px;font-size:15px;overflow-x:auto}
+.fb.good{background:var(--green-soft)} .fb.bad{background:var(--red-soft)} .fb.hint{background:var(--gold-soft)}
+.fb .tag{display:block;font-size:11px;text-transform:uppercase;letter-spacing:.08em;font-weight:700}
+.fb.good .tag{color:var(--green)} .fb.bad .tag{color:var(--red)} .fb.hint .tag{color:var(--gold)}
+.sol{margin:6px 0 0;padding-left:20px} .sol li{margin:2px 0}
+.suggest{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;border:1.5px dashed var(--c);border-radius:12px;padding:10px 14px}
+.streak{display:flex;gap:4px;align-items:center;font-size:13px;color:var(--faint)}
+.streak i{width:10px;height:10px;border-radius:50%;background:var(--line)} .streak i.ok{background:var(--green)} .streak i.no{background:var(--red)}
+/* modal quiz */
+.modal{position:fixed;inset:0;background:rgba(22,35,59,.45);display:grid;place-items:center;padding:16px;z-index:60}
+.modal .card{width:min(620px,100%);max-height:90vh;overflow:auto;display:flex;flex-direction:column;gap:14px}
+.qprog{display:flex;gap:6px} .qprog i{flex:1;height:6px;border-radius:3px;background:var(--line)} .qprog i.ok{background:var(--green)} .qprog i.no{background:var(--red)} .qprog i.now{background:var(--teal)}
+.tabs{display:flex;gap:6px;flex-wrap:wrap;border-bottom:1px solid var(--line);padding-bottom:0}
+.tab{border:none;background:none;padding:10px 16px;font-weight:600;font-size:16px;color:var(--muted);cursor:pointer;border-bottom:3px solid transparent;margin-bottom:-1px}
+.tab.on{color:var(--teal);border-bottom-color:var(--teal)}
+.learn,.pview{display:flex;flex-direction:column;gap:20px}
+.road{display:flex;gap:8px;flex-wrap:wrap}
+.stop{display:flex;align-items:center;gap:8px;border:1.5px solid var(--line);background:var(--surface);border-radius:999px;padding:6px 14px 6px 6px;cursor:pointer;font-size:14px;font-weight:600;color:var(--ink)}
+.stop i{font-style:normal;width:24px;height:24px;border-radius:50%;display:grid;place-items:center;background:var(--bg);font-size:12px;border:1.5px solid var(--line)}
+.stop.done i{background:var(--green);border-color:var(--green);color:#fff}
+.stop.on{border-color:var(--teal);background:var(--teal-soft)}
+.lesson{display:flex;flex-direction:column;gap:16px;scroll-margin-top:80px}
+.lesson h2{font-size:clamp(24px,3vw,30px)}
+.big{font-size:18px;background:var(--teal-soft);border-radius:14px;padding:14px 16px;overflow-x:auto}
+.big b{color:var(--teal)}
+.steps{display:flex;flex-direction:column;gap:8px;margin:0;padding:0;list-style:none;counter-reset:k}
+.steps li{counter-increment:k;display:grid;grid-template-columns:30px minmax(0,1fr);gap:10px;align-items:start;background:var(--bg);border-radius:12px;padding:10px 12px;animation:pop .25s ease}
+.steps li::before{content:counter(k);width:26px;height:26px;border-radius:50%;background:var(--navy);color:#fff;display:grid;place-items:center;font-size:13px;font-weight:700}
+.steps .m{font-size:19px;overflow-x:auto;overflow-y:hidden;padding:3px 0 4px} .steps .w{font-size:14px;color:var(--muted)}
+@keyframes pop{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){.steps li{animation:none}}
+.warn{background:var(--red-soft);border-radius:14px;padding:12px 16px;font-size:15px;overflow-x:auto}
+.warn b{color:var(--red)}
+.turn{border:1.5px solid var(--gold);border-radius:14px;padding:14px 16px;display:flex;flex-direction:column;gap:10px}
+.turn .q{font-size:19px;overflow-x:auto}
+.lnav{display:flex;gap:8px;flex-wrap:wrap;justify-content:space-between}
+footer{text-align:center;color:var(--faint);font-size:13px;padding:24px}
+.chapters{display:flex;flex-wrap:wrap;gap:8px}
+.chap{display:flex;align-items:center;gap:8px;border:1.5px solid var(--line);background:var(--surface);border-radius:999px;padding:5px 14px 5px 5px;font-size:14px;font-weight:600;color:var(--ink);cursor:pointer}
+.chap i{font-style:normal;width:24px;height:24px;border-radius:50%;display:grid;place-items:center;background:var(--bg);font-size:12px}
+.chap.on{background:var(--navy);border-color:var(--navy);color:#fff} .chap.on i{background:rgba(255,255,255,.2)}
+.chap.soon{opacity:.45;cursor:default}
+.fig{display:block;width:100%;max-width:360px;height:auto;margin:4px 0 8px}
+.problem .fig{max-width:340px}
+.mc{display:grid;gap:6px;margin-top:10px;font-size:.92em}
+.mc div{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:6px 10px}
+.mc div{cursor:pointer} .mc div:hover{border-color:var(--teal)} .mc div.sel{border-color:var(--teal);background:var(--teal-soft)}
+
+/* ---- left sidebar for chapters (wide screens) ---- */
+.lv-main{display:contents}
+.lv-main>.intro{order:-1}
+@media (min-width:720px){
+  .wrap{max-width:1320px;display:grid;grid-template-columns:210px minmax(0,1fr);gap:20px;align-items:start;padding-left:14px;padding-right:14px}
+  .lv-main{display:flex;flex-direction:column;gap:20px;min-width:0}
+  .wrap>.chapters{position:sticky;top:16px;flex-direction:column;flex-wrap:nowrap;gap:2px;max-height:calc(100vh - 32px);overflow-y:auto;background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:12px 10px}
+  .wrap>.chapters::before{content:attr(aria-label);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--faint);font-weight:700;padding:4px 8px 8px}
+  .wrap>.chapters .chap{border:0;border-radius:10px;background:transparent;padding:8px 8px;font-size:14px;line-height:1.3;text-align:left;width:100%;align-items:flex-start}
+  .wrap>.chapters .chap i{flex:0 0 auto;min-width:24px;width:auto;padding:0 5px;height:24px;border-radius:12px}
+  .wrap>.chapters .chap:hover{background:var(--bg)}
+  .wrap>.chapters .chap.on{background:var(--navy);color:#fff}
+}
+@media (min-width:1050px){ .wrap{grid-template-columns:260px minmax(0,1fr);gap:28px;padding-left:20px;padding-right:20px} }
+
+/* ---- compact level bar: one level for the whole chapter ---- */
+.lvbar{display:flex;flex-direction:column;gap:10px;padding:14px 18px}
+.lvtop{display:flex;flex-wrap:wrap;align-items:center;gap:10px 14px}
+.lvtop>.label{margin:0}
+.lvchips{display:flex;flex-wrap:wrap;gap:6px}
+.lvc{position:relative;display:inline-flex;align-items:center;gap:6px;border:1.5px solid var(--line);background:var(--surface);border-radius:999px;padding:4px 12px 4px 4px;font:inherit;font-size:13px;font-weight:600;color:var(--ink);cursor:pointer;line-height:1.2}
+.lvc i{font-style:normal;width:22px;height:22px;border-radius:50%;display:grid;place-items:center;font-size:12px;background:var(--bg);color:var(--c)}
+.lvc:hover{border-color:var(--c)}
+.lvc.on{background:var(--c);border-color:var(--c);color:#fff}
+.lvc.on i{background:rgba(255,255,255,.25);color:#fff}
+.lvc.star::after{content:"★";position:absolute;top:-7px;right:-3px;font-size:11px;color:var(--gold)}
+.lvsub{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px 14px;font-size:14px;color:var(--muted)}
+.lvsub b{color:var(--ink)}
+.lvsub .lvplace{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+#pLevels{display:none}
+.topic .tgo{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.topic .tgo small{color:var(--muted);font-size:13px}
+.watch{margin:-4px 0 4px;font-size:14px;color:var(--muted)} .watch b{color:var(--ink)}
+
+/* ---- hide the topic cards while a practice problem is open ---- */
+#practice:not([hidden]) ~ #topics{display:none}
+/* ---- chapter cheat sheet ---- */
+.tabs .cs-btn{margin-left:auto;align-self:center;border:1.5px solid var(--gold,#C9962B);background:#FFF8EA;color:#8A6415;border-radius:999px;padding:6px 14px;font:inherit;font-size:14px;font-weight:600;cursor:pointer;margin-bottom:6px}
+.tabs .cs-btn:hover{background:#FBF0D9}
+.csm{position:fixed;inset:0;background:rgba(15,23,42,.45);z-index:60;display:flex;justify-content:center;align-items:flex-start;padding:24px 12px;overflow-y:auto}
+.cs-sheet{background:#fff;border-radius:16px;max-width:980px;width:100%;padding:22px 26px 26px;box-shadow:0 20px 50px rgba(0,0,0,.25)}
+.cs-top{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;border-bottom:2px solid var(--navy);padding-bottom:10px;margin-bottom:14px}
+.cs-top h2{font-family:Fraunces,Georgia,serif;font-size:24px;margin:0;color:var(--navy)}
+.cs-top .sub{font-size:13px;color:var(--muted)}
+.cs-top .cs-acts{display:flex;gap:8px}
+.cs-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+@media (max-width:700px){.cs-grid{grid-template-columns:1fr}}
+.cs-card{border:1px solid var(--line);border-radius:12px;padding:12px 14px;break-inside:avoid;page-break-inside:avoid}
+.cs-card h3{margin:0 0 6px;font-size:16px;color:var(--navy);font-family:Fraunces,Georgia,serif}
+.cs-card .cs-idea{font-size:14px;line-height:1.55;margin-bottom:8px}
+.cs-card .cs-ex{background:var(--bg);border-radius:8px;padding:6px 10px;font-size:14px}
+.cs-card .cs-ex .lab,.cs-card .cs-warn .lab{display:block;font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--faint);font-weight:700;margin-bottom:2px}
+.cs-card .cs-ex div{margin:2px 0;overflow-x:auto}
+.cs-card .cs-warn{margin-top:8px;font-size:13px;line-height:1.5;border-left:3px solid var(--red,#C0392B);padding:2px 0 2px 8px}
+.cs-card .cs-warn .lab{color:var(--red,#C0392B)}
+.cs-foot{margin-top:12px;font-size:12px;color:var(--faint);text-align:right}
+@media print{
+  body.cs-printing > *:not(.csm){display:none !important}
+  body.cs-printing .csm{position:static;background:none;padding:0;overflow:visible}
+  body.cs-printing .cs-sheet{box-shadow:none;border-radius:0;padding:0;max-width:none}
+  body.cs-printing .cs-acts{display:none}
+  body.cs-printing .cs-card .cs-ex{background:#f4f4f4}
+  @page{margin:12mm}
+}
+</style>
+</head>
+<body>
+<header class="top"><div class="in">
+  <a class="brand" href="../index.html#/">Prof. Fang <span>Math</span></a>
+  <a class="back" href="../index.html#/course/grade6">← Back to Grade 6</a>
+</div></header>
+
+<div class="wrap">
+  <nav class="chapters" id="chapters" aria-label="Units"></nav>
+  <div class="lv-main">
+  <div class="intro">
+    <span class="label">Grade 6 · Learn &amp; Practice at Your Level</span>
+    <h1 id="chTitle">Grade 6</h1>
+    <p>Pick a unit. First learn each idea from the simplest example, then practice at the level that fits you and move up when you're ready.</p>
+  </div>
+
+
+  <div class="tabs" role="tablist">
+    <button class="tab" id="tabLearn" role="tab">① Learn the ideas</button>
+    <button class="tab" id="tabPractice" role="tab">② Practice at your level</button>
+    <button class="cs-btn" id="csBtn" type="button" title="One page with every key idea, example and warning in this chapter">📄 Cheat Sheet</button>
+  </div>
+
+  <div id="learnView" class="learn">
+    <div class="road" id="road"></div>
+    <div class="card lesson" id="lesson"></div>
+  </div>
+
+  <div id="practiceView" class="pview">
+    <div class="card lvbar">
+      <div class="lvtop"><span class="label">Your level for this unit</span><div class="lvchips" id="legend"></div></div>
+      <div class="lvsub"><span id="lvDesc"></span><span class="lvplace"><span id="recText"></span><button class="btn ghost sm" id="placeBtn">Take the 5-question check</button></span></div>
+    </div>
+    <div class="card practice" id="practice" hidden>
+      <div class="phead"><h2 id="pTitle"></h2><button class="btn ghost sm" id="closeP">All topics</button></div>
+      <div class="pills" id="pLevels"></div>
+      <div class="problem" id="pQ"></div>
+      <div class="row">
+        <input type="text" id="pAns" autocomplete="off" placeholder="Your answer" aria-label="Your answer">
+        <button class="btn" id="pCheck">Check</button>
+        <button class="btn ghost" id="pHint">Hint</button>
+        <button class="btn ghost" id="pShow" hidden>Show solution</button>
+        <button class="btn teal" id="pNext" hidden>Next problem →</button>
+      </div>
+      <div class="preview" id="pPrev"></div>
+      <div class="howto" id="pHow"></div>
+      <div id="pFb"></div>
+      <div id="pSuggest"></div>
+      <div class="streak" id="pStreak"></div>
+    </div>
+    <div class="topics" id="topics"></div>
+  </div>
+  </div>
+</div>
+<footer>© 2026 Prof. Fang Math</footer>
+
+<script>
+"use strict";
+/* ================= helpers ================= */
+const $=id=>document.getElementById(id);
+const rnd=(a,b)=>a+Math.floor(Math.random()*(b-a+1));
+const nz=(a,b)=>{let x;do{x=rnd(a,b)}while(x===0);return x};
+const pick=a=>a[Math.floor(Math.random()*a.length)];
+const gcd=(a,b)=>{a=Math.abs(a);b=Math.abs(b);while(b){[a,b]=[b,a%b]}return a};
+const sg=k=>k>=0?"+ "+k:"- "+(-k);            // "+ 3" / "- 3"
+const P=n=>n<0?"("+n+")":String(n);            // wrap negatives
+function co(a,v){ return (a===1?"":a===-1?"-":String(a))+v; }   // coefficient with variable
+function lin(a,b,v="x"){ if(a===0) return String(b); let s=co(a,v); if(b) s+=" "+sg(b); return s; }
+function cterm(a,v){ return (a<0?"- ":"+ ")+(Math.abs(a)===1?"":Math.abs(a))+v; } // signed term for middle
+function frac(n,d){ if(d<0){n=-n;d=-d} const g=gcd(n,d)||1; n/=g; d/=g; return d===1?String(n):(n<0?"-":"")+"\\frac{"+Math.abs(n)+"}{"+d+"}"; }
+const OPT={"<":"<","<=":"\\le",">":">",">=":"\\ge"}; const FLIP={"<":">","<=":">=",">":"<",">=":"<="};
+const pt=(x,y)=>`(${x}, ${y})`;
+const sq2=h=>`(x ${sg(-h)})^2`;
+function ptex(cs,v="x"){ const n=cs.length-1; let t=""; cs.forEach((c,i)=>{ const d=n-i; if(!c) return; const a=Math.abs(c), vv=d===0?"":d===1?v:v+"^{"+d+"}", cf=(a===1&&d>0)?"":String(a); t+=t?(c<0?" - ":" + "):(c<0?"-":""); t+=cf+vv; }); return t||"0"; }
+function pstr(cs){ const n=cs.length-1; return cs.map((c,i)=>`(${c})*x^${n-i}`).join("+"); }
+function pmul(a,b){ const r=Array(a.length+b.length-1).fill(0); a.forEach((x,i)=>b.forEach((y,j)=>r[i+j]+=x*y)); return r; }
+function radParts(n){ let k=1,m=n; for(let i=Math.floor(Math.sqrt(n));i>1;i--){ if(n%(i*i)===0){ k=i; m=n/(i*i); break; } } return [k,m]; }
+function rad(n){ const [k,m]=radParts(n); return m===1?String(k):(k===1?"":k)+"\\sqrt{"+m+"}"; }
+function radTex(c,n){ const [k,m]=radParts(n); const K=c*k; return m===1?String(K):(K===1?"":K)+"\\sqrt{"+m+"}"; }
+const divisors=n=>{n=Math.abs(n);const d=[];for(let i=1;i<=n;i++) if(n%i===0) d.push(i);return d;};
+const LEVELS=[
+ {n:1,name:"Foundation",desc:"Review the basics first",c:"var(--l1)"},
+ {n:2,name:"Basic",desc:"Textbook examples",c:"var(--l2)"},
+ {n:3,name:"Standard",desc:"School test level",c:"var(--l3)"},
+ {n:4,name:"Challenge",desc:"Stretch problems",c:"var(--l4)"},
+ {n:5,name:"Competition",desc:"Math Kangaroo / MOEMS style",c:"var(--l5)"}];
+
+const HOW={mc:"Click a choice or type its letter, then press Check.",word:"Type your answer as a word or abbreviation.",roots:"Give every solution, separated by commas: 3, -2. Use sqrt(5) for √5; ± is fine: 2±sqrt(3).",nsol:"Type one, none, or infinitely many.",point:"Type a point like (2, -5).",yn:"Type yes or no.",list:"List the values separated by commas, like -2, 0, 5.",line:"Type an equation like y = 2x + 3 (any correct form works).",number:"Type a number. Fractions like 9/4 are fine.",set:"Type the value, like 4 or x = 4.",expr:"Type an expression like 7x - 1 or (c - b)/a.",
+  ineq:"Type like x > 3 or x <= -2 (≤ and ≥ work too).",between:"Type like -2 < x <= 4.",or:"Type like x < -5 or x > 3."};
+Object.assign(HOW,{number:"Type a number, like 350.",expanded:"Type it with + signs, like 600 + 8.",yn:"Type yes or no.",frac:"Type a fraction like 3/4.",ratio:"Type a ratio like 3:5 (or 3 to 5).",rem:"Type the quotient and remainder, like 13 R 5.",mixed:"Type a mixed number like 2 3/4 (a space between the whole number and the fraction).",cmp:"Type <, > or =."});
+const ineqTex=(op,v)=>`x ${OPT[op]} ${v}`;
+
+/* ================= chapters =================
+   generators return {q, type, ans, ansTex, hint, sol[]} */
+/* ---------- Grade 3 helpers ---------- */
+const N=n=>String(n).replace(/\B(?=(\d{3})+(?!\d))/g,"{,}");      // 1{,}000 inside $...$
+const T_=s=>`\\text{${s}}`;
+const ONES=["zero","one","two","three","four","five","six","seven","eight","nine","ten","eleven","twelve","thirteen","fourteen","fifteen","sixteen","seventeen","eighteen","nineteen"];
+const TENS=["","","twenty","thirty","forty","fifty","sixty","seventy","eighty","ninety"];
+function words(n){ if(n<20) return ONES[n]; if(n<100) return TENS[Math.floor(n/10)]+(n%10?"-"+ONES[n%10]:""); if(n<1000) return ONES[Math.floor(n/100)]+" hundred"+(n%100?" "+words(n%100):""); return "one thousand"; }
+const digs=n=>[Math.floor(n/100),Math.floor(n/10)%10,n%10];
+const PLACE=["hundreds","tens","ones"], PV=[100,10,1];
+function expTex(n){ const d=digs(n); return d.map((x,i)=>x*PV[i]).filter(x=>x).join(" + ")||"0"; }
+const r10=n=>Math.round(n/10)*10, r100=n=>Math.round(n/100)*100;   // whole numbers: .5 rounds up
+const NAMES=["Mia","Leo","Ava","Sam","Zoe","Ben","Lily","Max","Emma","Noah","Ruby","Eli"];
+const BOX="\\square";
+function threeDigit(noZero){ let n; do{ n=rnd(101,999); }while(noZero&&digs(n).includes(0)); return n; }
+function addPair(regroup){ let a,b; do{ a=rnd(101,799); b=rnd(101,899-0); }while(a+b>999||((a%10+b%10>=10||Math.floor(a/10)%10+Math.floor(b/10)%10>=10)!==regroup)); return [a,b]; }
+function subPair(regroup){ let a,b; do{ a=rnd(200,999); b=rnd(101,a-50); }while((a%10<b%10||Math.floor(a/10)%10<Math.floor(b/10)%10)!==regroup); return [a,b]; }
+function colAdd(a,b){ const s=[]; const o=a%10+b%10, t=Math.floor(a/10)%10+Math.floor(b/10)%10+(o>=10?1:0);
+  s.push(`Ones: $${a%10} + ${b%10} = ${o}$${o>=10?` → write $${o%10}$, regroup $10$ ones as $1$ ten`:""}.`);
+  s.push(`Tens: $${Math.floor(a/10)%10} + ${Math.floor(b/10)%10}${o>=10?" + 1":""} = ${t}$${t>=10?` → write $${t%10}$, regroup $10$ tens as $1$ hundred`:""}.`);
+  s.push(`Hundreds: $${Math.floor(a/100)} + ${Math.floor(b/100)}${t>=10?" + 1":""} = ${Math.floor(a/100)+Math.floor(b/100)+(t>=10?1:0)}$. So $${N(a)} + ${N(b)} = ${N(a+b)}$.`); return s; }
+function colSub(a,b){ const s=[]; let [h,t,o]=digs(a); const [bh,bt,bo]=digs(b);
+  if(o<bo){ if(t===0){ h--; t=9; s.push(`No tens to open, so open a hundred: $${a}$ becomes $${h}$ hundreds, $10$ tens, then open a ten: $${h}$ hundreds, $9$ tens, $${o+10}$ ones.`); } else { t--; s.push(`Not enough ones: open a ten. Now $${t}$ tens and $${o+10}$ ones.`); } o+=10; }
+  s.push(`Ones: $${o} - ${bo} = ${o-bo}$.`);
+  if(t<bt){ h--; t+=10; s.push(`Not enough tens: open a hundred. Now $${h}$ hundreds and $${t}$ tens.`); }
+  s.push(`Tens: $${t} - ${bt} = ${t-bt}$. Hundreds: $${h} - ${bh} = ${h-bh}$.`);
+  s.push(`So $${a} - ${b} = ${a-b}$. Check: $${a-b} + ${b} = ${a}$ ✓`); return s; }
+
+/* ---------- fraction pictures & helpers (Unit 4) ---------- */
+const FR=(n,d)=>`\\frac{${n}}{${d}}`;
+const FQ=(n,d)=>`$${FR(n,d)}$`;
+function fbar(d,sh,ws){ const W=300,H=42; let x=6,o=""; const tot=ws?ws.reduce((a,b)=>a+b,0):d; for(let i=0;i<d;i++){ const w=W*(ws?ws[i]:1)/tot; o+=`<rect x="${x}" y="6" width="${w}" height="${H-12}" fill="${i<sh?"#7FC8C0":"#fff"}" stroke="#16233B" stroke-width="2"/>`; x+=w; }
+  return `<svg class="fig" viewBox="0 0 312 ${H}" style="max-width:320px;display:block;margin:8px 0" role="img" aria-label="bar split into ${d} parts, ${sh} shaded">${o}</svg>`; }
+function pie(d,sh){ const r=40,c=46; let o=""; for(let i=0;i<d;i++){ const a0=-Math.PI/2+2*Math.PI*i/d,a1=-Math.PI/2+2*Math.PI*(i+1)/d; const x0=c+r*Math.cos(a0),y0=c+r*Math.sin(a0),x1=c+r*Math.cos(a1),y1=c+r*Math.sin(a1);
+  o+=`<path d="M${c},${c} L${x0.toFixed(2)},${y0.toFixed(2)} A${r},${r} 0 ${d===1?1:0} 1 ${x1.toFixed(2)},${y1.toFixed(2)} Z" fill="${i<sh?"#7FC8C0":"#fff"}" stroke="#16233B" stroke-width="2"/>`; }
+  return `<svg class="fig" viewBox="0 0 92 92" style="max-width:120px;display:block;margin:8px 0" role="img" aria-label="circle split into ${d} parts, ${sh} shaded">${o}</svg>`; }
+// number line from 0 to `units`, each unit split into d parts; point at mark k (0 = start); labels only on whole numbers
+function nline(d,units,k,lab){ const W=380,x0=16,step=(W-2*x0)/(d*units); let o=`<line x1="${x0}" y1="30" x2="${W-x0}" y2="30" stroke="#16233B" stroke-width="2"/>`;
+  for(let i=0;i<=d*units;i++){ const x=x0+i*step, whole=i%d===0; o+=`<line x1="${x}" y1="${whole?20:24}" x2="${x}" y2="${whole?40:36}" stroke="#16233B" stroke-width="2"/>`; if(whole) o+=`<text x="${x}" y="58" text-anchor="middle" font-family="Inter,sans-serif" font-size="14" fill="#16233B">${i/d}</text>`; }
+  if(k!=null){ const x=x0+k*step; o+=`<circle cx="${x}" cy="30" r="6" fill="#B3261E"/><text x="${x}" y="13" text-anchor="middle" font-family="Inter,sans-serif" font-size="14" font-weight="700" fill="#B3261E">${lab||"P"}</text>`; }
+  return `<svg class="fig" viewBox="0 0 ${W} 64" style="max-width:400px;display:block;margin:8px 0" role="img" aria-label="number line">${o}</svg>`; }
+function mcList(stem,correct,wrong,hint,sol){ const o=[correct,...wrong].map((t,i)=>({t,ok:i===0})).sort(()=>Math.random()-.5),L="ABCDE",ans=L[o.findIndex(x=>x.ok)];
+  return {q:`${stem}<div class="mc">${o.map((x,i)=>`<div><b>${L[i]}.</b> ${x.t}</div>`).join("")}</div>`,type:"mc",ans,ansTex:`\\text{${ans}}`,hint,sol:[...sol,`Answer: <b>${ans}</b>.`]}; }
+const CMPW=(a,b)=>a<b?"<":a>b?">":"=";
+
+/* ---------- Grade 6 helpers ---------- */
+const G6N=["Mia","Leo","Ava","Sam","Zoe","Ben","Lily","Max","Emma","Noah","Ruby","Eli","Nora","Owen"];
+const nm=()=>pick(G6N);
+const ord=n=>n+((n%100>=11&&n%100<=13)?'th':({1:'st',2:'nd',3:'rd'})[n%10]||'th');
+const MIX=(w,n,d)=>w?(n?`${w}\\tfrac{${n}}{${d}}`:`${w}`):`\\tfrac{${n}}{${d}}`;
+function mixTex(n,d){ if(d<0){n=-n;d=-d} const g=gcd(n,d)||1; n/=g; d/=g; if(d===1) return `${n}`; const w=Math.floor(n/d),r=n%d; return w?`${w}\\tfrac{${r}}{${d}}`:`\\tfrac{${r}}{${d}}`; }
+const cpn=(d,lo=1)=>{let n;do{n=rnd(lo,d-1)}while(gcd(n,d)!==1);return n};
+const dp=v=>Math.round(v*1e6)/1e6;
+const SV=(w,h,body,lab)=>`<svg class="fig" viewBox="0 0 ${w} ${h}" style="max-width:${Math.min(w+20,480)}px;display:block;margin:8px 0" role="img" aria-label="${lab||"figure"}">${body}</svg>`;
+const TX=(x,y,t,o="")=>`<text x="${x}" y="${y}" text-anchor="middle" font-family="Inter,sans-serif" font-size="13" fill="#16233B" ${o}>${t}</text>`;
+/* number line with integer ticks from a to b; pts=[{v,lab,c}] */
+function nl6(a,b,pts=[]){ const W=380,x0=18,st=(W-2*x0)/(b-a); let o=`<line x1="${x0-8}" y1="34" x2="${W-x0+8}" y2="34" stroke="#16233B" stroke-width="2"/>`;
+  for(let v=a;v<=b;v++){ const x=x0+(v-a)*st; o+=`<line x1="${x}" y1="28" x2="${x}" y2="40" stroke="#16233B" stroke-width="${v===0?2.5:1.5}"/>`; if((b-a)<=20||v%2===0) o+=TX(x,58,v); }
+  pts.forEach(p=>{ const x=x0+(p.v-a)*st; o+=`<circle cx="${x}" cy="34" r="6" fill="${p.c||"#B3261E"}"/>`+TX(x,18,p.lab||"",`font-weight="700" fill="${p.c||"#B3261E"}"`); });
+  return SV(W,66,o,"number line"); }
+/* coordinate grid from -r..r; pts=[[x,y,label]], poly=[[x,y],...] */
+function grid6(r,pts=[],poly=null){ const S=300,c=S/2,u=(S-24)/(2*r); const X=x=>c+x*u, Y=y=>c-y*u; let o="";
+  for(let k=-r;k<=r;k++){ o+=`<line x1="${X(k)}" y1="${Y(-r)}" x2="${X(k)}" y2="${Y(r)}" stroke="${k===0?"#16233B":"#E3DED4"}" stroke-width="${k===0?1.8:1}"/><line x1="${X(-r)}" y1="${Y(k)}" x2="${X(r)}" y2="${Y(k)}" stroke="${k===0?"#16233B":"#E3DED4"}" stroke-width="${k===0?1.8:1}"/>`; if(k&&k%2===0) o+=TX(X(k),Y(0)+14,k,'font-size="10"')+TX(X(0)-10,Y(k)+4,k,'font-size="10"'); }
+  if(poly) o+=`<polygon points="${poly.map(p=>X(p[0])+","+Y(p[1])).join(" ")}" fill="rgba(15,124,124,.18)" stroke="#0F7C7C" stroke-width="2"/>`;
+  pts.forEach(p=>{ o+=`<circle cx="${X(p[0])}" cy="${Y(p[1])}" r="5" fill="#B3261E"/>`+TX(X(p[0])+(p[0]>=0?14:-14),Y(p[1])-8,p[2]||"",'font-weight="700" fill="#B3261E"'); });
+  return SV(S,S,o,"coordinate grid"); }
+/* dot plot of integer data from a..b */
+function dotp(data,a,b){ const W=380,x0=20,st=(W-2*x0)/(b-a); let o=`<line x1="${x0-8}" y1="120" x2="${W-x0+8}" y2="120" stroke="#16233B" stroke-width="2"/>`;
+  for(let v=a;v<=b;v++){ const x=x0+(v-a)*st; o+=`<line x1="${x}" y1="114" x2="${x}" y2="126" stroke="#16233B" stroke-width="1.5"/>`+TX(x,144,v); const c=data.filter(d=>d===v).length; for(let j=0;j<c;j++) o+=`<circle cx="${x}" cy="${106-j*13}" r="5" fill="#0F7C7C"/>`; }
+  return SV(W,150,o,"dot plot"); }
+/* box plot: f=[min,q1,med,q3,max] on scale a..b */
+function boxp(f,a,b){ const W=380,x0=20,X=v=>x0+(v-a)*(W-2*x0)/(b-a); let o=`<line x1="${x0}" y1="90" x2="${W-x0}" y2="90" stroke="#16233B" stroke-width="1.5"/>`;
+  const step=(b-a)<=24?1:(b-a)<=50?5:10; for(let v=a;v<=b;v+=step){ o+=`<line x1="${X(v)}" y1="${v%5===0?84:86}" x2="${X(v)}" y2="${v%5===0?96:94}" stroke="#16233B"/>`+((b-a)>24||v%2===0?TX(X(v),110,v,'font-size="11"'):""); }
+  o+=`<line x1="${X(f[0])}" y1="45" x2="${X(f[1])}" y2="45" stroke="#1F3A68" stroke-width="2"/><line x1="${X(f[3])}" y1="45" x2="${X(f[4])}" y2="45" stroke="#1F3A68" stroke-width="2"/>`;
+  o+=`<rect x="${X(f[1])}" y="25" width="${X(f[3])-X(f[1])}" height="40" fill="rgba(15,124,124,.18)" stroke="#1F3A68" stroke-width="2"/><line x1="${X(f[2])}" y1="25" x2="${X(f[2])}" y2="65" stroke="#B3261E" stroke-width="3"/>`;
+  [0,4].forEach(i=>o+=`<line x1="${X(f[i])}" y1="35" x2="${X(f[i])}" y2="55" stroke="#1F3A68" stroke-width="2"/>`);
+  return SV(W,118,o,"box plot"); }
+/* histogram: labels for bins, counts */
+function histo(labs,counts,unit){ const W=380,H=190,x0=36,bw=(W-x0-10)/labs.length,mx=Math.max(...counts),sc=(H-60)/Math.max(mx,1); let o="";
+  for(let k=0;k<=mx;k+=mx>8?2:1){ const y=H-36-k*sc; o+=`<line x1="${x0}" y1="${y}" x2="${W-10}" y2="${y}" stroke="#E3DED4"/>`+TX(x0-12,y+4,k,'font-size="11"'); }
+  labs.forEach((l,i)=>{ const h=counts[i]*sc,x=x0+i*bw; o+=`<rect x="${x}" y="${H-36-h}" width="${bw}" height="${h}" fill="#7FC8C0" stroke="#16233B" stroke-width="1.5"/>`+TX(x+bw/2,H-20,l,'font-size="11"'); });
+  o+=`<line x1="${x0}" y1="${H-36}" x2="${W-10}" y2="${H-36}" stroke="#16233B" stroke-width="2"/>`+(unit?TX(W/2,H-4,unit,'font-size="11" fill="#5B6474"'):"");
+  return SV(W,H,o,"histogram"); }
+/* shapes with labels */
+function shpPar(b,h){ return SV(300,150,`<polygon points="60,120 260,120 220,30 20,30" fill="rgba(15,124,124,.15)" stroke="#16233B" stroke-width="2"/><line x1="220" y1="30" x2="220" y2="120" stroke="#B3261E" stroke-dasharray="5 4" stroke-width="2"/><rect x="210" y="110" width="10" height="10" fill="none" stroke="#B3261E"/>`+TX(160,140,`b = ${b}`)+TX(186,80,`h = ${h}`,'fill="#B3261E" text-anchor="end"'),"parallelogram"); }
+function shpTri(b,h){ return SV(300,150,`<polygon points="30,120 270,120 190,25" fill="rgba(15,124,124,.15)" stroke="#16233B" stroke-width="2"/><line x1="190" y1="25" x2="190" y2="120" stroke="#B3261E" stroke-dasharray="5 4" stroke-width="2"/><rect x="180" y="110" width="10" height="10" fill="none" stroke="#B3261E"/>`+TX(150,140,`b = ${b}`)+TX(184,80,`h = ${h}`,'fill="#B3261E" text-anchor="end"'),"triangle"); }
+function shpTrap(b1,b2,h){ return SV(300,150,`<polygon points="20,120 280,120 210,30 80,30" fill="rgba(15,124,124,.15)" stroke="#16233B" stroke-width="2"/><line x1="80" y1="30" x2="80" y2="120" stroke="#B3261E" stroke-dasharray="5 4" stroke-width="2"/>`+TX(145,22,`b₂ = ${b2}`)+TX(150,140,`b₁ = ${b1}`)+TX(104,80,`h = ${h}`,'fill="#B3261E"'),"trapezoid"); }
+function shpBox(l,w,h){ return SV(300,170,`<polygon points="40,60 200,60 240,30 80,30" fill="#DDF0EE" stroke="#16233B" stroke-width="2"/><polygon points="200,60 240,30 240,120 200,150" fill="#BFE3DF" stroke="#16233B" stroke-width="2"/><rect x="40" y="60" width="160" height="90" fill="#EAF6F4" stroke="#16233B" stroke-width="2"/>`+TX(120,166,`${l}`)+TX(236,145,`${w}`)+TX(26,108,`${h}`),"rectangular prism"); }
+
+const CHAPTERS=[
+/* ===================== Unit 1 ===================== */
+{id:"ch1",title:"Number Operations",topics:[
+ {id:"div",title:"Multi-Digit Division",idea:"Long division repeats four moves: <b>divide</b>, <b>multiply</b>, <b>subtract</b>, <b>bring down</b>. Estimate each digit of the quotient, and check by multiplying: quotient × divisor + remainder = dividend.",
+  lesson:{steps:[["864 \\div 24","How many $24$s in $86$? About $3$ ($24 \\times 3 = 72$)."],["86 - 72 = 14,\\ \\text{bring down } 4 \\to 144","$144 \\div 24 = 6$ ($24 \\times 6 = 144$)."],["864 \\div 24 = 36","Check: $36 \\times 24 = 864$ ✓"]],warn:"If you subtract and get a number <b>bigger than the divisor</b>, the quotient digit was too small — try one more."},
+  gen:[
+  ()=>{ const b=rnd(3,9),q=rnd(201,999); return {q:`Divide: $${N(b*q)} \\div ${b}$.`,type:"number",ans:q,ansTex:`${q}`,hint:"Divide, multiply, subtract, bring down.",sol:[`$${N(b*q)} \\div ${b} = ${q}$. Check: $${q} \\times ${b} = ${N(b*q)}$ ✓`]}; },
+  ()=>{ const b=rnd(12,49),q=rnd(12,39); return {q:`Divide: $${N(b*q)} \\div ${b}$.`,type:"number",ans:q,ansTex:`${q}`,hint:`Estimate: how many $${b}$s fit in the first two or three digits?`,sol:[`$${b} \\times ${q} = ${N(b*q)}$, so the quotient is $${q}$.`]}; },
+  ()=>{ const b=rnd(12,59),q=rnd(101,299); return {q:`Divide: $${N(b*q)} \\div ${b}$.`,type:"number",ans:q,ansTex:`${q}`,hint:"Watch for a $0$ in the quotient when a step is too small to divide.",sol:[`$${N(b*q)} \\div ${b} = ${q}$. Check: $${q} \\times ${b} = ${N(b*q)}$ ✓`]}; },
+  ()=>{ const b=rnd(13,48),q=rnd(120,950),r=rnd(1,b-1),n=b*q+r; return {q:`Divide: $${N(n)} \\div ${b}$. (Type like 37 R 5.)`,type:"rem",ans:[q,r],ansTex:`${q}\\ R\\ ${r}`,hint:"Long division; the remainder must be less than the divisor.",sol:[`$${b} \\times ${q} = ${N(b*q)}$.`,`$${N(n)} - ${N(b*q)} = ${r}$, so $${q}\\ R\\ ${r}$.`]}; },
+  ()=>{ const per=rnd(12,36),q=rnd(20,80),r=rnd(1,per-1),n=per*q+r,thing=pick([["students","bus seats in each row",""],["bottles","bottles in each crate","crates"]]); return pick([{q:`A theater has $${N(n)}$ seats arranged in rows of $${per}$. The last row is not full. How many rows are there?`,type:"number",ans:q+1,ansTex:`${q+1}`,hint:"Divide; a partly filled row still counts.",sol:[`$${N(n)} \\div ${per} = ${q}\\ R\\ ${r}$.`,`$${q}$ full rows plus $1$ more: $${q+1}$ rows.`]},{q:`$${N(n)}$ ${thing[0]} are packed ${thing[1]==="bottles in each crate"?"into crates of":"in groups of"} $${per}$. How many are left over?`,type:"number",ans:r,ansTex:`${r}`,hint:"The leftover is the remainder.",sol:[`$${N(n)} \\div ${per} = ${q}\\ R\\ ${r}$.`,`$${r}$ left over.`]}]); }
+ ]},
+ {id:"dec",title:"Decimal Operations",idea:"<b>Add/subtract</b>: line up the decimal points. <b>Multiply</b>: multiply as whole numbers, then count the total decimal places. <b>Divide</b>: move the decimal point in the divisor and the dividend the same number of places so the divisor is a whole number.",
+  lesson:{steps:[["2.4 \\times 0.35","Multiply $24 \\times 35 = 840$."],["1 + 2 = 3 \\text{ decimal places}","Count the places in both factors."],["2.4 \\times 0.35 = 0.840 = 0.84","Place the point $3$ digits from the right."]],warn:"For $6.3 \\div 0.7$, move both points one place: $63 \\div 7 = 9$. Moving only one of them changes the answer."},
+  gen:[
+  ()=>{ const a=rnd(100,9999)/100,b=rnd(100,9999)/100; return {q:`Add: $${a.toFixed(2)} + ${b.toFixed(2)}$.`,type:"number",ans:dp(a+b),ansTex:(a+b).toFixed(2),hint:"Line up the decimal points.",sol:[`$${a.toFixed(2)} + ${b.toFixed(2)} = ${(a+b).toFixed(2)}$.`]}; },
+  ()=>{ let a,b; do{ a=rnd(100,9999)/100; b=rnd(10,999)/10; }while(b>=a); return {q:`Subtract: $${a.toFixed(2)} - ${b.toFixed(1)}$.`,type:"number",ans:dp(a-b),ansTex:(a-b).toFixed(2),hint:`Write $${b.toFixed(1)}$ as $${b.toFixed(2)}$ and line up the points.`,sol:[`$${a.toFixed(2)} - ${b.toFixed(2)} = ${(a-b).toFixed(2)}$.`]}; },
+  ()=>{ const a=rnd(11,99)/10,b=rnd(11,99)/pick([10,100]); const bd=b*100%10===0?1:2; return {q:`Multiply: $${a.toFixed(1)} \\times ${b.toFixed(bd)}$.`,type:"number",ans:dp(a*b),ansTex:`${dp(a*b)}`,hint:"Multiply as whole numbers, then count decimal places in both factors.",sol:[`$${Math.round(a*10)} \\times ${Math.round(b*10**bd)} = ${Math.round(a*10)*Math.round(b*10**bd)}$.`,`$${1+bd}$ decimal places: $${dp(a*b)}$.`]}; },
+  ()=>{ const d=rnd(2,9)/pick([10,10,100]),q=rnd(2,60)/pick([1,10]),n=dp(d*q); const dd=Math.round(d*100)%10===0?1:2; return {q:`Divide: $${n} \\div ${d.toFixed(dd)}$.`,type:"number",ans:dp(q),ansTex:`${dp(q)}`,hint:`Move both decimal points ${dd} place${dd>1?"s":""} to the right so you divide by a whole number.`,sol:[`$${n} \\div ${d.toFixed(dd)} = ${dp(n*10**dd)} \\div ${Math.round(d*10**dd)}$.`,`$= ${dp(q)}$.`]}; },
+  ()=>{ const p=rnd(125,899)/100,k=rnd(3,8),pay=Math.ceil(p*k/10)*10+pick([0,10]); return {q:`${nm()} buys $${k}$ notebooks at $\\$${p.toFixed(2)}$ each and pays with $\\$${pay}$. How much change?`,type:"number",ans:dp(pay-p*k),ansTex:`\\$${(pay-p*k).toFixed(2)}`,hint:"Multiply to find the total cost, then subtract from the money paid.",sol:[`Cost: $${k} \\times ${p.toFixed(2)} = ${(p*k).toFixed(2)}$.`,`Change: $${pay} - ${(p*k).toFixed(2)} = ${(pay-p*k).toFixed(2)}$.`]}; }
+ ]},
+ {id:"gcf",title:"GCF, LCM & the Distributive Property",idea:"The <b>GCF</b> (greatest common factor) is the biggest number that divides both. The <b>LCM</b> (least common multiple) is the smallest number both divide. The distributive property lets you pull out a common factor: $24 + 36 = 12(2 + 3)$.",
+  lesson:{steps:[["\\text{GCF}(24, 36)","Factors of $24$: $1,2,3,4,6,8,12,24$. Of $36$: $1,2,3,4,6,9,12,18,36$."],["\\text{GCF} = 12","The biggest one on both lists."],["24 + 36 = 12(2 + 3)","Pull the GCF out with the distributive property."]],warn:"GCF is never bigger than the smaller number; LCM is never smaller than the bigger number."},
+  gen:[
+  ()=>{ const g=rnd(2,12),a=g*rnd(2,8); let b; do{ b=g*rnd(2,8); }while(b===a||gcd(a,b)!==g); return {q:`Find the GCF of $${a}$ and $${b}$.`,type:"number",ans:g,ansTex:`${g}`,hint:"List the factors of each, or use prime factorizations.",sol:[`The common factors include $${divisors(g).join(", ")}$; the greatest is $${g}$.`]}; },
+  ()=>{ const a=rnd(3,15); let b; do{ b=rnd(3,15); }while(b===a); const l=a*b/gcd(a,b); return {q:`Find the LCM of $${a}$ and $${b}$.`,type:"number",ans:l,ansTex:`${l}`,hint:`List multiples of $${Math.max(a,b)}$ until one is also a multiple of $${Math.min(a,b)}$.`,sol:[`Multiples of $${Math.max(a,b)}$: $${[1,2,3,4].map(k=>k*Math.max(a,b)).join(", ")}, \\ldots$`,`LCM $= ${l}$.`]}; },
+  ()=>{ const g=rnd(2,12); let x,y; do{ x=rnd(1,9); y=rnd(1,9); }while(x===y||gcd(x,y)!==1); return {q:`Use the GCF to rewrite: $${g*x} + ${g*y} = \\square(${x} + ${y})$. What goes in the box?`,type:"number",ans:g,ansTex:`${g}`,hint:"Find the GCF of the two numbers.",sol:[`GCF$(${g*x}, ${g*y}) = ${g}$.`,`$${g*x} + ${g*y} = ${g}(${x} + ${y})$.`]}; },
+  ()=>{ if(Math.random()<.5){ const g=rnd(3,12),x=rnd(2,6); let y; do{ y=rnd(2,6); }while(gcd(x,y)!==1); const A=pick(["pencils","erasers"]); return {q:`A teacher has $${g*x}$ pencils and $${g*y}$ erasers. She makes identical kits with no supplies left over. What is the <b>greatest</b> number of kits she can make?`,type:"number",ans:g,ansTex:`${g}`,hint:"Identical groups with nothing left: GCF.",sol:[`GCF$(${g*x}, ${g*y}) = ${g}$ kits.`]}; } const a=pick([6,8,10,12]),b=pick([8,10,12,15].filter(v=>v!==a)),l=a*b/gcd(a,b); return {q:`Hot dogs come in packs of $${a}$ and buns in packs of $${b}$. What is the smallest number of hot dogs you can buy to have exactly as many buns?`,type:"number",ans:l,ansTex:`${l}`,hint:"The first number both pack sizes reach: LCM.",sol:[`LCM$(${a}, ${b}) = ${l}$.`]}; },
+  ()=>{ const g=rnd(2,8); let x,y; do{ x=rnd(2,9); y=rnd(2,9); }while(x===y||gcd(x,y)!==1); const a=g*x,b=g*y,l=g*x*y; return {q:`Two numbers have GCF $${g}$ and LCM $${l}$. One of the numbers is $${a}$. What is the other number?`,type:"number",ans:b,ansTex:`${b}`,hint:"For any two numbers, GCF × LCM = the product of the two numbers.",sol:[`$${g} \\times ${l} = ${g*l} = ${a} \\times \\square$.`,`$\\square = ${g*l} \\div ${a} = ${b}$.`]}; }
+ ]},
+ {id:"fdiv",title:"Dividing Fractions",idea:"Dividing asks “<b>how many of these fit?</b>” To divide by a fraction, <b>multiply by its reciprocal</b> (flip it): $\\frac34 \\div \\frac18 = \\frac34 \\times \\frac81 = 6$.",
+  lesson:{steps:[["3 \\div \\tfrac14","How many quarters fit in $3$ wholes?"],["3 \\times 4 = 12","Each whole holds $4$ quarters."],["\\tfrac23 \\div \\tfrac16 = \\tfrac23 \\times \\tfrac61 = 4","Keep, change, flip — then multiply."]],warn:"Flip only the <b>second</b> fraction (the divisor), and change mixed numbers to fractions first."},
+  gen:[
+  ()=>{ const w=rnd(2,9),d=rnd(2,8); return {q:`Divide: $${w} \\div \\tfrac{1}{${d}}$.`,type:"number",ans:w*d,ansTex:`${w*d}`,hint:`How many $\\frac{1}{${d}}$s fit in one whole? In $${w}$ wholes?`,sol:[`$${w} \\times ${d} = ${w*d}$.`]}; },
+  ()=>{ const d=rnd(2,9),n=cpn(d),w=rnd(2,6); return {q:`Divide: $\\tfrac{${n}}{${d}} \\div ${w}$.`,type:"mixed",ans:[n,d*w],ansTex:mixTex(n,d*w),hint:`Dividing by $${w}$ is the same as multiplying by $\\frac{1}{${w}}$.`,sol:[`$\\frac{${n}}{${d}} \\times \\frac{1}{${w}} = \\frac{${n}}{${d*w}}$${gcd(n,d*w)>1?` $= ${mixTex(n,d*w)}$`:""}.`]}; },
+  ()=>{ const b=rnd(2,9),a=cpn(b),d=rnd(2,9),c=cpn(d); return {q:`Divide: $\\tfrac{${a}}{${b}} \\div \\tfrac{${c}}{${d}}$. (A fraction or mixed number is fine.)`,type:"mixed",ans:[a*d,b*c],ansTex:mixTex(a*d,b*c),hint:"Keep, change, flip: multiply by the reciprocal.",sol:[`$\\frac{${a}}{${b}} \\times \\frac{${d}}{${c}} = \\frac{${a*d}}{${b*c}}$.`,`$= ${mixTex(a*d,b*c)}$.`]}; },
+  ()=>{ const b=rnd(2,6),a=cpn(b),w1=rnd(1,4),d=rnd(2,6),c=cpn(d),w2=rnd(1,3); const N1=w1*b+a,N2=w2*d+c; return {q:`Divide: $${MIX(w1,a,b)} \\div ${MIX(w2,c,d)}$.`,type:"mixed",ans:[N1*d,b*N2],ansTex:mixTex(N1*d,b*N2),hint:"Change both mixed numbers to fractions first.",sol:[`$\\frac{${N1}}{${b}} \\div \\frac{${N2}}{${d}} = \\frac{${N1}}{${b}} \\times \\frac{${d}}{${N2}} = \\frac{${N1*d}}{${b*N2}}$.`,`$= ${mixTex(N1*d,b*N2)}$.`]}; },
+  ()=>{ const b=rnd(2,6),a=cpn(b),k=pick([2,3,4,6]); /* a/b ÷ ? = a*k/b  -> ? = 1/k */ const q=[a*k,b]; return {q:`$\\tfrac{${a}}{${b}} \\div \\square = ${mixTex(q[0],q[1])}$. What fraction goes in the box?`,type:"mixed",ans:[1,k],ansTex:`\\tfrac{1}{${k}}`,hint:"Dividing gave a bigger answer — so the box is a fraction less than 1. Think: what times the answer gives the start?",sol:[`$\\square = \\tfrac{${a}}{${b}} \\div ${mixTex(q[0],q[1])} = \\tfrac{${a}}{${b}} \\times \\tfrac{${q[1]}}{${q[0]}} = \\tfrac{1}{${k}}$.`]}; }
+ ]}
+]},
+/* ===================== Unit 2 ===================== */
+{id:"ch2",title:"Fraction Division, Ratios & Rates",topics:[
+ {id:"fword",title:"Fraction Division Word Problems",idea:"Ask one of two questions: <b>How many groups?</b> (how many $\\frac34$-cup servings in $6$ cups → $6 \\div \\frac34$) or <b>How much in one group?</b> ($\\frac23$ lb shared by $4$ → $\\frac23 \\div 4$).",
+  lesson:{steps:[["6 \\text{ cups, } \\tfrac34 \\text{ cup per serving}","How many groups of $\\frac34$ fit in $6$?"],["6 \\div \\tfrac34 = 6 \\times \\tfrac43","Multiply by the reciprocal."],["= 8 \\text{ servings}","Check: $8 \\times \\frac34 = 6$ ✓"]],warn:"Read carefully: “$\\frac34$ of $6$” is <b>multiplication</b>; “how many $\\frac34$ in $6$” is <b>division</b>."},
+  gen:[
+  ()=>{ const c=rnd(2,9),d=pick([2,3,4,8]); return {q:`How many $\\tfrac{1}{${d}}$-cup servings are in $${c}$ cups of yogurt?`,type:"number",ans:c*d,ansTex:`${c*d}`,hint:`$${c} \\div \\tfrac{1}{${d}}$.`,sol:[`$${c} \\times ${d} = ${c*d}$ servings.`]}; },
+  ()=>{ const d=pick([3,4,5,8]),n=cpn(d,2),k=rnd(3,12); const tot=n*k; if(tot%d) return {q:`How many $\\tfrac{3}{4}$-mile laps make $6$ miles?`,type:"number",ans:8,ansTex:"8",hint:"$6 \\div \\frac34$.",sol:["$6 \\times \\frac43 = 8$ laps."]}; return {q:`How many $\\tfrac{${n}}{${d}}$-mile laps make $${tot/d}$ miles?`,type:"number",ans:k,ansTex:`${k}`,hint:`$${tot/d} \\div \\tfrac{${n}}{${d}}$.`,sol:[`$${tot/d} \\times \\tfrac{${d}}{${n}} = ${k}$ laps.`]}; },
+  ()=>{ const d=rnd(2,6),n=cpn(d),k=rnd(2,6); return {q:`$\\tfrac{${n}}{${d}}$ pound of trail mix is shared equally among $${k}$ friends. How many pounds does each friend get?`,type:"mixed",ans:[n,d*k],ansTex:mixTex(n,d*k),hint:`How much in one group: $\\tfrac{${n}}{${d}} \\div ${k}$.`,sol:[`$\\tfrac{${n}}{${d}} \\times \\tfrac{1}{${k}} = ${mixTex(n,d*k)}$ lb.`]}; },
+  ()=>{ const b=rnd(2,6),a=cpn(b),d=rnd(2,6),c=cpn(d); return {q:`A rectangle has area $\\tfrac{${a}}{${b}}$ square meter and length $\\tfrac{${c}}{${d}}$ meter. What is its width?`,type:"mixed",ans:[a*d,b*c],ansTex:mixTex(a*d,b*c),hint:"Width = area ÷ length.",sol:[`$\\tfrac{${a}}{${b}} \\div \\tfrac{${c}}{${d}} = \\tfrac{${a*d}}{${b*c}} = ${mixTex(a*d,b*c)}$ m.`]}; },
+  ()=>{ const d=pick([3,4,5,6]),n=cpn(d,2),w=rnd(3,9); return {q:`A ribbon is $${w}$ feet long. How many pieces $\\tfrac{${n}}{${d}}$ foot long can be cut, as a mixed number (the last piece may be a part of a piece)?`,type:"mixed",ans:[w*d,n],ansTex:mixTex(w*d,n),hint:`$${w} \\div \\tfrac{${n}}{${d}} = ${w} \\times \\tfrac{${d}}{${n}}$.`,sol:[`$${w} \\times \\tfrac{${d}}{${n}} = \\tfrac{${w*d}}{${n}} = ${mixTex(w*d,n)}$ pieces.`]}; }
+ ]},
+ {id:"ratio",title:"Ratios",idea:"A <b>ratio</b> compares two quantities: $a$ to $b$, $a : b$, or $\\frac{a}{b}$. <b>Part-to-part</b> compares two groups; <b>part-to-whole</b> compares a group to the total. Simplify like a fraction.",
+  lesson:{steps:[["\\text{12 dogs, 18 cats}","Part-to-part: dogs to cats."],["12 : 18 = 2 : 3","Divide both by $6$."],["\\text{dogs to all pets} = 12 : 30 = 2 : 5","Part-to-whole uses the total."]],warn:"Order matters: dogs to cats is $2 : 3$, but cats to dogs is $3 : 2$."},
+  gen:[
+  ()=>{ const a=rnd(2,12),b=rnd(2,12),A=pick(["red","blue","green"]),B=pick(["yellow","white","purple"]); return {q:`A bag has $${a}$ ${A} marbles and $${b}$ ${B} marbles. Write the ratio of ${A} to ${B} marbles. (Type like 3:5.)`,type:"ratio",ans:[a,b],ansTex:`${a} : ${b}`,hint:"First quantity : second quantity.",sol:[`${A} : ${B} $= ${a} : ${b}$${gcd(a,b)>1?` $= ${a/gcd(a,b)} : ${b/gcd(a,b)}$`:""}.`]}; },
+  ()=>{ const g=rnd(2,9); let x,y; do{ x=rnd(1,9); y=rnd(1,9); }while(x===y||gcd(x,y)!==1); return {q:`Write $${g*x} : ${g*y}$ in simplest form.`,type:"ratio",simp:true,ans:[x,y],ansTex:`${x} : ${y}`,hint:"Divide both numbers by their GCF.",sol:[`GCF $= ${g}$: $${g*x} : ${g*y} = ${x} : ${y}$.`]}; },
+  ()=>{ const b=rnd(5,15),g=rnd(5,15); return {q:`A class has $${b}$ boys and $${g}$ girls. What is the ratio of girls to <b>all students</b>, in simplest form?`,type:"ratio",simp:true,ans:[g/gcd(g,b+g),(b+g)/gcd(g,b+g)],ansTex:`${g/gcd(g,b+g)} : ${(b+g)/gcd(g,b+g)}`,hint:"Part-to-whole: use the total number of students.",sol:[`Total: $${b+g}$. Girls : total $= ${g} : ${b+g}$${gcd(g,b+g)>1?` $= ${g/gcd(g,b+g)} : ${(b+g)/gcd(g,b+g)}$`:""}.`]}; },
+  ()=>{ let x,y; do{ x=rnd(1,7); y=rnd(1,7); }while(x===y||gcd(x,y)!==1); const k=rnd(3,12),A=pick(["juice","paint","sand"]); return {q:`The ratio of boys to girls in a club is $${x} : ${y}$. There are $${(x+y)*k}$ members. How many are girls?`,type:"number",ans:y*k,ansTex:`${y*k}`,hint:`There are $${x+y}$ equal parts in all.`,sol:[`One part: $${(x+y)*k} \\div ${x+y} = ${k}$.`,`Girls: $${y} \\times ${k} = ${y*k}$.`]}; },
+  ()=>{ let x,y; do{ x=rnd(1,5); y=rnd(x+1,8); }while(gcd(x,y)!==1); const k=rnd(2,6); return {q:`A box has red and blue cubes in the ratio $${x} : ${y}$. There are $${x*k}$ red cubes. How many <b>more</b> red cubes must be added so the ratio becomes $1 : 1$?`,type:"number",ans:(y-x)*k,ansTex:`${(y-x)*k}`,hint:"Find the number of blue cubes first.",sol:[`Blue: $${y} \\times ${k} = ${y*k}$.`,`Need $${y*k} - ${x*k} = ${(y-x)*k}$ more red cubes.`]}; }
+ ]},
+ {id:"rtab",title:"Ratio Tables & Double Number Lines",idea:"Equivalent ratios come from <b>multiplying or dividing both</b> quantities by the same number. A ratio table or a double number line keeps the pairs lined up.",
+  lesson:{steps:[["3 \\text{ cups flour} : 2 \\text{ eggs}","The recipe ratio."],["\\times 4:\\quad 12 \\text{ cups} : 8 \\text{ eggs}","Multiply both by $4$."],["\\div 2:\\quad 6 \\text{ cups} : 4 \\text{ eggs}","Dividing works too."]],warn:"Adding the same number to both does <b>not</b> keep the ratio: $3 : 2$ is not the same as $4 : 3$."},
+  gen:[
+  ()=>{ const a=rnd(2,9),b=rnd(2,9),k=rnd(2,8); return {q:`Complete the ratio table: $${a} : ${b} = ${a*k} : \\square$.`,type:"number",ans:b*k,ansTex:`${b*k}`,hint:`$${a}$ was multiplied by $${k}$.`,sol:[`$${b} \\times ${k} = ${b*k}$.`]}; },
+  ()=>{ const a=rnd(2,9),b=rnd(2,9),k=rnd(2,6); return {q:`Complete: $${a*k} : ${b*k} = \\square : ${b}$.`,type:"number",ans:a,ansTex:`${a}`,hint:`$${b*k}$ was divided by $${k}$.`,sol:[`$${a*k} \\div ${k} = ${a}$.`]}; },
+  ()=>{ const a=rnd(2,6),b=rnd(3,12),k=rnd(4,7); const top=[0,a,2*a,3*a,k*a],bot=[0,b,2*b,3*b,"?"]; const W=380; let o=`<line x1="20" y1="30" x2="360" y2="30" stroke="#16233B" stroke-width="2"/><line x1="20" y1="80" x2="360" y2="80" stroke="#16233B" stroke-width="2"/>`; top.forEach((t,i)=>{ const x=20+i*85; o+=`<line x1="${x}" y1="24" x2="${x}" y2="36" stroke="#16233B"/><line x1="${x}" y1="74" x2="${x}" y2="86" stroke="#16233B"/>`+TX(x,18,t)+TX(x,102,bot[i],bot[i]==="?"?'font-weight="700" fill="#B3261E"':""); }); o+=TX(372,34,"gal",'font-size="11" text-anchor="start"')+TX(372,84,"$",'font-size="11"'); return {q:`${SV(W,110,o,"double number line")}The double number line shows the cost of gas. How much do $${k*a}$ gallons cost (in dollars)?`,type:"number",ans:k*b,ansTex:`${k*b}`,hint:`Every $${a}$ gallons cost $${b}$ dollars.`,sol:[`$${k*a} = ${k} \\times ${a}$, so the cost is $${k} \\times ${b} = ${k*b}$ dollars.`]}; },
+  ()=>{ const a=rnd(2,6),b=rnd(2,9),j=rnd(2,5),k=rnd(2,5); return {q:`In a ratio table, $${a*j}$ goes with $${b*j}$, and $${a*k}$ goes with $${b*k}$. What goes with $${a*(j+k)}$?`,type:"number",ans:b*(j+k),ansTex:`${b*(j+k)}`,hint:"You can add two rows of a ratio table.",sol:[`$${a*j} + ${a*k} = ${a*(j+k)}$, so add the partners: $${b*j} + ${b*k} = ${b*(j+k)}$.`]}; },
+  ()=>{ const a=pick([4,6,8,10,12]),b=pick([3,5,7,9]),c=a/2*pick([3,5,7]); const x=b*c/a; return {q:`$${a} : ${b} = ${c} : x$. Find $x$. (It may be a decimal.)`,type:"number",ans:x,ansTex:`${x}`,hint:`Find the unit rate: how much goes with $1$? ($${b} \\div ${a}$)`,sol:[`Each $1$ goes with $${b} \\div ${a} = ${b/a}$.`,`$${c} \\times ${b/a} = ${x}$.`]}; }
+ ]},
+ {id:"rate",title:"Unit Rates",idea:"A <b>rate</b> compares two different units (miles per hour, dollars per pound). A <b>unit rate</b> tells how much for <b>one</b>: divide the first quantity by the second.",
+  lesson:{steps:[["\\$4.50 \\text{ for } 6 \\text{ apples}","Want the price of one."],["4.50 \\div 6 = 0.75","Divide money by apples."],["\\$0.75 \\text{ per apple}","Use it: $10$ apples cost $10 \\times 0.75 = \\$7.50$."]],warn:"To compare deals, compare <b>unit prices</b> — the lower price per unit is the better buy."},
+  gen:[
+  ()=>{ const r=rnd(25,70),h=rnd(2,9); return {q:`A car travels $${r*h}$ miles in $${h}$ hours. What is its speed in miles per hour?`,type:"number",ans:r,ansTex:`${r}`,hint:"Miles ÷ hours.",sol:[`$${r*h} \\div ${h} = ${r}$ mph.`]}; },
+  ()=>{ const u=rnd(15,250)/100,n=rnd(3,12); return {q:`$${n}$ cans of soup cost $\\$${(u*n).toFixed(2)}$. What is the price per can?`,type:"number",ans:dp(u),ansTex:`\\$${u.toFixed(2)}`,hint:"Total cost ÷ number of cans.",sol:[`$${(u*n).toFixed(2)} \\div ${n} = ${u.toFixed(2)}$.`]}; },
+  ()=>{ let a,b,u,v; do{ a=rnd(3,8); b=rnd(9,16); u=rnd(40,150)/100; v=rnd(40,150)/100; }while(Math.abs(u-v)<0.03); const A=`$${a}$ for $\\$${(a*u).toFixed(2)}$`,B=`$${b}$ for $\\$${(b*v).toFixed(2)}$`; const best=u<v?"A":"B"; return {q:`Which is the better buy for granola bars? <br>A: ${A} &nbsp;&nbsp; B: ${B} <br>(Type A or B.)`,type:"mc",ans:best,ansTex:`\\text{${best}}`,hint:"Find the price per bar for each.",sol:[`A: $${(a*u).toFixed(2)} \\div ${a} = ${u.toFixed(2)}$ per bar. B: $${(b*v).toFixed(2)} \\div ${b} = ${v.toFixed(2)}$ per bar.`,`${best} is cheaper per bar.`]}; },
+  ()=>{ const r=rnd(3,12),h=rnd(2,6),t=rnd(7,20); return {q:`A printer prints $${r*h}$ pages in $${h}$ minutes. At the same rate, how many pages does it print in $${t}$ minutes?`,type:"number",ans:r*t,ansTex:`${r*t}`,hint:"Find the unit rate (pages per minute) first.",sol:[`$${r*h} \\div ${h} = ${r}$ pages per minute.`,`$${r} \\times ${t} = ${r*t}$ pages.`]}; },
+  ()=>{ const pr=pick([[3,6,2],[4,12,3],[6,3,2],[2,3,1.2],[4,4,2],[6,12,4],[10,15,6],[3,3,1.5]]); return {q:`${nm()} can paint a fence in $${pr[0]}$ hours. ${nm()} can paint the same fence in $${pr[1]}$ hours. Working together, how many hours will it take?`,type:"number",ans:pr[2],ansTex:`${pr[2]}`,hint:`Unit rates: each hour, one paints $\\frac{1}{${pr[0]}}$ of the fence and the other $\\frac{1}{${pr[1]}}$.`,sol:[`Together: $\\frac{1}{${pr[0]}} + \\frac{1}{${pr[1]}}$ of the fence per hour $= \\frac{1}{${pr[2]}}$.`,`So it takes $${pr[2]}$ hours.`]}; }
+ ]},
+ {id:"pct",title:"Percents",idea:"<b>Percent</b> means “per $100$”: $35\\% = \\frac{35}{100} = 0.35$. To find a percent of a number, multiply. To find the whole from a part, divide the part by the percent.",
+  lesson:{steps:[["25\\% \\text{ of } 80","$25\\% = \\frac14$."],["\\tfrac14 \\times 80 = 20","Or $0.25 \\times 80 = 20$."],["15 \\text{ is } 30\\% \\text{ of } ? \\Rightarrow 15 \\div 0.30 = 50","Part ÷ percent = whole."]],warn:"$\\%$ of a number is never bigger than the number unless the percent is over $100\\%$."},
+  gen:[
+  ()=>{ const p=pick([10,20,25,50,75,5,40]),n=pick([20,40,60,80,100,120,200,360]); return {q:`What is $${p}\\%$ of $${n}$?`,type:"number",ans:p*n/100,ansTex:`${p*n/100}`,hint:`$${p}\\% = \\frac{${p}}{100}$.`,sol:[`$${p/100} \\times ${n} = ${p*n/100}$.`]}; },
+  ()=>{ const F=pick([[1,4],[3,4],[1,5],[2,5],[3,10],[7,20],[9,25],[1,2],[3,50]]); return {q:`Write $\\tfrac{${F[0]}}{${F[1]}}$ as a percent. (Type just the number.)`,type:"number",ans:F[0]*100/F[1],ansTex:`${F[0]*100/F[1]}\\%`,hint:"Make the denominator $100$.",sol:[`$\\tfrac{${F[0]}}{${F[1]}} = \\tfrac{${F[0]*100/F[1]}}{100} = ${F[0]*100/F[1]}\\%$.`]}; },
+  ()=>{ const p=pick([10,20,25,40,50,30,60]),w=pick([20,40,50,80,120,150,200]); const part=p*w/100; return {q:`$${part}$ is $${p}\\%$ of what number?`,type:"number",ans:w,ansTex:`${w}`,hint:"Part ÷ percent (as a decimal) = whole.",sol:[`$${part} \\div ${p/100} = ${w}$.`]}; },
+  ()=>{ const bill=rnd(12,80)+pick([0,0.5]),p=pick([15,18,20]); return {q:`A meal costs $\\$${bill.toFixed(2)}$. How much is a $${p}\\%$ tip?`,type:"number",tol:0.006,ans:bill*p/100,ansTex:`\\$${(bill*p/100).toFixed(2)}`,hint:`Multiply by $${p/100}$.`,sol:[`$${bill.toFixed(2)} \\times ${p/100} = ${(bill*p/100).toFixed(3).replace(/0$/,"")}$ ≈ $\\$${(bill*p/100).toFixed(2)}$.`]}; },
+  ()=>{ const w=pick([20,25,40,50,80]),p=pick([5,10,15,20,30,35,45,60,75]); const part=w*p/100; if(!Number.isInteger(part*10)) return {q:`What percent of $40$ is $18$?`,type:"number",ans:45,ansTex:"45\\%",hint:"Part ÷ whole, then × 100.",sol:["$18 \\div 40 = 0.45 = 45\\%$."]}; return {q:`What percent of $${w}$ is $${part}$?`,type:"number",ans:p,ansTex:`${p}\\%`,hint:"Part ÷ whole, then multiply by $100$.",sol:[`$${part} \\div ${w} = ${p/100} = ${p}\\%$.`]}; }
+ ]}
+]},
+/* ===================== Unit 3 ===================== */
+{id:"ch3",title:"Rational Numbers & the Coordinate Plane",topics:[
+ {id:"neg",title:"Positive & Negative Numbers",idea:"<b>Negative</b> numbers are less than $0$ and sit to its <b>left</b> on a number line. <b>Opposites</b> are the same distance from $0$ on opposite sides: $5$ and $-5$. Negatives describe below zero, losses, debts and depths.",
+  lesson:{fig:nl6(-6,6,[{v:-4,lab:"−4"},{v:4,lab:"4",c:"#0F7C7C"}]),steps:[["-4 \\text{ and } 4","Both are $4$ units from $0$."],["\\text{opposites}","Same distance, opposite sides."],["-(-4) = 4","The opposite of the opposite is the number itself."]],warn:"$-8$ is <b>less</b> than $-3$ even though $8 > 3$: it is farther left."},
+  gen:[
+  ()=>{ const n=nz(-25,25); return {q:`What is the opposite of $${n}$?`,type:"number",ans:-n,ansTex:`${-n}`,hint:"Same distance from $0$, other side.",sol:[`The opposite of $${n}$ is $${-n}$.`]}; },
+  ()=>{ const S=pick([[`The temperature is $VAL$ degrees below zero.`,-1],[`A diver is $VAL$ feet below sea level.`,-1],[`${nm()} owes $VAL$ dollars.`,-1],[`A plane flies $VAL$ feet above sea level.`,1],[`A team gains $VAL$ yards.`,1],[`A stock loses $VAL$ dollars.`,-1]]),v=rnd(2,60); return {q:`${S[0].replace("VAL",v)} Write this as a positive or negative number.`,type:"number",ans:S[1]*v,ansTex:`${S[1]*v}`,hint:"Below, owe, lose → negative. Above, gain → positive.",sol:[`$${S[1]*v}$.`]}; },
+  ()=>{ const v=nz(-7,7); return {q:`${nl6(-8,8,[{v,lab:"P"}])}What number is at point $P$?`,type:"number",ans:v,ansTex:`${v}`,hint:"Count from $0$; left of $0$ is negative.",sol:[`$P = ${v}$.`]}; },
+  ()=>{ const a=-rnd(2,15),b=rnd(1,20); return {q:`At 6 a.m. the temperature was $${a}^\\circ$F. By noon it was $${b}^\\circ$F. How many degrees did it rise?`,type:"number",ans:b-a,ansTex:`${b-a}`,hint:`From $${a}$ up to $0$, then from $0$ up to $${b}$.`,sol:[`$${-a} + ${b} = ${b-a}$ degrees.`]}; },
+  ()=>{ const h=rnd(100,3000),d=rnd(50,500); return {q:`A hiker is on a mountain at $${N(h)}$ feet above sea level. A submarine is $${d}$ feet below sea level. How many feet apart are they vertically?`,type:"number",ans:h+d,ansTex:N(h+d),hint:"Distance from the hiker to sea level plus sea level to the submarine.",sol:[`$${N(h)} + ${d} = ${N(h+d)}$ feet.`]}; }
+ ]},
+ {id:"ord",title:"Comparing & Ordering Rational Numbers",idea:"On a number line, numbers <b>increase to the right</b>. Any positive is greater than any negative. Between two negatives, the one <b>closer to $0$</b> is greater.",
+  lesson:{fig:nl6(-5,5,[{v:-3,lab:"−3"},{v:-1,lab:"−1",c:"#0F7C7C"}]),steps:[["-3\\ \\square\\ -1","Place both on the number line."],["-1 \\text{ is to the right}","Right means greater."],["-3 < -1","$-1$ is closer to $0$."]],warn:"$-0.5$ is greater than $-0.75$: half a degree below zero is warmer than three-quarters below."},
+  gen:[
+  ()=>{ let a,b; do{ a=rnd(-20,20); b=rnd(-20,20); }while(a===b); return {q:`Compare: $${a}\\ \\square\\ ${b}$. (Type &lt;, &gt; or =.)`,type:"cmp",ans:CMPW(a,b),ansTex:`${a} ${CMPW(a,b)} ${b}`,hint:"Which is farther right on a number line?",sol:[`$${a} ${CMPW(a,b)} ${b}$.`]}; },
+  ()=>{ const P_=pick([[-0.5,"-0.5",-0.25,"-0.25"],[-0.75,"-\\tfrac34",-0.7,"-0.7"],[-1.2,"-1.2",-1.25,"-1.25"],[-0.6,"-0.6",-0.66,"-0.66"],[-2.5,"-2\\tfrac12",-2.4,"-2.4"],[-0.2,"-\\tfrac15",-0.25,"-\\tfrac14"]]),sw=Math.random()<.5,[a,at,b,bt]=sw?[P_[2],P_[3],P_[0],P_[1]]:P_; return {q:`Compare: $${at}\\ \\square\\ ${bt}$.`,type:"cmp",ans:CMPW(a,b),ansTex:`${at} ${CMPW(a,b)} ${bt}`,hint:"Between negatives, the one closer to $0$ is greater.",sol:[`$${at} = ${a}$ and $${bt} = ${b}$; $${at} ${CMPW(a,b)} ${bt}$.`]}; },
+  ()=>{ const xs=new Set(); while(xs.size<4) xs.add(rnd(-30,30)/pick([1,10])); const a=[...xs],c=Math.min(...a); return mcList("Which number is the <b>least</b>?",`$${c}$`,a.filter(x=>x!==c).map(x=>`$${x}$`),"The least is farthest left on the number line.",[`$${c}$ is farthest left.`]); },
+  ()=>{ const a=rnd(2,12),b=rnd(2,12),k=pick([0,1]); const L=-a, R=k?Math.abs(-b):-Math.abs(b); return {q:`Compare: $-${a}\\ \\square\\ ${k?`|-${b}|`:`-|${b}|`}$.`,type:"cmp",ans:CMPW(L,R),ansTex:`-${a} ${CMPW(L,R)} ${R}`,hint:"Find the absolute value first, then compare.",sol:[`$${k?`|-${b}|`:`-|${b}|`} = ${R}$.`,`$-${a} ${CMPW(L,R)} ${R}$.`]}; },
+  ()=>{ const a=-rnd(2,15),b=rnd(1,15); return {q:`How many integers are strictly between $${a}$ and $${b}$?`,type:"number",ans:b-a-1,ansTex:`${b-a-1}`,hint:`Count the negatives ${a+1} to −1, then 0, then 1 to ${b-1}.`,sol:[`From $${a+1}$ to $${b-1}$: $${b-1} - (${a+1}) + 1 = ${b-a-1}$ integers.`]}; }
+ ]},
+ {id:"abs",title:"Absolute Value",idea:"The <b>absolute value</b> $|a|$ is the <b>distance</b> from $a$ to $0$, so it is never negative: $|-7| = 7$ and $|7| = 7$.",
+  lesson:{fig:nl6(-8,8,[{v:-7,lab:"−7"},{v:7,lab:"7",c:"#0F7C7C"}]),steps:[["|-7|","How far is $-7$ from $0$?"],["7 \\text{ units}","Count the jumps."],["|-7| = 7 = |7|","Opposites have the same absolute value."]],warn:"$-|5| = -5$: take the absolute value first, then the negative sign outside."},
+  gen:[
+  ()=>{ const n=nz(-50,50); return {q:`Find $|${n}|$.`,type:"number",ans:Math.abs(n),ansTex:`${Math.abs(n)}`,hint:"Distance from $0$.",sol:[`$|${n}| = ${Math.abs(n)}$.`]}; },
+  ()=>{ const a=nz(-20,20),b=nz(-20,20); return {q:`Find $|${a}| + |${b}|$.`,type:"number",ans:Math.abs(a)+Math.abs(b),ansTex:`${Math.abs(a)+Math.abs(b)}`,hint:"Find each absolute value, then add.",sol:[`$${Math.abs(a)} + ${Math.abs(b)} = ${Math.abs(a)+Math.abs(b)}$.`]}; },
+  ()=>{ let a,b; do{ a=nz(-15,15); b=nz(-15,15); }while(Math.abs(a)===Math.abs(b)); return {q:`Compare: $|${a}|\\ \\square\\ |${b}|$.`,type:"cmp",ans:CMPW(Math.abs(a),Math.abs(b)),ansTex:`${Math.abs(a)} ${CMPW(Math.abs(a),Math.abs(b))} ${Math.abs(b)}`,hint:"Which number is farther from $0$?",sol:[`$${Math.abs(a)} ${CMPW(Math.abs(a),Math.abs(b))} ${Math.abs(b)}$.`]}; },
+  ()=>{ const k=rnd(1,20); return {q:`Find all numbers $x$ with $|x| = ${k}$. (List both, separated by a comma.)`,type:"list",ans:[k,-k],ansTex:`${k},\\ -${k}`,hint:`Which two numbers are $${k}$ units from $0$?`,sol:[`$x = ${k}$ or $x = -${k}$.`]}; },
+  ()=>{ const a=rnd(20,90),b=rnd(20,90); if(a===b) return {q:`Account A has a balance of $-\\$40$. Account B has $-\\$55$. Which debt is larger, in dollars?`,type:"number",ans:55,ansTex:"55",hint:"Debt = absolute value of a negative balance.",sol:["$|-55| = 55 > 40$."]}; return {q:`Account A has a balance of $-\\$${a}$ and account B has $-\\$${b}$. How many dollars larger is the bigger <b>debt</b>?`,type:"number",ans:Math.abs(a-b),ansTex:`${Math.abs(a-b)}`,hint:"Debts are the absolute values of the negative balances.",sol:[`Debts: $${a}$ and $${b}$.`,`Difference: $${Math.abs(a-b)}$.`]}; }
+ ]},
+ {id:"coord",title:"The Coordinate Plane",idea:"A point $(x, y)$: go <b>right/left</b> $x$, then <b>up/down</b> $y$. The signs tell the quadrant: I $(+,+)$, II $(-,+)$, III $(-,-)$, IV $(+,-)$. Reflecting over an axis flips one sign.",
+  lesson:{fig:grid6(6,[[3,2,"A"],[-4,1,"B"],[-2,-3,"C"]]),steps:[["A(3, 2)","Right $3$, up $2$: Quadrant I."],["B(-4, 1)","Left $4$, up $1$: Quadrant II."],["C(-2, -3)","Left $2$, down $3$: Quadrant III."]],warn:"The order matters: $(2, 5)$ and $(5, 2)$ are different points — $x$ always comes first."},
+  gen:[
+  ()=>{ const x=nz(-9,9),y=nz(-9,9),q=x>0?(y>0?"I":"IV"):(y>0?"II":"III"); return {q:`In which quadrant is the point $(${x}, ${y})$? (Type I, II, III or IV.)`,type:"word",opts:["I","II","III","IV"],ans:q,ansTex:`\\text{${q}}`,hint:"Look at the signs of $x$ and $y$.",sol:[`Signs $(${x>0?"+":"-"}, ${y>0?"+":"-"})$: Quadrant ${q}.`]}; },
+  ()=>{ const x=nz(-9,9),y=nz(-9,9); return {q:`Reflect $(${x}, ${y})$ over the <b>x-axis</b>. What is the new point?`,type:"point",ans:[x,-y],ansTex:pt(x,-y),hint:"Over the x-axis: the y-coordinate changes sign.",sol:[`$(${x}, ${-y})$.`]}; },
+  ()=>{ const x=nz(-9,9),y=nz(-9,9); return {q:`Reflect $(${x}, ${y})$ over the <b>y-axis</b>. What is the new point?`,type:"point",ans:[-x,y],ansTex:pt(-x,y),hint:"Over the y-axis: the x-coordinate changes sign.",sol:[`$(${-x}, ${y})$.`]}; },
+  ()=>{ const x=nz(-5,5),y=nz(-5,5); return {q:`${grid6(6,[[x,y,"P"]])}What are the coordinates of point $P$?`,type:"point",ans:[x,y],ansTex:pt(x,y),hint:"Count across first ($x$), then up or down ($y$).",sol:[`$P = ${pt(x,y)}$.`]}; },
+  ()=>{ const x=nz(-6,6),y=nz(-6,6),dx=nz(-7,7),dy=nz(-7,7); return {q:`Start at $(${x}, ${y})$. Move $${Math.abs(dx)}$ units ${dx>0?"right":"left"} and $${Math.abs(dy)}$ units ${dy>0?"up":"down"}, then reflect over the y-axis. Where are you?`,type:"point",ans:[-(x+dx),y+dy],ansTex:pt(-(x+dx),y+dy),hint:"Do the moves in order: change $x$ and $y$, then flip the sign of $x$.",sol:[`After moving: $(${x+dx}, ${y+dy})$.`,`Reflect over the y-axis: $${pt(-(x+dx),y+dy)}$.`]}; }
+ ]},
+ {id:"cdist",title:"Distance on the Coordinate Plane",idea:"If two points share the <b>same $x$</b> or the <b>same $y$</b>, the distance is along one line: subtract the other coordinates if they have the same sign, or <b>add their absolute values</b> if the signs are different.",
+  lesson:{fig:grid6(6,[[-3,2,"A"],[4,2,"B"]]),steps:[["A(-3, 2),\\ B(4, 2)","Same $y$: a horizontal segment."],["|-3| + |4| = 3 + 4","Opposite sides of the y-axis: add the distances to it."],["AB = 7","Count the squares to check."]],warn:"Distance is never negative. For $(2, 5)$ and $(2, -3)$: $5 + 3 = 8$, not $5 - 3$."},
+  gen:[
+  ()=>{ const y=nz(-8,8); let a,b; do{ a=rnd(1,9); b=rnd(1,9); }while(a===b); return {q:`Find the distance between $(${a}, ${y})$ and $(${b}, ${y})$.`,type:"number",ans:Math.abs(a-b),ansTex:`${Math.abs(a-b)}`,hint:"Same $y$: subtract the $x$-coordinates.",sol:[`$|${a} - ${b}| = ${Math.abs(a-b)}$.`]}; },
+  ()=>{ const x=nz(-8,8),a=rnd(1,9),b=-rnd(1,9); return {q:`Find the distance between $(${x}, ${a})$ and $(${x}, ${b})$.`,type:"number",ans:a-b,ansTex:`${a-b}`,hint:"Opposite sides of the x-axis: add the absolute values.",sol:[`$|${a}| + |${b}| = ${a-b}$.`]}; },
+  ()=>{ const y=nz(-5,5),a=-rnd(1,5),b=rnd(1,5); return {q:`${grid6(6,[[a,y,"A"],[b,y,"B"]])}How long is segment $AB$?`,type:"number",ans:b-a,ansTex:`${b-a}`,hint:"Count the units, or add the distances on each side of the y-axis.",sol:[`$${-a} + ${b} = ${b-a}$.`]}; },
+  ()=>{ const x1=-rnd(1,6),x2=rnd(1,6),y1=-rnd(1,6),y2=rnd(1,6); return {q:`A rectangle has vertices $(${x1}, ${y1})$, $(${x2}, ${y1})$, $(${x2}, ${y2})$ and $(${x1}, ${y2})$. What is its perimeter?`,type:"number",ans:2*(x2-x1+y2-y1),ansTex:`${2*(x2-x1+y2-y1)}`,hint:"Find the width and the height, then add all four sides.",sol:[`Width $${x2-x1}$, height $${y2-y1}$.`,`Perimeter $= 2(${x2-x1}) + 2(${y2-y1}) = ${2*(x2-x1+y2-y1)}$.`]}; },
+  ()=>{ const x=nz(-5,5),y=rnd(-5,5),d=rnd(3,9),up=Math.random()<.5; return {q:`Point $A$ is at $(${x}, ${y})$. Point $B$ is directly ${up?"above":"below"} $A$ and $${d}$ units away. What is the $y$-coordinate of $B$?`,type:"number",ans:up?y+d:y-d,ansTex:`${up?y+d:y-d}`,hint:`${up?"Above: add":"Below: subtract"} the distance.`,sol:[`$${y} ${up?"+":"-"} ${d} = ${up?y+d:y-d}$; $B = ${pt(x,up?y+d:y-d)}$.`]}; }
+ ]}
+]}
+];
+/* ===================== Unit 4 ===================== */
+CHAPTERS.push(
+{id:"ch4",title:"Expressions, Equations & Inequalities",topics:[
+ {id:"expo",title:"Exponents & Order of Operations",idea:"An <b>exponent</b> counts repeated multiplication: $2^5 = 2 \\cdot 2 \\cdot 2 \\cdot 2 \\cdot 2 = 32$. Order of operations: <b>P</b>arentheses, <b>E</b>xponents, <b>M</b>ultiply/<b>D</b>ivide left to right, <b>A</b>dd/<b>S</b>ubtract left to right.",
+  lesson:{steps:[["3 + 2 \\cdot (8 - 5)^2","Parentheses first: $8 - 5 = 3$."],["3 + 2 \\cdot 3^2 = 3 + 2 \\cdot 9","Exponent next: $3^2 = 9$."],["3 + 18 = 21","Multiply, then add."]],warn:"$3^2$ means $3 \\cdot 3 = 9$, <b>not</b> $3 \\cdot 2 = 6$."},
+  gen:[
+  ()=>{ const b=rnd(2,9),e=b<=3?rnd(2,5):rnd(2,3); return {q:`Evaluate $${b}^${e}$.`,type:"number",ans:b**e,ansTex:`${b**e}`,hint:`Multiply $${b}$ by itself $${e}$ times.`,sol:[`$${Array(e).fill(b).join(" \\cdot ")} = ${b**e}$.`]}; },
+  ()=>{ const a=rnd(2,12),b=rnd(2,9),c=rnd(2,9); return {q:`Evaluate: $${a} + ${b} \\times ${c}$.`,type:"number",ans:a+b*c,ansTex:`${a+b*c}`,hint:"Multiply before you add.",sol:[`$${b} \\times ${c} = ${b*c}$.`,`$${a} + ${b*c} = ${a+b*c}$.`]}; },
+  ()=>{ const a=rnd(2,6),b=rnd(1,9),c=rnd(1,5),d=rnd(2,4); return {q:`Evaluate: $${a}(${b} + ${c})^${d===4?2:d} - ${b}$.`,type:"number",ans:a*(b+c)**(d===4?2:d)-b,ansTex:`${a*(b+c)**(d===4?2:d)-b}`,hint:"Parentheses, then the exponent, then multiply, then subtract.",sol:[`$(${b+c})^${d===4?2:d} = ${(b+c)**(d===4?2:d)}$.`,`$${a} \\cdot ${(b+c)**(d===4?2:d)} - ${b} = ${a*(b+c)**(d===4?2:d)-b}$.`]}; },
+  ()=>{ const q=rnd(2,9),b=rnd(2,6),a=q*b*b,c=rnd(1,20); return {q:`Evaluate: $${a} \\div ${b}^2 + ${c}$.`,type:"number",ans:q+c,ansTex:`${q+c}`,hint:"Exponent first, then divide, then add.",sol:[`$${b}^2 = ${b*b}$.`,`$${a} \\div ${b*b} = ${q}$; $${q} + ${c} = ${q+c}$.`]}; },
+  ()=>{ const F=pick([[1,2,3],[2,3,2],[1,3,2],[3,4,2],[1,2,4],[2,5,2]]); const n=F[0]**F[2],d=F[1]**F[2]; return pick([{q:`Evaluate $\\left(\\tfrac{${F[0]}}{${F[1]}}\\right)^${F[2]}$.`,type:"mixed",ans:[n,d],ansTex:`\\tfrac{${n}}{${d}}`,hint:"Raise the top and the bottom to the power.",sol:[`$\\tfrac{${F[0]}^${F[2]}}{${F[1]}^${F[2]}} = \\tfrac{${n}}{${d}}$.`]},{q:`Evaluate $0.${F[0]}^${F[2]}$.`,type:"number",ans:dp((F[0]/10)**F[2]),ansTex:`${dp((F[0]/10)**F[2])}`,hint:`Multiply $0.${F[0]}$ by itself $${F[2]}$ times; count decimal places.`,sol:[`$${F[0]}^${F[2]} = ${F[0]**F[2]}$ with $${F[2]}$ decimal places: $${dp((F[0]/10)**F[2])}$.`]}]); }
+ ]},
+ {id:"wexp",title:"Writing & Evaluating Expressions",idea:"Turn words into math: <b>sum</b> $+$, <b>difference</b> $-$, <b>product</b> $\\times$, <b>quotient</b> $\\div$. “$5$ less than $n$” is $n - 5$ (order flips!). To <b>evaluate</b>, substitute the value and compute.",
+  lesson:{steps:[["\\text{3 times a number, plus 7}","Let the number be $n$."],["3n + 7","“Times” → $3n$; “plus 7” → $+ 7$."],["n = 5:\\ 3(5) + 7 = 22","Substitute, then use order of operations."]],warn:"“$4$ less than $x$” is $x - 4$, not $4 - x$."},
+  gen:[
+  ()=>{ const a=rnd(2,9),b=rnd(1,20),x=rnd(2,10); return {q:`Evaluate $${a}x + ${b}$ when $x = ${x}$.`,type:"number",ans:a*x+b,ansTex:`${a*x+b}`,hint:"Replace $x$ with the number.",sol:[`$${a}(${x}) + ${b} = ${a*x} + ${b} = ${a*x+b}$.`]}; },
+  ()=>{ const P=pick([["the sum of a number $n$ and $K$","n + K"],["$K$ less than a number $n$","n - K"],["the product of $K$ and a number $n$","K*n"],["a number $n$ divided by $K$","n/K"],["$K$ more than twice a number $n$","2n + K"],["the difference of a number $n$ and $K$","n - K"],["$K$ times the sum of a number $n$ and 1","K(n + 1)"]]),K=rnd(2,12); return {q:`Write an expression for ${P[0].replace("K",K)}.`,type:"expr",ans:P[1].replace(/K/g,K),ansTex:P[1].replace(/K/g,K).replace("*",""),hint:"Use $n$ for the number. Watch the order for “less than”.",sol:[`$${P[1].replace(/K/g,K).replace("*","")}$.`]}; },
+  ()=>{ const x=rnd(2,6),y=rnd(2,6); return {q:`Evaluate $x^2 + 3y$ when $x = ${x}$ and $y = ${y}$.`,type:"number",ans:x*x+3*y,ansTex:`${x*x+3*y}`,hint:"Square first, then add.",sol:[`$${x}^2 + 3(${y}) = ${x*x} + ${3*y} = ${x*x+3*y}$.`]}; },
+  ()=>{ const f=rnd(15,40),p=rnd(3,9),h=rnd(2,8); return {q:`A gym charges a $\\$${f}$ sign-up fee plus $\\$${p}$ per visit. Write an expression for the cost of $v$ visits.`,type:"expr",ans:`${f} + ${p}v`,ansTex:`${f} + ${p}v`,hint:"Fee once, plus price × visits.",sol:[`$${f} + ${p}v$. (For $${h}$ visits: $${f} + ${p*h} = ${f+p*h}$ dollars.)`]}; },
+  ()=>{ const s=rnd(3,9); return {q:`A square has side length $s$. Its perimeter is $4s$ and its area is $s^2$. When $s = ${s}$, how much bigger is the area than the perimeter?`,type:"number",ans:s*s-4*s,ansTex:`${s*s-4*s}`,hint:"Evaluate both expressions, then subtract.",sol:[`Area $${s*s}$, perimeter $${4*s}$.`,`$${s*s} - ${4*s} = ${s*s-4*s}$.`]}; }
+ ]},
+ {id:"eqv",title:"Equivalent Expressions",idea:"Equivalent expressions are equal for <b>every</b> value of the variable. Use the <b>distributive property</b> $a(b + c) = ab + ac$ and <b>combine like terms</b> ($3x + 5x = 8x$).",
+  lesson:{steps:[["3(x + 4) + 2x","Distribute the $3$."],["3x + 12 + 2x","Like terms: $3x$ and $2x$."],["5x + 12","Equivalent to the start for every $x$."]],warn:"$3(x + 4)$ is $3x + 12$, not $3x + 4$: multiply <b>every</b> term inside."},
+  gen:[
+  ()=>{ const a=rnd(2,9),b=rnd(1,12); return {q:`Use the distributive property: $${a}(x + ${b})$.`,type:"expr",form:"combined",ans:`${a}x + ${a*b}`,ansTex:`${a}x + ${a*b}`,hint:`Multiply $${a}$ by $x$ and by $${b}$.`,sol:[`$${a}x + ${a*b}$.`]}; },
+  ()=>{ const a=rnd(2,9),b=rnd(2,9),c=rnd(1,15); return {q:`Combine like terms: $${a}x + ${c} + ${b}x$.`,type:"expr",form:"combined",ans:`${a+b}x + ${c}`,ansTex:`${a+b}x + ${c}`,hint:"Add the $x$ terms.",sol:[`$(${a} + ${b})x + ${c} = ${a+b}x + ${c}$.`]}; },
+  ()=>{ const g=rnd(2,9),p=rnd(2,7),q=rnd(1,9); if(gcd(p,q)!==1) return {q:`Factor out the GCF: $12x + 18$.`,type:"expr",ans:"6(2x + 3)",form:"factored",ansTex:"6(2x + 3)",hint:"GCF of $12$ and $18$.",sol:["$6(2x + 3)$."]}; return {q:`Factor out the GCF: $${g*p}x + ${g*q}$.`,type:"expr",form:"factored",ans:`${g}(${p}x + ${q})`,ansTex:`${g}(${p}x + ${q})`,hint:`The GCF of $${g*p}$ and $${g*q}$ is $${g}$.`,sol:[`$${g}(${p}x + ${q})$.`]}; },
+  ()=>{ const a=rnd(2,6),b=rnd(1,8),c=rnd(2,6); return {q:`Simplify: $${a}(x + ${b}) + ${c}x$.`,type:"expr",form:"combined",ans:`${a+c}x + ${a*b}`,ansTex:`${a+c}x + ${a*b}`,hint:"Distribute, then combine like terms.",sol:[`$${a}x + ${a*b} + ${c}x$.`,`$${a+c}x + ${a*b}$.`]}; },
+  ()=>{ const a=rnd(2,5),b=rnd(1,6),c=rnd(2,4),d=rnd(1,6); return {q:`Simplify: $${a}(2x + ${b}) + ${c}(x + ${d})$.`,type:"expr",form:"combined",ans:`${2*a+c}x + ${a*b+c*d}`,ansTex:`${2*a+c}x + ${a*b+c*d}`,hint:"Distribute both, then combine the $x$ terms and the numbers.",sol:[`$${2*a}x + ${a*b} + ${c}x + ${c*d}$.`,`$${2*a+c}x + ${a*b+c*d}$.`]}; }
+ ]},
+ {id:"oneq",title:"One-Step Equations",idea:"An equation is a <b>balance</b>. Undo the operation by doing the <b>opposite</b> to both sides: subtract to undo adding, divide to undo multiplying.",
+  lesson:{steps:[["x + 7 = 19","$7$ is added to $x$."],["x + 7 - 7 = 19 - 7","Subtract $7$ from both sides."],["x = 12","Check: $12 + 7 = 19$ ✓"]],warn:"Whatever you do to one side, do to the <b>other</b> — or the balance tips."},
+  gen:[
+  ()=>{ const x=rnd(2,50),a=rnd(2,40); return {q:`Solve: $x + ${a} = ${x+a}$.`,type:"number",ans:x,ansTex:`x = ${x}`,hint:`Subtract $${a}$ from both sides.`,sol:[`$x = ${x+a} - ${a} = ${x}$.`]}; },
+  ()=>{ const x=rnd(2,15),a=rnd(2,12); return {q:`Solve: $${a}x = ${a*x}$.`,type:"number",ans:x,ansTex:`x = ${x}`,hint:`Divide both sides by $${a}$.`,sol:[`$x = ${a*x} \\div ${a} = ${x}$.`]}; },
+  ()=>{ const x=rnd(2,12),a=rnd(2,9); return {q:`Solve: $\\dfrac{x}{${a}} = ${x}$.`,type:"number",ans:a*x,ansTex:`x = ${a*x}`,hint:`Multiply both sides by $${a}$.`,sol:[`$x = ${x} \\times ${a} = ${a*x}$.`]}; },
+  ()=>{ const x=rnd(10,99)/10,a=rnd(10,99)/10; return {q:`Solve: $x - ${a} = ${dp(x)}$.`,type:"number",ans:dp(x+a),ansTex:`x = ${dp(x+a)}`,hint:`Add $${a}$ to both sides.`,sol:[`$x = ${dp(x)} + ${a} = ${dp(x+a)}$.`]}; },
+  ()=>{ const b=rnd(2,6),a=rnd(1,b-1),k=rnd(2,9); if(gcd(a,b)!==1) return {q:`Solve: $\\tfrac{2}{3}x = 10$.`,type:"number",ans:15,ansTex:"x = 15",hint:"Multiply by the reciprocal $\\frac32$.",sol:["$x = 10 \\cdot \\tfrac32 = 15$."]}; return {q:`Solve: $\\tfrac{${a}}{${b}}x = ${a*k}$.`,type:"number",ans:b*k,ansTex:`x = ${b*k}`,hint:`Multiply both sides by the reciprocal $\\tfrac{${b}}{${a}}$.`,sol:[`$x = ${a*k} \\cdot \\tfrac{${b}}{${a}} = ${b*k}$.`]}; }
+ ]},
+ {id:"ineq6",title:"Inequalities & Two Variables",idea:"An <b>inequality</b> like $x > 3$ has <b>many</b> solutions — every number to the right of $3$. In a two-variable relationship, the <b>independent</b> variable is the input you choose; the <b>dependent</b> variable depends on it ($y = 4x$).",
+  lesson:{fig:nl6(-1,8,[{v:3,lab:"3"}]),steps:[["x + 2 > 5","Undo $+ 2$ like an equation."],["x > 3","An open circle at $3$, shade right."],["y = 4x:\\ x = 6 \\Rightarrow y = 24","$x$ is the input, $y$ the output."]],warn:"“At least” means $\\ge$ and “at most” means $\\le$ — the endpoint is included."},
+  gen:[
+  ()=>{ const a=rnd(1,15),b=a+rnd(2,20),op=pick(["\\gt","\\lt","\\ge","\\le"]),o2={"\\gt":">","\\lt":"<","\\ge":">=","\\le":"<="}[op]; return {q:`Solve: $x + ${a} ${op} ${b}$. (Type like x &gt; 4.)`,type:"ineq",ans:{op:o2,v:b-a},ansTex:`x ${op} ${b-a}`,hint:`Subtract $${a}$ from both sides.`,sol:[`$x ${op} ${b} - ${a}$, so $x ${op} ${b-a}$.`]}; },
+  ()=>{ const a=rnd(2,9),v=rnd(2,12),op=pick(["\\gt","\\lt","\\ge","\\le"]),o2={"\\gt":">","\\lt":"<","\\ge":">=","\\le":"<="}[op]; return {q:`Solve: $${a}x ${op} ${a*v}$.`,type:"ineq",ans:{op:o2,v},ansTex:`x ${op} ${v}`,hint:`Divide both sides by $${a}$ (a positive number, so the sign stays).`,sol:[`$x ${op} ${v}$.`]}; },
+  ()=>{ const P=pick([["You must be at least $K$ years old.",">="],["The elevator holds at most $K$ people.","<="],["The temperature stayed below $K$ degrees.","<"],["More than $K$ people came.",">"]]),K=rnd(5,60); return {q:`Write an inequality for $x$: ${P[0].replace("K",K)}`,type:"ineq",ans:{op:P[1],v:K},ansTex:`x ${({">=":"\\ge","<=":"\\le",">":"\\gt","<":"\\lt"})[P[1]]} ${K}`,hint:"At least ≥, at most ≤, below <, more than >.",sol:[`$x ${({">=":"\\ge","<=":"\\le",">":"\\gt","<":"\\lt"})[P[1]]} ${K}$.`]}; },
+  ()=>{ const m=rnd(2,12),x=rnd(3,15); return {q:`Tickets cost $\\$${m}$ each. Let $t$ = number of tickets and $c$ = total cost, so $c = ${m}t$. What is $c$ when $t = ${x}$?`,type:"number",ans:m*x,ansTex:`${m*x}`,hint:"Substitute the input.",sol:[`$c = ${m}(${x}) = ${m*x}$ dollars.`]}; },
+  ()=>{ const m=rnd(2,9),b=rnd(0,10),xs=[1,2,3,4].map(k=>k+rnd(0,1)*0); const rows=[1,2,3,4].map(x=>[x,m*x+b]); return {q:`The table shows a relationship between $x$ and $y$: <br>${rows.map(r=>`$(${r[0]}, ${r[1]})$`).join(", ")} <br>Write an equation for $y$ in terms of $x$.`,type:"line",ans:`y = ${m}x + ${b}`,ansTex:`y = ${m}x${b?` + ${b}`:""}`,hint:`Each time $x$ goes up $1$, $y$ goes up $${m}$.`,sol:[`$y$ grows by $${m}$ each step, and at $x = 0$ it would be $${b}$.`,`$y = ${m}x${b?` + ${b}`:""}$.`]}; }
+ ]}
+]},
+/* ===================== Unit 5 ===================== */
+{id:"ch5",title:"Area, Surface Area & Volume",topics:[
+ {id:"apt",title:"Area of Parallelograms & Triangles",idea:"Cut a triangle off a parallelogram and slide it over: you get a rectangle, so $A = bh$. A triangle is <b>half</b> a parallelogram: $A = \\tfrac12 bh$. The height is always <b>perpendicular</b> to the base.",
+  lesson:{fig:shpTri(10,6),steps:[["b = 10,\\ h = 6","The height meets the base at a right angle."],["A = \\tfrac12 \\cdot 10 \\cdot 6","Half of base × height."],["A = 30 \\text{ square units}","A parallelogram with the same base and height: $60$."]],warn:"Use the <b>perpendicular</b> height, not the slanted side."},
+  gen:[
+  ()=>{ const b=rnd(3,20),h=rnd(2,15); return {q:`${shpPar(b,h)}Find the area of the parallelogram.`,type:"number",ans:b*h,ansTex:`${b*h}`,hint:"$A = bh$.",sol:[`$${b} \\times ${h} = ${b*h}$ square units.`]}; },
+  ()=>{ const b=rnd(3,20),h=rnd(2,14); return {q:`${shpTri(b,h)}Find the area of the triangle.`,type:"number",ans:b*h/2,ansTex:`${b*h/2}`,hint:"$A = \\tfrac12 bh$.",sol:[`$\\tfrac12 \\times ${b} \\times ${h} = ${b*h/2}$ square units.`]}; },
+  ()=>{ const b=rnd(4,16),h=rnd(3,12),s=h+rnd(1,4); return {q:`A parallelogram has base $${b}$ cm, slanted side $${s}$ cm and height $${h}$ cm. What is its area?`,type:"number",ans:b*h,ansTex:`${b*h}`,hint:"Ignore the slanted side.",sol:[`$A = ${b} \\times ${h} = ${b*h}$ cm².`]}; },
+  ()=>{ const b=rnd(4,16),h=rnd(2,12); return {q:`A triangle has area $${b*h/2}$ square feet and base $${b}$ feet. What is its height?`,type:"number",ans:h,ansTex:`${h}`,hint:"$A = \\tfrac12 bh$; work backward.",sol:[`$${b*h/2} = \\tfrac12 \\cdot ${b} \\cdot h = ${b/2}h$.`,`$h = ${h}$ ft.`]}; },
+  ()=>{ const b=rnd(2,8)+0.5,h=rnd(2,9); return {q:`Find the area of a triangle with base $${b}$ m and height $${h}$ m.`,type:"number",ans:b*h/2,ansTex:`${b*h/2}`,hint:"$\\tfrac12 \\times$ base $\\times$ height; decimals are fine.",sol:[`$\\tfrac12 \\times ${b} \\times ${h} = ${b*h/2}$ m².`]}; }
+ ]},
+ {id:"trap",title:"Trapezoids & Composite Figures",idea:"A trapezoid's area is the <b>average of the bases</b> times the height: $A = \\tfrac12 (b_1 + b_2)h$. For a composite figure, <b>split</b> it into rectangles and triangles (or subtract a missing piece) and add the areas.",
+  lesson:{fig:shpTrap(12,6,5),steps:[["b_1 = 12,\\ b_2 = 6,\\ h = 5","Two parallel bases."],["\\tfrac12(12 + 6) = 9","The average base."],["A = 9 \\cdot 5 = 45","Average base × height."]],warn:"Add the bases <b>before</b> halving — and only the two parallel sides are bases."},
+  gen:[
+  ()=>{ const b1=rnd(6,20),b2=rnd(2,b1-2),h=rnd(2,12); return {q:`${shpTrap(b1,b2,h)}Find the area of the trapezoid.`,type:"number",ans:(b1+b2)*h/2,ansTex:`${(b1+b2)*h/2}`,hint:"$A = \\tfrac12(b_1 + b_2)h$.",sol:[`$\\tfrac12(${b1} + ${b2}) \\times ${h} = ${(b1+b2)/2} \\times ${h} = ${(b1+b2)*h/2}$.`]}; },
+  ()=>{ const w=rnd(6,14),h=rnd(4,10),cw=rnd(2,w-3),ch=rnd(2,h-2); const W=w*16,H=h*16; const o=`<polygon points="10,10 ${10+W},10 ${10+W},${10+H-ch*16} ${10+W-cw*16},${10+H-ch*16} ${10+W-cw*16},${10+H} 10,${10+H}" fill="rgba(15,124,124,.15)" stroke="#16233B" stroke-width="2"/>`+TX(10+W/2,0,`${w}`)+TX(W+24,14+(H-ch*16)/2,`${h-ch}`)+`<text x="${16+W-cw*16}" y="${14+H-ch*8}" font-family="Inter,sans-serif" font-size="11" fill="#B3261E">${cw} × ${ch} cut out</text>`+`<text x="2" y="${14+H/2}" text-anchor="end" font-family="Inter,sans-serif" font-size="13" fill="#16233B">${h}</text>`; return {q:`${SV(W+90,H+36,`<g transform="translate(20,16)">${o}</g>`,"L-shape")}A ${w} by ${h} rectangle has a ${cw} by ${ch} corner cut out. What is the area of the remaining shape?`,type:"number",ans:w*h-cw*ch,ansTex:`${w*h-cw*ch}`,hint:"Big rectangle minus the missing corner.",sol:[`$${w} \\times ${h} - ${cw} \\times ${ch} = ${w*h} - ${cw*ch} = ${w*h-cw*ch}$.`]}; },
+  ()=>{ const w=rnd(4,12),h=rnd(3,9),th=rnd(2,7); return {q:`A house shape is a rectangle $${w}$ ft wide and $${h}$ ft tall with a triangle roof on top: base $${w}$ ft, height $${th}$ ft. Find the total area.`,type:"number",ans:w*h+w*th/2,ansTex:`${w*h+w*th/2}`,hint:"Rectangle + triangle.",sol:[`$${w*h} + \\tfrac12 \\cdot ${w} \\cdot ${th} = ${w*h} + ${w*th/2} = ${w*h+w*th/2}$ ft².`]}; },
+  ()=>{ const b1=rnd(8,20),b2=rnd(3,b1-2),h=rnd(2,10),A=(b1+b2)*h/2; return {q:`A trapezoid has bases $${b1}$ and $${b2}$ and area $${A}$. What is its height?`,type:"number",ans:h,ansTex:`${h}`,hint:"Average base × height = area.",sol:[`Average base: $${(b1+b2)/2}$.`,`$h = ${A} \\div ${(b1+b2)/2} = ${h}$.`]}; },
+  ()=>{ const s=rnd(6,14),t=rnd(2,Math.floor(s/2)); return {q:`A square tile is $${s}$ inches on each side. A right triangle with legs $${t}$ and $${t}$ inches is cut off each of its <b>four</b> corners. What area is left?`,type:"number",ans:s*s-4*t*t/2,ansTex:`${s*s-2*t*t}`,hint:"Square minus four small triangles.",sol:[`Each triangle: $\\tfrac12 \\cdot ${t} \\cdot ${t} = ${t*t/2}$.`,`$${s*s} - 4(${t*t/2}) = ${s*s-2*t*t}$ in².`]}; }
+ ]},
+ {id:"cpoly",title:"Polygons on the Coordinate Plane",idea:"Plot the vertices and connect them. Sides that are <b>horizontal or vertical</b> have lengths you can find by subtracting coordinates — then use area formulas, or split the polygon into rectangles and triangles.",
+  lesson:{fig:grid6(6,[[-3,-2,"A"],[4,-2,"B"],[4,3,"C"],[-3,3,"D"]],[[-3,-2],[4,-2],[4,3],[-3,3]]),steps:[["AB:\\ 4 - (-3) = 7","Same $y$: subtract the $x$-values."],["BC:\\ 3 - (-2) = 5","Same $x$: subtract the $y$-values."],["A = 7 \\cdot 5 = 35","A rectangle."]],warn:"Subtracting a negative adds: $4 - (-3) = 7$."},
+  gen:[
+  ()=>{ const x1=-rnd(1,5),x2=rnd(1,5),y1=-rnd(1,5),y2=rnd(1,5); const P=[[x1,y1],[x2,y1],[x2,y2],[x1,y2]]; return {q:`${grid6(6,P.map((p,i)=>[p[0],p[1],"ABCD"[i]]),P)}Find the area of rectangle $ABCD$.`,type:"number",ans:(x2-x1)*(y2-y1),ansTex:`${(x2-x1)*(y2-y1)}`,hint:"Width × height; count units.",sol:[`Width $${x2-x1}$, height $${y2-y1}$.`,`Area $${(x2-x1)*(y2-y1)}$.`]}; },
+  ()=>{ const x1=-rnd(1,5),x2=rnd(1,5),y1=-rnd(1,5),y2=rnd(1,5),xt=rnd(x1,x2); const P=[[x1,y1],[x2,y1],[xt,y2]]; return {q:`${grid6(6,P.map((p,i)=>[p[0],p[1],"ABC"[i]]),P)}Find the area of triangle $ABC$.`,type:"number",ans:(x2-x1)*(y2-y1)/2,ansTex:`${(x2-x1)*(y2-y1)/2}`,hint:"Base $AB$ is horizontal; the height is the vertical distance to $C$.",sol:[`Base $${x2-x1}$, height $${y2-y1}$.`,`$\\tfrac12 \\cdot ${x2-x1} \\cdot ${y2-y1} = ${(x2-x1)*(y2-y1)/2}$.`]}; },
+  ()=>{ const x1=-rnd(1,6),x2=rnd(1,6),y1=-rnd(1,6),y2=rnd(1,6); return {q:`A rectangle has vertices $(${x1}, ${y1})$, $(${x2}, ${y1})$, $(${x2}, ${y2})$ and $(${x1}, ${y2})$. Find its area.`,type:"number",ans:(x2-x1)*(y2-y1),ansTex:`${(x2-x1)*(y2-y1)}`,hint:"Subtract coordinates to get the side lengths.",sol:[`$${x2} - (${x1}) = ${x2-x1}$ and $${y2} - (${y1}) = ${y2-y1}$.`,`Area $= ${(x2-x1)*(y2-y1)}$.`]}; },
+  ()=>{ const x=nz(-5,5),y=nz(-5,5),s=rnd(2,6); return {q:`A square has vertices $(${x}, ${y})$, $(${x+s}, ${y})$ and $(${x+s}, ${y+s})$. What is the fourth vertex?`,type:"point",ans:[x,y+s],ansTex:pt(x,y+s),hint:"Sketch it: the fourth corner lines up with the others.",sol:[`$${pt(x,y+s)}$.`]}; },
+  ()=>{ const a=rnd(2,5),b=rnd(2,5),h=rnd(2,5),t=rnd(1,4); const P=[[-a,-h],[b,-h],[b,0],[0,t],[-a,0]]; const A=(a+b)*h+(a+b)*t/2; return {q:`${grid6(6,P.map((p,i)=>[p[0],p[1],"ABCDE"[i]]),P)}Find the area of pentagon $ABCDE$. (Split it into a rectangle and a triangle.)`,type:"number",ans:A,ansTex:`${A}`,hint:"Rectangle $ABCE$ below the x-axis plus triangle $ECD$ above.",sol:[`Rectangle: $${a+b} \\times ${h} = ${(a+b)*h}$.`,`Triangle: $\\tfrac12 \\cdot ${a+b} \\cdot ${t} = ${(a+b)*t/2}$.`,`Total $${A}$.`]}; }
+ ]},
+ {id:"vol",title:"Volume with Fractional Edges",idea:"Volume of a rectangular prism: $V = lwh$ (or $V = Bh$, base area × height). It works with fractions too — imagine packing it with tiny cubes of side $\\tfrac12$: each holds $\\tfrac18$ cubic unit.",
+  lesson:{fig:shpBox("4","2½","3"),steps:[["V = 4 \\cdot 2\\tfrac12 \\cdot 3","Length × width × height."],["4 \\cdot \\tfrac52 = 10","Multiply in a friendly order."],["10 \\cdot 3 = 30 \\text{ cubic units}","Same formula as whole numbers."]],warn:"Volume is in <b>cubic</b> units (cm³), area in square units (cm²)."},
+  gen:[
+  ()=>{ const l=rnd(2,12),w=rnd(2,9),h=rnd(2,9); return {q:`${shpBox(l,w,h)}Find the volume of the box.`,type:"number",ans:l*w*h,ansTex:`${l*w*h}`,hint:"$V = lwh$.",sol:[`$${l} \\times ${w} \\times ${h} = ${l*w*h}$ cubic units.`]}; },
+  ()=>{ const l=rnd(2,10),w=rnd(2,8),h=rnd(1,6); return {q:`Find the volume of a prism ${l} ft by ${w} ft by $${h}\\tfrac12$ ft.`,type:"mixed",ans:[l*w*(2*h+1),2],ansTex:mixTex(l*w*(2*h+1),2),hint:`Write $${h}\\tfrac12$ as $\\tfrac{${2*h+1}}{2}$.`,sol:[`$${l} \\cdot ${w} \\cdot \\tfrac{${2*h+1}}{2} = \\tfrac{${l*w*(2*h+1)}}{2} = ${mixTex(l*w*(2*h+1),2)}$ ft³.`]}; },
+  ()=>{ const a=rnd(1,4),b=rnd(1,4),c=rnd(1,4); return {q:`A box is $${a}$ by $${b}$ by $${c}$ units. How many cubes with edge $\\tfrac12$ unit fill it exactly?`,type:"number",ans:8*a*b*c,ansTex:`${8*a*b*c}`,hint:"Each unit of length holds $2$ half-cubes, in every direction.",sol:[`$${2*a} \\times ${2*b} \\times ${2*c} = ${8*a*b*c}$ cubes.`]}; },
+  ()=>{ const l=rnd(3,10),w=rnd(2,8),h=rnd(2,9); return {q:`A box has volume $${l*w*h}$ cm³, length $${l}$ cm and width $${w}$ cm. How tall is it?`,type:"number",ans:h,ansTex:`${h}`,hint:"Divide the volume by the base area.",sol:[`Base area $${l*w}$.`,`$h = ${l*w*h} \\div ${l*w} = ${h}$ cm.`]}; },
+  ()=>{ const s=pick([[1,2],[3,4],[1,3],[2,3],[3,2]]),n=s[0]**3,d=s[1]**3; return {q:`Find the volume of a cube with edge $\\tfrac{${s[0]}}{${s[1]}}$ m.`,type:"mixed",ans:[n,d],ansTex:mixTex(n,d),hint:"Edge × edge × edge.",sol:[`$\\left(\\tfrac{${s[0]}}{${s[1]}}\\right)^3 = \\tfrac{${n}}{${d}}$${n>d?` $= ${mixTex(n,d)}$`:""} m³.`]}; }
+ ]},
+ {id:"surf",title:"Nets & Surface Area",idea:"<b>Surface area</b> is the total area of all the faces — unfold the solid into a <b>net</b> and add the areas. A rectangular prism has $3$ pairs of matching faces: $SA = 2lw + 2lh + 2wh$.",
+  lesson:{fig:shpBox(5,3,2),steps:[["2(5 \\cdot 3) = 30","Top and bottom."],["2(5 \\cdot 2) + 2(3 \\cdot 2) = 20 + 12","Front/back and the two sides."],["SA = 30 + 20 + 12 = 62","Square units: it's an area."]],warn:"A cube has $6$ equal faces: $SA = 6s^2$. Don't confuse it with volume $s^3$."},
+  gen:[
+  ()=>{ const s=rnd(2,12); return {q:`Find the surface area of a cube with edge $${s}$ cm.`,type:"number",ans:6*s*s,ansTex:`${6*s*s}`,hint:"$6$ faces, each $s \\times s$.",sol:[`$6 \\times ${s}^2 = 6 \\times ${s*s} = ${6*s*s}$ cm².`]}; },
+  ()=>{ const l=rnd(2,10),w=rnd(2,8),h=rnd(2,8); return {q:`${shpBox(l,w,h)}Find the surface area of the box.`,type:"number",ans:2*(l*w+l*h+w*h),ansTex:`${2*(l*w+l*h+w*h)}`,hint:"$2lw + 2lh + 2wh$.",sol:[`$2(${l*w}) + 2(${l*h}) + 2(${w*h}) = ${2*(l*w+l*h+w*h)}$.`]}; },
+  ()=>{ const S=pick([["cube",6,"squares"],["rectangular prism",6,"rectangles"],["square pyramid",5,"faces (1 square + 4 triangles)"],["triangular prism",5,"faces (2 triangles + 3 rectangles)"],["triangular pyramid",4,"triangles"]]); return {q:`How many faces are in the net of a ${S[0]}?`,type:"number",ans:S[1],ansTex:`${S[1]}`,hint:"Count the flat faces of the solid.",sol:[`$${S[1]}$ ${S[2]}.`]}; },
+  ()=>{ const b=rnd(2,10),h=rnd(2,10); return {q:`A square pyramid has a base $${b}$ in by $${b}$ in. Each triangular face has base $${b}$ in and height $${h}$ in. Find its surface area.`,type:"number",ans:b*b+2*b*h,ansTex:`${b*b+2*b*h}`,hint:"Square base + 4 triangles.",sol:[`Base $${b*b}$; triangles $4 \\cdot \\tfrac12 \\cdot ${b} \\cdot ${h} = ${2*b*h}$.`,`$SA = ${b*b+2*b*h}$ in².`]}; },
+  ()=>{ const l=rnd(4,10),w=rnd(3,8),h=rnd(2,6); return {q:`A gift box with no lid is $${l}$ in long, $${w}$ in wide and $${h}$ in tall. How many square inches of cardboard is it made of?`,type:"number",ans:l*w+2*l*h+2*w*h,ansTex:`${l*w+2*l*h+2*w*h}`,hint:"No lid: only one $l \\times w$ face.",sol:[`$${l*w} + 2(${l*h}) + 2(${w*h}) = ${l*w+2*l*h+2*w*h}$ in².`]}; }
+ ]}
+]},
+/* ===================== Unit 6 ===================== */
+{id:"ch6",title:"Statistics & Data",topics:[
+ {id:"statq",title:"Statistical Questions & Dot Plots",idea:"A <b>statistical question</b> expects answers that <b>vary</b> (“How many hours do students in my class sleep?”). A <b>dot plot</b> shows each data value as a dot above a number line, so you can see the center, spread and shape.",
+  lesson:{fig:dotp([3,4,4,5,5,5,6,6,7,9],2,10),steps:[["\\text{10 dots}","Ten students answered."],["\\text{Tallest stack at } 5","The most common value (mode)."],["9 \\text{ is far from the rest}","A possible outlier."]],warn:"“How old am I?” has one answer — not statistical. “How old are the students in my school?” is statistical."},
+  gen:[
+  ()=>{ const Q=pick([["How tall are the students in our class?","YES"],["How tall is the school flagpole?","NO"],["How many pets do families on my street have?","YES"],["How many days are in March?","NO"],["What is the typical price of a movie ticket in our city?","YES"],["What time does school start today?","NO"],["How long do students take to get to school?","YES"],["What is Mia's favorite color?","NO"]]); return {q:`Is this a statistical question? <br><i>“${Q[0]}”</i> (yes/no)`,type:"yn",ans:Q[1],ansTex:`\\text{${Q[1]==="YES"?"yes":"no"}}`,hint:"Do you expect many different answers?",sol:[Q[1]==="YES"?"Yes — the answers vary.":"No — there is one answer."]}; },
+  ()=>{ const d=Array.from({length:rnd(8,14)},()=>rnd(1,8)),v=rnd(1,8); return {q:`${dotp(d,0,9)}How many data values are equal to $${v}$?`,type:"number",ans:d.filter(x=>x===v).length,ansTex:`${d.filter(x=>x===v).length}`,hint:"Count the dots above that number.",sol:[`$${d.filter(x=>x===v).length}$.`]}; },
+  ()=>{ const d=Array.from({length:rnd(8,14)},()=>rnd(1,8)); return {q:`${dotp(d,0,9)}How many data values are shown in all?`,type:"number",ans:d.length,ansTex:`${d.length}`,hint:"Count every dot.",sol:[`$${d.length}$ dots.`]}; },
+  ()=>{ let d; do{ d=Array.from({length:rnd(9,14)},()=>rnd(1,8)); }while(true&&(()=>{ const c=[...Array(10)].map((_,v)=>d.filter(x=>x===v).length),m=Math.max(...c); return c.filter(x=>x===m).length>1; })()); const c=[...Array(10)].map((_,v)=>d.filter(x=>x===v).length),mode=c.indexOf(Math.max(...c)); return {q:`${dotp(d,0,9)}What is the mode (most common value)?`,type:"number",ans:mode,ansTex:`${mode}`,hint:"The tallest stack.",sol:[`$${mode}$ appears $${c[mode]}$ times.`]}; },
+  ()=>{ const d=Array.from({length:rnd(9,14)},()=>rnd(2,9)),t=rnd(3,7); return {q:`${dotp(d,0,10)}The dot plot shows how many books each student read. How many students read <b>more than</b> $${t}$ books?`,type:"number",ans:d.filter(x=>x>t).length,ansTex:`${d.filter(x=>x>t).length}`,hint:`Count dots to the right of $${t}$ (not at $${t}$).`,sol:[`$${d.filter(x=>x>t).length}$ students.`]}; }
+ ]},
+ {id:"mean",title:"Mean & Median",idea:"The <b>mean</b> is the fair share: add all values and divide by how many. The <b>median</b> is the middle value when the data are in order (average the two middle ones if there's an even count). Outliers pull the mean but barely move the median.",
+  lesson:{steps:[["4,\\ 7,\\ 2,\\ 9,\\ 8","Five values."],["\\text{mean} = \\tfrac{30}{5} = 6","Sum ÷ count."],["2, 4, \\underline{7}, 8, 9 \\Rightarrow \\text{median} = 7","Order them; take the middle."]],warn:"Always <b>sort</b> the data before finding the median."},
+  gen:[
+  ()=>{ const n=rnd(4,7); let d; do{ d=Array.from({length:n},()=>rnd(1,20)); }while(d.reduce((a,b)=>a+b)%n); const s=d.reduce((a,b)=>a+b); return {q:`Find the mean: $${d.join(",\\ ")}$.`,type:"number",ans:s/n,ansTex:`${s/n}`,hint:"Add them all, then divide by how many.",sol:[`Sum $${s}$, count $${n}$.`,`Mean $= ${s/n}$.`]}; },
+  ()=>{ const n=pick([5,7,9]),d=Array.from({length:n},()=>rnd(1,40)),s=d.slice().sort((a,b)=>a-b); return {q:`Find the median: $${d.join(",\\ ")}$.`,type:"number",ans:s[(n-1)/2],ansTex:`${s[(n-1)/2]}`,hint:"Put them in order first.",sol:[`In order: $${s.join(", ")}$.`,`Median $= ${s[(n-1)/2]}$.`]}; },
+  ()=>{ const n=pick([4,6,8]),d=Array.from({length:n},()=>rnd(1,30)),s=d.slice().sort((a,b)=>a-b),m=(s[n/2-1]+s[n/2])/2; return {q:`Find the median: $${d.join(",\\ ")}$.`,type:"number",ans:m,ansTex:`${m}`,hint:"Even count: average the two middle values.",sol:[`In order: $${s.join(", ")}$.`,`$\\tfrac{${s[n/2-1]} + ${s[n/2]}}{2} = ${m}$.`]}; },
+  ()=>{ const n=rnd(3,5),m=rnd(70,90),d=Array.from({length:n},()=>m+rnd(-8,8)),need=m*(n+1)-d.reduce((a,b)=>a+b); if(need>100||need<0) return {q:`${nm()}'s test scores are $80, 85, 90$. What score on the next test makes the mean $86$?`,type:"number",ans:89,ansTex:"89",hint:"Total needed = mean × number of tests.",sol:["$86 \\times 4 = 344$; $344 - 255 = 89$."]}; return {q:`${nm()}'s test scores are $${d.join(",\\ ")}$. What score on the next test makes the mean exactly $${m}$?`,type:"number",ans:need,ansTex:`${need}`,hint:"Total needed = mean × number of tests.",sol:[`Needed total: $${m} \\times ${n+1} = ${m*(n+1)}$.`,`Current total: $${d.reduce((a,b)=>a+b)}$; need $${need}$.`]}; },
+  ()=>{ const d=[rnd(10,14),rnd(10,14),rnd(11,15),rnd(12,16)],o=rnd(60,90); const all=[...d,o],mean=all.reduce((a,b)=>a+b)/5,s=all.slice().sort((a,b)=>a-b); return mcList(`Data: $${all.join(",\\ ")}$. Which measure better describes a <b>typical</b> value?`,`the median, $${s[2]}$, because $${o}$ is an outlier`,[`the mean, $${mean}$, because it uses every value`,`the mean, because the data are symmetric`,`neither, because there is no mode`],"Look for a value far from the others.",[`$${o}$ pulls the mean up to $${mean}$.`,`The median $${s[2]}$ stays with the typical values.`]); }
+ ]},
+ {id:"mad",title:"Mean Absolute Deviation (MAD)",idea:"The <b>MAD</b> measures spread: on average, how far are the values from the mean? Find the mean, find each value's distance from it, then take the mean of those distances.",
+  lesson:{steps:[["2,\\ 4,\\ 6,\\ 8 \\Rightarrow \\text{mean} = 5","Step 1: the mean."],["|2-5|, |4-5|, |6-5|, |8-5| = 3, 1, 1, 3","Step 2: distances from the mean."],["\\text{MAD} = \\tfrac{3+1+1+3}{4} = 2","Step 3: mean of the distances."]],warn:"Distances are <b>never negative</b> — that's why we use absolute value."},
+  gen:[
+  ()=>{ const n=4,m=rnd(5,15); let ds; do{ ds=[rnd(1,5),rnd(1,5)]; }while(false); const d=[m-ds[0],m-ds[1],m+ds[0],m+ds[1]].sort((a,b)=>a-b); return {q:`The mean of $${d.join(",\\ ")}$ is $${m}$. Find the MAD.`,type:"number",ans:(2*ds[0]+2*ds[1])/4,ansTex:`${(2*ds[0]+2*ds[1])/4}`,hint:"Average the distances from the mean.",sol:[`Distances: $${d.map(v=>Math.abs(v-m)).join(", ")}$.`,`MAD $= ${2*ds[0]+2*ds[1]} \\div 4 = ${(2*ds[0]+2*ds[1])/4}$.`]}; },
+  ()=>{ const m=rnd(4,12),a=rnd(1,4),b=rnd(1,4); const d=[m-a,m-b,m,m+b,m+a].sort((x,y)=>x-y); return {q:`Find the MAD of $${d.join(",\\ ")}$.`,type:"number",ans:(2*a+2*b)/5,ansTex:`${(2*a+2*b)/5}`,hint:"First find the mean.",sol:[`Mean $= ${m}$.`,`Distances: $${d.map(v=>Math.abs(v-m)).join(", ")}$.`,`MAD $= ${2*a+2*b} \\div 5 = ${(2*a+2*b)/5}$.`]}; },
+  ()=>{ const m=rnd(3,10); return {q:`Every value in a data set equals $${m}$. What is the MAD?`,type:"number",ans:0,ansTex:"0",hint:"How far is each value from the mean?",sol:["All distances are $0$, so MAD $= 0$."]}; },
+  ()=>{ const a=rnd(1,3)/1,b=a+rnd(1,4); return mcList(`Class A's quiz scores have MAD $${a}$. Class B's have MAD $${b}$. Which statement is true?`,"Class B's scores are more spread out.",["Class A's scores are more spread out.","Class B has a higher mean.","Class A has more students."],"A bigger MAD means more spread.",[`$${b} > ${a}$, so Class B varies more.`]); },
+  ()=>{ const m=rnd(5,12),d=[m-3,m-1,m,m+1,m+3],k=rnd(2,10); return {q:`The data $${d.join(",\\ ")}$ have MAD $1.6$. If you add $${k}$ to every value, what is the new MAD?`,type:"number",ans:1.6,ansTex:"1.6",hint:"Shifting everything moves the mean too — distances don't change.",sol:["The mean shifts by the same amount, so every distance stays the same.","MAD $= 1.6$."]}; }
+ ]},
+ {id:"box",title:"Box Plots & IQR",idea:"The <b>five-number summary</b>: minimum, $Q_1$, median, $Q_3$, maximum. A <b>box plot</b> draws it. The box holds the middle half; the <b>interquartile range</b> $\\text{IQR} = Q_3 - Q_1$ measures the spread of that middle half.",
+  lesson:{fig:boxp([2,5,8,11,16],0,18),steps:[["\\min = 2,\\ \\max = 16","The ends of the whiskers."],["Q_1 = 5,\\ \\text{median} = 8,\\ Q_3 = 11","The box and the line inside it."],["\\text{IQR} = 11 - 5 = 6","The width of the box."]],warn:"$Q_1$ is the median of the <b>lower half</b>; $Q_3$ the median of the upper half (leave out the median itself when the count is odd)."},
+  gen:[
+  ()=>{ const f=[rnd(0,4)];[1,2,3,4].forEach(()=>f.push(f[f.length-1]+rnd(1,5))); return {q:`${boxp(f,0,22)}What is the median?`,type:"number",ans:f[2],ansTex:`${f[2]}`,hint:"The line inside the box.",sol:[`Median $= ${f[2]}$.`]}; },
+  ()=>{ const f=[rnd(0,4)];[1,2,3,4].forEach(()=>f.push(f[f.length-1]+rnd(1,5))); return {q:`${boxp(f,0,22)}Find the interquartile range (IQR).`,type:"number",ans:f[3]-f[1],ansTex:`${f[3]-f[1]}`,hint:"$Q_3 - Q_1$: the width of the box.",sol:[`$Q_3 = ${f[3]}$, $Q_1 = ${f[1]}$.`,`IQR $= ${f[3]-f[1]}$.`]}; },
+  ()=>{ const f=[rnd(0,4)];[1,2,3,4].forEach(()=>f.push(f[f.length-1]+rnd(1,5))); return {q:`${boxp(f,0,22)}Find the range.`,type:"number",ans:f[4]-f[0],ansTex:`${f[4]-f[0]}`,hint:"Maximum − minimum.",sol:[`$${f[4]} - ${f[0]} = ${f[4]-f[0]}$.`]}; },
+  ()=>{ const d=Array.from({length:7},()=>rnd(1,30)).sort((a,b)=>a-b); return {q:`Find $Q_1$ and $Q_3$ for: $${d.join(",\\ ")}$. (Type them separated by a comma.)`,type:"list",ans:[d[1],d[5]],ansTex:`Q_1 = ${d[1]},\\ Q_3 = ${d[5]}`,hint:"Median is the 4th value; $Q_1$ is the middle of the first three, $Q_3$ the middle of the last three.",sol:[`Lower half: $${d.slice(0,3).join(", ")}$ → $Q_1 = ${d[1]}$.`,`Upper half: $${d.slice(4).join(", ")}$ → $Q_3 = ${d[5]}$.`]}; },
+  ()=>{ const f=[rnd(0,3)];[1,2,3,4].forEach(()=>f.push(f[f.length-1]+rnd(1,5))); const P=pick([[25,"below $Q_1$"],[50,"above the median"],[75,"below $Q_3$"],[50,"inside the box"]]); return {q:`${boxp(f,0,22)}About what percent of the data lie ${P[1]}? (Type just the number.)`,type:"number",ans:P[0],ansTex:`${P[0]}\\%`,hint:"Each of the four sections holds about a quarter of the data.",sol:[`About $${P[0]}\\%$.`]}; }
+ ]},
+ {id:"hist",title:"Histograms",idea:"A <b>histogram</b> groups data into equal <b>intervals</b> (bins) and draws a bar for each; the bar's height is how many values fall in that interval. The bars touch because the intervals are next to each other.",
+  lesson:{fig:histo(["0–9","10–19","20–29","30–39"],[3,6,4,1],"minutes of reading"),steps:[["10\\text{–}19:\\ 6","The tallest bar: the most common interval."],["3 + 6 + 4 + 1 = 14","Total number of data values."],["\\text{At least } 20:\\ 4 + 1 = 5","Add the bars from $20$ up."]],warn:"A histogram can't tell you the exact values — only how many are in each interval."},
+  gen:[
+  ()=>{ const L=["0–4","5–9","10–14","15–19","20–24"],c=L.map(()=>rnd(0,9)); return {q:`${histo(L,c,"hours")}How many data values are shown in all?`,type:"number",ans:c.reduce((a,b)=>a+b),ansTex:`${c.reduce((a,b)=>a+b)}`,hint:"Add the heights of all bars.",sol:[`$${c.join(" + ")} = ${c.reduce((a,b)=>a+b)}$.`]}; },
+  ()=>{ const L=["0–4","5–9","10–14","15–19","20–24"]; let c; do{ c=L.map(()=>rnd(1,9)); }while(c.filter(x=>x===Math.max(...c)).length>1); const i=c.indexOf(Math.max(...c)); return mcList(`${histo(L,c,"hours")}Which interval has the most data values?`,`$${L[i].replace("–","\\text{–}")}$`,L.filter((_,j)=>j!==i).slice(0,3).map(x=>`$${x.replace("–","\\text{–}")}$`),"Find the tallest bar.",[`$${L[i].replace("–","\\text{–}")}$ has $${c[i]}$.`]); },
+  ()=>{ const L=["50–59","60–69","70–79","80–89","90–99"],c=L.map(()=>rnd(0,8)),k=rnd(2,3); const s=c.slice(k).reduce((a,b)=>a+b); return {q:`${histo(L,c,"test scores")}How many students scored at least $${50+10*k}$?`,type:"number",ans:s,ansTex:`${s}`,hint:`Add the bars from $${50+10*k}$ up.`,sol:[`$${c.slice(k).join(" + ")} = ${s}$.`]}; },
+  ()=>{ const L=["0–9","10–19","20–29","30–39"],c=L.map(()=>rnd(1,9)); const tot=c.reduce((a,b)=>a+b); return {q:`${histo(L,c,"ages")}How many people are younger than $20$?`,type:"number",ans:c[0]+c[1],ansTex:`${c[0]+c[1]}`,hint:"Add the first two bars.",sol:[`$${c[0]} + ${c[1]} = ${c[0]+c[1]}$.`]}; },
+  ()=>{ const L=["0–9","10–19","20–29","30–39"]; let c; c=L.map(()=>rnd(1,10)); const tot=c.reduce((a,b)=>a+b),i=rnd(0,3); const pct=Math.round(c[i]/tot*100); return {q:`${histo(L,c,"minutes")}To the nearest whole percent, what percent of the data are in the $${L[i].replace("–","\\text{–}")}$ interval?`,type:"number",tol:1,ans:c[i]/tot*100,ansTex:`${pct}\\%`,hint:"Bar height ÷ total, then × 100.",sol:[`Total $${tot}$.`,`$${c[i]} \\div ${tot} \\approx ${(c[i]/tot).toFixed(3)}$, about $${pct}\\%$.`]}; }
+ ]}
+]});
+const ALLCH=[[1,"Number Operations","ch1"],[2,"Fraction Division, Ratios & Rates","ch2"],[3,"Rational Numbers & the Coordinate Plane","ch3"],[4,"Expressions, Equations & Inequalities","ch4"],[5,"Area, Surface Area & Volume","ch5"],[6,"Statistics & Data","ch6"]];
+const COMING=[];
+
+
+
+/* ================= checking ================= */
+const CONST=new Set(["pi","e","E","PI","Infinity"]);
+function clean(s){ return String(s).replace(/(\d),(?=\d{3}(?!\d))/g,"$1").replace(/(^|[^a-z])([a-z])\s*\(/gi,"$1$2*(").replace(/[−–]/g,"-").replace(/×|·/g,"*").replace(/÷/g,"/").replace(/π/g,"pi").replace(/≤|=</g,"<=").replace(/≥|=>/g,">=").replace(/√\s*(\d+(?:\.\d+)?|\([^)]*\)|[a-z])/g,"sqrt($1)").trim(); }
+function val(s){ try{ const r=math.evaluate(s); const v=typeof r==="number"?r:(r&&typeof r.valueOf()==="number"?r.valueOf():NaN); return isFinite(v)?v:NaN; }catch(e){ return NaN; } }
+const close=(a,b)=>Math.abs(a-b)<1e-6*Math.max(1,Math.abs(b));
+function varsOf(node){ const v=new Set(); node.traverse((n,path,parent)=>{ if(n.isSymbolNode&&!(parent&&parent.isFunctionNode&&path==="fn")&&!CONST.has(n.name)&&typeof math[n.name]!=="function") v.add(n.name); }); return [...v]; }
+function evalAt(node,sc){ try{ const r=node.evaluate(sc); const v=typeof r==="number"?r:(r&&typeof r.valueOf()==="number"?r.valueOf():NaN); return isFinite(v)?v:NaN; }catch(e){ return NaN; } }
+function exprEq(student,expected,form){
+  let s=clean(student); if(s.includes("=")) s=s.split("=").pop();
+  let S,E; try{ S=math.parse(s); E=math.parse(expected); }catch(e){ return null; }
+  if(form&&form!=="combined"&&!formOK(S,s,form)) return false;
+  if(form==="combined"){ if(s.includes("(")) return false; const cnt={}; S.traverse((n,path,parent)=>{ if(n.isSymbolNode&&!(parent&&parent.isFunctionNode&&path==="fn")&&!CONST.has(n.name)) cnt[n.name]=(cnt[n.name]||0)+1; }); if(Object.values(cnt).some(c=>c>1)) return false; }
+  const vars=[...new Set([...varsOf(S),...varsOf(E)])]; let t=0;
+  for(let k=0;k<12&&t<6;k++){ const sc={}; vars.forEach(v=>sc[v]=Math.round((Math.random()*6-3)*1000)/1000+0.137+(k%2)); const a=evalAt(S,sc),b=evalAt(E,sc); if(isNaN(a)||isNaN(b)) continue; t++; if(!close(a,b)) return false; }
+  return t>=3?true:null;
+}
+function lineEq(student,expected,form){
+  const s=clean(student); if(s.split("=").length!==2) return null;
+  const [L,R]=s.split("="); if(!L.trim()||!R.trim()) return null;
+  let S,E; try{ S=math.parse("("+L+")-("+R+")"); const [eL,eR]=expected.split("="); E=math.parse("("+eL+")-("+eR+")"); }catch(e){ return null; }
+  if(form==="si"&&L.replace(/\s/g,"")!=="y") return false;
+  if(form==="std"){ if(s.includes("/")) return false; try{ if(varsOf(math.parse(R)).length) return false; }catch(e){ return null; } }
+  let ratio=null,t=0;
+  for(let k=0;k<14&&t<6;k++){ const sc={x:Math.round((Math.random()*8-4)*1000)/1000+0.31,y:Math.round((Math.random()*8-4)*1000)/1000+0.17}; const a=evalAt(S,sc),b=evalAt(E,sc); if(isNaN(a)||isNaN(b)) continue; t++;
+    if(Math.abs(b)<1e-9){ if(Math.abs(a)>1e-6) return false; continue; } const r=a/b; if(Math.abs(r)<1e-9) return false; if(ratio===null) ratio=r; else if(!close(r,ratio)) return false; }
+  return t>=3?true:null;
+}
+function radOK(input){ const t=clean(input).replace(/\s+/g,""); if(/\/\(?\*?sqrt/.test(t)) return false; const args=[...t.matchAll(/sqrt\(([^)]*)\)/g)].map(m=>m[1]); for(const a of args){ const n=Number(a); if(!Number.isInteger(n)||n<2) return false; if(radParts(n)[0]!==1) return false; } return true; }
+function parseRoots(s){ s=clean(s).replace(/\+\/-|\+-/g,"±").replace(/\b(or|and)\b/gi,",").replace(/;/g,","); const out=[];
+  for(let part of s.split(",")){ part=part.trim(); if(!part) continue; if(part.includes("=")) part=part.split("=").pop().trim();
+    if(part.includes("±")){ const i=part.indexOf("±"), L=part.slice(0,i).trim(), R=part.slice(i+1).trim();
+      if(/^\(/.test(L)&&/\)\s*\/\s*.+$/.test(R)){ const den=R.slice(R.lastIndexOf(")")+1), inner=R.slice(0,R.lastIndexOf(")")), l=L.slice(1)||"0"; out.push(val("("+l+"+("+inner+"))"+den),val("("+l+"-("+inner+"))"+den)); }
+      else { const l=L||"0"; out.push(val(l+"+("+R+")"),val(l+"-("+R+")")); } }
+    else out.push(val(part)); }
+  return out.length&&out.every(v=>!isNaN(v))?out:null; }
+function topTerms(n,out){ while(n.isParenthesisNode) n=n.content; if(n.isOperatorNode&&(n.fn==="add"||n.fn==="subtract")){ n.args.forEach(a=>topTerms(a,out)); } else if(n.isOperatorNode&&n.fn==="unaryMinus"){ topTerms(n.args[0],out); } else out.push(n); return out; }
+function strip(n){ while(n&&n.isParenthesisNode) n=n.content; return n; }
+function isSum(n){ n=strip(n); return n.isOperatorNode&&(n.fn==="add"||n.fn==="subtract"); }
+function factorsOf(n){ n=strip(n); if(n.isOperatorNode&&n.fn==="unaryMinus") return factorsOf(n.args[0]); if(n.isOperatorNode&&n.fn==="multiply") return n.args.flatMap(factorsOf); if(n.isOperatorNode&&n.fn==="pow"&&isSum(n.args[0])) return [strip(n.args[0])]; return [n]; }
+function coeffsX(node){ const ys=[0,1,2,3,4].map(x=>evalAt(node,{x})); if(ys.some(isNaN)) return null; const c=[]; let d=ys.slice(); const fact=[1,1,2,6,24]; const diffs=[];
+  for(let k=0;k<5;k++){ diffs.push(d[0]); d=d.slice(1).map((v,i)=>v-d[i]); }
+  if(Math.abs(diffs[4])>1e-9) return null; // degree <= 3 expected
+  // Newton forward form -> standard coefficients
+  const P=[[1],[0,1],[0,-1,1],[0,2,-3,1]]; const res=[0,0,0,0]; for(let k=0;k<4;k++){ const f=diffs[k]/fact[k]; P[k].forEach((v,i)=>res[i]+=f*v); }
+  return res.map(v=>Math.round(v*1e6)/1e6); }
+function formOK(S,s,form){
+  if(form==="simp"){ if(/\)\s*\^/.test(s)||/\^\s*-|\^\(-/.test(s)) return false; const cnt={}; S.traverse((n,path,parent)=>{ if(n.isSymbolNode&&!(parent&&parent.isFunctionNode&&path==="fn")&&!CONST.has(n.name)) cnt[n.name]=(cnt[n.name]||0)+1; }); return !Object.values(cnt).some(c=>c>1); }
+  if(form==="poly"){ if(s.includes("(")) return false; const degs=topTerms(S,[]).map(t=>{ const a=evalAt(t,{x:1.5}),b=evalAt(t,{x:3}); if(isNaN(a)||Math.abs(a)<1e-12) return null; return Math.round(Math.log(Math.abs(b/a))/Math.log(2)); }); if(degs.some(d=>d===null)) return false; return new Set(degs).size===degs.length; }
+  if(form==="factored"){ const f=factorsOf(S); if(f.length<2||!f.some(isSum)) return false;
+    for(const fa of f){ if(!isSum(fa)) continue; const vs=varsOf(fa); if(vs.length!==1||vs[0]!=="x") continue; const c=coeffsX(fa); if(!c) continue; const g=c.filter(v=>v!==0).reduce((a,b)=>gcd(a,Math.round(b)),0); if(Math.abs(g)>1) return false;
+      const nz_=c.filter(v=>v!==0).length; if(c[2]!==0&&c[3]===0&&c[1]!==0||false){ /* quadratic factor: check if it factors further over integers */ const A=c[2],B=c[1],C=c[0],D=B*B-4*A*C; if(D>=0&&Number.isInteger(Math.sqrt(D))) return false; }
+      if(c[2]!==0&&c[3]===0&&c[1]===0&&c[0]!==0){ const A=c[2],C=c[0],D=-4*A*C; if(D>0&&Number.isInteger(Math.sqrt(D))) return false; } }
+    return true; }
+  if(form==="nofrac") return !s.includes("/");
+  return true; }
+/* inequalities → list of intervals {lo,li,hi,hiI} */
+function ray(op,v){ return op===">"?{lo:v,li:false,hi:Infinity,hiI:false}:op===">="?{lo:v,li:true,hi:Infinity,hiI:false}:op==="<"?{lo:-Infinity,li:false,hi:v,hiI:false}:{lo:-Infinity,li:false,hi:v,hiI:true}; }
+function parseIneqPart(str){
+  const t=str.replace(/\s+/g,"").split(/(<=|>=|<|>)/); const isV=x=>/^[a-z]$/i.test(x);
+  if(t.length===3){ if(isV(t[0])){ const v=val(t[2]); return isNaN(v)?null:ray(t[1],v); } if(isV(t[2])){ const v=val(t[0]); return isNaN(v)?null:ray(FLIP[t[1]],v); } return null; }
+  if(t.length===5&&isV(t[2])){ const A=val(t[0]),B=val(t[4]); if(isNaN(A)||isNaN(B)) return null; const up=o=>o==="<"||o==="<=";
+    if(up(t[1])&&up(t[3])) return {lo:A,li:t[1]==="<=",hi:B,hiI:t[3]==="<="}; if(!up(t[1])&&!up(t[3])) return {lo:B,li:t[3]===">=",hi:A,hiI:t[1]===">="}; }
+  return null;
+}
+function parseIneq(s){ s=clean(s).toLowerCase(); const out=[];
+  for(const part of s.split(/\bor\b|∪|\|\|/)){ if(!part.trim()) continue;
+    const ands=part.split(/\band\b|,|&&/).filter(x=>x.trim()); let iv={lo:-Infinity,li:false,hi:Infinity,hiI:false};
+    for(const a of ands){ const r=parseIneqPart(a); if(!r) return null; if(r.lo>iv.lo||(r.lo===iv.lo&&!r.li)){ iv.lo=r.lo; iv.li=r.li; } if(r.hi<iv.hi||(r.hi===iv.hi&&!r.hiI)){ iv.hi=r.hi; iv.hiI=r.hiI; } }
+    out.push(iv); }
+  return out.length?out:null; }
+function sameIv(a,b){ const e=(x,y)=>(x===y)||(isFinite(x)&&isFinite(y)&&close(x,y)); return e(a.lo,b.lo)&&e(a.hi,b.hi)&&(!isFinite(a.lo)||a.li===b.li)&&(!isFinite(a.hi)||a.hiI===b.hiI); }
+function check(pr,input){
+  if(pr.type==="ratio"){ const t=String(input).trim().toLowerCase().replace(/\s*(to|:|\/)\s*/g,":").replace(/\s+/g,""); const m=/^(\d+(?:\.\d+)?):(\d+(?:\.\d+)?)$/.exec(t); if(!m) return null; const x=+m[1],y=+m[2]; if(!y) return false; if(pr.simp) return x===pr.ans[0]&&y===pr.ans[1]; return close(x*pr.ans[1],y*pr.ans[0]); }
+  if(pr.type==="rem"){ const t=clean(input).toLowerCase().replace(/remainder|rem\b/g,"r").replace(/\s+/g,""); const m=/^(\d+)r(\d+)$/.exec(t); if(!m){ if(/^\d+$/.test(t)) return +t===pr.ans[0]&&pr.ans[1]===0?true:false; return null; } return +m[1]===pr.ans[0]&&+m[2]===pr.ans[1]; }
+  if(pr.type==="mixed"){ const t=String(input).trim().replace(/\s+/g," "); let m=/^(\d+) (\d+)\/(\d+)$/.exec(t),w=0,n,d; if(m){ w=+m[1]; n=+m[2]; d=+m[3]; } else if((m=/^(\d+)\/(\d+)$/.exec(t.replace(/ /g,"")))){ n=+m[1]; d=+m[2]; } else if(/^\d+$/.test(t)){ w=+t; n=0; d=1; } else return null; if(!d) return null;
+    const ok=(w*d+n)*pr.ans[1]===d*pr.ans[0]; if(!ok) return false; if(pr.need&&(n>=d||(!m&&false))) return false; if(pr.need&&w===0&&pr.ans[0]>pr.ans[1]) return false; return true; }
+  if(pr.type==="frac"){ const t=String(input).replace(/\s+/g,""); let m=/^(\d+)\/(\d+)$/.exec(t),n,d; if(m){ n=+m[1]; d=+m[2]; } else if(/^\d+$/.test(t)){ n=+t; d=1; } else return null; if(!d) return null; if(pr.den&&d!==pr.den) return false; return n*pr.ans[1]===d*pr.ans[0]; }
+  if(pr.type==="cmp"){ const w=String(input).trim().toLowerCase(); const k=/^(<|less|smaller)/.test(w)?"<":/^(>|greater|more|bigger)/.test(w)?">":/^(=|equal|same)/.test(w)?"=":null; return k===null?null:k===pr.ans; }
+  if(pr.type==="expanded"){ const parts=clean(input).replace(/\s+/g,"").split("+").filter(Boolean); if(!parts.length||parts.some(p=>!/^\d+$/.test(p))) return null;
+    const want=new Set(String(pr.ans).split("").reverse().map((d,i)=>+d*10**i).filter(Boolean)), got=parts.map(Number);
+    return got.length===want.size&&got.every(v=>want.has(v))&&new Set(got).size===got.length; }
+  if(pr.type==="mc"){ const m=/^\(?\s*([a-e])\s*[).]?\s*$/i.exec(String(input).trim()); if(!m) return null; return m[1].toUpperCase()===pr.ans; }
+  if(pr.type==="word"){ const w=String(input).toUpperCase().replace(/[^A-Z]/g,""); if(!w) return null; const opts=pr.opts||["SSS","SAS","ASA","AAS","HL","NONE"]; const n=/NONE|NOT|CANNOT|CANT|NEITHER/.test(w)||w==="NO"?"NONE":w; if(!opts.includes(n)) return null; return n===pr.ans; }
+  if(pr.type==="number"){ const v=val(clean(String(input).replace(/\$/g,"")).split("=").pop()); if(isNaN(v)) return null; if(pr.tol?Math.abs(v-pr.ans)>pr.tol:!close(v,pr.ans)) return false; if(pr.form==="rad"&&!radOK(input)) return false; return true; }
+  if(pr.type==="roots"){ const r=parseRoots(input); if(!r) return null; const u=a=>a.filter((x,i)=>a.findIndex(y=>close(x,y))===i); const su=u(r),eu=u(pr.ans); return su.length===eu.length&&eu.every(x=>su.some(y=>close(x,y))); }
+  if(pr.type==="nsol"){ const w=String(input).toLowerCase(); const k=/inf|many|all|∞/.test(w)?"INF":/none|no |^no$|zero|^0$|parallel/.test(w)?"NONE":/one|^1$|single|unique/.test(w)?"ONE":null; return k===null?null:k===pr.ans; }
+  if(pr.type==="set"){ const v=val(clean(input).split("=").pop()); return isNaN(v)?null:close(v,pr.ans[0]); }
+  if(pr.type==="expr") return exprEq(input,pr.ans,pr.form);
+  if(pr.type==="line") return lineEq(input,pr.ans,pr.form);
+  if(pr.type==="point"){ const m=/^\(?\s*([^,]+),([^)]+)\)?$/.exec(clean(input).split("=").pop().trim()); if(!m) return null; const x=val(m[1]),y=val(m[2]); if(isNaN(x)||isNaN(y)) return null; return close(x,pr.ans[0])&&close(y,pr.ans[1]); }
+  if(pr.type==="yn"){ const w=String(input).trim().toUpperCase(); if(/^(Y|YES|YEAH|IS)/.test(w)) return pr.ans==="YES"; if(/^(N|NO|NOT)/.test(w)) return pr.ans==="NO"; return null; }
+  if(pr.type==="list"){ const parts=clean(input).replace(/[{}]/g,"").split(/,|;|\s+and\s+/).map(x=>x.trim()).filter(Boolean); if(!parts.length) return null; const v=parts.map(val); if(v.some(isNaN)) return null; const u=a=>a.filter((x,i)=>a.findIndex(y=>close(x,y))===i); const su=u(v),eu=u(pr.ans); return su.length===eu.length&&eu.every(x=>su.some(y=>close(x,y))); }
+  const want=pr.type==="ineq"?[ray(pr.ans.op,pr.ans.v)]:pr.type==="between"?[pr.ans]:pr.ans.map(r=>ray(r.op,r.v));
+  const got=parseIneq(input); if(!got) return null;
+  const srt=a=>a.slice().sort((x,y)=>x.lo-y.lo); const g=srt(got),w=srt(want);
+  return g.length===w.length&&g.every((x,i)=>sameIv(x,w[i]));
+}
+function render(el){ if(window.renderMathInElement) renderMathInElement(el,{delimiters:[{left:"$",right:"$",display:false}],throwOnError:false}); }
+
+/* ================= state ================= */
+let ST={cur:"ch1",ch:{}}; try{ Object.assign(ST,JSON.parse(localStorage.getItem("fm-g6")||"{}")); }catch(e){}
+const save=()=>{ try{ localStorage.setItem("fm-g6",JSON.stringify(ST)); }catch(e){} };
+let CH=null, st=null, T=null, L=1, PR=null, tries=0, done=false, firstTry=true, streak=[];
+function useChapter(id){ CH=CHAPTERS.find(c=>c.id===id)||CHAPTERS[0]; ST.cur=CH.id; ST.ch[CH.id]=ST.ch[CH.id]||{rec:null,level:{},solved:{},learned:{}}; st=ST.ch[CH.id]; save(); }
+
+/* ================= page ================= */
+function chapters(){ const b=$("chapters"); b.innerHTML="";
+  ALLCH.forEach(([n,t,id])=>{ if(id&&CHAPTERS.some(c=>c.id===id)){ const x=document.createElement("button"); x.type="button"; x.className="chap"+(id===CH.id?" on":""); x.innerHTML=`<i>${n}</i>${t}`; x.onclick=()=>{ if(id!==CH.id) openChapter(id,"learn"); }; b.appendChild(x); }
+    else { const x=document.createElement("span"); x.className="chap soon"; x.title="Coming soon"; x.innerHTML=`<i>${n}</i>${t}`; b.appendChild(x); } }); }
+function legend(){ if(!st) return; const box=$("legend"); box.innerHTML=""; const cur=curLv(); LEVELS.forEach(l=>{ const b=document.createElement("button"); b.type="button"; b.className="lvc"+(l.n===cur?" on":"")+(st.rec===l.n?" star":""); b.style.setProperty("--c",l.c); b.title=l.desc; b.innerHTML=`<i>${l.n}</i>${l.name}`; b.onclick=()=>setLevel(l.n); box.appendChild(b); }); const L0=LEVELS[cur-1]; $("lvDesc").innerHTML=`<b style="color:${L0.c}">Level ${cur} · ${L0.name}</b> — ${L0.desc}. Every topic below uses this level.`; }
+
+function curLv(){ return st.lvl||st.rec||1; }
+function setLevel(n){ st.lvl=n; save(); if(T&&!$("practice").hidden){ L=n; streak=[]; newProblem(); } legend(); topics(); }
+function recText(){ $("recText").innerHTML=st.rec?`★ Suggested: Level ${st.rec}`:"Not sure?"; $("placeBtn").textContent=st.rec?"Retake the check":"Take the 5-question check"; }
+function pillsFor(t,cur,onPick){ const w=document.createElement("div"); w.className="pills";
+  LEVELS.forEach(l=>{ const b=document.createElement("button"); b.type="button"; b.className="pill"+(l.n===cur?" on":"")+(st.rec===l.n?" star":""); b.style.setProperty("--c",l.c); const n=st.solved[t.id+l.n]||0; b.innerHTML=`${l.n} ${l.name}`+(n?`<span class="n">✓${n}</span>`:""); b.onclick=()=>onPick(l.n); w.appendChild(b); }); return w; }
+function topics(){ const box=$("topics"); box.innerHTML=""; legend(); const lvl=curLv();
+  CH.topics.forEach(t=>{ const c=document.createElement("div"); c.className="card topic"; const n=st.solved[t.id+lvl]||0;
+    c.innerHTML=`<h2>${t.title}</h2><p class="idea">${t.idea}</p><div class="example"><span class="label">Simplest example</span>${t.lesson.steps.map(s=>`<div class="q">$${s[0]}$</div>`).join("")}</div>`;
+    const g=document.createElement("div"); g.className="tgo"; const go=document.createElement("button"); go.className="btn teal sm"; go.textContent="Practice →"; go.onclick=()=>startPractice(t,lvl); g.appendChild(go);
+    const sm=document.createElement("small"); sm.textContent=n?`✓ ${n} solved at Level ${lvl}`:`Level ${lvl} · ${LEVELS[lvl-1].name}`; g.appendChild(sm); c.appendChild(g); box.appendChild(c); });
+  render(box); }
+function startPractice(t,n){ n=curLv(); T=t; L=n; st.level[t.id]=n; save(); streak=[]; $("practice").hidden=false; $("pTitle").textContent=t.title; newProblem(); $("practice").scrollIntoView({behavior:"smooth",block:"start"}); topics(); }
+function levelPills(){ $("pLevels").replaceWith(Object.assign(pillsFor(T,L,n=>{ L=n; st.level[T.id]=n; save(); streak=[]; newProblem(); topics(); }),{id:"pLevels"})); }
+function newProblem(){
+  PR=T.gen[L-1](); tries=0; done=false; firstTry=true;
+  $("pQ").innerHTML=`<span class="label" style="color:${LEVELS[L-1].c}">Level ${L} · ${LEVELS[L-1].name}</span><div>${PR.q}</div>`; render($("pQ"));
+  $("pAns").value=""; $("pAns").disabled=false; $("pPrev").textContent=""; $("pHow").textContent=PR.type==="word"&&PR.opts?"Type one of: "+PR.opts.map(o=>o==="NONE"?"none":o.length>3?o.toLowerCase():o).join(", ")+".":PR.form==="factored"?"Type the factored form, like 2(x - 3)(x + 4).":PR.form==="poly"?"Type the simplified polynomial, like 3x^2 - 5x + 2.":PR.form==="simp"?"Type the simplified expression with positive exponents, like 6x^5 or 3x^2/y^4.":PR.form==="rad"?"Type the simplest radical form, like 5sqrt(2).":PR.form==="si"?"Type it as y = mx + b, like y = -2x + 5.":PR.form==="std"?"Type it as Ax + By = C with whole numbers, like 3x - 2y = 6.":HOW[PR.type]; $("pFb").innerHTML=""; $("pSuggest").innerHTML="";
+  $("pCheck").hidden=false; $("pNext").hidden=true; $("pHint").disabled=false; $("pShow").hidden=true; levelPills(); drawStreak(); $("pAns").focus({preventScroll:true}); }
+function fb(kind,tag,html){ $("pFb").innerHTML=`<div class="fb ${kind}"><span class="tag">${tag}</span>${html}</div>`; render($("pFb")); }
+const solHtml=()=>`<ol class="sol">${PR.sol.map(s=>`<li>${s}</li>`).join("")}</ol>`;
+function finish(correct){ done=true; $("pAns").disabled=true; $("pCheck").hidden=true; $("pNext").hidden=false; $("pShow").hidden=true; $("pHint").disabled=true;
+  if(correct){ st.solved[T.id+L]=(st.solved[T.id+L]||0)+1; save(); }
+  streak.push(correct&&firstTry); if(streak.length>6) streak.shift(); drawStreak(); suggest(); levelPills(); $("pNext").focus({preventScroll:true}); }
+function submit(){ if(done||!PR) return; const v=$("pAns").value.trim(); if(!v) return; const r=check(PR,v);
+  if(r===null){ fb("hint","Try again","I couldn't read that. "+HOW[PR.type]); return; }
+  if(r){ fb("good","Correct"+(firstTry?" on the first try!":""),`$${PR.ansTex}$`+solHtml()); finish(true); return; }
+  tries++; firstTry=false;
+  if(tries===1){ fb("bad","Not yet",PR.hint+" Try again."); $("pShow").hidden=false; }
+  else { fb("bad","Not yet","Here's how it works:"+solHtml()); finish(false); } }
+function drawStreak(){ const s=$("pStreak"); s.innerHTML="Recent: "; streak.forEach(x=>{ const i=document.createElement("i"); i.className=x?"ok":"no"; s.appendChild(i); }); if(!streak.length) s.textContent="Get 3 right on the first try in a row to unlock a suggestion to move up."; }
+function suggest(){ const box=$("pSuggest"); box.innerHTML=""; const last=streak.slice(-3),last2=streak.slice(-2); let to=null,msg="";
+  if(L<5&&last.length===3&&last.every(Boolean)){ to=L+1; msg=`3 in a row on the first try! Ready for <b>Level ${L+1} · ${LEVELS[L].name}</b>?`; }
+  else if(L>1&&last2.length===2&&last2.every(x=>!x)){ to=L-1; msg=`These are tough — that's okay! Practice <b>Level ${L-1} · ${LEVELS[L-2].name}</b> first, then come back stronger.`; }
+  if(!to) return; const d=document.createElement("div"); d.className="suggest"; d.style.setProperty("--c",LEVELS[to-1].c); d.innerHTML=`<span>${msg}</span>`;
+  const b=document.createElement("button"); b.className="btn sm"; b.style.background=LEVELS[to-1].c; b.textContent=to>L?"Move up ↑":"Go to Level "+to; b.onclick=()=>{ setLevel(to); }; d.appendChild(b); box.appendChild(d); }
+$("pCheck").onclick=submit; $("pAns").addEventListener("keydown",e=>{ if(e.key==="Enter"){ e.preventDefault(); done?newProblem():submit(); } });
+
+/* ---- chapter cheat sheet ---- */
+function cheatSheet(){
+  const old=document.querySelector(".csm"); if(old) old.remove();
+  const page=(document.querySelector(".intro .label")||{}).textContent||"";
+  const course=page.split("·")[0].trim();
+  const m=document.createElement("div"); m.className="csm";
+  m.innerHTML=`<div class="cs-sheet"><div class="cs-top"><div><h2>${$("chTitle").textContent}</h2><span class="sub">${course} · Cheat Sheet · Prof. Fang Math</span></div><div class="cs-acts"><button class="btn teal sm" id="csPrint">🖨 Print / Save PDF</button><button class="btn ghost sm" id="csClose">Close</button></div></div>
+    <div class="cs-grid">${CH.topics.map(t=>`<div class="cs-card"><h3>${t.title}</h3><div class="cs-idea">${t.idea}</div>${t.lesson&&t.lesson.steps&&t.lesson.steps.length?`<div class="cs-ex"><span class="lab">Example</span>${t.lesson.steps.map(s=>`<div>$${s[0]}$</div>`).join("")}</div>`:""}${t.lesson&&t.lesson.warn?`<div class="cs-warn"><span class="lab">Watch out</span>${t.lesson.warn}</div>`:""}</div>`).join("")}</div>
+    <div class="cs-foot">fangmath.com</div></div>`;
+  document.body.appendChild(m); render(m);
+  const close=()=>{ m.remove(); document.body.classList.remove("cs-printing"); };
+  m.querySelector("#csClose").onclick=close; m.onclick=e=>{ if(e.target===m) close(); };
+  m.querySelector("#csPrint").onclick=()=>{ document.body.classList.add("cs-printing"); window.print(); setTimeout(()=>document.body.classList.remove("cs-printing"),500); };
+  document.addEventListener("keydown",function esc(e){ if(e.key==="Escape"){ close(); document.removeEventListener("keydown",esc); } });
+}
+$("csBtn").onclick=cheatSheet;
+$("pNext").onclick=newProblem; $("closeP").onclick=()=>{ $("practice").hidden=true; };
+$("pHint").onclick=()=>{ if(done) return; firstTry=false; fb("hint","Hint",PR.hint); };
+$("pShow").onclick=()=>{ fb("hint","Solution",`$${PR.ansTex}$`+solHtml()); finish(false); };
+$("pAns").addEventListener("input",()=>{ const v=$("pAns").value.trim(),pv=$("pPrev"); if(!v||!window.katex){ pv.textContent=""; return; }
+  try{ let tex; const c=clean(v);
+    if(/<|>/.test(c)) tex=c.replace(/<=/g,"\\le ").replace(/>=/g,"\\ge ").replace(/\bor\b/gi,"\\text{ or }").replace(/\band\b/gi,"\\text{ and }");
+    else tex=c.split("=").map(x=>math.parse(x).toTex({parenthesis:"auto",implicit:"hide"})).join(" = ");
+    pv.innerHTML='<span class="pl">You wrote</span><span class="pm"></span>'; katex.render(tex,pv.querySelector(".pm"),{throwOnError:false}); }catch(e){ pv.textContent=""; } });
+
+/* ---- placement ---- */
+$("placeBtn").onclick=()=>{
+  const PL=[0,1,2,0,1].map((ti,k)=>[CH.topics[ti%CH.topics.length],k+1]); let i=0,res=[],pr;
+  const m=document.createElement("div"); m.className="modal"; m.innerHTML=`<div class="card"><div class="phead"><h2>Where should I start?</h2><button class="btn ghost sm" id="qx">Close</button></div><div class="qprog" id="qp"></div><div class="problem" id="qq"></div><div class="row" id="qr"><input id="qa" type="text" autocomplete="off" placeholder="Your answer" aria-label="Your answer"><button class="btn" id="qc">Check</button><button class="btn ghost" id="qs">I don't know</button></div><div class="howto" id="qh"></div><div id="qf"></div></div>`;
+  document.body.appendChild(m); const q=id=>m.querySelector("#"+id);
+  const prog=()=>{ q("qp").innerHTML=PL.map((_,k)=>`<i class="${k<res.length?(res[k]?"ok":"no"):k===i?"now":""}"></i>`).join(""); };
+  const ask=()=>{ const [t,lv]=PL[i]; pr=t.gen[lv-1](); q("qq").innerHTML=`<span class="label">Question ${i+1} of 5 · Level ${lv}</span><div>${pr.q}</div>`; render(q("qq")); q("qa").value=""; q("qh").textContent=HOW[pr.type]; q("qf").innerHTML=""; prog(); q("qa").focus(); };
+  const end=()=>{ const lvl=res.indexOf(false)===-1?5:res.indexOf(false)+1; st.rec=lvl; st.lvl=lvl; save(); recText(); topics(); prog();
+    q("qq").innerHTML=`<span class="label">Result</span><div>Start at <b style="color:${LEVELS[lvl-1].c}">Level ${lvl} · ${LEVELS[lvl-1].name}</b>.</div><div style="font-size:15px;color:var(--muted)">${lvl===5?"You answered every question correctly — go for Competition!":lvl===1?"Foundation builds the base everything else needs. Move up whenever you get 3 in a row.":"You got the first "+(lvl-1)+" level"+(lvl===2?"":"s")+" right. Level "+lvl+" is the right challenge for you."}</div>`;
+    q("qr").hidden=true; q("qh").textContent=""; q("qf").innerHTML=""; const b=document.createElement("button"); b.className="btn teal"; b.textContent="See the topics"; b.onclick=()=>m.remove(); q("qf").appendChild(b); };
+  const answer=r=>{ res.push(r); if(!r){ end(); return; } i++; i>=PL.length?end():ask(); };
+  q("qc").onclick=()=>{ const v=q("qa").value.trim(); if(!v) return; const r=check(pr,v); if(r===null){ q("qf").innerHTML=`<div class="fb hint">I couldn't read that. ${HOW[pr.type]}</div>`; return; } answer(r); };
+  q("qa").addEventListener("keydown",e=>{ if(e.key==="Enter"){ e.preventDefault(); q("qc").click(); } });
+  q("qs").onclick=()=>answer(false); q("qx").onclick=()=>m.remove(); m.addEventListener("click",e=>{ if(e.target===m) m.remove(); });
+  ask(); };
+
+/* ---- learn ---- */
+let LI=0, shown=1, TP=null, tDone=false, tTries=0;
+function road(){ const r=$("road"); r.innerHTML=""; CH.topics.forEach((t,i)=>{ const b=document.createElement("button"); b.type="button"; b.className="stop"+(st.learned[t.id]?" done":"")+(i===LI?" on":""); b.innerHTML=`<i>${st.learned[t.id]?"✓":i+1}</i>${t.title}`; b.onclick=()=>openLesson(i); r.appendChild(b); }); }
+function openLesson(i,scroll){ LI=i; shown=1; tDone=false; tTries=0; TP=null; road(); if(window.drawStory) drawStory(CH.id,CH.topics[i]); drawLesson(); if(scroll) ($("story")||$("lesson")).scrollIntoView({behavior:"smooth",block:"start"}); }
+function drawLesson(){
+  const t=CH.topics[LI], l=t.lesson, box=$("lesson");
+  box.innerHTML=`<span class="label">Lesson ${LI+1} of ${CH.topics.length}</span><h2>${t.title}</h2><div class="big">${t.idea}</div>${l.fig||""}<span class="label">👀 Watch me — simplest example</span><p class="watch">I'll solve it one step at a time. Read each step and think about <b>why</b>. When it makes sense, press <b>Got it — next step</b>.</p><ol class="steps">${l.steps.slice(0,shown).map(s=>`<li><div><div class="m">$${s[0]}$</div><div class="w">${s[1]}</div></div></li>`).join("")}</ol>`;
+  if(shown<l.steps.length){ const b=document.createElement("button"); b.className="btn"; b.style.alignSelf="flex-start"; b.textContent="Got it — next step →"; b.onclick=()=>{ shown++; drawLesson(); }; box.appendChild(b);
+    const s=document.createElement("button"); s.className="btn ghost sm"; s.style.alignSelf="flex-start"; s.textContent="Show all steps at once"; s.onclick=()=>{ shown=l.steps.length; drawLesson(); }; box.appendChild(s); }
+  else {
+    box.insertAdjacentHTML("beforeend",`<div class="warn"><b>Watch out: </b>${l.warn}</div>`);
+    if(!TP) TP=t.gen[0]();
+    const w=document.createElement("div"); w.className="turn";
+    w.innerHTML=`<span class="label" style="color:var(--gold)">Your turn</span><div class="q">${TP.q}</div><div class="row"><input type="text" id="tAns" autocomplete="off" placeholder="Your answer" aria-label="Your answer"><button class="btn" id="tChk">Check</button><button class="btn ghost" id="tHint">Hint</button></div><div class="howto">${HOW[TP.type]}</div><div id="tFb"></div>`;
+    box.appendChild(w);
+    const nav=document.createElement("div"); nav.className="lnav"; const left=document.createElement("div"); left.className="row";
+    if(LI>0){ const pv=document.createElement("button"); pv.className="btn ghost sm"; pv.textContent="← Previous lesson"; pv.onclick=()=>openLesson(LI-1,true); left.appendChild(pv); }
+    const right=document.createElement("div"); right.className="row"; right.id="tNext"; nav.append(left,right); box.appendChild(nav);
+    const fbx=(k,tag,h)=>{ $("tFb").innerHTML=`<div class="fb ${k}"><span class="tag">${tag}</span>${h}</div>`; render($("tFb")); };
+    const win=()=>{ tDone=true; st.learned[t.id]=true; save(); road(); $("tAns").disabled=true; $("tChk").disabled=true; $("tHint").disabled=true; showNext(); };
+    const go=()=>{ if(tDone) return; const v=$("tAns").value.trim(); if(!v) return; const r=check(TP,v);
+      if(r===null){ fbx("hint","Try again","I couldn't read that. "+HOW[TP.type]); return; }
+      if(r){ fbx("good","Correct — you've got it!",`$${TP.ansTex}$`); win(); return; }
+      tTries++; if(tTries<2) fbx("bad","Not yet",TP.hint+" Try again."); else { fbx("hint","Answer",`$${TP.ansTex}$. Try another one to make sure.`); const a=document.createElement("button"); a.className="btn ghost sm"; a.textContent="Try another"; a.onclick=()=>{ TP=t.gen[0](); tTries=0; drawLesson(); }; $("tFb").appendChild(a); } };
+    $("tChk").onclick=go; $("tAns").addEventListener("keydown",e=>{ if(e.key==="Enter"){ e.preventDefault(); go(); } }); $("tHint").onclick=()=>fbx("hint","Hint",TP.hint);
+    if(st.learned[t.id]) showNext();
+  }
+  render(box);
+}
+function showNext(){ const r=$("tNext"); if(!r) return; r.innerHTML=""; const t=CH.topics[LI];
+  const pr=document.createElement("button"); pr.className="btn ghost sm"; pr.textContent="Practice this topic"; pr.onclick=()=>{ setTab("practice"); startPractice(t,st.level[t.id]||st.rec||1); }; r.appendChild(pr);
+  const n=document.createElement("button"); n.className="btn teal sm";
+  if(LI<CH.topics.length-1){ n.textContent="Next lesson →"; n.onclick=()=>openLesson(LI+1,true); } else { n.textContent="Start practicing →"; n.onclick=()=>{ setTab("practice"); window.scrollTo({top:0,behavior:"smooth"}); }; }
+  r.appendChild(n); }
+function setTab(t){ $("learnView").hidden=t!=="learn"; $("practiceView").hidden=t!=="practice"; $("tabLearn").classList.toggle("on",t==="learn"); $("tabPractice").classList.toggle("on",t==="practice"); try{ history.replaceState(null,"","#"+CH.id+"-"+t); }catch(e){} }
+function openChapter(id,tab){
+  useChapter(id); $("chTitle").textContent="Unit "+ALLCH.find(c=>c[2]===CH.id)[0]+": "+CH.title; $("practice").hidden=true;
+  chapters(); recText(); topics(); const first=CH.topics.findIndex(t=>!st.learned[t.id]); openLesson(first<0?0:first);
+  setTab(tab||(first<0?"practice":"learn")); }
+document.addEventListener("click",e=>{ const d=e.target.closest(".mc > div"); if(!d) return; const card=d.closest(".practice, .turn, .modal .card"); const inp=card&&card.querySelector("input[type=text]"); if(inp&&!inp.disabled){ inp.value=d.querySelector("b").textContent.trim()[0]; inp.focus(); d.parentElement.querySelectorAll("div").forEach(x=>x.classList.toggle("sel",x===d)); } });
+$("tabLearn").onclick=()=>setTab("learn"); $("tabPractice").onclick=()=>setTab("practice");
+window.addEventListener("load",()=>{ legend(); const m=/^#(ch\d+)(?:-(learn|practice))?$/.exec(location.hash); openChapter(m?m[1]:ST.cur,m?m[2]:null); });
+</script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="../mistakes.js"></script>
+<script src="fm-levels-bridge.js"></script>
+</body>
+</html>

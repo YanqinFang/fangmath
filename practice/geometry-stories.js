@@ -85,6 +85,14 @@
     aha: S`<p>A square corner is $90^\circ$, so the two pieces are <b>complementary</b>: $90 - 35 = 55^\circ$. A straight edge is $180^\circ$, so pieces there are <b>supplementary</b>: $180 - 35 = 145^\circ$.</p>
       <p>When scissors open, the two openings <b>across</b> from each other always match. Each one forms a straight line with the same neighbor, so they must be equal. Those are <b>vertical angles</b>.</p>`,
   };
+  T["ch2/tcp"] = {
+    title: "The Detective's Notebook",
+    scene: S`<p>A detective can't just say “the butler did it.” In court, every claim needs evidence: <i>“The butler had the key — <b>witness statement</b>. The key opens the safe — <b>lab test</b>. So the butler could open the safe — <b>both facts above</b>.”</i></p>
+      <p>Her notebook has two columns: <b>what I claim</b> on the left, <b>how I know</b> on the right.</p>`,
+    think: S`In math, what counts as “evidence”? If you write $2x = 8$ right after $2x + 5 = 13$, what is your evidence?`,
+    aha: S`<p>A <b>two-column proof</b> is the detective's notebook. Left column: <b>statements</b>, one small step at a time. Right column: <b>reasons</b> — only things everyone agrees on: what was <b>given</b>, a <b>definition</b>, a <b>property</b> (like the Subtraction Property of Equality), a <b>postulate</b>, or a <b>theorem</b> already proved.</p>
+      <p>Going from $2x + 5 = 13$ to $2x = 8$, the evidence is “I subtracted $5$ from both sides” — the <b>Subtraction Property of Equality</b>. Line $1$ is always the given; the last line is always what you had to prove.</p>`,
+  };
   T["ch3/par"] = {
     title: "The Road Across the Railroad",
     scene: S`<p>A straight road crosses two <b>parallel</b> train tracks. A surveyor measures the four angles where the road meets the first track. She is tired and doesn't want to walk to the second track.</p>`,

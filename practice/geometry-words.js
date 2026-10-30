@@ -45,6 +45,16 @@
   #words,#ready,#road,#practiceView{scroll-margin-top:80px}
   .wmore{margin:-6px 0 12px;font-size:14px;color:var(--muted)} .wmore>summary{cursor:pointer;color:var(--teal);font-weight:600;list-style:none} .wmore>summary::-webkit-details-marker{display:none}
   .wmore>div{background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:10px 12px;margin-top:6px;color:var(--ink);font-size:14.5px}
+  .tries{border:1px solid var(--line);border-radius:14px;padding:12px 14px;background:var(--bg)} .tries .tip{margin:0 0 6px;font-size:14px;color:var(--muted)}
+  .tries > svg{width:100%;max-width:320px;height:auto;display:block;margin:4px 0 8px}
+  .tq{background:#fff;border:1px solid var(--line);border-radius:12px;padding:10px 12px;margin:8px 0;font-size:15px}
+  .tqa{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-top:8px} .tqa .and{color:var(--muted);font-size:14px}
+  .dd{position:relative;display:inline-block} .ddb{min-width:96px;border:1.5px dashed var(--teal);background:#fff;color:var(--teal);border-radius:10px;padding:5px 12px;font:inherit;font-size:15px;cursor:pointer}
+  .ddb.on{border-style:solid;color:var(--ink);background:var(--teal-soft)}
+  .ddm{position:absolute;z-index:30;top:110%;left:0;background:#fff;border:1px solid var(--line);border-radius:10px;box-shadow:var(--shadow);padding:4px;display:flex;flex-direction:column;min-width:110px}
+  .ddm[hidden]{display:none!important} .ddm button{border:0;background:#fff;text-align:left;padding:6px 10px;border-radius:8px;font:inherit;font-size:15px;cursor:pointer} .ddm button:hover{background:var(--teal-soft)}
+  .tchk{border:0;background:var(--navy);color:#fff;border-radius:999px;padding:6px 16px;font:inherit;font-size:14px;font-weight:600;cursor:pointer}
+  .tfb .fb{margin-top:8px}
   .chroute{background:#fff;border:1px solid var(--line);border-radius:16px;padding:12px 14px;margin:0 0 14px;box-shadow:var(--shadow)}
   .chroute .rk{font-size:14px;color:var(--ink);margin-bottom:8px} .chroute .rk span{color:var(--muted)}
   .chroute .rs{display:flex;flex-wrap:wrap;align-items:center;gap:6px} .chroute .rs>span{color:var(--faint)}
@@ -465,6 +475,27 @@
     ]
   };
 
+
+  /* ---------- "Your turn — on paper first": fill-in questions after the concept cards ---------- */
+  const OL = t => `\\overleftrightarrow{${t}}`, OR = t => `\\overrightarrow{${t}}`, SG = t => `\\overline{${t}}`;
+  WORDS.ch1.tries = {
+    fig: svg(`<line x1="14" y1="58" x2="216" y2="58" stroke="${teal}" stroke-width="3" marker-start="url(#wa)" marker-end="url(#wa)"/><line x1="105" y1="58" x2="176" y2="4" stroke="#6A4BD8" stroke-width="3" marker-end="url(#wa)"/>${dot(45, 58, "A", 16)}${dot(105, 58, "B", 16)}${dot(170, 58, "C", 16)}${dot(150, 24, "D", -8)}<text x="208" y="50" font-family="Inter,sans-serif" font-size="13" font-style="italic" fill="${teal}">ℓ</text>`, "line through A, B, C and a ray from B through D").replace('viewBox="0 0 230 70"', 'viewBox="0 0 230 80"'),
+    qs: [
+      { q: "Name the line $\\ell$ in <b>two different ways</b> using two of its points.", n: 2,
+        opts: [OL("AB"), OL("BC"), OL("CA"), OR("AB"), SG("AC"), OL("AD")],
+        ok: s => s.every(x => [OL("AB"), OL("BC"), OL("CA")].includes(x)) && s[0] !== s[1],
+        sol: "Any two of $\\overleftrightarrow{AB}$, $\\overleftrightarrow{BC}$, $\\overleftrightarrow{CA}$ (also $\\overleftrightarrow{BA}$, … or line $\\ell$). A line gets a two-arrow bar, and both points must be <b>on</b> the line — $D$ is not." },
+      { q: "Name the ray that starts at $B$ and passes through $D$.", n: 1,
+        opts: [OR("BD"), OR("DB"), OL("BD"), SG("BD")],
+        ok: s => s[0] === OR("BD"),
+        sol: "$\\overrightarrow{BD}$ — the <b>endpoint comes first</b>. $\\overrightarrow{DB}$ would start at $D$ and point the other way." },
+      { q: "Name two <b>opposite rays</b> with endpoint $B$.", n: 2,
+        opts: [OR("BA"), OR("BC"), OR("AB"), OR("CB"), OR("BD")],
+        ok: s => s.slice().sort().join() === [OR("BA"), OR("BC")].sort().join(),
+        sol: "$\\overrightarrow{BA}$ and $\\overrightarrow{BC}$: they share endpoint $B$ and point in opposite directions along the same line. Together they make line $\\ell$." }
+    ]
+  };
+
   const KEY = "fm-geo-words";
   const load = () => { try { return JSON.parse(localStorage.getItem(KEY) || "{}"); } catch (e) { return {}; } };
   const save = v => { try { localStorage.setItem(KEY, JSON.stringify(v)); } catch (e) {} };
@@ -485,6 +516,10 @@
         <h4>👀 See it → 🗣 Say it → ✏️ Write it</h4>
         <div class="wgrid">${w.cards.map(c => `<div class="wcard"><h5>${c.t}${w.more && c.tag ? `<em class="tg" hidden>${c.tag}</em>` : ""}</h5>${PIC[c.k] || ""}
           <div class="wrow"><span class="lb">See it</span>${c.see}</div><div class="wrow"><span class="lb">Say it</span>${c.say}</div><div class="wrow"><span class="lb">Write it</span>${c.write}</div></div>`).join("")}</div>
+        ${w.tries ? `<h4>✍️ Your turn — on paper first</h4>
+        <div class="tries"><p class="tip">Write each answer on your paper first. Then choose what you wrote from the menu and press <b>Check</b>.</p>${w.tries.fig}
+          ${w.tries.qs.map((t, qi) => `<div class="tq" data-q="${qi}"><div class="tqq"><b>${qi + 1}.</b> ${t.q}</div><div class="tqa">${Array.from({ length: t.n }, (_, k) => `<span class="dd" data-k="${k}"><button type="button" class="ddb">choose ▾</button><span class="ddm" hidden>${t.opts.map(o => `<button type="button" data-v="${o.replace(/"/g, "&quot;")}">$${o}$</button>`).join("")}</span></span>`).join(t.n > 1 ? `<span class="and">and</span>` : "")}<button type="button" class="tchk">Check</button></div><div class="tfb"></div></div>`).join("")}
+        </div>` : ""}
         ${w.table ? `<h4>${w.tableTitle || "Line, ray or segment?"}</h4>${w.table}` : ""}
         <h4>📌 ${w.postTitle || "Postulates — try each one with your hands"}</h4>
         ${w.posts.map(([t, x]) => `<div class="post"><div class="t">${t}</div><div class="x"><b>Try it: </b>${x}</div></div>`).join("")}
@@ -500,6 +535,14 @@
       </div>`;
     const upd = () => { const n = box.querySelectorAll(".vocab input:checked").length; box.querySelector("#vocabN").textContent = `${n} of ${w.vocab.length} words ready${n === w.vocab.length ? " — great job! 🎉" : ""}`; };
     box.querySelectorAll(".vocab input").forEach(i => i.onchange = () => { const k = load(); k[chId] = [...box.querySelectorAll(".vocab input:checked")].map(x => x.value); save(k); upd(); });
+    if (w.tries) box.querySelectorAll(".tq").forEach(el => { const t = w.tries.qs[+el.dataset.q], sel = Array(t.n).fill(null);
+      el.querySelectorAll(".dd").forEach(dd => { const b = dd.querySelector(".ddb"), m = dd.querySelector(".ddm");
+        b.onclick = () => { box.querySelectorAll(".ddm").forEach(x => { if (x !== m) x.hidden = true; }); m.hidden = !m.hidden; };
+        m.querySelectorAll("button").forEach(o => o.onclick = () => { sel[+dd.dataset.k] = o.dataset.v; b.innerHTML = o.innerHTML; b.classList.add("on"); m.hidden = true; el.querySelector(".tfb").innerHTML = ""; }); });
+      el.querySelector(".tchk").onclick = () => { const fb = el.querySelector(".tfb");
+        if (sel.some(x => !x)) { fb.innerHTML = `<div class="fb hint"><span class="tag">Choose first</span>Pick ${t.n > 1 ? "both answers" : "an answer"} from the menu.</div>`; return; }
+        const good = t.ok(sel); fb.innerHTML = `<div class="fb ${good ? "good" : "bad"}"><span class="tag">${good ? "Correct!" : "Not yet"}</span>${good ? "" : "Check your paper again. "}${t.sol}</div>`;
+        if (window.renderMathInElement) renderMathInElement(fb, { delimiters: [{ left: "$", right: "$", display: false }], throwOnError: false }); }; });
     box.querySelectorAll(".qc button").forEach(b => b.onclick = () => { const a = b.nextElementSibling; a.hidden = !a.hidden; b.textContent = a.hidden ? "Show answer" : "Hide"; });
     box.addEventListener("toggle", e => { if (e.target !== box) return; const k = load(); k["_seen_" + chId] = !box.open; save(k); });
     const more = box.querySelector(".wmore"); if (more) more.addEventListener("toggle", () => box.querySelectorAll(".tg").forEach(t => t.hidden = !more.open));

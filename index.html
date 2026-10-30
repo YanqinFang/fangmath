@@ -378,6 +378,26 @@
   .mk-causes{display:flex;gap:6px;flex-wrap:wrap} .mk-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px}
   @media (max-width:640px){.mk-grid{grid-template-columns:1fr}.mk-bar{grid-template-columns:1fr 60px 24px}}
   .muted{color:var(--muted)}
+  /* High School page: pathway, sections, compact calendar list */
+  .hs-path{display:flex;flex-wrap:wrap;align-items:center;gap:8px 6px;background:#fff;border:1px solid var(--line);border-radius:18px;padding:14px 16px;margin:0 0 30px;box-shadow:var(--shadow)}
+  .hs-stop{display:inline-flex;align-items:center;gap:7px;border:1.5px solid var(--line);border-radius:999px;padding:6px 13px;font-size:14px;font-weight:600;color:var(--ink);text-decoration:none;background:#fff}
+  .hs-stop i{width:10px;height:10px;border-radius:50%;background:var(--c)}
+  .hs-stop:hover{border-color:var(--c);color:var(--c)}
+  .hs-arr{color:var(--faint);font-weight:700}
+  .hs-or{color:var(--faint);font-size:13px;font-style:italic}
+  .hs-lab{align-self:center;font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--faint);padding:0 4px}
+  .hs-college{display:inline-flex;flex-wrap:wrap;gap:6px;padding:4px 8px;border:1.5px dashed var(--line);border-radius:999px}
+  .hs-sec{margin:0 0 34px}
+  .hs-sec .sec-head{margin-bottom:14px}
+  .hs-sec .sec-head h2{font-size:clamp(22px,2.6vw,28px)}
+  .cal-list{background:#fff;border:1px solid var(--line);border-radius:16px;overflow:hidden}
+  .cal-row{display:flex;align-items:center;gap:14px;padding:12px 16px;border-top:1px solid var(--line)}
+  .cal-row:first-child{border-top:0}
+  .cal-row .ic{font-size:20px}
+  .cal-row .t{flex:1;display:flex;flex-direction:column;min-width:0}
+  .cal-row .t span{font-size:13px;color:var(--muted)}
+  .cal-row .b{display:flex;gap:8px}
+  @media (max-width:560px){.cal-row{flex-wrap:wrap}.cal-row .b{width:100%}.cal-row .b .btn{flex:1;text-align:center}}
 </style>
 </head>
 <body>
@@ -387,7 +407,6 @@
   <nav class="main" id="nav">
     <a href="#/k8" data-nav="k8">Grades 3–8</a>
     <a href="#/highschool" data-nav="highschool">High School</a>
-    <a href="#/calculus" data-nav="calculus">Calculus &amp; Beyond</a>
     <a href="#/competition" data-nav="competition">Competition</a>
     <a href="#/challenge" data-nav="challenge">Weekly Challenge</a>
     <a href="#/testprep" data-nav="testprep">SAT / ACT</a>
@@ -479,8 +498,9 @@ function routeInner(){
     if (old) { location.replace(old[2] === "g35" && old[1] === "lesson" && /^\/0\/0/.test(old[3] || "") ? "#/lesson/grade4/1/0" + (old[3] || "").slice(4) : "#/course/" + (old[2] === "g35" ? "grade3" : "grade6")); return; } }
   $("nav").classList.remove("open");
   const parts = location.hash.replace(/^#\/?/, "").split("/").map(decodeURIComponent);
+  if (parts[0] === "calculus") { location.replace("#/highschool"); return; }
   const page = parts[0] || "home";
-  const grpKey = (GROUPS[(courseById(parts[1]) || {}).group] || {}).key;
+  let grpKey = (GROUPS[(courseById(parts[1]) || {}).group] || {}).key; if (grpKey === "calculus") grpKey = "highschool";
   const navKey = { course:grpKey, lesson:grpKey, app:grpKey, login:"account", me:"account", dashboard:"account", student:"account" }[page] || page;
   document.querySelectorAll("#nav a").forEach(a => a.classList.toggle("active", a.dataset.nav === navKey));
   const v = $("view"); v.replaceChildren(); window.scrollTo(0, 0);
@@ -518,7 +538,7 @@ function levelsMeta(c){
 function courseCard(c){
   const n = lessonCount(c);
   return h("a", { class:"card course", href:"#/course/" + c.id, style:"--c:" + c.color },
-    h("div", { class:"meta" }, c.group === "K–8" ? "Grade " + c.short : (GROUPS[c.group] || {}).title || c.group), h("h3", {}, c.title), h("p", {}, c.blurb),
+    h("div", { class:"meta" }, c.group === "K–8" ? "Grade " + c.short : c.group === "Calculus & Beyond" ? (/^calc/.test(c.id) ? "AP Calculus" : "College Math") : (GROUPS[c.group] || {}).title || c.group), h("h3", {}, c.title), h("p", {}, c.blurb),
     h("div", { class:"meta" }, c.levels ? levelsMeta(c) : c.units.length + " units · " + (n ? n + (n === 1 ? " lesson" : " lessons") : "lessons coming soon")),
     h("span", { class:"go" }, "Open course →"));
 }
@@ -527,7 +547,7 @@ function pageHome(v){
   v.append(h("section", { class:"hero" }, h("div", { class:"wrap" },
     h("h1", { class:"wordmark" }, "Prof. Fang ", h("span", { class:"m" }, "Math")),
     h("p", { class:"tagline" }, h("b", {}, "Experience first. "), "Symbols second. ", h("b", {}, "Understanding always.")),
-    h("div", { class:"hero-cta" }, h("a", { class:"btn", href:"#/k8" }, "Grades 3–8"), h("a", { class:"btn teal", href:"#/highschool" }, "High School"), h("a", { class:"btn", style:"background:#6A4BD8", href:"#/calculus" }, "Calculus & Beyond"), h("a", { class:"btn", style:"background:#D35400", href:"#/competition" }, "Competition"), h("a", { class:"btn", style:"background:#B7472A", href:"#/testprep" }, "SAT / ACT"), h("a", { class:"btn ghost", href:"#/challenge" }, "This week's challenge")),
+    h("div", { class:"hero-cta" }, h("a", { class:"btn", href:"#/k8" }, "Grades 3–8"), h("a", { class:"btn teal", href:"#/highschool" }, "High School"), h("a", { class:"btn", style:"background:#D35400", href:"#/competition" }, "Competition"), h("a", { class:"btn", style:"background:#B7472A", href:"#/testprep" }, "SAT / ACT"), h("a", { class:"btn ghost", href:"#/challenge" }, "This week's challenge")),
     h("a", { class:"solve-hero", href:"#/solve" },
       h("span", { class:"ic", "aria-hidden":"true" }, "📸"),
       h("span", { class:"txt" }, h("b", {}, "Stuck on a homework problem?"), h("span", {}, "Type it in and solve it yourself, one step at a time — I'll check every step and give hints.")),
@@ -557,7 +577,33 @@ function pageHome(v){
 }
 
 /* ---------------- course lists ---------------- */
+function pageHighSchool(v){
+  const find = id => COURSES.find(c => c.id === id);
+  const core = COURSES.filter(c => c.group === "High School");
+  const calc = COURSES.filter(c => c.group === "Calculus & Beyond" && /^calc/.test(c.id));
+  const college = COURSES.filter(c => c.group === "Calculus & Beyond" && !/^calc/.test(c.id));
+  const stop = c => c ? h("a", { class:"hs-stop", href:"#/course/" + c.id, style:"--c:" + c.color }, h("i", {}), c.title) : null;
+  const arrow = () => h("span", { class:"hs-arr", "aria-hidden":"true" }, "→");
+  const path = [];
+  core.forEach(c => { path.push(stop(c), arrow()); });
+  calc.forEach((c, i) => { path.push(stop(c)); path.push(i < calc.length - 1 ? h("span", { class:"hs-or" }, "or") : arrow()); });
+  path.push(h("span", { class:"hs-college" }, h("span", { class:"hs-lab" }, "College"), college.map(stop)));
+  const sec = (t, d, list) => list.length ? h("section", { class:"hs-sec" }, h("div", { class:"sec-head" }, h("div", {}, h("h2", {}, t), h("p", {}, d))), h("div", { class:"grid" }, list.map(courseCard))) : null;
+  const cals = [...(GROUPS["High School"].downloads || []), ...((GROUPS["Calculus & Beyond"] || {}).downloads || [])];
+  v.append(h("div", { class:"wrap" },
+    h("div", { class:"page-head" }, h("h1", {}, "High School"), h("p", {}, "From Algebra 1 to AP Calculus — and on to college math. Follow the path, or jump straight to the course you need.")),
+    h("nav", { class:"hs-path", "aria-label":"Course pathway" }, path),
+    sec("Core Courses", "The four-year sequence, chapter by chapter — lessons, 5-level practice and a cheat sheet for every chapter.", core),
+    sec("AP Calculus", "AB covers Units 1–8; BC adds parametric, polar and vector calculus and infinite series.", calc),
+    sec("College Math", "For students who finish calculus early.", college),
+    cals.length ? h("section", { class:"hs-sec" }, h("div", { class:"sec-head" }, h("div", {}, h("h2", {}, "Free Daily Practice Calendars"), h("p", {}, "34 weeks · Monday–Friday · 10 problems a day (2027–28)."))),
+      h("div", { class:"cal-list" }, cals.map(d => h("div", { class:"cal-row" },
+        h("span", { class:"ic", "aria-hidden":"true" }, "📅"),
+        h("span", { class:"t" }, h("b", {}, d.title.replace(/ — Daily Practice Calendar.*$/, "")), h("span", {}, "Follows " + (d.text.match(/Follows (.*?)\.?$/) || [, ""])[1])),
+        h("span", { class:"b" }, d.cal ? h("a", { class:"btn sm ghost", href:"#/calendar/" + d.cal }, "Online") : null, h("a", { class:"btn sm teal", href:d.file, target:"_blank", rel:"noopener" }, "PDF")))))) : null));
+}
 function pageGroup(v, group, title, intro){
+  if (group === "High School") return pageHighSchool(v);
   v.append(h("div", { class:"wrap" },
     h("div", { class:"page-head" }, h("h1", {}, title), h("p", {}, intro)),
     (group === "K–8" ? [] : (GROUPS[group] || {}).downloads || []).map(d =>   // Grades 3–8: calendars live inside each grade's course page
@@ -571,7 +617,7 @@ function pageGroup(v, group, title, intro){
 }
 function pageCourse(v, id){
   const c = courseById(id); if (!c) return notFound(v);
-  const back = ["#/" + (GROUPS[c.group] || GROUPS["K–8"]).key, (GROUPS[c.group] || GROUPS["K–8"]).title];
+  const back = c.group === "Calculus & Beyond" ? ["#/highschool", "High School"] : ["#/" + (GROUPS[c.group] || GROUPS["K–8"]).key, (GROUPS[c.group] || GROUPS["K–8"]).title];
   const wrap = h("div", { class:"wrap" },
     h("div", { class:"page-head" }, h("div", { class:"crumbs" }, h("a", { href:back[0] }, back[1]), " / " + c.title), h("h1", {}, c.title), h("p", {}, c.blurb)));
   if (c.levels) wrap.append(h("a", { class:"solve-hero", style:"margin:0 0 12px;max-width:none", href:c.levels },

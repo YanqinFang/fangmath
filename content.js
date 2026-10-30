@@ -57,7 +57,7 @@ const GROUPS = {
         text:"Free · 34 weeks · Monday–Friday · 10 problems a day. Follows the California Common Core standards for Grade 8.",
         file:"materials/grade8/grade8_math_daily_calendar.pdf", cal:"grade8" },
     ] },
-  "High School":       { key:"highschool", title:"High School",       intro:"Algebra 1, Geometry, Algebra 2 and Precalculus, chapter by chapter.", alias:["algebra"],
+  "High School":       { key:"highschool", title:"High School",       intro:"From Algebra 1 to AP Calculus — and on to college math.", alias:["algebra"],
     /* FREE DOWNLOADS: shown at the top of this page. Add more { title, text, file } items to list more PDFs. */
     downloads: [
       { title:"Algebra 1 — Daily Practice Calendar (2027–28)",

@@ -326,6 +326,70 @@
       <p><b>Fraction of a group:</b> divide by the bottom, then multiply by the top.</p>`
   };
 
+
+  const G = (f, ...a) => (typeof window[f] === "function" ? window[f](...a) : "");
+  T["ch5/time"] = {
+    title: "Two Hands, Two Jobs",
+    scene: S`<p>Leo looks at the kitchen clock. The <b>short hand</b> is just past the $4$. The <b>long hand</b> points at the $7$. Leo says, “It's 4:07!”</p>` + G("clock", 4, 35),
+    think: S`Is Leo right? The long hand doesn't count $1, 2, 3, \dots$ like the short hand. How many minutes does it take the long hand to move from one number to the next?`,
+    aha: S`<p>The long hand goes all the way around in $60$ minutes, passing $12$ numbers. So each number is $60 \div 12 = 5$ minutes.</p>
+      <p>Pointing at the $7$ means $7 \times 5 = 35$ minutes. The short hand says the hour: just past $4$. So it's <b>4:35</b>, not 4:07.</p>
+      <p><b>Short hand: hour. Long hand: minutes, counting by 5s.</b> Quarter past $= :15$, half past $= :30$, quarter to $= :45$.</p>`
+  };
+  T["ch5/elapsed"] = {
+    title: "How Long Was Practice?",
+    scene: S`<p>Soccer practice starts at <b>3:15</b> and ends at <b>4:05</b>. Ava subtracts: $405 - 315 = 90$. “Practice was 90 minutes!”</p>`,
+    think: S`Does $90$ minutes sound right — that's an hour and a half? Try counting on from $3{:}15$ instead.`,
+    aha: S`<svg viewBox="0 0 420 70" role="img" aria-label="time number line"><line x1="20" y1="34" x2="400" y2="34" stroke="#94A3B8" stroke-width="2"/>
+        <g font-family="Inter,sans-serif" font-size="13" text-anchor="middle" fill="#16233B"><text x="30" y="60">3:15</text><text x="330" y="60">4:00</text><text x="390" y="60">4:05</text></g>
+        <path d="M32 30 Q180 0 328 30" fill="none" stroke="#0F7C7C" stroke-width="2.5"/><path d="M332 30 Q360 14 388 30" fill="none" stroke="#C9962B" stroke-width="2.5"/>
+        <g font-family="Inter,sans-serif" font-size="13" font-weight="700" text-anchor="middle"><text x="180" y="12" fill="#0F7C7C">+45 min</text><text x="360" y="12" fill="#B7791F">+5</text></g></svg>
+      <p>$3{:}15 \to 4{:}00$ is $45$ minutes. $4{:}00 \to 4{:}05$ is $5$ minutes. Total: $50$ minutes.</p>
+      <p>Ava's subtraction went wrong because an hour has <b>60</b> minutes, not 100. <b>Count on: jump to the next hour, then add the rest.</b></p>`
+  };
+  T["ch5/meas"] = {
+    title: "Big Units, Small Units",
+    scene: S`<p>Mia's dad asks two silly questions at dinner:</p><p>“How much water is in the bathtub — in <b>milliliters</b>?” and “How heavy is your paper clip — in <b>kilograms</b>?”</p>`,
+    think: S`Why are those silly questions? Which unit would make more sense for each one?`,
+    aha: S`<table><tr><th></th><th>small unit</th><th>big unit</th></tr>
+      <tr><td><b>liquid</b></td><td>milliliter (mL): a few drops</td><td>liter (L): a big water bottle</td></tr>
+      <tr><td><b>mass</b></td><td>gram (g): a paper clip</td><td>kilogram (kg): a big book</td></tr></table>
+      <p style="margin-top:10px">A bathtub holds lots of water, so use <b>liters</b> (about $150$ L!). A paper clip is tiny, so use <b>grams</b> (about $1$ g).</p>
+      <p>Then measures work like any number: $3$ jugs of $4$ L is $3 \times 4 = 12$ L. Just keep the unit.</p>`
+  };
+  T["ch5/graph"] = {
+    title: "Read the Key First",
+    scene: S`<p>Ms. Lee's class voted for a class pet. Zoe made a picture graph, but she forgot to look at the key.</p>` + (typeof picGraph === "function" ? picGraph(["Fish", "Hamster", "Turtle"], [3, 5, 2], 2, "🐾") : "") + S`<p>Zoe says, “5 kids voted for the hamster.”</p>`,
+    think: S`Look at the key at the bottom. Is Zoe right? How many kids voted in all?`,
+    aha: S`<p>Each 🐾 stands for <b>2</b> votes, not 1. Hamster: $5 \times 2 = 10$ votes. Fish: $3 \times 2 = 6$. Turtle: $2 \times 2 = 4$.</p>
+      <p>In all: $6 + 10 + 4 = 20$ kids.</p>
+      <p>On a <b>bar graph</b>, the scale does the same job as the key: if the lines count by $2$s, a bar halfway between $8$ and $10$ means $9$.</p>`
+  };
+  T["ch5/len"] = {
+    title: "Between the Inch Marks",
+    scene: S`<p>Ben measures his crayon. It ends <b>past the 3</b> but before the 4 — right at the first little mark.</p>` + G("ruler", 6, 13, true),
+    think: S`How many little spaces is each inch split into? So what is each little space worth?`,
+    aha: S`<p>Each inch is split into $4$ equal spaces, so each is $\frac14$ inch. The crayon ends $1$ space past $3$: it is $3\frac14$ inches long.</p>
+      <p>The middle mark is $\frac24 = \frac12$, so halfway between $3$ and $4$ is $3\frac12$.</p>
+      <p>When the whole class measures their crayons, a <b>line plot</b> puts an ✕ above each length. The tallest stack shows the most common length.</p>`
+  };
+  T["ch5/area"] = {
+    title: "Tiling the Floor",
+    scene: S`<p>Mia's family is putting square tiles on the playroom floor. Each tile is $1$ foot by $1$ foot. The floor is $6$ feet long and $4$ feet wide.</p>` + G("grid", 4, 6),
+    think: S`How many tiles do they need? Can you find it without counting every tile one by one?`,
+    aha: S`<p>The tiles make $4$ rows of $6$: $4 \times 6 = 24$ tiles.</p>
+      <p>That number is the <b>area</b>: how many unit squares cover the floor with no gaps and no overlaps. The floor's area is $24$ <b>square feet</b>.</p>
+      <p>For any rectangle: <b>area = length × width</b>. Small things use square inches or square centimeters; big things use square meters or square miles.</p>`
+  };
+  T["ch5/area2"] = {
+    title: "The L-Shaped Room",
+    scene: S`<p>Leo's bedroom is shaped like an <b>L</b>. Dad needs to know its area to buy carpet.</p>` + G("lshape", 7, 6, 3, 2, "ft"),
+    think: S`There's no single “length × width” for an L. How could you cut the room into shapes you <b>can</b> find the area of?`,
+    aha: S`<p><b>Cut it into two rectangles.</b> Bottom part: $7 \times 4 = 28$. Top part: $4 \times 2 = 8$. Total: $28 + 8 = 36$ square feet.</p>
+      <p><b>Or take away:</b> a full $7 \times 6$ rectangle is $42$. The missing corner is $3 \times 2 = 6$. $42 - 6 = 36$ square feet. Same answer!</p>
+      <p>And if you know the area and one side, divide: area $32$, side $8$ → other side $32 \div 8 = 4$.</p>`
+  };
+
   window.drawStory = function (chId, topic) {
     const lesson = document.getElementById("lesson"); if (!lesson) return;
     let box = document.getElementById("story");

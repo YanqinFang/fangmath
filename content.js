@@ -380,6 +380,42 @@ const COURSES = [
   },
 ];
 
+/* ---------------- LEARN & PRACTICE AT YOUR LEVEL ----------------
+   One entry per course: each unit links to its chapter(s) on the course's
+   levels page (lesson + 5-level practice).  levels: [page, [[chapter, title, extra?], ...] per unit] */
+(function(){
+  const P = "practice/";
+  const same = n => Array.from({ length:n }, (_, i) => [[i + 1]]);
+  const MAP = {
+    alg1:   [P + "algebra1-levels.html", same(12)],
+    geo:    [P + "geometry-levels.html", same(13)],
+    alg2:   [P + "algebra2-levels.html", same(14)],
+    calcab: [P + "calculus-ab-levels.html", same(8)],
+    precalc:[P + "precalculus-levels.html", [
+      [[1, "Functions and Their Graphs"], [2, "Polynomial and Rational Functions"]],
+      [[3, "Exponential and Logarithmic Functions"], [11, "Sequences, Series & Binomial Theorem"]],
+      [[4, "Trigonometric Functions"], [5, "Inverse Trig, Equations & Applications"], [6, "Trigonometric Identities"], [9, "Polar, Complex & Parametric"], [7, "Laws of Sines and Cosines", "Beyond AP"]],
+      [[8, "Vectors"], [9, "Polar, Complex & Parametric (parametric part)"], [10, "Conic Sections"], [12, "Limits & Intro to Calculus", "Beyond AP"]]]],
+  };
+  const AB = P + "calculus-ab-levels.html", BC = P + "calculus-bc-levels.html";
+  const BCU = { 5:[[1, "Integration Techniques", "BC"]], 6:[[2, "Euler's Method & Logistic Models", "BC"]],
+                8:[[3, "Arc Length, Parametric & Vector Functions", "BC"], [4, "Polar Calculus", "BC"]],
+                9:[[5, "Infinite Series: Convergence Tests", "BC"], [6, "Taylor & Power Series", "BC"]] };
+  COURSES.forEach(c => {
+    if (c.id === "calcbc") {
+      c.levels = BC;
+      c.units.forEach((u, i) => { u.learn = (i < 8 ? [{ href:AB, ch:i + 1, t:"Core lesson + practice (same as AB)" }] : [])
+        .concat((BCU[i] || []).map(([ch, t, x]) => ({ href:BC, ch, t, extra:x }))); });
+      return;
+    }
+    const m = MAP[c.id]; if (!m) return;
+    c.levels = m[0];
+    c.units.forEach((u, i) => { u.learn = (m[1][i] || []).map(([ch, t, x]) => ({ href:m[0], ch, t, extra:x })); });
+  });
+  const alg1 = COURSES.find(c => c.id === "alg1");
+  if (alg1) alg1.extras = [{ href:P + "tutor.html", ic:"🧭", t:"Step-by-Step Tutor", d:"20 equations broken into small guided steps, with hints and choices." }];
+})();
+
 /* ---------------- WEEKLY CHALLENGE (newest first) ----------------
    Each challenge walks through the Five Moves: Observe → Simplify → Explore → Generalize → Master. */
 const CHALLENGES = [

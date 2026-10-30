@@ -35,6 +35,7 @@
   .tutor-link a{font-weight:600}
   .levels-box{background:var(--surface);border:1.5px solid var(--teal);border-radius:var(--radius);padding:20px;margin:0 0 22px;box-shadow:var(--shadow)}
   .levels-box h2{font-size:24px} .levels-box p{color:var(--muted);margin:6px 0 14px}
+  .lv-row{cursor:default} .lv-btns{margin-left:auto;display:flex;gap:8px;flex-wrap:wrap}
   .levels-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
   .lv-card{display:flex;flex-direction:column;gap:4px;padding:14px 16px;border-radius:14px;background:var(--bg);border:1px solid var(--line);text-decoration:none;color:var(--ink)}
   .lv-card:hover{border-color:var(--teal)} .lv-card .ic{font-size:22px} .lv-card b{font-size:16px} .lv-card span:last-child{font-size:14px;color:var(--muted)}
@@ -506,11 +507,16 @@ function routeInner(){
 }
 
 /* ---------------- home ---------------- */
+function levelsMeta(c){
+  const chs = new Set(); c.units.forEach(u => (u.learn || []).forEach(l => chs.add(l.href + l.ch)));
+  const units = c.units.length + (c.group === "Calculus & Beyond" || c.id === "precalc" ? " AP units" : " chapters");
+  return (c.id === "alg1" || c.id === "geo" || c.id === "alg2" ? units : units + " · " + chs.size + " lessons") + " · Learn + 5-level practice";
+}
 function courseCard(c){
   const n = lessonCount(c);
   return h("a", { class:"card course", href:"#/course/" + c.id, style:"--c:" + c.color },
     h("div", { class:"meta" }, c.group === "K–8" ? "Grades " + c.short : (GROUPS[c.group] || {}).title || c.group), h("h3", {}, c.title), h("p", {}, c.blurb),
-    h("div", { class:"meta" }, c.units.length + " units · " + (n ? n + (n === 1 ? " lesson" : " lessons") : "lessons coming soon")),
+    h("div", { class:"meta" }, c.levels ? levelsMeta(c) : c.units.length + " units · " + (n ? n + (n === 1 ? " lesson" : " lessons") : "lessons coming soon")),
     h("span", { class:"go" }, "Open course →"));
 }
 function pageHome(v){
@@ -557,18 +563,6 @@ function pageGroup(v, group, title, intro){
       h("span", { class:"dl-btns" },
         d.cal ? h("a", { class:"btn ghost", href:"#/calendar/" + d.cal }, "Online calendar") : null,
         h("a", { class:"btn teal", href:d.file, target:"_blank", rel:"noopener" }, "Download PDF")))),
-    group === "High School" ? h("div", { class:"levels-box" },
-      h("h2", {}, "Learn & Practice at Your Level"),
-      h("p", {}, "Learn each idea from the simplest example, then practice in five levels — Foundation, Basic, Standard, Challenge, Competition."),
-      h("div", { class:"levels-row" },
-        [["practice/algebra1-levels.html", "📘", "Algebra 1", "All 12 chapters · from expressions to quadratics"],
-         ["practice/geometry-levels.html", "📐", "Geometry", "All 13 chapters · from tools of geometry to probability"],
-         ["practice/algebra2-levels.html", "📗", "Algebra 2", "All 14 chapters · from functions to trigonometry"],
-         ["practice/precalculus-levels.html", "📙", "Precalculus", "All 12 chapters · from functions to limits"],
-         ["practice/calculus-ab-levels.html", "∫", "AP Calculus AB", "All 8 units · limits, derivatives, integrals"],
-         ["practice/calculus-bc-levels.html", "∑", "AP Calculus BC", "BC-only topics · series, polar, parametric, Euler"],
-         ["practice/tutor.html", "🧭", "Step-by-Step Tutor", "20 equations broken into small guided steps"]]
-        .map(([href, ic, t, d]) => h("a", { class:"lv-card", href }, h("span", { class:"ic", "aria-hidden":"true" }, ic), h("b", {}, t), h("span", {}, d))))) : null,
     h("div", { class:"grid" }, COURSES.filter(c => c.group === group).map(courseCard))));
 }
 function pageCourse(v, id){
@@ -576,18 +570,33 @@ function pageCourse(v, id){
   const back = ["#/" + (GROUPS[c.group] || GROUPS["K–8"]).key, (GROUPS[c.group] || GROUPS["K–8"]).title];
   const wrap = h("div", { class:"wrap" },
     h("div", { class:"page-head" }, h("div", { class:"crumbs" }, h("a", { href:back[0] }, back[1]), " / " + c.title), h("h1", {}, c.title), h("p", {}, c.blurb)));
-  if (c.app) wrap.append(h("a", { class:"solve-hero", style:"margin:0 0 18px;max-width:none", href:`#/app/${c.id}` },
+  if (c.levels) wrap.append(h("a", { class:"solve-hero", style:"margin:0 0 12px;max-width:none", href:c.levels },
+    h("span", { class:"ic", "aria-hidden":"true" }, "📘"),
+    h("span", { class:"txt" }, h("b", {}, "Learn & Practice at Your Level"), h("span", {}, "Learn each idea from the simplest example, then practice in five levels — Foundation, Basic, Standard, Challenge, Competition.")),
+    h("span", { class:"btn teal" }, "Start →")));
+  if (c.app) wrap.append(h("a", { class:"solve-hero", style:"margin:0 0 12px;max-width:none", href:`#/app/${c.id}` },
     h("span", { class:"ic", "aria-hidden":"true" }, "🧩"),
-    h("span", { class:"txt" }, h("b", {}, "Interactive practice app"), h("span", {}, "Unlimited auto-generated problems for every chapter, checked instantly.")),
-    h("span", { class:"btn teal" }, "Open →")));
+    h("span", { class:"txt" }, h("b", {}, c.levels ? "More practice (scores saved)" : "Interactive practice app"), h("span", {}, "Unlimited auto-generated problems for every chapter, checked instantly" + (c.levels ? " — saved to your account." : "."))),
+    h("span", { class:"btn ghost" }, "Open →")));
+  (c.extras || []).forEach(x => wrap.append(h("a", { class:"solve-hero", style:"margin:0 0 12px;max-width:none", href:x.href },
+    h("span", { class:"ic", "aria-hidden":"true" }, x.ic), h("span", { class:"txt" }, h("b", {}, x.t), h("span", {}, x.d)), h("span", { class:"btn ghost" }, "Open →"))));
+  if (c.levels || c.app) wrap.append(h("div", { style:"height:10px" }));
   c.units.forEach((u, ui) => {
-    const appRow = u.app ? h("a", { class:"lesson-row", href:`#/app/${c.id}/${ui}` }, h("span", {}, "🧩"), h("span", { style:"font-weight:500" }, "Interactive practice" + (u.appTopics ? " · " + u.appTopics + " topics" : "")), h("span", { class:"tags" }, h("span", { class:"tag", style:"background:var(--teal-soft);color:var(--teal)" }, "Learn"), h("span", { class:"tag", style:"background:var(--gold-soft);color:#8A6415" }, "Practice"))) : null;
-    const det = h("details", { class:"card unit", open: u.lessons.length || u.app ? true : null },
-      h("summary", {}, h("span", {}, u.title), h("span", { style:"display:flex;gap:10px;align-items:center" }, h("span", { class:"n" }, u.lessons.length ? u.lessons.length + (u.lessons.length === 1 ? " lesson" : " lessons") : u.app ? "Practice app" : "Coming soon"), h("span", { class:"chev" }, "›"))),
-      h("div", { class:"lessons" }, appRow, u.lessons.length ? u.lessons.map((l, li) => h("a", { class:"lesson-row", href:`#/lesson/${c.id}/${ui}/${li}` },
+    const learn = u.learn || [];
+    const lvRows = learn.map(l => h("div", { class:"lesson-row lv-row" },
+      h("span", {}, "📘"),
+      h("span", { style:"font-weight:500" }, learn.length > 1 || l.href !== c.levels ? l.t : "Lesson + practice at your level",
+        l.extra ? h("span", { class:"tag", style:"margin-left:8px;background:var(--gold-soft);color:#8A6415" }, l.extra === "BC" ? "BC only" : l.extra) : null),
+      h("span", { class:"lv-btns" },
+        h("a", { class:"btn sm teal", href:`${l.href}#ch${l.ch}-learn` }, "📖 Learn"),
+        h("a", { class:"btn sm ghost", href:`${l.href}#ch${l.ch}-practice` }, "🎯 5 levels"))));
+    const appRow = u.app ? h("a", { class:"lesson-row", href:`#/app/${c.id}/${ui}` }, h("span", {}, "🧩"), h("span", { style:"font-weight:500" }, (learn.length ? "More practice" : "Interactive practice") + (u.appTopics ? " · " + u.appTopics + " topics" : "")), h("span", { class:"tags" }, learn.length ? h("span", { class:"tag", style:"background:var(--gold-soft);color:#8A6415" }, "Score saved") : [h("span", { class:"tag", style:"background:var(--teal-soft);color:var(--teal)" }, "Learn"), h("span", { class:"tag", style:"background:var(--gold-soft);color:#8A6415" }, "Practice")])) : null;
+    const det = h("details", { class:"card unit", open: u.lessons.length || u.app || learn.length ? true : null },
+      h("summary", {}, h("span", {}, u.title), h("span", { style:"display:flex;gap:10px;align-items:center" }, h("span", { class:"n" }, learn.length ? (learn.length > 1 ? learn.length + " lessons" : "Learn + practice") : u.lessons.length ? u.lessons.length + (u.lessons.length === 1 ? " lesson" : " lessons") : u.app ? "Practice app" : "Coming soon"), h("span", { class:"chev" }, "›"))),
+      h("div", { class:"lessons" }, lvRows, appRow, u.lessons.length ? u.lessons.map((l, li) => h("a", { class:"lesson-row", href:`#/lesson/${c.id}/${ui}/${li}` },
         h("span", {}, "📄"), h("span", { style:"font-weight:500" }, l.title),
         h("span", { class:"tags" }, l.video ? h("span", { class:"tag v" }, "▶ Video") : null, l.notes ? h("span", { class:"tag" }, "Notes") : null, l.worksheet ? h("span", { class:"tag" }, "Worksheet") : null, l.answers ? h("span", { class:"tag" }, "Answers") : null)))
-        : u.app ? null : h("div", { class:"soon" }, "Lessons for this unit are on the way.")));
+        : u.app || learn.length ? null : h("div", { class:"soon" }, "Lessons for this unit are on the way.")));
     wrap.append(det);
   });
   v.append(wrap);

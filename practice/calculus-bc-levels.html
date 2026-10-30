@@ -1,0 +1,645 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>AP Calculus BC: Learn &amp; Practice — Prof. Fang Math</title>
+<meta name="description" content="AP Calculus BC-only topics: integration techniques, Euler and logistic models, parametric, polar and vector calculus, and infinite series — in five levels.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/mathjs@14.9.1/lib/browser/math.js"></script>
+<style>
+:root{
+  --bg:#FBF8F3; --surface:#FFFFFF; --ink:#16233B; --muted:#5B6474; --faint:#8C93A0; --line:#E8E2D8;
+  --navy:#1F3A68; --teal:#0F7C7C; --teal-soft:#DDF0EE; --gold:#C9962B; --gold-soft:#FBF1DC; --red:#B3261E; --red-soft:#FBE7E5; --green:#1E7A45; --green-soft:#DDF4E6;
+  --l1:#2E8B57; --l2:#0F7C7C; --l3:#1F3A68; --l4:#B7472A; --l5:#6A4BD8;
+  --radius:18px; --shadow:0 8px 26px rgba(22,35,59,.07);
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 Inter,system-ui,-apple-system,sans-serif;-webkit-font-smoothing:antialiased}
+a{color:var(--teal)}
+h1,h2,h3{font-family:Fraunces,Georgia,serif;font-weight:600;letter-spacing:-.01em;margin:0;line-height:1.15}
+button,input{font:inherit;color:inherit}
+[hidden]{display:none!important}
+header.top{position:sticky;top:0;z-index:40;background:rgba(255,255,255,.96);border-bottom:1px solid var(--line)}
+header.top .in{max-width:1120px;margin:0 auto;padding:0 20px;height:64px;display:flex;align-items:center;gap:24px}
+.brand{font-weight:700;font-size:19px;text-decoration:none;color:var(--ink);white-space:nowrap}
+.brand span{color:var(--teal)}
+.back{margin-left:auto;font-size:15px;text-decoration:none;color:var(--muted);font-weight:500}
+.wrap{max-width:1120px;margin:0 auto;padding:24px 20px 48px;display:flex;flex-direction:column;gap:20px}
+.intro h1{font-size:clamp(28px,4vw,40px)}
+.intro p{color:var(--muted);margin:6px 0 0;max-width:680px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:20px}
+.label{font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--faint);font-weight:700}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:10px 18px;border-radius:999px;font-weight:600;border:1px solid transparent;cursor:pointer;background:var(--navy);color:#fff;text-decoration:none}
+.btn.teal{background:var(--teal)} .btn.ghost{background:var(--surface);color:var(--ink);border-color:var(--line)}
+.btn.sm{padding:7px 14px;font-size:14px}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+button:focus-visible,input:focus{outline:2px solid var(--teal);outline-offset:1px}
+/* level legend */
+.legend{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px}
+@media (max-width:760px){.legend{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.lg{border-radius:12px;padding:10px 12px;background:var(--bg);border-left:4px solid var(--c)}
+.lg b{display:block;font-size:14px;color:var(--c)} .lg span{font-size:13px;color:var(--muted)}
+/* placement */
+.place{display:flex;flex-wrap:wrap;gap:14px;align-items:center;justify-content:space-between;background:linear-gradient(120deg,var(--teal-soft),#fff 70%);border:1.5px solid var(--teal)}
+.place .t b{font-family:Fraunces,Georgia,serif;font-size:20px;display:block}
+.place .t span{color:var(--muted);font-size:15px}
+.rec{font-weight:600;color:var(--teal)}
+/* topics */
+.topics{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+@media (max-width:760px){.topics{grid-template-columns:minmax(0,1fr)}}
+.topic{display:flex;flex-direction:column;gap:12px}
+.topic h2{font-size:22px}
+.idea{color:var(--muted);font-size:15px;margin:0}
+.example{background:var(--bg);border-radius:12px;padding:12px 14px;font-size:15px;overflow-x:auto}
+.example .q{font-size:17px;margin-bottom:4px}
+.pills{display:flex;flex-wrap:wrap;gap:6px}
+.pill{position:relative;border:1.5px solid var(--line);background:var(--surface);border-radius:999px;padding:6px 12px;font-size:13px;font-weight:600;cursor:pointer;color:var(--ink)}
+.pill:hover{border-color:var(--c)}
+.pill.on{background:var(--c);border-color:var(--c);color:#fff}
+.pill .n{font-weight:500;opacity:.75;margin-left:4px}
+.pill.star::after{content:"★";position:absolute;top:-8px;right:-4px;font-size:12px;color:var(--gold)}
+/* practice */
+.practice{display:flex;flex-direction:column;gap:14px;scroll-margin-top:80px}
+.phead{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between}
+.phead h2{font-size:24px}
+.problem{font-size:clamp(19px,2.6vw,24px);padding:16px 18px;border-radius:14px;background:var(--bg);overflow-x:auto;line-height:1.7}
+.row{display:flex;gap:8px;flex-wrap:wrap}
+.row input{flex:1 1 240px;border:1px solid var(--line);border-radius:999px;padding:11px 16px;background:var(--bg)}
+.preview{font-size:18px;min-height:1.4em}
+.preview .pl{font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--faint);font-weight:700;margin-right:8px}
+.howto{font-size:13px;color:var(--faint)}
+.fb{border-radius:12px;padding:10px 14px;font-size:15px;overflow-x:auto}
+.fb.good{background:var(--green-soft)} .fb.bad{background:var(--red-soft)} .fb.hint{background:var(--gold-soft)}
+.fb .tag{display:block;font-size:11px;text-transform:uppercase;letter-spacing:.08em;font-weight:700}
+.fb.good .tag{color:var(--green)} .fb.bad .tag{color:var(--red)} .fb.hint .tag{color:var(--gold)}
+.sol{margin:6px 0 0;padding-left:20px} .sol li{margin:2px 0}
+.suggest{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;border:1.5px dashed var(--c);border-radius:12px;padding:10px 14px}
+.streak{display:flex;gap:4px;align-items:center;font-size:13px;color:var(--faint)}
+.streak i{width:10px;height:10px;border-radius:50%;background:var(--line)} .streak i.ok{background:var(--green)} .streak i.no{background:var(--red)}
+/* modal quiz */
+.modal{position:fixed;inset:0;background:rgba(22,35,59,.45);display:grid;place-items:center;padding:16px;z-index:60}
+.modal .card{width:min(620px,100%);max-height:90vh;overflow:auto;display:flex;flex-direction:column;gap:14px}
+.qprog{display:flex;gap:6px} .qprog i{flex:1;height:6px;border-radius:3px;background:var(--line)} .qprog i.ok{background:var(--green)} .qprog i.no{background:var(--red)} .qprog i.now{background:var(--teal)}
+.tabs{display:flex;gap:6px;flex-wrap:wrap;border-bottom:1px solid var(--line);padding-bottom:0}
+.tab{border:none;background:none;padding:10px 16px;font-weight:600;font-size:16px;color:var(--muted);cursor:pointer;border-bottom:3px solid transparent;margin-bottom:-1px}
+.tab.on{color:var(--teal);border-bottom-color:var(--teal)}
+.learn,.pview{display:flex;flex-direction:column;gap:20px}
+.road{display:flex;gap:8px;flex-wrap:wrap}
+.stop{display:flex;align-items:center;gap:8px;border:1.5px solid var(--line);background:var(--surface);border-radius:999px;padding:6px 14px 6px 6px;cursor:pointer;font-size:14px;font-weight:600;color:var(--ink)}
+.stop i{font-style:normal;width:24px;height:24px;border-radius:50%;display:grid;place-items:center;background:var(--bg);font-size:12px;border:1.5px solid var(--line)}
+.stop.done i{background:var(--green);border-color:var(--green);color:#fff}
+.stop.on{border-color:var(--teal);background:var(--teal-soft)}
+.lesson{display:flex;flex-direction:column;gap:16px;scroll-margin-top:80px}
+.lesson h2{font-size:clamp(24px,3vw,30px)}
+.big{font-size:18px;background:var(--teal-soft);border-radius:14px;padding:14px 16px;overflow-x:auto}
+.big b{color:var(--teal)}
+.steps{display:flex;flex-direction:column;gap:8px;margin:0;padding:0;list-style:none;counter-reset:k}
+.steps li{counter-increment:k;display:grid;grid-template-columns:30px minmax(0,1fr);gap:10px;align-items:start;background:var(--bg);border-radius:12px;padding:10px 12px;animation:pop .25s ease}
+.steps li::before{content:counter(k);width:26px;height:26px;border-radius:50%;background:var(--navy);color:#fff;display:grid;place-items:center;font-size:13px;font-weight:700}
+.steps .m{font-size:19px;overflow-x:auto} .steps .w{font-size:14px;color:var(--muted)}
+@keyframes pop{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){.steps li{animation:none}}
+.warn{background:var(--red-soft);border-radius:14px;padding:12px 16px;font-size:15px;overflow-x:auto}
+.warn b{color:var(--red)}
+.turn{border:1.5px solid var(--gold);border-radius:14px;padding:14px 16px;display:flex;flex-direction:column;gap:10px}
+.turn .q{font-size:19px;overflow-x:auto}
+.lnav{display:flex;gap:8px;flex-wrap:wrap;justify-content:space-between}
+footer{text-align:center;color:var(--faint);font-size:13px;padding:24px}
+.chapters{display:flex;flex-wrap:wrap;gap:8px}
+.chap{display:flex;align-items:center;gap:8px;border:1.5px solid var(--line);background:var(--surface);border-radius:999px;padding:5px 14px 5px 5px;font-size:14px;font-weight:600;color:var(--ink);cursor:pointer}
+.chap i{font-style:normal;width:24px;height:24px;border-radius:50%;display:grid;place-items:center;background:var(--bg);font-size:12px}
+.chap.on{background:var(--navy);border-color:var(--navy);color:#fff} .chap.on i{background:rgba(255,255,255,.2)}
+.chap.soon{opacity:.45;cursor:default}
+.fig{display:block;width:100%;max-width:360px;height:auto;margin:4px 0 8px}
+.problem .fig{max-width:340px}
+.mc{display:grid;gap:6px;margin-top:10px;font-size:.92em}
+.mc div{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:6px 10px}
+.mc div{cursor:pointer} .mc div:hover{border-color:var(--teal)} .mc div.sel{border-color:var(--teal);background:var(--teal-soft)}
+</style>
+</head>
+<body>
+<header class="top"><div class="in">
+  <a class="brand" href="../index.html#/">Prof. Fang <span>Math</span></a>
+  <a class="back" href="../index.html#/highschool">← Back to lessons</a>
+</div></header>
+
+<div class="wrap">
+  <div class="intro">
+    <span class="label">AP Calculus BC · BC-Only Topics</span>
+    <h1 id="chTitle">AP Calculus BC</h1>
+    <p>This page has only the topics that are <b>BC-only</b>. Everything BC shares with AB (Units 1–8: limits, derivatives, integrals, differential equations, area &amp; volume) is on the <a href="calculus-ab-levels.html">AP Calculus AB page</a> — work there first, then add these. Learn each idea from the simplest example, then practice at your level.</p>
+  </div>
+
+  <div class="chapters" id="chapters" aria-label="Chapters"></div>
+
+  <div class="tabs" role="tablist">
+    <button class="tab" id="tabLearn" role="tab">① Learn the ideas</button>
+    <button class="tab" id="tabPractice" role="tab">② Practice at your level</button>
+  </div>
+
+  <div id="learnView" class="learn">
+    <div class="road" id="road"></div>
+    <div class="card lesson" id="lesson"></div>
+  </div>
+
+  <div id="practiceView" class="pview">
+    <div class="legend" id="legend"></div>
+    <div class="card place">
+      <div class="t"><b>Not sure where to start?</b><span id="recText"></span></div>
+      <button class="btn teal" id="placeBtn">Take the 5-question check</button>
+    </div>
+    <div class="card practice" id="practice" hidden>
+      <div class="phead"><h2 id="pTitle"></h2><button class="btn ghost sm" id="closeP">All topics</button></div>
+      <div class="pills" id="pLevels"></div>
+      <div class="problem" id="pQ"></div>
+      <div class="row">
+        <input type="text" id="pAns" autocomplete="off" placeholder="Your answer" aria-label="Your answer">
+        <button class="btn" id="pCheck">Check</button>
+        <button class="btn ghost" id="pHint">Hint</button>
+        <button class="btn ghost" id="pShow" hidden>Show solution</button>
+        <button class="btn teal" id="pNext" hidden>Next problem →</button>
+      </div>
+      <div class="preview" id="pPrev"></div>
+      <div class="howto" id="pHow"></div>
+      <div id="pFb"></div>
+      <div id="pSuggest"></div>
+      <div class="streak" id="pStreak"></div>
+    </div>
+    <div class="topics" id="topics"></div>
+  </div>
+</div>
+<footer>© 2026 Prof. Fang Math</footer>
+
+<script>
+"use strict";
+/* ================= helpers ================= */
+const $=id=>document.getElementById(id);
+const rnd=(a,b)=>a+Math.floor(Math.random()*(b-a+1));
+const nz=(a,b)=>{let x;do{x=rnd(a,b)}while(x===0);return x};
+const pick=a=>a[Math.floor(Math.random()*a.length)];
+const gcd=(a,b)=>{a=Math.abs(a);b=Math.abs(b);while(b){[a,b]=[b,a%b]}return a};
+const sg=k=>k>=0?"+ "+k:"- "+(-k);            // "+ 3" / "- 3"
+const P=n=>n<0?"("+n+")":String(n);            // wrap negatives
+function co(a,v){ return (a===1?"":a===-1?"-":String(a))+v; }   // coefficient with variable
+function lin(a,b,v="x"){ if(a===0) return String(b); let s=co(a,v); if(b) s+=" "+sg(b); return s; }
+function cterm(a,v){ return (a<0?"- ":"+ ")+(Math.abs(a)===1?"":Math.abs(a))+v; } // signed term for middle
+function frac(n,d){ if(d<0){n=-n;d=-d} const g=gcd(n,d)||1; n/=g; d/=g; return d===1?String(n):(n<0?"-":"")+"\\frac{"+Math.abs(n)+"}{"+d+"}"; }
+const OPT={"<":"<","<=":"\\le",">":">",">=":"\\ge"}; const FLIP={"<":">","<=":">=",">":"<",">=":"<="};
+const pt=(x,y)=>`(${x}, ${y})`;
+const sq2=h=>`(x ${sg(-h)})^2`;
+function ptex(cs,v="x"){ const n=cs.length-1; let t=""; cs.forEach((c,i)=>{ const d=n-i; if(!c) return; const a=Math.abs(c), vv=d===0?"":d===1?v:v+"^{"+d+"}", cf=(a===1&&d>0)?"":String(a); t+=t?(c<0?" - ":" + "):(c<0?"-":""); t+=cf+vv; }); return t||"0"; }
+function pstr(cs){ const n=cs.length-1; return cs.map((c,i)=>`(${c})*x^${n-i}`).join("+"); }
+function pmul(a,b){ const r=Array(a.length+b.length-1).fill(0); a.forEach((x,i)=>b.forEach((y,j)=>r[i+j]+=x*y)); return r; }
+function radParts(n){ let k=1,m=n; for(let i=Math.floor(Math.sqrt(n));i>1;i--){ if(n%(i*i)===0){ k=i; m=n/(i*i); break; } } return [k,m]; }
+function rad(n){ const [k,m]=radParts(n); return m===1?String(k):(k===1?"":k)+"\\sqrt{"+m+"}"; }
+function radTex(c,n){ const [k,m]=radParts(n); const K=c*k; return m===1?String(K):(K===1?"":K)+"\\sqrt{"+m+"}"; }
+const divisors=n=>{n=Math.abs(n);const d=[];for(let i=1;i<=n;i++) if(n%i===0) d.push(i);return d;};
+const LEVELS=[
+ {n:1,name:"Foundation",zh:"起步",desc:"Review the basics first",c:"var(--l1)"},
+ {n:2,name:"Basic",zh:"基础",desc:"Textbook examples",c:"var(--l2)"},
+ {n:3,name:"Standard",zh:"标准",desc:"School test level",c:"var(--l3)"},
+ {n:4,name:"Challenge",zh:"挑战",desc:"Honors / hard SAT",c:"var(--l4)"},
+ {n:5,name:"Competition",zh:"竞赛",desc:"MATHCOUNTS / AMC 8–10 style",c:"var(--l5)"}];
+const HOW={anti:"Type an antiderivative like x^3/3 + 2x (+ C is optional). Use ln(x), e^x, sin(x).",point:"Type an ordered pair like (3, -2). Vectors can be typed like <3, -2>. Radicals are fine: 2sqrt(3).",cplx:"Type a complex number like 3-2i (fractions are fine).",croots:"List every solution separated by commas, like 2+3i, 2-3i (± is fine: 2±3i).",matrix:"Type the matrix row by row, like [[1, 2], [3, 4]] or 1 2; 3 4.",mc:"Click a choice or type its letter, then press Check.",word:"Type your answer as a word or abbreviation.",roots:"Give every solution, separated by commas: 3, -2. Use sqrt(5) for √5; ± is fine: 2±sqrt(3).",nsol:"Type one, none, or infinitely many.",point:"Type a point like (2, -5).",yn:"Type yes or no.",list:"List the values separated by commas, like -2, 0, 5.",line:"Type an equation like y = 2x + 3 (any correct form works).",number:"Type a number. Fractions like 9/4 are fine.",set:"Type the value, like 4 or x = 4.",expr:"Type an expression like 7x - 1 or (c - b)/a.",
+  ineq:"Type like x > 3 or x <= -2 (≤ and ≥ work too).",between:"Type like -2 < x <= 4.",or:"Type like x < -5 or x > 3."};
+const ineqTex=(op,v)=>`x ${OPT[op]} ${v}`;
+
+/* ================= chapters =================
+   generators return {q, type, ans, ansTex, hint, sol[]} */
+const sq=(h,v="x")=>h===0?v+"^2":"("+v+" "+sg(-h)+")^2";
+const deg=v=>`${v}^\\circ`;
+function mcQ(stem,correct,wrong,hint,sol){ const opts=[correct,...wrong].map((t,i)=>({t,ok:i===0})).sort(()=>Math.random()-.5); const L="ABCDE"; const ans=L[opts.findIndex(o=>o.ok)];
+  return {q:`${stem}<div class="mc">${opts.map((o,i)=>`<div><b>${L[i]}.</b> ${o.t}</div>`).join("")}</div>`,type:"mc",ans,ansTex:`\\text{${ans}}`,hint,sol:[...sol,`Answer: <b>${ans}</b>.`]}; }
+const fact=n=>n<=1?1:n*fact(n-1); const nPr=(n,r)=>fact(n)/fact(n-r), nCr=(n,r)=>fact(n)/(fact(r)*fact(n-r));
+const r2=v=>Math.round(v*100)/100, r1=v=>Math.round(v*10)/10;
+const cx=(a,b)=>b===0?String(a):(a===0?"":a+(b>0?" + ":" - "))+(a===0&&b<0?"-":"")+(Math.abs(b)===1?"":Math.abs(b))+"i";
+const fr=(n,d)=>frac(n,d);
+function piTex(n,d){ if(d<0){n=-n;d=-d} if(n===0) return "0"; const g=gcd(n,d)||1; n/=g; d/=g; const top=(n===1?"":n===-1?"-":n)+"\\pi"; return d===1?top:(n<0?"-":"")+"\\dfrac{"+(Math.abs(n)===1?"":Math.abs(n))+"\\pi}{"+d+"}"; }
+function numTex(v){ if(Math.abs(v)<1e-12) return "0"; const s=v<0?"-":"", a=Math.abs(v);
+  for(const b of [1,2,3,5,6,7,10,11,13]) for(let q=1;q<=100;q++){ const k=a*q/Math.sqrt(b), kr=Math.round(k); if(kr>0&&Math.abs(k-kr)<1e-9){ const g=gcd(kr,q), K=kr/g, Q=q/g; const top=b===1?String(K):(K===1?"":K)+"\\sqrt{"+b+"}"; return s+(Q===1?top:"\\dfrac{"+top+"}{"+Q+"}"); } }
+  return String(Math.round(v*1000)/1000); }
+const angTex=t=>piTex(Math.round(t/Math.PI*24),24);
+const R=d=>d*Math.PI/180, D=r=>r*180/Math.PI;
+const sinD=d=>Math.sin(R(d)), cosD=d=>Math.cos(R(d)), tanD=d=>Math.tan(R(d));
+function cTex(re,im){ if(Math.abs(im)<1e-9) return numTex(re); const a=Math.abs(re)<1e-9?"":numTex(re); const m=Math.abs(im), mt=Math.abs(m-1)<1e-9?"":numTex(m); return a+(a?(im<0?" - ":" + "):(im<0?"-":""))+mt+"i"; }
+function sols(f,N=48){ const out=[]; for(let k=0;k<N;k++){ const t=k*2*Math.PI/N; if(Math.abs(f(t))<1e-9) out.push(t); } return out; }
+const solTex=a=>a.map(angTex).join(",\\ ");
+const vtex=(a,b)=>`\\langle ${a}, ${b} \\rangle`;
+const TRIP=[[3,4,5],[5,12,13],[8,15,17],[7,24,25],[6,8,10],[9,12,15],[20,21,29]];
+function terms(arr){ let t=""; arr.forEach(([c,v])=>{ if(!c) return; const a=Math.abs(c), cf=(a===1&&v)?"":String(a); t+=t?(c<0?" - ":" + "):(c<0?"-":""); t+=cf+v; }); return t||"0"; }
+const SPECIAL=[[0,"0"],[0.5,"\\tfrac12"],[Math.SQRT1_2,"\\tfrac{\\sqrt2}{2}"],[Math.sqrt(3)/2,"\\tfrac{\\sqrt3}{2}"],[1,"1"]];
+const TANV=[[0,"0"],[Math.sqrt(3)/3,"\\tfrac{\\sqrt3}{3}"],[1,"1"],[Math.sqrt(3),"\\sqrt3"]];
+const QN=["I","II","III","IV"];
+
+const CV=["Converges","Diverges"];
+const r4=v=>Math.round(v*10000)/10000;
+const sci=v=>{ if(v>=1e-4) return String(Number(v.toPrecision(4))); const e=Math.floor(Math.log10(v)), m=Number((v/10**e).toPrecision(4)); return `${m}\\times 10^{${e}}`; };
+function euler(f,x,y,h,n){ for(let i=0;i<n;i++){ y=y+h*f(x,y); x=x+h; } return y; }
+const lnT=(v,s="")=>v===1?"0":`${s}\\ln ${v}`;
+const CHAPTERS=[
+/* ===================== Unit 6 BC ===================== */
+{id:"ch1",title:"Integration Techniques",topics:[
+ {id:"parts",title:"Integration by Parts",idea:"$\\displaystyle\\int u\\,dv = uv - \\int v\\,du$. Choose $u$ by <b>LIATE</b>: Logs, Inverse trig, Algebraic, Trig, Exponential — whichever comes first becomes $u$.",
+  lesson:{steps:[["\\displaystyle\\int xe^{x}\\,dx","$u = x$, $dv = e^x\\,dx$."],["du = dx,\\ v = e^{x}","Differentiate $u$, integrate $dv$."],["xe^{x} - \\displaystyle\\int e^{x}\\,dx = xe^{x} - e^{x} + C","Apply the formula."]],warn:"Pick $u$ so that $du$ is simpler. Choosing $u = e^x$ in $\\int xe^x\\,dx$ makes it worse."},
+  gen:[
+  ()=>{const k=pick([1,2,3,-1,-2]);return{q:`Find $\\displaystyle\\int xe^{${k===1?"":k===-1?"-":k}x}\\,dx$. (You may omit $+ C$.)`,type:"anti",ans:`(x/(${k})-1/(${k*k}))*e^(${k}*x)`,ansTex:k===1?"xe^{x} - e^{x} + C":`${k<0?"-":""}\\dfrac{x}{${Math.abs(k)}}e^{${k}x} - \\dfrac{1}{${k*k}}e^{${k}x} + C`,hint:`$u = x$, $dv = e^{${k}x}\\,dx$, so $v = \\dfrac{1}{${k}}e^{${k}x}$.`,sol:[`$\\dfrac{x}{${k}}e^{${k}x} - \\displaystyle\\int\\dfrac{1}{${k}}e^{${k}x}\\,dx$.`,`$= \\dfrac{x}{${k}}e^{${k}x} - \\dfrac{1}{${k*k}}e^{${k}x} + C$.`]}},
+  ()=>{const k=rnd(1,4),c=Math.random()<.5;const K=k===1?"":k;return c?{q:`Find $\\displaystyle\\int x\\cos(${K}x)\\,dx$.`,type:"anti",ans:`x*sin(${k}*x)/${k}+cos(${k}*x)/${k*k}`,ansTex:`${k===1?"x":`\\dfrac{x}{${k}}`}\\sin(${K}x) + ${k===1?"":`\\dfrac{1}{${k*k}}`}\\cos(${K}x) + C`,hint:"$u = x$, $dv = \\cos(kx)\\,dx$.",sol:[`$\\dfrac{x\\sin(${K}x)}{${k}} - \\displaystyle\\int\\dfrac{\\sin(${K}x)}{${k}}\\,dx = \\dfrac{x\\sin(${K}x)}{${k}} + \\dfrac{\\cos(${K}x)}{${k*k}} + C$.`]}:{q:`Find $\\displaystyle\\int x\\sin(${K}x)\\,dx$.`,type:"anti",ans:`-x*cos(${k}*x)/${k}+sin(${k}*x)/${k*k}`,ansTex:`-${k===1?"x":`\\dfrac{x}{${k}}`}\\cos(${K}x) + ${k===1?"":`\\dfrac{1}{${k*k}}`}\\sin(${K}x) + C`,hint:"$u = x$, $dv = \\sin(kx)\\,dx$.",sol:[`$-\\dfrac{x\\cos(${K}x)}{${k}} + \\displaystyle\\int\\dfrac{\\cos(${K}x)}{${k}}\\,dx = -\\dfrac{x\\cos(${K}x)}{${k}} + \\dfrac{\\sin(${K}x)}{${k*k}} + C$.`]}},
+  ()=>{const n=rnd(0,3),m=n+1;return{q:`Find $\\displaystyle\\int ${n===0?"":n===1?"x":"x^{"+n+"}"}\\ln x\\,dx$.`,type:"anti",ans:`x^${m}*log(x)/${m}-x^${m}/${m*m}`,ansTex:n===0?"x\\ln x - x + C":`\\dfrac{x^{${m}}\\ln x}{${m}} - \\dfrac{x^{${m}}}{${m*m}} + C`,hint:"$u = \\ln x$ (L comes first in LIATE), $dv = x^n\\,dx$.",sol:[`$v = \\dfrac{x^{${m}}}{${m}}$, $du = \\dfrac{dx}{x}$.`,`$\\dfrac{x^{${m}}\\ln x}{${m}} - \\displaystyle\\int\\dfrac{x^{${n}}}{${m}}\\,dx = \\dfrac{x^{${m}}\\ln x}{${m}} - \\dfrac{x^{${m}}}{${m*m}} + C$.`]}},
+  ()=>{const [e,v,t]=pick([["\\int_0^1 xe^{x}\\,dx",1,"1"],["\\int_1^{e} \\ln x\\,dx",1,"1"],["\\int_0^{\\pi} x\\sin x\\,dx",Math.PI,"\\pi"],["\\int_0^{\\pi/2} x\\cos x\\,dx",Math.PI/2-1,"\\dfrac{\\pi}{2} - 1"],["\\int_1^{e} x\\ln x\\,dx",(Math.E**2+1)/4,"\\dfrac{e^2 + 1}{4}"],["\\int_0^{1} xe^{-x}\\,dx",1-2/Math.E,"1 - \\dfrac{2}{e}"],["\\int_0^{1} \\tan^{-1}x\\,dx",Math.PI/4-Math.log(2)/2,"\\dfrac{\\pi}{4} - \\dfrac{\\ln 2}{2}"]]);return{q:`Evaluate $\\displaystyle${e}$. (Exact, like pi/2 - 1 or (e^2+1)/4.)`,type:"number",ans:v,ansTex:t,hint:"Integrate by parts, then evaluate $uv$ and the remaining integral between the limits.",sol:[`$= ${t}$.`]}},
+  ()=>{const [e,a,t,h]=pick([["x^2e^{x}","(x^2-2*x+2)*e^x","(x^2 - 2x + 2)e^{x} + C","Use parts twice (or the tabular method)."],["x^2\\cos x","x^2*sin(x)+2*x*cos(x)-2*sin(x)","x^2\\sin x + 2x\\cos x - 2\\sin x + C","Tabular: differentiate $x^2$ down to $0$, integrate $\\cos x$, alternate signs."],["x^2\\sin x","-x^2*cos(x)+2*x*sin(x)+2*cos(x)","-x^2\\cos x + 2x\\sin x + 2\\cos x + C","Tabular method."],["e^{x}\\sin x","e^x*(sin(x)-cos(x))/2","\\dfrac{e^{x}(\\sin x - \\cos x)}{2} + C","Parts twice: the original integral reappears — solve for it."],["e^{x}\\cos x","e^x*(sin(x)+cos(x))/2","\\dfrac{e^{x}(\\sin x + \\cos x)}{2} + C","Parts twice, then solve for the integral."],["x^3e^{x}","(x^3-3*x^2+6*x-6)*e^x","(x^3 - 3x^2 + 6x - 6)e^{x} + C","Tabular method."]]);return{q:`Find $\\displaystyle\\int ${e}\\,dx$.`,type:"anti",ans:a,ansTex:t,hint:h,sol:[`$${t}$.`]}}
+ ]},
+ {id:"pfrac",title:"Partial Fractions",idea:"Split $\\dfrac{px + q}{(x - a)(x - b)} = \\dfrac{A}{x - a} + \\dfrac{B}{x - b}$, then each piece integrates to a log. If the top's degree is not less than the bottom's, divide first.",
+  lesson:{steps:[["\\dfrac{1}{x(x + 1)} = \\dfrac{A}{x} + \\dfrac{B}{x + 1}","Set up."],["1 = A(x + 1) + Bx","Clear denominators."],["x = 0:\\ A = 1;\\ x = -1:\\ B = -1","Plug in each root (cover-up method)."]],warn:"$\\displaystyle\\int\\dfrac{dx}{x + 3} = \\ln|x + 3|$ — keep the absolute value."},
+  gen:[
+  ()=>{let p,q;do{p=rnd(-4,0);q=rnd(-4,0)}while(p===q);const A=nz(-5,5),B=nz(-5,5);const top=[A+B,-A*q-B*p];return{q:`$\\dfrac{${ptex(top)}}{(x ${sg(-p)})(x ${sg(-q)})} = \\dfrac{A}{x ${sg(-p)}} + \\dfrac{B}{x ${sg(-q)}}$. Find $A$.`.replace(/\(x \+ 0\)|\(x - 0\)|x \+ 0|x - 0/g,"x"),type:"number",ans:A,ansTex:`A = ${A}`,hint:`Cover-up: plug $x = ${p}$ into everything except the factor $x ${sg(-p)}$.`.replace("x + 0","x"),sol:[`$A = \\dfrac{${ptex(top).replace(/x/g,"("+p+")")}}{${p} ${sg(-q)}} = ${A}$.`]}},
+  ()=>{let p,q;do{p=rnd(-4,0);q=rnd(-4,0)}while(p===q);const A=nz(-4,4),B=nz(-4,4),top=[A+B,-A*q-B*p],den=pmul([1,-p],[1,-q]);const L=(c,r)=>`${c===1?"":c===-1?"-":c}\\ln|${lin(1,-r)}|`;return{q:`Find $\\displaystyle\\int\\dfrac{${ptex(top)}}{${ptex(den)}}\\,dx$.`,type:"anti",ans:`(${A})*log(abs(x-(${p})))+(${B})*log(abs(x-(${q})))`,ansTex:`${L(A,p)} ${B<0?"-":"+"} ${L(Math.abs(B),q)} + C`,hint:"Factor the bottom, split into partial fractions, then integrate each piece.",sol:[`$= \\dfrac{${A}}{${lin(1,-p)}} + \\dfrac{${B}}{${lin(1,-q)}}$.`,`$${L(A,p)} ${B<0?"-":"+"} ${L(Math.abs(B),q)} + C$.`]}},
+  ()=>{const n=rnd(2,6);return{q:`Evaluate $\\displaystyle\\int_1^{${n}}\\dfrac{dx}{x(x + 1)}$. (Exact, like ln(4/3).)`,type:"number",ans:Math.log(2*n/(n+1)),ansTex:`\\ln\\dfrac{${2*n/gcd(2*n,n+1)}}{${(n+1)/gcd(2*n,n+1)}}`,hint:"$\\dfrac{1}{x(x + 1)} = \\dfrac1x - \\dfrac{1}{x + 1}$.",sol:[`$\\left[\\ln\\dfrac{x}{x + 1}\\right]_1^{${n}} = \\ln\\dfrac{${n}}{${n+1}} - \\ln\\dfrac12 = \\ln\\dfrac{${2*n}}{${n+1}}$.`]}},
+  ()=>{const [e,v,t]=pick([["\\int_1^{\\infty}\\dfrac{dx}{x(x + 1)}",Math.log(2),"\\ln 2"],["\\int_2^{\\infty}\\dfrac{dx}{x^2 - 1}",Math.log(3)/2,"\\dfrac{\\ln 3}{2}"],["\\int_1^{\\infty}\\dfrac{dx}{x(x + 2)}",Math.log(3)/2,"\\dfrac{\\ln 3}{2}"],["\\int_0^{\\infty}\\dfrac{dx}{(x + 1)(x + 2)}",Math.log(2),"\\ln 2"],["\\int_3^{\\infty}\\dfrac{dx}{x^2 - 4}",Math.log(5)/4,"\\dfrac{\\ln 5}{4}"]]);return{q:`Evaluate $\\displaystyle${e}$.`,type:"number",ans:v,ansTex:t,hint:"Partial fractions; combine the logs into one before letting the upper limit go to $\\infty$.",sol:[`$${t}$.`]}},
+  ()=>{const d=rnd(1,4),b=rnd(-5,5);let c;do{c=rnd(-8,8)}while(c-d*(b-d)===0);const r=c-d*(b-d);return{q:`Find $\\displaystyle\\int\\dfrac{${ptex([1,b,c])}}{x + ${d}}\\,dx$.`,type:"anti",ans:`x^2/2+(${b-d})*x+(${r})*log(abs(x+${d}))`,ansTex:`\\dfrac{x^2}{2} ${b-d?cterm(b-d,"x"):""} ${r<0?"-":"+"} ${Math.abs(r)===1?"":Math.abs(r)}\\ln|x + ${d}| + C`,hint:"Top degree ≥ bottom degree: do polynomial (synthetic) division first.",sol:[`$\\dfrac{${ptex([1,b,c])}}{x + ${d}} = ${lin(1,b-d)} + \\dfrac{${r}}{x + ${d}}$.`,`Integrate: $\\dfrac{x^2}{2} ${b-d?cterm(b-d,"x"):""} ${r<0?"-":"+"} ${Math.abs(r)===1?"":Math.abs(r)}\\ln|x + ${d}| + C$.`]}}
+ ]},
+ {id:"improper",title:"Improper Integrals",idea:"An infinite limit or an infinite integrand makes an integral <b>improper</b>: write it as a limit. $\\displaystyle\\int_1^{\\infty}\\dfrac{dx}{x^p}$ converges exactly when $p > 1$; $\\displaystyle\\int_0^{1}\\dfrac{dx}{x^p}$ converges exactly when $p < 1$.",
+  lesson:{steps:[["\\displaystyle\\int_1^{\\infty}\\dfrac{dx}{x^2}","Replace $\\infty$ with $b$."],["\\displaystyle\\lim_{b\\to\\infty}\\left[-\\dfrac1x\\right]_1^b = \\lim_{b\\to\\infty}\\left(1 - \\dfrac1b\\right)","Evaluate, then take the limit."],["1","It converges to $1$."]],warn:"Check for a vertical asymptote <b>inside</b> the interval — $\\int_{-1}^{1}\\frac{dx}{x^2}$ is improper (and diverges)."},
+  gen:[
+  ()=>{const p=rnd(2,5),a=pick([1,1,2]);return{q:`Evaluate $\\displaystyle\\int_{${a}}^{\\infty}\\dfrac{dx}{x^{${p}}}$.`,type:"number",ans:a**(1-p)/(p-1),ansTex:frac(1,(p-1)*a**(p-1)),hint:"$\\displaystyle\\lim_{b\\to\\infty}\\left[\\dfrac{x^{1-p}}{1-p}\\right]_a^b$.",sol:[`$\\dfrac{${a}^{${1-p}}}{${p-1}} = ${frac(1,(p-1)*a**(p-1))}$.`]}},
+  ()=>{const k=rnd(1,6),V=pick([[`\\int_0^{\\infty}e^{-${k===1?"":k}x}\\,dx`,1/k,frac(1,k)],[`\\int_0^{\\infty}xe^{-x}\\,dx`,1,"1"],[`\\int_0^{\\infty}${k===1?"":k}e^{-x/2}\\,dx`,2*k,`${2*k}`],[`\\int_{\\ln ${k+1}}^{\\infty}e^{-x}\\,dx`,1/(k+1),frac(1,k+1)]]);return{q:`Evaluate $\\displaystyle${V[0]}$.`,type:"number",ans:V[1],ansTex:V[2],hint:"Write it as a limit; $e^{-b} \\to 0$ as $b \\to \\infty$.",sol:[`$${V[2]}$.`]}},
+  ()=>{const ps=[["\\tfrac12","\\sqrt{x}",0.5],["1","x",1],["\\tfrac32","x\\sqrt{x}",1.5],["2","x^2",2],["\\tfrac13","\\sqrt[3]{x}",1/3],["3","x^3",3]];const P_=pick(ps),inf=Math.random()<.5;const conv=inf?P_[2]>1:P_[2]<1;return mcQ(`Does $\\displaystyle\\int_${inf?"1^{\\infty}":"0^{1}"}\\dfrac{dx}{${P_[1]}}$ converge or diverge?`,CV[conv?0:1],[CV[conv?1:0]],`Compare with the $p$-rule: here $p = ${P_[0]}$.`,[inf?`On $[1, \\infty)$: converges iff $p > 1$.`:`On $(0, 1]$: converges iff $p < 1$.`,`$p = ${P_[0]}$: ${conv?"converges":"diverges"}.`]);},
+  ()=>{const V=pick([()=>{const a=pick([1,4,9,16]);return[`\\int_0^{${a}}\\dfrac{dx}{\\sqrt{x}}`,2*Math.sqrt(a),`${2*Math.sqrt(a)}`]},()=>{const a=pick([1,8,27]);return[`\\int_0^{${a}}\\dfrac{dx}{\\sqrt[3]{x}}`,1.5*Math.cbrt(a)**2,frac(3*Math.cbrt(a)**2,2)]},()=>[`\\int_0^{1}\\ln x\\,dx`,-1,"-1"],()=>{const a=pick([1,4,9]);return[`\\int_0^{${a}}\\dfrac{dx}{\\sqrt{${a} - x}}`,2*Math.sqrt(a),`${2*Math.sqrt(a)}`]}])();return{q:`Evaluate $\\displaystyle${V[0]}$.`,type:"number",ans:V[1],ansTex:V[2],hint:"The integrand blows up at an endpoint: replace it with a variable and take a one-sided limit.",sol:[`$${V[2]}$.`]}},
+  ()=>{const a=rnd(1,5),V=pick([["\\int_{-\\infty}^{\\infty}\\dfrac{dx}{1 + x^2}",Math.PI,"\\pi"],[`\\int_0^{\\infty}\\dfrac{dx}{x^2 + ${a*a}}`,Math.PI/(2*a),piTex(1,2*a)],["\\int_0^{\\infty}xe^{-x^2}\\,dx",0.5,"\\tfrac12"],["\\int_2^{\\infty}\\dfrac{dx}{x(\\ln x)^2}",1/Math.log(2),"\\dfrac{1}{\\ln 2}"],["\\int_0^{\\infty}x^2e^{-x}\\,dx",2,"2"]]);return{q:`Evaluate $\\displaystyle${V[0]}$.`,type:"number",ans:V[1],ansTex:V[2],hint:"Find the antiderivative ($\\tan^{-1}$, $u$-substitution, or parts), then take limits.",sol:[`$${V[2]}$.`]}}
+ ]}
+]},
+/* ===================== Unit 7 BC ===================== */
+{id:"ch2",title:"Euler's Method & Logistic Models",topics:[
+ {id:"euler",title:"Euler's Method",idea:"Step along tangent lines: $x_{n+1} = x_n + h$ and $y_{n+1} = y_n + h\\cdot f(x_n, y_n)$, where $f = \\dfrac{dy}{dx}$.",
+  lesson:{steps:[["\\dfrac{dy}{dx} = x + y,\\ y(0) = 1,\\ h = 0.5","Start at $(0, 1)$."],["y_1 = 1 + 0.5(0 + 1) = 1.5","Slope at $(0, 1)$ is $1$."],["y_2 = 1.5 + 0.5(0.5 + 1.5) = 2.5","Now at $(1, 2.5)$."]],warn:"Use the slope at the <b>start</b> of each step, and update $x$ too."},
+  gen:[
+  ()=>{const a=nz(-3,3),b=nz(-3,3),x0=rnd(-2,2),y0=rnd(-3,3),h=pick([0.1,0.2,0.5]);const f=(x,y)=>a*x+b*y,v=euler(f,x0,y0,h,1);return{q:`$\\dfrac{dy}{dx} = ${co(a,"x")} ${cterm(b,"y")}$, $y(${x0}) = ${y0}$. Use one step of Euler's method with $h = ${h}$ to approximate $y(${r4(x0+h)})$.`,type:"number",tol:1e-6,ans:r4(v),ansTex:`${r4(v)}`,hint:"$y_1 = y_0 + h\\,f(x_0, y_0)$.",sol:[`Slope $= ${f(x0,y0)}$; $y_1 = ${y0} + ${h}(${f(x0,y0)}) = ${r4(v)}$.`]}},
+  ()=>{const a=nz(-2,2),b=nz(-2,2),y0=rnd(-2,3),h=0.5;const f=(x,y)=>a*x+b*y,y1=euler(f,0,y0,h,1),v=euler(f,0,y0,h,2);return{q:`$\\dfrac{dy}{dx} = ${co(a,"x")} ${cterm(b,"y")}$, $y(0) = ${y0}$. Use Euler's method with two steps of size $0.5$ to approximate $y(1)$.`,type:"number",tol:1e-6,ans:r4(v),ansTex:`${r4(v)}`,hint:"Two steps: $(0, y_0) \\to (0.5, y_1) \\to (1, y_2)$.",sol:[`$y_1 = ${r4(y1)}$.`,`$y_2 = ${r4(y1)} + 0.5\\,f(0.5, ${r4(y1)}) = ${r4(v)}$.`]}},
+  ()=>{const k=pick([2,-1,0.5,3]),y0=pick([1,2,4,10]),h=pick([0.1,0.5]),v=euler((x,y)=>k*y,0,y0,h,2);return{q:`$\\dfrac{dy}{dx} = ${k===-1?"-":k}y$, $y(0) = ${y0}$. Use Euler's method with $h = ${h}$ and two steps to approximate $y(${2*h})$.`,type:"number",tol:1e-6,ans:r4(v),ansTex:`${r4(v)}`,hint:"Each step multiplies $y$ by $(1 + kh)$.",sol:[`$y_2 = ${y0}(1 + ${r4(k*h)})^2 = ${r4(v)}$.`]}},
+  ()=>{const V=pick([["x - y",(x,y)=>x-y],["xy",(x,y)=>x*y],["x^2 - y",(x,y)=>x*x-y],["y - 2x",(x,y)=>y-2*x],["2x + y",(x,y)=>2*x+y]]),y0=rnd(1,4),v=euler(V[1],0,y0,0.5,3);return{q:`$\\dfrac{dy}{dx} = ${V[0]}$, $y(0) = ${y0}$. Use Euler's method with three steps of size $0.5$ to approximate $y(1.5)$.`,type:"number",tol:1e-6,ans:r4(v),ansTex:`${r4(v)}`,hint:"Make a table: $x$, $y$, slope, $\\Delta y = 0.5\\cdot$slope.",sol:[`$y(0.5) \\approx ${r4(euler(V[1],0,y0,0.5,1))}$, $y(1) \\approx ${r4(euler(V[1],0,y0,0.5,2))}$, $y(1.5) \\approx ${r4(v)}$.`]}},
+  ()=>{const pts=[["x^2 + y^2",[0,1],1],["y",[0,2],1],["-y",[0,2],1],["x + y",[0,1],1],["1 - y^2",[0,0.5],-1],["\\cos x",[1,0],-1],["-x^2",[1,0],-1],["e^{x}",[0,1],1]];const P_=pick(pts),up=P_[2]>0;return mcQ(`The solution of $\\dfrac{dy}{dx} = ${P_[0]}$ through $(${P_[1][0]}, ${P_[1][1]})$ is approximated with Euler's method for a small step to the right. Is the approximation an over- or underestimate?`,up?"Underestimate":"Overestimate",[up?"Overestimate":"Underestimate"],"Find the sign of $\\dfrac{d^2y}{dx^2}$ at the point. Concave up → tangent lines lie below the curve.",[`$\\dfrac{d^2y}{dx^2}$ is ${up?"positive":"negative"} there: concave ${up?"up":"down"}, so the tangent line lies ${up?"below":"above"} the curve — an ${up?"underestimate":"overestimate"}.`]);}
+ ]},
+ {id:"logistic",title:"Logistic Growth",idea:"$\\dfrac{dP}{dt} = kP\\left(1 - \\dfrac{P}{M}\\right)$: growth slows as $P$ nears the <b>carrying capacity</b> $M$. $P(t) \\to M$, the growth is fastest at $P = \\dfrac{M}{2}$, and the solution is $P = \\dfrac{M}{1 + Ae^{-kt}}$.",
+  lesson:{steps:[["\\dfrac{dP}{dt} = 0.3P\\left(1 - \\dfrac{P}{800}\\right)","$k = 0.3$, $M = 800$."],["\\displaystyle\\lim_{t\\to\\infty}P = 800","Approaches the carrying capacity."],["\\text{fastest at } P = 400","Inflection point of $P(t)$."]],warn:"In the form $\\dfrac{dP}{dt} = kP(M - P)$, the carrying capacity is still $M$ (factor carefully)."},
+  gen:[
+  ()=>{const M=pick([200,300,500,800,1000,1500]),k=pick([0.1,0.2,0.3,0.05]),alt=Math.random()<.5;return{q:alt?`$\\dfrac{dP}{dt} = ${r4(k/M)}P(${M} - P)$. Find the carrying capacity.`:`$\\dfrac{dP}{dt} = ${k}P\\left(1 - \\dfrac{P}{${M}}\\right)$. Find the carrying capacity.`,type:"number",ans:M,ansTex:`${M}`,hint:"Where does $\\dfrac{dP}{dt} = 0$ (other than $P = 0$)?",sol:[`$M = ${M}$.`]}},
+  ()=>{const M=2*pick([100,150,250,400,600]),k=pick([0.01,0.02,0.004]);return{q:`$\\dfrac{dP}{dt} = ${k}P(${M} - P)$. At what population is $P$ growing fastest?`,type:"number",ans:M/2,ansTex:`${M/2}`,hint:"Half the carrying capacity.",sol:[`$M = ${M}$, fastest at $${M/2}$.`]}},
+  ()=>{const M=pick([100,250,400,1000]),P0=pick([M/4,M/2,M*1.5,M*2]),k=pick([0.2,0.5]);return{q:`$\\dfrac{dP}{dt} = ${k}P\\left(1 - \\dfrac{P}{${M}}\\right)$ with $P(0) = ${P0}$. Find $\\displaystyle\\lim_{t\\to\\infty}P(t)$.`,type:"number",ans:M,ansTex:`${M}`,hint:"Whether it starts above or below $M$, it approaches $M$ (as long as $P(0) > 0$).",sol:[`$${M}$ (${P0>M?"decreasing toward":"increasing toward"} $M$).`]}},
+  ()=>{const M=pick([100,200,500,1000]),P0=pick([10,20,25,50].filter(v=>v<M)),k=pick([0.2,0.3,0.5]);return{q:`The logistic solution with carrying capacity $${M}$ and $P(0) = ${P0}$ is $P(t) = \\dfrac{${M}}{1 + Ae^{-${k}t}}$. Find $A$.`,type:"number",ans:M/P0-1,ansTex:`${M/P0-1}`,hint:"Set $t = 0$: $P(0) = \\dfrac{M}{1 + A}$.",sol:[`$${P0} = \\dfrac{${M}}{1 + A} \\Rightarrow A = ${M/P0-1}$.`]}},
+  ()=>{const M=pick([400,600,1000,1200]),k=pick([0.1,0.2,0.5]),mx=Math.random()<.5,P_=pick([M/4,M/2,3*M/4]);return mx?{q:`$\\dfrac{dP}{dt} = ${k}P\\left(1 - \\dfrac{P}{${M}}\\right)$. Find the maximum rate of growth $\\dfrac{dP}{dt}$.`,type:"number",ans:k*M/4,ansTex:`${r4(k*M/4)}`,hint:"Evaluate $\\dfrac{dP}{dt}$ at $P = \\dfrac{M}{2}$.",sol:[`$${k}\\cdot${M/2}\\cdot\\tfrac12 = ${r4(k*M/4)}$.`]}:{q:`$\\dfrac{dP}{dt} = ${k}P\\left(1 - \\dfrac{P}{${M}}\\right)$. Find $\\dfrac{dP}{dt}$ when $P = ${P_}$.`,type:"number",ans:k*P_*(1-P_/M),ansTex:`${r4(k*P_*(1-P_/M))}`,hint:"Substitute.",sol:[`$${k}\\cdot${P_}\\cdot\\left(1 - ${frac(P_,M)}\\right) = ${r4(k*P_*(1-P_/M))}$.`]}}
+ ]}
+]},
+/* ===================== Units 8-9 BC ===================== */
+{id:"ch3",title:"Arc Length, Parametric & Vector Functions",topics:[
+ {id:"pderiv",title:"Parametric Derivatives",idea:"For $x(t)$, $y(t)$: $\\dfrac{dy}{dx} = \\dfrac{dy/dt}{dx/dt}$ and $\\dfrac{d^2y}{dx^2} = \\dfrac{\\frac{d}{dt}\\left(\\frac{dy}{dx}\\right)}{dx/dt}$.",
+  lesson:{steps:[["x = t^2,\\ y = t^3","Find $\\dfrac{dy}{dx}$."],["\\dfrac{dy}{dx} = \\dfrac{3t^2}{2t} = \\dfrac{3t}{2}","Divide the $t$-derivatives."],["\\dfrac{d^2y}{dx^2} = \\dfrac{3/2}{2t} = \\dfrac{3}{4t}","Differentiate $\\frac{dy}{dx}$ in $t$, divide by $\\frac{dx}{dt}$ again."]],warn:"$\\dfrac{d^2y}{dx^2}$ is <b>not</b> $\\dfrac{y''(t)}{x''(t)}$."},
+  gen:[
+  ()=>{const a=rnd(-5,5),b=rnd(-6,6),t=nz(-3,3);return{q:`$x = t^2 ${a?sg(a):""}$, $y = t^3 ${b?cterm(b,"t"):""}$. Find $\\dfrac{dy}{dx}$ at $t = ${t}$.`,type:"number",ans:(3*t*t+b)/(2*t),ansTex:frac(3*t*t+b,2*t),hint:"$\\dfrac{dy/dt}{dx/dt}$.",sol:[`$\\dfrac{3t^2 ${b?sg(b):""}}{2t}$ at $t = ${t}$: $${frac(3*t*t+b,2*t)}$.`]}},
+  ()=>{const k=rnd(1,4),a=rnd(-4,4);return{q:`$x = t^2 ${a?sg(a):""}$, $y = t^3 - ${3*k*k}t$. For which $t$ is the tangent line horizontal?`,type:"roots",ans:[k,-k],ansTex:`t = \\pm ${k}`,hint:"Horizontal: $\\dfrac{dy}{dt} = 0$ with $\\dfrac{dx}{dt} \\ne 0$.",sol:[`$3t^2 - ${3*k*k} = 0 \\Rightarrow t = \\pm ${k}$; $\\dfrac{dx}{dt} = 2t \\ne 0$ there.`]}},
+  ()=>{const t=nz(-2,2),a=rnd(-3,3),b=rnd(-3,3),x0=t*t+a,y0=t**3+b,m=3*t/2;return{q:`Find the equation of the tangent line to $x = t^2 ${a?sg(a):""}$, $y = t^3 ${b?sg(b):""}$ at $t = ${t}$.`,type:"line",ans:`(y-(${y0}))*2=(${3*t})*(x-(${x0}))`,ansTex:`y - ${P(y0)} = ${frac(3*t,2)}(x ${sg(-x0)})`,hint:"Point $(x(t), y(t))$, slope $\\dfrac{dy}{dx}$ at $t$.",sol:[`Point $${pt(x0,y0)}$, slope $\\dfrac{3t^2}{2t} = ${frac(3*t,2)}$.`,`$y - ${P(y0)} = ${frac(3*t,2)}(x ${sg(-x0)})$.`]}},
+  ()=>{const b=rnd(-6,6),t=nz(-3,3),v=(1.5-b/(2*t*t))/(2*t);return{q:`$x = t^2$, $y = t^3 ${b?cterm(b,"t"):""}$. Find $\\dfrac{d^2y}{dx^2}$ at $t = ${t}$.`,type:"number",ans:v,ansTex:frac(3*t*t-b,4*t**3),hint:"First $\\dfrac{dy}{dx} = \\dfrac{3t^2 + b}{2t} = \\dfrac{3t}{2} + \\dfrac{b}{2t}$. Differentiate in $t$, then divide by $2t$.",sol:[`$\\dfrac{d}{dt}\\dfrac{dy}{dx} = \\dfrac32 - \\dfrac{${b}}{2t^2}$.`,`Divide by $2t$: $${frac(3*t*t-b,4*t**3)}$.`]}},
+  ()=>{const a=rnd(1,6),b=rnd(1,6),T=pick([[Math.PI/4,"\\frac{\\pi}{4}"],[Math.PI/6,"\\frac{\\pi}{6}"],[Math.PI/3,"\\frac{\\pi}{3}"],[3*Math.PI/4,"\\frac{3\\pi}{4}"]]),v=-(b/a)*Math.cos(T[0])/Math.sin(T[0]);return{q:`$x = ${a}\\cos t$, $y = ${b}\\sin t$. Find $\\dfrac{dy}{dx}$ at $t = ${T[1]}$.`,type:"number",ans:v,ansTex:numTex(v),hint:"$\\dfrac{dy}{dx} = \\dfrac{b\\cos t}{-a\\sin t}$.",sol:[`$-\\dfrac{${b}}{${a}}\\cot t = ${numTex(v)}$.`]}}
+ ]},
+ {id:"arclen",title:"Arc Length & Speed",idea:"Parametric: speed $= \\sqrt{(x')^2 + (y')^2}$ and length $= \\displaystyle\\int_a^b\\sqrt{(x')^2 + (y')^2}\\,dt$. For $y = f(x)$: $L = \\displaystyle\\int_a^b\\sqrt{1 + (f'(x))^2}\\,dx$.",
+  lesson:{steps:[["x = 3t,\\ y = 4t,\\ 0 \\le t \\le 2","A straight path."],["\\sqrt{3^2 + 4^2} = 5","Constant speed."],["L = \\displaystyle\\int_0^2 5\\,dt = 10","Distance traveled."]],warn:"Arc length gives distance along the path — always positive."},
+  gen:[
+  ()=>{const a=nz(-4,4),b=nz(-3,3),t=rnd(0,3),m=a*a+4*b*b*t*t;return{q:`$x = ${lin(a,rnd(-5,5),"t")}$, $y = ${b===1?"":b===-1?"-":b}t^2$. Find the speed at $t = ${t}$.`,type:"number",ans:Math.sqrt(m),ansTex:rad(m),hint:"$\\sqrt{(dx/dt)^2 + (dy/dt)^2}$.",sol:[`$\\sqrt{${a}^2 + (${2*b*t})^2} = ${rad(m)}$.`]}},
+  ()=>{const tr=pick(TRIP.slice(0,5)),T=rnd(1,5),s1=pick([1,-1]),s2=pick([1,-1]);return{q:`Find the length of the path $x = ${lin(s1*tr[0],rnd(-5,5),"t")}$, $y = ${lin(s2*tr[1],rnd(-5,5),"t")}$ for $0 \\le t \\le ${T}$.`,type:"number",ans:tr[2]*T,ansTex:`${tr[2]*T}`,hint:"The speed is constant.",sol:[`Speed $= \\sqrt{${tr[0]**2} + ${tr[1]**2}} = ${tr[2]}$; length $= ${tr[2]}\\cdot${T} = ${tr[2]*T}$.`]}},
+  ()=>{const b=pick([3,8,15,24]),s=Math.sqrt(1+b);return{q:`Find the arc length of $y = \\tfrac23x^{3/2}$ from $x = 0$ to $x = ${b}$.`,type:"number",ans:2/3*(s**3-1),ansTex:frac(2*(s**3-1),3),hint:"$y' = \\sqrt{x}$, so $\\sqrt{1 + (y')^2} = \\sqrt{1 + x}$.",sol:[`$\\displaystyle\\int_0^{${b}}\\sqrt{1 + x}\\,dx = \\tfrac23\\left[(1 + x)^{3/2}\\right]_0^{${b}} = ${frac(2*(s**3-1),3)}$.`]}},
+  ()=>{const r=rnd(1,8),n=rnd(1,5),d=pick([2,3,4,6]);return{q:`Find the length of $x = ${r}\\cos t$, $y = ${r}\\sin t$ for $0 \\le t \\le ${piTex(n,d)}$.`,type:"number",ans:r*n*Math.PI/d,ansTex:piTex(r*n,d),hint:`The speed is $${r}$ (constant).`,sol:[`$${r}\\cdot${piTex(n,d)} = ${piTex(r*n,d)}$.`]}},
+  ()=>{const [e,v,t]=pick([["y = x^{3/2} \\text{ from } x = 0 \\text{ to } x = \\tfrac43",56/27,"\\tfrac{56}{27}"],["y = \\dfrac{x^3}{6} + \\dfrac{1}{2x} \\text{ from } x = 1 \\text{ to } x = 2",17/12,"\\tfrac{17}{12}"],["y = \\dfrac{x^2}{2} - \\dfrac{\\ln x}{4} \\text{ from } x = 1 \\text{ to } x = e",(Math.E**2+1)/4,"\\dfrac{e^2 + 1}{4}"],["y = \\ln(\\cos x) \\text{ from } x = 0 \\text{ to } x = \\tfrac{\\pi}{4}",Math.log(1+Math.SQRT2),"\\ln(1 + \\sqrt2)"],["x = t^2,\\ y = \\tfrac23t^3,\\ 0 \\le t \\le \\sqrt3",14/3,"\\tfrac{14}{3}"]]);return{q:`Find the arc length of $${e}$.`,type:"number",ans:v,ansTex:t,hint:"Simplify $1 + (y')^2$ — in these problems it is a perfect square.",sol:[`$L = ${t}$.`]}}
+ ]},
+ {id:"vecfn",title:"Vector-Valued Functions & Motion",idea:"$\\vec r(t) = \\langle x(t), y(t)\\rangle$. Velocity $\\vec v = \\dfrac{d\\vec r}{dt}$, acceleration $\\vec a = \\dfrac{d\\vec v}{dt}$, speed $= \\|\\vec v\\|$. Position from velocity: $\\vec r(b) = \\vec r(a) + \\displaystyle\\int_a^b\\vec v\\,dt$.",
+  lesson:{steps:[["\\vec r(t) = \\langle t^2, 3t\\rangle","Position."],["\\vec v(t) = \\langle 2t, 3\\rangle","Differentiate each component."],["\\text{speed at } t = 2:\\ \\sqrt{16 + 9} = 5","Length of $\\vec v$."]],warn:"Integrate each component separately and add the initial position to each."},
+  gen:[
+  ()=>{const a=rnd(-5,5),b=rnd(-6,6),t=nz(-3,3);return{q:`$\\vec r(t) = \\langle t^2 ${a?sg(a):""},\\ t^3 ${b?cterm(b,"t"):""}\\rangle$. Find the velocity vector at $t = ${t}$. (Type like <4, -3>.)`.replace("<4, -3>","&lt;4, -3&gt;"),type:"point",ans:[2*t,3*t*t+b],ansTex:vtex(2*t,3*t*t+b),hint:"Differentiate each component.",sol:[`$\\vec v = \\langle 2t, 3t^2 ${b?sg(b):""}\\rangle = ${vtex(2*t,3*t*t+b)}$.`]}},
+  ()=>{const k=rnd(2,4),t=pick([0,1,2]),f=Math.random()<.5;return f?{q:`$\\vec r(t) = \\langle e^{${k}t},\\ t^3\\rangle$. Find the acceleration vector at $t = ${t}$.`,type:"point",ans:[k*k*Math.exp(k*t),6*t],ansTex:vtex(t?`${k*k===1?"":k*k}e^{${k*t}}`:k*k,6*t),hint:"Differentiate twice.",sol:[`$\\vec a = \\langle ${k*k}e^{${k}t}, 6t\\rangle$.`]}:{q:`$\\vec r(t) = \\langle ${k}\\cos t,\\ ${k}\\sin t\\rangle$. Find the acceleration vector at $t = ${t===0?0:t===1?"\\frac{\\pi}{2}":"\\pi"}$.`,type:"point",ans:[-k*Math.cos(t*Math.PI/2),-k*Math.sin(t*Math.PI/2)],ansTex:vtex(Math.round(-k*Math.cos(t*Math.PI/2)),Math.round(-k*Math.sin(t*Math.PI/2))),hint:"$\\vec a = -\\vec r$ for circular motion like this.",sol:[`$\\vec a = \\langle -${k}\\cos t, -${k}\\sin t\\rangle = ${vtex(Math.round(-k*Math.cos(t*Math.PI/2)),Math.round(-k*Math.sin(t*Math.PI/2)))}$.`]}},
+  ()=>{const a=nz(-4,4),b=rnd(-6,6),t=rnd(0,3),vx=a,vy=2*t+b,m=vx*vx+vy*vy;return{q:`A particle moves with $\\vec r(t) = \\langle ${co(a,"t")},\\ t^2 ${b?cterm(b,"t"):""}\\rangle$. Find its speed at $t = ${t}$.`,type:"number",ans:Math.sqrt(m),ansTex:rad(m),hint:"Speed $= \\|\\vec v\\|$.",sol:[`$\\vec v(${t}) = ${vtex(vx,vy)}$, speed $= ${rad(m)}$.`]}},
+  ()=>{const x0=rnd(-5,5),y0=rnd(-5,5),T=rnd(1,3),a=nz(-3,3);return{q:`$\\vec v(t) = \\langle 2t,\\ ${3*a}t^2\\rangle$ and $\\vec r(0) = \\langle ${x0}, ${y0}\\rangle$. Find $\\vec r(${T})$.`,type:"point",ans:[x0+T*T,y0+a*T**3],ansTex:vtex(x0+T*T,y0+a*T**3),hint:"Integrate each component from $0$ to $T$ and add the start.",sol:[`$x = ${x0} + ${T*T}$, $y = ${y0} + ${a*T**3}$: $${vtex(x0+T*T,y0+a*T**3)}$.`]}},
+  ()=>{const tr=pick(TRIP.slice(0,5)),n=rnd(1,3),T=rnd(1,3);return{q:`A particle has velocity $\\vec v(t) = \\langle ${tr[0]}t^{${n}},\\ ${tr[1]}t^{${n}}\\rangle$. Find the total distance it travels from $t = 0$ to $t = ${T}$.`.replace(/\^\{1\}/g,""),type:"number",ans:tr[2]*T**(n+1)/(n+1),ansTex:frac(tr[2]*T**(n+1),n+1),hint:"Distance $= \\int\\|\\vec v\\|\\,dt$.",sol:[`Speed $= ${tr[2]}t^{${n}}$.`,`$\\displaystyle\\int_0^{${T}}${tr[2]}t^{${n}}\\,dt = ${frac(tr[2]*T**(n+1),n+1)}$.`]}}
+ ]}
+]},
+/* ===================== Unit 9 BC: polar ===================== */
+{id:"ch4",title:"Polar Calculus",topics:[
+ {id:"pslope",title:"Slopes of Polar Curves",idea:"With $x = r\\cos\\theta$, $y = r\\sin\\theta$: $\\dfrac{dy}{dx} = \\dfrac{dy/d\\theta}{dx/d\\theta} = \\dfrac{r'\\sin\\theta + r\\cos\\theta}{r'\\cos\\theta - r\\sin\\theta}$. The sign of $\\dfrac{dr}{d\\theta}$ says whether the curve moves away from or toward the origin.",
+  lesson:{steps:[["r = 2\\sin\\theta,\\ \\theta = \\tfrac{\\pi}{4}","$r = \\sqrt2$, $r' = 2\\cos\\theta = \\sqrt2$."],["\\dfrac{dy}{dx} = \\dfrac{\\sqrt2\\cdot\\frac{\\sqrt2}{2} + \\sqrt2\\cdot\\frac{\\sqrt2}{2}}{\\sqrt2\\cdot\\frac{\\sqrt2}{2} - \\sqrt2\\cdot\\frac{\\sqrt2}{2}}","Denominator $0$."],["\\text{vertical tangent}","The slope is undefined there."]],warn:"$\\dfrac{dr}{d\\theta}$ is <b>not</b> the slope $\\dfrac{dy}{dx}$."},
+  gen:[
+  ()=>{const a=rnd(1,4),b=rnd(1,4),C=pick([["\\cos",Math.cos],["\\sin",Math.sin]]),T=pick([[Math.PI/3,"\\frac{\\pi}{3}"],[Math.PI/2,"\\frac{\\pi}{2}"],[Math.PI,"\\pi"],[Math.PI/6,"\\frac{\\pi}{6}"],[0,"0"]]),r=a+b*C[1](T[0]),x=r*Math.cos(T[0]),y=r*Math.sin(T[0]);return{q:`Find the rectangular coordinates of the point on $r = ${a} + ${b}${C[0]}\\theta$ at $\\theta = ${T[1]}$. (Exact, or 3 decimal places.)`,type:"point",tol:0.0006,ans:[x,y],ansTex:pt(numTex(x),numTex(y)),hint:"Find $r$ first, then $x = r\\cos\\theta$, $y = r\\sin\\theta$.",sol:[`$r = ${numTex(r)}$, point $${pt(numTex(x),numTex(y))}$.`]}},
+  ()=>{const a=rnd(1,5),b=nz(-4,4),C=pick([["\\sin","\\cos",Math.cos,1],["\\cos","\\sin",Math.sin,-1]]),n=pick([1,2,3]),T=pick([[Math.PI/6,"\\frac{\\pi}{6}"],[Math.PI/4,"\\frac{\\pi}{4}"],[Math.PI/3,"\\frac{\\pi}{3}"]]),v=C[3]*b*n*C[2](n*T[0]);return{q:`Find $\\dfrac{dr}{d\\theta}$ for $r = ${a} ${b<0?"-":"+"} ${Math.abs(b)===1?"":Math.abs(b)}${C[0]}(${n===1?"":n}\\theta)$ at $\\theta = ${T[1]}$.`.replace("(\\theta)","\\theta"),type:"number",ans:v,ansTex:numTex(v),hint:"Chain rule on the trig term.",sol:[`$\\dfrac{dr}{d\\theta} = ${numTex(v)}$.`]}},
+  ()=>{const a=rnd(2,4),V=pick([[`${a}\\cos\\theta`,t=>a*Math.cos(t),t=>-a*Math.sin(t)],[`${a}\\sin\\theta`,t=>a*Math.sin(t),t=>a*Math.cos(t)],[`1 + \\cos\\theta`,t=>1+Math.cos(t),t=>-Math.sin(t)],[`2 + \\sin\\theta`,t=>2+Math.sin(t),t=>Math.cos(t)],[`${a}`,t=>a,t=>0]]);let T,v;do{T=pick([[Math.PI/6,"\\frac{\\pi}{6}"],[Math.PI/3,"\\frac{\\pi}{3}"],[2*Math.PI/3,"\\frac{2\\pi}{3}"],[Math.PI/2,"\\frac{\\pi}{2}"],[Math.PI/4,"\\frac{\\pi}{4}"]]);const r=V[1](T[0]),rp=V[2](T[0]),N=rp*Math.sin(T[0])+r*Math.cos(T[0]),Dd=rp*Math.cos(T[0])-r*Math.sin(T[0]);v=Math.abs(Dd)<1e-9?NaN:N/Dd}while(isNaN(v)||Math.abs(v)>50);return{q:`Find the slope $\\dfrac{dy}{dx}$ of $r = ${V[0]}$ at $\\theta = ${T[1]}$. (Exact, or 3 decimal places.)`,type:"number",tol:0.0006,ans:v,ansTex:numTex(v),hint:"$\\dfrac{r'\\sin\\theta + r\\cos\\theta}{r'\\cos\\theta - r\\sin\\theta}$.",sol:[`Slope $= ${numTex(v)}$.`]}},
+  ()=>{const a=rnd(1,4),b=rnd(1,4),C=pick([["\\sin",Math.cos],["\\cos",t=>-Math.sin(t)]]),k=rnd(1,11),T=k*Math.PI/6,rp=b*C[1](T);if(Math.abs(rp)<1e-9)return{q:`For $r = ${a} + ${b}\\sin\\theta$, is the curve moving away from or toward the origin at $\\theta = \\frac{\\pi}{4}$?`,type:"mc",...mcQ(`For $r = ${a + b + 1} + ${b}\\sin\\theta$, at $\\theta = \\frac{\\pi}{4}$, is the curve moving away from or toward the origin?`,"Away from the origin",["Toward the origin"],"Sign of $\\frac{dr}{d\\theta}$ (with $r > 0$).",["$r' = "+b+"\\cos\\frac{\\pi}{4} > 0$."])};const away=rp>0;return mcQ(`For $r = ${a+b} + ${b}${C[0]}\\theta$, at $\\theta = ${piTex(k,6)}$, is the curve moving away from or toward the origin?`,away?"Away from the origin":"Toward the origin",[away?"Toward the origin":"Away from the origin"],"$r > 0$ here, so check the sign of $\\dfrac{dr}{d\\theta}$.",[`$\\dfrac{dr}{d\\theta} = ${numTex(rp)}$, ${away?"positive":"negative"}: ${away?"away from":"toward"} the origin.`]);},
+  ()=>{const V=pick([["\\sin 2\\theta",t=>Math.sin(2*t),t=>2*Math.cos(2*t)],["1 + 2\\cos\\theta",t=>1+2*Math.cos(t),t=>-2*Math.sin(t)],["2 - 2\\sin\\theta",t=>2-2*Math.sin(t),t=>-2*Math.cos(t)],["\\cos 2\\theta",t=>Math.cos(2*t),t=>-2*Math.sin(2*t)],["3 + 2\\cos\\theta",t=>3+2*Math.cos(t),t=>-2*Math.sin(t)]]);let T,v;do{T=pick([[Math.PI/6,"\\frac{\\pi}{6}"],[Math.PI/3,"\\frac{\\pi}{3}"],[2*Math.PI/3,"\\frac{2\\pi}{3}"],[Math.PI/4,"\\frac{\\pi}{4}"],[5*Math.PI/6,"\\frac{5\\pi}{6}"]]);const r=V[1](T[0]),rp=V[2](T[0]),N=rp*Math.sin(T[0])+r*Math.cos(T[0]),Dd=rp*Math.cos(T[0])-r*Math.sin(T[0]);v=Math.abs(Dd)<1e-9?NaN:N/Dd}while(isNaN(v)||Math.abs(v)>50);return{q:`Find the slope of the tangent line to $r = ${V[0]}$ at $\\theta = ${T[1]}$. (Exact, or 3 decimal places.)`,type:"number",tol:0.0006,ans:v,ansTex:numTex(v),hint:"Compute $r$ and $r'$ at $\\theta$, then use $\\dfrac{r'\\sin\\theta + r\\cos\\theta}{r'\\cos\\theta - r\\sin\\theta}$.",sol:[`Slope $= ${numTex(v)}$.`]}}
+ ]},
+ {id:"parea",title:"Area in Polar Coordinates",idea:"$A = \\dfrac12\\displaystyle\\int_\\alpha^\\beta r^2\\,d\\theta$. Between two curves: $\\dfrac12\\displaystyle\\int_\\alpha^\\beta (R^2 - r^2)\\,d\\theta$, with limits where the curves meet.",
+  lesson:{steps:[["r = 2,\\ 0 \\le \\theta \\le \\tfrac{\\pi}{2}","A quarter circle."],["\\tfrac12\\displaystyle\\int_0^{\\pi/2} 4\\,d\\theta","$r^2 = 4$."],["\\pi","Matches $\\tfrac14\\pi(2)^2$ ✓"]],warn:"$\\cos^2\\theta = \\dfrac{1 + \\cos 2\\theta}{2}$ — you will need this identity often."},
+  gen:[
+  ()=>{const a=rnd(1,6),n=rnd(1,5),d=pick([2,3,4,6]);return{q:`Find the area of the region swept by $r = ${a}$ for $0 \\le \\theta \\le ${piTex(n,d)}$.`,type:"number",ans:a*a*n*Math.PI/(2*d),ansTex:piTex(a*a*n,2*d),hint:"$\\tfrac12\\int r^2\\,d\\theta$ with constant $r$.",sol:[`$\\tfrac12(${a*a})\\cdot${piTex(n,d)} = ${piTex(a*a*n,2*d)}$.`]}},
+  ()=>{const a=rnd(1,6),c=Math.random()<.5;return{q:`Find the area enclosed by $r = ${a}${c?"\\cos":"\\sin"}\\theta$.`,type:"number",ans:Math.PI*a*a/4,ansTex:piTex(a*a,4),hint:`It's a circle of diameter $${a}$, traced once for $0 \\le \\theta \\le \\pi$.`,sol:[`$\\tfrac12\\displaystyle\\int_0^{\\pi}${a*a}${c?"\\cos":"\\sin"}^2\\theta\\,d\\theta = ${piTex(a*a,4)}$.`]}},
+  ()=>{const a=rnd(1,5),f=pick(["\\cos","\\sin"]),s=pick(["+","-"]);return{q:`Find the area enclosed by the cardioid $r = ${a===1?"":a}(1 ${s} ${f}\\theta)$.`,type:"number",ans:1.5*Math.PI*a*a,ansTex:piTex(3*a*a,2),hint:"$\\tfrac12\\int_0^{2\\pi} a^2(1 \\pm \\cos\\theta)^2\\,d\\theta$; the cross term integrates to $0$.",sol:[`$\\tfrac12 a^2\\left(2\\pi + \\pi\\right) = \\dfrac{3\\pi a^2}{2} = ${piTex(3*a*a,2)}$.`]}},
+  ()=>{const a=rnd(1,5),n=rnd(2,5),f=pick(["\\sin","\\cos"]);return{q:`Find the area of <b>one petal</b> of $r = ${a===1?"":a}${f}(${n}\\theta)$.`,type:"number",ans:Math.PI*a*a/(4*n),ansTex:piTex(a*a,4*n),hint:`One petal: $\\theta$ runs over an interval of length $\\dfrac{\\pi}{${n}}$.`,sol:[`$\\tfrac12\\displaystyle\\int_0^{\\pi/${n}}${a*a===1?"":a*a}\\sin^2(${n}\\theta)\\,d\\theta = ${piTex(a*a,4*n)}$.`]}},
+  ()=>{const a=rnd(1,4);if(Math.random()<.4)return{q:`Find the area inside $r = 3\\sin\\theta$ and outside $r = 1 + \\sin\\theta$.`,type:"number",ans:Math.PI,ansTex:"\\pi",hint:"They meet where $3\\sin\\theta = 1 + \\sin\\theta$: $\\theta = \\tfrac{\\pi}{6}, \\tfrac{5\\pi}{6}$.",sol:["$\\tfrac12\\displaystyle\\int_{\\pi/6}^{5\\pi/6}\\left[9\\sin^2\\theta - (1 + \\sin\\theta)^2\\right]d\\theta = \\pi$."]};return{q:`Find the area inside $r = ${a}$ and outside $r = ${a===1?"":a}(1 - \\cos\\theta)$.`,type:"number",ans:a*a*(2-Math.PI/4),ansTex:`${2*a*a} - ${piTex(a*a,4)}`,hint:"They meet at $\\theta = \\pm\\tfrac{\\pi}{2}$.",sol:[`$\\tfrac12\\displaystyle\\int_{-\\pi/2}^{\\pi/2}${a*a===1?"":a*a}\\left[1 - (1 - \\cos\\theta)^2\\right]d\\theta = ${a*a===1?"":a*a}\\left(2 - \\dfrac{\\pi}{4}\\right)$.`]}}
+ ]}
+]},
+/* ===================== Unit 10 A ===================== */
+{id:"ch5",title:"Infinite Series: Convergence Tests",topics:[
+ {id:"geo",title:"Geometric, Telescoping & the nth-Term Test",idea:"Geometric $\\sum ar^n$ converges to $\\dfrac{\\text{first term}}{1 - r}$ iff $|r| < 1$. <b>nth-term test</b>: if $a_n \\not\\to 0$, the series diverges (if $a_n \\to 0$, the test says nothing). Telescoping sums collapse.",
+  lesson:{steps:[["\\displaystyle\\sum_{n=1}^{\\infty}\\left(\\tfrac13\\right)^n","First term $\\tfrac13$, $r = \\tfrac13$."],["\\dfrac{1/3}{1 - 1/3}","First term over $1 - r$."],["\\tfrac12","Converges."]],warn:"$a_n \\to 0$ does <b>not</b> prove convergence: $\\sum\\frac1n$ diverges."},
+  gen:[
+  ()=>{const a=nz(-9,9),q=rnd(2,7),p=nz(-(q-1),q-1);return{q:`Find $\\displaystyle\\sum_{n=0}^{\\infty}${a===1?"":a===-1?"-":a}\\left(${frac(p,q)}\\right)^n$.`,type:"number",ans:a/(1-p/q),ansTex:frac(a*q,q-p),hint:"First term (at $n = 0$) over $1 - r$.",sol:[`$\\dfrac{${a}}{1 - (${frac(p,q)})} = ${frac(a*q,q-p)}$.`]}},
+  ()=>{const a=nz(-6,6),q=rnd(2,6),p=nz(-(q-1),q-1);return{q:`Find $\\displaystyle\\sum_{n=1}^{\\infty}${a===1?"":a===-1?"-":a}\\left(${frac(p,q)}\\right)^n$.`,type:"number",ans:a*(p/q)/(1-p/q),ansTex:frac(a*p,q-p),hint:"Careful: the first term is at $n = 1$.",sol:[`First term $${frac(a*p,q)}$; sum $= \\dfrac{${frac(a*p,q)}}{1 - (${frac(p,q)})} = ${frac(a*p,q-p)}$.`]}},
+  ()=>{const a=rnd(0,3),k=rnd(1,2);let N=0,Dn=1;for(let j=1;j<=k;j++){N=N*(a+j)+Dn;Dn*=(a+j)}const v=Array.from({length:k},(_,j)=>1/(a+j+1)).reduce((s,x)=>s+x,0);return{q:`Find $\\displaystyle\\sum_{n=1}^{\\infty}\\dfrac{${k}}{(n ${a?sg(a):""})(n + ${a+k})}$.`,type:"number",ans:v,ansTex:numTex(v),hint:`Partial fractions: $\\dfrac{1}{n + ${a}} - \\dfrac{1}{n + ${a+k}}$ — it telescopes.`.replace("n + 0","n"),sol:[`Only the first $${k}$ positive terms survive: $${Array.from({length:k},(_,j)=>"\\tfrac{1}{"+(a+j+1)+"}").join(" + ")} = ${numTex(v)}$.`]}},
+  ()=>{const V=pick([["\\dfrac{n}{2n + 1}","\\tfrac12",false],["\\dfrac{n^2}{n^2 + 5}","1",false],["\\cos\\dfrac1n","1",false],["\\left(1 + \\dfrac1n\\right)^n","e",false],["\\dfrac{1}{n}","0",true],["\\dfrac{n}{n^2 + 1}","0",true],["\\dfrac{\\ln n}{n}","0",true],["\\dfrac{3^n}{2^n}","\\infty",false]]);const K=["The series diverges","The series converges","The test is inconclusive"],j=V[2]?2:0;return mcQ(`$\\displaystyle\\lim_{n\\to\\infty}${V[1]==="\\infty"?V[0]:V[0]} = ${V[1]}$. What does the $n$th-term test say about $\\displaystyle\\sum ${V[0]}$?`,K[j],K.filter((_,i)=>i!==j),"Diverges if the terms don't go to $0$; otherwise the test tells you nothing.",[`Limit $${V[1]}$: ${V[2]?"terms → 0, so the test is inconclusive.":"not 0, so it diverges."}`]);},
+  ()=>{const c=nz(-5,5),k=rnd(2,6);return{q:`For which $x$ does $\\displaystyle\\sum_{n=0}^{\\infty}\\dfrac{(x ${sg(-c)})^n}{${k}^n}$ converge? (Type like -2 < x < 4.)`,type:"between",ans:{lo:c-k,li:false,hi:c+k,hiI:false},ansTex:`${c-k} < x < ${c+k}`,hint:`It's geometric with $r = \\dfrac{x ${sg(-c)}}{${k}}$; need $|r| < 1$.`,sol:[`$|x ${sg(-c)}| < ${k} \\Rightarrow ${c-k} < x < ${c+k}$.`]}}
+ ]},
+ {id:"ptest",title:"Integral, p-Series & Comparison Tests",idea:"<b>p-series</b> $\\sum\\dfrac{1}{n^p}$ converges iff $p > 1$. <b>Integral test</b>: $\\sum f(n)$ and $\\int_1^\\infty f$ behave alike (for positive decreasing $f$). <b>Comparison</b>: compare with a known series — for limit comparison, use the dominant terms.",
+  lesson:{steps:[["\\displaystyle\\sum\\dfrac{1}{n^2 + 3}","Behaves like $\\sum\\dfrac{1}{n^2}$."],["\\dfrac{1}{n^2 + 3} < \\dfrac{1}{n^2}","Smaller than a convergent series."],["\\text{converges}","Direct comparison test."]],warn:"Being smaller than a <b>divergent</b> series proves nothing."},
+  gen:[
+  ()=>{const ps=[["\\sqrt{n}",0.5],["n",1],["n\\sqrt{n}",1.5],["n^2",2],["\\sqrt[3]{n^2}",2/3],["n^{1.01}",1.01],["n^{0.99}",0.99],["n^{\\pi}",Math.PI]];const P_=pick(ps),c=P_[1]>1;return mcQ(`Does $\\displaystyle\\sum_{n=1}^{\\infty}\\dfrac{1}{${P_[0]}}$ converge or diverge?`,CV[c?0:1],[CV[c?1:0]],"Write it as $\\frac{1}{n^p}$: converges iff $p > 1$.",[`$p = ${r4(P_[1])}$: ${c?"converges":"diverges"}.`]);},
+  ()=>{const a=pick([1,2,3]),b=rnd(-3,3),v=(1-b)/a;const ex=`${a===1?"":a}p ${b?sg(b):""}`;return{q:`For which values of $p$ does $\\displaystyle\\sum_{n=1}^{\\infty}\\dfrac{1}{n^{${ex}}}$ converge? (Type like p > 2; use x or p.)`,type:"ineq",ans:{op:">",v},ansTex:`p > ${frac(1-b,a)}`,hint:"A $p$-series converges when its exponent is greater than $1$.",sol:[`$${ex} > 1 \\Rightarrow p > ${frac(1-b,a)}$.`]}},
+  ()=>{const k=rnd(1,9),L=[[`\\dfrac{1}{n^2 + ${k}}`,1],[`\\dfrac{1}{n + ${k}}`,0],[`\\dfrac{1}{\\sqrt{n^3 + ${k}}}`,1],[`\\dfrac{n}{n^3 + ${k}}`,1],[`\\dfrac{n + ${k}}{n^2 + 1}`,0],[`\\dfrac{1}{2^n + ${k}}`,1],[`\\dfrac{\\ln n}{n}`,0],[`\\dfrac{1}{\\sqrt{n} + ${k}}`,0],[`\\dfrac{\\sin^2 n}{n^2}`,1]],V=pick(L);return mcQ(`Does $\\displaystyle\\sum_{n=1}^{\\infty}${V[0]}$ converge or diverge?`,CV[V[1]?0:1],[CV[V[1]?1:0]],"Keep only the dominant terms to find a series to compare with.",[`It behaves like a ${V[1]?"convergent":"divergent"} series, so it ${V[1]?"converges":"diverges"}.`]);},
+  ()=>{const V=pick([["\\int_1^{\\infty}\\dfrac{dx}{x^2}",1,"1","\\sum\\frac{1}{n^2}"],["\\int_1^{\\infty}\\dfrac{dx}{1 + x^2}",Math.PI/4,"\\dfrac{\\pi}{4}","\\sum\\frac{1}{1 + n^2}"],["\\int_2^{\\infty}\\dfrac{dx}{x(\\ln x)^2}",1/Math.log(2),"\\dfrac{1}{\\ln 2}","\\sum\\frac{1}{n(\\ln n)^2}"],["\\int_1^{\\infty}xe^{-x^2}\\,dx",1/(2*Math.E),"\\dfrac{1}{2e}","\\sum ne^{-n^2}"],["\\int_1^{\\infty}\\dfrac{dx}{x^3}",0.5,"\\tfrac12","\\sum\\frac{1}{n^3}"],["\\int_1^{\\infty}e^{-x}\\,dx",1/Math.E,"\\dfrac1e","\\sum e^{-n}"]]);return{q:`To apply the integral test to $${V[3]}$, evaluate $\\displaystyle${V[0]}$.`,type:"number",ans:V[1],ansTex:V[2],hint:"Find the antiderivative and take the limit.",sol:[`$${V[2]}$ (finite, so the series converges).`]}},
+  ()=>{const C=["\\sum\\dfrac{1}{n^2 + 1}","\\sum\\dfrac{1}{n\\sqrt n}","\\sum\\dfrac{1}{3^n}","\\sum\\dfrac{n}{n^3 + 2}","\\sum\\dfrac{1}{n!}"],Dv=["\\sum\\dfrac{1}{\\sqrt n}","\\sum\\dfrac{n}{n + 1}","\\sum\\dfrac{1}{n + 5}","\\sum\\dfrac{1}{\\ln n}","\\sum\\dfrac{2^n}{n}","\\sum\\cos\\dfrac1n"];const c=pick(C),w=Dv.slice().sort(()=>Math.random()-.5).slice(0,3);return mcQ("Which series converges?",`$${c}$`,w.map(x=>`$${x}$`),"Check each one: $n$th-term test, $p$-series, geometric, comparison.",[`$${c}$ converges; the others diverge.`]);}
+ ]},
+ {id:"alt",title:"Alternating Series & the Ratio Test",idea:"<b>Alternating series test</b>: $\\sum(-1)^n b_n$ converges if $b_n$ decreases to $0$; the error after $N$ terms is at most $b_{N+1}$. <b>Ratio test</b>: $L = \\lim\\left|\\dfrac{a_{n+1}}{a_n}\\right|$; $L < 1$ converges (absolutely), $L > 1$ diverges, $L = 1$ inconclusive.",
+  lesson:{steps:[["\\displaystyle\\sum\\dfrac{n}{2^n}","Ratio: $\\dfrac{n + 1}{2^{n+1}}\\cdot\\dfrac{2^n}{n}$."],["\\to \\dfrac12","$L = \\tfrac12 < 1$."],["\\text{converges absolutely}","Ratio test."]],warn:"$\\sum\\frac{(-1)^n}{n}$ converges, but only <b>conditionally</b> — $\\sum\\frac1n$ diverges."},
+  gen:[
+  ()=>{const k=rnd(2,6),p=rnd(1,4),inv=Math.random()<.5;return inv?{q:`Find $L = \\displaystyle\\lim_{n\\to\\infty}\\left|\\dfrac{a_{n+1}}{a_n}\\right|$ for $a_n = \\dfrac{n^{${p}}}{${k}^n}$.`.replace("^{1}",""),type:"number",ans:1/k,ansTex:frac(1,k),hint:"The polynomial part's ratio goes to $1$.",sol:[`$\\left(\\dfrac{n + 1}{n}\\right)^{${p}}\\cdot\\dfrac{1}{${k}} \\to ${frac(1,k)}$.`]}:{q:`Find $L = \\displaystyle\\lim_{n\\to\\infty}\\left|\\dfrac{a_{n+1}}{a_n}\\right|$ for $a_n = \\dfrac{${k}^n}{n^{${p}}}$.`.replace("^{1}",""),type:"number",ans:k,ansTex:`${k}`,hint:"The polynomial part's ratio goes to $1$.",sol:[`$${k}\\cdot\\left(\\dfrac{n}{n + 1}\\right)^{${p}} \\to ${k}$.`]}},
+  ()=>{const k=rnd(2,5),V=pick([[`\\dfrac{${k}^n}{n!}`,0],[`\\dfrac{n!}{${k}^n}`,1],[`\\dfrac{n^2}{${k}^n}`,0],[`\\dfrac{${k}^n}{n^2}`,1],[`\\dfrac{1}{n}`,2],[`\\dfrac{1}{n^2}`,2],[`\\dfrac{(n!)^2}{(2n)!}`,0]]);const K=["Converges","Diverges","The ratio test is inconclusive"];return mcQ(`What does the ratio test say about $\\displaystyle\\sum ${V[0]}$?`,K[V[1]],K.filter((_,i)=>i!==V[1]),"Compute $L$: $< 1$ converges, $> 1$ diverges, $= 1$ inconclusive.",[`$L$ ${V[1]===0?"< 1":V[1]===1?"> 1 (or ∞)":"= 1"}.`]);},
+  ()=>{const ps=[["n^2",2],["n",1],["\\sqrt n",0.5],["n\\sqrt n",1.5],["\\ln n",0.4],["1",0]];const P_=pick(ps);const K=["Converges absolutely","Converges conditionally","Diverges"];const j=P_[1]>1?0:P_[1]>0?1:2;return mcQ(`Classify $\\displaystyle\\sum_{n=2}^{\\infty}\\dfrac{(-1)^n}{${P_[0]}}$.`,K[j],K.filter((_,i)=>i!==j),"First test $\\sum|a_n|$. If that diverges, try the alternating series test.",[`$\\sum\\frac{1}{${P_[0]}}$ ${j===0?"converges":"diverges"}; ${j===0?"absolutely convergent.":j===1?"the alternating series test applies, so it converges conditionally.":"the terms don't go to $0$, so it diverges."}`]);},
+  ()=>{const p=rnd(1,3),N=rnd(3,9);return{q:`$\\displaystyle\\sum_{n=1}^{\\infty}\\dfrac{(-1)^{n+1}}{n^{${p}}}$ is approximated by its first $${N}$ terms. By the alternating series error bound, the error is at most what?`.replace("^{1}",""),type:"number",ans:1/(N+1)**p,ansTex:frac(1,(N+1)**p),hint:"The error is at most the first omitted term's size.",sol:[`$b_{${N+1}} = \\dfrac{1}{${N+1}^{${p}}} = ${frac(1,(N+1)**p)}$.`]}},
+  ()=>{const p=rnd(1,3),E=pick([10,100,1000,500,200]);let N=0;while(1/(N+1)**p>=1/E)N++;return{q:`What is the smallest number of terms $N$ of $\\displaystyle\\sum_{n=1}^{\\infty}\\dfrac{(-1)^{n+1}}{n^{${p}}}$ that guarantees an error less than $${frac(1,E)}$?`.replace("^{1}",""),type:"number",ans:N,ansTex:`${N}`,hint:"Need $b_{N+1} = \\dfrac{1}{(N + 1)^p} < $ the tolerance.",sol:[`$(N + 1)^{${p}} > ${E}$: smallest $N + 1 = ${N+1}$, so $N = ${N}$.`]}}
+ ]}
+]},
+/* ===================== Unit 10 B ===================== */
+{id:"ch6",title:"Taylor & Power Series",topics:[
+ {id:"taylor",title:"Taylor Polynomials",idea:"$P_n(x) = \\displaystyle\\sum_{k=0}^{n}\\dfrac{f^{(k)}(a)}{k!}(x - a)^k$. The coefficient of $(x - a)^k$ is $\\dfrac{f^{(k)}(a)}{k!}$.",
+  lesson:{steps:[["f(x) = e^x,\\ a = 0","Every derivative is $e^0 = 1$."],["P_3(x) = 1 + x + \\dfrac{x^2}{2} + \\dfrac{x^3}{6}","Divide by $k!$."],["e^{0.1} \\approx 1.10517","Very close to the true value."]],warn:"Don't forget the $k!$ in the denominators."},
+  gen:[
+  ()=>{const k=nz(-3,3),n=rnd(2,5);return{q:`Find the coefficient of $x^{${n}}$ in the Maclaurin series of $e^{${k===1?"":k===-1?"-":k}x}$.`,type:"number",ans:k**n/fact(n),ansTex:frac(k**n,fact(n)),hint:"$e^u = \\sum\\dfrac{u^n}{n!}$ with $u = kx$.",sol:[`$\\dfrac{${k}^{${n}}}{${n}!} = ${frac(k**n,fact(n))}$.`]}},
+  ()=>{const a=rnd(-2,3),f0=nz(-6,6),f1=nz(-5,5),f2=nz(-6,6),h=pick([0.1,0.2,-0.1,0.5]),v=f0+f1*h+f2/2*h*h;return{q:`$f(${a}) = ${f0}$, $f'(${a}) = ${f1}$, $f''(${a}) = ${f2}$. Use the second-degree Taylor polynomial at $x = ${a}$ to approximate $f(${r4(a+h)})$.`,type:"number",tol:1e-6,ans:r4(v),ansTex:`${r4(v)}`,hint:"$P_2 = f(a) + f'(a)(x - a) + \\dfrac{f''(a)}{2}(x - a)^2$.",sol:[`$${f0} + ${P(f1)}(${h}) + \\dfrac{${f2}}{2}(${h})^2 = ${r4(v)}$.`]}},
+  ()=>{const V=pick([["\\sin x","x-x^3/6","x - \\dfrac{x^3}{6}"],["\\cos x","1-x^2/2","1 - \\dfrac{x^2}{2}"],["e^{x}","1+x+x^2/2+x^3/6","1 + x + \\dfrac{x^2}{2} + \\dfrac{x^3}{6}"],["\\ln(1 + x)","x-x^2/2+x^3/3","x - \\dfrac{x^2}{2} + \\dfrac{x^3}{3}"],["\\dfrac{1}{1 - x}","1+x+x^2+x^3","1 + x + x^2 + x^3"],["\\tan^{-1}x","x-x^3/3","x - \\dfrac{x^3}{3}"],["e^{-x}","1-x+x^2/2-x^3/6","1 - x + \\dfrac{x^2}{2} - \\dfrac{x^3}{6}"]]);return{q:`Write the third-degree Maclaurin polynomial for $${V[0]}$.`,type:"expr",ans:V[1],ansTex:`P_3(x) = ${V[2]}`,hint:"Use the known series and stop at $x^3$ (some terms may be $0$).",sol:[`$${V[2]}$.`]}},
+  ()=>{const n=rnd(2,6),c=nz(-12,12),toD=Math.random()<.5;return toD?{q:`The Maclaurin series of $f$ has $x^{${n}}$-coefficient $${frac(c,fact(n))}$. Find $f^{(${n})}(0)$.`,type:"number",ans:c,ansTex:`${c}`,hint:"Coefficient $= \\dfrac{f^{(n)}(0)}{n!}$.",sol:[`$${frac(c,fact(n))}\\cdot ${n}! = ${c}$.`]}:{q:`$f^{(${n})}(0) = ${c}$. Find the coefficient of $x^{${n}}$ in the Maclaurin series of $f$.`,type:"number",ans:c/fact(n),ansTex:frac(c,fact(n)),hint:"Divide by $n!$.",sol:[`$\\dfrac{${c}}{${fact(n)}} = ${frac(c,fact(n))}$.`]}},
+  ()=>{const n=rnd(1,6),V=pick([["\\ln x","1",(-1)**(n+1)/n,frac((-1)**(n+1),n)],["\\dfrac{1}{x}","1",(-1)**n,`${(-1)**n}`],["\\sqrt{x}","1",[0,0.5,-1/8,1/16,-5/128,7/256,-21/1024][n],frac(Math.round([0,0.5,-1/8,1/16,-5/128,7/256,-21/1024][n]*1024),1024)]]);return{q:`Find the coefficient of $(x - ${V[1]})^{${n}}$ in the Taylor series of $${V[0]}$ about $x = ${V[1]}$.`.replace("^{1}",""),type:"number",ans:V[2],ansTex:V[3],hint:"Find the pattern of $f^{(n)}(1)$, then divide by $n!$.",sol:[`$\\dfrac{f^{(${n})}(1)}{${n}!} = ${V[3]}$.`]}}
+ ]},
+ {id:"error",title:"Lagrange & Alternating Error Bounds",idea:"<b>Lagrange</b>: $|f(x) - P_n(x)| \\le \\dfrac{M}{(n + 1)!}|x - a|^{n+1}$, where $M$ bounds $|f^{(n+1)}|$ between $a$ and $x$. For an alternating series, the error is at most the first omitted term.",
+  lesson:{steps:[["\\sin(0.2) \\approx 0.2 - \\dfrac{0.2^3}{6}","$P_3$ (also $P_4$)."],["|f^{(5)}| \\le 1","All derivatives of $\\sin$ are at most $1$."],["\\text{error} \\le \\dfrac{0.2^5}{5!} \\approx 2.7\\times10^{-6}","Very accurate."]],warn:"The bound uses the $(n + 1)$st derivative and $(n + 1)!$, one step past the polynomial's degree."},
+  gen:[
+  ()=>{const M=rnd(1,10),n=rnd(1,4),d=pick([0.1,0.2,0.5,1]),v=M*d**(n+1)/fact(n+1);return{q:`$|f^{(${n+1})}(x)| \\le ${M}$ on the interval. Find the Lagrange error bound for $P_{${n}}$ centered at $a$, used at a point with $|x - a| = ${d}$.`,type:"number",tol:v*6e-4,ans:v,ansTex:`${sci(v)}`,hint:"$\\dfrac{M}{(n + 1)!}|x - a|^{n+1}$.",sol:[`$\\dfrac{${M}}{${n+1}!}(${d})^{${n+1}} \\approx ${sci(v)}$.`]}},
+  ()=>{const n=rnd(1,4),d=pick([0.1,0.2,0.5]),v=3*d**(n+1)/fact(n+1);return{q:`Use $M = 3$ (since $e^x < 3$ on $[0, 1]$) to bound the error when $P_{${n}}(x)$ for $e^x$ at $0$ approximates $e^{${d}}$.`,type:"number",tol:v*6e-4,ans:v,ansTex:`${sci(v)}`,hint:"$\\dfrac{3}{(n + 1)!}(0.\\ldots)^{n+1}$.",sol:[`$\\dfrac{3(${d})^{${n+1}}}{${n+1}!} \\approx ${sci(v)}$.`]}},
+  ()=>{const n=pick([1,3,5]),d=pick([0.1,0.2,0.5,1]),v=d**(n+2)/fact(n+2);return{q:`$\\sin x$ is approximated by its Maclaurin polynomial of degree $${n}$ (which equals $P_{${n+1}}$). Using Lagrange with $M = 1$ and degree $${n+1}$, bound the error at $x = ${d}$.`,type:"number",tol:v*6e-4,ans:v,ansTex:`${sci(v)}`,hint:`Use $\\dfrac{|x|^{${n+2}}}{${n+2}!}$.`,sol:[`$\\dfrac{${d}^{${n+2}}}{${n+2}!} \\approx ${sci(v)}$.`]}},
+  ()=>{const V=pick([["\\sin(0.1)","0.1 - \\dfrac{0.1^3}{6}","\\dfrac{0.1^5}{120}",1e-5/120],["\\cos(0.2)","1 - \\dfrac{0.2^2}{2}","\\dfrac{0.2^4}{24}",0.0016/24],["e^{-0.1}","1 - 0.1 + \\dfrac{0.01}{2}","\\dfrac{0.1^3}{6}",0.001/6],["\\ln(1.1)","0.1 - \\dfrac{0.01}{2}","\\dfrac{0.1^3}{3}",0.001/3]]);return{q:`$${V[0]} \\approx ${V[1]}$. The series is alternating with decreasing terms. Bound the error.`,type:"number",tol:V[3]*6e-3,ans:V[3],ansTex:`${V[2]} \\approx ${sci(V[3])}`,hint:"The error is at most the next (first omitted) term.",sol:[`Next term: $${V[2]} \\approx ${sci(V[3])}$.`]}},
+  ()=>{const k=rnd(2,6);let n=0;while(3/fact(n+1)>=10**-k)n++;return{q:`What is the smallest degree $n$ for which the Lagrange bound $\\dfrac{3}{(n + 1)!}$ guarantees that $P_n(1)$ approximates $e$ with error less than $10^{-${k}}$?`,type:"number",ans:n,ansTex:`${n}`,hint:"Try $n = 1, 2, 3, \\ldots$ until $\\dfrac{3}{(n + 1)!} < 10^{-k}$.",sol:[`$\\dfrac{3}{${n+1}!} = ${sci(3/fact(n+1))} < 10^{-${k}}$, but $\\dfrac{3}{${n}!}$ is not. So $n = ${n}$.`]}}
+ ]},
+ {id:"radius",title:"Radius & Interval of Convergence",idea:"Use the ratio test to get $|x - a| < R$. Then <b>test each endpoint separately</b> — plug it in and use another test (p-series, alternating series, nth-term).",
+  lesson:{steps:[["\\displaystyle\\sum\\dfrac{x^n}{n}","Ratio: $|x|\\cdot\\dfrac{n}{n + 1} \\to |x|$."],["|x| < 1,\\ R = 1","Radius."],["x = -1:\\ \\text{converges};\\ x = 1:\\ \\text{diverges}","Interval $[-1, 1)$."]],warn:"The ratio test never decides the endpoints — they need their own check."},
+  gen:[
+  ()=>{const k=rnd(2,9),c=rnd(-4,4),V=pick([[`\\dfrac{(x ${sg(-c)})^n}{${k}^n}`,k],[`\\dfrac{n(x ${sg(-c)})^n}{${k}^n}`,k],[`\\dfrac{(x ${sg(-c)})^n}{n\\cdot ${k}^n}`,k]]);return{q:`Find the radius of convergence of $\\displaystyle\\sum_{n=1}^{\\infty}${V[0]}$.`.replace(/x - 0|x \+ 0/g,"x"),type:"number",ans:V[1],ansTex:`R = ${V[1]}`,hint:"Ratio test: you need $\\dfrac{|x - c|}{k} < 1$.",sol:[`$|x ${sg(-c)}| < ${k}$, so $R = ${k}$.`.replace(/x - 0|x \+ 0/g,"x")]}},
+  ()=>{const k=rnd(2,6),V=pick([[`${k}^nx^n`,1/k,frac(1,k)],[`\\dfrac{${k}^nx^n}{n^2}`,1/k,frac(1,k)],[`\\dfrac{x^{2n}}{${k*k}^n}`,k,`${k}`],[`\\dfrac{(${k}x)^n}{n}`,1/k,frac(1,k)]]);return{q:`Find the radius of convergence of $\\displaystyle\\sum_{n=1}^{\\infty}${V[0]}$.`,type:"number",ans:V[1],ansTex:`R = ${V[2]}`,hint:"Ratio test on the terms; solve for $|x|$.",sol:[`$R = ${V[2]}$.`]}},
+  ()=>{const c=rnd(-4,4),k=rnd(2,5);return{q:`Find the interval of convergence of $\\displaystyle\\sum_{n=1}^{\\infty}\\dfrac{(x ${sg(-c)})^n}{n\\cdot ${k}^n}$. (Type like -2 <= x < 4.)`.replace(/x - 0|x \+ 0/g,"x"),type:"between",ans:{lo:c-k,li:true,hi:c+k,hiI:false},ansTex:`${c-k} \\le x < ${c+k}`,hint:"Radius from the ratio test; at the endpoints you get $\\sum\\frac{(-1)^n}{n}$ and $\\sum\\frac1n$.",sol:[`$R = ${k}$.`,`$x = ${c-k}$: alternating harmonic, converges. $x = ${c+k}$: harmonic, diverges.`]}},
+  ()=>{const c=rnd(-4,4),k=rnd(2,5),V=pick([[`\\dfrac{(x ${sg(-c)})^n}{n^2\\cdot ${k}^n}`,true,true,"both endpoints give convergent $p$-series ($p = 2$)"],[`\\dfrac{(x ${sg(-c)})^n}{${k}^n}`,false,false,"at both endpoints the terms don't go to $0$"],[`\\dfrac{(-1)^n(x ${sg(-c)})^n}{n\\cdot ${k}^n}`,false,true,"right end: alternating harmonic (converges); left end: harmonic (diverges)"]]);return{q:`Find the interval of convergence of $\\displaystyle\\sum_{n=1}^{\\infty}${V[0]}$.`.replace(/x - 0|x \+ 0/g,"x"),type:"between",ans:{lo:c-k,li:V[1],hi:c+k,hiI:V[2]},ansTex:`${c-k} ${V[1]?"\\le":"<"} x ${V[2]?"\\le":"<"} ${c+k}`,hint:"Find $R$, then plug in each endpoint.",sol:[`$R = ${k}$; ${V[3]}.`]}},
+  ()=>{const a=pick([2,3,4]),b=nz(-5,5);return{q:`Find the interval of convergence of $\\displaystyle\\sum_{n=1}^{\\infty}\\dfrac{(${lin(a,-b)})^n}{n}$.`,type:"between",ans:{lo:(b-1)/a,li:true,hi:(b+1)/a,hiI:false},ansTex:`${frac(b-1,a)} \\le x < ${frac(b+1,a)}`,hint:`Need $|${lin(a,-b)}| < 1$; then check the endpoints.`,sol:[`$-1 < ${lin(a,-b)} < 1 \\Rightarrow ${frac(b-1,a)} < x < ${frac(b+1,a)}$.`,"Left end: alternating harmonic (converges); right end: harmonic (diverges)."]}}
+ ]},
+ {id:"mac",title:"Known Maclaurin Series & Manipulation",idea:"$e^x = \\sum\\dfrac{x^n}{n!}$, $\\sin x = \\sum\\dfrac{(-1)^nx^{2n+1}}{(2n + 1)!}$, $\\cos x = \\sum\\dfrac{(-1)^nx^{2n}}{(2n)!}$, $\\dfrac{1}{1 - x} = \\sum x^n$. Substitute, multiply by powers of $x$, differentiate, or integrate term by term.",
+  lesson:{steps:[["e^{x^2}","Substitute $x^2$ into $e^u$."],["1 + x^2 + \\dfrac{x^4}{2!} + \\dfrac{x^6}{3!} + \\cdots","Every power doubles."],["\\text{coefficient of } x^6 = \\tfrac16","Read it off."]],warn:"Substituting $u = kx$ changes every coefficient by $k^n$."},
+  gen:[
+  ()=>{const m=rnd(1,5),V=pick([["e^{x^2}",2*m,1/fact(m),frac(1,fact(m))],["xe^{x}",m+1,1/fact(m),frac(1,fact(m))],["x^2e^{x}",m+2,1/fact(m),frac(1,fact(m))],["\\dfrac{x}{1 - x}",m+1,1,"1"],["\\dfrac{1}{1 - x^2}",2*m,1,"1"]]);return{q:`Find the coefficient of $x^{${V[1]}}$ in the Maclaurin series of $${V[0]}$.`,type:"number",ans:V[2],ansTex:V[3],hint:"Start from a known series and substitute or multiply.",sol:[`$${V[3]}$.`]}},
+  ()=>{const k=nz(-4,4),n=rnd(1,5);return{q:`Find the coefficient of $x^{${n}}$ in the Maclaurin series of $\\dfrac{1}{1 ${k<0?"+":"-"} ${Math.abs(k)===1?"":Math.abs(k)}x}$.`.replace("^{1}",""),type:"number",ans:k**n,ansTex:`${k**n}`,hint:"$\\dfrac{1}{1 - u} = \\sum u^n$ with $u = kx$.",sol:[`$u = ${k}x$: coefficient $${k}^{${n}} = ${k**n}$.`]}},
+  ()=>{const k=rnd(2,5),V=pick([[`\\sum_{n=0}^{\\infty}\\dfrac{${k}^n}{n!}`,Math.exp(k),`e^{${k}}`],["\\sum_{n=0}^{\\infty}\\dfrac{(-1)^n\\pi^{2n}}{(2n)!}",-1,"-1"],["\\sum_{n=1}^{\\infty}\\dfrac{(-1)^{n+1}}{n}",Math.log(2),"\\ln 2"],["\\sum_{n=0}^{\\infty}\\dfrac{(-1)^n}{2n + 1}",Math.PI/4,"\\dfrac{\\pi}{4}"],[`\\sum_{n=0}^{\\infty}\\dfrac{1}{${k}^n}`,k/(k-1),frac(k,k-1)],["\\sum_{n=0}^{\\infty}\\dfrac{(-1)^n(\\pi/2)^{2n+1}}{(2n + 1)!}",1,"1"],[`\\sum_{n=0}^{\\infty}\\dfrac{(-1)^n}{n!}`,1/Math.E,"\\dfrac1e"]]);return{q:`Find the exact sum $\\displaystyle${V[0]}$.`,type:"number",ans:V[1],ansTex:V[2],hint:"Match it to a known Maclaurin series evaluated at a specific $x$.",sol:[`$= ${V[2]}$.`]}},
+  ()=>{const k=rnd(1,4),s=Math.random()<.5,m=rnd(0,3);const n=s?2*m+1:2*m,v=(-1)**m*k**n/fact(n);return{q:`Find the coefficient of $x^{${n}}$ in the Maclaurin series of $${s?"\\sin":"\\cos"}(${k===1?"":k}x)$.`.replace("x^{1}","x").replace("x^{0}","x^0"),type:"number",ans:v,ansTex:frac((-1)**m*k**n,fact(n)),hint:`Substitute $${k===1?"":k}x$ into the ${s?"sine":"cosine"} series.`,sol:[`$\\dfrac{(-1)^{${m}}\\,${k}^{${n}}}{${n}!} = ${frac((-1)**m*k**n,fact(n))}$.`]}},
+  ()=>{const V=pick([()=>{const n=rnd(3,7);return[`x^2e^{x}`,n,n*(n-1),`The $x^{${n}}$ coefficient is $\\frac{1}{${n-2}!}$; multiply by $${n}!$.`]},()=>[`\\sin(x^2)`,6,-120,"$\\sin(x^2) = x^2 - \\frac{x^6}{6} + \\cdots$; $-\\frac16\\cdot 6! = -120$."],()=>[`\\cos(x^2)`,4,-12,"$\\cos(x^2) = 1 - \\frac{x^4}{2} + \\cdots$; $-\\frac12\\cdot 4! = -12$."],()=>[`e^{2x}`,4,16,"Coefficient $\\frac{2^4}{4!}$; times $4!$ gives $16$."],()=>[`\\dfrac{1}{1 - x^3}`,6,720,"$\\frac{1}{1 - x^3} = 1 + x^3 + x^6 + \\cdots$; $1\\cdot 6! = 720$."],()=>[`x\\sin x`,4,-4,"$x\\sin x = x^2 - \\frac{x^4}{6} + \\cdots$; $-\\frac16\\cdot 24 = -4$."]])();return{q:`Find $f^{(${V[1]})}(0)$ for $f(x) = ${V[0]}$.`,type:"number",ans:V[2],ansTex:`${V[2]}`,hint:"Don't differentiate repeatedly — read the coefficient from the series and multiply by $n!$.",sol:[V[3]]}}
+ ]}
+]}
+];
+
+const ALLCH=[["6","Integration Techniques","ch1"],["7","Euler &amp; Logistic","ch2"],["8–9","Arc Length, Parametric &amp; Vectors","ch3"],["9","Polar Calculus","ch4"],["10","Series Convergence Tests","ch5"],["10","Taylor &amp; Power Series","ch6"]];
+const COMING=[];
+
+/* ================= checking ================= */
+const CONST=new Set(["pi","e","E","PI","Infinity"]);
+function pre(s){ return String(s).replace(/(?<![a-z])ln\s*\|([^|]+)\|/g,"log(abs($1))").replace(/°|\^\\circ|deg\b/g,"").replace(/θ/g,"theta").replace(/\barc(sin|cos|tan)\b/g,"a$1").replace(/(?<![a-z])(sin|cos|tan)\^\s*\(?-1\)?/g,"a$1")
+  .replace(/(?<![a-z])ln\s*\(/g,"log(").replace(/(?<![a-z])ln\s*(\d+(?:\.\d+)?|[a-z])\b/g,"log($1)")
+  .replace(/(?<![a-z])(sin|cos|tan|sec|csc|cot)\s*\^\s*(\d+)\s*\(([^()]*)\)/g,"($1($3))^$2").replace(/(?<![a-z])(sin|cos|tan|sec|csc|cot)\s*\^\s*(\d+)\s*(\d*(?:x|theta))\b/g,"($1($3))^$2")
+  .replace(/(?<![a-z])(sin|cos|tan|sec|csc|cot)\s*(\d*(?:x|theta))\b/g,"$1($2)").replace(/(?<![a-z_][a-z_0-9]*)(\d+(?:\.\d+)?|\))\s*(?=(?!(?:or|and)\b)(?!e[-+]?\d)[a-z(√])/gi,"$1*"); }
+function clean(s){ return pre(s).replace(/\|([^|]+)\|/g,"abs($1)").replace(/(^|[^a-z])([a-z])\s*\(/gi,"$1$2*(").replace(/[−–]/g,"-").replace(/×|·/g,"*").replace(/÷/g,"/").replace(/π/g,"pi").replace(/≤|=</g,"<=").replace(/≥|=>/g,">=").replace(/√\s*(\d+(?:\.\d+)?|\([^)]*\)|[a-z])/g,"sqrt($1)").trim(); }
+function val(s){ try{ const r=math.evaluate(s); const v=typeof r==="number"?r:(r&&typeof r.valueOf()==="number"?r.valueOf():NaN); return isFinite(v)?v:NaN; }catch(e){ return NaN; } }
+const close=(a,b)=>Math.abs(a-b)<1e-6*Math.max(1,Math.abs(b));
+function varsOf(node){ const v=new Set(); node.traverse((n,path,parent)=>{ if(n.isSymbolNode&&!(parent&&parent.isFunctionNode&&path==="fn")&&!CONST.has(n.name)&&typeof math[n.name]!=="function") v.add(n.name); }); return [...v]; }
+function evalAt(node,sc){ try{ const r=node.evaluate(sc); const v=typeof r==="number"?r:(r&&typeof r.valueOf()==="number"?r.valueOf():NaN); return isFinite(v)?v:NaN; }catch(e){ return NaN; } }
+function exprEq(student,expected,form){
+  let s=clean(student); if(s.includes("=")) s=s.split("=").pop();
+  let S,E; try{ S=math.parse(s); E=math.parse(expected); }catch(e){ return null; }
+  if(form&&form!=="combined"&&!formOK(S,s,form)) return false;
+  if(form==="combined"){ if(s.includes("(")) return false; const cnt={}; S.traverse((n,path,parent)=>{ if(n.isSymbolNode&&!(parent&&parent.isFunctionNode&&path==="fn")&&!CONST.has(n.name)) cnt[n.name]=(cnt[n.name]||0)+1; }); if(Object.values(cnt).some(c=>c>1)) return false; }
+  const vars=[...new Set([...varsOf(S),...varsOf(E)])]; let t=0;
+  for(let k=0;k<12&&t<6;k++){ const sc={}; vars.forEach(v=>sc[v]=Math.round(Math.random()*4000)/1000+0.15); const a=evalAt(S,sc),b=evalAt(E,sc); if(isNaN(a)||isNaN(b)) continue; t++; if(!close(a,b)) return false; }
+  return t>=3?true:null;
+}
+function lineEq(student,expected,form){
+  const s=clean(student); if(s.split("=").length!==2) return null;
+  const [L,R]=s.split("="); if(!L.trim()||!R.trim()) return null;
+  let S,E; try{ S=math.parse("("+L+")-("+R+")"); const [eL,eR]=expected.split("="); E=math.parse("("+eL+")-("+eR+")"); }catch(e){ return null; }
+  if(form==="si"&&L.replace(/\s/g,"")!=="y") return false;
+  if(form==="std"){ if(s.includes("/")) return false; try{ if(varsOf(math.parse(R)).length) return false; }catch(e){ return null; } }
+  let ratio=null,t=0;
+  for(let k=0;k<14&&t<6;k++){ const sc={x:Math.round((Math.random()*8-4)*1000)/1000+0.31,y:Math.round((Math.random()*8-4)*1000)/1000+0.17}; const a=evalAt(S,sc),b=evalAt(E,sc); if(isNaN(a)||isNaN(b)) continue; t++;
+    if(Math.abs(b)<1e-9){ if(Math.abs(a)>1e-6) return false; continue; } const r=a/b; if(Math.abs(r)<1e-9) return false; if(ratio===null) ratio=r; else if(!close(r,ratio)) return false; }
+  return t>=3?true:null;
+}
+function radOK(input){ const t=clean(input).replace(/\s+/g,""); if(/\/\(?\*?sqrt/.test(t)) return false; const args=[...t.matchAll(/sqrt\(([^)]*)\)/g)].map(m=>m[1]); for(const a of args){ const n=Number(a); if(!Number.isInteger(n)||n<2) return false; if(radParts(n)[0]!==1) return false; } return true; }
+function parseRoots(s){ s=clean(s).replace(/\+\/-|\+-/g,"±").replace(/\b(or|and)\b/gi,",").replace(/;/g,","); const out=[];
+  for(let part of s.split(",")){ part=part.trim(); if(!part) continue; if(part.includes("=")) part=part.split("=").pop().trim();
+    if(part.includes("±")){ const i=part.indexOf("±"), L=part.slice(0,i).trim(), R=part.slice(i+1).trim();
+      if(/^\(/.test(L)&&/\)\s*\/\s*.+$/.test(R)){ const den=R.slice(R.lastIndexOf(")")+1), inner=R.slice(0,R.lastIndexOf(")")), l=L.slice(1)||"0"; out.push(val("("+l+"+("+inner+"))"+den),val("("+l+"-("+inner+"))"+den)); }
+      else { const l=L||"0"; out.push(val(l+"+("+R+")"),val(l+"-("+R+")")); } }
+    else out.push(val(part)); }
+  return out.length&&out.every(v=>!isNaN(v))?out:null; }
+function topTerms(n,out){ while(n.isParenthesisNode) n=n.content; if(n.isOperatorNode&&(n.fn==="add"||n.fn==="subtract")){ n.args.forEach(a=>topTerms(a,out)); } else if(n.isOperatorNode&&n.fn==="unaryMinus"){ topTerms(n.args[0],out); } else out.push(n); return out; }
+function strip(n){ while(n&&n.isParenthesisNode) n=n.content; return n; }
+function isSum(n){ n=strip(n); return n.isOperatorNode&&(n.fn==="add"||n.fn==="subtract"); }
+function factorsOf(n){ n=strip(n); if(n.isOperatorNode&&n.fn==="unaryMinus") return factorsOf(n.args[0]); if(n.isOperatorNode&&n.fn==="multiply") return n.args.flatMap(factorsOf); if(n.isOperatorNode&&n.fn==="pow"&&isSum(n.args[0])) return [strip(n.args[0])]; return [n]; }
+function coeffsX(node){ const ys=[0,1,2,3,4].map(x=>evalAt(node,{x})); if(ys.some(isNaN)) return null; const c=[]; let d=ys.slice(); const fact=[1,1,2,6,24]; const diffs=[];
+  for(let k=0;k<5;k++){ diffs.push(d[0]); d=d.slice(1).map((v,i)=>v-d[i]); }
+  if(Math.abs(diffs[4])>1e-9) return null; // degree <= 3 expected
+  // Newton forward form -> standard coefficients
+  const P=[[1],[0,1],[0,-1,1],[0,2,-3,1]]; const res=[0,0,0,0]; for(let k=0;k<4;k++){ const f=diffs[k]/fact[k]; P[k].forEach((v,i)=>res[i]+=f*v); }
+  return res.map(v=>Math.round(v*1e6)/1e6); }
+function formOK(S,s,form){
+  if(form==="simp"){ if(/\)\s*\^/.test(s)||/\^\s*-|\^\(-/.test(s)) return false; const cnt={}; S.traverse((n,path,parent)=>{ if(n.isSymbolNode&&!(parent&&parent.isFunctionNode&&path==="fn")&&!CONST.has(n.name)) cnt[n.name]=(cnt[n.name]||0)+1; }); return !Object.values(cnt).some(c=>c>1); }
+  if(form==="poly"){ if(s.includes("(")) return false; const degs=topTerms(S,[]).map(t=>{ const a=evalAt(t,{x:1.5}),b=evalAt(t,{x:3}); if(isNaN(a)||Math.abs(a)<1e-12) return null; return Math.round(Math.log(Math.abs(b/a))/Math.log(2)); }); if(degs.some(d=>d===null)) return false; return new Set(degs).size===degs.length; }
+  if(form==="factored"){ const f=factorsOf(S); if(f.length<2||!f.some(isSum)) return false;
+    for(const fa of f){ if(!isSum(fa)) continue; const vs=varsOf(fa); if(vs.length!==1||vs[0]!=="x") continue; const c=coeffsX(fa); if(!c) continue; const g=c.filter(v=>v!==0).reduce((a,b)=>gcd(a,Math.round(b)),0); if(Math.abs(g)>1) return false;
+      const nz_=c.filter(v=>v!==0).length; if(c[2]!==0&&c[3]===0&&c[1]!==0||false){ /* quadratic factor: check if it factors further over integers */ const A=c[2],B=c[1],C=c[0],D=B*B-4*A*C; if(D>=0&&Number.isInteger(Math.sqrt(D))) return false; }
+      if(c[2]!==0&&c[3]===0&&c[1]===0&&c[0]!==0){ const A=c[2],C=c[0],D=-4*A*C; if(D>0&&Number.isInteger(Math.sqrt(D))) return false; } }
+    return true; }
+  if(form==="nofrac") return !s.includes("/");
+  return true; }
+function antiEq(input,expected){ let s=clean(input).replace(/\+\s*[cC]\s*$/,""); if(s.includes("=")) s=s.split("=").pop(); if(!s.trim()) return null;
+  let S,E; try{ S=math.parse(s); E=math.parse(expected); }catch(e){ return null; }
+  const vs=varsOf(S).filter(v=>v!=="x"); if(vs.length) return null;
+  let d0=null, n=0; for(const x of [0.37,0.81,1.29,1.73,2.41,3.07,0.53]){ const p=evalAt(S,{x}), q=evalAt(E,{x}); if(isNaN(q)) continue; if(isNaN(p)) return false; const d=p-q; if(d0===null) d0=d; else if(Math.abs(d-d0)>1e-6*Math.max(1,Math.abs(q))) return false; n++; }
+  return n>=3; }
+function cval(s){ try{ const r=math.evaluate(clean(s).replace(/([0-9)])\s*i\b/g,"$1*i")); if(typeof r==="number") return isFinite(r)?[r,0]:null; if(r&&typeof r.re==="number") return [r.re,r.im]; return null; }catch(e){ return null; } }
+function cList(s){ s=clean(s).replace(/\+\/-|\+-/g,"±").replace(/\b(or|and)\b/gi,",").replace(/;/g,","); const out=[];
+  for(let part of s.split(",")){ part=part.trim(); if(!part) continue; if(part.includes("=")) part=part.split("=").pop().trim();
+    if(part.includes("±")){ const k=part.indexOf("±"), L=part.slice(0,k).trim()||"0", R=part.slice(k+1).trim(); const z1=cval(L+"+("+R+")"), z2=cval(L+"-("+R+")"); if(!z1||!z2) return null; out.push(z1,z2); }
+    else { const z=cval(part); if(!z) return null; out.push(z); } }
+  return out.length?out:null; }
+/* inequalities → list of intervals {lo,li,hi,hiI} */
+function ray(op,v){ return op===">"?{lo:v,li:false,hi:Infinity,hiI:false}:op===">="?{lo:v,li:true,hi:Infinity,hiI:false}:op==="<"?{lo:-Infinity,li:false,hi:v,hiI:false}:{lo:-Infinity,li:false,hi:v,hiI:true}; }
+function parseIneqPart(str){
+  const t=str.replace(/\s+/g,"").split(/(<=|>=|<|>)/); const isV=x=>/^[a-z]$/i.test(x);
+  if(t.length===3){ if(isV(t[0])){ const v=val(t[2]); return isNaN(v)?null:ray(t[1],v); } if(isV(t[2])){ const v=val(t[0]); return isNaN(v)?null:ray(FLIP[t[1]],v); } return null; }
+  if(t.length===5&&isV(t[2])){ const A=val(t[0]),B=val(t[4]); if(isNaN(A)||isNaN(B)) return null; const up=o=>o==="<"||o==="<=";
+    if(up(t[1])&&up(t[3])) return {lo:A,li:t[1]==="<=",hi:B,hiI:t[3]==="<="}; if(!up(t[1])&&!up(t[3])) return {lo:B,li:t[3]===">=",hi:A,hiI:t[1]===">="}; }
+  return null;
+}
+function parseIneq(s){ s=clean(s).toLowerCase(); const out=[];
+  for(const part of s.split(/\bor\b|∪|\|\|/)){ if(!part.trim()) continue;
+    const ands=part.split(/\band\b|,|&&/).filter(x=>x.trim()); let iv={lo:-Infinity,li:false,hi:Infinity,hiI:false};
+    for(const a of ands){ const r=parseIneqPart(a); if(!r) return null; if(r.lo>iv.lo||(r.lo===iv.lo&&!r.li)){ iv.lo=r.lo; iv.li=r.li; } if(r.hi<iv.hi||(r.hi===iv.hi&&!r.hiI)){ iv.hi=r.hi; iv.hiI=r.hiI; } }
+    out.push(iv); }
+  return out.length?out:null; }
+function sameIv(a,b){ const e=(x,y)=>(x===y)||(isFinite(x)&&isFinite(y)&&close(x,y)); return e(a.lo,b.lo)&&e(a.hi,b.hi)&&(!isFinite(a.lo)||a.li===b.li)&&(!isFinite(a.hi)||a.hiI===b.hiI); }
+function check(pr,input){
+  if(pr.type==="mc"){ const m=/^\(?\s*([a-e])\s*[).]?\s*$/i.exec(String(input).trim()); if(!m) return null; return m[1].toUpperCase()===pr.ans; }
+  if(pr.type==="word"){ const w=String(input).toUpperCase().replace(/[^A-Z]/g,""); if(!w) return null; const opts=pr.opts||["SSS","SAS","ASA","AAS","HL","NONE"]; const n=/NONE|NOT|CANNOT|CANT|NEITHER/.test(w)||w==="NO"?"NONE":w; if(!opts.includes(n)) return null; return n===pr.ans; }
+  if(pr.type==="number"){ const v=val(clean(input).split("=").pop()); if(isNaN(v)) return null; if(pr.tol?Math.abs(v-pr.ans)>pr.tol:!close(v,pr.ans)) return false; if(pr.form==="rad"&&!radOK(input)) return false; return true; }
+  if(pr.type==="roots"){ const r=parseRoots(input); if(!r) return null; const u=a=>a.filter((x,i)=>a.findIndex(y=>close(x,y))===i); const su=u(r),eu=u(pr.ans); return su.length===eu.length&&eu.every(x=>su.some(y=>close(x,y))); }
+  if(pr.type==="nsol"){ const w=String(input).toLowerCase(); const k=/inf|many|all|∞/.test(w)?"INF":/none|no |^no$|zero|^0$|parallel/.test(w)?"NONE":/one|^1$|single|unique/.test(w)?"ONE":null; return k===null?null:k===pr.ans; }
+  if(pr.type==="set"){ const v=val(clean(input).split("=").pop()); return isNaN(v)?null:close(v,pr.ans[0]); }
+  if(pr.type==="expr") return exprEq(input,pr.ans,pr.form);
+  if(pr.type==="anti") return antiEq(input,pr.ans);
+  if(pr.type==="line") return lineEq(input,pr.ans,pr.form);
+  if(pr.type==="point"){ const t=clean(input).split("=").pop().trim().replace(/^[(<⟨]/,"").replace(/[)>⟩]$/,""); const parts=t.split(","); if(parts.length!==pr.ans.length) return null; const v=parts.map(val); if(v.some(isNaN)) return null; return v.every((x,k)=>Math.abs(x-pr.ans[k])<1e-6*Math.max(1,Math.abs(pr.ans[k]))+(pr.tol||0)); }
+  if(pr.type==="cplx"){ const z=cval(String(input).split("=").pop()); if(!z) return null; return close(z[0],pr.ans[0])&&close(z[1],pr.ans[1]); }
+  if(pr.type==="croots"){ const zs=cList(input); if(!zs) return null; const u=a=>a.filter((x,k)=>a.findIndex(y=>close(x[0],y[0])&&close(x[1],y[1]))===k); const su=u(zs),eu=u(pr.ans); return su.length===eu.length&&eu.every(x=>su.some(y=>close(x[0],y[0])&&close(x[1],y[1]))); }
+  if(pr.type==="matrix"){ const toks=clean(input).replace(/[\[\]{}()]/g," ").split(/[,;\s]+/).filter(Boolean); if(!toks.length) return null; const v=toks.map(val); if(v.some(isNaN)) return null; if(v.length!==pr.ans.length) return false; return v.every((x,k)=>close(x,pr.ans[k])); }
+  if(pr.type==="yn"){ const w=String(input).trim().toUpperCase(); if(/^(Y|YES|YEAH|IS)/.test(w)) return pr.ans==="YES"; if(/^(N|NO|NOT)/.test(w)) return pr.ans==="NO"; return null; }
+  if(pr.type==="list"){ const parts=clean(input).replace(/[{}]/g,"").split(/,|;|\s+and\s+/).map(x=>x.trim()).filter(Boolean); if(!parts.length) return null; const v=parts.map(val); if(v.some(isNaN)) return null; const u=a=>a.filter((x,i)=>a.findIndex(y=>close(x,y))===i); const su=u(v),eu=u(pr.ans); return su.length===eu.length&&eu.every(x=>su.some(y=>close(x,y))); }
+  const want=pr.type==="ineq"?[ray(pr.ans.op,pr.ans.v)]:pr.type==="between"?[pr.ans]:pr.ans.map(r=>ray(r.op,r.v));
+  const got=parseIneq(input); if(!got) return null;
+  const srt=a=>a.slice().sort((x,y)=>x.lo-y.lo); const g=srt(got),w=srt(want);
+  return g.length===w.length&&g.every((x,i)=>sameIv(x,w[i]));
+}
+function render(el){ if(window.renderMathInElement) renderMathInElement(el,{delimiters:[{left:"$",right:"$",display:false}],throwOnError:false}); }
+
+/* ================= state ================= */
+let ST={cur:"ch1",ch:{}}; try{ Object.assign(ST,JSON.parse(localStorage.getItem("fm-calcbc")||"{}")); }catch(e){}
+const save=()=>{ try{ localStorage.setItem("fm-calcbc",JSON.stringify(ST)); }catch(e){} };
+let CH=null, st=null, T=null, L=1, PR=null, tries=0, done=false, firstTry=true, streak=[];
+function useChapter(id){ CH=CHAPTERS.find(c=>c.id===id)||CHAPTERS[0]; ST.cur=CH.id; ST.ch[CH.id]=ST.ch[CH.id]||{rec:null,level:{},solved:{},learned:{}}; st=ST.ch[CH.id]; save(); }
+
+/* ================= page ================= */
+function chapters(){ const b=$("chapters"); b.innerHTML="";
+  ALLCH.forEach(([n,t,id])=>{ if(id&&CHAPTERS.some(c=>c.id===id)){ const x=document.createElement("button"); x.type="button"; x.className="chap"+(id===CH.id?" on":""); x.innerHTML=`<i>${n}</i>${t}`; x.onclick=()=>{ if(id!==CH.id) openChapter(id,"learn"); }; b.appendChild(x); }
+    else { const x=document.createElement("span"); x.className="chap soon"; x.title="Coming soon"; x.innerHTML=`<i>${n}</i>${t}`; b.appendChild(x); } }); }
+function legend(){ $("legend").innerHTML=""; LEVELS.forEach(l=>{ const d=document.createElement("div"); d.className="lg"; d.style.setProperty("--c",l.c); d.innerHTML=`<b>${l.n} · ${l.name} ${l.zh}</b><span>${l.desc}</span>`; $("legend").appendChild(d); }); }
+function recText(){ $("recText").innerHTML=st.rec?`Suggested starting level for this chapter: <span class="rec">${st.rec} · ${LEVELS[st.rec-1].name}</span> ★ — you can always change it.`:"Answer up to 5 questions and we'll suggest a level for this chapter."; $("placeBtn").textContent=st.rec?"Retake the check":"Take the 5-question check"; }
+function pillsFor(t,cur,onPick){ const w=document.createElement("div"); w.className="pills";
+  LEVELS.forEach(l=>{ const b=document.createElement("button"); b.type="button"; b.className="pill"+(l.n===cur?" on":"")+(st.rec===l.n?" star":""); b.style.setProperty("--c",l.c); const n=st.solved[t.id+l.n]||0; b.innerHTML=`${l.n} ${l.name}`+(n?`<span class="n">✓${n}</span>`:""); b.onclick=()=>onPick(l.n); w.appendChild(b); }); return w; }
+function topics(){ const box=$("topics"); box.innerHTML="";
+  CH.topics.forEach(t=>{ const c=document.createElement("div"); c.className="card topic"; const lvl=st.level[t.id]||st.rec||1;
+    c.innerHTML=`<h2>${t.title}</h2><p class="idea">${t.idea}</p><div class="example"><span class="label">Simplest example</span>${t.lesson.steps.map(s=>`<div class="q">$${s[0]}$</div>`).join("")}</div><span class="label">Practice at level</span>`;
+    c.appendChild(pillsFor(t,lvl,n=>startPractice(t,n)));
+    const go=document.createElement("button"); go.className="btn teal sm"; go.style.alignSelf="flex-start"; go.textContent=`Practice level ${lvl} →`; go.onclick=()=>startPractice(t,lvl); c.appendChild(go); box.appendChild(c); });
+  render(box); }
+function startPractice(t,n){ T=t; L=n; st.level[t.id]=n; save(); streak=[]; $("practice").hidden=false; $("pTitle").textContent=t.title; newProblem(); $("practice").scrollIntoView({behavior:"smooth",block:"start"}); topics(); }
+function levelPills(){ $("pLevels").replaceWith(Object.assign(pillsFor(T,L,n=>{ L=n; st.level[T.id]=n; save(); streak=[]; newProblem(); topics(); }),{id:"pLevels"})); }
+function newProblem(){
+  PR=T.gen[L-1](); tries=0; done=false; firstTry=true;
+  $("pQ").innerHTML=`<span class="label" style="color:${LEVELS[L-1].c}">Level ${L} · ${LEVELS[L-1].name}</span><div>${PR.q}</div>`; render($("pQ"));
+  $("pAns").value=""; $("pAns").disabled=false; $("pPrev").textContent=""; $("pHow").textContent=PR.type==="word"&&PR.opts?"Type one of: "+PR.opts.map(o=>o==="NONE"?"none":o.length>3?o.toLowerCase():o).join(", ")+".":PR.form==="factored"?"Type the factored form, like 2(x - 3)(x + 4).":PR.form==="poly"?"Type the simplified polynomial, like 3x^2 - 5x + 2.":PR.form==="simp"?"Type the simplified expression with positive exponents, like 6x^5 or 3x^2/y^4.":PR.form==="rad"?"Type the simplest radical form, like 5sqrt(2).":PR.form==="si"?"Type it as y = mx + b, like y = -2x + 5.":PR.form==="std"?"Type it as Ax + By = C with whole numbers, like 3x - 2y = 6.":HOW[PR.type]; $("pFb").innerHTML=""; $("pSuggest").innerHTML="";
+  $("pCheck").hidden=false; $("pNext").hidden=true; $("pHint").disabled=false; $("pShow").hidden=true; levelPills(); drawStreak(); $("pAns").focus({preventScroll:true}); }
+function fb(kind,tag,html){ $("pFb").innerHTML=`<div class="fb ${kind}"><span class="tag">${tag}</span>${html}</div>`; render($("pFb")); }
+const solHtml=()=>`<ol class="sol">${PR.sol.map(s=>`<li>${s}</li>`).join("")}</ol>`;
+function finish(correct){ done=true; $("pAns").disabled=true; $("pCheck").hidden=true; $("pNext").hidden=false; $("pShow").hidden=true; $("pHint").disabled=true;
+  if(correct){ st.solved[T.id+L]=(st.solved[T.id+L]||0)+1; save(); }
+  streak.push(correct&&firstTry); if(streak.length>6) streak.shift(); drawStreak(); suggest(); levelPills(); $("pNext").focus({preventScroll:true}); }
+function submit(){ if(done||!PR) return; const v=$("pAns").value.trim(); if(!v) return; const r=check(PR,v);
+  if(r===null){ fb("hint","Try again","I couldn't read that. "+HOW[PR.type]); return; }
+  if(r){ fb("good","Correct"+(firstTry?" on the first try!":""),`$${PR.ansTex}$`+solHtml()); finish(true); return; }
+  tries++; firstTry=false;
+  if(tries===1){ fb("bad","Not yet",PR.hint+" Try again."); $("pShow").hidden=false; }
+  else { fb("bad","Not yet","Here's how it works:"+solHtml()); finish(false); } }
+function drawStreak(){ const s=$("pStreak"); s.innerHTML="Recent: "; streak.forEach(x=>{ const i=document.createElement("i"); i.className=x?"ok":"no"; s.appendChild(i); }); if(!streak.length) s.textContent="Get 3 right on the first try in a row to unlock a suggestion to move up."; }
+function suggest(){ const box=$("pSuggest"); box.innerHTML=""; const last=streak.slice(-3),last2=streak.slice(-2); let to=null,msg="";
+  if(L<5&&last.length===3&&last.every(Boolean)){ to=L+1; msg=`3 in a row on the first try! Ready for <b>Level ${L+1} · ${LEVELS[L].name}</b>?`; }
+  else if(L>1&&last2.length===2&&last2.every(x=>!x)){ to=L-1; msg=`These are tough — that's okay! Practice <b>Level ${L-1} · ${LEVELS[L-2].name}</b> first, then come back stronger.`; }
+  if(!to) return; const d=document.createElement("div"); d.className="suggest"; d.style.setProperty("--c",LEVELS[to-1].c); d.innerHTML=`<span>${msg}</span>`;
+  const b=document.createElement("button"); b.className="btn sm"; b.style.background=LEVELS[to-1].c; b.textContent=to>L?"Move up ↑":"Go to Level "+to; b.onclick=()=>{ L=to; st.level[T.id]=to; save(); streak=[]; newProblem(); topics(); }; d.appendChild(b); box.appendChild(d); }
+$("pCheck").onclick=submit; $("pAns").addEventListener("keydown",e=>{ if(e.key==="Enter"){ e.preventDefault(); done?newProblem():submit(); } });
+$("pNext").onclick=newProblem; $("closeP").onclick=()=>{ $("practice").hidden=true; };
+$("pHint").onclick=()=>{ if(done) return; firstTry=false; fb("hint","Hint",PR.hint); };
+$("pShow").onclick=()=>{ fb("hint","Solution",`$${PR.ansTex}$`+solHtml()); finish(false); };
+$("pAns").addEventListener("input",()=>{ const v=$("pAns").value.trim(),pv=$("pPrev"); if(!v||!window.katex){ pv.textContent=""; return; }
+  try{ let tex; const c=clean(v);
+    if(/<|>/.test(c)) tex=c.replace(/<=/g,"\\le ").replace(/>=/g,"\\ge ").replace(/\bor\b/gi,"\\text{ or }").replace(/\band\b/gi,"\\text{ and }");
+    else tex=c.split("=").map(x=>math.parse(x).toTex({parenthesis:"auto",implicit:"hide"})).join(" = ");
+    pv.innerHTML='<span class="pl">You wrote</span><span class="pm"></span>'; katex.render(tex,pv.querySelector(".pm"),{throwOnError:false}); }catch(e){ pv.textContent=""; } });
+
+/* ---- placement ---- */
+$("placeBtn").onclick=()=>{
+  const PL=[0,1,2,0,1].map((ti,k)=>[CH.topics[ti%CH.topics.length],k+1]); let i=0,res=[],pr;
+  const m=document.createElement("div"); m.className="modal"; m.innerHTML=`<div class="card"><div class="phead"><h2>Where should I start?</h2><button class="btn ghost sm" id="qx">Close</button></div><div class="qprog" id="qp"></div><div class="problem" id="qq"></div><div class="row" id="qr"><input id="qa" type="text" autocomplete="off" placeholder="Your answer" aria-label="Your answer"><button class="btn" id="qc">Check</button><button class="btn ghost" id="qs">I don't know</button></div><div class="howto" id="qh"></div><div id="qf"></div></div>`;
+  document.body.appendChild(m); const q=id=>m.querySelector("#"+id);
+  const prog=()=>{ q("qp").innerHTML=PL.map((_,k)=>`<i class="${k<res.length?(res[k]?"ok":"no"):k===i?"now":""}"></i>`).join(""); };
+  const ask=()=>{ const [t,lv]=PL[i]; pr=t.gen[lv-1](); q("qq").innerHTML=`<span class="label">Question ${i+1} of 5 · Level ${lv}</span><div>${pr.q}</div>`; render(q("qq")); q("qa").value=""; q("qh").textContent=HOW[pr.type]; q("qf").innerHTML=""; prog(); q("qa").focus(); };
+  const end=()=>{ const lvl=res.indexOf(false)===-1?5:res.indexOf(false)+1; st.rec=lvl; save(); recText(); topics(); prog();
+    q("qq").innerHTML=`<span class="label">Result</span><div>Start at <b style="color:${LEVELS[lvl-1].c}">Level ${lvl} · ${LEVELS[lvl-1].name}</b>.</div><div style="font-size:15px;color:var(--muted)">${lvl===5?"You answered every question correctly — go for Competition!":lvl===1?"Foundation builds the base everything else needs. Move up whenever you get 3 in a row.":"You got the first "+(lvl-1)+" level"+(lvl===2?"":"s")+" right. Level "+lvl+" is the right challenge for you."}</div>`;
+    q("qr").hidden=true; q("qh").textContent=""; q("qf").innerHTML=""; const b=document.createElement("button"); b.className="btn teal"; b.textContent="See the topics"; b.onclick=()=>m.remove(); q("qf").appendChild(b); };
+  const answer=r=>{ res.push(r); if(!r){ end(); return; } i++; i>=PL.length?end():ask(); };
+  q("qc").onclick=()=>{ const v=q("qa").value.trim(); if(!v) return; const r=check(pr,v); if(r===null){ q("qf").innerHTML=`<div class="fb hint">I couldn't read that. ${HOW[pr.type]}</div>`; return; } answer(r); };
+  q("qa").addEventListener("keydown",e=>{ if(e.key==="Enter"){ e.preventDefault(); q("qc").click(); } });
+  q("qs").onclick=()=>answer(false); q("qx").onclick=()=>m.remove(); m.addEventListener("click",e=>{ if(e.target===m) m.remove(); });
+  ask(); };
+
+/* ---- learn ---- */
+let LI=0, shown=1, TP=null, tDone=false, tTries=0;
+function road(){ const r=$("road"); r.innerHTML=""; CH.topics.forEach((t,i)=>{ const b=document.createElement("button"); b.type="button"; b.className="stop"+(st.learned[t.id]?" done":"")+(i===LI?" on":""); b.innerHTML=`<i>${st.learned[t.id]?"✓":i+1}</i>${t.title}`; b.onclick=()=>openLesson(i); r.appendChild(b); }); }
+function openLesson(i,scroll){ LI=i; shown=1; tDone=false; tTries=0; TP=null; road(); drawLesson(); if(scroll) $("lesson").scrollIntoView({behavior:"smooth",block:"start"}); }
+function drawLesson(){
+  const t=CH.topics[LI], l=t.lesson, box=$("lesson");
+  box.innerHTML=`<span class="label">Lesson ${LI+1} of ${CH.topics.length}</span><h2>${t.title}</h2><div class="big">${t.idea}</div>${l.fig||""}<span class="label">Simplest example — one step at a time</span><ol class="steps">${l.steps.slice(0,shown).map(s=>`<li><div><div class="m">$${s[0]}$</div><div class="w">${s[1]}</div></div></li>`).join("")}</ol>`;
+  if(shown<l.steps.length){ const b=document.createElement("button"); b.className="btn"; b.style.alignSelf="flex-start"; b.textContent="Next step →"; b.onclick=()=>{ shown++; drawLesson(); }; box.appendChild(b);
+    const s=document.createElement("button"); s.className="btn ghost sm"; s.style.alignSelf="flex-start"; s.textContent="Show all steps"; s.onclick=()=>{ shown=l.steps.length; drawLesson(); }; box.appendChild(s); }
+  else {
+    box.insertAdjacentHTML("beforeend",`<div class="warn"><b>Watch out: </b>${l.warn}</div>`);
+    if(!TP) TP=t.gen[0]();
+    const w=document.createElement("div"); w.className="turn";
+    w.innerHTML=`<span class="label" style="color:var(--gold)">Your turn</span><div class="q">${TP.q}</div><div class="row"><input type="text" id="tAns" autocomplete="off" placeholder="Your answer" aria-label="Your answer"><button class="btn" id="tChk">Check</button><button class="btn ghost" id="tHint">Hint</button></div><div class="howto">${HOW[TP.type]}</div><div id="tFb"></div>`;
+    box.appendChild(w);
+    const nav=document.createElement("div"); nav.className="lnav"; const left=document.createElement("div"); left.className="row";
+    if(LI>0){ const pv=document.createElement("button"); pv.className="btn ghost sm"; pv.textContent="← Previous lesson"; pv.onclick=()=>openLesson(LI-1,true); left.appendChild(pv); }
+    const right=document.createElement("div"); right.className="row"; right.id="tNext"; nav.append(left,right); box.appendChild(nav);
+    const fbx=(k,tag,h)=>{ $("tFb").innerHTML=`<div class="fb ${k}"><span class="tag">${tag}</span>${h}</div>`; render($("tFb")); };
+    const win=()=>{ tDone=true; st.learned[t.id]=true; save(); road(); $("tAns").disabled=true; $("tChk").disabled=true; $("tHint").disabled=true; showNext(); };
+    const go=()=>{ if(tDone) return; const v=$("tAns").value.trim(); if(!v) return; const r=check(TP,v);
+      if(r===null){ fbx("hint","Try again","I couldn't read that. "+HOW[TP.type]); return; }
+      if(r){ fbx("good","Correct — you've got it!",`$${TP.ansTex}$`); win(); return; }
+      tTries++; if(tTries<2) fbx("bad","Not yet",TP.hint+" Try again."); else { fbx("hint","Answer",`$${TP.ansTex}$. Try another one to make sure.`); const a=document.createElement("button"); a.className="btn ghost sm"; a.textContent="Try another"; a.onclick=()=>{ TP=t.gen[0](); tTries=0; drawLesson(); }; $("tFb").appendChild(a); } };
+    $("tChk").onclick=go; $("tAns").addEventListener("keydown",e=>{ if(e.key==="Enter"){ e.preventDefault(); go(); } }); $("tHint").onclick=()=>fbx("hint","Hint",TP.hint);
+    if(st.learned[t.id]) showNext();
+  }
+  render(box);
+}
+function showNext(){ const r=$("tNext"); if(!r) return; r.innerHTML=""; const t=CH.topics[LI];
+  const pr=document.createElement("button"); pr.className="btn ghost sm"; pr.textContent="Practice this topic"; pr.onclick=()=>{ setTab("practice"); startPractice(t,st.level[t.id]||st.rec||1); }; r.appendChild(pr);
+  const n=document.createElement("button"); n.className="btn teal sm";
+  if(LI<CH.topics.length-1){ n.textContent="Next lesson →"; n.onclick=()=>openLesson(LI+1,true); } else { n.textContent="Start practicing →"; n.onclick=()=>{ setTab("practice"); window.scrollTo({top:0,behavior:"smooth"}); }; }
+  r.appendChild(n); }
+function setTab(t){ $("learnView").hidden=t!=="learn"; $("practiceView").hidden=t!=="practice"; $("tabLearn").classList.toggle("on",t==="learn"); $("tabPractice").classList.toggle("on",t==="practice"); try{ history.replaceState(null,"","#"+CH.id+"-"+t); }catch(e){} }
+function openChapter(id,tab){
+  useChapter(id); $("chTitle").textContent="Unit "+ALLCH.find(c=>c[2]===CH.id)[0]+": "+CH.title; $("practice").hidden=true;
+  chapters(); recText(); topics(); const first=CH.topics.findIndex(t=>!st.learned[t.id]); openLesson(first<0?0:first);
+  setTab(tab||(first<0?"practice":"learn")); }
+document.addEventListener("click",e=>{ const d=e.target.closest(".mc > div"); if(!d) return; const card=d.closest(".practice, .turn, .modal .card"); const inp=card&&card.querySelector("input[type=text]"); if(inp&&!inp.disabled){ inp.value=d.querySelector("b").textContent.trim()[0]; inp.focus(); d.parentElement.querySelectorAll("div").forEach(x=>x.classList.toggle("sel",x===d)); } });
+$("tabLearn").onclick=()=>setTab("learn"); $("tabPractice").onclick=()=>setTab("practice");
+window.addEventListener("load",()=>{ legend(); const m=/^#(ch\d+)(?:-(learn|practice))?$/.exec(location.hash); openChapter(m?m[1]:ST.cur,m?m[2]:null); });
+</script>
+</body>
+</html>

@@ -133,7 +133,7 @@ footer{text-align:center;color:var(--faint);font-size:13px;padding:24px}
   <div class="intro">
     <span class="label">AP Calculus AB · Learn &amp; Practice at Your Level</span>
     <h1 id="chTitle">AP Calculus AB</h1>
-    <p>Pick a chapter. First learn each idea from the simplest example, then practice at the level that fits you and move up when you're ready.</p>
+    <p>Pick a unit. First learn each idea from the simplest example, then practice at the level that fits you and move up when you're ready. Taking <b>BC</b>? Do all 8 units here, then add the <a href="calculus-bc-levels.html">BC-only topics</a>.</p>
   </div>
 
   <div class="chapters" id="chapters" aria-label="Chapters"></div>
@@ -201,11 +201,11 @@ function rad(n){ const [k,m]=radParts(n); return m===1?String(k):(k===1?"":k)+"\
 function radTex(c,n){ const [k,m]=radParts(n); const K=c*k; return m===1?String(K):(K===1?"":K)+"\\sqrt{"+m+"}"; }
 const divisors=n=>{n=Math.abs(n);const d=[];for(let i=1;i<=n;i++) if(n%i===0) d.push(i);return d;};
 const LEVELS=[
- {n:1,name:"Foundation",desc:"Review the basics first",c:"var(--l1)"},
- {n:2,name:"Basic",desc:"Textbook examples",c:"var(--l2)"},
- {n:3,name:"Standard",desc:"School test level",c:"var(--l3)"},
- {n:4,name:"Challenge",desc:"Honors / hard SAT",c:"var(--l4)"},
- {n:5,name:"Competition",desc:"MATHCOUNTS / AMC 8–10 style",c:"var(--l5)"}];
+ {n:1,name:"Foundation",zh:"起步",desc:"Review the basics first",c:"var(--l1)"},
+ {n:2,name:"Basic",zh:"基础",desc:"Textbook examples",c:"var(--l2)"},
+ {n:3,name:"Standard",zh:"标准",desc:"School test level",c:"var(--l3)"},
+ {n:4,name:"Challenge",zh:"挑战",desc:"Honors / hard SAT",c:"var(--l4)"},
+ {n:5,name:"Competition",zh:"竞赛",desc:"MATHCOUNTS / AMC 8–10 style",c:"var(--l5)"}];
 const HOW={anti:"Type an antiderivative like x^3/3 + 2x (+ C is optional). Use ln(x), e^x, sin(x).",point:"Type an ordered pair like (3, -2). Vectors can be typed like <3, -2>. Radicals are fine: 2sqrt(3).",cplx:"Type a complex number like 3-2i (fractions are fine).",croots:"List every solution separated by commas, like 2+3i, 2-3i (± is fine: 2±3i).",matrix:"Type the matrix row by row, like [[1, 2], [3, 4]] or 1 2; 3 4.",mc:"Click a choice or type its letter, then press Check.",word:"Type your answer as a word or abbreviation.",roots:"Give every solution, separated by commas: 3, -2. Use sqrt(5) for √5; ± is fine: 2±sqrt(3).",nsol:"Type one, none, or infinitely many.",point:"Type a point like (2, -5).",yn:"Type yes or no.",list:"List the values separated by commas, like -2, 0, 5.",line:"Type an equation like y = 2x + 3 (any correct form works).",number:"Type a number. Fractions like 9/4 are fine.",set:"Type the value, like 4 or x = 4.",expr:"Type an expression like 7x - 1 or (c - b)/a.",
   ineq:"Type like x > 3 or x <= -2 (≤ and ≥ work too).",between:"Type like -2 < x <= 4.",or:"Type like x < -5 or x > 3."};
 const ineqTex=(op,v)=>`x ${OPT[op]} ${v}`;
@@ -424,7 +424,7 @@ const MORE=[
   gen:[
   ()=>{let a,b;do{a=rnd(-3,2);b=rnd(-1,4)}while(b<=a);const cs=[nz(-3,3)*3,rnd(-4,4)*2,rnd(-6,6)];return{q:`Evaluate $\\displaystyle\\int_{${a}}^{${b}} (${ptex(cs)})\\,dx$.`,type:"number",ans:integ(cs,a,b),ansTex:integFrac(cs,a,b),hint:"Find an antiderivative and subtract.",sol:[`$\\left[${antiTex(cs).replace(" + C","")}\\right]_{${a}}^{${b}} = ${integFrac(cs,a,b)}$.`]}},
   ()=>{const k=rnd(1,4),a=rnd(2,6),V=pick([[`\\int_0^{\\pi} ${k===1?"":k}\\sin x\\,dx`,2*k,`${2*k}`],[`\\int_0^{\\pi/2} ${k===1?"":k}\\cos x\\,dx`,k,`${k}`],[`\\int_1^{e^{${k}}} \\dfrac{1}{x}\\,dx`,k,`${k}`],[`\\int_0^{\\ln ${a}} e^{x}\\,dx`,a-1,`${a-1}`],[`\\int_0^{\\pi/4} \\sec^2 x\\,dx`,1,"1"],[`\\int_0^{1} \\dfrac{${k===1?"":k}}{1 + x^2}\\,dx`,k*Math.PI/4,piTex(k,4)]]);return{q:`Evaluate $\\displaystyle${V[0]}$.`,type:"number",ans:V[1],ansTex:V[2],hint:"Use the basic antiderivatives: $\\sin, \\cos, \\ln|x|, e^x, \\tan, \\tan^{-1}$.",sol:[`$${V[2]}$.`]}},
-  ()=>{const V=pick([()=>{const a=rnd(1,4),c=rnd(1,9),x=rnd(1,3);return[`\\int_{${a}}^{x} (t^2 + ${c})\\,dt`,x,x*x+c,"FTC 1: just substitute $x$ into the integrand."]},()=>{const c=rnd(1,5),x=rnd(1,3);return[`\\int_{0}^{x^2} \\sqrt{t + ${c}}\\,dt`,x,Math.sqrt(x*x+c)*2*x,"FTC 1 with the chain rule: $f(x^2)\\cdot 2x$."]},()=>{const x=rnd(1,3);return[`\\int_{x}^{5} t^3\\,dt`,x,-(x**3),"Flip the limits: $-\\int_5^x$, then FTC 1."]},()=>{const x=rnd(1,2);return[`\\int_{1}^{x^3} \\dfrac{1}{t}\\,dt`,x,3/x,"$\\dfrac{1}{x^3}\\cdot 3x^2$."]}])();return{q:`$F(x) = \\displaystyle${V[0]}$. Find $F'(${V[1]})$.`,type:"number",ans:V[2],ansTex:numTex(V[2]),hint:V[3],sol:[`$F'(${V[1]}) = ${numTex(V[2])}$.`]}},
+  ()=>{const V=pick([()=>{const a=rnd(1,4),c=rnd(1,9),x=rnd(1,3);return[`\\int_{${a}}^{x} (t^2 + ${c})\\,dt`,x,x*x+c,"FTC 1: just substitute $x$ into the integrand."]},()=>{const [x,c]=pick([[1,3],[2,5],[1,8],[2,12],[3,7],[3,16],[1,15]]);return[`\\int_{0}^{x^2} \\sqrt{t + ${c}}\\,dt`,x,Math.sqrt(x*x+c)*2*x,"FTC 1 with the chain rule: $f(x^2)\\cdot 2x$."]},()=>{const x=rnd(1,3);return[`\\int_{x}^{5} t^3\\,dt`,x,-(x**3),"Flip the limits: $-\\int_5^x$, then FTC 1."]},()=>{const x=rnd(1,2);return[`\\int_{1}^{x^3} \\dfrac{1}{t}\\,dt`,x,3/x,"$\\dfrac{1}{x^3}\\cdot 3x^2$."]}])();return{q:`$F(x) = \\displaystyle${V[0]}$. Find $F'(${V[1]})$.`,type:"number",ans:V[2],ansTex:numTex(V[2]),hint:V[3],sol:[`$F'(${V[1]}) = ${numTex(V[2])}$.`]}},
   ()=>{const A=nz(-9,9),B=nz(-9,9),m=pick([2,3,-1,-2]),k=rnd(1,4),a=rnd(0,2),b=a+rnd(1,3),c=b+rnd(1,3);const v=m*(A+B)+k*(c-a);return{q:`$\\displaystyle\\int_{${a}}^{${b}} f(x)\\,dx = ${A}$ and $\\displaystyle\\int_{${b}}^{${c}} f(x)\\,dx = ${B}$. Find $\\displaystyle\\int_{${a}}^{${c}} \\big(${m===-1?"-":m}f(x) + ${k}\\big)\\,dx$.`,type:"number",ans:v,ansTex:`${v}`,hint:"Integrals add over adjacent intervals, and constants factor out. $\\int_a^c k\\,dx = k(c - a)$.",sol:[`$${m}(${A} + ${P(B)}) + ${k}(${c-a}) = ${v}$.`]}},
   ()=>{let a,b;do{a=rnd(-3,4);b=rnd(1,7)}while(b<=a||a<=-b);const lo=Math.min(0,a),c=rnd(-3,5);let L=rnd(-4,0),R=rnd(1,6);if(c<=L||c>=R){L=c-rnd(1,3);R=c+rnd(1,4)}const v=((c-L)**2+(R-c)**2)/2;return{q:`Evaluate $\\displaystyle\\int_{${L}}^{${R}} |x ${sg(-c)}|\\,dx$.`.replace("x - 0","x").replace("x + 0","x"),type:"number",ans:v,ansTex:frac((c-L)**2+(R-c)**2,2),hint:`Split at $x = ${c}$ — the graph is two triangles.`,sol:[`Triangles with bases $${c-L}$ and $${R-c}$: $\\dfrac{${(c-L)**2}}{2} + \\dfrac{${(R-c)**2}}{2} = ${frac((c-L)**2+(R-c)**2,2)}$.`]}}
  ]},
@@ -509,7 +509,7 @@ const CONST=new Set(["pi","e","E","PI","Infinity"]);
 function pre(s){ return String(s).replace(/(?<![a-z])ln\s*\|([^|]+)\|/g,"log(abs($1))").replace(/°|\^\\circ|deg\b/g,"").replace(/θ/g,"theta").replace(/\barc(sin|cos|tan)\b/g,"a$1").replace(/(?<![a-z])(sin|cos|tan)\^\s*\(?-1\)?/g,"a$1")
   .replace(/(?<![a-z])ln\s*\(/g,"log(").replace(/(?<![a-z])ln\s*(\d+(?:\.\d+)?|[a-z])\b/g,"log($1)")
   .replace(/(?<![a-z])(sin|cos|tan|sec|csc|cot)\s*\^\s*(\d+)\s*\(([^()]*)\)/g,"($1($3))^$2").replace(/(?<![a-z])(sin|cos|tan|sec|csc|cot)\s*\^\s*(\d+)\s*(\d*(?:x|theta))\b/g,"($1($3))^$2")
-  .replace(/(?<![a-z])(sin|cos|tan|sec|csc|cot)\s*(\d*(?:x|theta))\b/g,"$1($2)"); }
+  .replace(/(?<![a-z])(sin|cos|tan|sec|csc|cot)\s*(\d*(?:x|theta))\b/g,"$1($2)").replace(/(?<![a-z_][a-z_0-9]*)(\d+(?:\.\d+)?|\))\s*(?=(?!(?:or|and)\b)(?!e[-+]?\d)[a-z(√])/gi,"$1*"); }
 function clean(s){ return pre(s).replace(/\|([^|]+)\|/g,"abs($1)").replace(/(^|[^a-z])([a-z])\s*\(/gi,"$1$2*(").replace(/[−–]/g,"-").replace(/×|·/g,"*").replace(/÷/g,"/").replace(/π/g,"pi").replace(/≤|=</g,"<=").replace(/≥|=>/g,">=").replace(/√\s*(\d+(?:\.\d+)?|\([^)]*\)|[a-z])/g,"sqrt($1)").trim(); }
 function val(s){ try{ const r=math.evaluate(s); const v=typeof r==="number"?r:(r&&typeof r.valueOf()==="number"?r.valueOf():NaN); return isFinite(v)?v:NaN; }catch(e){ return NaN; } }
 const close=(a,b)=>Math.abs(a-b)<1e-6*Math.max(1,Math.abs(b));
@@ -623,7 +623,7 @@ function useChapter(id){ CH=CHAPTERS.find(c=>c.id===id)||CHAPTERS[0]; ST.cur=CH.
 function chapters(){ const b=$("chapters"); b.innerHTML="";
   ALLCH.forEach(([n,t,id])=>{ if(id&&CHAPTERS.some(c=>c.id===id)){ const x=document.createElement("button"); x.type="button"; x.className="chap"+(id===CH.id?" on":""); x.innerHTML=`<i>${n}</i>${t}`; x.onclick=()=>{ if(id!==CH.id) openChapter(id,"learn"); }; b.appendChild(x); }
     else { const x=document.createElement("span"); x.className="chap soon"; x.title="Coming soon"; x.innerHTML=`<i>${n}</i>${t}`; b.appendChild(x); } }); }
-function legend(){ $("legend").innerHTML=""; LEVELS.forEach(l=>{ const d=document.createElement("div"); d.className="lg"; d.style.setProperty("--c",l.c); d.innerHTML=`<b>${l.n} · ${l.name}</b><span>${l.desc}</span>`; $("legend").appendChild(d); }); }
+function legend(){ $("legend").innerHTML=""; LEVELS.forEach(l=>{ const d=document.createElement("div"); d.className="lg"; d.style.setProperty("--c",l.c); d.innerHTML=`<b>${l.n} · ${l.name} ${l.zh}</b><span>${l.desc}</span>`; $("legend").appendChild(d); }); }
 function recText(){ $("recText").innerHTML=st.rec?`Suggested starting level for this chapter: <span class="rec">${st.rec} · ${LEVELS[st.rec-1].name}</span> ★ — you can always change it.`:"Answer up to 5 questions and we'll suggest a level for this chapter."; $("placeBtn").textContent=st.rec?"Retake the check":"Take the 5-question check"; }
 function pillsFor(t,cur,onPick){ const w=document.createElement("div"); w.className="pills";
   LEVELS.forEach(l=>{ const b=document.createElement("button"); b.type="button"; b.className="pill"+(l.n===cur?" on":"")+(st.rec===l.n?" star":""); b.style.setProperty("--c",l.c); const n=st.solved[t.id+l.n]||0; b.innerHTML=`${l.n} ${l.name}`+(n?`<span class="n">✓${n}</span>`:""); b.onclick=()=>onPick(l.n); w.appendChild(b); }); return w; }
@@ -719,7 +719,7 @@ function showNext(){ const r=$("tNext"); if(!r) return; r.innerHTML=""; const t=
   r.appendChild(n); }
 function setTab(t){ $("learnView").hidden=t!=="learn"; $("practiceView").hidden=t!=="practice"; $("tabLearn").classList.toggle("on",t==="learn"); $("tabPractice").classList.toggle("on",t==="practice"); try{ history.replaceState(null,"","#"+CH.id+"-"+t); }catch(e){} }
 function openChapter(id,tab){
-  useChapter(id); $("chTitle").textContent="Chapter "+ALLCH.find(c=>c[2]===CH.id)[0]+": "+CH.title; $("practice").hidden=true;
+  useChapter(id); $("chTitle").textContent="Unit "+ALLCH.find(c=>c[2]===CH.id)[0]+": "+CH.title; $("practice").hidden=true;
   chapters(); recText(); topics(); const first=CH.topics.findIndex(t=>!st.learned[t.id]); openLesson(first<0?0:first);
   setTab(tab||(first<0?"practice":"learn")); }
 document.addEventListener("click",e=>{ const d=e.target.closest(".mc > div"); if(!d) return; const card=d.closest(".practice, .turn, .modal .card"); const inp=card&&card.querySelector("input[type=text]"); if(inp&&!inp.disabled){ inp.value=d.querySelector("b").textContent.trim()[0]; inp.focus(); d.parentElement.querySelectorAll("div").forEach(x=>x.classList.toggle("sel",x===d)); } });

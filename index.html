@@ -559,7 +559,8 @@ function pageHome(v){
 function pageGroup(v, group, title, intro){
   v.append(h("div", { class:"wrap" },
     h("div", { class:"page-head" }, h("h1", {}, title), h("p", {}, intro)),
-    ((GROUPS[group] || {}).downloads || []).map(d => h("div", { class:"solve-hero dl-hero", style:"margin:0 0 18px;max-width:none" },
+    (group === "K–8" ? [] : (GROUPS[group] || {}).downloads || []).map(d =>   // Grades 3–8: calendars live inside each grade's course page
+     h("div", { class:"solve-hero dl-hero", style:"margin:0 0 18px;max-width:none" },
       h("span", { class:"ic", "aria-hidden":"true" }, "📅"),
       h("span", { class:"txt" }, h("b", {}, d.title), h("span", {}, d.text)),
       h("span", { class:"dl-btns" },

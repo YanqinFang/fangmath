@@ -97,6 +97,364 @@
     ]
   };
 
+
+  /* ---------- more pictures (chapters 2–13) ---------- */
+  const fig = (inner, h = 90, alt = "figure") => `<svg viewBox="0 0 ${W} ${h}" role="img" aria-label="${alt}">${inner}</svg>`;
+  const T2 = (x, y, t, c = ink, s = 13, a = "middle") => `<text x="${x}" y="${y}" text-anchor="${a}" font-family="Inter,sans-serif" font-size="${s}" font-weight="700" fill="${c}">${t}</text>`;
+  const poly = (pts, f = "#DDF0EE", s = teal) => `<polygon points="${pts.map(p => p.join(",")).join(" ")}" fill="${f}" stroke="${s}" stroke-width="2.5"/>`;
+  const ln = (a, b, c = teal, w = 2.5, d = "") => `<line x1="${a[0]}" y1="${a[1]}" x2="${b[0]}" y2="${b[1]}" stroke="${c}" stroke-width="${w}" ${d ? `stroke-dasharray="${d}"` : ""}/>`;
+  const tick = (a, b, n = 1) => { const mx = (a[0] + b[0]) / 2, my = (a[1] + b[1]) / 2, dx = b[0] - a[0], dy = b[1] - a[1], L = Math.hypot(dx, dy), ux = -dy / L * 6, uy = dx / L * 6, vx = dx / L * 4, vy = dy / L * 4; let s = ""; for (let i = 0; i < n; i++) { const o = (i - (n - 1) / 2); s += `<line x1="${mx + ux + vx * o}" y1="${my + uy + vy * o}" x2="${mx - ux + vx * o}" y2="${my - uy + vy * o}" stroke="${ink}" stroke-width="2"/>`; } return s; };
+  Object.assign(PIC, {
+    venn: fig(`<ellipse cx="115" cy="45" rx="95" ry="40" fill="#DDF0EE" stroke="${teal}" stroke-width="2"/><ellipse cx="85" cy="48" rx="45" ry="24" fill="#FBF1DC" stroke="#C9962B" stroke-width="2"/>${T2(85, 52, "p", "#8A6415")}${T2(178, 50, "q", teal)}`, 90, "p inside q"),
+    trans: (() => { const X = y => 40 + (88 - y) / 86 * 150, L = (y, n, side) => T2(X(y) + side * 13, y + 4, n, ink, 11); return fig(`${ln([10, 25], [220, 25], ink, 2)}${ln([10, 65], [220, 65], ink, 2)}${ln([40, 88], [190, 2], red, 2.5)}${L(16, "1", -1)}${L(16, "2", 1)}${L(36, "3", -1)}${L(36, "4", 1)}${L(56, "5", -1)}${L(56, "6", 1)}${L(76, "7", -1)}${L(76, "8", 1)}`, 90, "two parallel lines cut by a transversal"); })(),
+    tri: fig(`${poly([[30, 80], [200, 80], [90, 12]])}${T2(22, 86, "A")}${T2(208, 86, "B")}${T2(90, 9, "C")}`, 92, "triangle ABC"),
+    cong: fig(`${poly([[10, 80], [100, 80], [40, 18]])}${poly([[125, 80], [215, 80], [155, 18]], "#FBF1DC", "#C9962B")}${tick([10, 80], [100, 80], 1)}${tick([125, 80], [215, 80], 1)}${tick([10, 80], [40, 18], 2)}${tick([125, 80], [155, 18], 2)}${tick([100, 80], [40, 18], 3)}${tick([215, 80], [155, 18], 3)}`, 90, "two congruent triangles with matching tick marks"),
+    iso: fig(`${poly([[55, 82], [175, 82], [115, 10]])}${tick([55, 82], [115, 10], 1)}${tick([175, 82], [115, 10], 1)}<path d="M72,82 A18,18 0 0 0 66,69" fill="none" stroke="${red}" stroke-width="2"/><path d="M158,82 A18,18 0 0 1 164,69" fill="none" stroke="${red}" stroke-width="2"/>`, 90, "isosceles triangle"),
+    mid: fig(`${poly([[20, 82], [210, 82], [90, 10]])}${ln([55, 46], [150, 46], red, 3)}<circle cx="55" cy="46" r="4" fill="${red}"/><circle cx="150" cy="46" r="4" fill="${red}"/>${tick([20, 82], [55, 46], 1)}${tick([55, 46], [90, 10], 1)}${tick([210, 82], [150, 46], 2)}${tick([150, 46], [90, 10], 2)}`, 92, "midsegment of a triangle"),
+    med: fig(`${poly([[20, 82], [210, 82], [90, 10]])}${ln([90, 10], [115, 82], red, 2.5)}${ln([90, 10], [90, 82], "#6A4BD8", 2.5, "5 4")}<rect x="90" y="74" width="8" height="8" fill="none" stroke="#6A4BD8"/>${T2(130, 76, "median", red, 11, "start")}${T2(86, 60, "altitude", "#6A4BD8", 11, "end")}`, 92, "median and altitude"),
+    para: fig(`${poly([[20, 78], [160, 78], [210, 14], [70, 14]])}${ln([20, 78], [210, 14], red, 1.5, "5 4")}${ln([160, 78], [70, 14], red, 1.5, "5 4")}${tick([20, 78], [160, 78], 1)}${tick([70, 14], [210, 14], 1)}${tick([20, 78], [70, 14], 2)}${tick([160, 78], [210, 14], 2)}`, 90, "parallelogram with diagonals"),
+    penta: fig(`${poly([[115, 8], [190, 40], [160, 84], [70, 84], [40, 40]])}${ln([115, 8], [160, 84], red, 1.5, "4 3")}${ln([115, 8], [70, 84], red, 1.5, "4 3")}`, 92, "pentagon split into 3 triangles"),
+    sim: fig(`${poly([[10, 82], [80, 82], [30, 46]])}${poly([[100, 82], [220, 82], [134, 20]], "#FBF1DC", "#C9962B")}${T2(46, 94, "×1", ink, 11)}${T2(160, 94, "×1.7", ink, 11)}`, 98, "two similar triangles"),
+    rt: fig(`${poly([[30, 80], [190, 80], [190, 14]])}<rect x="178" y="68" width="12" height="12" fill="none" stroke="${ink}"/><path d="M64,80 A34,34 0 0 0 62,68" fill="none" stroke="${red}" stroke-width="2"/>${T2(74, 74, "θ", red, 14)}${T2(110, 96, "adjacent", ink, 11)}${T2(198, 52, "opposite", ink, 11, "start")}${T2(96, 40, "hypotenuse", ink, 11)}`, 100, "right triangle with sides named from angle theta"),
+    refl: fig(`${ln([115, 2], [115, 88], red, 2, "5 4")}${poly([[40, 70], [40, 20], [80, 30], [40, 40]])}${poly([[190, 70], [190, 20], [150, 30], [190, 40]], "#FBF1DC", "#C9962B")}${T2(115, 98, "line of reflection", red, 11)}`, 100, "a flag reflected over a line"),
+    circ: fig(`<circle cx="100" cy="48" r="40" fill="#DDF0EE" stroke="${teal}" stroke-width="2.5"/><circle cx="100" cy="48" r="3.5" fill="${ink}"/>${ln([100, 48], [140, 48], red, 2.5)}${ln([72, 20], [128, 76], "#6A4BD8", 2.5)}${ln([60, 8], [200, 8], "#C9962B", 2.5)}${T2(122, 44, "r", red, 12)}${T2(66, 62, "chord", "#6A4BD8", 11)}${T2(210, 12, "tangent", "#8A6415", 11, "end")}`, 96, "circle with radius, chord and tangent"),
+    area: fig(`${poly([[20, 80], [170, 80], [210, 18], [60, 18]])}${ln([60, 18], [60, 80], red, 2, "5 4")}<rect x="60" y="70" width="10" height="10" fill="none" stroke="${red}"/>${T2(95, 96, "base b", ink, 11)}${T2(54, 54, "h", red, 13, "end")}`, 100, "parallelogram with base and height"),
+    solid: fig(`${poly([[20, 40], [100, 40], [100, 86], [20, 86]])}${poly([[20, 40], [45, 18], [125, 18], [100, 40]], "#C8E8E4")}${poly([[100, 40], [125, 18], [125, 64], [100, 86]], "#B5DED9")}<ellipse cx="180" cy="22" rx="30" ry="9" fill="#FBF1DC" stroke="#C9962B" stroke-width="2"/>${ln([150, 22], [150, 78], "#C9962B")}${ln([210, 22], [210, 78], "#C9962B")}<path d="M150,78 A30,9 0 0 0 210,78" fill="#FBF1DC" stroke="#C9962B" stroke-width="2"/>`, 96, "a prism and a cylinder"),
+    tree: fig(`${ln([20, 48], [80, 20], teal, 2)}${ln([20, 48], [80, 76], teal, 2)}${ln([90, 20], [150, 8], "#6A4BD8", 2)}${ln([90, 20], [150, 32], "#6A4BD8", 2)}${ln([90, 76], [150, 64], "#6A4BD8", 2)}${ln([90, 76], [150, 88], "#6A4BD8", 2)}${T2(85, 24, "H", teal, 12)}${T2(85, 80, "T", teal, 12)}${T2(160, 12, "HH", ink, 11, "start")}${T2(160, 36, "HT", ink, 11, "start")}${T2(160, 68, "TH", ink, 11, "start")}${T2(160, 92, "TT", ink, 11, "start")}`, 96, "tree diagram for two coins")
+  });
+
+  WORDS.ch2 = {
+    sub: "Conditional statements, reasoning, and the properties used in proofs",
+    intro: S`In this chapter you learn the <b>language of proof</b>. A proof is a chain of true statements, where every link has a reason. The words below are the tools for building that chain.`,
+    cards: [
+      { k: "venn", t: "Conditional statement", tag: "defined", see: "“If it is raining, then the ground is wet.” A promise: whenever the first part happens, the second part happens.", say: "An <b>if–then</b> statement. The “if” part is the <b>hypothesis</b> $p$; the “then” part is the <b>conclusion</b> $q$.", write: "$p \\to q$, read “if $p$, then $q$.” In the picture, every $p$ is inside $q$." },
+      { t: "Converse, inverse, contrapositive", tag: "defined", see: "“If it's a dog, it has 4 legs.” Flip it: “If it has 4 legs, it's a dog”? Not always — a cat!", say: "<b>Converse</b>: swap ($q \\to p$). <b>Inverse</b>: negate both ($\\sim p \\to \\sim q$). <b>Contrapositive</b>: swap <b>and</b> negate ($\\sim q \\to \\sim p$).", write: "The contrapositive is always true when the original is true." },
+      { t: "Biconditional", tag: "defined", see: "“A triangle is equilateral <b>if and only if</b> all its sides are equal.” Works both ways.", say: "A statement where the conditional <b>and</b> its converse are both true. Every good definition is a biconditional.", write: "$p \\leftrightarrow q$, “$p$ if and only if $q$” (iff)." },
+      { t: "Counterexample", tag: "defined", see: "“All birds can fly.” One penguin is enough to break it.", say: "<b>One</b> example that shows a statement is false.", write: "To disprove: find one counterexample. To prove: one example is never enough." },
+      { t: "Inductive reasoning", tag: "defined", see: "The sun has risen every morning, so it will rise tomorrow. You see a pattern and guess.", say: "Making a <b>conjecture</b> (a guess) from a pattern of examples. It can be wrong!", write: "Pattern → conjecture. Test it, try to break it." },
+      { t: "Deductive reasoning", tag: "defined", see: "A detective: “Only the cook had a key. The door was unlocked with a key. So the cook did it.”", say: "Reaching a conclusion that <b>must</b> be true, using facts, definitions and rules of logic.", write: "Law of Detachment: $p \\to q$ and $p$ is true, so $q$ is true. Law of Syllogism: $p \\to q$, $q \\to r$, so $p \\to r$." },
+      { t: "Theorem & proof", tag: "defined", see: "A courtroom: every claim needs evidence.", say: "A <b>theorem</b> is a statement that has been <b>proven</b>. A <b>proof</b> is a logical argument where each statement has a reason.", write: "Two-column proof: <b>Statements</b> on the left, <b>Reasons</b> on the right." }
+    ],
+    table: S`<table class="wtable"><tr><th>Form</th><th>Example (original: if a figure is a square, then it has 4 sides)</th><th>Always true?</th></tr>
+      <tr><td><b>Converse</b></td><td>If a figure has 4 sides, then it is a square.</td><td>no</td></tr>
+      <tr><td><b>Inverse</b></td><td>If a figure is not a square, then it does not have 4 sides.</td><td>no</td></tr>
+      <tr><td><b>Contrapositive</b></td><td>If a figure does not have 4 sides, then it is not a square.</td><td>yes ✓</td></tr></table>`,
+    tableTitle: "The four forms",
+    vocab: ["conjecture", "inductive reasoning", "counterexample", "conditional", "hypothesis", "conclusion", "converse", "inverse", "contrapositive", "negation", "biconditional", "deductive reasoning", "Law of Detachment", "Law of Syllogism", "theorem", "proof", "two-column proof", "Reflexive Property", "Symmetric Property", "Transitive Property", "Substitution Property"],
+    postTitle: "Properties you'll use as reasons",
+    posts: [
+      ["<b>Reflexive:</b> $a = a$.", "Everything is equal to itself — like your reflection in a mirror."],
+      ["<b>Symmetric:</b> if $a = b$, then $b = a$.", "If Mia is as tall as Leo, then Leo is as tall as Mia."],
+      ["<b>Transitive:</b> if $a = b$ and $b = c$, then $a = c$.", "Mia = Leo in height, Leo = Ava, so Mia = Ava."],
+      ["<b>Substitution:</b> if $a = b$, you can replace $a$ with $b$ anywhere.", "Trade a 5-dollar bill for five 1-dollar bills — same value."],
+      ["<b>Addition / Subtraction / Multiplication / Division Properties:</b> do the same thing to both sides.", "A balance scale stays level if you add the same weight to both pans."],
+      ["<b>Vertical Angles Theorem:</b> vertical angles are congruent.", "Cross two pencils: the opposite angles always match."]
+    ],
+    checks: [
+      ["Write the converse of: “If an angle measures $90^\\circ$, then it is a right angle.” Is it true?", "“If an angle is a right angle, then it measures $90^\\circ$.” True — so this is a good definition (a biconditional)."],
+      ["Give a counterexample: “Every number that ends in 5 is odd.”", "None exists — this one is true! A counterexample must make the hypothesis true and the conclusion false."],
+      ["Is a pattern of 100 examples a proof?", "No. Inductive reasoning makes a conjecture. Only deductive reasoning proves it."],
+      ["Which property: if $AB = CD$, then $CD = AB$?", "The Symmetric Property."]
+    ]
+  };
+
+  WORDS.ch3 = {
+    sub: "Parallel lines, transversals and the angles they make",
+    intro: S`When a line crosses two parallel lines, it makes <b>8 angles</b> — but only <b>two different sizes</b>. Learn the names of the angle pairs by their <b>position</b>, and the rest follows.`,
+    cards: [
+      { t: "Parallel lines", tag: "defined", see: "Railroad tracks. The lines on notebook paper.", say: "Coplanar lines that <b>never intersect</b>.", write: "$\\ell \\parallel m$. Arrows on the lines in a diagram ($>$ and $>$) mean parallel." },
+      { t: "Perpendicular lines", tag: "defined", see: "The corner of a book. A street sign post standing on flat ground.", say: "Lines that meet to form <b>right angles</b>.", write: "$\\ell \\perp m$, with a small square at the corner." },
+      { t: "Skew lines", tag: "defined", see: "A highway bridge passing over a road below: they never meet, but they aren't parallel.", say: "Lines that are <b>not coplanar</b>: they don't meet and aren't parallel.", write: "Only possible in 3D." },
+      { k: "trans", t: "Transversal", tag: "defined", see: "A street crossing two parallel avenues.", say: "A line that crosses two or more lines at different points.", write: "It makes 8 angles, numbered $1$–$8$." },
+      { t: "Corresponding angles", tag: "defined", see: "Same corner at each crossing — like the same seat in two identical rows of a theater.", say: "Angles in the <b>same position</b> at each intersection.", write: "In the picture: $\\angle 1$ and $\\angle 5$. Equal when lines are parallel." },
+      { t: "Alternate interior / exterior", tag: "defined", see: "“Alternate” = opposite sides of the transversal. “Interior” = between the two lines.", say: "<b>Alternate interior</b>: between the lines, on opposite sides. <b>Alternate exterior</b>: outside the lines, on opposite sides.", write: "$\\angle 4$ and $\\angle 5$ are alternate interior; $\\angle 1$ and $\\angle 8$ are alternate exterior." },
+      { t: "Same-side interior", tag: "defined", see: "Two angles between the lines on the same side, like the inside of the letter C.", say: "Interior angles on the <b>same side</b> of the transversal. When lines are parallel they add to $180^\\circ$.", write: "$\\angle 3$ and $\\angle 5$ (also called consecutive interior)." },
+      { t: "Slope of parallel / perpendicular lines", tag: "defined", see: "Two ramps with the same steepness never meet.", say: "Parallel lines have <b>equal slopes</b>. Perpendicular lines have slopes that are <b>negative reciprocals</b>.", write: "$m_1 = m_2$; $m_1 \\cdot m_2 = -1$ (like $2$ and $-\\frac12$)." }
+    ],
+    vocab: ["parallel lines", "perpendicular lines", "skew lines", "parallel planes", "transversal", "corresponding angles", "alternate interior angles", "alternate exterior angles", "same-side interior angles", "slope", "negative reciprocal", "Parallel Postulate"],
+    postTitle: "Postulates & theorems — try them",
+    posts: [
+      ["<b>Corresponding Angles Postulate:</b> parallel lines → corresponding angles are equal.", "Trace one angle on tracing paper and slide it down the transversal: it fits the other exactly."],
+      ["<b>Alternate Interior Angles Theorem:</b> parallel lines → alternate interior angles are equal.", "Look for the letter Z in the picture: its two corners match."],
+      ["<b>Same-Side Interior Angles Theorem:</b> parallel lines → same-side interior angles add to $180^\\circ$.", "Look for the letter C: its two inside corners make a straight angle together."],
+      ["<b>Converses:</b> if any of these angle pairs match, the lines <b>are</b> parallel.", "This is how carpenters check that shelves are parallel."],
+      ["<b>Parallel Postulate:</b> through a point not on a line, there is exactly one parallel line.", "Try drawing two different parallels through the same point — they'd have to be the same line."]
+    ],
+    checks: [
+      ["If $\\angle 1 = 110^\\circ$ and the lines are parallel, how many of the 8 angles are $110^\\circ$?", "Four of them. The other four are $70^\\circ$."],
+      ["A line has slope $\\frac{3}{4}$. What slope is perpendicular to it?", "$-\\frac{4}{3}$ (flip it and change the sign)."],
+      ["Can two lines be neither parallel nor intersecting?", "Yes — skew lines, in 3D (like a bridge over a road)."]
+    ]
+  };
+
+  WORDS.ch4 = {
+    sub: "Triangle angles, congruence and the five shortcuts",
+    intro: S`Two figures are <b>congruent</b> when one can be moved exactly on top of the other: same size and same shape. For triangles you don't need to check all six parts — five <b>shortcuts</b> are enough.`,
+    cards: [
+      { k: "tri", t: "Triangle parts", tag: "defined", see: "A slice of pizza, a roof, a yield sign.", say: "Three <b>sides</b>, three <b>vertices</b>, three <b>angles</b>. The angles always add to $180^\\circ$.", write: "$\\triangle ABC$; side $\\overline{AB}$ is across from $\\angle C$." },
+      { t: "Exterior angle", tag: "defined", see: "Walking along a side, then turning at a corner: the turn is the exterior angle.", say: "An angle formed by one side and the <b>extension</b> of another side.", write: "Exterior angle $=$ sum of the two <b>remote interior</b> angles." },
+      { k: "cong", t: "Congruent figures", tag: "defined", see: "Two cookies from the same cookie cutter.", say: "Figures with <b>all</b> matching sides and angles equal.", write: "$\\triangle ABC \\cong \\triangle DEF$ — letters in matching order. Tick marks show equal sides." },
+      { k: "iso", t: "Isosceles triangle", tag: "defined", see: "A triangle that folds onto itself: a tent from the front.", say: "A triangle with <b>at least two equal sides</b> (legs). The angles opposite them (base angles) are equal.", write: "Legs, base, base angles, vertex angle." },
+      { t: "Equilateral / equiangular", tag: "defined", see: "A yield sign: all sides the same.", say: "All three sides equal ⇔ all three angles equal ($60^\\circ$ each).", write: "Equilateral ⇔ equiangular." },
+      { t: "CPCTC", tag: "defined", see: "Once you know two cookies came from the same cutter, every part matches.", say: "<b>C</b>orresponding <b>P</b>arts of <b>C</b>ongruent <b>T</b>riangles are <b>C</b>ongruent.", write: "Used <b>after</b> proving the triangles congruent." }
+    ],
+    table: S`<table class="wtable"><tr><th>Shortcut</th><th>What you need</th><th>Works?</th></tr>
+      <tr><td><b>SSS</b></td><td>3 pairs of sides</td><td>✓</td></tr><tr><td><b>SAS</b></td><td>2 sides and the angle <b>between</b> them</td><td>✓</td></tr>
+      <tr><td><b>ASA</b></td><td>2 angles and the side <b>between</b> them</td><td>✓</td></tr><tr><td><b>AAS</b></td><td>2 angles and a side not between</td><td>✓</td></tr>
+      <tr><td><b>HL</b></td><td>right triangles: hypotenuse and a leg</td><td>✓</td></tr><tr><td>SSA, AAA</td><td>—</td><td>✗ (not enough)</td></tr></table>`,
+    tableTitle: "The congruence shortcuts",
+    vocab: ["triangle", "vertex", "interior angle", "exterior angle", "remote interior angles", "congruent", "corresponding parts", "SSS", "SAS", "ASA", "AAS", "HL", "CPCTC", "isosceles", "legs", "base angles", "equilateral", "equiangular", "hypotenuse"],
+    postTitle: "Theorems — try them",
+    posts: [
+      ["<b>Triangle Angle Sum:</b> the angles add to $180^\\circ$.", "Tear off the 3 corners of a paper triangle and line them up: they make a straight line."],
+      ["<b>Exterior Angle Theorem:</b> exterior angle $=$ sum of the remote interior angles.", "Place the two far corners from your torn triangle into the outside angle — they fill it."],
+      ["<b>SSS:</b> three sides decide the triangle.", "Make a triangle from 3 straws joined at the ends: it's rigid, it can't change shape."],
+      ["<b>SSA does NOT work.</b>", "Fix one side and an angle, then swing the second side: it can land in two places."],
+      ["<b>Isosceles Triangle Theorem:</b> equal sides → equal base angles.", "Fold an isosceles triangle down the middle: the base angles land on each other."]
+    ],
+    checks: [
+      ["Two angles of a triangle are $50^\\circ$ and $70^\\circ$. What is the exterior angle at the third vertex?", "$50 + 70 = 120^\\circ$ (and the interior angle there is $60^\\circ$)."],
+      ["Why doesn't AAA prove congruence?", "A small and a large equilateral triangle have the same angles but different sizes."],
+      ["If $\\triangle ABC \\cong \\triangle XYZ$, which side matches $\\overline{BC}$?", "$\\overline{YZ}$ — match the letters in order."]
+    ]
+  };
+
+  WORDS.ch5 = {
+    sub: "Special segments in triangles and where they meet",
+    intro: S`Every triangle has special segments: <b>midsegments, bisectors, medians and altitudes</b>. When three of the same kind are drawn, they always meet at one point — a <b>point of concurrency</b>.`,
+    cards: [
+      { k: "mid", t: "Midsegment", tag: "defined", see: "Connect the middles of two sides: a shelf halfway up a triangle-shaped frame.", say: "A segment joining the <b>midpoints</b> of two sides. It is <b>parallel</b> to the third side and <b>half</b> as long.", write: "Midsegment $= \\frac12 \\times$ third side." },
+      { t: "Perpendicular bisector", tag: "defined", see: "The line of points exactly as far from home as from school.", say: "A line that cuts a segment in half at a <b>right angle</b>. Every point on it is <b>equidistant</b> from the endpoints.", write: "Three of them meet at the <b>circumcenter</b>." },
+      { t: "Angle bisector", tag: "defined", see: "Folding an angle exactly in half.", say: "A ray that splits an angle into two equal angles. Every point on it is equidistant from the angle's sides.", write: "Three of them meet at the <b>incenter</b>." },
+      { k: "med", t: "Median & altitude", tag: "defined", see: "Median: balance a triangle on a ruler edge along it. Altitude: the straight-down height.", say: "<b>Median</b>: vertex to the midpoint of the opposite side. <b>Altitude</b>: vertex <b>perpendicular</b> to the opposite side.", write: "Medians meet at the <b>centroid</b>; altitudes at the <b>orthocenter</b>." },
+      { t: "Point of concurrency", tag: "defined", see: "Three roads that all meet at one roundabout.", say: "A point where <b>three or more lines</b> meet.", write: "Circumcenter, incenter, centroid, orthocenter." },
+      { t: "Triangle inequality", tag: "defined", see: "Try to build a triangle from sticks $2$, $3$ and $8$ cm: it won't close.", say: "The sum of any two sides must be <b>greater</b> than the third side.", write: "$a + b > c$, $a + c > b$, $b + c > a$." }
+    ],
+    table: S`<table class="wtable"><tr><th>Point</th><th>Made by</th><th>Special fact</th></tr>
+      <tr><td><b>Circumcenter</b></td><td>perpendicular bisectors</td><td>same distance to all 3 <b>vertices</b> (center of the circle around)</td></tr>
+      <tr><td><b>Incenter</b></td><td>angle bisectors</td><td>same distance to all 3 <b>sides</b> (center of the circle inside)</td></tr>
+      <tr><td><b>Centroid</b></td><td>medians</td><td>balance point; splits each median $2 : 1$</td></tr>
+      <tr><td><b>Orthocenter</b></td><td>altitudes</td><td>can be outside an obtuse triangle</td></tr></table>`,
+    tableTitle: "The four centers",
+    vocab: ["midsegment", "perpendicular bisector", "equidistant", "angle bisector", "median", "altitude", "point of concurrency", "circumcenter", "incenter", "centroid", "orthocenter", "circumscribed circle", "inscribed circle", "triangle inequality"],
+    postTitle: "Theorems — try them",
+    posts: [
+      ["<b>Midsegment Theorem:</b> parallel to the third side and half as long.", "Measure both with a ruler on any triangle you draw."],
+      ["<b>Centroid Theorem:</b> the centroid is $\\frac23$ of the way along each median.", "Cut a cardboard triangle, draw the medians, and balance it on a pencil tip at the centroid."],
+      ["<b>Triangle Inequality:</b> any two sides add to more than the third.", "Try straws of lengths $3, 4, 8$ — then $3, 4, 6$."],
+      ["<b>Biggest side across from biggest angle.</b>", "Open a pair of scissors wider: the gap between the tips grows."]
+    ],
+    checks: [
+      ["A midsegment is parallel to a side of length $14$. How long is it?", "$7$."],
+      ["Can $5$, $6$ and $12$ be the sides of a triangle?", "No: $5 + 6 = 11 < 12$."],
+      ["A town wants a fire station the same distance from three villages. Which center?", "The circumcenter."]
+    ]
+  };
+
+  WORDS.ch6 = {
+    sub: "Polygons, their angles, and the quadrilateral family",
+    intro: S`Every polygon can be cut into <b>triangles</b>, and that one idea gives all the angle formulas. Then you'll meet the <b>quadrilateral family</b>: each shape inherits the properties of the shapes above it.`,
+    cards: [
+      { k: "penta", t: "Polygon", tag: "defined", see: "A stop sign (8 sides), a honeycomb cell (6), a home plate (5).", say: "A closed plane figure made of segments that meet only at their endpoints. <b>Regular</b>: all sides and angles equal.", write: "Named by sides: pentagon (5), hexagon (6), octagon (8), $n$-gon." },
+      { t: "Interior & exterior angle sums", tag: "defined", see: "Walking all the way around any polygon, you turn exactly once around.", say: "Interior angles add to $(n - 2) \\cdot 180^\\circ$. Exterior angles (one per vertex) always add to $360^\\circ$.", write: "Regular $n$-gon: each interior angle $= \\frac{(n - 2) \\cdot 180^\\circ}{n}$." },
+      { k: "para", t: "Parallelogram", tag: "defined", see: "A folding gate; a leaning rectangle.", say: "A quadrilateral with <b>both pairs of opposite sides parallel</b>.", write: "Opposite sides equal, opposite angles equal, diagonals <b>bisect each other</b>." },
+      { t: "Rectangle, rhombus, square", tag: "defined", see: "A door, a diamond, a chessboard square.", say: "<b>Rectangle</b>: parallelogram with 4 right angles (diagonals equal). <b>Rhombus</b>: parallelogram with 4 equal sides (diagonals perpendicular). <b>Square</b>: both.", write: "Square ⊂ rectangle, square ⊂ rhombus." },
+      { t: "Trapezoid", tag: "defined", see: "A lampshade seen from the side; a bucket.", say: "A quadrilateral with <b>exactly one pair</b> of parallel sides (the <b>bases</b>). Isosceles trapezoid: legs equal.", write: "Midsegment $= \\frac{b_1 + b_2}{2}$." },
+      { t: "Kite", tag: "defined", see: "A kite in the sky.", say: "Two pairs of <b>consecutive</b> equal sides. Diagonals are perpendicular.", write: "One pair of opposite angles equal." }
+    ],
+    vocab: ["polygon", "regular polygon", "convex", "concave", "diagonal", "interior angle sum", "exterior angle sum", "parallelogram", "rectangle", "rhombus", "square", "trapezoid", "bases", "legs", "isosceles trapezoid", "kite", "midsegment of a trapezoid"],
+    postTitle: "Theorems — try them",
+    posts: [
+      ["<b>Polygon Angle Sum:</b> $(n - 2) \\cdot 180^\\circ$.", "Draw a hexagon, draw diagonals from one corner: count the triangles ($6 - 2 = 4$)."],
+      ["<b>Exterior Angle Sum:</b> always $360^\\circ$.", "Walk around a pentagon drawn on the playground: you end up facing the way you started."],
+      ["<b>Parallelogram diagonals bisect each other.</b>", "Measure from the crossing point to each corner: opposite pieces are equal."],
+      ["<b>Rhombus diagonals are perpendicular.</b>", "Fold a paper rhombus along both diagonals: the folds make a right angle."]
+    ],
+    checks: [
+      ["What is the sum of the interior angles of an octagon?", "$(8 - 2) \\cdot 180 = 1080^\\circ$."],
+      ["Each exterior angle of a regular polygon is $30^\\circ$. How many sides?", "$360 \\div 30 = 12$."],
+      ["Is every rhombus a square?", "No — a rhombus doesn't need right angles. But every square is a rhombus."]
+    ]
+  };
+
+  WORDS.ch7 = {
+    sub: "Ratios, proportions and similar figures",
+    intro: S`<b>Similar</b> means same shape, maybe a different size — like a photo and its enlargement. Angles stay the same; lengths are all multiplied by the same <b>scale factor</b>.`,
+    cards: [
+      { t: "Ratio & proportion", tag: "defined", see: "A recipe: 2 cups flour for every 1 cup sugar.", say: "A <b>ratio</b> compares two numbers. A <b>proportion</b> says two ratios are equal.", write: "$a : b$ or $\\frac{a}{b}$. In $\\frac{a}{b} = \\frac{c}{d}$, cross products are equal: $ad = bc$." },
+      { k: "sim", t: "Similar figures", tag: "defined", see: "A map and the real town. A model car and a real car.", say: "Corresponding angles are <b>equal</b> and corresponding sides are <b>proportional</b>.", write: "$\\triangle ABC \\sim \\triangle DEF$ — letters in matching order." },
+      { t: "Scale factor", tag: "defined", see: "“1 inch on the map = 10 miles.”", say: "The number $k$ every length is multiplied by.", write: "Lengths × $k$, areas × $k^2$, volumes × $k^3$." },
+      { t: "AA, SSS~, SAS~", tag: "defined", see: "Two triangles with the same angles always look like zoomed copies.", say: "<b>AA</b>: two angles equal. <b>SSS~</b>: all sides in the same ratio. <b>SAS~</b>: two sides in ratio and the angle between them equal.", write: "Proves $\\sim$, not $\\cong$." },
+      { t: "Side-Splitter", tag: "defined", see: "A shelf parallel to the floor in a triangle-shaped bookcase.", say: "A line parallel to one side of a triangle divides the other two sides <b>proportionally</b>.", write: "$\\frac{AD}{DB} = \\frac{AE}{EC}$." },
+      { t: "Geometric mean", tag: "defined", see: "The side of a square with the same area as a rectangle.", say: "The geometric mean of $a$ and $b$ is $\\sqrt{ab}$.", write: "$\\frac{a}{x} = \\frac{x}{b}$, so $x = \\sqrt{ab}$. It appears in right triangles with an altitude." }
+    ],
+    vocab: ["ratio", "proportion", "extremes", "means", "cross products", "similar", "scale factor", "scale drawing", "AA Similarity", "SSS Similarity", "SAS Similarity", "Side-Splitter Theorem", "geometric mean", "indirect measurement"],
+    postTitle: "Theorems — try them",
+    posts: [
+      ["<b>AA Similarity:</b> two equal angles are enough.", "Stand in the sun next to a flagpole: your shadow triangle and the pole's are similar (same sun angle, both right angles)."],
+      ["<b>Area scales by $k^2$.</b>", "Draw a $1 \\times 1$ square and a $2 \\times 2$ square: count the unit squares — $4$, not $2$."],
+      ["<b>Side-Splitter Theorem.</b>", "Draw a triangle, a parallel line across it, and measure the four pieces: check the ratios."]
+    ],
+    checks: [
+      ["A $3$-$4$-$5$ triangle is enlarged by scale factor $3$. What is the new hypotenuse?", "$15$."],
+      ["Two similar rectangles have scale factor $2$. The small one has area $6$. Big one?", "$6 \\times 2^2 = 24$."],
+      ["A $6$ ft person casts a $4$ ft shadow; a tree casts a $20$ ft shadow. How tall is the tree?", "$\\frac{6}{4} = \\frac{h}{20}$, so $h = 30$ ft."]
+    ]
+  };
+
+  WORDS.ch8 = {
+    sub: "The Pythagorean Theorem, special right triangles and trigonometry",
+    intro: S`In a right triangle, the sides have <b>names that depend on where you stand</b>. From angle $\\theta$, one leg is <b>opposite</b> you and one is <b>adjacent</b> (next to you); the longest side is always the <b>hypotenuse</b>.`,
+    cards: [
+      { k: "rt", t: "Hypotenuse, opposite, adjacent", tag: "defined", see: "A ladder against a wall: the ladder is the hypotenuse.", say: "<b>Hypotenuse</b>: the side across from the right angle (longest). <b>Opposite</b>/<b>adjacent</b>: the legs, named from the angle you're using.", write: "Opposite and adjacent swap if you switch to the other acute angle." },
+      { t: "Pythagorean Theorem", tag: "theorem", see: "A baseball diamond: home to second base is a diagonal.", say: "In a right triangle, the squares on the legs add up to the square on the hypotenuse.", write: "$a^2 + b^2 = c^2$. Triples: $3\\text{-}4\\text{-}5$, $5\\text{-}12\\text{-}13$, $8\\text{-}15\\text{-}17$." },
+      { t: "45-45-90 triangle", tag: "defined", see: "Half of a square, cut on the diagonal.", say: "Legs equal; hypotenuse $=$ leg $\\times \\sqrt2$.", write: "$1 : 1 : \\sqrt2$." },
+      { t: "30-60-90 triangle", tag: "defined", see: "Half of an equilateral triangle.", say: "Short leg $s$, long leg $s\\sqrt3$, hypotenuse $2s$.", write: "$1 : \\sqrt3 : 2$." },
+      { t: "Sine, cosine, tangent", tag: "defined", see: "The steepness of a ramp only depends on its angle, not its size.", say: "Ratios of sides in a right triangle, for an acute angle $\\theta$.", write: "$\\sin\\theta = \\frac{\\text{opp}}{\\text{hyp}}$, $\\cos\\theta = \\frac{\\text{adj}}{\\text{hyp}}$, $\\tan\\theta = \\frac{\\text{opp}}{\\text{adj}}$ — SOH-CAH-TOA." },
+      { t: "Angles of elevation & depression", tag: "defined", see: "Looking <b>up</b> at a kite (elevation) or <b>down</b> from a cliff at a boat (depression).", say: "Angles measured from the <b>horizontal</b> line of sight.", write: "The angle of elevation from A to B equals the angle of depression from B to A." }
+    ],
+    vocab: ["right triangle", "legs", "hypotenuse", "Pythagorean Theorem", "Pythagorean triple", "converse of the Pythagorean Theorem", "45-45-90 triangle", "30-60-90 triangle", "opposite side", "adjacent side", "sine", "cosine", "tangent", "inverse trig", "angle of elevation", "angle of depression"],
+    postTitle: "Theorems — try them",
+    posts: [
+      ["<b>Pythagorean Theorem.</b>", "Cut out squares of $3 \\times 3$ and $4 \\times 4$ grid paper: together they cover a $5 \\times 5$ square ($9 + 16 = 25$)."],
+      ["<b>Converse:</b> if $a^2 + b^2 = c^2$, the triangle is right.", "Builders tie knots at $3$, $4$ and $5$ units on a rope to make a perfect corner."],
+      ["<b>Trig ratios depend only on the angle.</b>", "Draw two right triangles with the same $30^\\circ$ angle, one big, one small: opposite ÷ hypotenuse is $0.5$ in both."]
+    ],
+    checks: [
+      ["Legs $6$ and $8$. Hypotenuse?", "$10$ (a $3$-$4$-$5$ triangle doubled)."],
+      ["A 30-60-90 triangle has hypotenuse $10$. Short leg? Long leg?", "Short leg $5$, long leg $5\\sqrt3$."],
+      ["From angle $A$, opposite $= 3$ and hypotenuse $= 5$. What is $\\cos A$?", "Adjacent $= 4$, so $\\cos A = \\frac45$."]
+    ]
+  };
+
+  WORDS.ch9 = {
+    sub: "Moving figures: translations, reflections, rotations and dilations",
+    intro: S`A <b>transformation</b> moves a figure (the <b>preimage</b>) to a new position (the <b>image</b>). Slides, flips and turns keep size and shape — they are <b>rigid motions</b>. A dilation changes the size.`,
+    cards: [
+      { t: "Translation", tag: "defined", see: "Sliding a book across a table without turning it.", say: "Every point moves the <b>same distance in the same direction</b>.", write: "$(x, y) \\to (x + a, y + b)$." },
+      { k: "refl", t: "Reflection", tag: "defined", see: "Your reflection in a mirror; a butterfly's wings.", say: "A flip over a <b>line of reflection</b>. Each point and its image are the same distance from the line.", write: "Over the $x$-axis: $(x, -y)$. Over the $y$-axis: $(-x, y)$. Over $y = x$: $(y, x)$." },
+      { t: "Rotation", tag: "defined", see: "The hands of a clock; a Ferris wheel.", say: "A turn around a <b>center</b> by an angle (counterclockwise is positive).", write: "$90^\\circ$: $(-y, x)$. $180^\\circ$: $(-x, -y)$. $270^\\circ$: $(y, -x)$." },
+      { t: "Dilation", tag: "defined", see: "Zooming a photo in or out.", say: "Resizing from a <b>center</b> by a scale factor $k$. Shape stays, size changes.", write: "From the origin: $(x, y) \\to (kx, ky)$. $k > 1$ enlarges, $0 < k < 1$ shrinks." },
+      { t: "Composition", tag: "defined", see: "Slide, then flip: footprints in the sand.", say: "Doing one transformation <b>after</b> another.", write: "A glide reflection = translation + reflection." },
+      { t: "Symmetry", tag: "defined", see: "A snowflake, a starfish, the letter A.", say: "<b>Line symmetry</b>: a reflection maps the figure onto itself. <b>Rotational symmetry</b>: a rotation less than $360^\\circ$ does.", write: "A regular hexagon has 6 lines of symmetry and rotational symmetry of $60^\\circ$." }
+    ],
+    vocab: ["transformation", "preimage", "image", "prime notation", "rigid motion", "translation", "vector", "reflection", "line of reflection", "rotation", "center of rotation", "angle of rotation", "dilation", "scale factor", "composition", "glide reflection", "line symmetry", "rotational symmetry"],
+    postTitle: "Big ideas — try them",
+    posts: [
+      ["<b>Rigid motions preserve distance and angle measure.</b>", "Trace a triangle, then slide, flip and turn the paper: the triangle never changes size."],
+      ["<b>Two reflections over parallel lines = a translation.</b>", "Flip tracing paper over one line, then another parallel line: the figure just slid."],
+      ["<b>Two reflections over intersecting lines = a rotation.</b>", "Same experiment with crossing lines: the figure turned."]
+    ],
+    checks: [
+      ["Reflect $(3, -2)$ over the $y$-axis.", "$(-3, -2)$."],
+      ["Rotate $(4, 1)$ by $90^\\circ$ counterclockwise about the origin.", "$(-1, 4)$."],
+      ["Is a dilation a rigid motion?", "No — it changes size (unless $k = 1$)."]
+    ]
+  };
+
+  WORDS.ch10 = {
+    sub: "Parts of a circle, angles and arcs, and the circle equation",
+    intro: S`A <b>circle</b> is all the points in a plane at the same distance from a center. Most circle facts come from comparing an angle with the <b>arc</b> it cuts off.`,
+    cards: [
+      { k: "circ", t: "Radius, diameter, chord", tag: "defined", see: "Spokes of a bike wheel (radii). A pizza cut straight across (a chord).", say: "<b>Radius</b>: center to circle. <b>Chord</b>: segment with both ends on the circle. <b>Diameter</b>: a chord through the center.", write: "$d = 2r$." },
+      { t: "Tangent & secant", tag: "defined", see: "A wheel touching the road at one point (tangent). A straw through a donut (secant).", say: "<b>Tangent</b>: a line that touches the circle at exactly one point. <b>Secant</b>: a line that crosses the circle at two points.", write: "A tangent is perpendicular to the radius at the point of tangency." },
+      { t: "Central angle & arc", tag: "defined", see: "A pizza slice: the angle at the center and the crust edge.", say: "A <b>central angle</b> has its vertex at the center. Its <b>arc</b> has the same degree measure.", write: "Minor arc $\\overset{\\frown}{AB}$ (less than $180^\\circ$); major arc $\\overset{\\frown}{ACB}$." },
+      { t: "Inscribed angle", tag: "defined", see: "Watching a stage from a seat on a round theater's wall.", say: "An angle with its vertex <b>on</b> the circle and sides that are chords.", write: "Inscribed angle $= \\frac12$ its intercepted arc." },
+      { t: "Arc length & sector", tag: "defined", see: "The crust length and the size of one pizza slice.", say: "Fractions of the circumference and of the area.", write: "Arc length $= \\frac{\\theta}{360} \\cdot 2\\pi r$; sector area $= \\frac{\\theta}{360} \\cdot \\pi r^2$." },
+      { t: "Equation of a circle", tag: "defined", see: "Every point on a sprinkler's spray edge is the same distance from the sprinkler.", say: "Center $(h, k)$, radius $r$.", write: "$(x - h)^2 + (y - k)^2 = r^2$." }
+    ],
+    vocab: ["circle", "center", "radius", "diameter", "chord", "secant", "tangent", "point of tangency", "central angle", "minor arc", "major arc", "semicircle", "inscribed angle", "intercepted arc", "circumference", "arc length", "sector", "standard form of a circle"],
+    postTitle: "Theorems — try them",
+    posts: [
+      ["<b>Inscribed Angle Theorem:</b> half the arc.", "Draw a central angle and an inscribed angle on the same arc and measure: the inscribed one is half."],
+      ["<b>An angle inscribed in a semicircle is $90^\\circ$.</b>", "Put the corner of a sheet of paper inside a circle with two edges touching the ends of a diameter — the corner lands on the circle."],
+      ["<b>Tangent ⊥ radius.</b>", "Lay a ruler touching a coin: the line from the coin's center to the touching point meets the ruler at a right angle."],
+      ["<b>Two tangents from one point are equal.</b>", "Like the two straps of a backpack hanging from your shoulder."]
+    ],
+    checks: [
+      ["An inscribed angle intercepts a $100^\\circ$ arc. Its measure?", "$50^\\circ$."],
+      ["Center $(2, -1)$, radius $3$. Equation?", "$(x - 2)^2 + (y + 1)^2 = 9$."],
+      ["Arc length of a $90^\\circ$ arc in a circle of radius $4$?", "$\\frac14 \\cdot 8\\pi = 2\\pi$."]
+    ]
+  };
+
+  WORDS.ch11 = {
+    sub: "Area formulas and where they come from",
+    intro: S`<b>Area</b> counts square units inside a figure. Almost every area formula comes from the <b>rectangle</b>: cut a shape apart and rearrange the pieces into a rectangle.`,
+    cards: [
+      { k: "area", t: "Base & height", tag: "defined", see: "The height of a tent is straight up from the floor, not along the slanted side.", say: "The <b>height</b> is always <b>perpendicular</b> to the base.", write: "Mark it with a small right-angle square." },
+      { t: "Triangle & parallelogram", tag: "defined", see: "Cut a parallelogram's corner and slide it over: a rectangle. Two copies of a triangle make a parallelogram.", say: "Parallelogram: $A = bh$. Triangle: half of that.", write: "$A = \\frac12 bh$." },
+      { t: "Trapezoid, rhombus, kite", tag: "defined", see: "Two copies of a trapezoid (one flipped) make a parallelogram.", say: "Trapezoid: average of the bases times the height. Rhombus & kite: half the product of the diagonals.", write: "$A = \\frac12(b_1 + b_2)h$; $A = \\frac12 d_1 d_2$." },
+      { t: "Circle", tag: "defined", see: "Cut a pizza into many thin slices and line them up head-to-tail: almost a rectangle.", say: "The rectangle is half the circumference long and $r$ tall.", write: "$A = \\pi r^2$, $C = 2\\pi r$." },
+      { t: "Regular polygon & apothem", tag: "defined", see: "A hexagon is 6 equal triangles around a center.", say: "The <b>apothem</b> $a$ is the distance from the center to a side.", write: "$A = \\frac12 a P$ ($P$ = perimeter)." },
+      { t: "Shaded regions", tag: "defined", see: "A picture frame: the frame's area is the big rectangle minus the picture.", say: "Find the area of the whole and subtract the parts that aren't shaded.", write: "Whole $-$ part." }
+    ],
+    vocab: ["area", "base", "height", "parallelogram area", "triangle area", "trapezoid area", "diagonal", "circumference", "pi", "circle area", "apothem", "regular polygon area", "composite figure", "shaded region", "ratio of areas"],
+    postTitle: "Where the formulas come from — try them",
+    posts: [
+      ["<b>Parallelogram → rectangle.</b>", "Cut a paper parallelogram along a height and move the triangle to the other side."],
+      ["<b>Two triangles make a parallelogram.</b>", "Cut out two identical triangles and fit them together."],
+      ["<b>Circle → rectangle.</b>", "Cut a paper circle into 16 slices and arrange them in a row, alternating up and down."],
+      ["<b>Similar figures: area ratio $= k^2$.</b>", "Draw a triangle on grid paper, then the same triangle twice as big: count the squares."]
+    ],
+    checks: [
+      ["A trapezoid has bases $6$ and $10$ and height $4$. Area?", "$\\frac12(6 + 10) \\cdot 4 = 32$."],
+      ["Why can't you use the slanted side of a parallelogram as the height?", "The height must be perpendicular to the base; the slanted side is longer than the height."],
+      ["Area of a circle with diameter $10$?", "$r = 5$, so $25\\pi$."]
+    ]
+  };
+
+  WORDS.ch12 = {
+    sub: "Solids: faces, nets, surface area and volume",
+    intro: S`<b>Surface area</b> is the wrapping paper on a solid. <b>Volume</b> is how much it holds. Prisms and cylinders are “stacks” of their base; pyramids and cones are exactly $\\frac13$ of the stack.`,
+    cards: [
+      { k: "solid", t: "Prism & cylinder", tag: "defined", see: "A cereal box (prism), a soup can (cylinder).", say: "Two parallel, congruent <b>bases</b> connected by side faces (or a curved side).", write: "$V = Bh$ ($B$ = area of the base)." },
+      { t: "Pyramid & cone", tag: "defined", see: "The pyramids of Egypt; an ice-cream cone.", say: "One base and a point at the top (the <b>apex</b>).", write: "$V = \\frac13 Bh$." },
+      { t: "Sphere", tag: "defined", see: "A ball, a bubble.", say: "All points in space at distance $r$ from a center.", write: "$V = \\frac43\\pi r^3$, $SA = 4\\pi r^2$." },
+      { t: "Net", tag: "defined", see: "A cereal box cut open and laid flat.", say: "A flat pattern that folds into a solid.", write: "Surface area = total area of the net." },
+      { t: "Height vs. slant height", tag: "defined", see: "A tent: the pole is the height; the slanted fabric is the slant height.", say: "<b>Height</b>: straight up from the base (for volume). <b>Slant height</b>: along the side (for lateral area).", write: "$h$ vs. $\\ell$." },
+      { t: "Faces, edges, vertices", tag: "defined", see: "A die: 6 faces, 12 edges, 8 corners.", say: "Flat surfaces, the segments where they meet, and the corner points.", write: "Euler's formula: $F + V = E + 2$." }
+    ],
+    vocab: ["polyhedron", "face", "edge", "vertex", "net", "cross section", "prism", "cylinder", "pyramid", "cone", "sphere", "hemisphere", "base area", "height", "slant height", "lateral area", "surface area", "volume", "Cavalieri's Principle", "similar solids"],
+    postTitle: "Big ideas — try them",
+    posts: [
+      ["<b>Cone $= \\frac13$ of a cylinder</b> with the same base and height.", "Fill a paper cone with rice and pour it into a matching cylinder: it takes 3 cones."],
+      ["<b>Cavalieri's Principle:</b> same cross-section areas → same volume.", "Push a stack of coins so it leans: same coins, same volume."],
+      ["<b>Euler's formula:</b> $F + V = E + 2$.", "Count on a cube: $6 + 8 = 12 + 2$."],
+      ["<b>Similar solids: volume ratio $= k^3$.</b>", "Build a $2 \\times 2 \\times 2$ cube from unit cubes: it takes $8$."]
+    ],
+    checks: [
+      ["A cylinder has $r = 3$ and $h = 5$. Volume?", "$\\pi \\cdot 9 \\cdot 5 = 45\\pi$."],
+      ["A cone has the same base and height as that cylinder. Volume?", "$15\\pi$."],
+      ["Two similar boxes have scale factor $3$. How many times more does the big one hold?", "$27$ times."]
+    ]
+  };
+
+  WORDS.ch13 = {
+    sub: "Outcomes, counting, and probability",
+    intro: S`<b>Probability</b> measures how likely something is, from $0$ (impossible) to $1$ (certain). Most of the work is <b>counting carefully</b>: how many outcomes are favorable, and how many are possible.`,
+    cards: [
+      { t: "Outcome, event, sample space", tag: "defined", see: "Rolling a die: the outcomes are $1$ to $6$; “rolling an even number” is an event.", say: "<b>Outcome</b>: one possible result. <b>Sample space</b>: all outcomes. <b>Event</b>: a set of outcomes.", write: "$S = \\{1, 2, 3, 4, 5, 6\\}$; $E = \\{2, 4, 6\\}$." },
+      { t: "Probability", tag: "defined", see: "A bag with 3 red and 7 blue marbles.", say: "Favorable outcomes divided by all outcomes (when all are equally likely).", write: "$P(\\text{red}) = \\frac{3}{10}$. Complement: $P(\\text{not } A) = 1 - P(A)$." },
+      { k: "tree", t: "Counting principle", tag: "defined", see: "3 shirts and 4 pants make $12$ outfits.", say: "Multiply the number of choices at each step.", write: "A tree diagram shows every path." },
+      { t: "Permutation", tag: "defined", see: "Choosing a president, vice president and secretary: order matters.", say: "An arrangement where <b>order matters</b>.", write: "$_nP_r = \\frac{n!}{(n - r)!}$." },
+      { t: "Combination", tag: "defined", see: "Choosing 3 friends to invite: order doesn't matter.", say: "A selection where <b>order doesn't matter</b>.", write: "$_nC_r = \\frac{n!}{r!(n - r)!}$." },
+      { t: "Independent & conditional", tag: "defined", see: "Two coin flips (independent). Drawing two cards without putting the first back (dependent).", say: "<b>Independent</b>: one doesn't change the other. <b>Conditional</b>: probability of $B$ given that $A$ happened.", write: "$P(A \\text{ and } B) = P(A) \\cdot P(B)$ if independent; $P(B \\mid A) = \\frac{P(A \\text{ and } B)}{P(A)}$." }
+    ],
+    vocab: ["outcome", "sample space", "event", "probability", "complement", "theoretical probability", "experimental probability", "counting principle", "factorial", "permutation", "combination", "independent events", "dependent events", "mutually exclusive", "conditional probability", "two-way table", "tree diagram"],
+    postTitle: "Big ideas — try them",
+    posts: [
+      ["<b>Experimental → theoretical.</b>", "Flip a coin 10 times, then 100 times: the fraction of heads gets closer to $\\frac12$."],
+      ["<b>Order matters?</b> Permutation. <b>Doesn't?</b> Combination.", "List the ways to pick 2 of A, B, C: AB, AC, BC (3 combinations) vs. AB, BA, AC, CA, BC, CB (6 permutations)."],
+      ["<b>Addition Rule:</b> $P(A \\text{ or } B) = P(A) + P(B) - P(A \\text{ and } B)$.", "Count students who play soccer or basketball: don't count the ones who play both twice."]
+    ],
+    checks: [
+      ["A die is rolled. $P(\\text{greater than } 4)$?", "$\\frac{2}{6} = \\frac13$."],
+      ["How many ways can 5 runners finish 1st, 2nd and 3rd?", "$5 \\cdot 4 \\cdot 3 = 60$ (a permutation)."],
+      ["How many ways to choose 2 toppings from 6?", "$_6C_2 = 15$."]
+    ]
+  };
+
   const KEY = "fm-geo-words";
   const load = () => { try { return JSON.parse(localStorage.getItem(KEY) || "{}"); } catch (e) { return {}; } };
   const save = v => { try { localStorage.setItem(KEY, JSON.stringify(v)); } catch (e) {} };
@@ -115,8 +473,8 @@
         <h4>👀 See it → 🗣 Say it → ✏️ Write it</h4>
         <div class="wgrid">${w.cards.map(c => `<div class="wcard"><h5>${c.t}<em>${c.tag}</em></h5>${PIC[c.k] || ""}
           <div class="wrow"><span class="lb">See it</span>${c.see}</div><div class="wrow"><span class="lb">Say it</span>${c.say}</div><div class="wrow"><span class="lb">Write it</span>${c.write}</div></div>`).join("")}</div>
-        ${w.table ? `<h4>Line, ray or segment?</h4>${w.table}` : ""}
-        <h4>📌 Postulates — try each one with your hands</h4>
+        ${w.table ? `<h4>${w.tableTitle || "Line, ray or segment?"}</h4>${w.table}` : ""}
+        <h4>📌 ${w.postTitle || "Postulates — try each one with your hands"}</h4>
         ${w.posts.map(([t, x]) => `<div class="post"><div class="t">${t}</div><div class="x"><b>Try it: </b>${x}</div></div>`).join("")}
         <h4>📝 Words to know <span style="font-size:14px;font-family:Inter;color:var(--muted);font-weight:500">— tick each word you can explain in your own words</span></h4>
         <div class="vocab">${w.vocab.map(v => `<label><input type="checkbox" value="${v}" ${mine.includes(v) ? "checked" : ""}>${v}</label>`).join("")}</div>

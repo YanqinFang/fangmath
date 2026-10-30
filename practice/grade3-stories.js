@@ -36,7 +36,7 @@
     for (let i = 0; i < t; i++) { out += `<rect x="${x}" y="10" width="8" height="54" rx="2" fill="#FBF1DC" stroke="#C9962B" stroke-width="2"/>`; x += 12; }
     x += 8;
     for (let i = 0; i < o; i++) { out += `<rect x="${x}" y="${56 - (i % 2) * 12}" width="8" height="8" rx="2" fill="#FBE7E5" stroke="#B3261E" stroke-width="1.6"/>`; if (i % 2) x += 12; }
-    const tx = Math.max(8 + h * 62 + 6, 112), ox = Math.max(8 + h * 62 + 14 + t * 12, t ? tx + 84 : tx);
+    const tx = h ? Math.max(8 + h * 62 + 6, 112) : 14, ox = Math.max(8 + h * 62 + 14 + t * 12, t ? tx + 84 : tx);
     return `<svg viewBox="0 0 440 92" role="img" aria-label="${h} boxes, ${t} bags, ${o} loose candies">${out}
       <g font-family="Inter,sans-serif" font-size="12" fill="#5B6474">${h ? `<text x="8" y="84">boxes of 100</text>` : ""}${t ? `<text x="${tx}" y="84">bags of 10</text>` : ""}${o ? `<text x="${ox}" y="84">loose</text>` : ""}</g></svg>`;
   }
@@ -200,6 +200,69 @@
       <tr><td>2</td><td>?</td><td>$6$</td><td>$54$</td><td>divide: $54 \div 6 = 9$</td></tr>
       <tr><td>3</td><td>$9$</td><td>?</td><td>$54$</td><td>divide: $54 \div 9 = 6$</td></tr></table>
       <p style="margin-top:10px"><b>Missing the total? Multiply. Know the total? Divide.</b></p>`
+  };
+
+
+  T["ch3/props"] = {
+    title: "The Egg Carton Trick",
+    scene: S`<p>Grandpa has <b>2 boxes</b>. Each box holds <b>7 egg cartons</b>, and each carton holds <b>5 eggs</b>. How many eggs are there?</p>
+      <p>Leo writes $2 \times 7 \times 5$ and starts: $2 \times 7 = 14$, then $14 \times 5 = \;$… “Ugh, that's hard!”</p>`,
+    think: S`Is there an easier order to multiply $2$, $7$ and $5$? Which two numbers make a really friendly product?`,
+    aha: S`<p>Do $2 \times 5 = 10$ first. Then $10 \times 7 = 70$. Easy! There are $70$ eggs.</p>
+      <p>When every sign is $\times$, you may <b>change the order</b> ($2 \times 5 = 5 \times 2$) and <b>change the grouping</b> — the answer stays the same. Mathematicians call these the <i>commutative</i> and <i>associative</i> properties.</p>
+      <p>Two more you already know: $345 \times 1 = 345$ and $345 \times 0 = 0$.</p>`
+  };
+  T["ch3/dist"] = {
+    title: "The Tile Floor",
+    scene: S`<p>The bathroom floor has <b>7 rows of 8 tiles</b>. Mia forgot $7 \times 8$. But she notices the tiles are two colors: the first <b>5 columns</b> are green and the last <b>3 columns</b> are gold.</p>` + dots(7, 8, 5),
+    think: S`How many tiles are on the left of the red line? How many on the right? Can Mia find $7 \times 8$ without knowing it?`,
+    aha: S`<p>Left: $7 \times 5 = 35$. Right: $7 \times 3 = 21$. All: $35 + 21 = 56$. So $7 \times 8 = 56$.</p>
+      <p>This works for bigger numbers too. $4 \times 13$: break $13$ into $10 + 3$. $4 \times 10 = 40$, $4 \times 3 = 12$, so $4 \times 13 = 52$.</p>
+      <p>And sometimes taking away is easier: $6 \times 19 = 6 \times 20 - 6 = 120 - 6 = 114$.</p>`
+  };
+  T["ch3/unk"] = {
+    title: "The Mystery Box",
+    scene: S`<p>The art room has a box of crayon packs. The label is torn, but it still says <b>8 crayons per pack</b>. Ms. Lee counts <b>56 crayons</b> in all.</p>`,
+    think: S`How many packs are in the box? Before you solve it, can you write the story as a number sentence with a $\square$ for the part you don't know?`,
+    aha: S`<p>“Some packs of $8$ make $56$” → $\square \times 8 = 56$.</p>
+      <p>How many $8$s make $56$? That's $56 \div 8 = 7$. So $\square = 7$ packs.</p>
+      <p>Writing the equation first tells you <b>what is unknown</b>: the number of groups, the size of each group, or the total. Instead of a box, we can use a letter like $n$: $n \times 8 = 56$.</p>`
+  };
+  T["ch3/two"] = {
+    title: "One Step at a Time",
+    scene: S`<p>Ben earns $8$ dollars a week for walking the neighbor's dog. He saves all of it for $6$ weeks. Then he spends $15$ dollars on a kite.</p>`,
+    think: S`The question is “how much is left?” But you can't answer it in one jump. What do you need to know <b>first</b>?`,
+    aha: S`<p><b>Step 1:</b> How much did Ben save? $6 \times 8 = 48$ dollars.</p>
+      <div class="bar"><span style="background:#0F7C7C;flex:33">left: ?</span><span style="background:#C9962B;flex:15">kite 15</span></div>
+      <p><b>Step 2:</b> Take away the kite: $48 - 15 = 33$ dollars left.</p>
+      <p>As one equation with a letter: $n = 6 \times 8 - 15 = 33$. <b>Multiply first</b>, then subtract.</p>`
+  };
+  T["ch3/eo"] = {
+    title: "Partners at Recess",
+    scene: S`<p>Coach says, “Find a partner!” With <b>12</b> kids, everyone has a partner. With <b>13</b> kids, one kid is left out.</p>
+      <p>Then Coach makes teams: <b>3 teams of 5</b>. Now everyone must find a partner from any team.</p>`,
+    think: S`Is $3 \times 5 = 15$ even or odd? What if there were 3 teams of <b>4</b>? Can you guess a rule before you multiply?`,
+    aha: S`<p><b>Even</b> numbers split into pairs ($12$: everyone has a partner). <b>Odd</b> numbers leave one out ($13$).</p>
+      <p>Each team of $4$ pairs up by itself, so $3 \times 4 = 12$ is even. Each team of $5$ has one kid left over: three leftovers make one pair and <b>one</b> more kid, so $3 \times 5 = 15$ is odd.</p>
+      <p><b>Rule:</b> a product is odd <b>only</b> when both numbers are odd. One even number makes the whole product even.</p>`
+  };
+  T["ch3/pat"] = {
+    title: "Number Detectives",
+    scene: S`<p>Zoe writes the 9s facts in a list:</p>
+      <table><tr><td>$9$</td><td>$18$</td><td>$27$</td><td>$36$</td><td>$45$</td><td>$54$</td><td>$63$</td><td>$72$</td><td>$81$</td></tr></table>
+      <p style="margin-top:10px">Then she sees the pattern $6, 12, 18, 24, \dots$ on a wall and wonders what comes next.</p>`,
+    think: S`Add the two digits of each 9s answer. What do you notice? And what is the rule for $6, 12, 18, 24$?`,
+    aha: S`<p>$1 + 8 = 9$, $2 + 7 = 9$, $3 + 6 = 9$, … the digits of every 9s fact (up to $9 \times 10$) add to <b>9</b>! Also, the tens digit goes up by $1$ while the ones digit goes down by $1$ — because adding $9$ is adding $10$ and taking away $1$.</p>
+      <p>For $6, 12, 18, 24$: each jump is $+6$, so next is $30$. These are the 6s facts, so the $10$th number is $10 \times 6 = 60$.</p>
+      <p><b>A detective checks the rule on every step</b>, then uses it to jump far ahead.</p>`
+  };
+  T["ch3/x10"] = {
+    title: "Bags of Ten",
+    scene: S`<p>At the Candy Factory, a small box holds <b>30 candies</b> — that's <b>3 bags of 10</b>. A store orders <b>4 small boxes</b>.</p>` + (() => { let o = ""; for (let g = 0; g < 4; g++) { const x0 = 10 + g * 104; o += `<rect x="${x0}" y="6" width="90" height="70" rx="8" fill="none" stroke="#94A3B8" stroke-width="2" stroke-dasharray="5 4"/>`; for (let k = 0; k < 3; k++) o += `<rect x="${x0 + 18 + k * 20}" y="16" width="12" height="50" rx="3" fill="#FBF1DC" stroke="#C9962B" stroke-width="2"/>`; o += `<text x="${x0 + 45}" y="94" text-anchor="middle" font-family="Inter,sans-serif" font-size="12" fill="#5B6474">box ${g + 1}: 30</text>`; } return `<svg viewBox="0 0 430 102" role="img" aria-label="4 boxes, each with 3 bags of 10">${o}</svg>`; })(),
+    think: S`How many bags of 10 is that? How many candies? Can you use a fact you already know?`,
+    aha: S`<p>Each box is $3$ bags, so $4$ boxes are $4 \times 3 = 12$ bags. $12$ bags of ten is $120$ candies.</p>
+      <p>So $4 \times 30 = 4 \times 3$ <b>tens</b> $= 12$ tens $= 120$. Use the basic fact, then count in tens.</p>
+      <p>If $7 \times 6 = 42$, then $7 \times 60 = 42$ tens $= 420$.</p>`
   };
 
   window.drawStory = function (chId, topic) {

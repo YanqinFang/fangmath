@@ -783,5 +783,8 @@ function openChapter(id,tab){
 $("tabLearn").onclick=()=>setTab("learn"); $("tabPractice").onclick=()=>setTab("practice");
 window.addEventListener("load",()=>{ legend(); const m=/^#(ch\d+)(?:-(learn|practice))?$/.exec(location.hash); openChapter(m?m[1]:ST.cur,m?m[2]:null); });
 </script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="../mistakes.js"></script>
+<script src="fm-levels-bridge.js"></script>
 </body>
 </html>

@@ -1744,7 +1744,17 @@ function notFound(v){ v.append(h("div", { class:"wrap" }, h("div", { class:"page
 
 $("yr").textContent = new Date().getFullYear();
 $("footLinks").append(h("span", {}, h("a", { href:"mailto:" + SITE.email }, SITE.email), SITE.youtube ? [" · ", h("a", { href:SITE.youtube, target:"_blank", rel:"noopener" }, "YouTube")] : null, " · ", h("a", { href:SITE.pma, target:"_blank", rel:"noopener" }, "Parents Meet AI")));
-(async () => { updateAcct(); if (accountsOn) { try { await loadAdult(); } catch (e) {} } route(); })();
+/* practice runs from the "at your level" pages that were not saved yet (see practice/fm-levels-bridge.js) */
+async function flushLevels(){
+  if (!accountsOn || !kid) return;
+  let q; try { q = JSON.parse(localStorage.getItem("fm-lv-pending") || "[]"); } catch (e) { return; }
+  for (const s of q.filter(s => s.kid === kid.token)) {
+    const { error } = await sb.rpc("fm_kid_record", { p_token: kid.token, p_kind: "practice", p_item: s.item, p_title: s.title, p_score: s.right, p_total: s.n, p_detail: { firstTry: s.first, missed: s.missed, level: s.level }, p_seconds: s.sec });
+    if (error) return;
+    try { localStorage.setItem("fm-lv-pending", JSON.stringify(JSON.parse(localStorage.getItem("fm-lv-pending") || "[]").filter(x => x.id !== s.id))); } catch (e) {}
+  }
+}
+(async () => { updateAcct(); if (accountsOn) { try { await loadAdult(); } catch (e) {} } route(); try { await flushLevels(); } catch (e) {} })();
 </script>
 </body>
 </html>

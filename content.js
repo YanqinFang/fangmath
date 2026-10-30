@@ -35,9 +35,15 @@ const SITE = {
 
 /* ---------------- COURSE GROUPS (menu pages) ---------------- */
 const GROUPS = {
-  "K–8":               { key:"k8",         title:"Grades K–8",        intro:"Elementary and middle school math — every idea starts with something you can see, touch or draw.",
+  "K–8":               { key:"k8",         title:"Grades 3–8",        intro:"Elementary and middle school math — every idea starts with something you can see, touch or draw.",
     /* FREE DOWNLOADS: shown at the top of this page. Add more { title, text, file } items to list more PDFs. */
     downloads: [
+      { title:"Grade 3 Math — Daily Practice Calendar (2027–28)",
+        text:"Free · 34 weeks · Monday–Friday · 10 problems a day. Follows the California Common Core standards for Grade 3.",
+        file:"materials/grade3/grade3_math_daily_calendar.pdf", cal:"grade3" },
+      { title:"Grade 4 Math — Daily Practice Calendar (2027–28)",
+        text:"Free · 34 weeks · Monday–Friday · 10 problems a day. Follows the California Common Core standards for Grade 4.",
+        file:"materials/grade4/grade4_math_daily_calendar.pdf", cal:"grade4" },
       { title:"Grade 5 Math — Daily Practice Calendar (2027–28)",
         text:"Free · 34 weeks · Monday–Friday · 10 problems a day. Follows the California Common Core standards for Grade 5.",
         file:"materials/grade5/grade5_math_daily_calendar.pdf", cal:"grade5" },
@@ -100,15 +106,6 @@ const GROUPS = {
 
 /* ---------------- COURSES ---------------- */
 const COURSES = [
-  {
-    id: "k2", group: "K–8", title: "Grades K–2", short: "K–2", color: "#E0873A",
-    blurb: "Counting, place value, adding and subtracting — built with objects and pictures first.",
-    units: [
-      { title: "Counting & Place Value", lessons: [] },
-      { title: "Addition & Subtraction within 100", lessons: [] },
-      { title: "Measurement, Time & Money", lessons: [] },
-    ],
-  },
   {
     id: "g35", group: "K–8", title: "Grades 3–5", short: "3–5", color: "#0F7C7C",
     blurb: "Multiplication, division, fractions and decimals — from area models to fluent methods.",

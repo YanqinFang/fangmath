@@ -71,7 +71,7 @@
 
   function build(body, id) {
     let last = null; try { last = localStorage.getItem("fmcal:last"); } catch (e) {}
-    if (!DATA[id]) id = DATA[last] ? last : "grade5";
+    if (!DATA[id]) id = DATA[last] ? last : "grade3";
     if (location.hash !== "#/calendar/" + id) history.replaceState(null, "", "#/calendar/" + id);
     const C = DATA[id], st = load(id);
     const sessions = [];

@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Prof. Fang Math — Experience first. Symbols second. Understanding always.</title>
-<meta name="description" content="Free K–12 math lessons, notes, worksheets, videos, games, flash cards and a weekly challenge from Prof. Fang Math.">
+<meta name="description" content="Free Grades 3–12 math lessons, notes, worksheets, videos, games, flash cards and a weekly challenge from Prof. Fang Math.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -362,7 +362,7 @@
   <a class="brand" href="#/" aria-label="Prof. Fang Math — home">Prof. Fang <span>Math</span></a>
   <button class="menu-btn" aria-label="Menu" aria-expanded="false" id="menuBtn">☰</button>
   <nav class="main" id="nav">
-    <a href="#/k8" data-nav="k8">Grades K–8</a>
+    <a href="#/k8" data-nav="k8">Grades 3–8</a>
     <a href="#/highschool" data-nav="highschool">High School</a>
     <a href="#/calculus" data-nav="calculus">Calculus &amp; Beyond</a>
     <a href="#/competition" data-nav="competition">Competition</a>
@@ -405,7 +405,7 @@ function renderMath(root){
 }
 /* safety net: keep the site working even if content.js is an older version */
 if (typeof GROUPS === "undefined") window.GROUPS = {
-  "K–8":               { key:"k8",         title:"Grades K–8",        intro:"Elementary and middle school math — every idea starts with something you can see, touch or draw." },
+  "K–8":               { key:"k8",         title:"Grades 3–8",        intro:"Elementary and middle school math — every idea starts with something you can see, touch or draw." },
   "High School":       { key:"highschool", title:"High School",       intro:"Algebra 1, Geometry, Algebra 2 and Precalculus, chapter by chapter.", alias:["algebra"] },
   "Calculus & Beyond": { key:"calculus",   title:"Calculus & Beyond", intro:"AP Calculus AB and BC, then college math: Linear Algebra and Multivariable Calculus." },
 };
@@ -494,7 +494,7 @@ function pageHome(v){
   v.append(h("section", { class:"hero" }, h("div", { class:"wrap" },
     h("h1", { class:"wordmark" }, "Prof. Fang ", h("span", { class:"m" }, "Math")),
     h("p", { class:"tagline" }, h("b", {}, "Experience first. "), "Symbols second. ", h("b", {}, "Understanding always.")),
-    h("div", { class:"hero-cta" }, h("a", { class:"btn", href:"#/k8" }, "Grades K–8"), h("a", { class:"btn teal", href:"#/highschool" }, "High School"), h("a", { class:"btn", style:"background:#6A4BD8", href:"#/calculus" }, "Calculus & Beyond"), h("a", { class:"btn", style:"background:#D35400", href:"#/competition" }, "Competition"), h("a", { class:"btn", style:"background:#B7472A", href:"#/testprep" }, "SAT / ACT"), h("a", { class:"btn ghost", href:"#/challenge" }, "This week's challenge")),
+    h("div", { class:"hero-cta" }, h("a", { class:"btn", href:"#/k8" }, "Grades 3–8"), h("a", { class:"btn teal", href:"#/highschool" }, "High School"), h("a", { class:"btn", style:"background:#6A4BD8", href:"#/calculus" }, "Calculus & Beyond"), h("a", { class:"btn", style:"background:#D35400", href:"#/competition" }, "Competition"), h("a", { class:"btn", style:"background:#B7472A", href:"#/testprep" }, "SAT / ACT"), h("a", { class:"btn ghost", href:"#/challenge" }, "This week's challenge")),
     h("a", { class:"solve-hero", href:"#/solve" },
       h("span", { class:"ic", "aria-hidden":"true" }, "📸"),
       h("span", { class:"txt" }, h("b", {}, "Stuck on a homework problem?"), h("span", {}, "Type it in and solve it yourself, one step at a time — I'll check every step and give hints.")),
@@ -771,7 +771,7 @@ const sb = accountsOn ? window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON
 let adult = null, adultProfile = null;
 let kid = (() => { try { return JSON.parse(localStorage.getItem("fm-kid") || "null"); } catch (e) { return null; } })();
 const AVATARS = ["🦊", "🐼", "🐯", "🐸", "🦉", "🐙", "🦄", "🐳", "🐝", "🦖", "🐱", "🐶"];
-const GRADES = ["K", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"];
+const GRADES = ["3", "4", "5", "6", "7", "8", "9", "10", "11", "12"];
 function setKid(k){ kid = k; try { k ? localStorage.setItem("fm-kid", JSON.stringify(k)) : localStorage.removeItem("fm-kid"); } catch (e) {} updateAcct(); }
 function updateAcct(){
   const a = $("acctLink"); if (!accountsOn) { a.classList.add("hidden"); return; }

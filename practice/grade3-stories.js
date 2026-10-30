@@ -265,6 +265,67 @@
       <p>If $7 \times 6 = 42$, then $7 \times 60 = 42$ tens $= 420$.</p>`
   };
 
+
+  /* Unit 4 pictures use fbar / pie / nline from grade3-levels.html (loaded before this file runs) */
+  const FB = (...a) => (window.fbar ? fbar(...a) : ""), PI = (...a) => (window.pie ? pie(...a) : ""), NL = (...a) => (window.nline ? nline(...a) : "");
+  T["ch4/unit"] = {
+    title: "Fair Pizza",
+    scene: S`<p>Four friends order one pizza. Leo cuts it — but his slices are all different sizes! Mia says, “That's not fair. Let me do it.” She cuts it into <b>4 equal</b> slices.</p>` + PI(4, 1),
+    think: S`Each friend takes one of Mia's slices. What part of the pizza does each friend get? Why couldn't we answer that with Leo's slices?`,
+    aha: S`<p>The pizza is split into $4$ <b>equal</b> parts, so one slice is <b>one fourth</b>: $\frac{1}{4}$.</p>
+      <p>The <b>bottom</b> number (denominator) says how many equal parts the whole is cut into. The <b>top</b> number (numerator) says how many parts we take.</p>
+      <p>With Leo's uneven slices, one slice isn't $\frac14$ — some are bigger, some are smaller. <b>Fractions need equal parts.</b></p>`
+  };
+  T["ch4/name"] = {
+    title: "Painting the Fence",
+    scene: S`<p>Ava's fence has <b>4 equal boards</b>. On Saturday she paints <b>3</b> of them.</p>` + FB(4, 3) + S`<p>On Sunday, she sees <b>6 kids</b> in the park, and <b>2</b> of them are wearing hats.</p>`,
+    think: S`What fraction of the fence is painted? What fraction of the kids wear hats? Is the “whole” the same kind of thing in both stories?`,
+    aha: S`<p>The fence: $3$ of $4$ equal boards $= \frac{3}{4}$. That's $\frac14 + \frac14 + \frac14$ — three <b>fourths</b>.</p>
+      <p>The kids: the whole is the <b>group</b> of $6$. $2$ of the $6$ wear hats: $\frac{2}{6}$.</p>
+      <p>A fraction always asks: <b>what is the whole, how many equal parts, how many do we take?</b></p>`
+  };
+  T["ch4/nl"] = {
+    title: "The Walk to School",
+    scene: S`<p>Zoe's walk to school is $1$ mile. There are trees at equal spaces along the way, splitting the walk into <b>4 equal parts</b>. Zoe stops to tie her shoe at the <b>third</b> tree.</p>` + NL(4, 1, 3, "Zoe"),
+    think: S`What fraction of the mile has Zoe walked? Careful: is the first tick mark at home a “tree”?`,
+    aha: S`<p>Each space between trees is $\frac14$ of a mile. Zoe walked <b>3 spaces</b>, so she is at $\frac{3}{4}$ of a mile.</p>
+      <p>On a number line, count the <b>jumps</b> from $0$, not the tick marks. The mark at $0$ is home — no walking yet!</p>
+      <p>At the school (the 4th jump) she has walked $\frac44 = 1$ whole mile.</p>`
+  };
+  T["ch4/whole"] = {
+    title: "Pizza Party Math",
+    scene: S`<p>At the party there are <b>2 pizzas</b>, each cut into <b>3 equal slices</b>.</p>` + PI(3, 3) + PI(3, 3),
+    think: S`How many slices are there? Each slice is $\frac13$ of a pizza. How could you write “2 pizzas” as a fraction?`,
+    aha: S`<p>One pizza is $3$ thirds: $\frac33 = 1$. Two pizzas are $6$ thirds: $\frac63 = 2$.</p>
+      <p>So whole numbers are fractions too! $2 = \frac{6}{3} = \frac{4}{2} = \frac{2}{1}$.</p>
+      <p>And if 1 more slice arrives? That's $\frac{7}{3}$ — more than $2$ wholes. Fractions can be bigger than $1$.</p>`
+  };
+  T["ch4/eq"] = {
+    title: "Same Chocolate, More Pieces",
+    scene: S`<p>Mia and Ben each get the same size chocolate bar. Mia's bar has <b>2 big pieces</b>; she eats <b>1</b>. Ben's bar has <b>4 small pieces</b>; he eats <b>2</b>.</p>` + FB(2, 1) + FB(4, 2),
+    think: S`Mia ate $\frac12$. Ben ate $\frac24$. Who ate more chocolate?`,
+    aha: S`<p>They ate the <b>same amount</b>! Look at the bars: the shaded parts are the same length.</p>
+      <p>Ben's bar is just Mia's bar with every piece cut in two. Twice as many pieces, and he took twice as many: $\frac12 = \frac{1 \times 2}{2 \times 2} = \frac24$.</p>
+      <p>These are <b>equivalent fractions</b>: same size, same point on the number line. Multiply the top and bottom by the <b>same</b> number.</p>`
+  };
+  T["ch4/cmp"] = {
+    title: "Which Piece Is Bigger?",
+    scene: S`<p>Two cakes are the same size. One is cut into <b>3</b> equal pieces, the other into <b>8</b>. Leo says, “I want the piece from the 8 cake, because $8$ is bigger than $3$!”</p>` + FB(3, 1) + FB(8, 1),
+    think: S`Is $\frac18$ bigger than $\frac13$? What happens to each piece when you cut a cake into more pieces?`,
+    aha: S`<p>More pieces means <b>smaller</b> pieces! $\frac13$ is much bigger than $\frac18$, so $\frac13 \gt \frac18$. Leo made a bad trade.</p>
+      <p><b>Same bottom</b> (same size pieces): compare the tops. $\frac38 \lt \frac58$.</p>
+      <p><b>Same top</b> (same number of pieces): the smaller bottom wins. $\frac23 \gt \frac25$.</p>
+      <p>But only compare fractions of the <b>same whole</b>: half of a giant cake is more than half of a cupcake!</p>`
+  };
+  T["ch4/fword"] = {
+    title: "Sharing the Cookies",
+    scene: S`<p>Grandma baked <b>12 cookies</b>. She gives $\frac14$ of them to the neighbors and keeps $\frac34$ for the family.</p>`,
+    think: S`How many cookies is $\frac14$ of $12$? How many is $\frac34$? Try putting the 12 cookies into equal groups.`,
+    aha: S`<p>$\frac14$ means split into $4$ equal groups: $12 \div 4 = 3$ cookies in each group. The neighbors get $3$.</p>
+      <p>$\frac34$ is $3$ of those groups: $3 \times 3 = 9$ cookies for the family. And $3 + 9 = 12$ ✓</p>
+      <p><b>Fraction of a group:</b> divide by the bottom, then multiply by the top.</p>`
+  };
+
   window.drawStory = function (chId, topic) {
     const lesson = document.getElementById("lesson"); if (!lesson) return;
     let box = document.getElementById("story");

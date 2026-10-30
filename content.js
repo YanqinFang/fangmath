@@ -217,7 +217,7 @@ const COURSES = [
     blurb: "Reasoning and proof, congruence and similarity, right triangles, circles, area and volume.",
     app: "practice/geometry.html",
     units: [
-      { title: "1. Tools of Geometry", app: "practice/geometry.html?chapter=g1", appTopics: 6, lessons: [] },
+      { title: "1. Foundations of Geometry", app: "practice/geometry.html?chapter=g1", appTopics: 6, lessons: [] },
       { title: "2. Reasoning & Proof", app: "practice/geometry.html?chapter=g2", appTopics: 5, lessons: [] },
       { title: "3. Parallel & Perpendicular Lines", app: "practice/geometry.html?chapter=g3", appTopics: 5, lessons: [] },
       { title: "4. Congruent Triangles", app: "practice/geometry.html?chapter=g4", appTopics: 5, lessons: [] },

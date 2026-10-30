@@ -307,7 +307,7 @@ function pairGen(rel){ // pick a pair with a known name; rel: "equal" | "supp" |
   let a,b; do{ a=rnd(1,8); b=rnd(1,8); }while(a===b||!PAIRNAME(a,b)||(rel&&angRel(a,b)!==rel)); return [a,b]; }
 
 const CHAPTERS=[
-{id:"ch1",title:"Tools of Geometry",topics:[
+{id:"ch1",title:"Foundations of Geometry",topics:[
  {id:"seg",title:"Segments & Midpoints",idea:"The <b>midpoint</b> is the average of the endpoints: $M = \\left(\\dfrac{x_1 + x_2}{2}, \\dfrac{y_1 + y_2}{2}\\right)$.",
   lesson:{steps:[["A(2, 3),\\ B(8, 7)","Find the midpoint of $\\overline{AB}$."],["\\dfrac{2 + 8}{2} = 5","Average the $x$-coordinates."],["\\dfrac{3 + 7}{2} = 5","Average the $y$-coordinates."],["M = (5, 5)","Write the point."]],warn:"Add the coordinates, don't subtract: the midpoint uses $x_1 + x_2$, the distance uses $x_2 - x_1$."},
   gen:[
@@ -739,7 +739,7 @@ const MORE=[
 
 CHAPTERS.push(...MORE);
 CHAPTERS.sort((a,b)=>Number(a.id.slice(2))-Number(b.id.slice(2)));
-const ALLCH=[[1,"Tools of Geometry","ch1"],[2,"Reasoning & Proof","ch2"],[3,"Parallel & Perpendicular Lines","ch3"],[4,"Congruent Triangles","ch4"],[5,"Relationships Within Triangles","ch5"],[6,"Polygons & Quadrilaterals","ch6"],[7,"Similarity","ch7"],[8,"Right Triangles & Trigonometry","ch8"],[9,"Transformations","ch9"],[10,"Circles","ch10"],[11,"Area","ch11"],[12,"Surface Area & Volume","ch12"],[13,"Probability","ch13"]];
+const ALLCH=[[1,"Foundations of Geometry","ch1"],[2,"Reasoning & Proof","ch2"],[3,"Parallel & Perpendicular Lines","ch3"],[4,"Congruent Triangles","ch4"],[5,"Relationships Within Triangles","ch5"],[6,"Polygons & Quadrilaterals","ch6"],[7,"Similarity","ch7"],[8,"Right Triangles & Trigonometry","ch8"],[9,"Transformations","ch9"],[10,"Circles","ch10"],[11,"Area","ch11"],[12,"Surface Area & Volume","ch12"],[13,"Probability","ch13"]];
 const COMING=[];
 
 /* ================= checking ================= */

@@ -60,13 +60,13 @@ const GROUPS = {
   "High School":       { key:"highschool", title:"High School",       intro:"Algebra 1, Geometry, Algebra 2 and Precalculus, chapter by chapter.", alias:["algebra"],
     /* FREE DOWNLOADS: shown at the top of this page. Add more { title, text, file } items to list more PDFs. */
     downloads: [
-      { title:"Grade 9 Math: Algebra 1 — Daily Practice Calendar (2027–28)",
+      { title:"Algebra 1 — Daily Practice Calendar (2027–28)",
         text:"Free · 34 weeks · Monday–Friday · 10 problems a day. Follows the California Common Core standards for Algebra 1.",
         file:"materials/grade9/grade9_algebra1_daily_calendar.pdf", cal:"grade9-algebra1" },
-      { title:"Grade 10 Math: Geometry — Daily Practice Calendar (2027–28)",
+      { title:"Geometry — Daily Practice Calendar (2027–28)",
         text:"Free · 34 weeks · Monday–Friday · 10 problems a day. Follows the California Common Core standards for Geometry.",
         file:"materials/grade10/grade10_geometry_daily_calendar.pdf", cal:"grade10-geometry" },
-      { title:"Grade 11 Math: Algebra 2 — Daily Practice Calendar (2027–28)",
+      { title:"Algebra 2 — Daily Practice Calendar (2027–28)",
         text:"Free · 34 weeks · Monday–Friday · 10 problems a day. Follows the California Common Core standards for Algebra 2.",
         file:"materials/grade11/grade11_algebra2_daily_calendar.pdf", cal:"grade11-algebra2" },
       { title:"Precalculus — Daily Practice Calendar (2027–28)",

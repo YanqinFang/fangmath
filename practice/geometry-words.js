@@ -55,6 +55,10 @@
   .ddm[hidden]{display:none!important} .ddm button{border:0;background:#fff;text-align:left;padding:6px 10px;border-radius:8px;font:inherit;font-size:15px;cursor:pointer} .ddm button:hover{background:var(--teal-soft)}
   .tchk{border:0;background:var(--navy);color:#fff;border-radius:999px;padding:6px 16px;font:inherit;font-size:14px;font-weight:600;cursor:pointer}
   .tfb .fb{margin-top:8px}
+  .wgroup{border-top:1px dashed var(--line);margin-top:14px;padding-top:4px} .wgroup:first-of-type{border-top:0}
+  .wgroup h4 .gn{display:inline-grid;place-items:center;width:26px;height:26px;border-radius:50%;background:var(--navy);color:#fff;font:700 13px Inter,sans-serif;margin-right:8px;vertical-align:2px}
+  .defb{margin-top:6px;border:1px solid var(--teal);background:#fff;color:var(--teal);border-radius:999px;padding:4px 12px;font:inherit;font-size:13px;font-weight:600;cursor:pointer}
+  .tries{margin-top:12px} .tries .th{font-family:Fraunces,Georgia,serif;font-size:17px;font-weight:600;margin-bottom:2px}
   .chroute{background:#fff;border:1px solid var(--line);border-radius:16px;padding:12px 14px;margin:0 0 14px;box-shadow:var(--shadow)}
   .chroute .rk{font-size:14px;color:var(--ink);margin-bottom:8px} .chroute .rk span{color:var(--muted)}
   .chroute .rs{display:flex;flex-wrap:wrap;align-items:center;gap:6px} .chroute .rs>span{color:var(--faint)}
@@ -478,27 +482,49 @@
 
   /* ---------- "Your turn — on paper first": fill-in questions after the concept cards ---------- */
   const OL = t => `\\overleftrightarrow{${t}}`, OR = t => `\\overrightarrow{${t}}`, SG = t => `\\overline{${t}}`;
-  WORDS.ch1.tries = {
-    fig: svg(`<line x1="14" y1="58" x2="216" y2="58" stroke="${teal}" stroke-width="3" marker-start="url(#wa)" marker-end="url(#wa)"/><line x1="105" y1="58" x2="176" y2="4" stroke="#6A4BD8" stroke-width="3" marker-end="url(#wa)"/>${dot(45, 58, "A", 16)}${dot(105, 58, "B", 16)}${dot(170, 58, "C", 16)}${dot(150, 24, "D", -8)}<text x="208" y="50" font-family="Inter,sans-serif" font-size="13" font-style="italic" fill="${teal}">ℓ</text>`, "line through A, B, C and a ray from B through D").replace('viewBox="0 0 230 70"', 'viewBox="0 0 230 80"'),
-    qs: [
-      { q: "Name the line $\\ell$ in <b>two different ways</b> using two of its points.", n: 2,
-        opts: [OL("AB"), OL("BC"), OL("CA"), OR("AB"), SG("AC"), OL("AD")],
-        ok: s => s.every(x => [OL("AB"), OL("BC"), OL("CA")].includes(x)) && s[0] !== s[1],
-        sol: "Any two of $\\overleftrightarrow{AB}$, $\\overleftrightarrow{BC}$, $\\overleftrightarrow{CA}$ (also $\\overleftrightarrow{BA}$, … or line $\\ell$). A line gets a two-arrow bar, and both points must be <b>on</b> the line — $D$ is not." },
-      { q: "Name the ray that starts at $B$ and passes through $D$.", n: 1,
-        opts: [OR("BD"), OR("DB"), OL("BD"), SG("BD")],
-        ok: s => s[0] === OR("BD"),
-        sol: "$\\overrightarrow{BD}$ — the <b>endpoint comes first</b>. $\\overrightarrow{DB}$ would start at $D$ and point the other way." },
-      { q: "Name two <b>opposite rays</b> with endpoint $B$.", n: 2,
-        opts: [OR("BA"), OR("BC"), OR("AB"), OR("CB"), OR("BD")],
-        ok: s => s.slice().sort().join() === [OR("BA"), OR("BC")].sort().join(),
-        sol: "$\\overrightarrow{BA}$ and $\\overrightarrow{BC}$: they share endpoint $B$ and point in opposite directions along the same line. Together they make line $\\ell$." }
-    ]
-  };
+  const PL = t => `\\text{plane } ${t}`;
+  WORDS.ch1.groups = [
+    { title: "Point, line, plane — the three building blocks", cards: [0, 1, 2],
+      tries: { fig: `<svg viewBox="0 0 230 110" role="img" aria-label="plane P with line through A and B, point C in the plane and point E above"><defs><marker id="wa2" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0L10,5L0,10z" fill="${teal}"/></marker></defs><polygon points="20,100 170,100 215,50 65,50" fill="#DDF0EE" stroke="${teal}" stroke-width="2"/><line x1="38" y1="88" x2="196" y2="62" stroke="${teal}" stroke-width="3" marker-start="url(#wa2)" marker-end="url(#wa2)"/>${dot(75, 82, "A", 16)}${dot(150, 69.6, "B", 16)}${dot(120, 92, "C", 14)}${dot(170, 18, "E", -8)}<line x1="170" y1="18" x2="170" y2="66" stroke="#94A3B8" stroke-dasharray="3 3"/><text x="205" y="94" font-family="Fraunces,serif" font-size="16" font-style="italic" fill="${teal}">P</text><text x="198" y="58" font-family="Inter,sans-serif" font-size="13" font-style="italic" fill="${teal}">ℓ</text></svg>`,
+        qs: [
+          { q: "Name the line $\\ell$ in <b>two different ways</b>.", n: 2, opts: [OL("AB"), OL("BA"), "\\text{line } \\ell", OR("AB"), SG("AB"), OL("AC")],
+            ok: s => s.every(x => [OL("AB"), OL("BA"), "\\text{line } \\ell"].includes(x)) && s[0] !== s[1],
+            sol: "Any two of $\\overleftrightarrow{AB}$, $\\overleftrightarrow{BA}$, line $\\ell$. A line gets a two-arrow bar. $C$ is in the plane but <b>not on</b> the line, so $\\overleftrightarrow{AC}$ is a different line." },
+          { q: "Name plane $\\mathcal{P}$ using <b>three of its points</b>.", n: 1, opts: [PL("ABC"), PL("ABE"), PL("AB"), PL("BCE")],
+            ok: s => s[0] === PL("ABC"), sol: "Plane $ABC$. You need three points that are <b>in</b> the plane and not all on one line. $E$ is above the plane, and two points aren't enough." },
+          { q: "Which point is <b>not</b> in plane $\\mathcal{P}$?", n: 1, opts: ["A", "B", "C", "E"],
+            ok: s => s[0] === "E", sol: "$E$ — it floats above the plane (the dashed line shows it is not on the flat surface)." }
+        ] } },
+    { title: "Segment, ray, angle — pieces of a line", cards: [3, 4, 5],
+      tries: { fig: svg(`<line x1="14" y1="58" x2="216" y2="58" stroke="${teal}" stroke-width="3" marker-start="url(#wa)" marker-end="url(#wa)"/><line x1="105" y1="58" x2="176" y2="4" stroke="#6A4BD8" stroke-width="3" marker-end="url(#wa)"/>${dot(45, 58, "A", 16)}${dot(105, 58, "B", 16)}${dot(170, 58, "C", 16)}${dot(150, 24, "D", -8)}`, "line through A, B, C and a ray from B through D").replace('viewBox="0 0 230 70"', 'viewBox="0 0 230 80"'),
+        qs: [
+          { q: "Name the ray that starts at $B$ and passes through $D$.", n: 1, opts: [OR("BD"), OR("DB"), OL("BD"), SG("BD")],
+            ok: s => s[0] === OR("BD"), sol: "$\\overrightarrow{BD}$ — the <b>endpoint comes first</b>. $\\overrightarrow{DB}$ would start at $D$ and point the other way." },
+          { q: "Name two <b>opposite rays</b> with endpoint $B$.", n: 2, opts: [OR("BA"), OR("BC"), OR("AB"), OR("CB"), OR("BD")],
+            ok: s => s.slice().sort().join() === [OR("BA"), OR("BC")].sort().join(), sol: "$\\overrightarrow{BA}$ and $\\overrightarrow{BC}$: same endpoint $B$, opposite directions along one line." },
+          { q: "Name the angle formed by $\\overrightarrow{BD}$ and $\\overrightarrow{BC}$.", n: 1, opts: ["\\angle DBC", "\\angle BDC", "\\angle BCD", "\\angle DCB"],
+            ok: s => s[0] === "\\angle DBC", sol: "$\\angle DBC$ (or $\\angle CBD$): the vertex $B$ is always the <b>middle</b> letter." }
+        ] } },
+    { title: "Collinear, coplanar, intersection — how figures meet", cards: [6, 7],
+      tries: { fig: svg(`<line x1="14" y1="50" x2="216" y2="50" stroke="${teal}" stroke-width="3" marker-start="url(#wa)" marker-end="url(#wa)"/><line x1="37" y1="5" x2="166" y2="63.6" stroke="#6A4BD8" stroke-width="2.5"/>${dot(40, 50, "A", 16)}${dot(136, 50, "B", -8)}${dot(190, 50, "C", -8)}${dot(70, 20, "D", 16)}<text x="208" y="42" font-family="Inter,sans-serif" font-size="13" font-style="italic" fill="${teal}">ℓ</text><text x="22" y="12" font-family="Inter,sans-serif" font-size="13" font-style="italic" fill="#6A4BD8">m</text>`, "line l through A, B, C; line m through D and B").replace('viewBox="0 0 230 70"', 'viewBox="0 0 230 74"'),
+        qs: [
+          { q: "Name <b>three collinear</b> points.", n: 1, opts: ["A, B, C", "A, B, D", "B, C, D", "A, C, D"],
+            ok: s => s[0] === "A, B, C", sol: "$A$, $B$, $C$ all lie on line $\\ell$." },
+          { q: "Which point is <b>not</b> collinear with $A$ and $C$?", n: 1, opts: ["A", "B", "C", "D"],
+            ok: s => s[0] === "D", sol: "$D$ is not on line $\\ell$ (it's on line $m$)." },
+          { q: "Lines $\\ell$ and $m$ intersect at which point?", n: 1, opts: ["A", "B", "C", "D"],
+            ok: s => s[0] === "B", sol: "$B$ — the one point on <b>both</b> lines. Two lines meet in at most one point." }
+        ] } }
+  ];
 
   const KEY = "fm-geo-words";
   const load = () => { try { return JSON.parse(localStorage.getItem(KEY) || "{}"); } catch (e) { return {}; } };
   const save = v => { try { localStorage.setItem(KEY, JSON.stringify(v)); } catch (e) {} };
+
+  const cardHtml = (c, fold) => `<div class="wcard"><h5>${c.t}${c.tag ? `<em class="tg" hidden>${c.tag}</em>` : ""}</h5>${PIC[c.k] || ""}
+    <div class="wrow"><span class="lb">See it</span>${c.see}</div>${fold ? `<button type="button" class="defb">Show the definition ▾</button><div class="defs" hidden>` : ""}<div class="wrow"><span class="lb">Say it</span>${c.say}</div><div class="wrow"><span class="lb">Write it</span>${c.write}</div>${fold ? "</div>" : ""}</div>`;
+  const triesHtml = (tr, gi) => !tr ? "" : `<div class="tries" data-g="${gi}"><div class="th">✍️ Your turn — on paper first</div><p class="tip">Write each answer on your paper first. Then choose what you wrote from the menu and press <b>Check</b>.</p>${tr.fig}
+    ${tr.qs.map((t, qi) => `<div class="tq" data-q="${qi}"><div class="tqq"><b>${qi + 1}.</b> ${t.q}</div><div class="tqa">${Array.from({ length: t.n }, (_, k) => `<span class="dd" data-k="${k}"><button type="button" class="ddb">choose ▾</button><span class="ddm" hidden>${t.opts.map(o => `<button type="button" data-v="${o.replace(/"/g, "&quot;")}">$${o}$</button>`).join("")}</span></span>`).join(t.n > 1 ? `<span class="and">and</span>` : "")}<button type="button" class="tchk">Check</button></div><div class="tfb"></div></div>`).join("")}</div>`;
 
   function draw(chId) {
     const lv = document.getElementById("learnView"); if (!lv) return;
@@ -513,13 +539,10 @@
       <div class="wb">
         <div class="intro">${w.intro}</div>
         ${w.more ? `<details class="wmore"><summary>ℹ️ ${w.more[0]}</summary><div>${w.more[1]}</div></details>` : ""}
-        <h4>👀 See it → 🗣 Say it → ✏️ Write it</h4>
-        <div class="wgrid">${w.cards.map(c => `<div class="wcard"><h5>${c.t}${w.more && c.tag ? `<em class="tg" hidden>${c.tag}</em>` : ""}</h5>${PIC[c.k] || ""}
-          <div class="wrow"><span class="lb">See it</span>${c.see}</div><div class="wrow"><span class="lb">Say it</span>${c.say}</div><div class="wrow"><span class="lb">Write it</span>${c.write}</div></div>`).join("")}</div>
-        ${w.tries ? `<h4>✍️ Your turn — on paper first</h4>
-        <div class="tries"><p class="tip">Write each answer on your paper first. Then choose what you wrote from the menu and press <b>Check</b>.</p>${w.tries.fig}
-          ${w.tries.qs.map((t, qi) => `<div class="tq" data-q="${qi}"><div class="tqq"><b>${qi + 1}.</b> ${t.q}</div><div class="tqa">${Array.from({ length: t.n }, (_, k) => `<span class="dd" data-k="${k}"><button type="button" class="ddb">choose ▾</button><span class="ddm" hidden>${t.opts.map(o => `<button type="button" data-v="${o.replace(/"/g, "&quot;")}">$${o}$</button>`).join("")}</span></span>`).join(t.n > 1 ? `<span class="and">and</span>` : "")}<button type="button" class="tchk">Check</button></div><div class="tfb"></div></div>`).join("")}
-        </div>` : ""}
+        ${w.groups ? w.groups.map((gr, gi) => `<div class="wgroup"><h4><span class="gn">${gi + 1}</span>${gr.title}</h4>
+          <div class="wgrid">${gr.cards.map(i => cardHtml(w.cards[i], true)).join("")}</div>
+          ${triesHtml(gr.tries, gi)}</div>`).join("") : `<h4>👀 See it → 🗣 Say it → ✏️ Write it</h4>
+        <div class="wgrid">${w.cards.map(c => cardHtml(c, false)).join("")}</div>${w.tries ? triesHtml(w.tries, 0) : ""}`}
         ${w.table ? `<h4>${w.tableTitle || "Line, ray or segment?"}</h4>${w.table}` : ""}
         <h4>📌 ${w.postTitle || "Postulates — try each one with your hands"}</h4>
         ${w.posts.map(([t, x]) => `<div class="post"><div class="t">${t}</div><div class="x"><b>Try it: </b>${x}</div></div>`).join("")}
@@ -535,7 +558,8 @@
       </div>`;
     const upd = () => { const n = box.querySelectorAll(".vocab input:checked").length; box.querySelector("#vocabN").textContent = `${n} of ${w.vocab.length} words ready${n === w.vocab.length ? " — great job! 🎉" : ""}`; };
     box.querySelectorAll(".vocab input").forEach(i => i.onchange = () => { const k = load(); k[chId] = [...box.querySelectorAll(".vocab input:checked")].map(x => x.value); save(k); upd(); });
-    if (w.tries) box.querySelectorAll(".tq").forEach(el => { const t = w.tries.qs[+el.dataset.q], sel = Array(t.n).fill(null);
+    box.querySelectorAll(".defb").forEach(b => b.onclick = () => { const d = b.nextElementSibling; d.hidden = !d.hidden; b.textContent = d.hidden ? "Show the definition ▾" : "Hide the definition ▴"; });
+    box.querySelectorAll(".tries .tq").forEach(el => { const gi = +el.closest(".tries").dataset.g, tr = w.groups ? w.groups[gi].tries : w.tries, t = tr.qs[+el.dataset.q], sel = Array(t.n).fill(null);
       el.querySelectorAll(".dd").forEach(dd => { const b = dd.querySelector(".ddb"), m = dd.querySelector(".ddm");
         b.onclick = () => { box.querySelectorAll(".ddm").forEach(x => { if (x !== m) x.hidden = true; }); m.hidden = !m.hidden; };
         m.querySelectorAll("button").forEach(o => o.onclick = () => { sel[+dd.dataset.k] = o.dataset.v; b.innerHTML = o.innerHTML; b.classList.add("on"); m.hidden = true; el.querySelector(".tfb").innerHTML = ""; }); });

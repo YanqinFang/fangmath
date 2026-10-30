@@ -390,6 +390,57 @@
       <p>And if you know the area and one side, divide: area $32$, side $8$ → other side $32 \div 8 = 4$.</p>`
   };
 
+
+  T["ch6/per"] = {
+    title: "The Ant's Walk",
+    scene: S`<p>An ant lives at one corner of a rectangular garden that is $7$ m long and $3$ m wide. Every morning it walks along the <b>edge</b> of the garden, all the way around, back home.</p>` + G("rectPic", 7, 3, "m"),
+    think: S`How far does the ant walk each morning? Is it the same as how many square meters the garden covers?`,
+    aha: S`<p>The ant walks $7 + 3 + 7 + 3 = 20$ m. That distance around is the <b>perimeter</b>.</p>
+      <p>The garden <b>covers</b> $7 \times 3 = 21$ square meters — that's the <b>area</b>, a different question. Perimeter is a path (meters); area is a surface (square meters).</p>
+      <p>Shortcut for a rectangle: one length and one width is half the trip, so double it: $2 \times (7 + 3) = 20$.</p>`
+  };
+  T["ch6/miss"] = {
+    title: "The Torn Plan",
+    scene: S`<p>Dad built a rectangular fence with $24$ m of fencing. The plan says the long side is $8$ m, but the short side got torn off the paper.</p>`,
+    think: S`How long is the short side? Leo says “$24 - 8 = 16$ m!” What do you think?`,
+    aha: S`<p>Walking halfway around the fence covers one long side and one short side: $24 \div 2 = 12$ m.</p>
+      <p>So the short side is $12 - 8 = 4$ m. Check: $8 + 4 + 8 + 4 = 24$ ✓</p>
+      <p>Leo's $16$ m is three sides (one long and two short), not one. <b>Work backward from the whole perimeter.</b></p>`
+  };
+  T["ch6/ap"] = {
+    title: "Same Fence, Different Gardens",
+    scene: S`<p>Mia has $12$ m of fence to make a rectangular garden. The sides must be whole meters. She can make it long and thin, or more like a square.</p>`,
+    think: S`List every garden Mia can make. Which one gives her the most room to plant?`,
+    aha: S`<table><tr><th>garden</th><th>perimeter</th><th>area</th></tr><tr><td>$1 \times 5$</td><td>$12$ m</td><td>$5$ sq m</td></tr><tr><td>$2 \times 4$</td><td>$12$ m</td><td>$8$ sq m</td></tr><tr><td>$3 \times 3$</td><td>$12$ m</td><td><b>$9$ sq m</b></td></tr></table>
+      <p style="margin-top:10px">Same fence, different gardens! <b>The closer to a square, the bigger the area.</b></p>
+      <p>And it works the other way too: rectangles with the same area ($12$ sq m: $1 \times 12$, $2 \times 6$, $3 \times 4$) can need very different amounts of fence. The square-ish one needs the least.</p>`
+  };
+  T["ch6/quad"] = {
+    title: "The Shape Family Tree",
+    scene: S`<p>Four shapes are arguing about who belongs to which family.</p><div style="display:flex;gap:14px;flex-wrap:wrap;align-items:center">` + G("quadPic", "rectangle") + G("quadPic", "rhombus") + G("quadPic", "square") + G("quadPic", "trapezoid") + S`</div><p>The <b>Rectangle Club</b> says: “Members need 4 right angles.” The <b>Rhombus Club</b> says: “Members need 4 equal sides.”</p>`,
+    think: S`Which clubs can the square join? Can the trapezoid join either club?`,
+    aha: S`<p>The square has 4 right angles <b>and</b> 4 equal sides, so it joins <b>both</b> clubs: a square is a rectangle and a rhombus.</p>
+      <p>The trapezoid has neither, so it joins neither club — but it's still a <b>quadrilateral</b> (4 sides, 4 angles), like all of them.</p>
+      <p>Names are about the <b>rules</b>, not how a shape looks: a long thin rectangle and a square are both rectangles.</p>`
+  };
+  T["ch6/parts"] = {
+    title: "Two Ways to Halve a Sandwich",
+    scene: S`<p>Ben cuts his square sandwich in half <b>straight across</b>: two rectangles. Zoe cuts hers <b>corner to corner</b>: two triangles. Same size sandwiches.</p>`,
+    think: S`Ben says his half is bigger because rectangles are bigger than triangles. Is he right? What makes a part “one half”?`,
+    aha: S`<p>Both cuts make <b>2 equal parts</b> of the same sandwich, so each part is $\frac12$ — whatever its shape.</p>
+      <p>A fraction of a shape is about <b>area</b>: how much it covers. If a hexagon is made of $6$ equal triangles, $2$ triangles are $\frac26$ of the hexagon.</p>
+      <p>And if the whole sandwich is $36$ square cm, each half is $36 \div 2 = 18$ square cm.</p>`
+  };
+  T["ch6/mix"] = {
+    title: "Planning the Class Party",
+    scene: S`<p>Ms. Lee's class is planning a party for $30$ people. Each table seats $4$. Pens for party games cost $3$ dollars, and the class has $20$ dollars. The party starts at $11{:}40$ and lasts $35$ minutes.</p>`,
+    think: S`How many tables? How many pens can they buy — and how much money is left? When does the party end? For each question, decide first: which operation?`,
+    aha: S`<p><b>Tables:</b> $7 \times 4 = 28$ seats — two people would stand! So they need <b>8</b> tables.</p>
+      <p><b>Pens:</b> $6 \times 3 = 18$ and $7 \times 3 = 21$ is too much, so $6$ pens with $20 - 18 = 2$ dollars left.</p>
+      <p><b>Time:</b> $11{:}40 \to 12{:}00$ is $20$ min, then $15$ more: $12{:}15$.</p>
+      <p>Every answer gets a <b>sense check</b>: no half-tables, no half-pens, no 70-minute hours.</p>`
+  };
+
   window.drawStory = function (chId, topic) {
     const lesson = document.getElementById("lesson"); if (!lesson) return;
     let box = document.getElementById("story");

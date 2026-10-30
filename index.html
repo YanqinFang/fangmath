@@ -589,7 +589,9 @@ function pageCourse(v, id){
       h("span", { class:"ic", "aria-hidden":"true" }, "📅"), h("span", { class:"txt" }, h("b", {}, "Daily Practice Calendar"), h("span", {}, "34 weeks · Monday–Friday · 10 problems a day. Each unit below matches the calendar weeks.")),
       h("span", { class:"dl-btns" }, h("a", { class:"btn ghost", href:"#/calendar/" + c.cal }, "Online calendar"), d ? h("a", { class:"btn teal", href:d.file, target:"_blank", rel:"noopener" }, "Download PDF") : null))); }
   if (c.levels || c.app || c.cal) wrap.append(h("div", { style:"height:10px" }));
-  c.units.forEach((u, ui) => {
+  /* units that only repeat the two buttons above (no lessons, no calendar weeks) are not listed */
+  const hasOwn = u => (u.lessons || []).length || u.cal;
+  c.units.forEach((u, ui) => { if ((c.levels || c.app) && !hasOwn(u)) return;
     const learn = u.learn || [];
     const calRow = u.cal ? h("a", { class:"lesson-row", href:`#/calendar/${u.cal.id}/${u.cal.weeks[0]}` }, h("span", {}, "📅"), h("span", { style:"font-weight:500" }, `Daily practice · Calendar weeks ${u.cal.weeks[0]}–${u.cal.weeks[1]}`), h("span", { class:"tags" }, h("span", { class:"tag", style:"background:var(--teal-soft);color:var(--teal)" }, "10 a day"))) : null;
     const lvRows = learn.map(l => h("div", { class:"lesson-row lv-row" },

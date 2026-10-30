@@ -42,15 +42,33 @@
     scene: S`<p><b>On one street.</b> Mia lives at house $2$ on Maple Street and Leo lives at house $8$. They want to meet so that <b>both walk the same distance</b>. Where should they meet?</p>
       <p><b>In the city.</b> Now Mia is at $(2, 3)$ and Leo is at $(8, 7)$ on the city grid. They walk straight toward each other. Where do they meet?</p>`,
     think: S`Before you look at the formula, drag Mia and Leo below. Try the street first, then the city. What do you notice about the <b>shadows</b> on the axes?`,
-    aha: S`<p><b>On a line</b>, there are three ways to find the meeting point: walk in one step at a time from both ends; take half the distance ($8 - 2 = 6$, half is $3$, so $2 + 3 = 5$); or average: $\dfrac{2 + 8}{2} = 5$.</p>
-      <p><b>On the $xOy$ plane</b>, look at the shadows. On the $x$-axis the shadows are at $2$ and $8$, so the middle shadow is $5$. On the $y$-axis they are at $3$ and $7$, so the middle is $5$. The meeting point is $M = (5, 5)$. Walking halfway along the slanted path means going <b>halfway east and halfway north at the same time</b>, so each direction is its own number-line problem.</p>
+    aha: S`<p><b>One idea does everything: start where you are, then walk half the trip.</b></p>
+      <svg viewBox="0 0 420 92" style="width:100%;max-width:420px;display:block;margin:4px auto 8px" role="img" aria-label="Number line: an arrow of +3 from 2 and an arrow of -3 from 8 both reach 5">
+        <defs><marker id="mtA" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0L10,5L0,10z" fill="#0F7C7C"/></marker><marker id="mtB" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0L10,5L0,10z" fill="#B7791F"/></marker></defs>
+        <line x1="20" y1="50" x2="400" y2="50" stroke="#94A3B8" stroke-width="2"/>
+        <g font-family="Inter,sans-serif" font-size="12" fill="#475569" text-anchor="middle">
+          <g stroke="#94A3B8"><line x1="20" y1="45" x2="20" y2="55"/><line x1="58" y1="45" x2="58" y2="55"/><line x1="96" y1="45" x2="96" y2="55"/><line x1="134" y1="45" x2="134" y2="55"/><line x1="172" y1="45" x2="172" y2="55"/><line x1="210" y1="45" x2="210" y2="55"/><line x1="248" y1="45" x2="248" y2="55"/><line x1="286" y1="45" x2="286" y2="55"/><line x1="324" y1="45" x2="324" y2="55"/><line x1="362" y1="45" x2="362" y2="55"/><line x1="400" y1="45" x2="400" y2="55"/></g>
+          <text x="20" y="70">0</text><text x="96" y="70">2</text><text x="210" y="70">5</text><text x="324" y="70">8</text><text x="400" y="70">10</text>
+        </g>
+        <circle cx="96" cy="50" r="6" fill="#0F7C7C"/><circle cx="324" cy="50" r="6" fill="#B7791F"/><circle cx="210" cy="50" r="5" fill="#1F3A68"/>
+        <path d="M100 36 Q153 14 204 34" fill="none" stroke="#0F7C7C" stroke-width="2.5" marker-end="url(#mtA)"/>
+        <path d="M320 36 Q267 14 216 34" fill="none" stroke="#B7791F" stroke-width="2.5" marker-end="url(#mtB)"/>
+        <g font-family="Inter,sans-serif" font-size="13" font-weight="700" text-anchor="middle"><text x="150" y="14" fill="#0F7C7C">Mia: +3</text><text x="270" y="14" fill="#B7791F">Leo: −3</text><text x="96" y="88" fill="#0F7C7C">A</text><text x="324" y="88" fill="#B7791F">B</text><text x="210" y="88" fill="#1F3A68">M</text></g>
+      </svg>
+      <p><b>1. Mia's trip.</b> From $A = 2$ to $B = 8$ the trip is $8 - 2 = +6$ (the $+$ means “to the right”). Half the trip is $+3$, so they meet at $2 + 3 = 5$.</p>
+      <p><b>2. Leo's trip.</b> From $B = 8$ back to $A = 2$ the trip is $2 - 8 = -6$ (the $-$ means “to the left”). Half is $-3$, and $8 + (-3) = 5$. <b>Same place!</b></p>
+      <p><b>Tiny new idea — a vector.</b> A trip that remembers its <b>direction</b> is called a <i>vector</i>, drawn as an arrow. $\overrightarrow{AB} = +6$ and $\overrightarrow{BA} = -6$ have the same length but point opposite ways. The sign does the bookkeeping, so it never matters who starts.</p>
+      <p><b>3. Turn it into the formula.</b> Start plus half the trip:</p>
+      <p style="text-align:center">$x_1 + \dfrac{x_2 - x_1}{2} = \dfrac{2x_1 + x_2 - x_1}{2} = \dfrac{x_1 + x_2}{2}$</p>
+      <p>So “start + half the trip” is exactly the <b>average</b> of the two ends. It even works with negatives: from $-3$ to $5$ the trip is $+8$, half is $+4$, and $-3 + 4 = 1 = \dfrac{-3 + 5}{2}$.</p>
+      <p><b>4. On the $xOy$ plane</b>, the trip arrow has two parts: $\overrightarrow{AB} = \langle 8 - 2,\ 7 - 3\rangle = \langle 6, 4\rangle$, which is $6$ east and $4$ north. Half the trip is $\langle 3, 2\rangle$, so $M = (2 + 3,\ 3 + 2) = (5, 5)$. From Leo's side, $\overrightarrow{BA} = \langle -6, -4\rangle$, half is $\langle -3, -2\rangle$, and $(8 - 3,\ 7 - 2) = (5, 5)$. Same point. Each direction is its own number-line problem:</p>
+      <p style="text-align:center">$M = \left(\dfrac{x_1 + x_2}{2},\ \dfrac{y_1 + y_2}{2}\right)$</p>
       <table><tr><th></th><th>On a line</th><th>On the $xOy$ plane</th></tr>
-      <tr><td>A position is</td><td>1 number</td><td>2 numbers $(x, y)$</td></tr>
-      <tr><td>Midpoint</td><td>$\dfrac{a + b}{2}$</td><td>average the $x$'s <b>and</b> the $y$'s separately</td></tr>
-      <tr><td>Distance</td><td>$|b - a|$</td><td>$\sqrt{(x_2 - x_1)^2 + (y_2 - y_1)^2}$ (next lesson)</td></tr>
-      <tr><td>Answer is</td><td>a number (a place)</td><td>a point (two coordinates)</td></tr></table>
-      <p style="margin-top:10px"><b>Careful:</b> $\dfrac{8 - 2}{2} = 3$ is <i>half the distance</i> (“walk 3 steps”), not the meeting place. And never mix $x$ with $y$.</p>
-      <p><b>Going backward:</b> Mia walked from $(2, 3)$ to the meeting point $(5, 5)$: east $3$, north $2$. Leo's house is the same trip again from $M$: $(8, 7)$. That's $B = 2M - A$.</p>`,
+      <tr><td>The trip $\overrightarrow{AB}$</td><td>$x_2 - x_1$</td><td>$\langle x_2 - x_1,\ y_2 - y_1\rangle$</td></tr>
+      <tr><td>Midpoint = start + half the trip</td><td>$\dfrac{x_1 + x_2}{2}$</td><td>$\left(\dfrac{x_1 + x_2}{2}, \dfrac{y_1 + y_2}{2}\right)$</td></tr>
+      <tr><td>Distance = length of the trip</td><td>$|x_2 - x_1|$</td><td>$\sqrt{(x_2 - x_1)^2 + (y_2 - y_1)^2}$ (next lesson)</td></tr></table>
+      <p style="margin-top:10px"><b>Careful:</b> $\dfrac{x_2 - x_1}{2}$ alone is <i>half the trip</i> (how far to walk), not the meeting place. Always add it to the start.</p>
+      <p><b>The same idea goes further.</b> A third of the way from $A$: $A + \tfrac13\overrightarrow{AB}$, so from $(2, 3)$ that is $(2 + 2,\ 3 + \tfrac43)$. Know $A$ and the midpoint $M$ but not $B$? Walk the trip $\overrightarrow{AM}$ one more time from $M$: $B = M + (M - A) = 2M - A$. For example, $(5 + 3,\ 5 + 2) = (8, 7)$.</p>`,
   };
   T["ch1/dist"] = {
     title: "The Taxi and the Crow",
@@ -373,7 +391,7 @@
         handle(lx(a), y, "a", "#1F3A68", "Mia " + a); handle(lx(b), y, "b", "#B7472A", "Leo " + b);
         const d = Math.abs(b - a);
         read.innerHTML = kind === "mid"
-          ? `Distance $= |${b} - ${a < 0 ? "(" + a + ")" : a}| = ${d}$, half of it is $${fx(d / 2)}$. Meeting point $M = \\dfrac{${a} + ${b < 0 ? "(" + b + ")" : b}}{2} = ${fx(m)}$.`
+          ? (() => { const sv = v => (v > 0 ? "+" : "") + fx(v), pv = v => v < 0 ? "(" + fx(v) + ")" : sv(v); return `Mia's trip $\\overrightarrow{AB} = ${b} - ${a < 0 ? "(" + a + ")" : a} = ${sv(b - a)}$, half is $${sv((b - a) / 2)}$, so $M = ${a} + ${pv((b - a) / 2)} = ${fx(m)}$ $= \\dfrac{${a} + ${b < 0 ? "(" + b + ")" : b}}{2}$.`; })()
           : `On a line there is only one direction: distance $= |${b} - ${a < 0 ? "(" + a + ")" : a}| = ${d}$.`;
       } else {
         const W = 2 * GP + (G1 - G0) * GS;

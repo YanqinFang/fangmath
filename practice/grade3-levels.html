@@ -156,6 +156,37 @@ footer{text-align:center;color:var(--faint);font-size:13px;padding:24px}
 .topic .tgo{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
 .topic .tgo small{color:var(--muted);font-size:13px}
 .watch{margin:-4px 0 4px;font-size:14px;color:var(--muted)} .watch b{color:var(--ink)}
+
+/* ---- hide the topic cards while a practice problem is open ---- */
+#practice:not([hidden]) ~ #topics{display:none}
+/* ---- chapter cheat sheet ---- */
+.tabs .cs-btn{margin-left:auto;align-self:center;border:1.5px solid var(--gold,#C9962B);background:#FFF8EA;color:#8A6415;border-radius:999px;padding:6px 14px;font:inherit;font-size:14px;font-weight:600;cursor:pointer;margin-bottom:6px}
+.tabs .cs-btn:hover{background:#FBF0D9}
+.csm{position:fixed;inset:0;background:rgba(15,23,42,.45);z-index:60;display:flex;justify-content:center;align-items:flex-start;padding:24px 12px;overflow-y:auto}
+.cs-sheet{background:#fff;border-radius:16px;max-width:980px;width:100%;padding:22px 26px 26px;box-shadow:0 20px 50px rgba(0,0,0,.25)}
+.cs-top{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;border-bottom:2px solid var(--navy);padding-bottom:10px;margin-bottom:14px}
+.cs-top h2{font-family:Fraunces,Georgia,serif;font-size:24px;margin:0;color:var(--navy)}
+.cs-top .sub{font-size:13px;color:var(--muted)}
+.cs-top .cs-acts{display:flex;gap:8px}
+.cs-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+@media (max-width:700px){.cs-grid{grid-template-columns:1fr}}
+.cs-card{border:1px solid var(--line);border-radius:12px;padding:12px 14px;break-inside:avoid;page-break-inside:avoid}
+.cs-card h3{margin:0 0 6px;font-size:16px;color:var(--navy);font-family:Fraunces,Georgia,serif}
+.cs-card .cs-idea{font-size:14px;line-height:1.55;margin-bottom:8px}
+.cs-card .cs-ex{background:var(--bg);border-radius:8px;padding:6px 10px;font-size:14px}
+.cs-card .cs-ex .lab,.cs-card .cs-warn .lab{display:block;font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--faint);font-weight:700;margin-bottom:2px}
+.cs-card .cs-ex div{margin:2px 0;overflow-x:auto}
+.cs-card .cs-warn{margin-top:8px;font-size:13px;line-height:1.5;border-left:3px solid var(--red,#C0392B);padding:2px 0 2px 8px}
+.cs-card .cs-warn .lab{color:var(--red,#C0392B)}
+.cs-foot{margin-top:12px;font-size:12px;color:var(--faint);text-align:right}
+@media print{
+  body.cs-printing > *:not(.csm){display:none !important}
+  body.cs-printing .csm{position:static;background:none;padding:0;overflow:visible}
+  body.cs-printing .cs-sheet{box-shadow:none;border-radius:0;padding:0;max-width:none}
+  body.cs-printing .cs-acts{display:none}
+  body.cs-printing .cs-card .cs-ex{background:#f4f4f4}
+  @page{margin:12mm}
+}
 </style>
 </head>
 <body>
@@ -177,6 +208,7 @@ footer{text-align:center;color:var(--faint);font-size:13px;padding:24px}
   <div class="tabs" role="tablist">
     <button class="tab" id="tabLearn" role="tab">① Learn the ideas</button>
     <button class="tab" id="tabPractice" role="tab">② Practice at your level</button>
+    <button class="cs-btn" id="csBtn" type="button" title="One page with every key idea, example and warning in this chapter">📄 Cheat Sheet</button>
   </div>
 
   <div id="learnView" class="learn">
@@ -665,6 +697,23 @@ function suggest(){ const box=$("pSuggest"); box.innerHTML=""; const last=streak
   if(!to) return; const d=document.createElement("div"); d.className="suggest"; d.style.setProperty("--c",LEVELS[to-1].c); d.innerHTML=`<span>${msg}</span>`;
   const b=document.createElement("button"); b.className="btn sm"; b.style.background=LEVELS[to-1].c; b.textContent=to>L?"Move up ↑":"Go to Level "+to; b.onclick=()=>{ setLevel(to); }; d.appendChild(b); box.appendChild(d); }
 $("pCheck").onclick=submit; $("pAns").addEventListener("keydown",e=>{ if(e.key==="Enter"){ e.preventDefault(); done?newProblem():submit(); } });
+
+/* ---- chapter cheat sheet ---- */
+function cheatSheet(){
+  const old=document.querySelector(".csm"); if(old) old.remove();
+  const page=(document.querySelector(".intro .label")||{}).textContent||"";
+  const course=page.split("·")[0].trim();
+  const m=document.createElement("div"); m.className="csm";
+  m.innerHTML=`<div class="cs-sheet"><div class="cs-top"><div><h2>${$("chTitle").textContent}</h2><span class="sub">${course} · Cheat Sheet · Prof. Fang Math</span></div><div class="cs-acts"><button class="btn teal sm" id="csPrint">🖨 Print / Save PDF</button><button class="btn ghost sm" id="csClose">Close</button></div></div>
+    <div class="cs-grid">${CH.topics.map(t=>`<div class="cs-card"><h3>${t.title}</h3><div class="cs-idea">${t.idea}</div>${t.lesson&&t.lesson.steps&&t.lesson.steps.length?`<div class="cs-ex"><span class="lab">Example</span>${t.lesson.steps.map(s=>`<div>$${s[0]}$</div>`).join("")}</div>`:""}${t.lesson&&t.lesson.warn?`<div class="cs-warn"><span class="lab">Watch out</span>${t.lesson.warn}</div>`:""}</div>`).join("")}</div>
+    <div class="cs-foot">fangmath.com</div></div>`;
+  document.body.appendChild(m); render(m);
+  const close=()=>{ m.remove(); document.body.classList.remove("cs-printing"); };
+  m.querySelector("#csClose").onclick=close; m.onclick=e=>{ if(e.target===m) close(); };
+  m.querySelector("#csPrint").onclick=()=>{ document.body.classList.add("cs-printing"); window.print(); setTimeout(()=>document.body.classList.remove("cs-printing"),500); };
+  document.addEventListener("keydown",function esc(e){ if(e.key==="Escape"){ close(); document.removeEventListener("keydown",esc); } });
+}
+$("csBtn").onclick=cheatSheet;
 $("pNext").onclick=newProblem; $("closeP").onclick=()=>{ $("practice").hidden=true; };
 $("pHint").onclick=()=>{ if(done) return; firstTry=false; fb("hint","Hint",PR.hint); };
 $("pShow").onclick=()=>{ fb("hint","Solution",`$${PR.ansTex}$`+solHtml()); finish(false); };

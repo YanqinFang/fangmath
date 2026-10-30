@@ -570,8 +570,8 @@ const CHAPTERS=[
  ]}
 ]},
 {id:"ch12",title:"Radicals, Rational Expressions & Capstone",topics:[
- {id:"rad",title:"Simplifying Radicals",idea:"Pull out perfect-square factors: $\\sqrt{50} = \\sqrt{25 \\cdot 2} = 5\\sqrt{2}$.",
-  lesson:{steps:[["\\sqrt{72}","Find the largest perfect square factor."],["\\sqrt{36 \\cdot 2}","$36$ is a perfect square."],["6\\sqrt{2}","$\\sqrt{36} = 6$."]],warn:"Use the <b>largest</b> perfect square: $\\sqrt{72} = 2\\sqrt{18}$ is not fully simplified."},
+ {id:"rad",title:"Simplifying Radicals",idea:"A square root is a division in disguise: $\\sqrt{25} = 5$ because $25 \\div 5 = 5$ — the divisor gives itself back. Pull out perfect-square factors: $\\sqrt{50} = \\sqrt{25 \\cdot 2} = 5\\sqrt{2}$.",
+  lesson:{steps:[["\\sqrt{72}","Find the largest perfect square factor."],["\\sqrt{36 \\cdot 2}","$36$ is a perfect square."],["6\\sqrt{2}","$\\sqrt{36} = 6$, because $36 \\div 6 = 6$ — a square root is the divisor that gives itself back."]],warn:"Use the <b>largest</b> perfect square: $\\sqrt{72} = 2\\sqrt{18}$ is not fully simplified."},
   gen:[
   ()=>{const k=rnd(2,15);return{q:`Simplify $\\sqrt{${k*k}}$.`,type:"number",ans:k,ansTex:`${k}`,hint:"Which number times itself gives this?",sol:[`$${k} \\cdot ${k} = ${k*k}$.`]}},
   ()=>{const k=rnd(2,9),m=pick([2,3,5,6,7,10]);return{q:`Simplify $\\sqrt{${k*k*m}}$. (Type like 3sqrt(5).)`,type:"number",form:"rad",ans:k*Math.sqrt(m),ansTex:`${k}\\sqrt{${m}}`,hint:`Find a perfect square that divides $${k*k*m}$.`,sol:[`$\\sqrt{${k*k} \\cdot ${m}} = ${k}\\sqrt{${m}}$.`]}},

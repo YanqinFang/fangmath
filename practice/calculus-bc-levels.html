@@ -136,6 +136,24 @@ footer{text-align:center;color:var(--faint);font-size:13px;padding:24px}
   .wrap>.chapters .chap.on{background:var(--navy);color:#fff}
 }
 @media (min-width:1050px){ .wrap{grid-template-columns:260px minmax(0,1fr);gap:28px;padding-left:20px;padding-right:20px} }
+
+/* ---- compact level bar: one level for the whole chapter ---- */
+.lvbar{display:flex;flex-direction:column;gap:10px;padding:14px 18px}
+.lvtop{display:flex;flex-wrap:wrap;align-items:center;gap:10px 14px}
+.lvtop>.label{margin:0}
+.lvchips{display:flex;flex-wrap:wrap;gap:6px}
+.lvc{position:relative;display:inline-flex;align-items:center;gap:6px;border:1.5px solid var(--line);background:var(--surface);border-radius:999px;padding:4px 12px 4px 4px;font:inherit;font-size:13px;font-weight:600;color:var(--ink);cursor:pointer;line-height:1.2}
+.lvc i{font-style:normal;width:22px;height:22px;border-radius:50%;display:grid;place-items:center;font-size:12px;background:var(--bg);color:var(--c)}
+.lvc:hover{border-color:var(--c)}
+.lvc.on{background:var(--c);border-color:var(--c);color:#fff}
+.lvc.on i{background:rgba(255,255,255,.25);color:#fff}
+.lvc.star::after{content:"★";position:absolute;top:-7px;right:-3px;font-size:11px;color:var(--gold)}
+.lvsub{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px 14px;font-size:14px;color:var(--muted)}
+.lvsub b{color:var(--ink)}
+.lvsub .lvplace{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+#pLevels{display:none}
+.topic .tgo{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.topic .tgo small{color:var(--muted);font-size:13px}
 </style>
 </head>
 <body>
@@ -165,10 +183,9 @@ footer{text-align:center;color:var(--faint);font-size:13px;padding:24px}
   </div>
 
   <div id="practiceView" class="pview">
-    <div class="legend" id="legend"></div>
-    <div class="card place">
-      <div class="t"><b>Not sure where to start?</b><span id="recText"></span></div>
-      <button class="btn teal" id="placeBtn">Take the 5-question check</button>
+    <div class="card lvbar">
+      <div class="lvtop"><span class="label">Your level for this chapter</span><div class="lvchips" id="legend"></div></div>
+      <div class="lvsub"><span id="lvDesc"></span><span class="lvplace"><span id="recText"></span><button class="btn ghost sm" id="placeBtn">Take the 5-question check</button></span></div>
     </div>
     <div class="card practice" id="practice" hidden>
       <div class="phead"><h2 id="pTitle"></h2><button class="btn ghost sm" id="closeP">All topics</button></div>
@@ -555,17 +572,20 @@ function useChapter(id){ CH=CHAPTERS.find(c=>c.id===id)||CHAPTERS[0]; ST.cur=CH.
 function chapters(){ const b=$("chapters"); b.innerHTML="";
   ALLCH.forEach(([n,t,id])=>{ if(id&&CHAPTERS.some(c=>c.id===id)){ const x=document.createElement("button"); x.type="button"; x.className="chap"+(id===CH.id?" on":""); x.innerHTML=`<i>${n}</i>${t}`; x.onclick=()=>{ if(id!==CH.id) openChapter(id,"learn"); }; b.appendChild(x); }
     else { const x=document.createElement("span"); x.className="chap soon"; x.title="Coming soon"; x.innerHTML=`<i>${n}</i>${t}`; b.appendChild(x); } }); }
-function legend(){ $("legend").innerHTML=""; LEVELS.forEach(l=>{ const d=document.createElement("div"); d.className="lg"; d.style.setProperty("--c",l.c); d.innerHTML=`<b>${l.n} · ${l.name} ${l.zh}</b><span>${l.desc}</span>`; $("legend").appendChild(d); }); }
-function recText(){ $("recText").innerHTML=st.rec?`Suggested starting level for this chapter: <span class="rec">${st.rec} · ${LEVELS[st.rec-1].name}</span> ★ — you can always change it.`:"Answer up to 5 questions and we'll suggest a level for this chapter."; $("placeBtn").textContent=st.rec?"Retake the check":"Take the 5-question check"; }
+function legend(){ if(!st) return; const box=$("legend"); box.innerHTML=""; const cur=curLv(); LEVELS.forEach(l=>{ const b=document.createElement("button"); b.type="button"; b.className="lvc"+(l.n===cur?" on":"")+(st.rec===l.n?" star":""); b.style.setProperty("--c",l.c); b.title=l.desc; b.innerHTML=`<i>${l.n}</i>${l.name}`; b.onclick=()=>setLevel(l.n); box.appendChild(b); }); const L0=LEVELS[cur-1]; $("lvDesc").innerHTML=`<b style="color:${L0.c}">Level ${cur} · ${L0.name}</b> — ${L0.desc}. Every topic below uses this level.`; }
+
+function curLv(){ return st.lvl||st.rec||1; }
+function setLevel(n){ st.lvl=n; save(); if(T&&!$("practice").hidden){ L=n; streak=[]; newProblem(); } legend(); topics(); }
+function recText(){ $("recText").innerHTML=st.rec?`★ Suggested: Level ${st.rec}`:"Not sure?"; $("placeBtn").textContent=st.rec?"Retake the check":"Take the 5-question check"; }
 function pillsFor(t,cur,onPick){ const w=document.createElement("div"); w.className="pills";
   LEVELS.forEach(l=>{ const b=document.createElement("button"); b.type="button"; b.className="pill"+(l.n===cur?" on":"")+(st.rec===l.n?" star":""); b.style.setProperty("--c",l.c); const n=st.solved[t.id+l.n]||0; b.innerHTML=`${l.n} ${l.name}`+(n?`<span class="n">✓${n}</span>`:""); b.onclick=()=>onPick(l.n); w.appendChild(b); }); return w; }
-function topics(){ const box=$("topics"); box.innerHTML="";
-  CH.topics.forEach(t=>{ const c=document.createElement("div"); c.className="card topic"; const lvl=st.level[t.id]||st.rec||1;
-    c.innerHTML=`<h2>${t.title}</h2><p class="idea">${t.idea}</p><div class="example"><span class="label">Simplest example</span>${t.lesson.steps.map(s=>`<div class="q">$${s[0]}$</div>`).join("")}</div><span class="label">Practice at level</span>`;
-    c.appendChild(pillsFor(t,lvl,n=>startPractice(t,n)));
-    const go=document.createElement("button"); go.className="btn teal sm"; go.style.alignSelf="flex-start"; go.textContent=`Practice level ${lvl} →`; go.onclick=()=>startPractice(t,lvl); c.appendChild(go); box.appendChild(c); });
+function topics(){ const box=$("topics"); box.innerHTML=""; legend(); const lvl=curLv();
+  CH.topics.forEach(t=>{ const c=document.createElement("div"); c.className="card topic"; const n=st.solved[t.id+lvl]||0;
+    c.innerHTML=`<h2>${t.title}</h2><p class="idea">${t.idea}</p><div class="example"><span class="label">Simplest example</span>${t.lesson.steps.map(s=>`<div class="q">$${s[0]}$</div>`).join("")}</div>`;
+    const g=document.createElement("div"); g.className="tgo"; const go=document.createElement("button"); go.className="btn teal sm"; go.textContent="Practice →"; go.onclick=()=>startPractice(t,lvl); g.appendChild(go);
+    const sm=document.createElement("small"); sm.textContent=n?`✓ ${n} solved at Level ${lvl}`:`Level ${lvl} · ${LEVELS[lvl-1].name}`; g.appendChild(sm); c.appendChild(g); box.appendChild(c); });
   render(box); }
-function startPractice(t,n){ T=t; L=n; st.level[t.id]=n; save(); streak=[]; $("practice").hidden=false; $("pTitle").textContent=t.title; newProblem(); $("practice").scrollIntoView({behavior:"smooth",block:"start"}); topics(); }
+function startPractice(t,n){ n=curLv(); T=t; L=n; st.level[t.id]=n; save(); streak=[]; $("practice").hidden=false; $("pTitle").textContent=t.title; newProblem(); $("practice").scrollIntoView({behavior:"smooth",block:"start"}); topics(); }
 function levelPills(){ $("pLevels").replaceWith(Object.assign(pillsFor(T,L,n=>{ L=n; st.level[T.id]=n; save(); streak=[]; newProblem(); topics(); }),{id:"pLevels"})); }
 function newProblem(){
   PR=T.gen[L-1](); tries=0; done=false; firstTry=true;
@@ -588,7 +608,7 @@ function suggest(){ const box=$("pSuggest"); box.innerHTML=""; const last=streak
   if(L<5&&last.length===3&&last.every(Boolean)){ to=L+1; msg=`3 in a row on the first try! Ready for <b>Level ${L+1} · ${LEVELS[L].name}</b>?`; }
   else if(L>1&&last2.length===2&&last2.every(x=>!x)){ to=L-1; msg=`These are tough — that's okay! Practice <b>Level ${L-1} · ${LEVELS[L-2].name}</b> first, then come back stronger.`; }
   if(!to) return; const d=document.createElement("div"); d.className="suggest"; d.style.setProperty("--c",LEVELS[to-1].c); d.innerHTML=`<span>${msg}</span>`;
-  const b=document.createElement("button"); b.className="btn sm"; b.style.background=LEVELS[to-1].c; b.textContent=to>L?"Move up ↑":"Go to Level "+to; b.onclick=()=>{ L=to; st.level[T.id]=to; save(); streak=[]; newProblem(); topics(); }; d.appendChild(b); box.appendChild(d); }
+  const b=document.createElement("button"); b.className="btn sm"; b.style.background=LEVELS[to-1].c; b.textContent=to>L?"Move up ↑":"Go to Level "+to; b.onclick=()=>{ setLevel(to); }; d.appendChild(b); box.appendChild(d); }
 $("pCheck").onclick=submit; $("pAns").addEventListener("keydown",e=>{ if(e.key==="Enter"){ e.preventDefault(); done?newProblem():submit(); } });
 $("pNext").onclick=newProblem; $("closeP").onclick=()=>{ $("practice").hidden=true; };
 $("pHint").onclick=()=>{ if(done) return; firstTry=false; fb("hint","Hint",PR.hint); };
@@ -606,7 +626,7 @@ $("placeBtn").onclick=()=>{
   document.body.appendChild(m); const q=id=>m.querySelector("#"+id);
   const prog=()=>{ q("qp").innerHTML=PL.map((_,k)=>`<i class="${k<res.length?(res[k]?"ok":"no"):k===i?"now":""}"></i>`).join(""); };
   const ask=()=>{ const [t,lv]=PL[i]; pr=t.gen[lv-1](); q("qq").innerHTML=`<span class="label">Question ${i+1} of 5 · Level ${lv}</span><div>${pr.q}</div>`; render(q("qq")); q("qa").value=""; q("qh").textContent=HOW[pr.type]; q("qf").innerHTML=""; prog(); q("qa").focus(); };
-  const end=()=>{ const lvl=res.indexOf(false)===-1?5:res.indexOf(false)+1; st.rec=lvl; save(); recText(); topics(); prog();
+  const end=()=>{ const lvl=res.indexOf(false)===-1?5:res.indexOf(false)+1; st.rec=lvl; st.lvl=lvl; save(); recText(); topics(); prog();
     q("qq").innerHTML=`<span class="label">Result</span><div>Start at <b style="color:${LEVELS[lvl-1].c}">Level ${lvl} · ${LEVELS[lvl-1].name}</b>.</div><div style="font-size:15px;color:var(--muted)">${lvl===5?"You answered every question correctly — go for Competition!":lvl===1?"Foundation builds the base everything else needs. Move up whenever you get 3 in a row.":"You got the first "+(lvl-1)+" level"+(lvl===2?"":"s")+" right. Level "+lvl+" is the right challenge for you."}</div>`;
     q("qr").hidden=true; q("qh").textContent=""; q("qf").innerHTML=""; const b=document.createElement("button"); b.className="btn teal"; b.textContent="See the topics"; b.onclick=()=>m.remove(); q("qf").appendChild(b); };
   const answer=r=>{ res.push(r); if(!r){ end(); return; } i++; i>=PL.length?end():ask(); };

@@ -107,11 +107,24 @@ const GROUPS = {
 /* ---------------- COURSES ---------------- */
 const COURSES = [
   {
-    id: "g35", group: "K–8", title: "Grades 3–5", short: "3–5", color: "#0F7C7C",
-    blurb: "Multiplication, division, fractions and decimals — from area models to fluent methods.",
+    id: "grade3", group: "K–8", title: "Grade 3", short: "3", color: "#0F7C7C", cal: "grade3",
+    blurb: "Place value, multiplication and division facts, first fractions, area and perimeter.",
     units: [
-      { title: "Multiplication & Division", lessons: [
-        { title: "Multiplying 3-Digit by 1-Digit & Long Division", grade: "3–4",
+      { title: "1. Place Value, Addition & Subtraction", cal: { id: "grade3", weeks: [1, 4] }, lessons: [] },
+      { title: "2. Multiplication & Division Facts", cal: { id: "grade3", weeks: [5, 10] }, lessons: [] },
+      { title: "3. Multiplication Strategies & Word Problems", cal: { id: "grade3", weeks: [11, 15] }, lessons: [] },
+      { title: "4. Fractions", cal: { id: "grade3", weeks: [16, 20] }, lessons: [] },
+      { title: "5. Time, Measurement, Data & Area", cal: { id: "grade3", weeks: [21, 26] }, lessons: [] },
+      { title: "6. Perimeter, Shapes & Problem Solving", cal: { id: "grade3", weeks: [27, 31] }, lessons: [] },
+    ],
+  },
+  {
+    id: "grade4", group: "K–8", title: "Grade 4", short: "4", color: "#2E86AB", cal: "grade4",
+    blurb: "Multi-digit operations, factors, equivalent fractions, decimals, and angles.",
+    units: [
+      { title: "1. Place Value & Multi-Digit Addition", cal: { id: "grade4", weeks: [1, 4] }, lessons: [] },
+      { title: "2. Multiplication & Division", cal: { id: "grade4", weeks: [5, 10] }, lessons: [
+        { title: "Multiplying 3-Digit by 1-Digit & Long Division", grade: "4",
           notes: "files/multiply-divide-notes.pdf", worksheet: "files/multiply-divide-worksheet.pdf", answers: "files/multiply-divide-answer-key.pdf",
           summary: "Four ways to multiply (expanded form, area model, partial products, standard algorithm) and 2-digit ÷ 1-digit long division.",
           example: { q: "Find $347 \\times 6$ with the area model.",
@@ -125,21 +138,59 @@ const COURSES = [
             { q: "Find $84 \\div 4$.", answer: "21", simpler: "Split $84$ into $80 + 4$. What is $80 \\div 4$? $4 \\div 4$?" },
             { q: "What is $96 \\div 7$?", choices: ["$13$ R $5$", "$13$ R $4$", "$12$ R $12$", "$14$ R $2$"], answer: 0, simpler: "What is $7 \\times 13$? How far is that from $96$? (A remainder must be less than $7$.)" },
           ] },
-      ] },
-      { title: "Fractions", lessons: [] },
-      { title: "Decimals", lessons: [] },
-      { title: "Geometry & Measurement", lessons: [] },
+      ]  },
+      { title: "3. Factors, Patterns & Equivalent Fractions", cal: { id: "grade4", weeks: [11, 15] }, lessons: [] },
+      { title: "4. Fraction Operations & Decimals", cal: { id: "grade4", weeks: [16, 21] }, lessons: [] },
+      { title: "5. Measurement & Data", cal: { id: "grade4", weeks: [22, 25] }, lessons: [] },
+      { title: "6. Angles, Lines & Shapes", cal: { id: "grade4", weeks: [26, 31] }, lessons: [] },
     ],
   },
   {
-    id: "g68", group: "K–8", title: "Grades 6–8", short: "6–8", color: "#6A4BD8",
-    blurb: "Ratios, integers, equations and transformations — the bridge to Algebra.",
+    id: "grade5", group: "K–8", title: "Grade 5", short: "5", color: "#3D9A50", cal: "grade5",
+    blurb: "Decimals, all four fraction operations, volume, and the coordinate plane.",
     units: [
-      { title: "Ratios, Rates & Percents", lessons: [] },
-      { title: "Integers & Rational Numbers", lessons: [] },
-      { title: "Expressions & Equations", lessons: [] },
-      { title: "Transformations & Geometry", lessons: [] },
-      { title: "Statistics & Probability", lessons: [] },
+      { title: "1. Place Value & Decimals", cal: { id: "grade5", weeks: [1, 4] }, lessons: [] },
+      { title: "2. Multi-Digit & Decimal Operations", cal: { id: "grade5", weeks: [5, 10] }, lessons: [] },
+      { title: "3. Adding & Subtracting Fractions", cal: { id: "grade5", weeks: [11, 15] }, lessons: [] },
+      { title: "4. Multiplying & Dividing Fractions", cal: { id: "grade5", weeks: [16, 20] }, lessons: [] },
+      { title: "5. Measurement, Data & Volume", cal: { id: "grade5", weeks: [21, 26] }, lessons: [] },
+      { title: "6. Expressions, Patterns & Geometry", cal: { id: "grade5", weeks: [27, 31] }, lessons: [] },
+    ],
+  },
+  {
+    id: "grade6", group: "K–8", title: "Grade 6", short: "6", color: "#6A4BD8", cal: "grade6",
+    blurb: "Ratios and rates, rational numbers, expressions and equations, area and volume, statistics.",
+    units: [
+      { title: "1. Number Operations", cal: { id: "grade6", weeks: [1, 4] }, lessons: [] },
+      { title: "2. Fraction Division, Ratios & Rates", cal: { id: "grade6", weeks: [5, 10] }, lessons: [] },
+      { title: "3. Rational Numbers & the Coordinate Plane", cal: { id: "grade6", weeks: [11, 15] }, lessons: [] },
+      { title: "4. Expressions, Equations & Inequalities", cal: { id: "grade6", weeks: [16, 21] }, lessons: [] },
+      { title: "5. Area, Surface Area & Volume", cal: { id: "grade6", weeks: [22, 26] }, lessons: [] },
+      { title: "6. Statistics & Data", cal: { id: "grade6", weeks: [27, 31] }, lessons: [] },
+    ],
+  },
+  {
+    id: "grade7", group: "K–8", title: "Grade 7", short: "7", color: "#B7472A", cal: "grade7",
+    blurb: "Rational numbers, proportions and percents, equations and inequalities, geometry, probability.",
+    units: [
+      { title: "1. Operations with Rational Numbers", cal: { id: "grade7", weeks: [1, 4] }, lessons: [] },
+      { title: "2. Proportional Relationships & Percents", cal: { id: "grade7", weeks: [5, 10] }, lessons: [] },
+      { title: "3. Expressions, Equations & Inequalities", cal: { id: "grade7", weeks: [11, 15] }, lessons: [] },
+      { title: "4. Scale Drawings, Angles & Circles", cal: { id: "grade7", weeks: [16, 21] }, lessons: [] },
+      { title: "5. Area, Surface Area & Volume", cal: { id: "grade7", weeks: [22, 26] }, lessons: [] },
+      { title: "6. Probability & Statistics", cal: { id: "grade7", weeks: [27, 31] }, lessons: [] },
+    ],
+  },
+  {
+    id: "grade8", group: "K–8", title: "Grade 8", short: "8", color: "#C77C02", cal: "grade8",
+    blurb: "Exponents, linear equations and slope, functions and systems, transformations, Pythagorean theorem.",
+    units: [
+      { title: "1. Exponents & Real Numbers", cal: { id: "grade8", weeks: [1, 4] }, lessons: [] },
+      { title: "2. Linear Equations & Slope", cal: { id: "grade8", weeks: [5, 10] }, lessons: [] },
+      { title: "3. Functions & Systems", cal: { id: "grade8", weeks: [11, 15] }, lessons: [] },
+      { title: "4. Transformations, Congruence & Similarity", cal: { id: "grade8", weeks: [16, 21] }, lessons: [] },
+      { title: "5. The Pythagorean Theorem & Volume", cal: { id: "grade8", weeks: [22, 26] }, lessons: [] },
+      { title: "6. Data & Statistics", cal: { id: "grade8", weeks: [27, 31] }, lessons: [] },
     ],
   },
   {
@@ -481,7 +532,7 @@ const DECKS = [
     ["Change of base", "$\\log_b x = \\dfrac{\\ln x}{\\ln b}$"],
     ["Natural log", "$\\ln x = \\log_e x$, where $e \\approx 2.718$"],
   ] },
-  { id: "g35-mult", course: "Grades 3–5", title: "Multiplication Words", cards: [
+  { id: "g35-mult", course: "Grade 3", title: "Multiplication Words", cards: [
     ["Factor", "A number being multiplied. In $6 \\times 7 = 42$, $6$ and $7$ are factors."],
     ["Product", "The answer to a multiplication. In $6 \\times 7 = 42$, the product is $42$."],
     ["Partial products", "Split one factor by place value, multiply each part, then add: $23\\times4 = 80 + 12 = 92$."],

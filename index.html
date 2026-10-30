@@ -475,6 +475,8 @@ function route(){
   }
 }
 function routeInner(){
+  { const old = location.hash.match(/^#\/(course|lesson)\/(g35|g68)(\/.*)?$/);   // old combined Grades 3–5 / 6–8 courses
+    if (old) { location.replace(old[2] === "g35" && old[1] === "lesson" && /^\/0\/0/.test(old[3] || "") ? "#/lesson/grade4/1/0" + (old[3] || "").slice(4) : "#/course/" + (old[2] === "g35" ? "grade3" : "grade6")); return; } }
   $("nav").classList.remove("open");
   const parts = location.hash.replace(/^#\/?/, "").split("/").map(decodeURIComponent);
   const page = parts[0] || "home";
@@ -515,7 +517,7 @@ function levelsMeta(c){
 function courseCard(c){
   const n = lessonCount(c);
   return h("a", { class:"card course", href:"#/course/" + c.id, style:"--c:" + c.color },
-    h("div", { class:"meta" }, c.group === "K–8" ? "Grades " + c.short : (GROUPS[c.group] || {}).title || c.group), h("h3", {}, c.title), h("p", {}, c.blurb),
+    h("div", { class:"meta" }, c.group === "K–8" ? "Grade " + c.short : (GROUPS[c.group] || {}).title || c.group), h("h3", {}, c.title), h("p", {}, c.blurb),
     h("div", { class:"meta" }, c.levels ? levelsMeta(c) : c.units.length + " units · " + (n ? n + (n === 1 ? " lesson" : " lessons") : "lessons coming soon")),
     h("span", { class:"go" }, "Open course →"));
 }
@@ -580,9 +582,14 @@ function pageCourse(v, id){
     h("span", { class:"btn ghost" }, "Open →")));
   (c.extras || []).forEach(x => wrap.append(h("a", { class:"solve-hero", style:"margin:0 0 12px;max-width:none", href:x.href },
     h("span", { class:"ic", "aria-hidden":"true" }, x.ic), h("span", { class:"txt" }, h("b", {}, x.t), h("span", {}, x.d)), h("span", { class:"btn ghost" }, "Open →"))));
-  if (c.levels || c.app) wrap.append(h("div", { style:"height:10px" }));
+  if (c.cal) { const d = Object.values(GROUPS).flatMap(g => g.downloads || []).find(d => d.cal === c.cal);
+    wrap.append(h("div", { class:"solve-hero dl-hero", style:"margin:0 0 12px;max-width:none" },
+      h("span", { class:"ic", "aria-hidden":"true" }, "📅"), h("span", { class:"txt" }, h("b", {}, "Daily Practice Calendar"), h("span", {}, "34 weeks · Monday–Friday · 10 problems a day. Each unit below matches the calendar weeks.")),
+      h("span", { class:"dl-btns" }, h("a", { class:"btn ghost", href:"#/calendar/" + c.cal }, "Online calendar"), d ? h("a", { class:"btn teal", href:d.file, target:"_blank", rel:"noopener" }, "Download PDF") : null))); }
+  if (c.levels || c.app || c.cal) wrap.append(h("div", { style:"height:10px" }));
   c.units.forEach((u, ui) => {
     const learn = u.learn || [];
+    const calRow = u.cal ? h("a", { class:"lesson-row", href:`#/calendar/${u.cal.id}/${u.cal.weeks[0]}` }, h("span", {}, "📅"), h("span", { style:"font-weight:500" }, `Daily practice · Calendar weeks ${u.cal.weeks[0]}–${u.cal.weeks[1]}`), h("span", { class:"tags" }, h("span", { class:"tag", style:"background:var(--teal-soft);color:var(--teal)" }, "10 a day"))) : null;
     const lvRows = learn.map(l => h("div", { class:"lesson-row lv-row" },
       h("span", {}, "📘"),
       h("span", { style:"font-weight:500" }, learn.length > 1 || l.href !== c.levels ? l.t : "Lesson + practice at your level",
@@ -591,9 +598,9 @@ function pageCourse(v, id){
         h("a", { class:"btn sm teal", href:`${l.href}#ch${l.ch}-learn` }, "📖 Learn"),
         h("a", { class:"btn sm ghost", href:`${l.href}#ch${l.ch}-practice` }, "🎯 5 levels"))));
     const appRow = u.app ? h("a", { class:"lesson-row", href:`#/app/${c.id}/${ui}` }, h("span", {}, "🧩"), h("span", { style:"font-weight:500" }, (learn.length ? "More practice" : "Interactive practice") + (u.appTopics ? " · " + u.appTopics + " topics" : "")), h("span", { class:"tags" }, learn.length ? h("span", { class:"tag", style:"background:var(--gold-soft);color:#8A6415" }, "Score saved") : [h("span", { class:"tag", style:"background:var(--teal-soft);color:var(--teal)" }, "Learn"), h("span", { class:"tag", style:"background:var(--gold-soft);color:#8A6415" }, "Practice")])) : null;
-    const det = h("details", { class:"card unit", open: u.lessons.length || u.app || learn.length ? true : null },
+    const det = h("details", { class:"card unit", open: u.lessons.length || u.app || learn.length || u.cal ? true : null },
       h("summary", {}, h("span", {}, u.title), h("span", { style:"display:flex;gap:10px;align-items:center" }, h("span", { class:"n" }, learn.length ? (learn.length > 1 ? learn.length + " lessons" : "Learn + practice") : u.lessons.length ? u.lessons.length + (u.lessons.length === 1 ? " lesson" : " lessons") : u.app ? "Practice app" : "Coming soon"), h("span", { class:"chev" }, "›"))),
-      h("div", { class:"lessons" }, lvRows, appRow, u.lessons.length ? u.lessons.map((l, li) => h("a", { class:"lesson-row", href:`#/lesson/${c.id}/${ui}/${li}` },
+      h("div", { class:"lessons" }, calRow, lvRows, appRow, u.lessons.length ? u.lessons.map((l, li) => h("a", { class:"lesson-row", href:`#/lesson/${c.id}/${ui}/${li}` },
         h("span", {}, "📄"), h("span", { style:"font-weight:500" }, l.title),
         h("span", { class:"tags" }, l.video ? h("span", { class:"tag v" }, "▶ Video") : null, l.notes ? h("span", { class:"tag" }, "Notes") : null, l.worksheet ? h("span", { class:"tag" }, "Worksheet") : null, l.answers ? h("span", { class:"tag" }, "Answers") : null)))
         : u.app || learn.length ? null : h("div", { class:"soon" }, "Lessons for this unit are on the way.")));

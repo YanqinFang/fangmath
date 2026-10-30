@@ -42,6 +42,13 @@
   .smem{display:grid;gap:8px} .smem>div{border:1px solid var(--line);border-radius:12px;padding:9px 13px;background:#fff;font-size:15px} .smem .x{color:var(--muted);font-size:14px;margin-top:3px}
   .howmem{background:var(--teal-soft);border-radius:12px;padding:10px 14px;margin:10px 0 0;font-size:14.5px}
   .sund{margin:4px 0 0;padding-left:22px;font-size:15px;line-height:1.6}
+  #words,#ready,#road,#practiceView{scroll-margin-top:80px}
+  .chroute{background:#fff;border:1px solid var(--line);border-radius:16px;padding:12px 14px;margin:0 0 14px;box-shadow:var(--shadow)}
+  .chroute .rk{font-size:14px;color:var(--ink);margin-bottom:8px} .chroute .rk span{color:var(--muted)}
+  .chroute .rs{display:flex;flex-wrap:wrap;align-items:center;gap:6px} .chroute .rs>span{color:var(--faint)}
+  .chroute button{display:flex;align-items:center;gap:7px;border:1px solid var(--line);background:var(--bg);border-radius:999px;padding:6px 12px 6px 6px;font:inherit;font-size:13.5px;font-weight:600;color:var(--ink);cursor:pointer}
+  .chroute button:hover{border-color:var(--teal);background:var(--teal-soft)}
+  .chroute button i{font-style:normal;width:22px;height:22px;border-radius:50%;background:var(--navy);color:#fff;display:grid;place-items:center;font-size:12px}
   `;
   const st = document.createElement("style"); st.textContent = css; document.head.appendChild(st);
 
@@ -467,7 +474,8 @@
     const known = load(), mine = known[chId] || [];
     if (!box) { box = document.createElement("details"); box.id = "words"; box.className = "words"; lv.insertBefore(box, lv.firstChild); }
     box.open = !(known["_seen_" + chId]);
-    box.innerHTML = `<summary><span style="font-size:24px">📘</span><div><b>Words &amp; Postulates — start here</b><br><span>${w.sub}</span></div><i>›</i></summary>
+    const g = STUDY[chId], nPost = w.posts.length, pw = (w.postTitle || "Postulates").split(/[ —&]/)[0].toLowerCase();
+    box.innerHTML = `<summary><span style="font-size:24px">📘</span><div><b>Start here: Words &amp; Postulates</b><br><span>${w.cards.length} concepts · ${nPost} ${pw === "postulates" ? "postulates" : "key facts"} · ${w.vocab.length} words to know — ${w.sub}</span></div><i>›</i></summary>
       <div class="wb">
         <div class="intro">${w.intro}</div>
         <h4>👀 See it → 🗣 Say it → ✏️ Write it</h4>
@@ -479,6 +487,10 @@
         <h4>📝 Words to know <span style="font-size:14px;font-family:Inter;color:var(--muted);font-weight:500">— tick each word you can explain in your own words</span></h4>
         <div class="vocab">${w.vocab.map(v => `<label><input type="checkbox" value="${v}" ${mine.includes(v) ? "checked" : ""}>${v}</label>`).join("")}</div>
         <div id="vocabN" style="font-size:13.5px;color:var(--muted);margin-top:6px"></div>
+        ${g ? `<h4>🧠 What to memorize — and how</h4>
+        <div class="smem">${g.mem.map(([a, b]) => `<div><div class="t">${a}</div><div class="x">💡 ${b}</div></div>`).join("")}</div>
+        <div class="howmem">${HOWMEM}</div>
+        <h4>🔍 Understand — don't just memorize</h4><ul class="sund">${g.und.map(x => `<li>${x}</li>`).join("")}</ul>` : ""}
         <h4>✅ Quick check</h4>
         ${w.checks.map(([q, a]) => `<div class="qc">${q}<button type="button">Show answer</button><div class="a" hidden>${a}</div></div>`).join("")}
       </div>`;
@@ -581,30 +593,33 @@
   const HOWMEM = "<b>How to memorize with understanding:</b> ① picture it or draw it → ② say <i>why</i> it's true → ③ cover it and write it from memory → ④ review on day 1, 3 and 7 (the Mistake Log does this for missed problems).";
 
   function drawStudy(chId) {
-    const lv = document.getElementById("learnView"); if (!lv) return;
-    let box = document.getElementById("study"); const g = STUDY[chId];
-    if (!g) { if (box) box.remove(); return; }
-    const k = load();
-    if (!box) { box = document.createElement("details"); box.id = "study"; box.className = "words study"; }
-    lv.insertBefore(box, lv.firstChild);
-    box.open = !(k["_sseen_" + chId]);
-    const ready = k["_ready_" + chId] || [];
-    box.innerHTML = `<summary><span style="font-size:24px">🧭</span><div><b>How to study this chapter</b><br><span>${g.kind}</span></div><i>›</i></summary>
+    const old = document.getElementById("study"); if (old) old.remove();
+    const g = STUDY[chId], tabs = document.querySelector(".tabs[role=tablist]"), pv = document.getElementById("practiceView");
+    let r = document.getElementById("chroute");
+    if (!g || !tabs) { if (r) r.remove(); return; }
+    if (!r) { r = document.createElement("div"); r.id = "chroute"; r.className = "chroute"; tabs.parentNode.insertBefore(r, tabs); }
+    r.innerHTML = `<div class="rk">🧭 This chapter: <b>${g.kind}</b> <span>${g.why}</span></div>
+      <div class="rs"><button type="button" data-s="1"><i>1</i>Start here: words &amp; postulates</button><span>→</span><button type="button" data-s="2"><i>2</i>Stories &amp; lessons</button><span>→</span><button type="button" data-s="3"><i>3</i>Practice at your level</button><span>→</span><button type="button" data-s="4"><i>4</i>Ready for the test?</button></div>`;
+    const go = el => { if (el) setTimeout(() => el.scrollIntoView({ behavior: "smooth", block: "start" }), 60); };
+    r.querySelectorAll("button").forEach(b => b.onclick = () => { const n = +b.dataset.s;
+      if (n === 1) { setTab("learn"); const w = document.getElementById("words"); if (w) { w.open = true; go(w); } }
+      else if (n === 2) { setTab("learn"); const w = document.getElementById("words"); if (w) w.open = false; go(document.getElementById("road")); }
+      else if (n === 3) { setTab("practice"); go(document.getElementById("practiceView")); }
+      else { setTab("practice"); const rd = document.getElementById("ready"); if (rd) { rd.open = true; go(rd); } } });
+    /* step 4: traps + checklist, at the top of the practice tab */
+    let box = document.getElementById("ready");
+    if (!pv) return;
+    if (!box) { box = document.createElement("details"); box.id = "ready"; box.className = "words study"; pv.insertBefore(box, pv.firstChild); }
+    const k = load(), ready = k["_ready_" + chId] || [];
+    box.open = false;
+    box.innerHTML = `<summary><span style="font-size:22px">✅</span><div><b>Ready for the test?</b><br><span>Common traps and a ${g.ready.length}-point checklist</span></div><i>›</i></summary>
       <div class="wb">
-        <div class="intro">${g.why}</div>
-        <h4>👣 Study in this order</h4><ol class="sstep">${g.steps.map(x => `<li>${x}</li>`).join("")}</ol>
-        <h4>🧠 Memorize — but understand first</h4>
-        <div class="smem">${g.mem.map(([a, b]) => `<div><div class="t">${a}</div><div class="x">💡 ${b}</div></div>`).join("")}</div>
-        <div class="howmem">${HOWMEM}</div>
-        <h4>🔍 Understand — don't memorize</h4><ul class="sund">${g.und.map(x => `<li>${x}</li>`).join("")}</ul>
         <h4>⚠️ Common traps</h4><ul class="sund">${g.traps.map(x => `<li>${x}</li>`).join("")}</ul>
-        <h4>✅ I'm ready for the test when…</h4>
+        <h4>✅ I'm ready when…</h4>
         <div class="vocab sready">${g.ready.map(x => `<label><input type="checkbox" value="${x.replace(/"/g, "&quot;")}" ${ready.includes(x) ? "checked" : ""}>${x}</label>`).join("")}</div>
       </div>`;
     box.querySelectorAll(".sready input").forEach(i => i.onchange = () => { const s2 = load(); s2["_ready_" + chId] = [...box.querySelectorAll(".sready input:checked")].map(x => x.value); save(s2); });
-    box.addEventListener("toggle", () => { const s2 = load(); s2["_sseen_" + chId] = !box.open; save(s2); });
-    if (window.renderMathInElement) renderMathInElement(box, { delimiters: [{ left: "$", right: "$", display: false }], throwOnError: false });
-    else setTimeout(() => drawStudy(chId), 300);
+    if (window.renderMathInElement) { renderMathInElement(box, { delimiters: [{ left: "$", right: "$", display: false }], throwOnError: false }); renderMathInElement(r, { delimiters: [{ left: "$", right: "$", display: false }], throwOnError: false }); }
   }
 
   if (typeof openChapter === "function") {

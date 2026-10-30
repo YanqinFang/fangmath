@@ -1,0 +1,829 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Precalculus: Learn &amp; Practice — Prof. Fang Math</title>
+<meta name="description" content="Precalculus chapter by chapter: learn each idea from the simplest example, then practice in five levels from Foundation to Competition.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/mathjs@14.9.1/lib/browser/math.js"></script>
+<style>
+:root{
+  --bg:#FBF8F3; --surface:#FFFFFF; --ink:#16233B; --muted:#5B6474; --faint:#8C93A0; --line:#E8E2D8;
+  --navy:#1F3A68; --teal:#0F7C7C; --teal-soft:#DDF0EE; --gold:#C9962B; --gold-soft:#FBF1DC; --red:#B3261E; --red-soft:#FBE7E5; --green:#1E7A45; --green-soft:#DDF4E6;
+  --l1:#2E8B57; --l2:#0F7C7C; --l3:#1F3A68; --l4:#B7472A; --l5:#6A4BD8;
+  --radius:18px; --shadow:0 8px 26px rgba(22,35,59,.07);
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 Inter,system-ui,-apple-system,sans-serif;-webkit-font-smoothing:antialiased}
+a{color:var(--teal)}
+h1,h2,h3{font-family:Fraunces,Georgia,serif;font-weight:600;letter-spacing:-.01em;margin:0;line-height:1.15}
+button,input{font:inherit;color:inherit}
+[hidden]{display:none!important}
+header.top{position:sticky;top:0;z-index:40;background:rgba(255,255,255,.96);border-bottom:1px solid var(--line)}
+header.top .in{max-width:1120px;margin:0 auto;padding:0 20px;height:64px;display:flex;align-items:center;gap:24px}
+.brand{font-weight:700;font-size:19px;text-decoration:none;color:var(--ink);white-space:nowrap}
+.brand span{color:var(--teal)}
+.back{margin-left:auto;font-size:15px;text-decoration:none;color:var(--muted);font-weight:500}
+.wrap{max-width:1120px;margin:0 auto;padding:24px 20px 48px;display:flex;flex-direction:column;gap:20px}
+.intro h1{font-size:clamp(28px,4vw,40px)}
+.intro p{color:var(--muted);margin:6px 0 0;max-width:680px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:20px}
+.label{font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--faint);font-weight:700}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:10px 18px;border-radius:999px;font-weight:600;border:1px solid transparent;cursor:pointer;background:var(--navy);color:#fff;text-decoration:none}
+.btn.teal{background:var(--teal)} .btn.ghost{background:var(--surface);color:var(--ink);border-color:var(--line)}
+.btn.sm{padding:7px 14px;font-size:14px}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+button:focus-visible,input:focus{outline:2px solid var(--teal);outline-offset:1px}
+/* level legend */
+.legend{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px}
+@media (max-width:760px){.legend{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.lg{border-radius:12px;padding:10px 12px;background:var(--bg);border-left:4px solid var(--c)}
+.lg b{display:block;font-size:14px;color:var(--c)} .lg span{font-size:13px;color:var(--muted)}
+/* placement */
+.place{display:flex;flex-wrap:wrap;gap:14px;align-items:center;justify-content:space-between;background:linear-gradient(120deg,var(--teal-soft),#fff 70%);border:1.5px solid var(--teal)}
+.place .t b{font-family:Fraunces,Georgia,serif;font-size:20px;display:block}
+.place .t span{color:var(--muted);font-size:15px}
+.rec{font-weight:600;color:var(--teal)}
+/* topics */
+.topics{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+@media (max-width:760px){.topics{grid-template-columns:minmax(0,1fr)}}
+.topic{display:flex;flex-direction:column;gap:12px}
+.topic h2{font-size:22px}
+.idea{color:var(--muted);font-size:15px;margin:0}
+.example{background:var(--bg);border-radius:12px;padding:12px 14px;font-size:15px;overflow-x:auto}
+.example .q{font-size:17px;margin-bottom:4px}
+.pills{display:flex;flex-wrap:wrap;gap:6px}
+.pill{position:relative;border:1.5px solid var(--line);background:var(--surface);border-radius:999px;padding:6px 12px;font-size:13px;font-weight:600;cursor:pointer;color:var(--ink)}
+.pill:hover{border-color:var(--c)}
+.pill.on{background:var(--c);border-color:var(--c);color:#fff}
+.pill .n{font-weight:500;opacity:.75;margin-left:4px}
+.pill.star::after{content:"★";position:absolute;top:-8px;right:-4px;font-size:12px;color:var(--gold)}
+/* practice */
+.practice{display:flex;flex-direction:column;gap:14px;scroll-margin-top:80px}
+.phead{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between}
+.phead h2{font-size:24px}
+.problem{font-size:clamp(19px,2.6vw,24px);padding:16px 18px;border-radius:14px;background:var(--bg);overflow-x:auto;line-height:1.7}
+.row{display:flex;gap:8px;flex-wrap:wrap}
+.row input{flex:1 1 240px;border:1px solid var(--line);border-radius:999px;padding:11px 16px;background:var(--bg)}
+.preview{font-size:18px;min-height:1.4em}
+.preview .pl{font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--faint);font-weight:700;margin-right:8px}
+.howto{font-size:13px;color:var(--faint)}
+.fb{border-radius:12px;padding:10px 14px;font-size:15px;overflow-x:auto}
+.fb.good{background:var(--green-soft)} .fb.bad{background:var(--red-soft)} .fb.hint{background:var(--gold-soft)}
+.fb .tag{display:block;font-size:11px;text-transform:uppercase;letter-spacing:.08em;font-weight:700}
+.fb.good .tag{color:var(--green)} .fb.bad .tag{color:var(--red)} .fb.hint .tag{color:var(--gold)}
+.sol{margin:6px 0 0;padding-left:20px} .sol li{margin:2px 0}
+.suggest{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;border:1.5px dashed var(--c);border-radius:12px;padding:10px 14px}
+.streak{display:flex;gap:4px;align-items:center;font-size:13px;color:var(--faint)}
+.streak i{width:10px;height:10px;border-radius:50%;background:var(--line)} .streak i.ok{background:var(--green)} .streak i.no{background:var(--red)}
+/* modal quiz */
+.modal{position:fixed;inset:0;background:rgba(22,35,59,.45);display:grid;place-items:center;padding:16px;z-index:60}
+.modal .card{width:min(620px,100%);max-height:90vh;overflow:auto;display:flex;flex-direction:column;gap:14px}
+.qprog{display:flex;gap:6px} .qprog i{flex:1;height:6px;border-radius:3px;background:var(--line)} .qprog i.ok{background:var(--green)} .qprog i.no{background:var(--red)} .qprog i.now{background:var(--teal)}
+.tabs{display:flex;gap:6px;flex-wrap:wrap;border-bottom:1px solid var(--line);padding-bottom:0}
+.tab{border:none;background:none;padding:10px 16px;font-weight:600;font-size:16px;color:var(--muted);cursor:pointer;border-bottom:3px solid transparent;margin-bottom:-1px}
+.tab.on{color:var(--teal);border-bottom-color:var(--teal)}
+.learn,.pview{display:flex;flex-direction:column;gap:20px}
+.road{display:flex;gap:8px;flex-wrap:wrap}
+.stop{display:flex;align-items:center;gap:8px;border:1.5px solid var(--line);background:var(--surface);border-radius:999px;padding:6px 14px 6px 6px;cursor:pointer;font-size:14px;font-weight:600;color:var(--ink)}
+.stop i{font-style:normal;width:24px;height:24px;border-radius:50%;display:grid;place-items:center;background:var(--bg);font-size:12px;border:1.5px solid var(--line)}
+.stop.done i{background:var(--green);border-color:var(--green);color:#fff}
+.stop.on{border-color:var(--teal);background:var(--teal-soft)}
+.lesson{display:flex;flex-direction:column;gap:16px;scroll-margin-top:80px}
+.lesson h2{font-size:clamp(24px,3vw,30px)}
+.big{font-size:18px;background:var(--teal-soft);border-radius:14px;padding:14px 16px;overflow-x:auto}
+.big b{color:var(--teal)}
+.steps{display:flex;flex-direction:column;gap:8px;margin:0;padding:0;list-style:none;counter-reset:k}
+.steps li{counter-increment:k;display:grid;grid-template-columns:30px minmax(0,1fr);gap:10px;align-items:start;background:var(--bg);border-radius:12px;padding:10px 12px;animation:pop .25s ease}
+.steps li::before{content:counter(k);width:26px;height:26px;border-radius:50%;background:var(--navy);color:#fff;display:grid;place-items:center;font-size:13px;font-weight:700}
+.steps .m{font-size:19px;overflow-x:auto} .steps .w{font-size:14px;color:var(--muted)}
+@keyframes pop{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){.steps li{animation:none}}
+.warn{background:var(--red-soft);border-radius:14px;padding:12px 16px;font-size:15px;overflow-x:auto}
+.warn b{color:var(--red)}
+.turn{border:1.5px solid var(--gold);border-radius:14px;padding:14px 16px;display:flex;flex-direction:column;gap:10px}
+.turn .q{font-size:19px;overflow-x:auto}
+.lnav{display:flex;gap:8px;flex-wrap:wrap;justify-content:space-between}
+footer{text-align:center;color:var(--faint);font-size:13px;padding:24px}
+.chapters{display:flex;flex-wrap:wrap;gap:8px}
+.chap{display:flex;align-items:center;gap:8px;border:1.5px solid var(--line);background:var(--surface);border-radius:999px;padding:5px 14px 5px 5px;font-size:14px;font-weight:600;color:var(--ink);cursor:pointer}
+.chap i{font-style:normal;width:24px;height:24px;border-radius:50%;display:grid;place-items:center;background:var(--bg);font-size:12px}
+.chap.on{background:var(--navy);border-color:var(--navy);color:#fff} .chap.on i{background:rgba(255,255,255,.2)}
+.chap.soon{opacity:.45;cursor:default}
+.fig{display:block;width:100%;max-width:360px;height:auto;margin:4px 0 8px}
+.problem .fig{max-width:340px}
+.mc{display:grid;gap:6px;margin-top:10px;font-size:.92em}
+.mc div{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:6px 10px}
+.mc div{cursor:pointer} .mc div:hover{border-color:var(--teal)} .mc div.sel{border-color:var(--teal);background:var(--teal-soft)}
+</style>
+</head>
+<body>
+<header class="top"><div class="in">
+  <a class="brand" href="../index.html#/">Prof. Fang <span>Math</span></a>
+  <a class="back" href="../index.html#/highschool">← Back to lessons</a>
+</div></header>
+
+<div class="wrap">
+  <div class="intro">
+    <span class="label">Precalculus · Learn &amp; Practice at Your Level</span>
+    <h1 id="chTitle">Precalculus</h1>
+    <p>Pick a chapter. First learn each idea from the simplest example, then practice at the level that fits you and move up when you're ready.</p>
+  </div>
+
+  <div class="chapters" id="chapters" aria-label="Chapters"></div>
+
+  <div class="tabs" role="tablist">
+    <button class="tab" id="tabLearn" role="tab">① Learn the ideas</button>
+    <button class="tab" id="tabPractice" role="tab">② Practice at your level</button>
+  </div>
+
+  <div id="learnView" class="learn">
+    <div class="road" id="road"></div>
+    <div class="card lesson" id="lesson"></div>
+  </div>
+
+  <div id="practiceView" class="pview">
+    <div class="legend" id="legend"></div>
+    <div class="card place">
+      <div class="t"><b>Not sure where to start?</b><span id="recText"></span></div>
+      <button class="btn teal" id="placeBtn">Take the 5-question check</button>
+    </div>
+    <div class="card practice" id="practice" hidden>
+      <div class="phead"><h2 id="pTitle"></h2><button class="btn ghost sm" id="closeP">All topics</button></div>
+      <div class="pills" id="pLevels"></div>
+      <div class="problem" id="pQ"></div>
+      <div class="row">
+        <input type="text" id="pAns" autocomplete="off" placeholder="Your answer" aria-label="Your answer">
+        <button class="btn" id="pCheck">Check</button>
+        <button class="btn ghost" id="pHint">Hint</button>
+        <button class="btn ghost" id="pShow" hidden>Show solution</button>
+        <button class="btn teal" id="pNext" hidden>Next problem →</button>
+      </div>
+      <div class="preview" id="pPrev"></div>
+      <div class="howto" id="pHow"></div>
+      <div id="pFb"></div>
+      <div id="pSuggest"></div>
+      <div class="streak" id="pStreak"></div>
+    </div>
+    <div class="topics" id="topics"></div>
+  </div>
+</div>
+<footer>© 2026 Prof. Fang Math</footer>
+
+<script>
+"use strict";
+/* ================= helpers ================= */
+const $=id=>document.getElementById(id);
+const rnd=(a,b)=>a+Math.floor(Math.random()*(b-a+1));
+const nz=(a,b)=>{let x;do{x=rnd(a,b)}while(x===0);return x};
+const pick=a=>a[Math.floor(Math.random()*a.length)];
+const gcd=(a,b)=>{a=Math.abs(a);b=Math.abs(b);while(b){[a,b]=[b,a%b]}return a};
+const sg=k=>k>=0?"+ "+k:"- "+(-k);            // "+ 3" / "- 3"
+const P=n=>n<0?"("+n+")":String(n);            // wrap negatives
+function co(a,v){ return (a===1?"":a===-1?"-":String(a))+v; }   // coefficient with variable
+function lin(a,b,v="x"){ if(a===0) return String(b); let s=co(a,v); if(b) s+=" "+sg(b); return s; }
+function cterm(a,v){ return (a<0?"- ":"+ ")+(Math.abs(a)===1?"":Math.abs(a))+v; } // signed term for middle
+function frac(n,d){ if(d<0){n=-n;d=-d} const g=gcd(n,d)||1; n/=g; d/=g; return d===1?String(n):(n<0?"-":"")+"\\frac{"+Math.abs(n)+"}{"+d+"}"; }
+const OPT={"<":"<","<=":"\\le",">":">",">=":"\\ge"}; const FLIP={"<":">","<=":">=",">":"<",">=":"<="};
+const pt=(x,y)=>`(${x}, ${y})`;
+const sq2=h=>`(x ${sg(-h)})^2`;
+function ptex(cs,v="x"){ const n=cs.length-1; let t=""; cs.forEach((c,i)=>{ const d=n-i; if(!c) return; const a=Math.abs(c), vv=d===0?"":d===1?v:v+"^{"+d+"}", cf=(a===1&&d>0)?"":String(a); t+=t?(c<0?" - ":" + "):(c<0?"-":""); t+=cf+vv; }); return t||"0"; }
+function pstr(cs){ const n=cs.length-1; return cs.map((c,i)=>`(${c})*x^${n-i}`).join("+"); }
+function pmul(a,b){ const r=Array(a.length+b.length-1).fill(0); a.forEach((x,i)=>b.forEach((y,j)=>r[i+j]+=x*y)); return r; }
+function radParts(n){ let k=1,m=n; for(let i=Math.floor(Math.sqrt(n));i>1;i--){ if(n%(i*i)===0){ k=i; m=n/(i*i); break; } } return [k,m]; }
+function rad(n){ const [k,m]=radParts(n); return m===1?String(k):(k===1?"":k)+"\\sqrt{"+m+"}"; }
+function radTex(c,n){ const [k,m]=radParts(n); const K=c*k; return m===1?String(K):(K===1?"":K)+"\\sqrt{"+m+"}"; }
+const divisors=n=>{n=Math.abs(n);const d=[];for(let i=1;i<=n;i++) if(n%i===0) d.push(i);return d;};
+const LEVELS=[
+ {n:1,name:"Foundation",zh:"起步",desc:"Review the basics first",c:"var(--l1)"},
+ {n:2,name:"Basic",zh:"基础",desc:"Textbook examples",c:"var(--l2)"},
+ {n:3,name:"Standard",zh:"标准",desc:"School test level",c:"var(--l3)"},
+ {n:4,name:"Challenge",zh:"挑战",desc:"Honors / hard SAT",c:"var(--l4)"},
+ {n:5,name:"Competition",zh:"竞赛",desc:"MATHCOUNTS / AMC 8–10 style",c:"var(--l5)"}];
+const HOW={point:"Type an ordered pair like (3, -2). Vectors can be typed like <3, -2>. Radicals are fine: 2sqrt(3).",cplx:"Type a complex number like 3-2i (fractions are fine).",croots:"List every solution separated by commas, like 2+3i, 2-3i (± is fine: 2±3i).",matrix:"Type the matrix row by row, like [[1, 2], [3, 4]] or 1 2; 3 4.",mc:"Click a choice or type its letter, then press Check.",word:"Type your answer as a word or abbreviation.",roots:"Give every solution, separated by commas: 3, -2. Use sqrt(5) for √5; ± is fine: 2±sqrt(3).",nsol:"Type one, none, or infinitely many.",point:"Type a point like (2, -5).",yn:"Type yes or no.",list:"List the values separated by commas, like -2, 0, 5.",line:"Type an equation like y = 2x + 3 (any correct form works).",number:"Type a number. Fractions like 9/4 are fine.",set:"Type the value, like 4 or x = 4.",expr:"Type an expression like 7x - 1 or (c - b)/a.",
+  ineq:"Type like x > 3 or x <= -2 (≤ and ≥ work too).",between:"Type like -2 < x <= 4.",or:"Type like x < -5 or x > 3."};
+const ineqTex=(op,v)=>`x ${OPT[op]} ${v}`;
+
+/* ================= chapters =================
+   generators return {q, type, ans, ansTex, hint, sol[]} */
+const sq=(h,v="x")=>h===0?v+"^2":"("+v+" "+sg(-h)+")^2";
+const deg=v=>`${v}^\\circ`;
+function mcQ(stem,correct,wrong,hint,sol){ const opts=[correct,...wrong].map((t,i)=>({t,ok:i===0})).sort(()=>Math.random()-.5); const L="ABCDE"; const ans=L[opts.findIndex(o=>o.ok)];
+  return {q:`${stem}<div class="mc">${opts.map((o,i)=>`<div><b>${L[i]}.</b> ${o.t}</div>`).join("")}</div>`,type:"mc",ans,ansTex:`\\text{${ans}}`,hint,sol:[...sol,`Answer: <b>${ans}</b>.`]}; }
+const fact=n=>n<=1?1:n*fact(n-1); const nPr=(n,r)=>fact(n)/fact(n-r), nCr=(n,r)=>fact(n)/(fact(r)*fact(n-r));
+const r2=v=>Math.round(v*100)/100, r1=v=>Math.round(v*10)/10;
+const cx=(a,b)=>b===0?String(a):(a===0?"":a+(b>0?" + ":" - "))+(a===0&&b<0?"-":"")+(Math.abs(b)===1?"":Math.abs(b))+"i";
+const fr=(n,d)=>frac(n,d);
+function piTex(n,d){ if(d<0){n=-n;d=-d} if(n===0) return "0"; const g=gcd(n,d)||1; n/=g; d/=g; const top=(n===1?"":n===-1?"-":n)+"\\pi"; return d===1?top:(n<0?"-":"")+"\\dfrac{"+(Math.abs(n)===1?"":Math.abs(n))+"\\pi}{"+d+"}"; }
+function numTex(v){ if(Math.abs(v)<1e-12) return "0"; const s=v<0?"-":"", a=Math.abs(v);
+  for(const b of [1,2,3,5,6,7,10,11,13]) for(let q=1;q<=100;q++){ const k=a*q/Math.sqrt(b), kr=Math.round(k); if(kr>0&&Math.abs(k-kr)<1e-9){ const g=gcd(kr,q), K=kr/g, Q=q/g; const top=b===1?String(K):(K===1?"":K)+"\\sqrt{"+b+"}"; return s+(Q===1?top:"\\dfrac{"+top+"}{"+Q+"}"); } }
+  return String(Math.round(v*1000)/1000); }
+const angTex=t=>piTex(Math.round(t/Math.PI*24),24);
+const R=d=>d*Math.PI/180, D=r=>r*180/Math.PI;
+const sinD=d=>Math.sin(R(d)), cosD=d=>Math.cos(R(d)), tanD=d=>Math.tan(R(d));
+function cTex(re,im){ if(Math.abs(im)<1e-9) return numTex(re); const a=Math.abs(re)<1e-9?"":numTex(re); const m=Math.abs(im), mt=Math.abs(m-1)<1e-9?"":numTex(m); return a+(a?(im<0?" - ":" + "):(im<0?"-":""))+mt+"i"; }
+function sols(f,N=48){ const out=[]; for(let k=0;k<N;k++){ const t=k*2*Math.PI/N; if(Math.abs(f(t))<1e-9) out.push(t); } return out; }
+const solTex=a=>a.map(angTex).join(",\\ ");
+const vtex=(a,b)=>`\\langle ${a}, ${b} \\rangle`;
+const TRIP=[[3,4,5],[5,12,13],[8,15,17],[7,24,25],[6,8,10],[9,12,15],[20,21,29]];
+function terms(arr){ let t=""; arr.forEach(([c,v])=>{ if(!c) return; const a=Math.abs(c), cf=(a===1&&v)?"":String(a); t+=t?(c<0?" - ":" + "):(c<0?"-":""); t+=cf+v; }); return t||"0"; }
+const SPECIAL=[[0,"0"],[0.5,"\\tfrac12"],[Math.SQRT1_2,"\\tfrac{\\sqrt2}{2}"],[Math.sqrt(3)/2,"\\tfrac{\\sqrt3}{2}"],[1,"1"]];
+const TANV=[[0,"0"],[Math.sqrt(3)/3,"\\tfrac{\\sqrt3}{3}"],[1,"1"],[Math.sqrt(3),"\\sqrt3"]];
+const QN=["I","II","III","IV"];
+
+const CHAPTERS=[
+/* ===================== 1 ===================== */
+{id:"ch1",title:"Functions and Their Graphs",topics:[
+ {id:"dom",title:"Function Values & Domain",idea:"A <b>function</b> gives exactly one output for each input. The <b>domain</b> is every input that is allowed: no zero denominators, and nothing negative under an even root.",
+  lesson:{steps:[["f(x) = \\sqrt{x - 3}","Find the domain."],["x - 3 \\ge 0","The inside of a square root can't be negative."],["x \\ge 3","Domain: $[3, \\infty)$."]],warn:"For $\\dfrac{1}{x - 3}$ the rule is different: only $x = 3$ is excluded, because it makes the denominator zero."},
+  gen:[
+  ()=>{const a=nz(-4,4),b=nz(-8,8),c=nz(-9,9),x=nz(-4,4),v=a*x*x+b*x+c;return{q:`$f(x) = ${ptex([a,b,c])}$. Find $f(${x})$.`,type:"number",ans:v,ansTex:`${v}`,hint:"Replace every $x$ with the number — in parentheses.",sol:[`$f(${x}) = ${a}(${x})^2 ${sg(b)}(${x}) ${sg(c)} = ${v}$.`]}},
+  ()=>{const a=nz(-9,9);return{q:`Find the domain of $f(x) = \\sqrt{x ${sg(-a)}}$. (Type like x >= 2.)`,type:"ineq",ans:{op:">=",v:a},ansTex:ineqTex(">=",a),hint:"Set the inside $\\ge 0$.",sol:[`$x ${sg(-a)} \\ge 0$, so $x \\ge ${a}$.`]}},
+  ()=>{const k=rnd(2,5),m=nz(-5,5),c=k*m;return{q:`Find the domain of $g(x) = \\sqrt{${c} - ${k}x}$.`,type:"ineq",ans:{op:"<=",v:m},ansTex:ineqTex("<=",m),hint:"Set the inside $\\ge 0$, then solve for $x$.",sol:[`$${c} - ${k}x \\ge 0 \\Rightarrow ${k}x \\le ${c} \\Rightarrow x \\le ${m}$.`]}},
+  ()=>{const a=nz(-3,3),b=nz(-6,6);return{q:`For $f(x) = ${ptex([a,b,0])}$, simplify the difference quotient $\\dfrac{f(x + h) - f(x)}{h}$.`,type:"expr",ans:`2*(${a})*x+(${a})*h+(${b})`,ansTex:`${co(2*a,"x")} ${cterm(a,"h")} ${sg(b)}`,hint:"Expand $f(x + h)$, subtract $f(x)$ — every term without $h$ cancels — then divide by $h$.",sol:[`$f(x + h) - f(x) = ${co(2*a,"xh")} ${cterm(a,"h^2")} ${cterm(b,"h")}$.`,`Divide by $h$: $${co(2*a,"x")} ${cterm(a,"h")} ${sg(b)}$.`]}},
+  ()=>{const p=pick([2,3,-2]),m=nz(-3,3),q=nz(-4,4),s=nz(-6,6),r=p*m,k=nz(-6,6),v=m*(k-q)+s;return{q:`$f(${lin(p,q)}) = ${lin(r,s)}$ for every $x$. Find $f(${k})$.`,type:"number",ans:v,ansTex:`${v}`,hint:`Let $t = ${lin(p,q)}$, so $x = \\dfrac{t ${sg(-q)}}{${p}}$. Write $f(t)$.`,sol:[`$f(t) = ${r}\\cdot\\dfrac{t ${sg(-q)}}{${p}} ${sg(s)} = ${m}(t ${sg(-q)}) ${sg(s)}$.`,`$f(${k}) = ${v}$.`]}}
+ ]},
+ {id:"trans",title:"Transformations of Graphs",idea:"$y = a\\,f(x - h) + k$: shift right $h$, up $k$; $|a|$ stretches vertically; a negative $a$ reflects over the $x$-axis. $f(-x)$ reflects over the $y$-axis.",
+  lesson:{steps:[["y = f(x)","Point $(2, 5)$ is on the graph."],["y = f(x - 3) + 1","Right $3$, up $1$."],["(2 + 3,\\ 5 + 1) = (5, 6)","Add $h$ to $x$, add $k$ to $y$."]],warn:"Inside the parentheses the sign is backwards: $f(x - 3)$ moves <b>right</b> $3$, and $f(x + 3)$ moves <b>left</b> $3$."},
+  gen:[
+  ()=>{const h=nz(-6,6),k=nz(-6,6),dir=(v,a,b)=>`$${Math.abs(v)}$ ${v>0?a:b}`;const c=`${dir(h,"right","left")}, ${dir(k,"up","down")}`;return mcQ(`The graph of $y = f(x ${sg(-h)}) ${sg(k)}$ is the graph of $y = f(x)$ shifted:`,c,[`${dir(-h,"right","left")}, ${dir(k,"up","down")}`,`${dir(h,"right","left")}, ${dir(-k,"up","down")}`,`${dir(-h,"right","left")}, ${dir(-k,"up","down")}`],"Inside: opposite direction. Outside: same direction.",[`$x ${sg(-h)}$ moves ${h>0?"right":"left"} $${Math.abs(h)}$; $${sg(k)}$ moves ${k>0?"up":"down"} $${Math.abs(k)}$.`]);},
+  ()=>{const a=nz(-6,6),b=nz(-6,6),h=nz(-5,5),k=nz(-5,5);return{q:`The point $(${a}, ${b})$ is on the graph of $y = f(x)$. Which point must be on $y = f(x ${sg(-h)}) ${sg(k)}$?`,type:"point",ans:[a+h,b+k],ansTex:pt(a+h,b+k),hint:"Add $h$ to the $x$-coordinate and $k$ to the $y$-coordinate.",sol:[`$(${a} ${sg(h)},\\ ${b} ${sg(k)}) = ${pt(a+h,b+k)}$.`]}},
+  ()=>{const c=pick([2,3]),a=c*nz(-3,3),b=nz(-6,6);const V=pick([["-f(x)",[a,-b],"Reflect over the $x$-axis: negate $y$."],["f(-x)",[-a,b],"Reflect over the $y$-axis: negate $x$."],[`${c}f(x)`,[a,c*b],`Vertical stretch: multiply $y$ by $${c}$.`],[`f(${c}x)`,[a/c,b],`Horizontal shrink: divide $x$ by $${c}$.`]]);return{q:`The point $(${a}, ${b})$ is on $y = f(x)$. Which point must be on $y = ${V[0]}$?`,type:"point",ans:V[1],ansTex:pt(...V[1]),hint:V[2],sol:[`${V[2]} The point is $${pt(...V[1])}$.`]}},
+  ()=>{const A=pick([-3,-2,-1,2,3]),c=pick([2,-1]),a=2*nz(-3,3),b=nz(-5,5),h=nz(-4,4),k=nz(-5,5);const X=a/c+h,Y=A*b+k;return{q:`The point $(${a}, ${b})$ is on $y = f(x)$. Which point must be on $y = ${A===-1?"-":A}f\\big(${c===2?"2":"-"}(x ${sg(-h)})\\big) ${sg(k)}$?`,type:"point",ans:[X,Y],ansTex:pt(X,Y),hint:"$x$: undo the inside — divide by the factor, then add the shift. $y$: multiply by the outside factor, then add.",sol:[`$x = \\dfrac{${a}}{${c}} ${sg(h)} = ${X}$, $\\ y = ${A}(${b}) ${sg(k)} = ${Y}$.`]}},
+  ()=>{const A=pick([-3,-2,-1,2,3]),h=nz(-5,5),k=nz(-6,6),sqr=Math.random()<.5;const par=sqr?"y = x^2":"y = |x|";const body=sqr?`(x ${sg(-h)})^2`:`|x ${sg(-h)}|`;const ex=sqr?`(${A})*(x-(${h}))^2+(${k})`:`(${A})*abs(x-(${h}))+(${k})`;const steps=[`shifted ${h>0?"right":"left"} $${Math.abs(h)}$`];if(A<0)steps.push("reflected over the $x$-axis");if(Math.abs(A)>1)steps.push(`stretched vertically by a factor of $${Math.abs(A)}$`);steps.push(`shifted ${k>0?"up":"down"} $${Math.abs(k)}$`);return{q:`The graph of $${par}$ is ${steps.join(", then ")}. Write the new equation.`,type:"expr",ans:ex,ansTex:`y = ${A===-1?"-":A}${body} ${sg(k)}`,hint:"Horizontal shift goes inside, the reflection and stretch multiply the outside, and the vertical shift is added last.",sol:[`$y = ${A===-1?"-":A}${body} ${sg(k)}$.`]}}
+ ]},
+ {id:"comp",title:"Composition & Inverse Functions",idea:"$(f \\circ g)(x) = f(g(x))$: do $g$ first. The inverse $f^{-1}$ undoes $f$. To find it, swap $x$ and $y$, then solve for $y$.",
+  lesson:{steps:[["f(x) = 2x + 3","Write $y = 2x + 3$."],["x = 2y + 3","Swap $x$ and $y$."],["f^{-1}(x) = \\dfrac{x - 3}{2}","Solve for $y$."]],warn:"$f^{-1}(x)$ is <b>not</b> $\\dfrac{1}{f(x)}$. The $-1$ means “inverse”, not an exponent."},
+  gen:[
+  ()=>{const a=nz(-4,4),b=nz(-6,6),c=nz(-4,4),d=nz(-6,6),k=nz(-4,4),g=c*k+d;return{q:`$f(x) = ${lin(a,b)}$ and $g(x) = ${lin(c,d)}$. Find $f(g(${k}))$.`,type:"number",ans:a*g+b,ansTex:`${a*g+b}`,hint:"Inside first: compute $g$, then plug the result into $f$.",sol:[`$g(${k}) = ${g}$.`,`$f(${g}) = ${a*g+b}$.`]}},
+  ()=>{const b=nz(-6,6),c=nz(-5,5),fg=Math.random()<.5;return fg?{q:`$f(x) = x^2 ${sg(b)}$ and $g(x) = ${lin(1,c)}$. Find $f(g(x))$ in expanded form.`,type:"expr",ans:`(x+(${c}))^2+(${b})`,ansTex:ptex([1,2*c,c*c+b]),hint:"Replace the $x$ in $f$ with the whole expression $g(x)$.",sol:[`$f(g(x)) = (${lin(1,c)})^2 ${sg(b)} = ${ptex([1,2*c,c*c+b])}$.`]}:{q:`$f(x) = x^2 ${sg(b)}$ and $g(x) = ${lin(1,c)}$. Find $g(f(x))$.`,type:"expr",ans:`x^2+(${b})+(${c})`,ansTex:ptex([1,0,b+c]),hint:"$g$ adds a number — apply it to $f(x)$.",sol:[`$g(f(x)) = x^2 ${sg(b)} ${sg(c)} = ${ptex([1,0,b+c])}$.`]};},
+  ()=>{const a=pick([2,3,4,5,-2,-3]),b=nz(-9,9);return{q:`Find $f^{-1}(x)$ for $f(x) = ${lin(a,b)}$.`,type:"expr",ans:`(x-(${b}))/(${a})`,ansTex:`f^{-1}(x) = ${a<0?"-":""}\\dfrac{x ${sg(-b)}}{${Math.abs(a)}}`,hint:"Swap $x$ and $y$, then solve for $y$.",sol:[`$x = ${lin(a,b,"y")}$.`,`$y = \\dfrac{x ${sg(-b)}}{${a}}$.`]}},
+  ()=>{let a,b,c,d;do{a=nz(-4,4);b=nz(-6,6);c=nz(-3,3);d=nz(-6,6)}while(a*d-b*c===0||a===-d);return{q:`Find $f^{-1}(x)$ for $f(x) = \\dfrac{${lin(a,b)}}{${lin(c,d)}}$.`,type:"expr",ans:`(${d}*x-(${b}))/((${a})-(${c})*x)`,ansTex:c>0?`f^{-1}(x) = \\dfrac{${lin(-d,b)}}{${lin(c,-a)}}`:`f^{-1}(x) = \\dfrac{${lin(d,-b)}}{${lin(-c,a)}}`,hint:"Swap: $x = \\dfrac{ay + b}{cy + d}$. Multiply out, collect the $y$ terms on one side, factor out $y$.",sol:[`$x(${lin(c,d,"y")}) = ${lin(a,b,"y")}$.`,`$y(${lin(c,-a)}) = ${lin(-d,b)}$.`,`$y = \\dfrac{${lin(d,-b)}}{${lin(-c,a)}}$.`]}},
+  ()=>{const a=pick([2,3,-2,-3]),b=nz(-5,5),x=nz(-6,6),n=a*a*x+a*b+b;return{q:`$f(x) = ${lin(a,b)}$. Solve $f(f(x)) = ${n}$.`,type:"set",ans:[x],ansTex:`x = ${x}`,hint:"First write $f(f(x))$ as a linear expression.",sol:[`$f(f(x)) = ${a}(${lin(a,b)}) ${sg(b)} = ${lin(a*a,a*b+b)}$.`,`$${lin(a*a,a*b+b)} = ${n} \\Rightarrow x = ${x}$.`]}}
+ ]}
+]},
+/* ===================== 2 ===================== */
+{id:"ch2",title:"Polynomial and Rational Functions",topics:[
+ {id:"endb",title:"Polynomial Graphs & End Behavior",idea:"The <b>leading term</b> $ax^n$ decides the ends. Even $n$: both ends the same way. Odd $n$: opposite ways. A zero with <b>even</b> multiplicity touches the axis; <b>odd</b> crosses it.",
+  lesson:{steps:[["f(x) = -2x^3 + x","Leading term $-2x^3$: odd degree, negative."],["x \\to \\infty:\\ f(x) \\to -\\infty","Falls on the right."],["x \\to -\\infty:\\ f(x) \\to \\infty","Rises on the left."]],warn:"Only the leading term matters for end behavior — ignore the rest, even if the other coefficients are big."},
+  gen:[
+  ()=>{const n=rnd(2,6),a=nz(-5,5);const cs=[a];for(let i=0;i<n;i++)cs.push(rnd(-6,6));const E=["Rises left, rises right","Falls left, falls right","Falls left, rises right","Rises left, falls right"];const c=n%2===0?(a>0?E[0]:E[1]):(a>0?E[2]:E[3]);return mcQ(`Describe the end behavior of $f(x) = ${ptex(cs)}$.`,c,E.filter(x=>x!==c),"Look only at the leading term: its degree (even/odd) and sign.",[`Leading term $${co(a,"x^{"+n+"}")}$: ${n%2?"odd":"even"} degree, ${a>0?"positive":"negative"}.`]);},
+  ()=>{const r=nz(-5,5),s=nz(-5,5),m=rnd(1,4),n=rnd(1,3),p=rnd(0,2),a=nz(-3,3);const t=(v,e)=>`(x ${sg(-v)})${e>1?"^{"+e+"}":""}`;return{q:`What is the degree of $f(x) = ${a===1?"":a===-1?"-":a}${p?(p>1?"x^{"+p+"}":"x"):""}${t(r,m)}${t(s,n)}$?`,type:"number",ans:m+n+p,ansTex:`${m+n+p}`,hint:"Add the exponents of all the $x$ factors.",sol:[`$${p} + ${m} + ${n} = ${m+n+p}$.`]}},
+  ()=>{let r,s;do{r=nz(-6,6);s=nz(-6,6)}while(r===s);const e=pick([2,4]),o=pick([1,3]);return{q:`$f(x) = (x ${sg(-r)})^{${e}}(x ${sg(-s)})^{${o}}$. At which zero does the graph <b>touch</b> the $x$-axis and turn around (not cross)?`,type:"set",ans:[r],ansTex:`x = ${r}`,hint:"Even multiplicity: touch. Odd multiplicity: cross.",sol:[`$x = ${r}$ has even multiplicity $${e}$, so the graph touches there.`]}},
+  ()=>{const n=rnd(3,7),cs=[nz(-4,4)];for(let i=0;i<n;i++)cs.push(rnd(-5,5));cs[n]=nz(-5,5);const tp=Math.random()<.5;return{q:`For $f(x) = ${ptex(cs)}$, what is the greatest possible number of ${tp?"turning points":"real zeros"}?`,type:"number",ans:tp?n-1:n,ansTex:`${tp?n-1:n}`,hint:"A degree-$n$ polynomial has at most $n$ real zeros and at most $n - 1$ turning points.",sol:[`Degree $${n}$, so at most $${tp?n-1:n}$.`]}},
+  ()=>{let r,s,t;do{r=nz(-4,4);s=nz(-4,4);t=rnd(-4,4)}while(r===s||s===t||r===t);const cs=pmul(pmul([1,-r],[1,-s]),[1,-t]);return{q:`Write the polynomial of least degree with leading coefficient $1$ and zeros $${r}$, $${s}$, and $${t}$. Expand it.`,type:"expr",form:"poly",ans:pstr(cs),ansTex:ptex(cs),hint:"Multiply $(x - r)(x - s)(x - t)$ and combine like terms.",sol:[`$(x ${sg(-r)})(x ${sg(-s)})(x ${sg(-t)}) = ${ptex(cs)}$.`]}}
+ ]},
+ {id:"div",title:"Division, Remainder & Factor Theorems",idea:"<b>Remainder Theorem</b>: dividing $p(x)$ by $x - k$ leaves remainder $p(k)$. <b>Factor Theorem</b>: $x - k$ is a factor exactly when $p(k) = 0$.",
+  lesson:{steps:[["p(x) = x^3 - 2x + 5,\\ \\text{divide by } x - 2","Want the remainder."],["p(2) = 8 - 4 + 5","Plug in $k = 2$."],["\\text{remainder} = 9","No long division needed."]],warn:"Dividing by $x + 3$ means $k = -3$. Use the opposite sign."},
+  gen:[
+  ()=>{const cs=[nz(-3,3),rnd(-5,5),rnd(-6,6),rnd(-9,9)],k=nz(-3,3),v=cs.reduce((s,c)=>s*k+c,0);return{q:`Find the remainder when $p(x) = ${ptex(cs)}$ is divided by $x ${sg(-k)}$.`,type:"number",ans:v,ansTex:`${v}`,hint:`Remainder Theorem: compute $p(${k})$.`,sol:[`$p(${k}) = ${v}$.`]}},
+  ()=>{const r=nz(-3,3),b=rnd(-5,5),k=rnd(-8,8),d=-(r**3+b*r*r+k*r);return{q:`Find $d$ so that $x ${sg(-r)}$ is a factor of $p(x) = ${ptex([1,b,k,0])} + d$.`,type:"number",ans:d,ansTex:`d = ${d}`,hint:`Factor Theorem: $p(${r})$ must equal $0$.`,sol:[`$p(${r}) = ${r**3+b*r*r+k*r} + d = 0$.`,`$d = ${d}$.`]}},
+  ()=>{const r=nz(-4,4),p=rnd(-5,5),q=rnd(-6,6),cs=pmul([1,-r],[1,p,q]);return{q:`$x ${sg(-r)}$ is a factor of $${ptex(cs)}$. Find the quotient $\\dfrac{${ptex(cs)}}{x ${sg(-r)}}$.`,type:"expr",form:"poly",ans:pstr([1,p,q]),ansTex:ptex([1,p,q]),hint:`Use synthetic division with $${r}$.`,sol:[`Synthetic division by $${r}$ gives $${ptex([1,p,q])}$ with remainder $0$.`]}},
+  ()=>{let r,s,t;do{r=nz(-5,5);s=nz(-5,5);t=nz(-5,5)}while(r===s||s===t||r===t);const cs=pmul(pmul([1,-r],[1,-s]),[1,-t]);return{q:`$x = ${r}$ is a zero of $p(x) = ${ptex(cs)}$. Find all the zeros.`,type:"roots",ans:[r,s,t],ansTex:`x = ${r}, ${s}, ${t}`,hint:`Divide by $x ${sg(-r)}$, then factor the quadratic.`,sol:[`$p(x) = (x ${sg(-r)})(${ptex(pmul([1,-s],[1,-t]))})$.`,`Zeros: $${r}, ${s}, ${t}$.`]}},
+  ()=>{let a,b;do{a=nz(-4,4);b=nz(-4,4)}while(a===b);const m=nz(-5,5),n=rnd(-8,8),A=m*a+n,B=m*b+n;return{q:`When $p(x)$ is divided by $x ${sg(-a)}$ the remainder is $${A}$, and when divided by $x ${sg(-b)}$ the remainder is $${B}$. Find the remainder when $p(x)$ is divided by $(x ${sg(-a)})(x ${sg(-b)})$.`,type:"expr",ans:`${m}*x+(${n})`,ansTex:lin(m,n),hint:"The remainder has degree less than 2, so it is $mx + n$. It must match $p(a)$ and $p(b)$.",sol:[`$${a}m + n = ${A}$ and $${b}m + n = ${B}$.`,`$m = ${m}$, $n = ${n}$: remainder $${lin(m,n)}$.`]}}
+ ]},
+ {id:"rat",title:"Rational Functions & Inequalities",idea:"Vertical asymptotes come from zeros of the denominator. Compare degrees for horizontal asymptotes. For inequalities, mark the zeros on a number line and test each interval.",
+  lesson:{steps:[["\\dfrac{x - 1}{x + 2} \\ge 0","Critical points: $x = 1$ (top) and $x = -2$ (bottom)."],["\\text{test: } x = -3,\\ 0,\\ 2","Signs: $+$, $-$, $+$."],["x < -2 \\text{ or } x \\ge 1","$-2$ is never included: it makes the denominator zero."]],warn:"Never multiply both sides of an inequality by an expression with $x$ — its sign may be negative. Use a sign chart."},
+  gen:[
+  ()=>{let a,b;do{a=nz(-6,6);b=nz(-6,6)}while(a===-b);return{q:`Find the vertical asymptote of $f(x) = \\dfrac{x ${sg(a)}}{x ${sg(-b)}}$. (Type like x = 3.)`,type:"set",ans:[b],ansTex:`x = ${b}`,hint:"Set the denominator equal to $0$.",sol:[`$x ${sg(-b)} = 0 \\Rightarrow x = ${b}$.`]}},
+  ()=>{const a=nz(-6,6),c=nz(-5,5);return{q:`Find the horizontal asymptote of $f(x) = \\dfrac{${ptex([a,rnd(-5,5),rnd(-5,5)])}}{${ptex([c,rnd(-5,5),nz(-5,5)])}}$.`,type:"number",ans:a/c,ansTex:`y = ${frac(a,c)}`,hint:"Same degree on top and bottom: divide the leading coefficients.",sol:[`$y = \\dfrac{${a}}{${c}} = ${frac(a,c)}$.`]}},
+  ()=>{let a,b;do{a=rnd(-6,6);b=rnd(-6,6)}while(a>=b);const lt=Math.random()<.5,inc=Math.random()<.5;const op=lt?(inc?"\\le":"<"):(inc?"\\ge":">");const P_=`(x ${sg(-a)})(x ${sg(-b)})`.replace("(x + 0)","x").replace("(x - 0)","x");return lt?{q:`Solve $${P_} ${op} 0$.`,type:"between",ans:{lo:a,li:inc,hi:b,hiI:inc},ansTex:`${a} ${inc?"\\le":"<"} x ${inc?"\\le":"<"} ${b}`,hint:"The parabola opens up, so it is negative between its zeros.",sol:[`Zeros $${a}$ and $${b}$; negative between them.`]}:{q:`Solve $${P_} ${op} 0$.`,type:"or",ans:[{op:inc?"<=":"<",v:a},{op:inc?">=":">",v:b}],ansTex:`x ${inc?"\\le":"<"} ${a} \\text{ or } x ${inc?"\\ge":">"} ${b}`,hint:"The parabola opens up, so it is positive outside its zeros.",sol:[`Zeros $${a}$ and $${b}$; positive outside them.`]};},
+  ()=>{let a,b;do{a=rnd(-6,6);b=rnd(-6,6)}while(a===b);const ge=Math.random()<.5,lo=Math.min(a,b),hi=Math.max(a,b);const q=`Solve $\\dfrac{x ${sg(-a)}}{x ${sg(-b)}} ${ge?"\\ge":"\\le"} 0$.`.replace("{x + 0}","{x}").replace("{x - 0}","{x}");if(ge){const o1=lo===a?"<=":"<",o2=hi===a?">=":">";return{q,type:"or",ans:[{op:o1,v:lo},{op:o2,v:hi}],ansTex:`x ${OPT[o1]} ${lo} \\text{ or } x ${OPT[o2]} ${hi}`,hint:"Sign chart with critical points from the top and the bottom. The bottom's zero is never included.",sol:[`Critical points $${a}$ (top) and $${b}$ (bottom).`,`Positive outside: $x ${OPT[o1]} ${lo}$ or $x ${OPT[o2]} ${hi}$.`]}}return{q,type:"between",ans:{lo,li:lo===a,hi,hiI:hi===a},ansTex:`${lo} ${lo===a?"\\le":"<"} x ${hi===a?"\\le":"<"} ${hi}`,hint:"Sign chart with critical points from the top and the bottom. The bottom's zero is never included.",sol:[`Critical points $${a}$ (top) and $${b}$ (bottom).`,`Negative between them; include only $${a}$.`]};},
+  ()=>{let b,c,d;do{b=rnd(-6,6);c=rnd(-8,8);d=nz(-4,4)}while(c+d*(b+d)===0);return{q:`Find the slant (oblique) asymptote of $f(x) = \\dfrac{${ptex([1,b,c])}}{x ${sg(-d)}}$. (Type like y = x + 2.)`,type:"line",ans:`y=x+(${b+d})`,ansTex:`y = ${lin(1,b+d)}`,hint:`Divide: the quotient (without the remainder) is the asymptote.`,sol:[`Synthetic division by $${d}$: quotient $${lin(1,b+d)}$, remainder $${c+d*(b+d)}$.`,`Asymptote $y = ${lin(1,b+d)}$.`]}}
+ ]}
+]},
+/* ===================== 3 ===================== */
+{id:"ch3",title:"Exponential and Logarithmic Functions",topics:[
+ {id:"expf",title:"Exponential Growth, Decay & Interest",idea:"$f(x) = ab^x$ grows if $b > 1$ and decays if $0 < b < 1$. Interest: $A = P\\left(1 + \\dfrac{r}{n}\\right)^{nt}$; continuous: $A = Pe^{rt}$.",
+  lesson:{steps:[["P = 1000,\\ r = 5\\%,\\ t = 2,\\ \\text{yearly}","Compound once a year."],["A = 1000(1.05)^2","$n = 1$."],["A = 1102.50","Round money to the cent."]],warn:"Write the rate as a decimal: $5\\% = 0.05$, not $5$."},
+  gen:[
+  ()=>{const a=pick([2,3,4,5,6,8,10]),b=pick([2,3,4,5]),x=rnd(-2,3);const v=a*b**x;return{q:`$f(x) = ${a}\\cdot ${b}^x$. Find $f(${x})$.`,type:"number",ans:v,ansTex:x<0?frac(a,b**-x):`${v}`,hint:"A negative exponent means a reciprocal: $b^{-n} = \\dfrac{1}{b^n}$.",sol:[`$${a}\\cdot ${b}^{${x}} = ${x<0?frac(a,b**-x):v}$.`]}},
+  ()=>{const P_=pick([1000,2000,2500,5000]),r=pick([3,4,5,6]),nn=pick([[1,"yearly"],[4,"quarterly"],[12,"monthly"]]),t=rnd(2,10);const A=P_*(1+r/100/nn[0])**(nn[0]*t);return{q:`$\\$${P_}$ is invested at $${r}\\%$ compounded ${nn[1]} for $${t}$ years. Find the amount to the nearest cent. (Type just the number.)`,type:"number",tol:0.011,ans:A,ansTex:A.toFixed(2),hint:"$A = P\\left(1 + \\dfrac{r}{n}\\right)^{nt}$.",sol:[`$A = ${P_}\\left(1 + \\dfrac{${r/100}}{${nn[0]}}\\right)^{${nn[0]*t}} \\approx ${A.toFixed(2)}$.`]}},
+  ()=>{const P_=pick([500,1000,1500,3000]),r=pick([2,3,4,5,6,7]),t=rnd(3,15),A=P_*Math.exp(r/100*t);return{q:`$\\$${P_}$ is invested at $${r}\\%$ compounded continuously. Find the amount after $${t}$ years, to the nearest cent.`,type:"number",tol:0.011,ans:A,ansTex:A.toFixed(2),hint:"$A = Pe^{rt}$.",sol:[`$A = ${P_}e^{${r/100}\\cdot ${t}} \\approx ${A.toFixed(2)}$.`]}},
+  ()=>{const j=rnd(1,5),M=2**j*rnd(1,12),h=pick([3,5,8,12,25,30]);return{q:`A substance has a half-life of $${h}$ years. How much of a $${M}$-gram sample is left after $${j*h}$ years?`,type:"number",ans:M/2**j,ansTex:`${M/2**j}`,hint:"Count the half-lives, then halve that many times.",sol:[`$${j*h} \\div ${h} = ${j}$ half-lives.`,`$${M}\\left(\\tfrac12\\right)^{${j}} = ${M/2**j}$.`]}},
+  ()=>{const k=pick([2,3,4]),r=pick([3,4,5,6,8]),t=Math.log(k)/(r/100);return{q:`Money grows at $${r}\\%$ compounded continuously. How many years until it ${k===2?"doubles":k===3?"triples":"quadruples"}? (Nearest tenth.)`,type:"number",tol:0.06,ans:t,ansTex:`${r1(t)}`,hint:`Solve $e^{rt} = ${k}$, so $t = \\dfrac{\\ln ${k}}{r}$.`,sol:[`$t = \\dfrac{\\ln ${k}}{${r/100}} \\approx ${r1(t)}$ years.`]}}
+ ]},
+ {id:"logp",title:"Logarithms & Their Properties",idea:"$\\log_b x = y$ means $b^y = x$. Product: $\\log(MN) = \\log M + \\log N$. Quotient: subtract. Power: $\\log M^k = k\\log M$. Change of base: $\\log_b x = \\dfrac{\\log x}{\\log b}$.",
+  lesson:{steps:[["\\log_2 8","Ask: $2$ to what power is $8$?"],["2^3 = 8","So the answer is $3$."],["\\log_2 \\tfrac18 = -3","Fractions give negative logs."]],warn:"$\\log(M + N)$ does <b>not</b> split. Only products, quotients, and powers do."},
+  gen:[
+  ()=>{const b=pick([2,3,4,5,10]),k=rnd(-3,4);const arg=k>=0?String(b**k):`\\tfrac{1}{${b**-k}}`;return{q:`Evaluate $\\log_{${b}} ${arg}$.`,type:"number",ans:k,ansTex:`${k}`,hint:`$${b}$ to what power gives $${arg}$?`,sol:[`$${b}^{${k}} = ${arg}$, so the answer is $${k}$.`]}},
+  ()=>{const p=nz(-5,5),q=nz(-5,5),m=rnd(1,4),n=rnd(1,3),div=Math.random()<.5;const v=div?m*p-n*q:m*p+n*q;return{q:`$\\log_b x = ${p}$ and $\\log_b y = ${q}$. Find $\\log_b ${div?`\\dfrac{${m>1?"x^{"+m+"}":"x"}}{${n>1?"y^{"+n+"}":"y"}}`:`(${m>1?"x^{"+m+"}":"x"}${n>1?"y^{"+n+"}":"y"})`}$.`,type:"number",ans:v,ansTex:`${v}`,hint:"Split with the product/quotient rule, then bring the exponents down.",sol:[`$${m}\\log_b x ${div?"-":"+"} ${n}\\log_b y = ${m}(${p}) ${div?"-":"+"} ${n}(${q}) = ${v}$.`]}},
+  ()=>{let a,b,k,c;do{a=pick([6,10,12,20,24,40]);b=pick([2,4,6,8,12]);k=rnd(1,6);c=a*b/2**k}while(!Number.isInteger(c)||c<2||c===a||c===b);return{q:`Evaluate $\\log_2 ${a} + \\log_2 ${b} - \\log_2 ${c}$.`,type:"number",ans:k,ansTex:`${k}`,hint:"Combine into one log: $\\log_2 \\dfrac{ab}{c}$.",sol:[`$\\log_2 \\dfrac{${a}\\cdot ${b}}{${c}} = \\log_2 ${2**k} = ${k}$.`]}},
+  ()=>{const s=pick([2,3]),m=rnd(2,3),n=rnd(1,6);return{q:`Evaluate $\\log_{${s**m}} ${s**n}$.`,type:"number",ans:n/m,ansTex:frac(n,m),hint:`Write both as powers of $${s}$.`,sol:[`$\\log_{${s}^{${m}}} ${s}^{${n}} = \\dfrac{${n}}{${m}} = ${frac(n,m)}$.`]}},
+  ()=>{const s=pick([2,3]),p=rnd(1,3),q=rnd(2,6),t=pick([5,7,11,13]);return{q:`Evaluate $\\log_{${s**p}} ${t} \\cdot \\log_{${t}} ${s**q}$.`,type:"number",ans:q/p,ansTex:frac(q,p),hint:"Change of base: $\\log_a b \\cdot \\log_b c = \\log_a c$.",sol:[`$= \\log_{${s**p}} ${s**q} = \\dfrac{${q}}{${p}} = ${frac(q,p)}$.`]}}
+ ]},
+ {id:"loge",title:"Exponential & Logarithmic Equations",idea:"Same base: set the exponents equal. Otherwise take a log of both sides. For log equations, rewrite in exponential form — and check that every log's input is positive.",
+  lesson:{steps:[["\\log_3 (x - 1) = 2","Rewrite as a power."],["x - 1 = 3^2 = 9","Exponential form."],["x = 10","Check: $\\log_3 9 = 2$ ✓"]],warn:"Answers that make a log's input zero or negative must be thrown out."},
+  gen:[
+  ()=>{const b=pick([2,3,5]),k=rnd(1,b===2?6:4),a=nz(-4,4);return{q:`Solve $${b}^{x ${sg(a)}} = ${b**k}$.`,type:"set",ans:[k-a],ansTex:`x = ${k-a}`,hint:`Write $${b**k}$ as a power of $${b}$.`,sol:[`$${b}^{x ${sg(a)}} = ${b}^{${k}}$, so $x ${sg(a)} = ${k}$, $x = ${k-a}$.`]}},
+  ()=>{let s,m,n,c,x;do{s=pick([2,3]);m=rnd(1,3);n=rnd(1,3);c=nz(-4,4);x=n*c/(m-n)}while(m===n||!Number.isInteger(x)||x===0);return{q:`Solve $${s**m}^{x} = ${s**n}^{x ${sg(c)}}$.`,type:"set",ans:[x],ansTex:`x = ${x}`,hint:`Rewrite both bases as powers of $${s}$.`,sol:[`$${s}^{${m}x} = ${s}^{${n}(x ${sg(c)})}$.`,`$${m}x = ${n}x ${sg(n*c)} \\Rightarrow x = ${x}$.`]}},
+  ()=>{const b=pick([2,3,5]),k=rnd(1,3),a=nz(-6,6);return{q:`Solve $\\log_{${b}}(x ${sg(-a)}) = ${k}$.`,type:"set",ans:[b**k+a],ansTex:`x = ${b**k+a}`,hint:"Rewrite in exponential form.",sol:[`$x ${sg(-a)} = ${b}^{${k}} = ${b**k}$, so $x = ${b**k+a}$.`]}},
+  ()=>{const k=rnd(3,6),i=rnd(Math.floor(k/2)+1,k),x=2**i,d=x-2**(k-i);return{q:`Solve $\\log_2 x + \\log_2 (x - ${d}) = ${k}$.`,type:"set",ans:[x],ansTex:`x = ${x}`,hint:"Combine: $\\log_2[x(x - d)] = k$, so $x(x - d) = 2^k$. Reject any answer that makes a log's input negative.",sol:[`$x(x - ${d}) = ${2**k}$, $x^2 - ${d}x - ${2**k} = 0$.`,`$x = ${x}$ or $x = ${-(2**k)/x}$ (rejected). Answer $x = ${x}$.`]}},
+  ()=>{let a,b;do{a=rnd(2,7);b=rnd(1,7)}while(a===b);return{q:`Solve $e^{2x} - ${a+b}e^{x} + ${a*b} = 0$. (Type like ln(2), ln(5).)`,type:"roots",ans:[Math.log(a),Math.log(b)],ansTex:`x = \\ln ${a},\\ ${b===1?"0":"\\ln "+b}`,hint:"Let $u = e^x$. This is a quadratic in $u$.",sol:[`$u^2 - ${a+b}u + ${a*b} = (u - ${a})(u - ${b}) = 0$.`,`$e^x = ${a}$ or $e^x = ${b}$: $x = \\ln ${a}$, $x = ${b===1?"0":"\\ln "+b}$.`]}}
+ ]}
+]},
+/* ===================== 4 ===================== */
+{id:"ch4",title:"Trigonometric Functions",topics:[
+ {id:"radian",title:"Radians, Coterminal Angles & Arc Length",idea:"$180^\\circ = \\pi$ radians. Arc length $s = r\\theta$ and sector area $A = \\tfrac12 r^2\\theta$ need $\\theta$ in <b>radians</b>. Coterminal angles differ by $360^\\circ$.",
+  lesson:{steps:[["120^\\circ","Multiply by $\\dfrac{\\pi}{180}$."],["120\\cdot\\dfrac{\\pi}{180}","Simplify."],["\\dfrac{2\\pi}{3}","Radians."]],warn:"Before using $s = r\\theta$, change degrees to radians."},
+  gen:[
+  ()=>{let d;do{d=15*nz(-24,24)}while(d===0);return{q:`Convert $${d}^\\circ$ to radians. (Type like 2pi/3.)`,type:"number",ans:d*Math.PI/180,ansTex:piTex(d,180),hint:"Multiply by $\\dfrac{\\pi}{180}$ and simplify.",sol:[`$${d}\\cdot\\dfrac{\\pi}{180} = ${piTex(d,180)}$.`]}},
+  ()=>{let a,v;do{a=Math.random()<.5?rnd(370,1100):-rnd(10,700);v=((a%360)+360)%360}while(v===0);return{q:`Find the angle between $0^\\circ$ and $360^\\circ$ that is coterminal with $${a}^\\circ$.`,type:"number",ans:v,ansTex:`${v}^\\circ`,hint:"Add or subtract $360^\\circ$ until you land in $[0^\\circ, 360^\\circ)$.",sol:[`$${a} ${a>0?"-":"+"} ${Math.abs(a-v)} = ${v}$.`]}},
+  ()=>{const r=rnd(2,15),d=pick([30,45,60,90,120,135,150,210,240,270,300]);return{q:`Find the arc length on a circle of radius $${r}$ for a central angle of $${d}^\\circ$. (Exact, like 5pi.)`,type:"number",ans:r*d*Math.PI/180,ansTex:piTex(r*d,180),hint:"Convert to radians, then $s = r\\theta$.",sol:[`$\\theta = ${piTex(d,180)}$.`,`$s = ${r}\\cdot ${piTex(d,180)} = ${piTex(r*d,180)}$.`]}},
+  ()=>{let r,n,dd;do{r=rnd(2,12);n=rnd(1,5);dd=pick([2,3,4,6])}while(gcd(n,dd)!==1);return{q:`Find the area of a sector with radius $${r}$ and central angle $${piTex(n,dd)}$.`,type:"number",ans:r*r*n*Math.PI/(2*dd),ansTex:piTex(r*r*n,2*dd),hint:"$A = \\tfrac12 r^2\\theta$.",sol:[`$\\tfrac12 (${r})^2\\cdot ${piTex(n,dd)} = ${piTex(r*r*n,2*dd)}$.`]}},
+  ()=>{const r=rnd(5,20),k=pick([10,20,30,45,60,100]);return{q:`A wheel of radius $${r}$ inches turns at $${k}$ revolutions per minute. Find the linear speed of a point on the rim in inches per minute. (Exact, like 40pi.)`,type:"number",ans:2*Math.PI*r*k,ansTex:piTex(2*r*k,1),hint:"One revolution moves a point $2\\pi r$.",sol:[`$${k}\\cdot 2\\pi(${r}) = ${piTex(2*r*k,1)}$ in/min.`]}}
+ ]},
+ {id:"unitc",title:"Trig Values: Unit Circle & Right Triangles",idea:"On the unit circle the point at angle $\\theta$ is $(\\cos\\theta, \\sin\\theta)$, and $\\tan\\theta = \\dfrac{\\sin\\theta}{\\cos\\theta}$. Use the <b>reference angle</b> and the quadrant's sign.",
+  lesson:{steps:[["\\sin\\dfrac{5\\pi}{6}","Reference angle $\\dfrac{\\pi}{6}$, Quadrant II."],["\\sin\\dfrac{\\pi}{6} = \\tfrac12","The special-triangle value."],["\\sin\\dfrac{5\\pi}{6} = \\tfrac12","Sine is positive in Quadrant II."]],warn:"All Students Take Calculus: All positive in I, Sine in II, Tangent in III, Cosine in IV."},
+  gen:[
+  ()=>{let k,f,v;do{k=rnd(1,23);f=pick(["sin","cos","tan"]);v=Math[f](k*Math.PI/12)}while(!(k%2===0||k%3===0)||(f==="tan"&&Math.abs(Math.cos(k*Math.PI/12))<1e-9));return{q:`Find the exact value of $\\${f}\\left(${piTex(k,12)}\\right)$. (Type like sqrt(3)/2.)`,type:"number",ans:v,ansTex:numTex(v),hint:"Find the reference angle and the quadrant, then use the special triangles.",sol:[`$\\${f}\\left(${piTex(k,12)}\\right) = ${numTex(v)}$.`]}},
+  ()=>{const t=pick(TRIP.slice(0,5)),f=pick(["sin","cos","tan"]);const [a,b,c]=t;const v=f==="sin"?a/c:f==="cos"?b/c:a/b;return{q:`A right triangle has legs $${a}$ and $${b}$ and hypotenuse $${c}$. Angle $A$ is opposite the leg $${a}$. Find $\\${f} A$.`,type:"number",ans:v,ansTex:f==="tan"?frac(a,b):frac(f==="sin"?a:b,c),hint:"SOH-CAH-TOA.",sol:[`$\\${f} A = ${f==="tan"?frac(a,b):frac(f==="sin"?a:b,c)}$.`]}},
+  ()=>{let a;do{a=rnd(91,359)}while(a%90===0);const v=a<180?180-a:a<270?a-180:360-a;return{q:`Find the reference angle of $${a}^\\circ$.`,type:"number",ans:v,ansTex:`${v}^\\circ`,hint:"The acute angle to the nearest part of the $x$-axis.",sol:[`$${a}^\\circ$ is in Quadrant ${a<180?"II":a<270?"III":"IV"}; reference angle $${v}^\\circ$.`]}},
+  ()=>{const [a,b,c]=pick(TRIP.slice(0,4)),Q=rnd(3,4),neg=true;const f=pick(["tan","cos"]);const s=-1;const cs=Q===3?-1:1;const v=f==="tan"?(s*a)/(cs*b):cs*b/c;return{q:`$\\sin\\theta = -${frac(a,c)}$ and $\\theta$ is in Quadrant ${QN[Q-1]}. Find $\\${f}\\theta$.`,type:"number",ans:v,ansTex:f==="tan"?frac(s*a,cs*b):frac(cs*b,c),hint:"Draw the triangle: opposite $"+a+"$, hypotenuse $"+c+"$. Find the other side, then use the quadrant's signs.",sol:[`Adjacent side $= \\sqrt{${c*c} - ${a*a}} = ${b}$.`,`In Quadrant ${QN[Q-1]}, $\\cos\\theta ${cs>0?">":"<"} 0$: $\\${f}\\theta = ${f==="tan"?frac(s*a,cs*b):frac(cs*b,c)}$.`]}},
+  ()=>{const [n,m]=pick([[1,2],[1,3],[2,3],[3,4],[4,3],[5,4],[7,5],[6,5],[1,5]]),v=(n*n-m*m)/(2*m*m);return{q:`$\\sin\\theta + \\cos\\theta = ${frac(n,m)}$. Find $\\sin\\theta\\cos\\theta$.`,type:"number",ans:v,ansTex:frac(n*n-m*m,2*m*m),hint:"Square both sides and use $\\sin^2\\theta + \\cos^2\\theta = 1$.",sol:[`$1 + 2\\sin\\theta\\cos\\theta = ${frac(n*n,m*m)}$.`,`$\\sin\\theta\\cos\\theta = ${frac(n*n-m*m,2*m*m)}$.`]}}
+ ]},
+ {id:"tgraph",title:"Graphs of Sine & Cosine",idea:"$y = a\\sin(b(x - c)) + d$: amplitude $|a|$, period $\\dfrac{2\\pi}{b}$, phase shift $c$ (right if positive), midline $y = d$.",
+  lesson:{steps:[["y = 3\\sin(2x) + 1","Read off the parts."],["\\text{amplitude } 3,\\ \\text{period } \\dfrac{2\\pi}{2} = \\pi","$a = 3$, $b = 2$."],["\\max = 4,\\ \\min = -2","Midline $\\pm$ amplitude."]],warn:"For $y = \\sin(2x - \\pi)$, factor first: $\\sin\\!\\big(2(x - \\tfrac{\\pi}{2})\\big)$. The shift is $\\tfrac{\\pi}{2}$, not $\\pi$."},
+  gen:[
+  ()=>{const a=nz(-9,9),b=rnd(1,6),d=rnd(-5,5),f=pick(["sin","cos"]);return{q:`Find the amplitude of $y = ${a===-1?"-":a===1?"":a}\\${f}(${b===1?"":b}x) ${d?sg(d):""}$.`,type:"number",ans:Math.abs(a),ansTex:`${Math.abs(a)}`,hint:"Amplitude $= |a|$.",sol:[`$|${a}| = ${Math.abs(a)}$.`]}},
+  ()=>{const B=pick([[2,"2"],[3,"3"],[4,"4"],[6,"6"],[0.5,"\\tfrac12 "],[1/3,"\\tfrac13 "]]),a=rnd(1,5),f=pick(["sin","cos"]);const tx=B[0]===0.5?"4\\pi":B[0]===1/3?"6\\pi":piTex(2,B[0]);return{q:`Find the period of $y = ${a===1?"":a}\\${f}(${B[1]}x)$. (Type like pi/2.)`,type:"number",ans:2*Math.PI/B[0],ansTex:tx,hint:"Period $= \\dfrac{2\\pi}{b}$.",sol:[`$\\dfrac{2\\pi}{${B[1].trim()}} = ${tx}$.`]}},
+  ()=>{const b=rnd(1,4),m=pick([2,3,4,6]),k=nz(-3,3);const sh=k/m*Math.PI,ct=piTex(b*k,m);return{q:`Find the phase shift of $y = \\sin\\left(${b===1?"":b}x ${b*k>0?"-":"+"} ${piTex(Math.abs(b*k),m)}\\right)$. (Positive = right, negative = left.)`,type:"number",ans:sh,ansTex:piTex(k,m),hint:`Factor out $${b}$: $\\sin(b(x - c))$ has shift $c$.`,sol:[`$${b===1?"":b}x ${b*k>0?"-":"+"} ${piTex(Math.abs(b*k),m)} = ${b===1?"":b}\\left(x ${k>0?"-":"+"} ${piTex(Math.abs(k),m)}\\right)$.`,`Shift $= ${piTex(k,m)}$.`]}},
+  ()=>{const a=nz(-8,8),b=rnd(1,5),d=nz(-6,6),mx=Math.random()<.5,f=pick(["sin","cos"]);const v=mx?Math.abs(a)+d:d-Math.abs(a);return{q:`Find the ${mx?"maximum":"minimum"} value of $y = ${a===-1?"-":a===1?"":a}\\${f}(${b===1?"":b}x) ${sg(d)}$.`,type:"number",ans:v,ansTex:`${v}`,hint:"Midline $d$, plus or minus the amplitude.",sol:[`$${d} ${mx?"+":"-"} ${Math.abs(a)} = ${v}$.`]}},
+  ()=>{const A=rnd(2,7),b=pick([2,3,4,6]),d=nz(-5,5);return{q:`Write a sine function $y = a\\sin(bx) + d$ (with $a > 0$, $b > 0$) with amplitude $${A}$, period $${piTex(2,b)}$, and midline $y = ${d}$.`,type:"expr",ans:`${A}*sin(${b}*x)+(${d})`,ansTex:`y = ${A}\\sin(${b}x) ${sg(d)}`,hint:"$a$ = amplitude, $b = \\dfrac{2\\pi}{\\text{period}}$, $d$ = midline.",sol:[`$b = \\dfrac{2\\pi}{${piTex(2,b)}} = ${b}$.`,`$y = ${A}\\sin(${b}x) ${sg(d)}$.`]}}
+ ]}
+]},
+/* ===================== 5 ===================== */
+{id:"ch5",title:"Inverse Trig, Trig Equations & Applications",topics:[
+ {id:"invt",title:"Inverse Trigonometric Functions",idea:"$\\sin^{-1}x$ gives an angle in $\\left[-\\tfrac{\\pi}{2}, \\tfrac{\\pi}{2}\\right]$, $\\cos^{-1}x$ in $[0, \\pi]$, $\\tan^{-1}x$ in $\\left(-\\tfrac{\\pi}{2}, \\tfrac{\\pi}{2}\\right)$.",
+  lesson:{steps:[["\\sin^{-1}\\left(\\tfrac12\\right)","Which angle in $[-\\tfrac{\\pi}{2}, \\tfrac{\\pi}{2}]$ has sine $\\tfrac12$?"],["\\sin\\dfrac{\\pi}{6} = \\tfrac12","The special angle."],["\\sin^{-1}\\left(\\tfrac12\\right) = \\dfrac{\\pi}{6}","Inside the range ✓"]],warn:"$\\cos^{-1}\\left(-\\tfrac12\\right) = \\tfrac{2\\pi}{3}$, not $-\\tfrac{\\pi}{3}$ — arccos never gives a negative angle."},
+  gen:[
+  ()=>{const [v,t]=pick(SPECIAL),s=pick([1,-1]);const x=s*v;return{q:`Find $\\sin^{-1}\\left(${s<0&&v?"-":""}${t}\\right)$ in radians. (Type like pi/6.)`,type:"number",ans:Math.asin(x),ansTex:angTex(Math.asin(x)),hint:"The answer must be between $-\\tfrac{\\pi}{2}$ and $\\tfrac{\\pi}{2}$.",sol:[`$\\sin\\left(${angTex(Math.asin(x))}\\right) = ${numTex(x)}$.`]}},
+  ()=>{const [v,t]=pick(SPECIAL),s=pick([1,-1]);const x=s*v;return{q:`Find $\\cos^{-1}\\left(${s<0&&v?"-":""}${t}\\right)$ in radians.`,type:"number",ans:Math.acos(x),ansTex:angTex(Math.acos(x)),hint:"The answer must be between $0$ and $\\pi$.",sol:[`$\\cos\\left(${angTex(Math.acos(x))}\\right) = ${numTex(x)}$.`]}},
+  ()=>{const [v,t]=pick(TANV),s=pick([1,-1]),x=s*v,f=Math.random()<.5;return f?{q:`Find $\\tan^{-1}\\left(${s<0&&v?"-":""}${t}\\right)$ in radians.`,type:"number",ans:Math.atan(x),ansTex:angTex(Math.atan(x)),hint:"The answer must be strictly between $-\\tfrac{\\pi}{2}$ and $\\tfrac{\\pi}{2}$.",sol:[`$\\tan\\left(${angTex(Math.atan(x))}\\right) = ${numTex(x)}$.`]}:(()=>{const [w,u]=pick(SPECIAL.slice(1,4)),y=-w;return{q:`Find $\\cos^{-1}\\left(-${u}\\right) - \\sin^{-1}\\left(-${u}\\right)$ in radians.`,type:"number",ans:Math.acos(y)-Math.asin(y),ansTex:angTex(Math.acos(y)-Math.asin(y)),hint:"Do each inverse separately, watching each range.",sol:[`$${angTex(Math.acos(y))} - \\left(${angTex(Math.asin(y))}\\right) = ${angTex(Math.acos(y)-Math.asin(y))}$.`]}})();},
+  ()=>{const [a,b,c]=pick(TRIP.slice(0,4)),s=pick([1,-1]);const V=pick([["\\sin","\\cos^{-1}",Math.sin,Math.acos,b/c,frac(s*b,c)],["\\cos","\\sin^{-1}",Math.cos,Math.asin,a/c,frac(s*a,c)],["\\tan","\\sin^{-1}",Math.tan,Math.asin,a/c,frac(s*a,c)],["\\tan","\\cos^{-1}",Math.tan,Math.acos,b/c,frac(s*b,c)]]);const v=V[2](V[3](s*V[4]));return{q:`Find the exact value of $${V[0]}\\left(${V[1]}\\left(${V[5]}\\right)\\right)$.`,type:"number",ans:v,ansTex:numTex(v),hint:"Let $\\theta$ be the inner angle. Draw its right triangle, and remember which quadrant the inverse function puts $\\theta$ in.",sol:[`Triangle with sides $${a}, ${b}, ${c}$.`,`The value is $${numTex(v)}$.`]}},
+  ()=>{const f=Math.random()<.5;let k,t,v;do{k=rnd(4,11);t=k*Math.PI/6;v=f?Math.asin(Math.sin(t)):Math.acos(Math.cos(t))}while(Math.abs(v-t)<1e-9);return{q:`Find $${f?"\\sin^{-1}\\left(\\sin":"\\cos^{-1}\\left(\\cos"}${piTex(k,6)}\\right)$.`,type:"number",ans:v,ansTex:angTex(v),hint:`The answer is <b>not</b> $${piTex(k,6)}$ — it must be in the range of $${f?"\\sin^{-1}":"\\cos^{-1}"}$.`,sol:[`$${f?"\\sin":"\\cos"}${piTex(k,6)} = ${numTex(f?Math.sin(t):Math.cos(t))}$.`,`The angle in the range with that value is $${angTex(v)}$.`]}}
+ ]},
+ {id:"teq",title:"Solving Trigonometric Equations",idea:"Isolate the trig function, find the reference angle, then list <b>every</b> solution in the interval by checking each quadrant where the sign is right.",
+  lesson:{steps:[["2\\sin x - 1 = 0","Isolate: $\\sin x = \\tfrac12$."],["\\text{reference angle } \\dfrac{\\pi}{6}","Sine is positive in Quadrants I and II."],["x = \\dfrac{\\pi}{6},\\ \\dfrac{5\\pi}{6}","Both solutions in $[0, 2\\pi)$."]],warn:"A calculator gives only one answer. Most trig equations have two (or more) solutions in $[0, 2\\pi)$."},
+  gen:[
+  ()=>{const f=pick(["sin","cos"]),[v,t]=pick(SPECIAL),s=pick([1,-1]),x=s*v;const S=sols(u=>Math[f](u)-x);return{q:`Solve $\\${f} x = ${s<0&&v?"-":""}${t}$ on $[0, 2\\pi)$. (List all, like pi/6, 5pi/6.)`,type:"roots",ans:S,ansTex:`x = ${solTex(S)}`,hint:"Reference angle first, then the quadrants with the right sign.",sol:[`$x = ${solTex(S)}$.`]}},
+  ()=>{const f=pick(["sin","cos"]),W=pick([[1,"1"],[Math.SQRT2,"\\sqrt{2}"],[Math.sqrt(3),"\\sqrt{3}"]]),s=pick([1,-1]),x=s*W[0]/2;const S=sols(u=>2*Math[f](u)-x*2);return{q:`Solve $2\\${f} x ${s>0?"-":"+"} ${W[1]} = 0$ on $[0, 2\\pi)$.`,type:"roots",ans:S,ansTex:`x = ${solTex(S)}`,hint:`Isolate: $\\${f} x = ${numTex(x)}$.`,sol:[`$\\${f} x = ${numTex(x)}$.`,`$x = ${solTex(S)}$.`]}},
+  ()=>{const [v,t]=pick(TANV.slice(1)),s=pick([1,-1]),x=s*v,sq=Math.random()<.4;const S=sols(u=>Math.abs(Math.cos(u))<1e-9?1:(sq?Math.tan(u)**2-v*v:Math.tan(u)-x));return{q:sq?`Solve $\\tan^2 x = ${numTex(v*v)}$ on $[0, 2\\pi)$.`:`Solve $\\tan x = ${s<0?"-":""}${t}$ on $[0, 2\\pi)$.`,type:"roots",ans:S,ansTex:`x = ${solTex(S)}`,hint:sq?"$\\tan x = \\pm\\sqrt{\\cdots}$ — both signs.":"Tangent repeats every $\\pi$: find one answer and add $\\pi$.",sol:[`$x = ${solTex(S)}$.`]}},
+  ()=>{const RT=[[0.5,[2,-1],"\\tfrac12"],[-0.5,[2,1],"-\\tfrac12"],[1,[1,-1],"1"],[-1,[1,1],"-1"],[0,[1,0],"0"]];let p,q;do{p=pick(RT);q=pick(RT)}while(p===q);const f=pick(["sin","cos"]),cs=pmul(p[1],q[1]);const S=sols(u=>cs[0]*Math[f](u)**2+cs[1]*Math[f](u)+cs[2]);const eq=terms([[cs[0],`\\${f}^2 x`],[cs[1],`\\${f} x`],[cs[2],""]]);return{q:`Solve $${eq} = 0$ on $[0, 2\\pi)$.`,type:"roots",ans:S,ansTex:`x = ${solTex(S)}`,hint:`Let $u = \\${f} x$ and factor the quadratic.`,sol:[`$\\${f} x = ${p[2]}$ or $\\${f} x = ${q[2]}$.`,`$x = ${solTex(S)}$.`]}},
+  ()=>{const f=pick(["sin","cos"]),[v,t]=pick([SPECIAL[0],SPECIAL[1],SPECIAL[3],SPECIAL[4]]),s=pick([1,-1]),x=s*v;const S=sols(u=>Math[f](2*u)-x);return{q:`Solve $\\${f} 2x = ${s<0&&v?"-":""}${t}$ on $[0, 2\\pi)$.`,type:"roots",ans:S,ansTex:`x = ${solTex(S)}`,hint:"Solve for $2x$ on $[0, 4\\pi)$ — two full turns — then divide by $2$.",sol:[`$2x$ has $${S.length}$ values in $[0, 4\\pi)$; dividing by $2$: $x = ${solTex(S)}$.`]}}
+ ]},
+ {id:"tapp",title:"Right-Triangle Applications",idea:"Angle of <b>elevation</b>: looking up from horizontal. Angle of <b>depression</b>: looking down. Draw the right triangle and pick sin, cos, or tan from the sides you know.",
+  lesson:{steps:[["\\text{distance } 50,\\ \\text{elevation } 30^\\circ","Want the height $h$."],["\\tan 30^\\circ = \\dfrac{h}{50}","Opposite over adjacent."],["h = 50\\tan 30^\\circ \\approx 28.9","Calculator in degree mode."]],warn:"Check your calculator is in <b>degree</b> mode for these problems."},
+  gen:[
+  ()=>{const d=rnd(20,150),a=rnd(15,70),h=d*tanD(a);return{q:`From $${d}$ ft away from the base of a tree, the angle of elevation to the top is $${a}^\\circ$. How tall is the tree? (Nearest tenth.)`,type:"number",tol:0.06,ans:h,ansTex:`${r1(h)}`,hint:"$\\tan\\theta = \\dfrac{\\text{opposite}}{\\text{adjacent}}$.",sol:[`$h = ${d}\\tan ${a}^\\circ \\approx ${r1(h)}$ ft.`]}},
+  ()=>{const o=rnd(5,60),a=rnd(5,80),t=D(Math.atan(o/a));return{q:`A ramp rises $${o}$ ft over a horizontal distance of $${a}$ ft. Find its angle of elevation in degrees. (Nearest tenth.)`,type:"number",tol:0.06,ans:t,ansTex:`${r1(t)}^\\circ`,hint:"$\\theta = \\tan^{-1}\\dfrac{\\text{rise}}{\\text{run}}$.",sol:[`$\\tan^{-1}\\dfrac{${o}}{${a}} \\approx ${r1(t)}^\\circ$.`]}},
+  ()=>{const L=rnd(10,40),a=rnd(50,80),h=L*sinD(a);return{q:`A $${L}$-ft ladder leans against a wall, making a $${a}^\\circ$ angle with the ground. How high up the wall does it reach? (Nearest tenth.)`,type:"number",tol:0.06,ans:h,ansTex:`${r1(h)}`,hint:"The ladder is the hypotenuse; the height is opposite the angle.",sol:[`$h = ${L}\\sin ${a}^\\circ \\approx ${r1(h)}$ ft.`]}},
+  ()=>{const h=rnd(50,400),a=rnd(10,50),x=h/tanD(a);return{q:`From the top of a $${h}$-ft cliff, the angle of depression to a boat is $${a}^\\circ$. How far is the boat from the base of the cliff? (Nearest tenth.)`,type:"number",tol:0.06,ans:x,ansTex:`${r1(x)}`,hint:"The angle of depression equals the angle of elevation from the boat. Use tangent.",sol:[`$\\tan ${a}^\\circ = \\dfrac{${h}}{x}$, so $x = \\dfrac{${h}}{\\tan ${a}^\\circ} \\approx ${r1(x)}$ ft.`]}},
+  ()=>{let al,be;do{al=rnd(15,40);be=rnd(30,70)}while(be-al<10);const x=rnd(50,300),h=x/(1/tanD(al)-1/tanD(be));return{q:`The angle of elevation to the top of a tower is $${al}^\\circ$. After walking $${x}$ ft straight toward it, the angle is $${be}^\\circ$. How tall is the tower? (Nearest foot.)`,type:"number",tol:0.6,ans:h,ansTex:`${Math.round(h)}`,hint:"Let $d$ be the near distance: $h = d\\tan\\beta = (d + x)\\tan\\alpha$. Solve for $h$.",sol:[`$h = \\dfrac{${x}}{\\cot ${al}^\\circ - \\cot ${be}^\\circ} \\approx ${Math.round(h)}$ ft.`]}}
+ ]}
+]},
+/* ===================== 6 ===================== */
+{id:"ch6",title:"Trigonometric Identities",topics:[
+ {id:"basic",title:"Fundamental Identities",idea:"Reciprocal: $\\csc = \\dfrac{1}{\\sin}$, $\\sec = \\dfrac{1}{\\cos}$, $\\cot = \\dfrac{1}{\\tan}$. Pythagorean: $\\sin^2 + \\cos^2 = 1$, $1 + \\tan^2 = \\sec^2$, $1 + \\cot^2 = \\csc^2$.",
+  lesson:{steps:[["\\sin x \\cot x","Rewrite $\\cot x$."],["\\sin x\\cdot\\dfrac{\\cos x}{\\sin x}","$\\cot = \\dfrac{\\cos}{\\sin}$."],["\\cos x","Cancel $\\sin x$."]],warn:"When stuck, rewrite everything in terms of $\\sin$ and $\\cos$."},
+  gen:[
+  ()=>{const [e,a,t]=pick([["\\sin x \\cot x","cos(x)","\\cos x"],["\\tan x \\cos x","sin(x)","\\sin x"],["\\csc x \\sin x","1","1"],["\\sec x \\cos x","1","1"],["\\dfrac{\\sin x}{\\tan x}","cos(x)","\\cos x"],["\\cot x \\tan x","1","1"],["\\cos x \\csc x","cot(x)","\\cot x"]]);return{q:`Simplify $${e}$. (Type like cos(x).)`,type:"expr",ans:a,ansTex:t,hint:"Rewrite in terms of $\\sin$ and $\\cos$, then cancel.",sol:[`$${e} = ${t}$.`]}},
+  ()=>{const [e,a,t]=pick([["1 - \\cos^2 x","sin(x)^2","\\sin^2 x"],["\\sec^2 x - 1","tan(x)^2","\\tan^2 x"],["\\dfrac{1 - \\sin^2 x}{\\cos x}","cos(x)","\\cos x"],["\\csc^2 x - \\cot^2 x","1","1"],["(1 + \\tan^2 x)\\cos^2 x","1","1"],["\\dfrac{\\sec x}{\\csc x}","tan(x)","\\tan x"],["\\sin^2 x\\sec^2 x","tan(x)^2","\\tan^2 x"]]);return{q:`Simplify $${e}$. (Type like sin(x)^2.)`,type:"expr",ans:a,ansTex:t,hint:"Look for a Pythagorean identity.",sol:[`$${e} = ${t}$.`]}},
+  ()=>{const [a,b,c]=pick(TRIP.slice(0,4)),Q=pick([1,2]);const s=Q===1?1:-1;return{q:`$\\sin\\theta = ${frac(a,c)}$ and $\\theta$ is in Quadrant ${QN[Q-1]}. Find $\\sec\\theta$.`,type:"number",ans:s*c/b,ansTex:frac(s*c,b),hint:"Find $\\cos\\theta$ with $\\sin^2 + \\cos^2 = 1$, then flip it.",sol:[`$\\cos\\theta = ${frac(s*b,c)}$.`,`$\\sec\\theta = ${frac(s*c,b)}$.`]}},
+  ()=>{const [a,b,c]=pick(TRIP.slice(0,4)),Q=pick([1,3]);const s=Q===1?1:-1;return{q:`$\\tan\\theta = ${frac(a,b)}$ and $\\theta$ is in Quadrant ${QN[Q-1]}. Find $\\sin\\theta$.`,type:"number",ans:s*a/c,ansTex:frac(s*a,c),hint:"Use $1 + \\tan^2 = \\sec^2$, or draw the triangle; then apply the quadrant sign.",sol:[`Hypotenuse $= \\sqrt{${a*a} + ${b*b}} = ${c}$.`,`In Quadrant ${QN[Q-1]}, $\\sin\\theta = ${frac(s*a,c)}$.`]}},
+  ()=>{const [e,a,t]=pick([["\\dfrac{\\sin x}{1 + \\cos x} + \\dfrac{1 + \\cos x}{\\sin x}","2/sin(x)","2\\csc x"],["\\dfrac{1}{1 - \\sin x} + \\dfrac{1}{1 + \\sin x}","2/cos(x)^2","2\\sec^2 x"],["\\dfrac{\\cos x}{1 - \\sin x} - \\tan x","1/cos(x)","\\sec x"],["(\\sin x + \\cos x)^2 - 1","2*sin(x)*cos(x)","2\\sin x\\cos x"],["\\dfrac{\\tan x + \\cot x}{\\sec x}","1/sin(x)","\\csc x"],["\\sin^4 x - \\cos^4 x","sin(x)^2-cos(x)^2","\\sin^2 x - \\cos^2 x"]]);return{q:`Simplify $${e}$. (Type like 2/sin(x).)`,type:"expr",ans:a,ansTex:t,hint:"Combine fractions over a common denominator, or factor; then use a Pythagorean identity.",sol:[`$${e} = ${t}$.`]}}
+ ]},
+ {id:"sumd",title:"Sum & Difference Formulas",idea:"$\\sin(A \\pm B) = \\sin A\\cos B \\pm \\cos A\\sin B$. $\\cos(A \\pm B) = \\cos A\\cos B \\mp \\sin A\\sin B$. $\\tan(A \\pm B) = \\dfrac{\\tan A \\pm \\tan B}{1 \\mp \\tan A\\tan B}$.",
+  lesson:{steps:[["\\sin 75^\\circ = \\sin(45^\\circ + 30^\\circ)","Split into special angles."],["\\tfrac{\\sqrt2}{2}\\cdot\\tfrac{\\sqrt3}{2} + \\tfrac{\\sqrt2}{2}\\cdot\\tfrac12","Use the formula."],["\\dfrac{\\sqrt6 + \\sqrt2}{4}","Combine."]],warn:"$\\sin(A + B) \\ne \\sin A + \\sin B$. Always use the formula."},
+  gen:[
+  ()=>{const A=pick([15,75,105,165,195,255,285,345]),f=pick(["sin","cos"]),v=Math[f](R(A));let tx="";for(const s1 of [1,-1])for(const s2 of [1,-1])if(Math.abs(s1*Math.sqrt(6)+s2*Math.SQRT2-4*v)<1e-9){tx=s1<0&&s2<0?"-\\dfrac{\\sqrt6 + \\sqrt2}{4}":s1>0&&s2>0?"\\dfrac{\\sqrt6 + \\sqrt2}{4}":s1>0?"\\dfrac{\\sqrt6 - \\sqrt2}{4}":"\\dfrac{\\sqrt2 - \\sqrt6}{4}"}return{q:`Find the exact value of $\\${f} ${A}^\\circ$. (Type like (sqrt(6)+sqrt(2))/4.)`,type:"number",ans:v,ansTex:tx,hint:"Write the angle as a sum or difference of $30^\\circ$, $45^\\circ$, $60^\\circ$, … and use the formula.",sol:[`$\\${f} ${A}^\\circ = ${tx}$.`]}},
+  ()=>{const S=pick([30,45,60,90,120,135,150]);let a;do{a=5*rnd(1,S/5-1)}while(a===S-a&&false);const b=S-a,cos=Math.random()<.5;const v=cos?cosD(S):sinD(S);return{q:`Find the exact value of $${cos?`\\cos ${a}^\\circ\\cos ${b}^\\circ - \\sin ${a}^\\circ\\sin ${b}^\\circ`:`\\sin ${a}^\\circ\\cos ${b}^\\circ + \\cos ${a}^\\circ\\sin ${b}^\\circ`}$.`,type:"number",ans:v,ansTex:numTex(v),hint:"Recognize the pattern of a sum formula, run backward.",sol:[`$= \\${cos?"cos":"sin"}(${a}^\\circ + ${b}^\\circ) = \\${cos?"cos":"sin"} ${S}^\\circ = ${numTex(v)}$.`]}},
+  ()=>{const [a1,b1,c1]=pick(TRIP.slice(0,3));let t2;do{t2=pick(TRIP.slice(0,3))}while(t2[2]===c1);const [a2,b2,c2]=t2;const V=pick([["\\sin(A + B)",a1*b2+b1*a2],["\\cos(A + B)",b1*b2-a1*a2],["\\sin(A - B)",a1*b2-b1*a2],["\\cos(A - B)",b1*b2+a1*a2]]);return{q:`$\\sin A = ${frac(a1,c1)}$ and $\\cos B = ${frac(b2,c2)}$, with $A$ and $B$ in Quadrant I. Find $${V[0]}$.`,type:"number",ans:V[1]/(c1*c2),ansTex:frac(V[1],c1*c2),hint:"First find $\\cos A$ and $\\sin B$ with $\\sin^2 + \\cos^2 = 1$.",sol:[`$\\cos A = ${frac(b1,c1)}$, $\\sin B = ${frac(a2,c2)}$.`,`$${V[0]} = ${frac(V[1],c1*c2)}$.`]}},
+  ()=>{let p1,p2,q1,q2;do{p1=nz(-4,4);p2=rnd(1,3);q1=nz(-4,4);q2=rnd(1,3)}while(p2*q2-p1*q1===0||gcd(p1,p2)!==1||gcd(q1,q2)!==1);const N=p1*q2+q1*p2,Dn=p2*q2-p1*q1;return{q:`$\\tan A = ${frac(p1,p2)}$ and $\\tan B = ${frac(q1,q2)}$. Find $\\tan(A + B)$.`,type:"number",ans:N/Dn,ansTex:frac(N,Dn),hint:"$\\tan(A + B) = \\dfrac{\\tan A + \\tan B}{1 - \\tan A\\tan B}$.",sol:[`$\\dfrac{${frac(p1,p2)} + ${frac(q1,q2)}}{1 - (${frac(p1,p2)})(${frac(q1,q2)})} = ${frac(N,Dn)}$.`]}},
+  ()=>{let k;do{k=pick([2,3,4,5,-2,-3,0.5,1/3,-0.5])}while(k===-1);const n=k===0.5?[1,2]:k===1/3?[1,3]:k===-0.5?[-1,2]:[k,1];return{q:`$\\tan\\left(x + \\dfrac{\\pi}{4}\\right) = ${frac(n[0],n[1])}$. Find $\\tan x$.`,type:"number",ans:(n[0]-n[1])/(n[0]+n[1]),ansTex:frac(n[0]-n[1],n[0]+n[1]),hint:"Let $t = \\tan x$: $\\dfrac{t + 1}{1 - t} = k$. Solve for $t$.",sol:[`$t + 1 = k(1 - t) \\Rightarrow t = \\dfrac{k - 1}{k + 1} = ${frac(n[0]-n[1],n[0]+n[1])}$.`]}}
+ ]},
+ {id:"dbl",title:"Double- & Half-Angle Formulas",idea:"$\\sin 2\\theta = 2\\sin\\theta\\cos\\theta$. $\\cos 2\\theta = \\cos^2\\theta - \\sin^2\\theta = 1 - 2\\sin^2\\theta = 2\\cos^2\\theta - 1$. Half-angle: $\\cos\\dfrac{\\theta}{2} = \\pm\\sqrt{\\dfrac{1 + \\cos\\theta}{2}}$.",
+  lesson:{steps:[["\\sin\\theta = \\tfrac35,\\ \\text{Quadrant I}","Then $\\cos\\theta = \\tfrac45$."],["\\sin 2\\theta = 2\\cdot\\tfrac35\\cdot\\tfrac45","Double-angle formula."],["\\sin 2\\theta = \\tfrac{24}{25}","Multiply."]],warn:"$\\sin 2\\theta$ is <b>not</b> $2\\sin\\theta$."},
+  gen:[
+  ()=>{const [a,b,c]=pick(TRIP.slice(0,4)),Q=pick([1,2]),s=Q===1?1:-1;return{q:`$\\sin\\theta = ${frac(a,c)}$ and $\\theta$ is in Quadrant ${QN[Q-1]}. Find $\\sin 2\\theta$.`,type:"number",ans:2*a*s*b/(c*c),ansTex:frac(2*a*s*b,c*c),hint:"Find $\\cos\\theta$ (watch the sign), then $2\\sin\\theta\\cos\\theta$.",sol:[`$\\cos\\theta = ${frac(s*b,c)}$.`,`$\\sin 2\\theta = 2\\cdot${frac(a,c)}\\cdot${frac(s*b,c)} = ${frac(2*a*s*b,c*c)}$.`]}},
+  ()=>{const [a,b,c]=pick(TRIP.slice(0,4)),useCos=Math.random()<.5;const N=useCos?2*b*b-c*c:c*c-2*a*a;return{q:`${useCos?`$\\cos\\theta = ${frac(b,c)}$`:`$\\sin\\theta = ${frac(a,c)}$`}. Find $\\cos 2\\theta$.`,type:"number",ans:N/(c*c),ansTex:frac(N,c*c),hint:useCos?"Use $\\cos 2\\theta = 2\\cos^2\\theta - 1$.":"Use $\\cos 2\\theta = 1 - 2\\sin^2\\theta$.",sol:[`$\\cos 2\\theta = ${frac(N,c*c)}$.`]}},
+  ()=>{const [e,v]=pick([["2\\sin 15^\\circ\\cos 15^\\circ",sinD(30)],["\\cos^2 15^\\circ - \\sin^2 15^\\circ",cosD(30)],["2\\cos^2 22.5^\\circ - 1",cosD(45)],["1 - 2\\sin^2 75^\\circ",cosD(150)],["\\dfrac{2\\tan 22.5^\\circ}{1 - \\tan^2 22.5^\\circ}",tanD(45)],["2\\sin 67.5^\\circ\\cos 67.5^\\circ",sinD(135)],["\\cos^2 105^\\circ - \\sin^2 105^\\circ",cosD(210)],["\\dfrac{2\\tan 15^\\circ}{1 - \\tan^2 15^\\circ}",tanD(30)]]);return{q:`Find the exact value of $${e}$.`,type:"number",ans:v,ansTex:numTex(v),hint:"Recognize a double-angle formula and simplify to one trig value.",sol:[`$${e} = ${numTex(v)}$.`]}},
+  ()=>{const [a,b,c]=pick(TRIP.slice(0,4)),half=pick(["cos","sin"]);const N=half==="cos"?c+b:c-b;return{q:`$\\cos\\theta = ${frac(b,c)}$ with $0 < \\theta < \\dfrac{\\pi}{2}$. Find $\\${half}\\dfrac{\\theta}{2}$. (Type like sqrt(9/10).)`,type:"number",ans:Math.sqrt(N/(2*c)),ansTex:`\\sqrt{${frac(N,2*c)}}`,hint:`$\\${half}\\dfrac{\\theta}{2} = \\sqrt{\\dfrac{1 ${half==="cos"?"+":"-"} \\cos\\theta}{2}}$ (positive, since $\\tfrac{\\theta}{2}$ is in Quadrant I).`,sol:[`$\\sqrt{\\dfrac{1 ${half==="cos"?"+":"-"} ${frac(b,c)}}{2}} = \\sqrt{${frac(N,2*c)}}$.`]}},
+  ()=>{const [e,f]=pick([["\\cos 2x = \\cos x",x=>Math.cos(2*x)-Math.cos(x)],["\\sin 2x = \\sin x",x=>Math.sin(2*x)-Math.sin(x)],["\\cos 2x + \\sin x = 0",x=>Math.cos(2*x)+Math.sin(x)],["\\sin 2x = \\cos x",x=>Math.sin(2*x)-Math.cos(x)],["\\cos 2x = 3\\sin x - 1",x=>Math.cos(2*x)-3*Math.sin(x)+1],["\\cos 2x + \\cos x = 0",x=>Math.cos(2*x)+Math.cos(x)]]);const S=sols(f);return{q:`Solve $${e}$ on $[0, 2\\pi)$.`,type:"roots",ans:S,ansTex:`x = ${solTex(S)}`,hint:"Replace the double angle so only one function of $x$ is left, then factor.",sol:[`$x = ${solTex(S)}$.`]}}
+ ]}
+]}
+];
+
+const HERON=[[3,4,5,6],[5,5,6,12],[5,5,8,12],[13,14,15,84],[7,15,20,42],[9,10,17,36],[10,13,13,60],[6,25,29,60],[13,13,24,60],[11,13,20,66]];
+const ANG=[30,45,60,120,135,150,210,225,240,300,315,330];
+const MORE=[
+/* ===================== 7 ===================== */
+{id:"ch7",title:"Laws of Sines and Cosines",topics:[
+ {id:"los",title:"Law of Sines",idea:"$\\dfrac{a}{\\sin A} = \\dfrac{b}{\\sin B} = \\dfrac{c}{\\sin C}$. Use it when you know an angle and the side across from it (AAS, ASA, SSA).",
+  lesson:{steps:[["A = 40^\\circ,\\ B = 60^\\circ,\\ a = 10","Find $b$."],["\\dfrac{10}{\\sin 40^\\circ} = \\dfrac{b}{\\sin 60^\\circ}","Pair each side with its opposite angle."],["b = \\dfrac{10\\sin 60^\\circ}{\\sin 40^\\circ} \\approx 13.5","Solve."]],warn:"SSA can give $0$, $1$, or $2$ triangles — the <b>ambiguous case</b>."},
+  gen:[
+  ()=>{let A,B;do{A=rnd(25,85);B=rnd(25,85)}while(A+B>165||A===B);const a=rnd(5,25),b=a*sinD(B)/sinD(A);return{q:`In $\\triangle ABC$, $A = ${A}^\\circ$, $B = ${B}^\\circ$, and $a = ${a}$. Find $b$. (Nearest tenth.)`,type:"number",tol:0.06,ans:b,ansTex:`${r1(b)}`,hint:"$\\dfrac{a}{\\sin A} = \\dfrac{b}{\\sin B}$.",sol:[`$b = \\dfrac{${a}\\sin ${B}^\\circ}{\\sin ${A}^\\circ} \\approx ${r1(b)}$.`]}},
+  ()=>{let A,B;do{A=rnd(20,80);B=rnd(20,80)}while(A+B>160);const C=180-A-B,a=rnd(5,25),c=a*sinD(C)/sinD(A);return{q:`In $\\triangle ABC$, $A = ${A}^\\circ$, $B = ${B}^\\circ$, and $a = ${a}$. Find $c$. (Nearest tenth.)`,type:"number",tol:0.06,ans:c,ansTex:`${r1(c)}`,hint:"First find $C = 180^\\circ - A - B$.",sol:[`$C = ${C}^\\circ$.`,`$c = \\dfrac{${a}\\sin ${C}^\\circ}{\\sin ${A}^\\circ} \\approx ${r1(c)}$.`]}},
+  ()=>{const A=rnd(25,80),b=rnd(5,15),a=b+rnd(2,10),B=D(Math.asin(b*sinD(A)/a));return{q:`In $\\triangle ABC$, $A = ${A}^\\circ$, $a = ${a}$, and $b = ${b}$. Find angle $B$ in degrees. (Nearest tenth.)`,type:"number",tol:0.06,ans:B,ansTex:`${r1(B)}^\\circ`,hint:"$\\sin B = \\dfrac{b\\sin A}{a}$. Since $a > b$, only the acute answer works.",sol:[`$\\sin B = \\dfrac{${b}\\sin ${A}^\\circ}{${a}}$, $B \\approx ${r1(B)}^\\circ$.`]}},
+  ()=>{let A,a,b,h,n;do{A=rnd(25,70);b=rnd(8,20);h=b*sinD(A);const c=rnd(0,2);a=c===0?rnd(2,Math.floor(h)):c===1?rnd(Math.ceil(h),b-1):rnd(b,b+8)}while(Math.abs(a-h)<0.3||a<1);n=a<h?0:a<b?2:1;return{q:`In $\\triangle ABC$, $A = ${A}^\\circ$, $a = ${a}$, and $b = ${b}$. How many triangles are possible?`,type:"number",ans:n,ansTex:`${n}`,hint:"Compare $a$ with the height $h = b\\sin A$ and with $b$.",sol:[`$h = ${b}\\sin ${A}^\\circ \\approx ${r1(h)}$.`,a<h?"$a < h$: no triangle.":a<b?"$h < a < b$: two triangles.":"$a \\ge b$: one triangle."]}},
+  ()=>{let A,B;do{A=rnd(25,80);B=rnd(25,80)}while(A+B>160);const C=180-A-B,a=rnd(5,20),K=a*a*sinD(B)*sinD(C)/(2*sinD(A));return{q:`In $\\triangle ABC$, $A = ${A}^\\circ$, $B = ${B}^\\circ$, and $a = ${a}$. Find the area. (Nearest tenth.)`,type:"number",tol:0.06,ans:K,ansTex:`${r1(K)}`,hint:"Find another side with the Law of Sines, then use $\\tfrac12 ab\\sin C$.",sol:[`$C = ${C}^\\circ$, $b = \\dfrac{${a}\\sin ${B}^\\circ}{\\sin ${A}^\\circ}$.`,`Area $= \\tfrac12 ab\\sin C \\approx ${r1(K)}$.`]}}
+ ]},
+ {id:"loc",title:"Law of Cosines",idea:"$c^2 = a^2 + b^2 - 2ab\\cos C$. Use it for SAS (find the third side) and SSS (find an angle).",
+  lesson:{steps:[["a = 5,\\ b = 8,\\ C = 60^\\circ","Find $c$."],["c^2 = 25 + 64 - 2(5)(8)\\cos 60^\\circ","$\\cos 60^\\circ = \\tfrac12$."],["c^2 = 49,\\ c = 7","Done."]],warn:"In SSS, find the <b>largest</b> angle first — it is the only one that might be obtuse."},
+  gen:[
+  ()=>{const a=rnd(4,20),b=rnd(4,20),C=rnd(20,150),c=Math.sqrt(a*a+b*b-2*a*b*cosD(C));return{q:`In $\\triangle ABC$, $a = ${a}$, $b = ${b}$, and $C = ${C}^\\circ$. Find $c$. (Nearest tenth.)`,type:"number",tol:0.06,ans:c,ansTex:`${r1(c)}`,hint:"$c^2 = a^2 + b^2 - 2ab\\cos C$.",sol:[`$c^2 = ${a*a} + ${b*b} - ${2*a*b}\\cos ${C}^\\circ$, $c \\approx ${r1(c)}$.`]}},
+  ()=>{let a,b,c;do{a=rnd(3,15);b=rnd(3,15);c=rnd(3,15)}while(a+b<=c||a+c<=b||b+c<=a);const C=D(Math.acos((a*a+b*b-c*c)/(2*a*b)));return{q:`A triangle has sides $a = ${a}$, $b = ${b}$, and $c = ${c}$. Find angle $C$ in degrees. (Nearest tenth.)`,type:"number",tol:0.06,ans:C,ansTex:`${r1(C)}^\\circ`,hint:"$\\cos C = \\dfrac{a^2 + b^2 - c^2}{2ab}$.",sol:[`$\\cos C = \\dfrac{${a*a} + ${b*b} - ${c*c}}{${2*a*b}}$, $C \\approx ${r1(C)}^\\circ$.`]}},
+  ()=>{const t=pick([[3,5,120,7],[5,8,60,7],[3,8,60,7],[7,8,120,13],[8,15,60,13],[5,16,120,19],[5,21,60,19]]),k=rnd(1,2),sw=Math.random()<.5;const a=k*(sw?t[1]:t[0]),b=k*(sw?t[0]:t[1]);return{q:`In $\\triangle ABC$, $a = ${a}$, $b = ${b}$, and $C = ${t[2]}^\\circ$. Find the exact length $c$.`,type:"number",ans:k*t[3],ansTex:`${k*t[3]}`,hint:`$\\cos ${t[2]}^\\circ = ${t[2]===60?"\\tfrac12":"-\\tfrac12"}$.`,sol:[`$c^2 = ${a*a} + ${b*b} ${t[2]===60?"-":"+"} ${a*b} = ${(k*t[3])**2}$.`,`$c = ${k*t[3]}$.`]}},
+  ()=>{const s1=rnd(10,40),s2=rnd(10,40),th=rnd(30,150),t=rnd(2,5),d=Math.sqrt((s1*t)**2+(s2*t)**2-2*s1*s2*t*t*cosD(th));return{q:`Two ships leave port at the same time. One sails at $${s1}$ mph, the other at $${s2}$ mph, on courses $${th}^\\circ$ apart. How far apart are they after $${t}$ hours? (Nearest tenth of a mile.)`,type:"number",tol:0.06,ans:d,ansTex:`${r1(d)}`,hint:"Find each distance traveled, then use the Law of Cosines.",sol:[`Sides $${s1*t}$ and $${s2*t}$, angle $${th}^\\circ$.`,`$d \\approx ${r1(d)}$ mi.`]}},
+  ()=>{let a,b,c;do{a=rnd(2,9);b=rnd(a,10);c=rnd(b,12)}while(a+b<=c||c===a);const N=a*a+b*b-c*c;return{q:`A triangle has sides $${a}$, $${b}$, and $${c}$. Find the cosine of its largest angle.`,type:"number",ans:N/(2*a*b),ansTex:frac(N,2*a*b),hint:"The largest angle is opposite the longest side.",sol:[`$\\cos C = \\dfrac{${a*a} + ${b*b} - ${c*c}}{2(${a})(${b})} = ${frac(N,2*a*b)}$.`]}}
+ ]},
+ {id:"tarea",title:"Triangle Area & Heron's Formula",idea:"Area $= \\tfrac12 ab\\sin C$ (SAS). <b>Heron</b>: with $s = \\tfrac{a + b + c}{2}$, area $= \\sqrt{s(s - a)(s - b)(s - c)}$.",
+  lesson:{steps:[["a = 13,\\ b = 14,\\ c = 15","$s = 21$."],["\\sqrt{21\\cdot 8\\cdot 7\\cdot 6}","Heron's formula."],["\\sqrt{7056} = 84","The area."]],warn:"$s$ is <b>half</b> the perimeter, not the whole perimeter."},
+  gen:[
+  ()=>{const a=rnd(2,14),b=rnd(2,14),C=pick([30,45,60,90,120,135,150]),K=a*b*sinD(C)/2;return{q:`Find the exact area of a triangle with sides $${a}$ and $${b}$ and included angle $${C}^\\circ$. (Type like 6sqrt(3).)`,type:"number",ans:K,ansTex:numTex(K),hint:"Area $= \\tfrac12 ab\\sin C$.",sol:[`$\\tfrac12(${a})(${b})\\sin ${C}^\\circ = ${numTex(K)}$.`]}},
+  ()=>{const a=rnd(4,25),b=rnd(4,25),C=rnd(15,165),K=a*b*sinD(C)/2;return{q:`Find the area of a triangle with sides $${a}$ and $${b}$ and included angle $${C}^\\circ$. (Nearest tenth.)`,type:"number",tol:0.06,ans:K,ansTex:`${r1(K)}`,hint:"Area $= \\tfrac12 ab\\sin C$.",sol:[`$\\tfrac12(${a})(${b})\\sin ${C}^\\circ \\approx ${r1(K)}$.`]}},
+  ()=>{const t=pick(HERON),k=rnd(1,3);return{q:`Find the area of a triangle with sides $${k*t[0]}$, $${k*t[1]}$, and $${k*t[2]}$.`,type:"number",ans:k*k*t[3],ansTex:`${k*k*t[3]}`,hint:"Heron's formula with $s = \\tfrac{a + b + c}{2}$.",sol:[`$s = ${k*(t[0]+t[1]+t[2])/2}$.`,`Area $= ${k*k*t[3]}$.`]}},
+  ()=>{let a,b,c;do{a=rnd(3,20);b=rnd(3,20);c=rnd(3,20)}while(a+b<=c||a+c<=b||b+c<=a);const s=(a+b+c)/2,K=Math.sqrt(s*(s-a)*(s-b)*(s-c));return{q:`Find the area of a triangle with sides $${a}$, $${b}$, and $${c}$. (Nearest tenth.)`,type:"number",tol:0.06,ans:K,ansTex:`${r1(K)}`,hint:"Heron's formula.",sol:[`$s = ${s}$, area $= \\sqrt{${s}(${s-a})(${s-b})(${s-c})} \\approx ${r1(K)}$.`]}},
+  ()=>{const t=pick(HERON),k=rnd(1,2),[a,b,c,K0]=[k*t[0],k*t[1],k*t[2],k*k*t[3]],inr=Math.random()<.5;return inr?{q:`A triangle has sides $${a}$, $${b}$, and $${c}$. Find the radius of its inscribed circle.`,type:"number",ans:2*K0/(a+b+c),ansTex:frac(2*K0,a+b+c),hint:"Area $= rs$, where $s$ is the semiperimeter.",sol:[`Area $= ${K0}$, $s = ${(a+b+c)/2}$.`,`$r = ${frac(2*K0,a+b+c)}$.`]}:{q:`A triangle has sides $${a}$, $${b}$, and $${c}$. Find the radius of its circumscribed circle.`,type:"number",ans:a*b*c/(4*K0),ansTex:frac(a*b*c,4*K0),hint:"$R = \\dfrac{abc}{4K}$, where $K$ is the area.",sol:[`Area $K = ${K0}$.`,`$R = \\dfrac{${a*b*c}}{${4*K0}} = ${frac(a*b*c,4*K0)}$.`]}}
+ ]}
+]},
+/* ===================== 8 ===================== */
+{id:"ch8",title:"Vectors",topics:[
+ {id:"vcomp",title:"Components, Magnitude & Unit Vectors",idea:"$\\vec{PQ} = \\langle x_2 - x_1, y_2 - y_1\\rangle$. Magnitude $\\|\\langle a, b\\rangle\\| = \\sqrt{a^2 + b^2}$. A unit vector is $\\dfrac{\\vec v}{\\|\\vec v\\|}$.",
+  lesson:{steps:[["P(1, 2),\\ Q(4, 6)","Find $\\vec{PQ}$."],["\\langle 4 - 1,\\ 6 - 2\\rangle = \\langle 3, 4\\rangle","End minus start."],["\\|\\vec{PQ}\\| = \\sqrt{9 + 16} = 5","Its length."]],warn:"Always subtract start from end: $Q - P$, not $P - Q$."},
+  gen:[
+  ()=>{const x1=nz(-8,8),y1=nz(-8,8),x2=nz(-8,8),y2=nz(-8,8);return{q:`Find the component form of $\\vec{PQ}$ for $P(${x1}, ${y1})$ and $Q(${x2}, ${y2})$. (Type like &lt;3, -2&gt;.)`,type:"point",ans:[x2-x1,y2-y1],ansTex:vtex(x2-x1,y2-y1),hint:"Subtract: end minus start.",sol:[`$\\langle ${x2} - ${P(x1)},\\ ${y2} - ${P(y1)}\\rangle = ${vtex(x2-x1,y2-y1)}$.`]}},
+  ()=>{const tr=Math.random()<.6;let a,b;if(tr){const t=pick(TRIP.slice(0,4));a=t[0]*pick([1,-1]);b=t[1]*pick([1,-1]);if(Math.random()<.5)[a,b]=[b,a]}else{a=nz(-7,7);b=nz(-7,7)}const m=a*a+b*b;return{q:`Find the magnitude of $\\vec v = ${vtex(a,b)}$.`,type:"number",ans:Math.sqrt(m),ansTex:rad(m),hint:"$\\sqrt{a^2 + b^2}$.",sol:[`$\\sqrt{${a*a} + ${b*b}} = ${rad(m)}$.`]}},
+  ()=>{const u=[nz(-6,6),nz(-6,6)],v=[nz(-6,6),nz(-6,6)],p=rnd(2,4),q=rnd(1,3),r=[p*u[0]-q*v[0],p*u[1]-q*v[1]];return{q:`$\\vec u = ${vtex(...u)}$ and $\\vec v = ${vtex(...v)}$. Find $${p}\\vec u - ${q===1?"":q}\\vec v$.`,type:"point",ans:r,ansTex:vtex(...r),hint:"Scale each vector, then subtract component by component.",sol:[`$${vtex(p*u[0],p*u[1])} - ${vtex(q*v[0],q*v[1])} = ${vtex(...r)}$.`]}},
+  ()=>{const t=pick(TRIP.slice(0,4));let a=t[0]*pick([1,-1]),b=t[1]*pick([1,-1]);if(Math.random()<.5)[a,b]=[b,a];const c=t[2];return{q:`Find the unit vector in the direction of $${vtex(a,b)}$.`,type:"point",ans:[a/c,b/c],ansTex:vtex(frac(a,c),frac(b,c)),hint:"Divide each component by the magnitude.",sol:[`Magnitude $${c}$, unit vector $${vtex(frac(a,c),frac(b,c))}$.`]}},
+  ()=>{const m=2*rnd(1,10),th=pick(ANG),x=m*cosD(th),y=m*sinD(th);return{q:`A vector has magnitude $${m}$ and direction angle $${th}^\\circ$. Find its exact component form. (Type like &lt;5sqrt(3), 5&gt;.)`,type:"point",ans:[x,y],ansTex:vtex(numTex(x),numTex(y)),hint:"$\\langle \\|v\\|\\cos\\theta,\\ \\|v\\|\\sin\\theta\\rangle$.",sol:[`$\\langle ${m}\\cos ${th}^\\circ,\\ ${m}\\sin ${th}^\\circ\\rangle = ${vtex(numTex(x),numTex(y))}$.`]}}
+ ]},
+ {id:"dot",title:"Dot Product & Angles",idea:"$\\vec u\\cdot\\vec v = u_1v_1 + u_2v_2 = \\|\\vec u\\|\\|\\vec v\\|\\cos\\theta$. The vectors are <b>orthogonal</b> when the dot product is $0$.",
+  lesson:{steps:[["\\langle 3, 4\\rangle\\cdot\\langle 4, -3\\rangle","Multiply matching components."],["12 - 12 = 0","Add."],["\\text{orthogonal}","The angle is $90^\\circ$."]],warn:"The dot product is a <b>number</b>, not a vector."},
+  gen:[
+  ()=>{const u=[nz(-8,8),nz(-8,8)],v=[nz(-8,8),nz(-8,8)],d=u[0]*v[0]+u[1]*v[1];return{q:`Find $${vtex(...u)}\\cdot${vtex(...v)}$.`,type:"number",ans:d,ansTex:`${d}`,hint:"$u_1v_1 + u_2v_2$.",sol:[`$${u[0]*v[0]} ${sg(u[1]*v[1])} = ${d}$.`]}},
+  ()=>{let u,v;do{u=[nz(-6,6),nz(-6,6)];v=[nz(-6,6),nz(-6,6)]}while(u[0]*v[1]===u[1]*v[0]);const d=u[0]*v[0]+u[1]*v[1],th=D(Math.acos(d/Math.hypot(...u)/Math.hypot(...v)));return{q:`Find the angle between $${vtex(...u)}$ and $${vtex(...v)}$ in degrees. (Nearest tenth.)`,type:"number",tol:0.06,ans:th,ansTex:`${r1(th)}^\\circ`,hint:"$\\cos\\theta = \\dfrac{\\vec u\\cdot\\vec v}{\\|\\vec u\\|\\|\\vec v\\|}$.",sol:[`$\\cos\\theta = \\dfrac{${d}}{\\sqrt{${u[0]**2+u[1]**2}}\\sqrt{${v[0]**2+v[1]**2}}}$, $\\theta \\approx ${r1(th)}^\\circ$.`]}},
+  ()=>{let a,b,c,k;do{a=nz(-6,6);b=nz(-6,6);c=nz(-6,6);k=-a*b/c}while(!Number.isInteger(k));return{q:`Find $k$ so that $${vtex(a,"k")}$ and $${vtex(b,c)}$ are orthogonal.`,type:"number",ans:k,ansTex:`k = ${k}`,hint:"Set the dot product equal to $0$.",sol:[`$${a*b} + ${c}k = 0 \\Rightarrow k = ${k}$.`]}},
+  ()=>{let u,v;do{u=[nz(-6,6),nz(-6,6)];v=[nz(-4,4),nz(-4,4)]}while(u[0]*v[0]+u[1]*v[1]===0);const d=u[0]*v[0]+u[1]*v[1],m=v[0]**2+v[1]**2;return{q:`Find the projection of $\\vec u = ${vtex(...u)}$ onto $\\vec v = ${vtex(...v)}$.`,type:"point",ans:[d*v[0]/m,d*v[1]/m],ansTex:vtex(frac(d*v[0],m),frac(d*v[1],m)),hint:"$\\text{proj}_{\\vec v}\\vec u = \\dfrac{\\vec u\\cdot\\vec v}{\\|\\vec v\\|^2}\\vec v$.",sol:[`$\\dfrac{${d}}{${m}}${vtex(...v)} = ${vtex(frac(d*v[0],m),frac(d*v[1],m))}$.`]}},
+  ()=>{const F=rnd(10,80),d=rnd(20,200),th=rnd(15,60),W=F*d*cosD(th);return{q:`A force of $${F}$ lb, pulling at $${th}^\\circ$ above the horizontal, drags a crate $${d}$ ft along the floor. How much work is done? (Nearest tenth of a ft-lb.)`,type:"number",tol:0.06,ans:W,ansTex:`${r1(W)}`,hint:"$W = \\|\\vec F\\|\\|\\vec d\\|\\cos\\theta$.",sol:[`$W = ${F}\\cdot ${d}\\cos ${th}^\\circ \\approx ${r1(W)}$ ft-lb.`]}}
+ ]},
+ {id:"vapp",title:"Resultants & Navigation",idea:"Add vectors component by component to get the <b>resultant</b>. Its magnitude is the size of the combined effect, and its direction angle is found with $\\tan^{-1}$ — watch the quadrant.",
+  lesson:{steps:[["\\langle 3, 0\\rangle + \\langle 0, 4\\rangle","Two perpendicular forces."],["\\langle 3, 4\\rangle","Add components."],["\\|\\vec R\\| = 5","Its magnitude."]],warn:"$\\tan^{-1}$ only gives angles in Quadrants I and IV. For a vector in II or III, add $180^\\circ$."},
+  gen:[
+  ()=>{const t=pick(TRIP),k=1;return{q:`Two forces of $${t[0]}$ N and $${t[1]}$ N act on an object at a right angle. Find the magnitude of the resultant.`,type:"number",ans:t[2],ansTex:`${t[2]}`,hint:"Perpendicular forces: use the Pythagorean Theorem.",sol:[`$\\sqrt{${t[0]**2} + ${t[1]**2}} = ${t[2]}$ N.`]}},
+  ()=>{const a=[nz(-9,9),nz(-9,9)],b=[nz(-9,9),nz(-9,9)],r=[a[0]+b[0],a[1]+b[1]];const m=r[0]**2+r[1]**2;return{q:`$\\vec F_1 = ${vtex(...a)}$ and $\\vec F_2 = ${vtex(...b)}$. Find the magnitude of the resultant. (Exact or nearest tenth.)`,type:"number",tol:0.06,ans:Math.sqrt(m),ansTex:rad(m),hint:"Add the vectors, then find the length.",sol:[`$\\vec R = ${vtex(...r)}$, $\\|\\vec R\\| = ${rad(m)}$.`]}},
+  ()=>{let a,b;do{a=nz(-9,9);b=nz(-9,9)}while(Math.abs(a)===Math.abs(b));let t=D(Math.atan2(b,a));if(t<0)t+=360;return{q:`Find the direction angle of $${vtex(a,b)}$, between $0^\\circ$ and $360^\\circ$. (Nearest tenth.)`,type:"number",tol:0.06,ans:t,ansTex:`${r1(t)}^\\circ`,hint:"$\\tan^{-1}\\dfrac{b}{a}$, then adjust for the quadrant.",sol:[`Quadrant ${a>0?(b>0?"I":"IV"):(b>0?"II":"III")}: $\\theta \\approx ${r1(t)}^\\circ$.`]}},
+  ()=>{const s=rnd(150,500),w=rnd(20,60),dir=pick([["east",[1,0]],["west",[-1,0]],["northeast",[Math.SQRT1_2,Math.SQRT1_2]],["southeast",[Math.SQRT1_2,-Math.SQRT1_2]]]);const g=Math.hypot(w*dir[1][0],s+w*dir[1][1]);return{q:`A plane flies due north at $${s}$ mph through a $${w}$-mph wind blowing toward the ${dir[0]}. Find the plane's ground speed. (Nearest tenth.)`,type:"number",tol:0.06,ans:g,ansTex:`${r1(g)}`,hint:"Write both velocities as vectors, add them, and find the magnitude.",sol:[`$\\vec v = \\langle 0, ${s}\\rangle + \\vec w$, $\\|\\vec v\\| \\approx ${r1(g)}$ mph.`]}},
+  ()=>{const p=rnd(5,40),q=rnd(5,40),th=rnd(20,160),R_=Math.sqrt(p*p+q*q+2*p*q*cosD(th));return{q:`Forces of $${p}$ lb and $${q}$ lb act on a point with an angle of $${th}^\\circ$ between them. Find the magnitude of the resultant. (Nearest tenth.)`,type:"number",tol:0.06,ans:R_,ansTex:`${r1(R_)}`,hint:"$\\|\\vec R\\|^2 = p^2 + q^2 + 2pq\\cos\\theta$ (from the parallelogram).",sol:[`$\\sqrt{${p*p} + ${q*q} + ${2*p*q}\\cos ${th}^\\circ} \\approx ${r1(R_)}$ lb.`]}}
+ ]}
+]},
+/* ===================== 9 ===================== */
+{id:"ch9",title:"Polar Coordinates, Complex Numbers & Parametrics",topics:[
+ {id:"polar",title:"Polar Coordinates & Equations",idea:"$x = r\\cos\\theta$, $y = r\\sin\\theta$, $r^2 = x^2 + y^2$, $\\tan\\theta = \\dfrac{y}{x}$.",
+  lesson:{steps:[["(r, \\theta) = (4, 60^\\circ)","Convert to rectangular."],["x = 4\\cos 60^\\circ = 2","$x = r\\cos\\theta$."],["y = 4\\sin 60^\\circ = 2\\sqrt3","So the point is $(2, 2\\sqrt3)$."]],warn:"$\\tan^{-1}\\dfrac{y}{x}$ alone can put $\\theta$ in the wrong quadrant — check the signs of $x$ and $y$."},
+  gen:[
+  ()=>{const r=2*rnd(1,6),th=pick(ANG.concat([90,180,270])),x=r*cosD(th),y=r*sinD(th);return{q:`Convert the polar point $(${r}, ${th}^\\circ)$ to rectangular coordinates. (Exact.)`,type:"point",ans:[x,y],ansTex:pt(numTex(x),numTex(y)),hint:"$x = r\\cos\\theta$, $y = r\\sin\\theta$.",sol:[`$(${r}\\cos ${th}^\\circ, ${r}\\sin ${th}^\\circ) = ${pt(numTex(x),numTex(y))}$.`]}},
+  ()=>{const t=pick(TRIP.slice(0,4));let a=t[0]*pick([1,-1]),b=t[1]*pick([1,-1]);if(Math.random()<.5)[a,b]=[b,a];let th=D(Math.atan2(b,a));if(th<0)th+=360;return{q:`Convert $(${a}, ${b})$ to polar coordinates $(r, \\theta)$ with $r > 0$ and $0^\\circ \\le \\theta < 360^\\circ$. ($\\theta$ to the nearest tenth.)`,type:"point",tol:0.06,ans:[t[2],th],ansTex:pt(t[2],r1(th)+"^\\circ"),hint:"$r = \\sqrt{x^2 + y^2}$; find $\\theta$ from $\\tan\\theta = \\dfrac{y}{x}$ and the quadrant.",sol:[`$r = ${t[2]}$, $\\theta \\approx ${r1(th)}^\\circ$.`]}},
+  ()=>{const k=nz(-6,6),a=Math.abs(k);const V=pick([[`r = ${a}`,`x^2+y^2=${a*a}`,`x^2 + y^2 = ${a*a}`,"Square: $r^2 = x^2 + y^2$."],[`r = ${2*k}\\cos\\theta`,`x^2+y^2=${2*k}*x`,`x^2 + y^2 = ${2*k}x`,"Multiply both sides by $r$."],[`r = ${2*k}\\sin\\theta`,`x^2+y^2=${2*k}*y`,`x^2 + y^2 = ${2*k}y`,"Multiply both sides by $r$."],[`r\\cos\\theta = ${k}`,`x=${k}`,`x = ${k}`,"$r\\cos\\theta = x$."],[`r\\sin\\theta = ${k}`,`y=${k}`,`y = ${k}`,"$r\\sin\\theta = y$."]]);return{q:`Convert the polar equation $${V[0]}$ to rectangular form.`,type:"line",ans:V[1],ansTex:V[2],hint:V[3],sol:[`$${V[2]}$.`]}},
+  ()=>{const k=rnd(2,6);const O=[[`x = ${k}`,`r = ${k}\\sec\\theta`],[`y = ${k}`,`r = ${k}\\csc\\theta`],[`x^2 + y^2 = ${k*k}`,`r = ${k}`],["y = x","\\theta = \\dfrac{\\pi}{4}"],[`x^2 + y^2 = ${2*k}y`,`r = ${2*k}\\sin\\theta`],[`x^2 + y^2 = ${2*k}x`,`r = ${2*k}\\cos\\theta`]];const i=rnd(0,O.length-1),w=O.filter((_,j)=>j!==i).sort(()=>Math.random()-.5).slice(0,3);return mcQ(`Which polar equation has the same graph as $${O[i][0]}$?`,`$${O[i][1]}$`,w.map(x=>`$${x[1]}$`),"Substitute $x = r\\cos\\theta$ and $y = r\\sin\\theta$, then solve for $r$.",[`$${O[i][0]}$ becomes $${O[i][1]}$.`]);},
+  ()=>{const n=rnd(2,8),a=rnd(1,6),f=pick(["sin","cos"]),p=n%2?n:2*n;return{q:`How many petals does the rose curve $r = ${a}\\${f}(${n}\\theta)$ have?`,type:"number",ans:p,ansTex:`${p}`,hint:"$n$ odd: $n$ petals. $n$ even: $2n$ petals.",sol:[`$n = ${n}$ is ${n%2?"odd":"even"}: $${p}$ petals.`]}}
+ ]},
+ {id:"cpolar",title:"Complex Numbers in Polar Form",idea:"$a + bi = r(\\cos\\theta + i\\sin\\theta)$ with $r = \\sqrt{a^2 + b^2}$. Multiply: multiply moduli, add angles. <b>De Moivre</b>: $[r(\\cos\\theta + i\\sin\\theta)]^n = r^n(\\cos n\\theta + i\\sin n\\theta)$.",
+  lesson:{steps:[["1 + i","$r = \\sqrt2$, $\\theta = 45^\\circ$."],["(1 + i)^4 = (\\sqrt2)^4(\\cos 180^\\circ + i\\sin 180^\\circ)","De Moivre."],["= 4(-1) = -4","Much faster than multiplying four times."]],warn:"The angle (argument) depends on the quadrant of $a + bi$, just like a polar point."},
+  gen:[
+  ()=>{const t=pick(TRIP.slice(0,4));let a=t[0]*pick([1,-1]),b=t[1]*pick([1,-1]);if(Math.random()<.5)[a,b]=[b,a];return{q:`Find the modulus $|${cx(a,b)}|$.`,type:"number",ans:t[2],ansTex:`${t[2]}`,hint:"$|a + bi| = \\sqrt{a^2 + b^2}$.",sol:[`$\\sqrt{${a*a} + ${b*b}} = ${t[2]}$.`]}},
+  ()=>{const r=2*rnd(1,3),th=pick(ANG);const z=cTex(r*cosD(th),r*sinD(th));return{q:`Find the argument $\\theta$ (with $0^\\circ \\le \\theta < 360^\\circ$) of $${z}$.`,type:"number",ans:th,ansTex:`${th}^\\circ`,hint:"Plot the point and use the special triangles.",sol:[`$${z} = ${r}(\\cos ${th}^\\circ + i\\sin ${th}^\\circ)$, so $\\theta = ${th}^\\circ$.`]}},
+  ()=>{let t1,t2,S;do{t1=5*rnd(1,40);t2=5*rnd(1,40);S=(t1+t2)%360}while(S%30!==0&&S%45!==0);const r1_=rnd(1,4),r2_=2*rnd(1,3),Rm=r1_*r2_,re=Rm*cosD(S),im=Rm*sinD(S);return{q:`Multiply $${r1_===1?"":r1_}(\\cos ${t1}^\\circ + i\\sin ${t1}^\\circ)\\cdot ${r2_}(\\cos ${t2}^\\circ + i\\sin ${t2}^\\circ)$. Give the answer as $a + bi$ (exact).`,type:"cplx",ans:[re,im],ansTex:cTex(re,im),hint:"Multiply the moduli and add the angles.",sol:[`$${Rm}(\\cos ${S}^\\circ + i\\sin ${S}^\\circ) = ${cTex(re,im)}$.`]}},
+  ()=>{const B=pick([["1 + i",Math.SQRT2,45,2],["1 - i",Math.SQRT2,-45,2],["-1 + i",Math.SQRT2,135,2],["\\sqrt{3} + i",2,30,3],["-\\sqrt{3} + i",2,150,3],["1 + \\sqrt{3}\\,i",2,60,3]]);const n=B[3]*rnd(1,B[3]===2?4:2);const m=B[1]**n,re=Math.round(m*cosD(B[2]*n)),im=Math.round(m*sinD(B[2]*n));return{q:`Use De Moivre's Theorem to find $(${B[0]})^{${n}}$.`,type:"cplx",ans:[re,im],ansTex:cx(re,im),hint:"Write the base in polar form first.",sol:[`$${B[0]} = ${numTex(B[1])}(\\cos ${B[2]}^\\circ + i\\sin ${B[2]}^\\circ)$.`,`Raise to the $${n}$: $${numTex(m)}(\\cos ${B[2]*n}^\\circ + i\\sin ${B[2]*n}^\\circ) = ${cx(re,im)}$.`]}},
+  ()=>{const C=pick([[3,0],[3,90],[3,180],[3,270],[4,0],[4,180],[6,0]]),n=C[0],ph=C[1],Rr=n===3?rnd(1,3):rnd(1,2);const w=Rr**n,wre=Math.round(w*cosD(ph)),wim=Math.round(w*sinD(ph));const zs=[];for(let k=0;k<n;k++){const a=(ph+360*k)/n;zs.push([Rr*cosD(a),Rr*sinD(a)])}return{q:`Find all complex solutions of $z^{${n}} = ${cx(wre,wim)}$. (List them, like 2, -1+sqrt(3)i, -1-sqrt(3)i.)`,type:"croots",ans:zs,ansTex:`z = ${zs.map(z=>cTex(z[0],z[1])).join(",\\ ")}`,hint:`Polar form: modulus $${w}$, angle $${ph}^\\circ$. The roots have modulus $${Rr}$ and are spaced $${360/n}^\\circ$ apart.`,sol:[`Angles $${zs.map((_,k)=>(ph+360*k)/n+"^\\circ").join(", ")}$, modulus $${Rr}$.`,`$z = ${zs.map(z=>cTex(z[0],z[1])).join(",\\ ")}$.`]}}
+ ]},
+ {id:"param",title:"Parametric Equations",idea:"A parameter $t$ gives both $x$ and $y$. To <b>eliminate</b> it, solve one equation for $t$ and substitute, or use $\\cos^2 t + \\sin^2 t = 1$.",
+  lesson:{steps:[["x = t + 1,\\ y = t^2","Eliminate $t$."],["t = x - 1","Solve the simpler equation for $t$."],["y = (x - 1)^2","Substitute."]],warn:"In projectile problems, $y = h + v_0 t - 16t^2$ uses feet and seconds."},
+  gen:[
+  ()=>{const a=nz(-4,4),b=rnd(-6,6),c=nz(-3,3),d=rnd(-6,6),t=nz(-3,3);return{q:`$x = ${lin(a,b,"t")}$, $y = ${c===1?"":c===-1?"-":c}t^2 ${d?sg(d):""}$. Find the point at $t = ${t}$.`,type:"point",ans:[a*t+b,c*t*t+d],ansTex:pt(a*t+b,c*t*t+d),hint:"Plug $t$ into both equations.",sol:[`$${pt(a*t+b,c*t*t+d)}$.`]}},
+  ()=>{const a=nz(-5,5),b=rnd(-5,5),lin2=Math.random()<.4;if(lin2){const m=pick([2,3]),c=nz(-5,5);return{q:`Eliminate the parameter: $x = ${m}t$, $y = t ${sg(c)}$.`,type:"line",ans:`y=x/${m}+(${c})`,ansTex:`y = \\dfrac{x}{${m}} ${sg(c)}`,hint:`From the first equation, $t = \\dfrac{x}{${m}}$.`,sol:[`$t = \\dfrac{x}{${m}}$, so $y = \\dfrac{x}{${m}} ${sg(c)}$.`]}}return{q:`Eliminate the parameter: $x = t ${sg(a)}$, $y = t^2 ${b?sg(b):""}$.`,type:"line",ans:`y=(x-(${a}))^2+(${b})`,ansTex:`y = (x ${sg(-a)})^2 ${b?sg(b):""}`,hint:"Solve the first equation for $t$.",sol:[`$t = x ${sg(-a)}$.`,`$y = (x ${sg(-a)})^2 ${b?sg(b):""}$.`]}},
+  ()=>{const a=rnd(2,6);let b;do{b=rnd(2,6)}while(b===a);const h=nz(-5,5),k=nz(-5,5);const V=pick([[`x = ${a}\\cos t,\\ y = ${a}\\sin t`,`x^2+y^2=${a*a}`,`x^2 + y^2 = ${a*a}`],[`x = ${a}\\cos t,\\ y = ${b}\\sin t`,`x^2/${a*a}+y^2/${b*b}=1`,`\\dfrac{x^2}{${a*a}} + \\dfrac{y^2}{${b*b}} = 1`],[`x = ${h} + ${a}\\cos t,\\ y = ${k} + ${a}\\sin t`,`(x-(${h}))^2+(y-(${k}))^2=${a*a}`,`(x ${sg(-h)})^2 + (y ${sg(-k)})^2 = ${a*a}`]]);return{q:`Eliminate the parameter: $${V[0]}$.`,type:"line",ans:V[1],ansTex:V[2],hint:"Isolate $\\cos t$ and $\\sin t$, then use $\\cos^2 t + \\sin^2 t = 1$.",sol:[`$${V[2]}$.`]}},
+  ()=>{const T=rnd(2,6),v=rnd(0,Math.floor((16*T-1)/8))*8,h=16*T*T-v*T;return{q:`A ball's height is $y = ${h} ${v?"+ "+v+"t ":""}- 16t^2$ feet after $t$ seconds. When does it hit the ground?`,type:"number",ans:T,ansTex:`t = ${T}`,hint:"Set $y = 0$ and keep the positive root.",sol:[`$16t^2 ${v?"- "+v+"t ":""}- ${h} = 0$.`,`$t = ${T}$ s.`]}},
+  ()=>{const v=8*rnd(2,12),h=rnd(0,100),H=h+v*v/64;return{q:`A ball is thrown upward: $y = ${h?h+" + ":""}${v}t - 16t^2$ feet. Find its maximum height.`,type:"number",ans:H,ansTex:`${H}`,hint:"The vertex is at $t = \\dfrac{v_0}{32}$.",sol:[`$t = \\dfrac{${v}}{32} = ${v/32}$.`,`$y = ${H}$ ft.`]}}
+ ]}
+]},
+/* ===================== 10 ===================== */
+{id:"ch10",title:"Conic Sections",topics:[
+ {id:"conid",title:"Classifying Conics & Eccentricity",idea:"For $Ax^2 + Bxy + Cy^2 + \\cdots = 0$: $B^2 - 4AC < 0$ ellipse (circle if $A = C$, $B = 0$), $= 0$ parabola, $> 0$ hyperbola. Eccentricity $e = \\dfrac{c}{a}$: $0$ circle, $<1$ ellipse, $1$ parabola, $>1$ hyperbola.",
+  lesson:{steps:[["4x^2 - 9y^2 + 8x = 0","$A = 4$, $C = -9$."],["AC < 0","Opposite signs."],["\\text{hyperbola}","No $xy$ term needed."]],warn:"Only the squared terms decide the type — the $x$ and $y$ terms just move the center."},
+  gen:[
+  ()=>{const K=["Circle","Ellipse","Parabola","Hyperbola"],k=rnd(0,3);let A=rnd(1,6),C;C=k===0?A:k===1?(()=>{let c;do{c=rnd(1,9)}while(c===A);return c})():k===2?0:-rnd(1,9);if(Math.random()<.3&&k!==2){A=-A;C=-C}const sw=k===2&&Math.random()<.5;const eq=terms(sw?[[C,"x^2"],[A,"y^2"],[nz(-8,8),"x"],[rnd(-8,8),"y"],[rnd(-9,9),""]]:[[A,"x^2"],[C,"y^2"],[rnd(-8,8),"x"],[k===2?nz(-8,8):rnd(-8,8),"y"],[rnd(-9,9),""]]);return mcQ(`Classify the conic $${eq} = 0$.`,K[k],K.filter((_,j)=>j!==k),"Compare the coefficients of $x^2$ and $y^2$.",[`$x^2$ and $y^2$ coefficients: ${k===0?"equal":k===1?"same sign, different":k===2?"only one squared term":"opposite signs"}.`]);},
+  ()=>{const K=["Ellipse","Parabola","Hyperbola"];let A,B,C,dd;do{A=nz(-5,5);B=nz(-6,6);C=nz(-5,5);dd=B*B-4*A*C}while(false);const k=dd<0?0:dd===0?1:2;return mcQ(`Classify $${terms([[A,"x^2"],[B,"xy"],[C,"y^2"],[rnd(-5,5),"x"],[rnd(-5,5),"y"],[nz(-9,9),""]])} = 0$.`,K[k],K.filter((_,j)=>j!==k).concat(["Circle"]),"Use the discriminant $B^2 - 4AC$.",[`$B^2 - 4AC = ${B*B} - ${4*A*C} = ${dd}$, ${dd<0?"negative":dd===0?"zero":"positive"}.`]);},
+  ()=>{const t=pick([[5,4,3],[5,3,4],[13,12,5],[13,5,12],[10,8,6],[17,15,8],[17,8,15]]),v=Math.random()<.5;const [a,b,c]=[t[0],t[1],t[2]];return{q:`Find the eccentricity of the ellipse $\\dfrac{x^2}{${v?b*b:a*a}} + \\dfrac{y^2}{${v?a*a:b*b}} = 1$.`,type:"number",ans:c/a,ansTex:frac(c,a),hint:"$c^2 = a^2 - b^2$ ($a^2$ is the larger denominator), then $e = \\dfrac{c}{a}$.",sol:[`$c = \\sqrt{${a*a} - ${b*b}} = ${c}$.`,`$e = ${frac(c,a)}$.`]}},
+  ()=>{const t=pick(TRIP.slice(0,5)),sw=Math.random()<.5,[a,b,c]=sw?[t[1],t[0],t[2]]:[t[0],t[1],t[2]],v=Math.random()<.5;return{q:`Find the eccentricity of the hyperbola $${v?`\\dfrac{y^2}{${a*a}} - \\dfrac{x^2}{${b*b}}`:`\\dfrac{x^2}{${a*a}} - \\dfrac{y^2}{${b*b}}`} = 1$.`,type:"number",ans:c/a,ansTex:frac(c,a),hint:"For a hyperbola $c^2 = a^2 + b^2$, and $a^2$ is under the positive term.",sol:[`$c = \\sqrt{${a*a} + ${b*b}} = ${c}$.`,`$e = ${frac(c,a)}$.`]}},
+  ()=>{let m,n;do{m=rnd(1,6);n=rnd(1,8)}while(m===n);const k=rnd(2,12),f=pick(["\\cos","\\sin"]),s=pick(["-","+"]);return{q:`Find the eccentricity of the conic $r = \\dfrac{${k}}{${m} ${s} ${n}${f}\\theta}$.`,type:"number",ans:n/m,ansTex:frac(n,m),hint:"Divide top and bottom by the constant so the denominator starts with $1$: $r = \\dfrac{ed}{1 \\pm e\\cos\\theta}$.",sol:[`$r = \\dfrac{${frac(k,m)}}{1 ${s} ${frac(n,m)}${f}\\theta}$, so $e = ${frac(n,m)}$ (${n<m?"ellipse":"hyperbola"}).`]}}
+ ]},
+ {id:"ellh",title:"Translated Ellipses & Hyperbolas",idea:"Ellipse $\\dfrac{(x - h)^2}{a^2} + \\dfrac{(y - k)^2}{b^2} = 1$, center $(h, k)$, foci $c$ from the center along the major axis. Hyperbola $\\dfrac{(x - h)^2}{a^2} - \\dfrac{(y - k)^2}{b^2} = 1$, asymptotes $y - k = \\pm\\dfrac{b}{a}(x - h)$.",
+  lesson:{steps:[["\\dfrac{(x - 2)^2}{25} + \\dfrac{(y + 1)^2}{9} = 1","Center $(2, -1)$."],["c^2 = 25 - 9 = 16,\\ c = 4","Major axis horizontal."],["\\text{foci } (6, -1),\\ (-2, -1)","Move $c$ left and right."]],warn:"In $(y + 1)^2$ the center's $y$ is $-1$: the sign flips."},
+  gen:[
+  ()=>{const h=nz(-6,6),k=nz(-6,6),a=rnd(2,6);let b;do{b=rnd(2,6)}while(b===a);const hy=Math.random()<.4;return{q:`Find the center of $\\dfrac{(x ${sg(-h)})^2}{${a*a}} ${hy?"-":"+"} \\dfrac{(y ${sg(-k)})^2}{${b*b}} = 1$.`,type:"point",ans:[h,k],ansTex:pt(h,k),hint:"Center $(h, k)$ — flip the signs inside.",sol:[`Center $${pt(h,k)}$.`]}},
+  ()=>{const t=pick([[5,3,4],[5,4,3],[13,5,12],[10,8,6],[17,8,15],[13,12,5]]),h=nz(-6,6),k=nz(-6,6);return{q:`Find the focus with the larger $x$-coordinate for $\\dfrac{(x ${sg(-h)})^2}{${t[0]**2}} + \\dfrac{(y ${sg(-k)})^2}{${t[1]**2}} = 1$.`,type:"point",ans:[h+t[2],k],ansTex:pt(h+t[2],k),hint:"$c^2 = a^2 - b^2$; foci are $(h \\pm c, k)$.",sol:[`$c = \\sqrt{${t[0]**2} - ${t[1]**2}} = ${t[2]}$.`,`Focus $${pt(h+t[2],k)}$.`]}},
+  ()=>{const a=rnd(1,6),b=rnd(1,6),h=nz(-5,5),k=nz(-5,5),v=Math.random()<.5;const sl=v?[a,b]:[b,a];return{q:`Find the positive slope of an asymptote of $${v?`\\dfrac{(y ${sg(-k)})^2}{${a*a}} - \\dfrac{(x ${sg(-h)})^2}{${b*b}}`:`\\dfrac{(x ${sg(-h)})^2}{${a*a}} - \\dfrac{(y ${sg(-k)})^2}{${b*b}}`} = 1$.`,type:"number",ans:sl[0]/sl[1],ansTex:frac(sl[0],sl[1]),hint:v?"Vertical hyperbola: slopes $\\pm\\dfrac{a}{b}$ (the $y$-term's root over the $x$-term's).":"Horizontal hyperbola: slopes $\\pm\\dfrac{b}{a}$.",sol:[`Slope $${frac(sl[0],sl[1])}$.`]}},
+  ()=>{const A2=pick([4,9,16,25]);let B2;do{B2=pick([1,4,9,16])}while(B2===A2);const h=nz(-4,4),k=nz(-4,4);const cs=[B2,A2,-2*B2*h,-2*A2*k,B2*h*h+A2*k*k-A2*B2];return{q:`Find the center of the ellipse $${terms([[cs[0],"x^2"],[cs[1],"y^2"],[cs[2],"x"],[cs[3],"y"],[cs[4],""]])} = 0$.`,type:"point",ans:[h,k],ansTex:pt(h,k),hint:"Group the $x$ terms and the $y$ terms and complete the square in each.",sol:[`$${B2===1?"":B2}(x ${sg(-h)})^2 + ${A2}(y ${sg(-k)})^2 = ${A2*B2}$.`,`Center $${pt(h,k)}$.`]}},
+  ()=>{const t=pick([[5,3,4],[5,4,3],[13,5,12],[10,8,6],[17,8,15],[13,12,5]]),lr=Math.random()<.5;return lr?{q:`Find the length of the latus rectum (the focal chord perpendicular to the major axis) of $\\dfrac{x^2}{${t[0]**2}} + \\dfrac{y^2}{${t[1]**2}} = 1$.`,type:"number",ans:2*t[1]**2/t[0],ansTex:frac(2*t[1]**2,t[0]),hint:"Plug $x = c$ into the equation, or use $\\dfrac{2b^2}{a}$.",sol:[`$\\dfrac{2b^2}{a} = \\dfrac{${2*t[1]**2}}{${t[0]}} = ${frac(2*t[1]**2,t[0])}$.`]}:{q:`An ellipse has a major axis of length $${2*t[0]}$ and a minor axis of length $${2*t[1]}$. Find the distance between its foci.`,type:"number",ans:2*t[2],ansTex:`${2*t[2]}`,hint:"$a$ and $b$ are half the axes; $c^2 = a^2 - b^2$.",sol:[`$a = ${t[0]}$, $b = ${t[1]}$, $c = ${t[2]}$.`,`Distance $2c = ${2*t[2]}$.`]}}
+ ]},
+ {id:"parab",title:"Translated Parabolas",idea:"$(y - k)^2 = 4p(x - h)$ opens right ($p > 0$) or left; $(x - h)^2 = 4p(y - k)$ opens up or down. Vertex $(h, k)$; the focus is $p$ from the vertex, the directrix $p$ on the other side.",
+  lesson:{steps:[["(x - 1)^2 = 8(y + 2)","Vertex $(1, -2)$, $4p = 8$."],["p = 2","Opens up."],["\\text{focus } (1, 0),\\ \\text{directrix } y = -4","$p$ up and $p$ down from the vertex."]],warn:"Find $p$ from $4p$ — divide by $4$ first."},
+  gen:[
+  ()=>{const h=nz(-6,6),k=nz(-6,6),p=nz(-4,4),ver=Math.random()<.5;return{q:`Find the vertex of $${ver?`(x ${sg(-h)})^2 = ${4*p}(y ${sg(-k)})`:`(y ${sg(-k)})^2 = ${4*p}(x ${sg(-h)})`}$.`,type:"point",ans:[h,k],ansTex:pt(h,k),hint:"Vertex $(h, k)$; flip the signs inside.",sol:[`Vertex $${pt(h,k)}$.`]}},
+  ()=>{const h=nz(-6,6),k=nz(-6,6),p=nz(-4,4),ver=Math.random()<.5;const F=ver?[h,k+p]:[h+p,k];return{q:`Find the focus of $${ver?`(x ${sg(-h)})^2 = ${4*p}(y ${sg(-k)})`:`(y ${sg(-k)})^2 = ${4*p}(x ${sg(-h)})`}$.`,type:"point",ans:F,ansTex:pt(...F),hint:"Find $p$, then move $p$ from the vertex in the direction the parabola opens.",sol:[`$p = ${p}$, vertex $${pt(h,k)}$.`,`Focus $${pt(...F)}$.`]}},
+  ()=>{const h=nz(-6,6),k=nz(-6,6),p=nz(-4,4),ver=Math.random()<.5;const L=ver?`y=${k-p}`:`x=${h-p}`;return{q:`Find the directrix of $${ver?`(x ${sg(-h)})^2 = ${4*p}(y ${sg(-k)})`:`(y ${sg(-k)})^2 = ${4*p}(x ${sg(-h)})`}$. (Type like y = -3.)`,type:"line",ans:L,ansTex:L.replace("="," = "),hint:"The directrix is $p$ from the vertex, on the side away from the focus.",sol:[`$p = ${p}$, so the directrix is $${L.replace("="," = ")}$.`]}},
+  ()=>{const h=nz(-5,5),k=nz(-5,5),p=nz(-3,3);return{q:`Find the vertex of the parabola $${terms([[1,"y^2"],[-2*k,"y"],[-4*p,"x"],[k*k+4*p*h,""]])} = 0$.`,type:"point",ans:[h,k],ansTex:pt(h,k),hint:"Keep the $y$ terms on one side, complete the square, and factor the other side.",sol:[`$(y ${sg(-k)})^2 = ${4*p}(x ${sg(-h)})$.`,`Vertex $${pt(h,k)}$.`]}},
+  ()=>{const w=2*rnd(2,10),d=rnd(1,6);return{q:`A satellite dish is a parabola $${w}$ ft across and $${d}$ ft deep. How far from the vertex should the receiver (at the focus) be placed?`,type:"number",ans:w*w/(16*d),ansTex:frac(w*w,16*d),hint:`Use $x^2 = 4py$ through the rim point $(${w/2}, ${d})$.`,sol:[`$${(w/2)**2} = 4p(${d})$, so $p = ${frac(w*w,16*d)}$ ft.`]}}
+ ]}
+]},
+/* ===================== 11 ===================== */
+{id:"ch11",title:"Sequences, Series & the Binomial Theorem",topics:[
+ {id:"seq",title:"Sequences & Series",idea:"Arithmetic: $a_n = a_1 + (n - 1)d$. Geometric: $a_n = a_1r^{n-1}$. Infinite geometric sum $\\dfrac{a_1}{1 - r}$ when $|r| < 1$. A <b>recursive</b> rule builds each term from the one before.",
+  lesson:{steps:[["\\displaystyle\\sum_{k=1}^{4}(2k + 1)","Write out the terms."],["3 + 5 + 7 + 9","$k = 1, 2, 3, 4$."],["24","Add."]],warn:"In $\\sum_{k=1}^{n}$, count the terms: there are $n$ of them, not $n - 1$."},
+  gen:[
+  ()=>{const a=nz(-15,15),d=nz(-7,7),n=rnd(8,40);return{q:`Arithmetic sequence: $a_1 = ${a}$, $d = ${d}$. Find $a_{${n}}$.`,type:"number",ans:a+(n-1)*d,ansTex:`${a+(n-1)*d}`,hint:"$a_n = a_1 + (n - 1)d$.",sol:[`$${a} + ${n-1}(${d}) = ${a+(n-1)*d}$.`]}},
+  ()=>{const a=nz(-5,5),b=rnd(-9,9),n=rnd(5,30),S=a*n*(n+1)/2+b*n;return{q:`Evaluate $\\displaystyle\\sum_{k=1}^{${n}} (${lin(a,b,"k")})$.`,type:"number",ans:S,ansTex:`${S}`,hint:"Split: $a\\sum k + \\sum b$, with $\\sum_{k=1}^{n} k = \\dfrac{n(n + 1)}{2}$.",sol:[`$${a}\\cdot\\dfrac{${n}\\cdot${n+1}}{2} ${sg(b)}\\cdot ${n} = ${S}$.`]}},
+  ()=>{const a=nz(-20,20),q=rnd(2,6),p=nz(-(q-1),q-1);return{q:`Find the sum of the infinite geometric series with first term $${a}$ and ratio $${frac(p,q)}$.`,type:"number",ans:a/(1-p/q),ansTex:frac(a*q,q-p),hint:"$S = \\dfrac{a_1}{1 - r}$.",sol:[`$\\dfrac{${a}}{1 - (${frac(p,q)})} = ${frac(a*q,q-p)}$.`]}},
+  ()=>{const a=nz(-5,5),m=pick([2,3,-2,-1]),c=nz(-5,5);let v=a;for(let i=2;i<=5;i++)v=m*v+c;return{q:`$a_1 = ${a}$ and $a_n = ${m===-1?"-":m}a_{n-1} ${sg(c)}$. Find $a_5$.`,type:"number",ans:v,ansTex:`${v}`,hint:"Build the terms one at a time.",sol:[`Compute $a_2, a_3, a_4$, then $a_5 = ${v}$.`]}},
+  ()=>{const n=rnd(5,50),odd=Math.random()<.5;return odd?{q:`Evaluate $\\displaystyle\\sum_{k=1}^{${n}} \\dfrac{1}{(2k - 1)(2k + 1)}$.`,type:"number",ans:n/(2*n+1),ansTex:frac(n,2*n+1),hint:"Partial fractions: $\\dfrac{1}{(2k - 1)(2k + 1)} = \\dfrac12\\left(\\dfrac{1}{2k - 1} - \\dfrac{1}{2k + 1}\\right)$ — it telescopes.",sol:[`$\\dfrac12\\left(1 - \\dfrac{1}{${2*n+1}}\\right) = ${frac(n,2*n+1)}$.`]}:{q:`Evaluate $\\displaystyle\\sum_{k=1}^{${n}} \\dfrac{1}{k(k + 1)}$.`,type:"number",ans:n/(n+1),ansTex:frac(n,n+1),hint:"$\\dfrac{1}{k(k + 1)} = \\dfrac1k - \\dfrac{1}{k + 1}$ — the middle terms cancel.",sol:[`$1 - \\dfrac{1}{${n+1}} = ${frac(n,n+1)}$.`]}}
+ ]},
+ {id:"binom",title:"The Binomial Theorem",idea:"$(a + b)^n = \\displaystyle\\sum_{k=0}^{n}\\binom{n}{k}a^{n-k}b^k$, with $\\dbinom{n}{k} = \\dfrac{n!}{k!(n - k)!}$ (the numbers in Pascal's triangle).",
+  lesson:{steps:[["(x + 2)^3","$n = 3$: coefficients $1, 3, 3, 1$."],["x^3 + 3x^2(2) + 3x(2^2) + 2^3","Powers of $2$ go up."],["x^3 + 6x^2 + 12x + 8","Simplify."]],warn:"Include the sign and the number inside: in $(2x - 3)^n$ each term carries powers of $2$ and of $-3$."},
+  gen:[
+  ()=>{const n=rnd(4,12),k=rnd(2,n-2);return{q:`Evaluate $\\dbinom{${n}}{${k}}$.`,type:"number",ans:nCr(n,k),ansTex:`${nCr(n,k)}`,hint:"$\\dfrac{n!}{k!(n - k)!}$.",sol:[`$\\dbinom{${n}}{${k}} = ${nCr(n,k)}$.`]}},
+  ()=>{const n=rnd(4,8),k=rnd(1,n-1),a=nz(-3,3),v=nCr(n,k)*a**(n-k);return{q:`Find the coefficient of $x^{${k}}$ in $(x ${sg(a)})^{${n}}$.`,type:"number",ans:v,ansTex:`${v}`,hint:`The $x^{${k}}$ term is $\\dbinom{${n}}{${k}}x^{${k}}(${a})^{${n-k}}$.`,sol:[`$\\dbinom{${n}}{${k}}(${a})^{${n-k}} = ${nCr(n,k)}\\cdot${a**(n-k)} = ${v}$.`]}},
+  ()=>{const n=rnd(3,7),k=rnd(1,n-1),a=pick([2,3,-2]),b=nz(-3,3),v=nCr(n,k)*a**k*b**(n-k);return{q:`Find the coefficient of $x^{${k}}$ in $(${a}x ${sg(b)})^{${n}}$.`,type:"number",ans:v,ansTex:`${v}`,hint:`Term: $\\dbinom{${n}}{${k}}(${a}x)^{${k}}(${b})^{${n-k}}$.`,sol:[`$${nCr(n,k)}\\cdot${a**k}\\cdot${b**(n-k)} = ${v}$.`]}},
+  ()=>{const sq=Math.random()<.5,a=nz(-3,3);if(sq){const n=3*rnd(1,3),j=2*n/3,v=nCr(n,j)*a**j;return{q:`Find the constant term of $\\left(x^2 ${a<0?"-":"+"} \\dfrac{${Math.abs(a)}}{x}\\right)^{${n}}$.`,type:"number",ans:v,ansTex:`${v}`,hint:"General term $\\dbinom{n}{j}(x^2)^{n-j}\\left(\\tfrac{a}{x}\\right)^j$ has power $2n - 3j$. Set it to $0$.",sol:[`$2(${n}) - 3j = 0 \\Rightarrow j = ${j}$.`,`$\\dbinom{${n}}{${j}}(${a})^{${j}} = ${v}$.`]}}const n=2*rnd(2,4),v=nCr(n,n/2)*a**(n/2);return{q:`Find the constant term of $\\left(x ${a<0?"-":"+"} \\dfrac{${Math.abs(a)}}{x}\\right)^{${n}}$.`,type:"number",ans:v,ansTex:`${v}`,hint:"The $x$'s cancel when there are equally many of each factor.",sol:[`Middle term: $\\dbinom{${n}}{${n/2}}(${a})^{${n/2}} = ${v}$.`]}},
+  ()=>{const a=nz(-3,3),b=nz(-3,3),n=rnd(3,7),mid=Math.random()<.5;if(mid){const N=2*rnd(2,4);return{q:`Find the sum of all the binomial coefficients in the expansion of $(x + y)^{${N}}$.`,type:"number",ans:2**N,ansTex:`${2**N}`,hint:"Set $x = y = 1$.",sol:[`$(1 + 1)^{${N}} = ${2**N}$.`]}}return{q:`Find the sum of all the coefficients of $(${a===1?"":a===-1?"-":a}x ${sg(b)})^{${n}}$ when expanded.`,type:"number",ans:(a+b)**n,ansTex:`${(a+b)**n}`,hint:"Plug in $x = 1$.",sol:[`$(${a} ${sg(b)})^{${n}} = ${(a+b)**n}$.`]}}
+ ]},
+ {id:"sums",title:"Sum Formulas & Induction",idea:"$\\sum k = \\dfrac{n(n + 1)}{2}$, $\\sum k^2 = \\dfrac{n(n + 1)(2n + 1)}{6}$, $\\sum k^3 = \\left(\\dfrac{n(n + 1)}{2}\\right)^2$. Formulas like these are proved by <b>mathematical induction</b>.",
+  lesson:{steps:[["1 + 2 + \\cdots + 10","$n = 10$."],["\\dfrac{10\\cdot 11}{2}","Gauss's formula."],["55","Done."]],warn:"Induction: prove the first case, then show “true for $k$” forces “true for $k + 1$”."},
+  gen:[
+  ()=>{const n=rnd(10,200);return{q:`Find $1 + 2 + 3 + \\cdots + ${n}$.`,type:"number",ans:n*(n+1)/2,ansTex:`${n*(n+1)/2}`,hint:"$\\dfrac{n(n + 1)}{2}$.",sol:[`$\\dfrac{${n}\\cdot${n+1}}{2} = ${n*(n+1)/2}$.`]}},
+  ()=>{const n=rnd(5,30),v=n*(n+1)*(2*n+1)/6;return{q:`Evaluate $\\displaystyle\\sum_{k=1}^{${n}} k^2$.`,type:"number",ans:v,ansTex:`${v}`,hint:"$\\dfrac{n(n + 1)(2n + 1)}{6}$.",sol:[`$\\dfrac{${n}\\cdot${n+1}\\cdot${2*n+1}}{6} = ${v}$.`]}},
+  ()=>{const m=rnd(5,40),n=m+rnd(10,80),v=(n*(n+1)-(m-1)*m)/2;return{q:`Evaluate $\\displaystyle\\sum_{k=${m}}^{${n}} k$.`,type:"number",ans:v,ansTex:`${v}`,hint:`Sum to $${n}$, minus the sum to $${m-1}$. (Or: number of terms × average.)`,sol:[`$${n*(n+1)/2} - ${(m-1)*m/2} = ${v}$.`]}},
+  ()=>{const n=rnd(5,20),c=nz(-6,6),d=rnd(-5,5),v=n*(n+1)*(2*n+1)/6+c*n*(n+1)/2+d*n;return{q:`Evaluate $\\displaystyle\\sum_{k=1}^{${n}} (k^2 ${cterm(c,"k")} ${d?sg(d):""})$.`,type:"number",ans:v,ansTex:`${v}`,hint:"Split into $\\sum k^2 + c\\sum k + \\sum d$.",sol:[`$${n*(n+1)*(2*n+1)/6} ${sg(c*n*(n+1)/2)} ${sg(d*n)} = ${v}$.`]}},
+  ()=>{if(Math.random()<.5){const n=rnd(5,25),v=(n*(n+1)/2)**2;return{q:`Evaluate $1^3 + 2^3 + \\cdots + ${n}^3$.`,type:"number",ans:v,ansTex:`${v}`,hint:"$\\sum k^3 = \\left(\\dfrac{n(n + 1)}{2}\\right)^2$.",sol:[`$${n*(n+1)/2}^2 = ${v}$.`]}}const n=rnd(10,120),T=n*(n+1)/2;return{q:`$1 + 2 + 3 + \\cdots + n = ${T}$. Find $n$.`,type:"number",ans:n,ansTex:`${n}`,hint:`Solve $\\dfrac{n(n + 1)}{2} = ${T}$: $n(n + 1) = ${2*T}$.`,sol:[`$n(n + 1) = ${2*T} = ${n}\\cdot${n+1}$, so $n = ${n}$.`]}}
+ ]}
+]},
+/* ===================== 12 ===================== */
+{id:"ch12",title:"Limits and an Introduction to Calculus",topics:[
+ {id:"lim1",title:"Evaluating Limits",idea:"Try direct substitution first. If you get $\\dfrac{0}{0}$, factor and cancel, rationalize, or use $\\displaystyle\\lim_{x\\to 0}\\dfrac{\\sin x}{x} = 1$.",
+  lesson:{steps:[["\\displaystyle\\lim_{x\\to 3}\\dfrac{x^2 - 9}{x - 3}","Substitution gives $\\tfrac00$."],["\\dfrac{(x - 3)(x + 3)}{x - 3} = x + 3","Factor and cancel."],["3 + 3 = 6","Now substitute."]],warn:"$\\dfrac{0}{0}$ does not mean the limit is $0$ or undefined — it means “do more work”."},
+  gen:[
+  ()=>{const cs=[nz(-3,3),rnd(-5,5),rnd(-6,6)],a=nz(-4,4),v=cs[0]*a*a+cs[1]*a+cs[2];return{q:`Find $\\displaystyle\\lim_{x\\to ${a}} (${ptex(cs)})$.`,type:"number",ans:v,ansTex:`${v}`,hint:"Polynomials are continuous: substitute.",sol:[`$${v}$.`]}},
+  ()=>{let a,b;do{a=nz(-6,6);b=rnd(-6,6)}while(a===b);return{q:`Find $\\displaystyle\\lim_{x\\to ${a}} \\dfrac{${ptex([1,-(a+b),a*b])}}{x ${sg(-a)}}$.`,type:"number",ans:a-b,ansTex:`${a-b}`,hint:"Factor the top; one factor cancels.",sol:[`$\\dfrac{(x ${sg(-a)})(x ${sg(-b)})}{x ${sg(-a)}} = x ${sg(-b)}$.`,`At $x = ${a}$: $${a-b}$.`]}},
+  ()=>{const a=rnd(1,6);return{q:`Find $\\displaystyle\\lim_{x\\to 0} \\dfrac{\\sqrt{x + ${a*a}} - ${a}}{x}$.`,type:"number",ans:1/(2*a),ansTex:frac(1,2*a),hint:"Multiply top and bottom by the conjugate $\\sqrt{x + a^2} + a$.",sol:[`$\\dfrac{x}{x(\\sqrt{x + ${a*a}} + ${a})} = \\dfrac{1}{\\sqrt{x + ${a*a}} + ${a}}$.`,`At $x = 0$: $${frac(1,2*a)}$.`]}},
+  ()=>{const a=rnd(2,9),b=rnd(2,9),V=pick([[`\\dfrac{\\sin ${a}x}{x}`,a,`${a}`],[`\\dfrac{\\sin ${a}x}{\\sin ${b}x}`,a/b,frac(a,b)],[`\\dfrac{\\tan ${a}x}{x}`,a,`${a}`],[`\\dfrac{\\sin ${a}x}{${b}x}`,a/b,frac(a,b)],["\\dfrac{1 - \\cos x}{x}",0,"0"]]);return{q:`Find $\\displaystyle\\lim_{x\\to 0} ${V[0]}$.`,type:"number",ans:V[1],ansTex:V[2],hint:"Make the angle and the denominator match, then use $\\dfrac{\\sin u}{u} \\to 1$.",sol:[`The limit is $${V[2]}$.`]}},
+  ()=>{const a=nz(-5,5);return Math.random()<.5?{q:`Find $\\displaystyle\\lim_{x\\to ${a}} \\dfrac{x^3 ${a<0?"+":"-"} ${Math.abs(a**3)}}{x ${sg(-a)}}$.`,type:"number",ans:3*a*a,ansTex:`${3*a*a}`,hint:"Difference of cubes: $x^3 - a^3 = (x - a)(x^2 + ax + a^2)$.",sol:[`$x^2 + ${a}x + ${a*a} \\to ${3*a*a}$.`]}:{q:`Find $\\displaystyle\\lim_{x\\to ${a}} \\dfrac{\\frac1x - \\frac{1}{${a}}}{x ${sg(-a)}}$.`,type:"number",ans:-1/(a*a),ansTex:frac(-1,a*a),hint:"Combine the top into one fraction: $\\dfrac{a - x}{ax}$.",sol:[`$\\dfrac{${a} - x}{${a}x(x ${sg(-a)})} = -\\dfrac{1}{${a}x} \\to ${frac(-1,a*a)}$.`]}}
+ ]},
+ {id:"liminf",title:"Continuity, One-Sided Limits & Limits at Infinity",idea:"As $x \\to \\infty$, a rational function goes to the ratio of leading coefficients (same degree) or $0$ (bottom degree bigger). $f$ is <b>continuous</b> at $c$ when $\\displaystyle\\lim_{x\\to c} f(x) = f(c)$.",
+  lesson:{steps:[["\\displaystyle\\lim_{x\\to\\infty}\\dfrac{3x^2 + 1}{2x^2 - x}","Same degree."],["\\dfrac{3}{2}","Ratio of leading coefficients."],["y = \\tfrac32","This is the horizontal asymptote."]],warn:"A piecewise function is continuous at the break only if both pieces give the same value there."},
+  gen:[
+  ()=>{const a=nz(-8,8),d=nz(-6,6),n=rnd(1,4);const top=[a],bot=[d];for(let i=0;i<n;i++){top.push(rnd(-5,5));bot.push(rnd(-5,5))}return{q:`Find $\\displaystyle\\lim_{x\\to\\infty} \\dfrac{${ptex(top)}}{${ptex(bot)}}$.`,type:"number",ans:a/d,ansTex:frac(a,d),hint:"Same degree: divide the leading coefficients.",sol:[`$${frac(a,d)}$.`]}},
+  ()=>{const m=rnd(1,3),n=m+rnd(0,1),a=nz(-7,7),d=nz(-5,5);const top=[a],bot=[d];for(let i=0;i<m;i++)top.push(rnd(-5,5));for(let i=0;i<n;i++)bot.push(rnd(-5,5));const v=m===n?a/d:0;return{q:`Find $\\displaystyle\\lim_{x\\to -\\infty} \\dfrac{${ptex(top)}}{${ptex(bot)}}$.`,type:"number",ans:v,ansTex:m===n?frac(a,d):"0",hint:"Compare the degrees of top and bottom.",sol:[m===n?`Same degree: $${frac(a,d)}$.`:"The bottom has the larger degree: the limit is $0$."]}},
+  ()=>{let a,c,k,b;do{a=nz(-4,4);c=nz(-3,4);k=nz(-5,5)}while(c===1);b=a*c+k*(1-c);return{q:`Find $k$ so that $f(x) = \\begin{cases} ${lin(a,0)} + k, & x < ${c} \\\\ kx ${sg(b)}, & x \\ge ${c} \\end{cases}$ is continuous.`,type:"number",ans:k,ansTex:`k = ${k}`,hint:`Both pieces must agree at $x = ${c}$.`,sol:[`$${a*c} + k = ${c}k ${sg(b)}$.`,`$k = ${k}$.`]}},
+  ()=>{if(Math.random()<.5){const c=nz(-4,4),p=rnd(-6,6),m=nz(-4,4),q=rnd(-6,6),left=Math.random()<.5;const v=left?c*c+p:m*c+q;return{q:`$f(x) = \\begin{cases} x^2 ${p?sg(p):""}, & x < ${c} \\\\ ${lin(m,q)}, & x \\ge ${c} \\end{cases}$. Find $\\displaystyle\\lim_{x\\to ${c}^{${left?"-":"+"}}} f(x)$.`,type:"number",ans:v,ansTex:`${v}`,hint:`Use only the piece for $x ${left?"<":">"} ${c}$.`,sol:[`$${v}$.`]}}const a=nz(-5,5),left=Math.random()<.5;return{q:`Find $\\displaystyle\\lim_{x\\to ${a}^{${left?"-":"+"}}} \\dfrac{|x ${sg(-a)}|}{x ${sg(-a)}}$.`,type:"number",ans:left?-1:1,ansTex:left?"-1":"1",hint:`For $x ${left?"<":">"} ${a}$, the top equals ${left?"$-(x - a)$":"$x - a$"}.`,sol:[`$${left?-1:1}$.`]}},
+  ()=>{const b=nz(-9,9),dd=rnd(-9,9);if(dd!==b&&Math.random()<.5){return{q:`Find $\\displaystyle\\lim_{x\\to\\infty}\\left(\\sqrt{${ptex([1,b,0])}} - \\sqrt{${ptex([1,dd,0])}}\\right)$.`,type:"number",ans:(b-dd)/2,ansTex:frac(b-dd,2),hint:"Multiply by the conjugate over itself; then divide top and bottom by $x$.",sol:[`$\\dfrac{${b-dd}x}{\\sqrt{x^2 + \\cdots} + \\sqrt{x^2 + \\cdots}} \\to ${frac(b-dd,2)}$.`]}}return{q:`Find $\\displaystyle\\lim_{x\\to\\infty}\\left(\\sqrt{${ptex([1,b,0])}} - x\\right)$.`,type:"number",ans:b/2,ansTex:frac(b,2),hint:"Multiply by $\\dfrac{\\sqrt{x^2 + bx} + x}{\\sqrt{x^2 + bx} + x}$.",sol:[`$\\dfrac{${b}x}{\\sqrt{x^2 ${cterm(b,"x")}} + x} \\to ${frac(b,2)}$.`]}}
+ ]},
+ {id:"deriv",title:"Rates of Change & the Derivative",idea:"Average rate of change $\\dfrac{f(b) - f(a)}{b - a}$ is a secant slope. The derivative $f'(x) = \\displaystyle\\lim_{h\\to 0}\\dfrac{f(x + h) - f(x)}{h}$ is the slope of the tangent line.",
+  lesson:{steps:[["f(x) = x^2","Find $f'(x)$."],["\\dfrac{(x + h)^2 - x^2}{h} = 2x + h","Difference quotient."],["f'(x) = 2x","Let $h \\to 0$."]],warn:"For powers: $\\dfrac{d}{dx}x^n = nx^{n-1}$ — this shortcut comes from the limit definition."},
+  gen:[
+  ()=>{const a=nz(-3,3),b=rnd(-6,6),c=rnd(-9,9);let p,q;do{p=rnd(-4,3);q=rnd(-3,5)}while(q<=p);return{q:`Find the average rate of change of $f(x) = ${ptex([a,b,c])}$ on $[${p}, ${q}]$.`,type:"number",ans:a*(p+q)+b,ansTex:`${a*(p+q)+b}`,hint:"$\\dfrac{f(b) - f(a)}{b - a}$.",sol:[`$f(${q}) = ${a*q*q+b*q+c}$, $f(${p}) = ${a*p*p+b*p+c}$.`,`$\\dfrac{${a*q*q+b*q+c} - ${P(a*p*p+b*p+c)}}{${q-p}} = ${a*(p+q)+b}$.`]}},
+  ()=>{const a=nz(-4,4),b=rnd(-6,6),c=rnd(-9,9),x0=nz(-4,4);return{q:`Use the limit definition to find $f'(${x0})$ for $f(x) = ${ptex([a,b,c])}$.`,type:"number",ans:2*a*x0+b,ansTex:`${2*a*x0+b}`,hint:`$\\displaystyle\\lim_{h\\to 0}\\dfrac{f(${x0} + h) - f(${x0})}{h}$.`,sol:[`The difference quotient simplifies to $${2*a*x0+b} ${cterm(a,"h")}$.`,`$f'(${x0}) = ${2*a*x0+b}$.`]}},
+  ()=>{const cub=Math.random()<.5;const cs=cub?[nz(-3,3),rnd(-4,4),rnd(-6,6),rnd(-9,9)]:[nz(-5,5),rnd(-8,8),rnd(-9,9)];const n=cs.length-1,dc=cs.slice(0,n).map((c,i)=>c*(n-i));return{q:`Find $f'(x)$ for $f(x) = ${ptex(cs)}$.`,type:"expr",form:"poly",ans:pstr(dc),ansTex:ptex(dc),hint:"Power rule: $\\dfrac{d}{dx}x^n = nx^{n-1}$; constants have derivative $0$.",sol:[`$f'(x) = ${ptex(dc)}$.`]}},
+  ()=>{const b=rnd(-6,6),c=rnd(-6,6),x0=nz(-4,4),y0=x0*x0+b*x0+c,m=2*x0+b;return{q:`Find the equation of the tangent line to $y = ${ptex([1,b,c])}$ at $x = ${x0}$.`,type:"line",ans:`y-(${y0})=${m}*(x-(${x0}))`,ansTex:`y = ${lin(m,y0-m*x0)}`,hint:"Slope $= f'(x_0) = 2x_0 + b$. Then point-slope form.",sol:[`Point $${pt(x0,y0)}$, slope $${m}$.`,`$y = ${lin(m,y0-m*x0)}$.`]}},
+  ()=>{const b=rnd(-6,6),c=rnd(-6,6),x=nz(-4,4),m=2*x+b,n=rnd(-9,9);return{q:`At what point is the tangent line to $y = ${ptex([1,b,c])}$ parallel to $y = ${lin(m,n)}$?`,type:"point",ans:[x,x*x+b*x+c],ansTex:pt(x,x*x+b*x+c),hint:"Parallel means equal slopes: set $f'(x) = 2x + b$ equal to the line's slope.",sol:[`$2x ${sg(b)} = ${m} \\Rightarrow x = ${x}$.`,`Point $${pt(x,x*x+b*x+c)}$.`]}}
+ ]}
+]}
+];
+
+CHAPTERS.push(...MORE);
+const ALLCH=[[1,"Functions and Their Graphs","ch1"],[2,"Polynomial and Rational Functions","ch2"],[3,"Exponential and Logarithmic Functions","ch3"],[4,"Trigonometric Functions","ch4"],[5,"Inverse Trig, Equations & Applications","ch5"],[6,"Trigonometric Identities","ch6"],[7,"Laws of Sines and Cosines","ch7"],[8,"Vectors","ch8"],[9,"Polar, Complex & Parametric","ch9"],[10,"Conic Sections","ch10"],[11,"Sequences, Series & Binomial Theorem","ch11"],[12,"Limits & Intro to Calculus","ch12"]];
+const COMING=[];
+
+/* ================= checking ================= */
+const CONST=new Set(["pi","e","E","PI","Infinity"]);
+function pre(s){ return String(s).replace(/°|\^\\circ|deg\b/g,"").replace(/θ/g,"theta").replace(/\barc(sin|cos|tan)\b/g,"a$1").replace(/(?<![a-z])(sin|cos|tan)\^\s*\(?-1\)?/g,"a$1")
+  .replace(/(?<![a-z])log\s*\(([^(),]*)\)/g,"log10($1)").replace(/(?<![a-z])ln\s*\(/g,"log(").replace(/(?<![a-z])ln\s*(\d+(?:\.\d+)?|[a-z])\b/g,"log($1)")
+  .replace(/(?<![a-z])(sin|cos|tan|sec|csc|cot)\s*\^\s*(\d+)\s*\(([^()]*)\)/g,"($1($3))^$2").replace(/(?<![a-z])(sin|cos|tan|sec|csc|cot)\s*\^\s*(\d+)\s*(\d*(?:x|theta))\b/g,"($1($3))^$2")
+  .replace(/(?<![a-z])(sin|cos|tan|sec|csc|cot)\s*(\d*(?:x|theta))\b/g,"$1($2)"); }
+function clean(s){ return pre(s).replace(/\|([^|]+)\|/g,"abs($1)").replace(/(^|[^a-z])([a-z])\s*\(/gi,"$1$2*(").replace(/[−–]/g,"-").replace(/×|·/g,"*").replace(/÷/g,"/").replace(/π/g,"pi").replace(/≤|=</g,"<=").replace(/≥|=>/g,">=").replace(/√\s*(\d+(?:\.\d+)?|\([^)]*\)|[a-z])/g,"sqrt($1)").trim(); }
+function val(s){ try{ const r=math.evaluate(s); const v=typeof r==="number"?r:(r&&typeof r.valueOf()==="number"?r.valueOf():NaN); return isFinite(v)?v:NaN; }catch(e){ return NaN; } }
+const close=(a,b)=>Math.abs(a-b)<1e-6*Math.max(1,Math.abs(b));
+function varsOf(node){ const v=new Set(); node.traverse((n,path,parent)=>{ if(n.isSymbolNode&&!(parent&&parent.isFunctionNode&&path==="fn")&&!CONST.has(n.name)&&typeof math[n.name]!=="function") v.add(n.name); }); return [...v]; }
+function evalAt(node,sc){ try{ const r=node.evaluate(sc); const v=typeof r==="number"?r:(r&&typeof r.valueOf()==="number"?r.valueOf():NaN); return isFinite(v)?v:NaN; }catch(e){ return NaN; } }
+function exprEq(student,expected,form){
+  let s=clean(student); if(s.includes("=")) s=s.split("=").pop();
+  let S,E; try{ S=math.parse(s); E=math.parse(expected); }catch(e){ return null; }
+  if(form&&form!=="combined"&&!formOK(S,s,form)) return false;
+  if(form==="combined"){ if(s.includes("(")) return false; const cnt={}; S.traverse((n,path,parent)=>{ if(n.isSymbolNode&&!(parent&&parent.isFunctionNode&&path==="fn")&&!CONST.has(n.name)) cnt[n.name]=(cnt[n.name]||0)+1; }); if(Object.values(cnt).some(c=>c>1)) return false; }
+  const vars=[...new Set([...varsOf(S),...varsOf(E)])]; let t=0;
+  for(let k=0;k<12&&t<6;k++){ const sc={}; vars.forEach(v=>sc[v]=Math.round(Math.random()*4000)/1000+0.15); const a=evalAt(S,sc),b=evalAt(E,sc); if(isNaN(a)||isNaN(b)) continue; t++; if(!close(a,b)) return false; }
+  return t>=3?true:null;
+}
+function lineEq(student,expected,form){
+  const s=clean(student); if(s.split("=").length!==2) return null;
+  const [L,R]=s.split("="); if(!L.trim()||!R.trim()) return null;
+  let S,E; try{ S=math.parse("("+L+")-("+R+")"); const [eL,eR]=expected.split("="); E=math.parse("("+eL+")-("+eR+")"); }catch(e){ return null; }
+  if(form==="si"&&L.replace(/\s/g,"")!=="y") return false;
+  if(form==="std"){ if(s.includes("/")) return false; try{ if(varsOf(math.parse(R)).length) return false; }catch(e){ return null; } }
+  let ratio=null,t=0;
+  for(let k=0;k<14&&t<6;k++){ const sc={x:Math.round((Math.random()*8-4)*1000)/1000+0.31,y:Math.round((Math.random()*8-4)*1000)/1000+0.17}; const a=evalAt(S,sc),b=evalAt(E,sc); if(isNaN(a)||isNaN(b)) continue; t++;
+    if(Math.abs(b)<1e-9){ if(Math.abs(a)>1e-6) return false; continue; } const r=a/b; if(Math.abs(r)<1e-9) return false; if(ratio===null) ratio=r; else if(!close(r,ratio)) return false; }
+  return t>=3?true:null;
+}
+function radOK(input){ const t=clean(input).replace(/\s+/g,""); if(/\/\(?\*?sqrt/.test(t)) return false; const args=[...t.matchAll(/sqrt\(([^)]*)\)/g)].map(m=>m[1]); for(const a of args){ const n=Number(a); if(!Number.isInteger(n)||n<2) return false; if(radParts(n)[0]!==1) return false; } return true; }
+function parseRoots(s){ s=clean(s).replace(/\+\/-|\+-/g,"±").replace(/\b(or|and)\b/gi,",").replace(/;/g,","); const out=[];
+  for(let part of s.split(",")){ part=part.trim(); if(!part) continue; if(part.includes("=")) part=part.split("=").pop().trim();
+    if(part.includes("±")){ const i=part.indexOf("±"), L=part.slice(0,i).trim(), R=part.slice(i+1).trim();
+      if(/^\(/.test(L)&&/\)\s*\/\s*.+$/.test(R)){ const den=R.slice(R.lastIndexOf(")")+1), inner=R.slice(0,R.lastIndexOf(")")), l=L.slice(1)||"0"; out.push(val("("+l+"+("+inner+"))"+den),val("("+l+"-("+inner+"))"+den)); }
+      else { const l=L||"0"; out.push(val(l+"+("+R+")"),val(l+"-("+R+")")); } }
+    else out.push(val(part)); }
+  return out.length&&out.every(v=>!isNaN(v))?out:null; }
+function topTerms(n,out){ while(n.isParenthesisNode) n=n.content; if(n.isOperatorNode&&(n.fn==="add"||n.fn==="subtract")){ n.args.forEach(a=>topTerms(a,out)); } else if(n.isOperatorNode&&n.fn==="unaryMinus"){ topTerms(n.args[0],out); } else out.push(n); return out; }
+function strip(n){ while(n&&n.isParenthesisNode) n=n.content; return n; }
+function isSum(n){ n=strip(n); return n.isOperatorNode&&(n.fn==="add"||n.fn==="subtract"); }
+function factorsOf(n){ n=strip(n); if(n.isOperatorNode&&n.fn==="unaryMinus") return factorsOf(n.args[0]); if(n.isOperatorNode&&n.fn==="multiply") return n.args.flatMap(factorsOf); if(n.isOperatorNode&&n.fn==="pow"&&isSum(n.args[0])) return [strip(n.args[0])]; return [n]; }
+function coeffsX(node){ const ys=[0,1,2,3,4].map(x=>evalAt(node,{x})); if(ys.some(isNaN)) return null; const c=[]; let d=ys.slice(); const fact=[1,1,2,6,24]; const diffs=[];
+  for(let k=0;k<5;k++){ diffs.push(d[0]); d=d.slice(1).map((v,i)=>v-d[i]); }
+  if(Math.abs(diffs[4])>1e-9) return null; // degree <= 3 expected
+  // Newton forward form -> standard coefficients
+  const P=[[1],[0,1],[0,-1,1],[0,2,-3,1]]; const res=[0,0,0,0]; for(let k=0;k<4;k++){ const f=diffs[k]/fact[k]; P[k].forEach((v,i)=>res[i]+=f*v); }
+  return res.map(v=>Math.round(v*1e6)/1e6); }
+function formOK(S,s,form){
+  if(form==="simp"){ if(/\)\s*\^/.test(s)||/\^\s*-|\^\(-/.test(s)) return false; const cnt={}; S.traverse((n,path,parent)=>{ if(n.isSymbolNode&&!(parent&&parent.isFunctionNode&&path==="fn")&&!CONST.has(n.name)) cnt[n.name]=(cnt[n.name]||0)+1; }); return !Object.values(cnt).some(c=>c>1); }
+  if(form==="poly"){ if(s.includes("(")) return false; const degs=topTerms(S,[]).map(t=>{ const a=evalAt(t,{x:1.5}),b=evalAt(t,{x:3}); if(isNaN(a)||Math.abs(a)<1e-12) return null; return Math.round(Math.log(Math.abs(b/a))/Math.log(2)); }); if(degs.some(d=>d===null)) return false; return new Set(degs).size===degs.length; }
+  if(form==="factored"){ const f=factorsOf(S); if(f.length<2||!f.some(isSum)) return false;
+    for(const fa of f){ if(!isSum(fa)) continue; const vs=varsOf(fa); if(vs.length!==1||vs[0]!=="x") continue; const c=coeffsX(fa); if(!c) continue; const g=c.filter(v=>v!==0).reduce((a,b)=>gcd(a,Math.round(b)),0); if(Math.abs(g)>1) return false;
+      const nz_=c.filter(v=>v!==0).length; if(c[2]!==0&&c[3]===0&&c[1]!==0||false){ /* quadratic factor: check if it factors further over integers */ const A=c[2],B=c[1],C=c[0],D=B*B-4*A*C; if(D>=0&&Number.isInteger(Math.sqrt(D))) return false; }
+      if(c[2]!==0&&c[3]===0&&c[1]===0&&c[0]!==0){ const A=c[2],C=c[0],D=-4*A*C; if(D>0&&Number.isInteger(Math.sqrt(D))) return false; } }
+    return true; }
+  if(form==="nofrac") return !s.includes("/");
+  return true; }
+function cval(s){ try{ const r=math.evaluate(clean(s).replace(/([0-9)])\s*i\b/g,"$1*i")); if(typeof r==="number") return isFinite(r)?[r,0]:null; if(r&&typeof r.re==="number") return [r.re,r.im]; return null; }catch(e){ return null; } }
+function cList(s){ s=clean(s).replace(/\+\/-|\+-/g,"±").replace(/\b(or|and)\b/gi,",").replace(/;/g,","); const out=[];
+  for(let part of s.split(",")){ part=part.trim(); if(!part) continue; if(part.includes("=")) part=part.split("=").pop().trim();
+    if(part.includes("±")){ const k=part.indexOf("±"), L=part.slice(0,k).trim()||"0", R=part.slice(k+1).trim(); const z1=cval(L+"+("+R+")"), z2=cval(L+"-("+R+")"); if(!z1||!z2) return null; out.push(z1,z2); }
+    else { const z=cval(part); if(!z) return null; out.push(z); } }
+  return out.length?out:null; }
+/* inequalities → list of intervals {lo,li,hi,hiI} */
+function ray(op,v){ return op===">"?{lo:v,li:false,hi:Infinity,hiI:false}:op===">="?{lo:v,li:true,hi:Infinity,hiI:false}:op==="<"?{lo:-Infinity,li:false,hi:v,hiI:false}:{lo:-Infinity,li:false,hi:v,hiI:true}; }
+function parseIneqPart(str){
+  const t=str.replace(/\s+/g,"").split(/(<=|>=|<|>)/); const isV=x=>/^[a-z]$/i.test(x);
+  if(t.length===3){ if(isV(t[0])){ const v=val(t[2]); return isNaN(v)?null:ray(t[1],v); } if(isV(t[2])){ const v=val(t[0]); return isNaN(v)?null:ray(FLIP[t[1]],v); } return null; }
+  if(t.length===5&&isV(t[2])){ const A=val(t[0]),B=val(t[4]); if(isNaN(A)||isNaN(B)) return null; const up=o=>o==="<"||o==="<=";
+    if(up(t[1])&&up(t[3])) return {lo:A,li:t[1]==="<=",hi:B,hiI:t[3]==="<="}; if(!up(t[1])&&!up(t[3])) return {lo:B,li:t[3]===">=",hi:A,hiI:t[1]===">="}; }
+  return null;
+}
+function parseIneq(s){ s=clean(s).toLowerCase(); const out=[];
+  for(const part of s.split(/\bor\b|∪|\|\|/)){ if(!part.trim()) continue;
+    const ands=part.split(/\band\b|,|&&/).filter(x=>x.trim()); let iv={lo:-Infinity,li:false,hi:Infinity,hiI:false};
+    for(const a of ands){ const r=parseIneqPart(a); if(!r) return null; if(r.lo>iv.lo||(r.lo===iv.lo&&!r.li)){ iv.lo=r.lo; iv.li=r.li; } if(r.hi<iv.hi||(r.hi===iv.hi&&!r.hiI)){ iv.hi=r.hi; iv.hiI=r.hiI; } }
+    out.push(iv); }
+  return out.length?out:null; }
+function sameIv(a,b){ const e=(x,y)=>(x===y)||(isFinite(x)&&isFinite(y)&&close(x,y)); return e(a.lo,b.lo)&&e(a.hi,b.hi)&&(!isFinite(a.lo)||a.li===b.li)&&(!isFinite(a.hi)||a.hiI===b.hiI); }
+function check(pr,input){
+  if(pr.type==="mc"){ const m=/^\(?\s*([a-e])\s*[).]?\s*$/i.exec(String(input).trim()); if(!m) return null; return m[1].toUpperCase()===pr.ans; }
+  if(pr.type==="word"){ const w=String(input).toUpperCase().replace(/[^A-Z]/g,""); if(!w) return null; const opts=pr.opts||["SSS","SAS","ASA","AAS","HL","NONE"]; const n=/NONE|NOT|CANNOT|CANT|NEITHER/.test(w)||w==="NO"?"NONE":w; if(!opts.includes(n)) return null; return n===pr.ans; }
+  if(pr.type==="number"){ const v=val(clean(input).split("=").pop()); if(isNaN(v)) return null; if(pr.tol?Math.abs(v-pr.ans)>pr.tol:!close(v,pr.ans)) return false; if(pr.form==="rad"&&!radOK(input)) return false; return true; }
+  if(pr.type==="roots"){ const r=parseRoots(input); if(!r) return null; const u=a=>a.filter((x,i)=>a.findIndex(y=>close(x,y))===i); const su=u(r),eu=u(pr.ans); return su.length===eu.length&&eu.every(x=>su.some(y=>close(x,y))); }
+  if(pr.type==="nsol"){ const w=String(input).toLowerCase(); const k=/inf|many|all|∞/.test(w)?"INF":/none|no |^no$|zero|^0$|parallel/.test(w)?"NONE":/one|^1$|single|unique/.test(w)?"ONE":null; return k===null?null:k===pr.ans; }
+  if(pr.type==="set"){ const v=val(clean(input).split("=").pop()); return isNaN(v)?null:close(v,pr.ans[0]); }
+  if(pr.type==="expr") return exprEq(input,pr.ans,pr.form);
+  if(pr.type==="line") return lineEq(input,pr.ans,pr.form);
+  if(pr.type==="point"){ const t=clean(input).split("=").pop().trim().replace(/^[(<⟨]/,"").replace(/[)>⟩]$/,""); const parts=t.split(","); if(parts.length!==pr.ans.length) return null; const v=parts.map(val); if(v.some(isNaN)) return null; return v.every((x,k)=>Math.abs(x-pr.ans[k])<1e-6*Math.max(1,Math.abs(pr.ans[k]))+(pr.tol||0)); }
+  if(pr.type==="cplx"){ const z=cval(String(input).split("=").pop()); if(!z) return null; return close(z[0],pr.ans[0])&&close(z[1],pr.ans[1]); }
+  if(pr.type==="croots"){ const zs=cList(input); if(!zs) return null; const u=a=>a.filter((x,k)=>a.findIndex(y=>close(x[0],y[0])&&close(x[1],y[1]))===k); const su=u(zs),eu=u(pr.ans); return su.length===eu.length&&eu.every(x=>su.some(y=>close(x[0],y[0])&&close(x[1],y[1]))); }
+  if(pr.type==="matrix"){ const toks=clean(input).replace(/[\[\]{}()]/g," ").split(/[,;\s]+/).filter(Boolean); if(!toks.length) return null; const v=toks.map(val); if(v.some(isNaN)) return null; if(v.length!==pr.ans.length) return false; return v.every((x,k)=>close(x,pr.ans[k])); }
+  if(pr.type==="yn"){ const w=String(input).trim().toUpperCase(); if(/^(Y|YES|YEAH|IS)/.test(w)) return pr.ans==="YES"; if(/^(N|NO|NOT)/.test(w)) return pr.ans==="NO"; return null; }
+  if(pr.type==="list"){ const parts=clean(input).replace(/[{}]/g,"").split(/,|;|\s+and\s+/).map(x=>x.trim()).filter(Boolean); if(!parts.length) return null; const v=parts.map(val); if(v.some(isNaN)) return null; const u=a=>a.filter((x,i)=>a.findIndex(y=>close(x,y))===i); const su=u(v),eu=u(pr.ans); return su.length===eu.length&&eu.every(x=>su.some(y=>close(x,y))); }
+  const want=pr.type==="ineq"?[ray(pr.ans.op,pr.ans.v)]:pr.type==="between"?[pr.ans]:pr.ans.map(r=>ray(r.op,r.v));
+  const got=parseIneq(input); if(!got) return null;
+  const srt=a=>a.slice().sort((x,y)=>x.lo-y.lo); const g=srt(got),w=srt(want);
+  return g.length===w.length&&g.every((x,i)=>sameIv(x,w[i]));
+}
+function render(el){ if(window.renderMathInElement) renderMathInElement(el,{delimiters:[{left:"$",right:"$",display:false}],throwOnError:false}); }
+
+/* ================= state ================= */
+let ST={cur:"ch1",ch:{}}; try{ Object.assign(ST,JSON.parse(localStorage.getItem("fm-pc")||"{}")); }catch(e){}
+const save=()=>{ try{ localStorage.setItem("fm-pc",JSON.stringify(ST)); }catch(e){} };
+let CH=null, st=null, T=null, L=1, PR=null, tries=0, done=false, firstTry=true, streak=[];
+function useChapter(id){ CH=CHAPTERS.find(c=>c.id===id)||CHAPTERS[0]; ST.cur=CH.id; ST.ch[CH.id]=ST.ch[CH.id]||{rec:null,level:{},solved:{},learned:{}}; st=ST.ch[CH.id]; save(); }
+
+/* ================= page ================= */
+function chapters(){ const b=$("chapters"); b.innerHTML="";
+  ALLCH.forEach(([n,t,id])=>{ if(id&&CHAPTERS.some(c=>c.id===id)){ const x=document.createElement("button"); x.type="button"; x.className="chap"+(id===CH.id?" on":""); x.innerHTML=`<i>${n}</i>${t}`; x.onclick=()=>{ if(id!==CH.id) openChapter(id,"learn"); }; b.appendChild(x); }
+    else { const x=document.createElement("span"); x.className="chap soon"; x.title="Coming soon"; x.innerHTML=`<i>${n}</i>${t}`; b.appendChild(x); } }); }
+function legend(){ $("legend").innerHTML=""; LEVELS.forEach(l=>{ const d=document.createElement("div"); d.className="lg"; d.style.setProperty("--c",l.c); d.innerHTML=`<b>${l.n} · ${l.name} ${l.zh}</b><span>${l.desc}</span>`; $("legend").appendChild(d); }); }
+function recText(){ $("recText").innerHTML=st.rec?`Suggested starting level for this chapter: <span class="rec">${st.rec} · ${LEVELS[st.rec-1].name}</span> ★ — you can always change it.`:"Answer up to 5 questions and we'll suggest a level for this chapter."; $("placeBtn").textContent=st.rec?"Retake the check":"Take the 5-question check"; }
+function pillsFor(t,cur,onPick){ const w=document.createElement("div"); w.className="pills";
+  LEVELS.forEach(l=>{ const b=document.createElement("button"); b.type="button"; b.className="pill"+(l.n===cur?" on":"")+(st.rec===l.n?" star":""); b.style.setProperty("--c",l.c); const n=st.solved[t.id+l.n]||0; b.innerHTML=`${l.n} ${l.name}`+(n?`<span class="n">✓${n}</span>`:""); b.onclick=()=>onPick(l.n); w.appendChild(b); }); return w; }
+function topics(){ const box=$("topics"); box.innerHTML="";
+  CH.topics.forEach(t=>{ const c=document.createElement("div"); c.className="card topic"; const lvl=st.level[t.id]||st.rec||1;
+    c.innerHTML=`<h2>${t.title}</h2><p class="idea">${t.idea}</p><div class="example"><span class="label">Simplest example</span>${t.lesson.steps.map(s=>`<div class="q">$${s[0]}$</div>`).join("")}</div><span class="label">Practice at level</span>`;
+    c.appendChild(pillsFor(t,lvl,n=>startPractice(t,n)));
+    const go=document.createElement("button"); go.className="btn teal sm"; go.style.alignSelf="flex-start"; go.textContent=`Practice level ${lvl} →`; go.onclick=()=>startPractice(t,lvl); c.appendChild(go); box.appendChild(c); });
+  render(box); }
+function startPractice(t,n){ T=t; L=n; st.level[t.id]=n; save(); streak=[]; $("practice").hidden=false; $("pTitle").textContent=t.title; newProblem(); $("practice").scrollIntoView({behavior:"smooth",block:"start"}); topics(); }
+function levelPills(){ $("pLevels").replaceWith(Object.assign(pillsFor(T,L,n=>{ L=n; st.level[T.id]=n; save(); streak=[]; newProblem(); topics(); }),{id:"pLevels"})); }
+function newProblem(){
+  PR=T.gen[L-1](); tries=0; done=false; firstTry=true;
+  $("pQ").innerHTML=`<span class="label" style="color:${LEVELS[L-1].c}">Level ${L} · ${LEVELS[L-1].name}</span><div>${PR.q}</div>`; render($("pQ"));
+  $("pAns").value=""; $("pAns").disabled=false; $("pPrev").textContent=""; $("pHow").textContent=PR.type==="word"&&PR.opts?"Type one of: "+PR.opts.map(o=>o==="NONE"?"none":o.length>3?o.toLowerCase():o).join(", ")+".":PR.form==="factored"?"Type the factored form, like 2(x - 3)(x + 4).":PR.form==="poly"?"Type the simplified polynomial, like 3x^2 - 5x + 2.":PR.form==="simp"?"Type the simplified expression with positive exponents, like 6x^5 or 3x^2/y^4.":PR.form==="rad"?"Type the simplest radical form, like 5sqrt(2).":PR.form==="si"?"Type it as y = mx + b, like y = -2x + 5.":PR.form==="std"?"Type it as Ax + By = C with whole numbers, like 3x - 2y = 6.":HOW[PR.type]; $("pFb").innerHTML=""; $("pSuggest").innerHTML="";
+  $("pCheck").hidden=false; $("pNext").hidden=true; $("pHint").disabled=false; $("pShow").hidden=true; levelPills(); drawStreak(); $("pAns").focus({preventScroll:true}); }
+function fb(kind,tag,html){ $("pFb").innerHTML=`<div class="fb ${kind}"><span class="tag">${tag}</span>${html}</div>`; render($("pFb")); }
+const solHtml=()=>`<ol class="sol">${PR.sol.map(s=>`<li>${s}</li>`).join("")}</ol>`;
+function finish(correct){ done=true; $("pAns").disabled=true; $("pCheck").hidden=true; $("pNext").hidden=false; $("pShow").hidden=true; $("pHint").disabled=true;
+  if(correct){ st.solved[T.id+L]=(st.solved[T.id+L]||0)+1; save(); }
+  streak.push(correct&&firstTry); if(streak.length>6) streak.shift(); drawStreak(); suggest(); levelPills(); $("pNext").focus({preventScroll:true}); }
+function submit(){ if(done||!PR) return; const v=$("pAns").value.trim(); if(!v) return; const r=check(PR,v);
+  if(r===null){ fb("hint","Try again","I couldn't read that. "+HOW[PR.type]); return; }
+  if(r){ fb("good","Correct"+(firstTry?" on the first try!":""),`$${PR.ansTex}$`+solHtml()); finish(true); return; }
+  tries++; firstTry=false;
+  if(tries===1){ fb("bad","Not yet",PR.hint+" Try again."); $("pShow").hidden=false; }
+  else { fb("bad","Not yet","Here's how it works:"+solHtml()); finish(false); } }
+function drawStreak(){ const s=$("pStreak"); s.innerHTML="Recent: "; streak.forEach(x=>{ const i=document.createElement("i"); i.className=x?"ok":"no"; s.appendChild(i); }); if(!streak.length) s.textContent="Get 3 right on the first try in a row to unlock a suggestion to move up."; }
+function suggest(){ const box=$("pSuggest"); box.innerHTML=""; const last=streak.slice(-3),last2=streak.slice(-2); let to=null,msg="";
+  if(L<5&&last.length===3&&last.every(Boolean)){ to=L+1; msg=`3 in a row on the first try! Ready for <b>Level ${L+1} · ${LEVELS[L].name}</b>?`; }
+  else if(L>1&&last2.length===2&&last2.every(x=>!x)){ to=L-1; msg=`These are tough — that's okay! Practice <b>Level ${L-1} · ${LEVELS[L-2].name}</b> first, then come back stronger.`; }
+  if(!to) return; const d=document.createElement("div"); d.className="suggest"; d.style.setProperty("--c",LEVELS[to-1].c); d.innerHTML=`<span>${msg}</span>`;
+  const b=document.createElement("button"); b.className="btn sm"; b.style.background=LEVELS[to-1].c; b.textContent=to>L?"Move up ↑":"Go to Level "+to; b.onclick=()=>{ L=to; st.level[T.id]=to; save(); streak=[]; newProblem(); topics(); }; d.appendChild(b); box.appendChild(d); }
+$("pCheck").onclick=submit; $("pAns").addEventListener("keydown",e=>{ if(e.key==="Enter"){ e.preventDefault(); done?newProblem():submit(); } });
+$("pNext").onclick=newProblem; $("closeP").onclick=()=>{ $("practice").hidden=true; };
+$("pHint").onclick=()=>{ if(done) return; firstTry=false; fb("hint","Hint",PR.hint); };
+$("pShow").onclick=()=>{ fb("hint","Solution",`$${PR.ansTex}$`+solHtml()); finish(false); };
+$("pAns").addEventListener("input",()=>{ const v=$("pAns").value.trim(),pv=$("pPrev"); if(!v||!window.katex){ pv.textContent=""; return; }
+  try{ let tex; const c=clean(v);
+    if(/<|>/.test(c)) tex=c.replace(/<=/g,"\\le ").replace(/>=/g,"\\ge ").replace(/\bor\b/gi,"\\text{ or }").replace(/\band\b/gi,"\\text{ and }");
+    else tex=c.split("=").map(x=>math.parse(x).toTex({parenthesis:"auto",implicit:"hide"})).join(" = ");
+    pv.innerHTML='<span class="pl">You wrote</span><span class="pm"></span>'; katex.render(tex,pv.querySelector(".pm"),{throwOnError:false}); }catch(e){ pv.textContent=""; } });
+
+/* ---- placement ---- */
+$("placeBtn").onclick=()=>{
+  const PL=[0,1,2,0,1].map((ti,k)=>[CH.topics[ti%CH.topics.length],k+1]); let i=0,res=[],pr;
+  const m=document.createElement("div"); m.className="modal"; m.innerHTML=`<div class="card"><div class="phead"><h2>Where should I start?</h2><button class="btn ghost sm" id="qx">Close</button></div><div class="qprog" id="qp"></div><div class="problem" id="qq"></div><div class="row" id="qr"><input id="qa" type="text" autocomplete="off" placeholder="Your answer" aria-label="Your answer"><button class="btn" id="qc">Check</button><button class="btn ghost" id="qs">I don't know</button></div><div class="howto" id="qh"></div><div id="qf"></div></div>`;
+  document.body.appendChild(m); const q=id=>m.querySelector("#"+id);
+  const prog=()=>{ q("qp").innerHTML=PL.map((_,k)=>`<i class="${k<res.length?(res[k]?"ok":"no"):k===i?"now":""}"></i>`).join(""); };
+  const ask=()=>{ const [t,lv]=PL[i]; pr=t.gen[lv-1](); q("qq").innerHTML=`<span class="label">Question ${i+1} of 5 · Level ${lv}</span><div>${pr.q}</div>`; render(q("qq")); q("qa").value=""; q("qh").textContent=HOW[pr.type]; q("qf").innerHTML=""; prog(); q("qa").focus(); };
+  const end=()=>{ const lvl=res.indexOf(false)===-1?5:res.indexOf(false)+1; st.rec=lvl; save(); recText(); topics(); prog();
+    q("qq").innerHTML=`<span class="label">Result</span><div>Start at <b style="color:${LEVELS[lvl-1].c}">Level ${lvl} · ${LEVELS[lvl-1].name}</b>.</div><div style="font-size:15px;color:var(--muted)">${lvl===5?"You answered every question correctly — go for Competition!":lvl===1?"Foundation builds the base everything else needs. Move up whenever you get 3 in a row.":"You got the first "+(lvl-1)+" level"+(lvl===2?"":"s")+" right. Level "+lvl+" is the right challenge for you."}</div>`;
+    q("qr").hidden=true; q("qh").textContent=""; q("qf").innerHTML=""; const b=document.createElement("button"); b.className="btn teal"; b.textContent="See the topics"; b.onclick=()=>m.remove(); q("qf").appendChild(b); };
+  const answer=r=>{ res.push(r); if(!r){ end(); return; } i++; i>=PL.length?end():ask(); };
+  q("qc").onclick=()=>{ const v=q("qa").value.trim(); if(!v) return; const r=check(pr,v); if(r===null){ q("qf").innerHTML=`<div class="fb hint">I couldn't read that. ${HOW[pr.type]}</div>`; return; } answer(r); };
+  q("qa").addEventListener("keydown",e=>{ if(e.key==="Enter"){ e.preventDefault(); q("qc").click(); } });
+  q("qs").onclick=()=>answer(false); q("qx").onclick=()=>m.remove(); m.addEventListener("click",e=>{ if(e.target===m) m.remove(); });
+  ask(); };
+
+/* ---- learn ---- */
+let LI=0, shown=1, TP=null, tDone=false, tTries=0;
+function road(){ const r=$("road"); r.innerHTML=""; CH.topics.forEach((t,i)=>{ const b=document.createElement("button"); b.type="button"; b.className="stop"+(st.learned[t.id]?" done":"")+(i===LI?" on":""); b.innerHTML=`<i>${st.learned[t.id]?"✓":i+1}</i>${t.title}`; b.onclick=()=>openLesson(i); r.appendChild(b); }); }
+function openLesson(i,scroll){ LI=i; shown=1; tDone=false; tTries=0; TP=null; road(); drawLesson(); if(scroll) $("lesson").scrollIntoView({behavior:"smooth",block:"start"}); }
+function drawLesson(){
+  const t=CH.topics[LI], l=t.lesson, box=$("lesson");
+  box.innerHTML=`<span class="label">Lesson ${LI+1} of ${CH.topics.length}</span><h2>${t.title}</h2><div class="big">${t.idea}</div>${l.fig||""}<span class="label">Simplest example — one step at a time</span><ol class="steps">${l.steps.slice(0,shown).map(s=>`<li><div><div class="m">$${s[0]}$</div><div class="w">${s[1]}</div></div></li>`).join("")}</ol>`;
+  if(shown<l.steps.length){ const b=document.createElement("button"); b.className="btn"; b.style.alignSelf="flex-start"; b.textContent="Next step →"; b.onclick=()=>{ shown++; drawLesson(); }; box.appendChild(b);
+    const s=document.createElement("button"); s.className="btn ghost sm"; s.style.alignSelf="flex-start"; s.textContent="Show all steps"; s.onclick=()=>{ shown=l.steps.length; drawLesson(); }; box.appendChild(s); }
+  else {
+    box.insertAdjacentHTML("beforeend",`<div class="warn"><b>Watch out: </b>${l.warn}</div>`);
+    if(!TP) TP=t.gen[0]();
+    const w=document.createElement("div"); w.className="turn";
+    w.innerHTML=`<span class="label" style="color:var(--gold)">Your turn</span><div class="q">${TP.q}</div><div class="row"><input type="text" id="tAns" autocomplete="off" placeholder="Your answer" aria-label="Your answer"><button class="btn" id="tChk">Check</button><button class="btn ghost" id="tHint">Hint</button></div><div class="howto">${HOW[TP.type]}</div><div id="tFb"></div>`;
+    box.appendChild(w);
+    const nav=document.createElement("div"); nav.className="lnav"; const left=document.createElement("div"); left.className="row";
+    if(LI>0){ const pv=document.createElement("button"); pv.className="btn ghost sm"; pv.textContent="← Previous lesson"; pv.onclick=()=>openLesson(LI-1,true); left.appendChild(pv); }
+    const right=document.createElement("div"); right.className="row"; right.id="tNext"; nav.append(left,right); box.appendChild(nav);
+    const fbx=(k,tag,h)=>{ $("tFb").innerHTML=`<div class="fb ${k}"><span class="tag">${tag}</span>${h}</div>`; render($("tFb")); };
+    const win=()=>{ tDone=true; st.learned[t.id]=true; save(); road(); $("tAns").disabled=true; $("tChk").disabled=true; $("tHint").disabled=true; showNext(); };
+    const go=()=>{ if(tDone) return; const v=$("tAns").value.trim(); if(!v) return; const r=check(TP,v);
+      if(r===null){ fbx("hint","Try again","I couldn't read that. "+HOW[TP.type]); return; }
+      if(r){ fbx("good","Correct — you've got it!",`$${TP.ansTex}$`); win(); return; }
+      tTries++; if(tTries<2) fbx("bad","Not yet",TP.hint+" Try again."); else { fbx("hint","Answer",`$${TP.ansTex}$. Try another one to make sure.`); const a=document.createElement("button"); a.className="btn ghost sm"; a.textContent="Try another"; a.onclick=()=>{ TP=t.gen[0](); tTries=0; drawLesson(); }; $("tFb").appendChild(a); } };
+    $("tChk").onclick=go; $("tAns").addEventListener("keydown",e=>{ if(e.key==="Enter"){ e.preventDefault(); go(); } }); $("tHint").onclick=()=>fbx("hint","Hint",TP.hint);
+    if(st.learned[t.id]) showNext();
+  }
+  render(box);
+}
+function showNext(){ const r=$("tNext"); if(!r) return; r.innerHTML=""; const t=CH.topics[LI];
+  const pr=document.createElement("button"); pr.className="btn ghost sm"; pr.textContent="Practice this topic"; pr.onclick=()=>{ setTab("practice"); startPractice(t,st.level[t.id]||st.rec||1); }; r.appendChild(pr);
+  const n=document.createElement("button"); n.className="btn teal sm";
+  if(LI<CH.topics.length-1){ n.textContent="Next lesson →"; n.onclick=()=>openLesson(LI+1,true); } else { n.textContent="Start practicing →"; n.onclick=()=>{ setTab("practice"); window.scrollTo({top:0,behavior:"smooth"}); }; }
+  r.appendChild(n); }
+function setTab(t){ $("learnView").hidden=t!=="learn"; $("practiceView").hidden=t!=="practice"; $("tabLearn").classList.toggle("on",t==="learn"); $("tabPractice").classList.toggle("on",t==="practice"); try{ history.replaceState(null,"","#"+CH.id+"-"+t); }catch(e){} }
+function openChapter(id,tab){
+  useChapter(id); $("chTitle").textContent="Chapter "+ALLCH.find(c=>c[2]===CH.id)[0]+": "+CH.title; $("practice").hidden=true;
+  chapters(); recText(); topics(); const first=CH.topics.findIndex(t=>!st.learned[t.id]); openLesson(first<0?0:first);
+  setTab(tab||(first<0?"practice":"learn")); }
+document.addEventListener("click",e=>{ const d=e.target.closest(".mc > div"); if(!d) return; const card=d.closest(".practice, .turn, .modal .card"); const inp=card&&card.querySelector("input[type=text]"); if(inp&&!inp.disabled){ inp.value=d.querySelector("b").textContent.trim()[0]; inp.focus(); d.parentElement.querySelectorAll("div").forEach(x=>x.classList.toggle("sel",x===d)); } });
+$("tabLearn").onclick=()=>setTab("learn"); $("tabPractice").onclick=()=>setTab("practice");
+window.addEventListener("load",()=>{ legend(); const m=/^#(ch\d+)(?:-(learn|practice))?$/.exec(location.hash); openChapter(m?m[1]:ST.cur,m?m[2]:null); });
+</script>
+</body>
+</html>

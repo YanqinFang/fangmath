@@ -43,6 +43,8 @@
   .howmem{background:var(--teal-soft);border-radius:12px;padding:10px 14px;margin:10px 0 0;font-size:14.5px}
   .sund{margin:4px 0 0;padding-left:22px;font-size:15px;line-height:1.6}
   #words,#ready,#road,#practiceView{scroll-margin-top:80px}
+  .wmore{margin:-6px 0 12px;font-size:14px;color:var(--muted)} .wmore>summary{cursor:pointer;color:var(--teal);font-weight:600;list-style:none} .wmore>summary::-webkit-details-marker{display:none}
+  .wmore>div{background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:10px 12px;margin-top:6px;color:var(--ink);font-size:14.5px}
   .chroute{background:#fff;border:1px solid var(--line);border-radius:16px;padding:12px 14px;margin:0 0 14px;box-shadow:var(--shadow)}
   .chroute .rk{font-size:14px;color:var(--ink);margin-bottom:8px} .chroute .rk span{color:var(--muted)}
   .chroute .rs{display:flex;flex-wrap:wrap;align-items:center;gap:6px} .chroute .rs>span{color:var(--faint)}
@@ -71,7 +73,8 @@
   const WORDS = {};
   WORDS.ch1 = {
     sub: "Point, line, plane, segment, ray, angle — and the first postulates",
-    intro: S`Geometry starts with three words we <b>cannot define</b>: <b>point</b>, <b>line</b> and <b>plane</b>. We can only describe them with examples. Every other word in geometry is then defined using these three. They are called <b>undefined terms</b>.`,
+    intro: S`Every word in geometry starts from a picture you already know. Read each card: <b>see it</b>, <b>say it</b>, then <b>write it</b>.`,
+    more: ["Extra: what is an “undefined term”?", S`Geometry starts with three words we <b>cannot define</b>: <b>point</b>, <b>line</b> and <b>plane</b>. Any definition would need other words, and those would need more words… so mathematicians agree to start with these three and only <b>describe</b> them with examples. Every other word (segment, ray, angle, …) is then defined using them. That is why the cards are marked <i>undefined</i> or <i>defined</i>.`],
     cards: [
       { k: "point", t: "Point", tag: "undefined", see: "The pin marking your house on a map. A star so far away it is just a dot.", say: "A location. It has <b>no size</b> at all — no length, no width.", write: "A capital letter: point $A$." },
       { k: "line", t: "Line", tag: "undefined", see: "A perfectly straight road that never ends in either direction. The fold in a sheet of paper, going on forever. The edge where a wall meets the floor.", say: "A straight path of points that goes on <b>forever in both directions</b>. It has no thickness.", write: "Two points on it: $\\overleftrightarrow{AB}$, or a lowercase letter: line $\\ell$." },
@@ -478,8 +481,9 @@
     box.innerHTML = `<summary><span style="font-size:24px">📘</span><div><b>Start here: Words &amp; Postulates</b><br><span>${w.cards.length} concepts · ${nPost} ${pw === "postulates" ? "postulates" : "key facts"} · ${w.vocab.length} words to know — ${w.sub}</span></div><i>›</i></summary>
       <div class="wb">
         <div class="intro">${w.intro}</div>
+        ${w.more ? `<details class="wmore"><summary>ℹ️ ${w.more[0]}</summary><div>${w.more[1]}</div></details>` : ""}
         <h4>👀 See it → 🗣 Say it → ✏️ Write it</h4>
-        <div class="wgrid">${w.cards.map(c => `<div class="wcard"><h5>${c.t}<em>${c.tag}</em></h5>${PIC[c.k] || ""}
+        <div class="wgrid">${w.cards.map(c => `<div class="wcard"><h5>${c.t}${w.more && c.tag ? `<em class="tg" hidden>${c.tag}</em>` : ""}</h5>${PIC[c.k] || ""}
           <div class="wrow"><span class="lb">See it</span>${c.see}</div><div class="wrow"><span class="lb">Say it</span>${c.say}</div><div class="wrow"><span class="lb">Write it</span>${c.write}</div></div>`).join("")}</div>
         ${w.table ? `<h4>${w.tableTitle || "Line, ray or segment?"}</h4>${w.table}` : ""}
         <h4>📌 ${w.postTitle || "Postulates — try each one with your hands"}</h4>
@@ -497,7 +501,8 @@
     const upd = () => { const n = box.querySelectorAll(".vocab input:checked").length; box.querySelector("#vocabN").textContent = `${n} of ${w.vocab.length} words ready${n === w.vocab.length ? " — great job! 🎉" : ""}`; };
     box.querySelectorAll(".vocab input").forEach(i => i.onchange = () => { const k = load(); k[chId] = [...box.querySelectorAll(".vocab input:checked")].map(x => x.value); save(k); upd(); });
     box.querySelectorAll(".qc button").forEach(b => b.onclick = () => { const a = b.nextElementSibling; a.hidden = !a.hidden; b.textContent = a.hidden ? "Show answer" : "Hide"; });
-    box.addEventListener("toggle", () => { const k = load(); k["_seen_" + chId] = !box.open; save(k); });
+    box.addEventListener("toggle", e => { if (e.target !== box) return; const k = load(); k["_seen_" + chId] = !box.open; save(k); });
+    const more = box.querySelector(".wmore"); if (more) more.addEventListener("toggle", () => box.querySelectorAll(".tg").forEach(t => t.hidden = !more.open));
     upd();
     if (window.renderMathInElement) renderMathInElement(box, { delimiters: [{ left: "$", right: "$", display: false }], throwOnError: false });
     else setTimeout(() => draw(chId), 300);

@@ -196,11 +196,11 @@ function rad(n){ const [k,m]=radParts(n); return m===1?String(k):(k===1?"":k)+"\
 function radTex(c,n){ const [k,m]=radParts(n); const K=c*k; return m===1?String(K):(K===1?"":K)+"\\sqrt{"+m+"}"; }
 const divisors=n=>{n=Math.abs(n);const d=[];for(let i=1;i<=n;i++) if(n%i===0) d.push(i);return d;};
 const LEVELS=[
- {n:1,name:"Foundation",zh:"起步",desc:"Review the basics first",c:"var(--l1)"},
- {n:2,name:"Basic",zh:"基础",desc:"Textbook examples",c:"var(--l2)"},
- {n:3,name:"Standard",zh:"标准",desc:"School test level",c:"var(--l3)"},
- {n:4,name:"Challenge",zh:"挑战",desc:"Honors / hard SAT",c:"var(--l4)"},
- {n:5,name:"Competition",zh:"竞赛",desc:"MATHCOUNTS / AMC 8–10 style",c:"var(--l5)"}];
+ {n:1,name:"Foundation",desc:"Review the basics first",c:"var(--l1)"},
+ {n:2,name:"Basic",desc:"Textbook examples",c:"var(--l2)"},
+ {n:3,name:"Standard",desc:"School test level",c:"var(--l3)"},
+ {n:4,name:"Challenge",desc:"Honors / hard SAT",c:"var(--l4)"},
+ {n:5,name:"Competition",desc:"MATHCOUNTS / AMC 8–10 style",c:"var(--l5)"}];
 const HOW={roots:"Give every solution, separated by commas: 3, -2. Use sqrt(5) for √5; ± is fine: 2±sqrt(3).",nsol:"Type one, none, or infinitely many.",point:"Type a point like (2, -5).",yn:"Type yes or no.",list:"List the values separated by commas, like -2, 0, 5.",line:"Type an equation like y = 2x + 3 (any correct form works).",number:"Type a number. Fractions like 9/4 are fine.",set:"Type the value, like 4 or x = 4.",expr:"Type an expression like 7x - 1 or (c - b)/a.",
   ineq:"Type like x > 3 or x <= -2 (≤ and ≥ work too).",between:"Type like -2 < x <= 4.",or:"Type like x < -5 or x > 3."};
 const ineqTex=(op,v)=>`x ${OPT[op]} ${v}`;
@@ -665,7 +665,7 @@ function useChapter(id){ CH=CHAPTERS.find(c=>c.id===id)||CHAPTERS[0]; ST.cur=CH.
 function chapters(){ const b=$("chapters"); b.innerHTML="";
   CHAPTERS.forEach((c,i)=>{ const x=document.createElement("button"); x.type="button"; x.className="chap"+(c.id===CH.id?" on":""); x.innerHTML=`<i>${i+1}</i>${c.title}`; x.onclick=()=>{ if(c.id!==CH.id) openChapter(c.id,"learn"); }; b.appendChild(x); });
   COMING.forEach((t,i)=>{ const x=document.createElement("span"); x.className="chap soon"; x.title="Coming soon"; x.innerHTML=`<i>${CHAPTERS.length+i+1}</i>${t}`; b.appendChild(x); }); }
-function legend(){ $("legend").innerHTML=""; LEVELS.forEach(l=>{ const d=document.createElement("div"); d.className="lg"; d.style.setProperty("--c",l.c); d.innerHTML=`<b>${l.n} · ${l.name} ${l.zh}</b><span>${l.desc}</span>`; $("legend").appendChild(d); }); }
+function legend(){ $("legend").innerHTML=""; LEVELS.forEach(l=>{ const d=document.createElement("div"); d.className="lg"; d.style.setProperty("--c",l.c); d.innerHTML=`<b>${l.n} · ${l.name}</b><span>${l.desc}</span>`; $("legend").appendChild(d); }); }
 function recText(){ $("recText").innerHTML=st.rec?`Suggested starting level for this chapter: <span class="rec">${st.rec} · ${LEVELS[st.rec-1].name}</span> ★ — you can always change it.`:"Answer up to 5 questions and we'll suggest a level for this chapter."; $("placeBtn").textContent=st.rec?"Retake the check":"Take the 5-question check"; }
 function pillsFor(t,cur,onPick){ const w=document.createElement("div"); w.className="pills";
   LEVELS.forEach(l=>{ const b=document.createElement("button"); b.type="button"; b.className="pill"+(l.n===cur?" on":"")+(st.rec===l.n?" star":""); b.style.setProperty("--c",l.c); const n=st.solved[t.id+l.n]||0; b.innerHTML=`${l.n} ${l.name}`+(n?`<span class="n">✓${n}</span>`:""); b.onclick=()=>onPick(l.n); w.appendChild(b); }); return w; }

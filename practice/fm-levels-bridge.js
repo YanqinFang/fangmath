@@ -13,7 +13,7 @@
   const PAGES = {
     "algebra1-levels": ["alg1", "Algebra 1"], "geometry-levels": ["geo", "Geometry"],
     "algebra2-levels": ["alg2", "Algebra 2"], "precalculus-levels": ["precalc", "Precalculus"],
-    "calculus-ab-levels": ["calcab", "AP Calculus AB"], "calculus-bc-levels": ["calcbc", "AP Calculus BC"],
+    "calculus-ab-levels": ["calcab", "AP Calculus AB"], "grade3-levels": ["grade3", "Grade 3"], "calculus-bc-levels": ["calcbc", "AP Calculus BC"],
   };
   const page = (location.pathname.match(/([\w-]+)\.html$/) || [])[1] || "";
   const [CID, CTITLE] = PAGES[page] || [page, page];

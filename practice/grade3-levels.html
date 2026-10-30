@@ -1,0 +1,568 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Grade 3 Math: Learn &amp; Practice — Prof. Fang Math</title>
+<meta name="description" content="Grade 3 math unit by unit: learn each idea from the simplest example, then practice in five levels from Foundation to Competition.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/mathjs@14.9.1/lib/browser/math.js"></script>
+<script defer src="grade3-stories.js"></script>
+<style>
+:root{
+  --bg:#FBF8F3; --surface:#FFFFFF; --ink:#16233B; --muted:#5B6474; --faint:#8C93A0; --line:#E8E2D8;
+  --navy:#1F3A68; --teal:#0F7C7C; --teal-soft:#DDF0EE; --gold:#C9962B; --gold-soft:#FBF1DC; --red:#B3261E; --red-soft:#FBE7E5; --green:#1E7A45; --green-soft:#DDF4E6;
+  --l1:#2E8B57; --l2:#0F7C7C; --l3:#1F3A68; --l4:#B7472A; --l5:#6A4BD8;
+  --radius:18px; --shadow:0 8px 26px rgba(22,35,59,.07);
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 Inter,system-ui,-apple-system,sans-serif;-webkit-font-smoothing:antialiased}
+a{color:var(--teal)}
+h1,h2,h3{font-family:Fraunces,Georgia,serif;font-weight:600;letter-spacing:-.01em;margin:0;line-height:1.15}
+button,input{font:inherit;color:inherit}
+[hidden]{display:none!important}
+header.top{position:sticky;top:0;z-index:40;background:rgba(255,255,255,.96);border-bottom:1px solid var(--line)}
+header.top .in{max-width:1120px;margin:0 auto;padding:0 20px;height:64px;display:flex;align-items:center;gap:24px}
+.brand{font-weight:700;font-size:19px;text-decoration:none;color:var(--ink);white-space:nowrap}
+.brand span{color:var(--teal)}
+.back{margin-left:auto;font-size:15px;text-decoration:none;color:var(--muted);font-weight:500}
+.wrap{max-width:1120px;margin:0 auto;padding:24px 20px 48px;display:flex;flex-direction:column;gap:20px}
+.intro h1{font-size:clamp(28px,4vw,40px)}
+.intro p{color:var(--muted);margin:6px 0 0;max-width:680px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:20px}
+.label{font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--faint);font-weight:700}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:10px 18px;border-radius:999px;font-weight:600;border:1px solid transparent;cursor:pointer;background:var(--navy);color:#fff;text-decoration:none}
+.btn.teal{background:var(--teal)} .btn.ghost{background:var(--surface);color:var(--ink);border-color:var(--line)}
+.btn.sm{padding:7px 14px;font-size:14px}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+button:focus-visible,input:focus{outline:2px solid var(--teal);outline-offset:1px}
+/* level legend */
+.legend{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px}
+@media (max-width:760px){.legend{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.lg{border-radius:12px;padding:10px 12px;background:var(--bg);border-left:4px solid var(--c)}
+.lg b{display:block;font-size:14px;color:var(--c)} .lg span{font-size:13px;color:var(--muted)}
+/* placement */
+.place{display:flex;flex-wrap:wrap;gap:14px;align-items:center;justify-content:space-between;background:linear-gradient(120deg,var(--teal-soft),#fff 70%);border:1.5px solid var(--teal)}
+.place .t b{font-family:Fraunces,Georgia,serif;font-size:20px;display:block}
+.place .t span{color:var(--muted);font-size:15px}
+.rec{font-weight:600;color:var(--teal)}
+/* topics */
+.topics{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+@media (max-width:760px){.topics{grid-template-columns:minmax(0,1fr)}}
+.topic{display:flex;flex-direction:column;gap:12px}
+.topic h2{font-size:22px}
+.idea{color:var(--muted);font-size:15px;margin:0}
+.example{background:var(--bg);border-radius:12px;padding:12px 14px;font-size:15px;overflow-x:auto}
+.example .q{font-size:17px;margin-bottom:4px}
+.pills{display:flex;flex-wrap:wrap;gap:6px}
+.pill{position:relative;border:1.5px solid var(--line);background:var(--surface);border-radius:999px;padding:6px 12px;font-size:13px;font-weight:600;cursor:pointer;color:var(--ink)}
+.pill:hover{border-color:var(--c)}
+.pill.on{background:var(--c);border-color:var(--c);color:#fff}
+.pill .n{font-weight:500;opacity:.75;margin-left:4px}
+.pill.star::after{content:"★";position:absolute;top:-8px;right:-4px;font-size:12px;color:var(--gold)}
+/* practice */
+.practice{display:flex;flex-direction:column;gap:14px;scroll-margin-top:80px}
+.phead{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between}
+.phead h2{font-size:24px}
+.problem{font-size:clamp(19px,2.6vw,24px);padding:16px 18px;border-radius:14px;background:var(--bg);overflow-x:auto;line-height:1.7}
+.row{display:flex;gap:8px;flex-wrap:wrap}
+.row input{flex:1 1 240px;border:1px solid var(--line);border-radius:999px;padding:11px 16px;background:var(--bg)}
+.preview{font-size:18px;min-height:1.4em}
+.preview .pl{font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--faint);font-weight:700;margin-right:8px}
+.howto{font-size:13px;color:var(--faint)}
+.fb{border-radius:12px;padding:10px 14px;font-size:15px;overflow-x:auto}
+.fb.good{background:var(--green-soft)} .fb.bad{background:var(--red-soft)} .fb.hint{background:var(--gold-soft)}
+.fb .tag{display:block;font-size:11px;text-transform:uppercase;letter-spacing:.08em;font-weight:700}
+.fb.good .tag{color:var(--green)} .fb.bad .tag{color:var(--red)} .fb.hint .tag{color:var(--gold)}
+.sol{margin:6px 0 0;padding-left:20px} .sol li{margin:2px 0}
+.suggest{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;border:1.5px dashed var(--c);border-radius:12px;padding:10px 14px}
+.streak{display:flex;gap:4px;align-items:center;font-size:13px;color:var(--faint)}
+.streak i{width:10px;height:10px;border-radius:50%;background:var(--line)} .streak i.ok{background:var(--green)} .streak i.no{background:var(--red)}
+/* modal quiz */
+.modal{position:fixed;inset:0;background:rgba(22,35,59,.45);display:grid;place-items:center;padding:16px;z-index:60}
+.modal .card{width:min(620px,100%);max-height:90vh;overflow:auto;display:flex;flex-direction:column;gap:14px}
+.qprog{display:flex;gap:6px} .qprog i{flex:1;height:6px;border-radius:3px;background:var(--line)} .qprog i.ok{background:var(--green)} .qprog i.no{background:var(--red)} .qprog i.now{background:var(--teal)}
+.tabs{display:flex;gap:6px;flex-wrap:wrap;border-bottom:1px solid var(--line);padding-bottom:0}
+.tab{border:none;background:none;padding:10px 16px;font-weight:600;font-size:16px;color:var(--muted);cursor:pointer;border-bottom:3px solid transparent;margin-bottom:-1px}
+.tab.on{color:var(--teal);border-bottom-color:var(--teal)}
+.learn,.pview{display:flex;flex-direction:column;gap:20px}
+.road{display:flex;gap:8px;flex-wrap:wrap}
+.stop{display:flex;align-items:center;gap:8px;border:1.5px solid var(--line);background:var(--surface);border-radius:999px;padding:6px 14px 6px 6px;cursor:pointer;font-size:14px;font-weight:600;color:var(--ink)}
+.stop i{font-style:normal;width:24px;height:24px;border-radius:50%;display:grid;place-items:center;background:var(--bg);font-size:12px;border:1.5px solid var(--line)}
+.stop.done i{background:var(--green);border-color:var(--green);color:#fff}
+.stop.on{border-color:var(--teal);background:var(--teal-soft)}
+.lesson{display:flex;flex-direction:column;gap:16px;scroll-margin-top:80px}
+.lesson h2{font-size:clamp(24px,3vw,30px)}
+.big{font-size:18px;background:var(--teal-soft);border-radius:14px;padding:14px 16px;overflow-x:auto}
+.big b{color:var(--teal)}
+.steps{display:flex;flex-direction:column;gap:8px;margin:0;padding:0;list-style:none;counter-reset:k}
+.steps li{counter-increment:k;display:grid;grid-template-columns:30px minmax(0,1fr);gap:10px;align-items:start;background:var(--bg);border-radius:12px;padding:10px 12px;animation:pop .25s ease}
+.steps li::before{content:counter(k);width:26px;height:26px;border-radius:50%;background:var(--navy);color:#fff;display:grid;place-items:center;font-size:13px;font-weight:700}
+.steps .m{font-size:19px;overflow-x:auto} .steps .w{font-size:14px;color:var(--muted)}
+@keyframes pop{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){.steps li{animation:none}}
+.warn{background:var(--red-soft);border-radius:14px;padding:12px 16px;font-size:15px;overflow-x:auto}
+.warn b{color:var(--red)}
+.turn{border:1.5px solid var(--gold);border-radius:14px;padding:14px 16px;display:flex;flex-direction:column;gap:10px}
+.turn .q{font-size:19px;overflow-x:auto}
+.lnav{display:flex;gap:8px;flex-wrap:wrap;justify-content:space-between}
+footer{text-align:center;color:var(--faint);font-size:13px;padding:24px}
+.chapters{display:flex;flex-wrap:wrap;gap:8px}
+.chap{display:flex;align-items:center;gap:8px;border:1.5px solid var(--line);background:var(--surface);border-radius:999px;padding:5px 14px 5px 5px;font-size:14px;font-weight:600;color:var(--ink);cursor:pointer}
+.chap i{font-style:normal;width:24px;height:24px;border-radius:50%;display:grid;place-items:center;background:var(--bg);font-size:12px}
+.chap.on{background:var(--navy);border-color:var(--navy);color:#fff} .chap.on i{background:rgba(255,255,255,.2)}
+.chap.soon{opacity:.45;cursor:default}
+.fig{display:block;width:100%;max-width:360px;height:auto;margin:4px 0 8px}
+.problem .fig{max-width:340px}
+.mc{display:grid;gap:6px;margin-top:10px;font-size:.92em}
+.mc div{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:6px 10px}
+.mc div{cursor:pointer} .mc div:hover{border-color:var(--teal)} .mc div.sel{border-color:var(--teal);background:var(--teal-soft)}
+
+/* ---- left sidebar for chapters (wide screens) ---- */
+.lv-main{display:contents}
+.lv-main>.intro{order:-1}
+@media (min-width:720px){
+  .wrap{max-width:1320px;display:grid;grid-template-columns:210px minmax(0,1fr);gap:20px;align-items:start;padding-left:14px;padding-right:14px}
+  .lv-main{display:flex;flex-direction:column;gap:20px;min-width:0}
+  .wrap>.chapters{position:sticky;top:16px;flex-direction:column;flex-wrap:nowrap;gap:2px;max-height:calc(100vh - 32px);overflow-y:auto;background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:12px 10px}
+  .wrap>.chapters::before{content:attr(aria-label);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--faint);font-weight:700;padding:4px 8px 8px}
+  .wrap>.chapters .chap{border:0;border-radius:10px;background:transparent;padding:8px 8px;font-size:14px;line-height:1.3;text-align:left;width:100%;align-items:flex-start}
+  .wrap>.chapters .chap i{flex:0 0 auto;min-width:24px;width:auto;padding:0 5px;height:24px;border-radius:12px}
+  .wrap>.chapters .chap:hover{background:var(--bg)}
+  .wrap>.chapters .chap.on{background:var(--navy);color:#fff}
+}
+@media (min-width:1050px){ .wrap{grid-template-columns:260px minmax(0,1fr);gap:28px;padding-left:20px;padding-right:20px} }
+</style>
+</head>
+<body>
+<header class="top"><div class="in">
+  <a class="brand" href="../index.html#/">Prof. Fang <span>Math</span></a>
+  <a class="back" href="../index.html#/course/grade3">← Back to Grade 3</a>
+</div></header>
+
+<div class="wrap">
+  <nav class="chapters" id="chapters" aria-label="Units"></nav>
+  <div class="lv-main">
+  <div class="intro">
+    <span class="label">Grade 3 · Learn &amp; Practice at Your Level</span>
+    <h1 id="chTitle">Grade 3</h1>
+    <p>Pick a unit. First learn each idea from the simplest example, then practice at the level that fits you and move up when you're ready.</p>
+  </div>
+
+
+  <div class="tabs" role="tablist">
+    <button class="tab" id="tabLearn" role="tab">① Learn the ideas</button>
+    <button class="tab" id="tabPractice" role="tab">② Practice at your level</button>
+  </div>
+
+  <div id="learnView" class="learn">
+    <div class="road" id="road"></div>
+    <div class="card lesson" id="lesson"></div>
+  </div>
+
+  <div id="practiceView" class="pview">
+    <div class="legend" id="legend"></div>
+    <div class="card place">
+      <div class="t"><b>Not sure where to start?</b><span id="recText"></span></div>
+      <button class="btn teal" id="placeBtn">Take the 5-question check</button>
+    </div>
+    <div class="card practice" id="practice" hidden>
+      <div class="phead"><h2 id="pTitle"></h2><button class="btn ghost sm" id="closeP">All topics</button></div>
+      <div class="pills" id="pLevels"></div>
+      <div class="problem" id="pQ"></div>
+      <div class="row">
+        <input type="text" id="pAns" autocomplete="off" placeholder="Your answer" aria-label="Your answer">
+        <button class="btn" id="pCheck">Check</button>
+        <button class="btn ghost" id="pHint">Hint</button>
+        <button class="btn ghost" id="pShow" hidden>Show solution</button>
+        <button class="btn teal" id="pNext" hidden>Next problem →</button>
+      </div>
+      <div class="preview" id="pPrev"></div>
+      <div class="howto" id="pHow"></div>
+      <div id="pFb"></div>
+      <div id="pSuggest"></div>
+      <div class="streak" id="pStreak"></div>
+    </div>
+    <div class="topics" id="topics"></div>
+  </div>
+  </div>
+</div>
+<footer>© 2026 Prof. Fang Math</footer>
+
+<script>
+"use strict";
+/* ================= helpers ================= */
+const $=id=>document.getElementById(id);
+const rnd=(a,b)=>a+Math.floor(Math.random()*(b-a+1));
+const nz=(a,b)=>{let x;do{x=rnd(a,b)}while(x===0);return x};
+const pick=a=>a[Math.floor(Math.random()*a.length)];
+const gcd=(a,b)=>{a=Math.abs(a);b=Math.abs(b);while(b){[a,b]=[b,a%b]}return a};
+const sg=k=>k>=0?"+ "+k:"- "+(-k);            // "+ 3" / "- 3"
+const P=n=>n<0?"("+n+")":String(n);            // wrap negatives
+function co(a,v){ return (a===1?"":a===-1?"-":String(a))+v; }   // coefficient with variable
+function lin(a,b,v="x"){ if(a===0) return String(b); let s=co(a,v); if(b) s+=" "+sg(b); return s; }
+function cterm(a,v){ return (a<0?"- ":"+ ")+(Math.abs(a)===1?"":Math.abs(a))+v; } // signed term for middle
+function frac(n,d){ if(d<0){n=-n;d=-d} const g=gcd(n,d)||1; n/=g; d/=g; return d===1?String(n):(n<0?"-":"")+"\\frac{"+Math.abs(n)+"}{"+d+"}"; }
+const OPT={"<":"<","<=":"\\le",">":">",">=":"\\ge"}; const FLIP={"<":">","<=":">=",">":"<",">=":"<="};
+const pt=(x,y)=>`(${x}, ${y})`;
+const sq2=h=>`(x ${sg(-h)})^2`;
+function ptex(cs,v="x"){ const n=cs.length-1; let t=""; cs.forEach((c,i)=>{ const d=n-i; if(!c) return; const a=Math.abs(c), vv=d===0?"":d===1?v:v+"^{"+d+"}", cf=(a===1&&d>0)?"":String(a); t+=t?(c<0?" - ":" + "):(c<0?"-":""); t+=cf+vv; }); return t||"0"; }
+function pstr(cs){ const n=cs.length-1; return cs.map((c,i)=>`(${c})*x^${n-i}`).join("+"); }
+function pmul(a,b){ const r=Array(a.length+b.length-1).fill(0); a.forEach((x,i)=>b.forEach((y,j)=>r[i+j]+=x*y)); return r; }
+function radParts(n){ let k=1,m=n; for(let i=Math.floor(Math.sqrt(n));i>1;i--){ if(n%(i*i)===0){ k=i; m=n/(i*i); break; } } return [k,m]; }
+function rad(n){ const [k,m]=radParts(n); return m===1?String(k):(k===1?"":k)+"\\sqrt{"+m+"}"; }
+function radTex(c,n){ const [k,m]=radParts(n); const K=c*k; return m===1?String(K):(K===1?"":K)+"\\sqrt{"+m+"}"; }
+const divisors=n=>{n=Math.abs(n);const d=[];for(let i=1;i<=n;i++) if(n%i===0) d.push(i);return d;};
+const LEVELS=[
+ {n:1,name:"Foundation",desc:"Review the basics first",c:"var(--l1)"},
+ {n:2,name:"Basic",desc:"Textbook examples",c:"var(--l2)"},
+ {n:3,name:"Standard",desc:"School test level",c:"var(--l3)"},
+ {n:4,name:"Challenge",desc:"Stretch problems",c:"var(--l4)"},
+ {n:5,name:"Competition",desc:"Math Kangaroo / MOEMS style",c:"var(--l5)"}];
+
+const HOW={mc:"Click a choice or type its letter, then press Check.",word:"Type your answer as a word or abbreviation.",roots:"Give every solution, separated by commas: 3, -2. Use sqrt(5) for √5; ± is fine: 2±sqrt(3).",nsol:"Type one, none, or infinitely many.",point:"Type a point like (2, -5).",yn:"Type yes or no.",list:"List the values separated by commas, like -2, 0, 5.",line:"Type an equation like y = 2x + 3 (any correct form works).",number:"Type a number. Fractions like 9/4 are fine.",set:"Type the value, like 4 or x = 4.",expr:"Type an expression like 7x - 1 or (c - b)/a.",
+  ineq:"Type like x > 3 or x <= -2 (≤ and ≥ work too).",between:"Type like -2 < x <= 4.",or:"Type like x < -5 or x > 3."};
+Object.assign(HOW,{number:"Type a number, like 350.",expanded:"Type it with + signs, like 600 + 8.",yn:"Type yes or no."});
+const ineqTex=(op,v)=>`x ${OPT[op]} ${v}`;
+
+/* ================= chapters =================
+   generators return {q, type, ans, ansTex, hint, sol[]} */
+/* ---------- Grade 3 helpers ---------- */
+const N=n=>String(n).replace(/\B(?=(\d{3})+(?!\d))/g,"{,}");      // 1{,}000 inside $...$
+const T_=s=>`\\text{${s}}`;
+const ONES=["zero","one","two","three","four","five","six","seven","eight","nine","ten","eleven","twelve","thirteen","fourteen","fifteen","sixteen","seventeen","eighteen","nineteen"];
+const TENS=["","","twenty","thirty","forty","fifty","sixty","seventy","eighty","ninety"];
+function words(n){ if(n<20) return ONES[n]; if(n<100) return TENS[Math.floor(n/10)]+(n%10?"-"+ONES[n%10]:""); if(n<1000) return ONES[Math.floor(n/100)]+" hundred"+(n%100?" "+words(n%100):""); return "one thousand"; }
+const digs=n=>[Math.floor(n/100),Math.floor(n/10)%10,n%10];
+const PLACE=["hundreds","tens","ones"], PV=[100,10,1];
+function expTex(n){ const d=digs(n); return d.map((x,i)=>x*PV[i]).filter(x=>x).join(" + ")||"0"; }
+const r10=n=>Math.round(n/10)*10, r100=n=>Math.round(n/100)*100;   // whole numbers: .5 rounds up
+const NAMES=["Mia","Leo","Ava","Sam","Zoe","Ben","Lily","Max","Emma","Noah","Ruby","Eli"];
+const BOX="\\square";
+function threeDigit(noZero){ let n; do{ n=rnd(101,999); }while(noZero&&digs(n).includes(0)); return n; }
+function addPair(regroup){ let a,b; do{ a=rnd(101,799); b=rnd(101,899-0); }while(a+b>999||((a%10+b%10>=10||Math.floor(a/10)%10+Math.floor(b/10)%10>=10)!==regroup)); return [a,b]; }
+function subPair(regroup){ let a,b; do{ a=rnd(200,999); b=rnd(101,a-50); }while((a%10<b%10||Math.floor(a/10)%10<Math.floor(b/10)%10)!==regroup); return [a,b]; }
+function colAdd(a,b){ const s=[]; const o=a%10+b%10, t=Math.floor(a/10)%10+Math.floor(b/10)%10+(o>=10?1:0);
+  s.push(`Ones: $${a%10} + ${b%10} = ${o}$${o>=10?` → write $${o%10}$, regroup $10$ ones as $1$ ten`:""}.`);
+  s.push(`Tens: $${Math.floor(a/10)%10} + ${Math.floor(b/10)%10}${o>=10?" + 1":""} = ${t}$${t>=10?` → write $${t%10}$, regroup $10$ tens as $1$ hundred`:""}.`);
+  s.push(`Hundreds: $${Math.floor(a/100)} + ${Math.floor(b/100)}${t>=10?" + 1":""} = ${Math.floor(a/100)+Math.floor(b/100)+(t>=10?1:0)}$. So $${N(a)} + ${N(b)} = ${N(a+b)}$.`); return s; }
+function colSub(a,b){ const s=[]; let [h,t,o]=digs(a); const [bh,bt,bo]=digs(b);
+  if(o<bo){ if(t===0){ h--; t=9; s.push(`No tens to open, so open a hundred: $${a}$ becomes $${h}$ hundreds, $10$ tens, then open a ten: $${h}$ hundreds, $9$ tens, $${o+10}$ ones.`); } else { t--; s.push(`Not enough ones: open a ten. Now $${t}$ tens and $${o+10}$ ones.`); } o+=10; }
+  s.push(`Ones: $${o} - ${bo} = ${o-bo}$.`);
+  if(t<bt){ h--; t+=10; s.push(`Not enough tens: open a hundred. Now $${h}$ hundreds and $${t}$ tens.`); }
+  s.push(`Tens: $${t} - ${bt} = ${t-bt}$. Hundreds: $${h} - ${bh} = ${h-bh}$.`);
+  s.push(`So $${a} - ${b} = ${a-b}$. Check: $${a-b} + ${b} = ${a}$ ✓`); return s; }
+
+const CHAPTERS=[
+{id:"ch1",title:"Place Value, Addition & Subtraction",topics:[
+ {id:"pv",title:"Place Value to 1,000",idea:"Every digit has a <b>place</b>: hundreds, tens or ones. The place tells how much the digit is worth. In $472$ the $4$ is worth $400$, the $7$ is worth $70$, and the $2$ is worth $2$.",
+  lesson:{steps:[["472","What is the value of the $7$?"],["4\\ "+T_("hundreds")+",\\ 7\\ "+T_("tens")+",\\ 2\\ "+T_("ones"),"Name the place of each digit."],["7\\ "+T_("tens")+" = 70","The $7$ is in the tens place, so it is worth $70$."]],warn:"The <b>digit</b> is $7$, but its <b>value</b> is $70$. Value = digit × the size of its place."},
+  gen:[
+  ()=>{ const n=threeDigit(true), i=rnd(0,2), d=digs(n)[i]; return {q:`What is the value of the digit $${d}$ in $${n}$?`+(digs(n).filter(x=>x===d).length>1?` (the one in the ${PLACE[i]} place)`:""),type:"number",ans:d*PV[i],ansTex:`${d*PV[i]}`,hint:`Which place is the $${d}$ in: hundreds, tens or ones?`,sol:[`The $${d}$ is in the ${PLACE[i]} place.`,`$${d}$ ${PLACE[i]} $= ${d*PV[i]}$.`]}; },
+  ()=>{ const h=rnd(1,9),t=rnd(0,9),o=rnd(0,9),n=100*h+10*t+o; return {q:`What number has $${h}$ hundreds, $${t}$ tens and $${o}$ ones?`,type:"number",ans:n,ansTex:`${n}`,hint:"Write the hundreds digit, then the tens digit, then the ones digit.",sol:[`$${h}$ hundreds $= ${100*h}$, $${t}$ tens $= ${10*t}$, $${o}$ ones $= ${o}$.`,`$${100*h} + ${10*t} + ${o} = ${n}$.`]}; },
+  ()=>{ if(Math.random()<.5){ const h=rnd(1,7),t=rnd(10,19),o=rnd(0,9),n=100*h+10*t+o; return {q:`What number is $${h}$ hundreds, $${t}$ tens and $${o}$ ones?`,type:"number",ans:n,ansTex:`${n}`,hint:`$${t}$ tens is more than $10$ tens. $10$ tens make $1$ hundred.`,sol:[`$${t}$ tens $= ${10*t}$.`,`$${100*h} + ${10*t} + ${o} = ${n}$.`]}; }
+    const tens=rnd(11,99),n=tens*10; return {q:`How many tens are in $${n}$?`,type:"number",ans:tens,ansTex:`${tens}\\ ${T_("tens")}`,hint:"Each ten is $10$. How many groups of $10$ make the number?",sol:[`$${n} = ${tens} \\times 10$.`,`So there are $${tens}$ tens.`]}; },
+  ()=>{ const k=pick([[10,"more"],[10,"less"],[100,"more"],[100,"less"]]), edge=Math.random()<.45; let n;
+    if(k[0]===10&&k[1]==="more") n=edge?rnd(1,8)*100+90+rnd(0,9):rnd(100,989);
+    else if(k[0]===10) n=edge?rnd(1,9)*100+rnd(0,9):rnd(110,999);
+    else if(k[1]==="more") n=rnd(100,899); else n=rnd(200,999);
+    const m=k[1]==="more"?n+k[0]:n-k[0];
+    return {q:`What is $${k[0]}$ ${k[1]} than $${N(n)}$?`,type:"number",ans:m,ansTex:N(m),hint:`${k[0]} ${k[1]} changes the ${k[0]===10?"tens":"hundreds"} digit by $1$. Watch out if the tens digit is ${k[1]==="more"?"$9$":"$0$"}.`,sol:[`$${N(n)} ${k[1]==="more"?"+":"-"} ${k[0]} = ${N(m)}$.`]}; },
+  ()=>{ let d; do{ d=[rnd(0,9),rnd(1,9),rnd(1,9)]; }while(new Set(d).size<3); const s=d.slice().sort((a,b)=>b-a), big=+s.join(""); const up=s.slice().reverse(); if(up[0]===0){ const j=up.findIndex(x=>x>0); [up[0],up[j]]=[up[j],up[0]]; } const small=+up.join("");
+    return {q:`Use each of the digits $${d.join(",\\ ")}$ exactly once to make 3-digit numbers. What is the difference between the <b>greatest</b> and the <b>smallest</b> number you can make?`,type:"number",ans:big-small,ansTex:`${big} - ${small} = ${big-small}`,hint:"Greatest: biggest digit in the hundreds place. Smallest: smallest digit in the hundreds place — but a 3-digit number can't start with $0$.",sol:[`Greatest: $${big}$.`,`Smallest: $${small}$${d.includes(0)?" ($0$ can't go first)":""}.`,`$${big} - ${small} = ${big-small}$.`]}; }
+ ]},
+ {id:"exp",title:"Expanded Form",idea:"<b>Expanded form</b> writes a number as the sum of the values of its digits: $608 = 600 + 8$. A $0$ digit adds nothing, so we leave it out.",
+  lesson:{steps:[["608","Write it in expanded form."],["6\\ "+T_("hundreds")+",\\ 0\\ "+T_("tens")+",\\ 8\\ "+T_("ones"),"Name each place."],["600 + 0 + 8","Write each value."],["608 = 600 + 8","Leave out the $0$."]],warn:"Don't write $6 + 0 + 8$. Each part must show its <b>value</b>: $600 + 8$."},
+  gen:[
+  ()=>{ const n=threeDigit(true); return {q:`Write $${n}$ in expanded form.`,type:"expanded",ans:n,ansTex:`${n} = ${expTex(n)}`,hint:"Write the value of each digit and put $+$ between them.",sol:[`$${n} = ${expTex(n)}$.`]}; },
+  ()=>{ let n; do{ n=threeDigit(false); }while(!digs(n).slice(1).includes(0)); return {q:`Write $${n}$ in expanded form.`,type:"expanded",ans:n,ansTex:`${n} = ${expTex(n)}`,hint:"A digit $0$ is worth nothing — skip it.",sol:[`$${n} = ${expTex(n)}$.`]}; },
+  ()=>{ const n=threeDigit(Math.random()<.6), parts=expTex(n).split(" + ").sort(()=>Math.random()-.5); return {q:`What number is $${parts.join(" + ")}$?`,type:"number",ans:n,ansTex:`${n}`,hint:"Put each part in its place: hundreds, tens, ones. The order of adding doesn't matter.",sol:[`Hundreds: $${Math.floor(n/100)}$, tens: $${Math.floor(n/10)%10}$, ones: $${n%10}$.`,`The number is $${n}$.`]}; },
+  ()=>{ let n; do{ n=threeDigit(false); }while(Math.random()<.6&&!digs(n).includes(0)); return {q:`Write <b>${words(n)}</b> as a number.`,type:"number",ans:n,ansTex:`${n}`,hint:`"Hundred" tells the hundreds digit. If a place is missing, write $0$ there.`,sol:[`${words(n)} $= ${expTex(n)} = ${n}$.`]}; },
+  ()=>{ let n,k,u,m; do{ n=rnd(120,880); k=rnd(2,9); u=pick([10,100]); m=n+k*u; }while(m>999||Math.floor(m/100)===Math.floor(n/100)&&u===10); return {q:`What number is $${k}$ ${u===10?"tens":"hundreds"} more than $${expTex(n)}$?`,type:"number",ans:m,ansTex:`${m}`,hint:`First write the number: $${expTex(n)} = ?$ Then add $${k*u}$.`,sol:[`$${expTex(n)} = ${n}$.`,`$${k}$ ${u===10?"tens":"hundreds"} $= ${k*u}$.`,`$${n} + ${k*u} = ${m}$.`]}; }
+ ]},
+ {id:"round",title:"Rounding to the Nearest 10 and 100",idea:"To round, find the two <b>neighbors</b> (the tens or hundreds just below and just above), then pick the closer one. Look at the digit to the right: $5$ or more → round <b>up</b>; $4$ or less → round <b>down</b>.",
+  lesson:{steps:[["347\\ \\to\\ "+T_("nearest ten"),"Round $347$ to the nearest ten."],["340\\ \\lt\\ 347\\ \\lt\\ 350","The neighbors are $340$ and $350$."],[T_("ones digit is ")+"7 \\ge 5","Look at the ones digit."],["347 \\approx 350","Round up."]],warn:"When rounding to the nearest <b>hundred</b>, look at the <b>tens</b> digit, not the ones: $347 \\to 300$ because the tens digit $4$ is less than $5$."},
+  gen:[
+  ()=>{ const n=rnd(11,99); return {q:`Round $${n}$ to the nearest ten.`,type:"number",ans:r10(n),ansTex:`${r10(n)}`,hint:`The neighbors are $${Math.floor(n/10)*10}$ and $${Math.floor(n/10)*10+10}$. Look at the ones digit.`,sol:[`Ones digit $${n%10}$ is ${n%10>=5?"$5$ or more → up":"less than $5$ → down"}.`,`$${n} \\approx ${r10(n)}$.`]}; },
+  ()=>{ const n=rnd(101,989); return {q:`Round $${n}$ to the nearest ten.`,type:"number",ans:r10(n),ansTex:`${N(r10(n))}`,hint:`The neighbors are $${Math.floor(n/10)*10}$ and $${N(Math.floor(n/10)*10+10)}$.`,sol:[`Ones digit $${n%10}$ → round ${n%10>=5?"up":"down"}.`,`$${n} \\approx ${N(r10(n))}$.`]}; },
+  ()=>{ const n=rnd(110,949); return {q:`Round $${n}$ to the nearest hundred.`,type:"number",ans:r100(n),ansTex:`${N(r100(n))}`,hint:`The neighbors are $${Math.floor(n/100)*100}$ and $${N(Math.floor(n/100)*100+100)}$. Look at the <b>tens</b> digit.`,sol:[`Tens digit $${Math.floor(n/10)%10}$ → round ${Math.floor(n/10)%10>=5?"up":"down"}.`,`$${n} \\approx ${N(r100(n))}$.`]}; },
+  ()=>{ const c=rnd(0,2); let n,u; if(c===0){ n=rnd(1,9)*100+90+rnd(5,9); u=10; } else if(c===1){ n=rnd(1,9)*100+50+(Math.random()<.5?0:rnd(0,9)); u=100; } else { n=rnd(10,99)*10+5; u=10; } const a=u===10?r10(n):r100(n);
+    return {q:`Round $${n}$ to the nearest ${u===10?"ten":"hundred"}.`,type:"number",ans:a,ansTex:`${N(a)}`,hint:u===10?"Ones digit $5$ or more rounds up — even if that changes the hundreds digit too.":"Look at the tens digit. Exactly $50$ past the hundred rounds up.",sol:[`Neighbors: $${Math.floor(n/u)*u}$ and $${N(Math.floor(n/u)*u+u)}$.`,`${u===10?"Ones":"Tens"} digit $${u===10?n%10:Math.floor(n/10)%10}$ → round ${u===10?(n%10>=5?"up":"down"):(Math.floor(n/10)%10>=5?"up":"down")}: $${N(a)}$.`]}; },
+  ()=>{ const k=rnd(0,2);
+    if(k===0){ const t=rnd(2,99)*10, big=Math.random()<.5; const a=big?t+4:t-5; return {q:`What is the ${big?"greatest":"smallest"} whole number that rounds to $${t}$ when rounded to the nearest ten?`,type:"number",ans:a,ansTex:`${a}`,hint:`Which numbers round to $${t}$? They go from $${t-5}$ up to $${t+4}$.`,sol:[`Numbers from $${t-5}$ to $${t+4}$ round to $${t}$.`,`The ${big?"greatest":"smallest"} is $${a}$.`]}; }
+    if(k===1){ const h=rnd(2,9)*100, big=Math.random()<.5; const a=big?h+49:h-50; return {q:`What is the ${big?"greatest":"smallest"} whole number that rounds to $${h}$ when rounded to the nearest hundred?`,type:"number",ans:a,ansTex:`${a}`,hint:`Numbers from $${h-50}$ up to $${h+49}$ round to $${h}$.`,sol:[`Numbers from $${h-50}$ to $${h+49}$ round to $${h}$.`,`The ${big?"greatest":"smallest"} is $${a}$.`]}; }
+    const t=rnd(2,9)*100; return {q:`How many whole numbers round to $${t}$ when rounded to the nearest hundred?`,type:"number",ans:100,ansTex:"100",hint:`Find the smallest and the greatest. Then count: from $${t-50}$ to $${t+49}$.`,sol:[`They go from $${t-50}$ to $${t+49}$.`,`$${t+49} - ${t-50} + 1 = 100$ numbers.`]}; }
+ ]},
+ {id:"add",title:"Adding within 1,000",idea:"Line up the places and add ones, then tens, then hundreds. When a place gets <b>10 or more</b>, <b>regroup</b>: $10$ ones make $1$ ten, $10$ tens make $1$ hundred.",
+  lesson:{steps:[["256 + 178","Line up hundreds, tens, ones."],["6 + 8 = 14","Ones: write $4$, regroup $1$ ten."],["5 + 7 + 1 = 13","Tens: write $3$, regroup $1$ hundred."],["2 + 1 + 1 = 4","Hundreds."],["256 + 178 = 434","Done!"]],warn:"Don't forget the little regrouped $1$ when you add the next place."},
+  gen:[
+  ()=>{ let a,b; do{ a=rnd(1,8)*100+rnd(0,9)*10; b=rnd(1,8)*100+rnd(0,9)*10; }while(a+b>990||(a%100+b%100)>=100); return {q:`Compute $${a} + ${b}$.`,type:"number",ans:a+b,ansTex:`${a+b}`,hint:"Add the hundreds, then add the tens.",sol:[`Hundreds: $${a/100|0} + ${b/100|0} = ${(a/100|0)+(b/100|0)}$. Tens: $${a%100/10} + ${b%100/10} = ${a%100/10+b%100/10}$.`,`$${a} + ${b} = ${a+b}$.`]}; },
+  ()=>{ const [a,b]=addPair(false); return {q:`Compute $${a} + ${b}$.`,type:"number",ans:a+b,ansTex:`${a+b}`,hint:"Add ones, then tens, then hundreds.",sol:colAdd(a,b)}; },
+  ()=>{ const [a,b]=addPair(true); return {q:`Compute $${a} + ${b}$.`,type:"number",ans:a+b,ansTex:`${a+b}`,hint:"If the ones add to $10$ or more, regroup $10$ ones as $1$ ten.",sol:colAdd(a,b)}; },
+  ()=>{ let x,y,z; do{ x=rnd(105,395); y=Math.ceil(x/100)*100-x+rnd(0,1)*100; z=rnd(100,400); }while(x%10===0||x+y+z>999); const [p,q,r]=Math.random()<.5?[x,z,y]:[x,y,z];
+    return {q:`Compute $${p} + ${q} + ${r}$.`,type:"number",ans:x+y+z,ansTex:`${x+y+z}`,hint:`Look for two numbers that make a friendly number. Try $${x} + ${y}$ first.`,sol:[`$${x} + ${y} = ${x+y}$ — a friendly number!`,`$${x+y} + ${z} = ${x+y+z}$.`]}; },
+  ()=>{ let a,b,i; do{ a=rnd(101,799); b=rnd(101,899); i=rnd(0,2); }while(a+b>999||digs(a)[i]===0&&i===0); const s=a+b, d=digs(a); const shown=d.map((x,j)=>j===i?BOX:x).join("");
+    return {q:`Find the missing digit: $${shown} + ${b} = ${s}$.`,type:"number",ans:d[i],ansTex:`${BOX} = ${d[i]}`,hint:"Subtraction undoes addition: the first number is the sum minus the second number.",sol:[`$${s} - ${b} = ${a}$.`,`So the missing ${PLACE[i]} digit is $${d[i]}$.`]}; }
+ ]},
+ {id:"est",title:"Estimate to Check",idea:"<b>Estimate first</b>: round each number, then add or subtract the easy numbers. If the exact answer is far from the estimate, check your work.",
+  lesson:{steps:[["398 + 211","Estimate the sum."],["398 \\approx 400,\\ \\ 211 \\approx 200","Round each to the nearest hundred."],["400 + 200 = 600","Add the easy numbers."],["398 + 211 \\approx 600","The exact sum ($609$) should be close to $600$."]],warn:"An estimate is not the exact answer. Use it to see if an answer <b>makes sense</b>."},
+  gen:[
+  ()=>{ let a,b; do{ a=rnd(110,640); b=rnd(110,640); }while(r100(a)+r100(b)>1000||a%100===50||b%100===50); return {q:`Estimate $${a} + ${b}$ by rounding each number to the nearest hundred.`,type:"number",ans:r100(a)+r100(b),ansTex:`${r100(a)} + ${r100(b)} = ${N(r100(a)+r100(b))}`,hint:"Round each number to the nearest hundred first, then add.",sol:[`$${a} \\approx ${r100(a)}$ and $${b} \\approx ${r100(b)}$.`,`$${r100(a)} + ${r100(b)} = ${N(r100(a)+r100(b))}$.`]}; },
+  ()=>{ let a,b; do{ a=rnd(101,600); b=rnd(101,390); }while(a%10===5||b%10===5); return {q:`Estimate $${a} + ${b}$ by rounding each number to the nearest ten.`,type:"number",ans:r10(a)+r10(b),ansTex:`${r10(a)} + ${r10(b)} = ${r10(a)+r10(b)}`,hint:"Round each number to the nearest ten first.",sol:[`$${a} \\approx ${r10(a)}$ and $${b} \\approx ${r10(b)}$.`,`$${r10(a)} + ${r10(b)} = ${r10(a)+r10(b)}$.`]}; },
+  ()=>{ let a,b; do{ a=rnd(410,980); b=rnd(110,a-120); }while(r100(a)-r100(b)<=0||a%100===50||b%100===50); return {q:`Estimate $${a} - ${b}$ by rounding each number to the nearest hundred.`,type:"number",ans:r100(a)-r100(b),ansTex:`${r100(a)} - ${r100(b)} = ${r100(a)-r100(b)}`,hint:"Round each number to the nearest hundred, then subtract.",sol:[`$${a} \\approx ${r100(a)}$ and $${b} \\approx ${r100(b)}$.`,`$${r100(a)} - ${r100(b)} = ${r100(a)-r100(b)}$.`]}; },
+  ()=>{ let a,b; const ok=Math.random()<.4; let claim; do{ a=rnd(150,520); b=rnd(150,450); claim=ok?a+b:a+b+pick([-100,100,-200,200]); }while(a+b>990||Math.abs(a+b-r100(a)-r100(b))>60||(!ok&&Math.abs(claim-r100(a)-r100(b))<100)||claim<=0); const nm=pick(NAMES);
+    return {q:`${nm} says $${a} + ${b} = ${claim}$. Use rounding to the nearest hundred to check. Is ${nm}'s answer reasonable? (yes or no)`,type:"yn",ans:ok?"YES":"NO",ansTex:ok?T_("Yes"):T_("No: the sum is ")+(a+b),hint:`Estimate: $${r100(a)} + ${r100(b)} = ?$ Is $${claim}$ close to that?`,sol:[`Estimate: $${r100(a)} + ${r100(b)} = ${r100(a)+r100(b)}$.`,ok?`$${claim}$ is close to $${r100(a)+r100(b)}$, so it is reasonable (and it is exactly right).`:`$${claim}$ is about $100$ away from the estimate — not reasonable. The real sum is $${a+b}$.`]}; },
+  ()=>{ const u=pick([10,100]), t=u===10?rnd(10,49)*10:rnd(2,4)*100, big=Math.random()<.5; const one=big?(u===10?t+4:t+49):(u===10?t-5:t-50);
+    return {q:`Two whole numbers each round to $${t}$ when rounded to the nearest ${u===10?"ten":"hundred"}. What is the ${big?"greatest":"smallest"} their sum could be?`,type:"number",ans:2*one,ansTex:`${one} + ${one} = ${2*one}`,hint:`What is the ${big?"greatest":"smallest"} number that rounds to $${t}$?`,sol:[`The ${big?"greatest":"smallest"} number that rounds to $${t}$ is $${one}$.`,`Use it twice: $${one} + ${one} = ${2*one}$.`]}; }
+ ]},
+ {id:"sub",title:"Subtracting within 1,000",idea:"Line up the places and subtract ones, then tens, then hundreds. If the top digit is too small, <b>regroup</b>: open $1$ ten to get $10$ more ones (or $1$ hundred to get $10$ more tens).",
+  lesson:{steps:[["523 - 268","Line up the places."],["13 - 8 = 5","Ones: $3 < 8$, so open a ten: $13 - 8$."],["11 - 6 = 5","Tens: now $1 < 6$, so open a hundred: $11 - 6$."],["4 - 2 = 2","Hundreds."],["523 - 268 = 255","Check: $255 + 268 = 523$ ✓"]],warn:"Always subtract <b>top minus bottom</b>. $3 - 8$ doesn't flip into $8 - 3$ — regroup instead."},
+  gen:[
+  ()=>{ let a,b; do{ a=rnd(3,9)*100+rnd(0,9)*10; b=rnd(1,8)*100+rnd(0,9)*10; }while(b>=a||a%100<b%100); return {q:`Compute $${a} - ${b}$.`,type:"number",ans:a-b,ansTex:`${a-b}`,hint:"Subtract the hundreds, then the tens.",sol:[`Hundreds: $${a/100|0} - ${b/100|0} = ${(a/100|0)-(b/100|0)}$. Tens: $${a%100/10} - ${b%100/10} = ${a%100/10-b%100/10}$.`,`$${a} - ${b} = ${a-b}$.`]}; },
+  ()=>{ const [a,b]=subPair(false); return {q:`Compute $${a} - ${b}$.`,type:"number",ans:a-b,ansTex:`${a-b}`,hint:"Subtract ones, then tens, then hundreds.",sol:colSub(a,b)}; },
+  ()=>{ let a,b; do{ [a,b]=subPair(true); }while(Math.floor(a/10)%10===0); return {q:`Compute $${a} - ${b}$.`,type:"number",ans:a-b,ansTex:`${a-b}`,hint:"If the top ones digit is smaller, open a ten: you get $10$ more ones.",sol:colSub(a,b)}; },
+  ()=>{ const a=Math.random()<.5?rnd(2,9)*100:rnd(2,9)*100+rnd(1,9); let b; do{ b=rnd(101,a-11); }while(b%10===0||b>=a); return {q:`Compute $${a} - ${b}$.`,type:"number",ans:a-b,ansTex:`${a-b}`,hint:"There are no tens to open, so open a hundred first: $1$ hundred = $10$ tens. Then open a ten.",sol:colSub(a,b)}; },
+  ()=>{ let a,b,i,s; do{ a=rnd(300,999); b=rnd(101,a-100); s=a-b; i=rnd(0,2); }while(i===0&&Math.floor(a/100)===0); const d=digs(a), shown=d.map((x,j)=>j===i?BOX:x).join("");
+    return {q:`Find the missing digit: $${shown} - ${b} = ${s}$.`,type:"number",ans:d[i],ansTex:`${BOX} = ${d[i]}`,hint:"Addition undoes subtraction: the top number is the answer plus the number you took away.",sol:[`$${s} + ${b} = ${a}$.`,`So the missing ${PLACE[i]} digit is $${d[i]}$.`]}; }
+ ]},
+ {id:"check",title:"Missing Numbers & Checking",idea:"Addition and subtraction are a <b>fact family</b>: $\\text{part} + \\text{part} = \\text{whole}$. To find a missing part, subtract. To check a subtraction, add the answer back.",
+  lesson:{steps:[["450 + "+BOX+" = 720","Find the missing number."],["720 - 450 = "+BOX,"The whole minus the part gives the other part."],[BOX+" = 270","Subtract."],["450 + 270 = 720\\ ✓","Check by adding."]],warn:"In $450 + \\square = 720$, the answer is <b>not</b> $450 + 720$. The box is a <b>part</b>, so subtract."},
+  gen:[
+  ()=>{ let a,w; do{ a=rnd(1,8)*100+rnd(0,9)*10; w=rnd(2,9)*100+rnd(0,9)*10; }while(w<=a||(w%100)<(a%100)); return {q:`Fill in the box: $${a} + ${BOX} = ${w}$.`,type:"number",ans:w-a,ansTex:`${BOX} = ${w-a}`,hint:`Subtract: $${w} - ${a}$.`,sol:[`$${w} - ${a} = ${w-a}$.`,`Check: $${a} + ${w-a} = ${w}$ ✓`]}; },
+  ()=>{ const b=rnd(101,450), d=rnd(100,500); return {q:`Fill in the box: $${BOX} - ${b} = ${d}$.`,type:"number",ans:b+d,ansTex:`${BOX} = ${b+d}`,hint:"The box is the whole. Put the parts together: add.",sol:[`The box is the whole: $${d} + ${b} = ${b+d}$.`,`Check: $${b+d} - ${b} = ${d}$ ✓`]}; },
+  ()=>{ let a,w; do{ a=rnd(105,690); w=rnd(a+60,999); }while(w%10>=a%10); return Math.random()<.5?{q:`Fill in the box: $${a} + ${BOX} = ${w}$.`,type:"number",ans:w-a,ansTex:`${BOX} = ${w-a}`,hint:`Subtract: $${w} - ${a}$. You will need to regroup.`,sol:colSub(w,a)}:{q:`Fill in the box: $${w} - ${BOX} = ${a}$.`,type:"number",ans:w-a,ansTex:`${BOX} = ${w-a}`,hint:`The box is the part taken away: $${w} - ${a}$.`,sol:colSub(w,a)}; },
+  ()=>{ let a,b; do{ a=rnd(400,980); b=rnd(120,a-100); }while(a%10>=b%10); const ok=Math.random()<.45, claim=ok?a-b:a-b+pick([-10,10]); return {q:`Check by adding: is $${a} - ${b} = ${claim}$ correct? (yes or no)`,type:"yn",ans:ok?"YES":"NO",ansTex:ok?T_("Yes"):T_("No: ")+`${a} - ${b} = ${a-b}`,hint:`Add $${claim} + ${b}$. Do you get $${a}$?`,sol:[`$${claim} + ${b} = ${claim+b}$.`,ok?`That is $${a}$, so it is correct.`:`That is not $${a}$, so it is wrong. The right answer is $${a-b}$.`]}; },
+  ()=>{ if(Math.random()<.5){ let x,c; do{ x=rnd(11,45)*10; c=rnd(1,30)*10; }while(2*x+c>990); const w=2*x+c; return {q:`Both boxes hold the <b>same</b> number: $${BOX} + ${BOX} + ${c} = ${w}$. What number is in each box?`,type:"number",ans:x,ansTex:`${BOX} = ${x}`,hint:`First take away $${c}$. What is left is two equal parts.`,sol:[`$${w} - ${c} = ${w-c}$.`,`Two equal parts make $${w-c}$, so each is $${x}$ (because $${x} + ${x} = ${w-c}$).`]}; }
+    let a,b,c; do{ a=rnd(120,400); b=rnd(500,900); c=rnd(50,b-a-20); }while(b-c-a<=0); const x=b-c-a; return {q:`Fill in the box so both sides are equal: $${a} + ${BOX} = ${b} - ${c}$.`,type:"number",ans:x,ansTex:`${BOX} = ${x}`,hint:`Work out the right side first: $${b} - ${c} = ?$`,sol:[`$${b} - ${c} = ${b-c}$.`,`$${a} + ${BOX} = ${b-c}$, so $${BOX} = ${b-c} - ${a} = ${x}$.`]}; }
+ ]},
+ {id:"word",title:"Word Problems: Put Together, Take Apart, Compare",idea:"Read the story and ask: are we <b>putting together</b> (add), <b>taking apart</b> (subtract), or <b>comparing</b> two amounts (subtract to find how many more)? Draw a bar to see it.",
+  lesson:{steps:[[T_("Mia read 245 pages; Leo read 180."),"How many more pages did Mia read?"],[T_("Compare: big bar − small bar"),"\"How many more\" means find the difference."],["245 - 180 = 65","Subtract."],[T_("Mia read 65 more pages."),"Answer with a sentence."]],warn:"\"How many more\" is a <b>subtraction</b> question, even though it says \"more\"."},
+  gen:[
+  ()=>{ const it=pick([["books","A library has","It gets","more. How many books does it have now?"],["stickers","A shop has","It gets","more. How many stickers does it have now?"]]); const a=rnd(1,6)*100+rnd(0,9)*10, b=rnd(1,3)*100+rnd(0,9)*10; return {q:`${it[1]} $${a}$ ${it[0]}. ${it[2]} $${b}$ ${it[3]}`,type:"number",ans:a+b,ansTex:`${a} + ${b} = ${a+b}`,hint:"Putting together → add.",sol:[`Put together: $${a} + ${b} = ${a+b}$.`]}; },
+  ()=>{ const nm=pick(NAMES); let a,b; do{ a=rnd(200,900); b=rnd(100,a-50); }while(false); const it=pick(["beads","cards","marbles","shells"]); return {q:`${nm} had $${a}$ ${it} and gave away $${b}$. How many ${it} does ${nm} have left?`,type:"number",ans:a-b,ansTex:`${a} - ${b} = ${a-b}`,hint:"Taking apart → subtract.",sol:[`Take apart: $${a} - ${b} = ${a-b}$.`]}; },
+  ()=>{ let [p,q]=[pick(NAMES),pick(NAMES)]; while(q===p) q=pick(NAMES); const a=rnd(200,800), b=rnd(100,a-20), how=Math.random()<.5; return {q:how?`${p} scored $${a}$ points and ${q} scored $${b}$ points. How many more points did ${p} score?`:`${p} scored $${a}$ points and ${q} scored $${b}$ points. How many fewer points did ${q} score than ${p}?`,type:"number",ans:a-b,ansTex:`${a} - ${b} = ${a-b}`,hint:"Comparing two amounts → subtract the smaller from the bigger.",sol:[`Compare: $${a} - ${b} = ${a-b}$.`]}; },
+  ()=>{ const a=rnd(5,9)*100, b=rnd(100,250), c=rnd(100,250); return {q:`A bakery made $${a}$ cookies. It sold $${b}$ on Monday and $${c}$ on Tuesday. How many cookies are left?`,type:"number",ans:a-b-c,ansTex:`${a} - ${b} - ${c} = ${a-b-c}`,hint:"Two steps: how many were sold in all? Then take that away.",sol:[`Sold: $${b} + ${c} = ${b+c}$.`,`Left: $${a} - ${b+c} = ${a-b-c}$.`]}; },
+  ()=>{ let [p,q]=[pick(NAMES),pick(NAMES)]; while(q===p) q=pick(NAMES); let tot,d,s; do{ d=rnd(2,20)*10; s=rnd(10,40)*10; tot=2*s+d; }while(tot>990); return {q:`${p} and ${q} have $${tot}$ stickers together. ${p} has $${d}$ more than ${q}. How many stickers does ${q} have?`,type:"number",ans:s,ansTex:`${s}`,hint:`Take away ${p}'s extra $${d}$ first. Then the rest splits into two equal parts.`,sol:[`$${tot} - ${d} = ${tot-d}$.`,`Two equal parts: $${s} + ${s} = ${tot-d}$, so ${q} has $${s}$ (and ${p} has $${s+d}$).`]}; }
+ ]}
+]}
+];
+
+const ALLCH=[[1,"Place Value, Addition & Subtraction","ch1"],[2,"Multiplication & Division Facts","ch2"],[3,"Multiplication Strategies & Word Problems","ch3"],[4,"Fractions","ch4"],[5,"Time, Measurement, Data & Area","ch5"],[6,"Perimeter, Shapes & Problem Solving","ch6"]];
+const COMING=[];
+
+/* ================= checking ================= */
+const CONST=new Set(["pi","e","E","PI","Infinity"]);
+function clean(s){ return String(s).replace(/(\d),(?=\d{3}(?!\d))/g,"$1").replace(/(^|[^a-z])([a-z])\s*\(/gi,"$1$2*(").replace(/[−–]/g,"-").replace(/×|·/g,"*").replace(/÷/g,"/").replace(/π/g,"pi").replace(/≤|=</g,"<=").replace(/≥|=>/g,">=").replace(/√\s*(\d+(?:\.\d+)?|\([^)]*\)|[a-z])/g,"sqrt($1)").trim(); }
+function val(s){ try{ const r=math.evaluate(s); const v=typeof r==="number"?r:(r&&typeof r.valueOf()==="number"?r.valueOf():NaN); return isFinite(v)?v:NaN; }catch(e){ return NaN; } }
+const close=(a,b)=>Math.abs(a-b)<1e-6*Math.max(1,Math.abs(b));
+function varsOf(node){ const v=new Set(); node.traverse((n,path,parent)=>{ if(n.isSymbolNode&&!(parent&&parent.isFunctionNode&&path==="fn")&&!CONST.has(n.name)&&typeof math[n.name]!=="function") v.add(n.name); }); return [...v]; }
+function evalAt(node,sc){ try{ const r=node.evaluate(sc); const v=typeof r==="number"?r:(r&&typeof r.valueOf()==="number"?r.valueOf():NaN); return isFinite(v)?v:NaN; }catch(e){ return NaN; } }
+function exprEq(student,expected,form){
+  let s=clean(student); if(s.includes("=")) s=s.split("=").pop();
+  let S,E; try{ S=math.parse(s); E=math.parse(expected); }catch(e){ return null; }
+  if(form&&form!=="combined"&&!formOK(S,s,form)) return false;
+  if(form==="combined"){ if(s.includes("(")) return false; const cnt={}; S.traverse((n,path,parent)=>{ if(n.isSymbolNode&&!(parent&&parent.isFunctionNode&&path==="fn")&&!CONST.has(n.name)) cnt[n.name]=(cnt[n.name]||0)+1; }); if(Object.values(cnt).some(c=>c>1)) return false; }
+  const vars=[...new Set([...varsOf(S),...varsOf(E)])]; let t=0;
+  for(let k=0;k<12&&t<6;k++){ const sc={}; vars.forEach(v=>sc[v]=Math.round((Math.random()*6-3)*1000)/1000+0.137+(k%2)); const a=evalAt(S,sc),b=evalAt(E,sc); if(isNaN(a)||isNaN(b)) continue; t++; if(!close(a,b)) return false; }
+  return t>=3?true:null;
+}
+function lineEq(student,expected,form){
+  const s=clean(student); if(s.split("=").length!==2) return null;
+  const [L,R]=s.split("="); if(!L.trim()||!R.trim()) return null;
+  let S,E; try{ S=math.parse("("+L+")-("+R+")"); const [eL,eR]=expected.split("="); E=math.parse("("+eL+")-("+eR+")"); }catch(e){ return null; }
+  if(form==="si"&&L.replace(/\s/g,"")!=="y") return false;
+  if(form==="std"){ if(s.includes("/")) return false; try{ if(varsOf(math.parse(R)).length) return false; }catch(e){ return null; } }
+  let ratio=null,t=0;
+  for(let k=0;k<14&&t<6;k++){ const sc={x:Math.round((Math.random()*8-4)*1000)/1000+0.31,y:Math.round((Math.random()*8-4)*1000)/1000+0.17}; const a=evalAt(S,sc),b=evalAt(E,sc); if(isNaN(a)||isNaN(b)) continue; t++;
+    if(Math.abs(b)<1e-9){ if(Math.abs(a)>1e-6) return false; continue; } const r=a/b; if(Math.abs(r)<1e-9) return false; if(ratio===null) ratio=r; else if(!close(r,ratio)) return false; }
+  return t>=3?true:null;
+}
+function radOK(input){ const t=clean(input).replace(/\s+/g,""); if(/\/\(?\*?sqrt/.test(t)) return false; const args=[...t.matchAll(/sqrt\(([^)]*)\)/g)].map(m=>m[1]); for(const a of args){ const n=Number(a); if(!Number.isInteger(n)||n<2) return false; if(radParts(n)[0]!==1) return false; } return true; }
+function parseRoots(s){ s=clean(s).replace(/\+\/-|\+-/g,"±").replace(/\b(or|and)\b/gi,",").replace(/;/g,","); const out=[];
+  for(let part of s.split(",")){ part=part.trim(); if(!part) continue; if(part.includes("=")) part=part.split("=").pop().trim();
+    if(part.includes("±")){ const i=part.indexOf("±"), L=part.slice(0,i).trim(), R=part.slice(i+1).trim();
+      if(/^\(/.test(L)&&/\)\s*\/\s*.+$/.test(R)){ const den=R.slice(R.lastIndexOf(")")+1), inner=R.slice(0,R.lastIndexOf(")")), l=L.slice(1)||"0"; out.push(val("("+l+"+("+inner+"))"+den),val("("+l+"-("+inner+"))"+den)); }
+      else { const l=L||"0"; out.push(val(l+"+("+R+")"),val(l+"-("+R+")")); } }
+    else out.push(val(part)); }
+  return out.length&&out.every(v=>!isNaN(v))?out:null; }
+function topTerms(n,out){ while(n.isParenthesisNode) n=n.content; if(n.isOperatorNode&&(n.fn==="add"||n.fn==="subtract")){ n.args.forEach(a=>topTerms(a,out)); } else if(n.isOperatorNode&&n.fn==="unaryMinus"){ topTerms(n.args[0],out); } else out.push(n); return out; }
+function strip(n){ while(n&&n.isParenthesisNode) n=n.content; return n; }
+function isSum(n){ n=strip(n); return n.isOperatorNode&&(n.fn==="add"||n.fn==="subtract"); }
+function factorsOf(n){ n=strip(n); if(n.isOperatorNode&&n.fn==="unaryMinus") return factorsOf(n.args[0]); if(n.isOperatorNode&&n.fn==="multiply") return n.args.flatMap(factorsOf); if(n.isOperatorNode&&n.fn==="pow"&&isSum(n.args[0])) return [strip(n.args[0])]; return [n]; }
+function coeffsX(node){ const ys=[0,1,2,3,4].map(x=>evalAt(node,{x})); if(ys.some(isNaN)) return null; const c=[]; let d=ys.slice(); const fact=[1,1,2,6,24]; const diffs=[];
+  for(let k=0;k<5;k++){ diffs.push(d[0]); d=d.slice(1).map((v,i)=>v-d[i]); }
+  if(Math.abs(diffs[4])>1e-9) return null; // degree <= 3 expected
+  // Newton forward form -> standard coefficients
+  const P=[[1],[0,1],[0,-1,1],[0,2,-3,1]]; const res=[0,0,0,0]; for(let k=0;k<4;k++){ const f=diffs[k]/fact[k]; P[k].forEach((v,i)=>res[i]+=f*v); }
+  return res.map(v=>Math.round(v*1e6)/1e6); }
+function formOK(S,s,form){
+  if(form==="simp"){ if(/\)\s*\^/.test(s)||/\^\s*-|\^\(-/.test(s)) return false; const cnt={}; S.traverse((n,path,parent)=>{ if(n.isSymbolNode&&!(parent&&parent.isFunctionNode&&path==="fn")&&!CONST.has(n.name)) cnt[n.name]=(cnt[n.name]||0)+1; }); return !Object.values(cnt).some(c=>c>1); }
+  if(form==="poly"){ if(s.includes("(")) return false; const degs=topTerms(S,[]).map(t=>{ const a=evalAt(t,{x:1.5}),b=evalAt(t,{x:3}); if(isNaN(a)||Math.abs(a)<1e-12) return null; return Math.round(Math.log(Math.abs(b/a))/Math.log(2)); }); if(degs.some(d=>d===null)) return false; return new Set(degs).size===degs.length; }
+  if(form==="factored"){ const f=factorsOf(S); if(f.length<2||!f.some(isSum)) return false;
+    for(const fa of f){ if(!isSum(fa)) continue; const vs=varsOf(fa); if(vs.length!==1||vs[0]!=="x") continue; const c=coeffsX(fa); if(!c) continue; const g=c.filter(v=>v!==0).reduce((a,b)=>gcd(a,Math.round(b)),0); if(Math.abs(g)>1) return false;
+      const nz_=c.filter(v=>v!==0).length; if(c[2]!==0&&c[3]===0&&c[1]!==0||false){ /* quadratic factor: check if it factors further over integers */ const A=c[2],B=c[1],C=c[0],D=B*B-4*A*C; if(D>=0&&Number.isInteger(Math.sqrt(D))) return false; }
+      if(c[2]!==0&&c[3]===0&&c[1]===0&&c[0]!==0){ const A=c[2],C=c[0],D=-4*A*C; if(D>0&&Number.isInteger(Math.sqrt(D))) return false; } }
+    return true; }
+  if(form==="nofrac") return !s.includes("/");
+  return true; }
+/* inequalities → list of intervals {lo,li,hi,hiI} */
+function ray(op,v){ return op===">"?{lo:v,li:false,hi:Infinity,hiI:false}:op===">="?{lo:v,li:true,hi:Infinity,hiI:false}:op==="<"?{lo:-Infinity,li:false,hi:v,hiI:false}:{lo:-Infinity,li:false,hi:v,hiI:true}; }
+function parseIneqPart(str){
+  const t=str.replace(/\s+/g,"").split(/(<=|>=|<|>)/); const isV=x=>/^[a-z]$/i.test(x);
+  if(t.length===3){ if(isV(t[0])){ const v=val(t[2]); return isNaN(v)?null:ray(t[1],v); } if(isV(t[2])){ const v=val(t[0]); return isNaN(v)?null:ray(FLIP[t[1]],v); } return null; }
+  if(t.length===5&&isV(t[2])){ const A=val(t[0]),B=val(t[4]); if(isNaN(A)||isNaN(B)) return null; const up=o=>o==="<"||o==="<=";
+    if(up(t[1])&&up(t[3])) return {lo:A,li:t[1]==="<=",hi:B,hiI:t[3]==="<="}; if(!up(t[1])&&!up(t[3])) return {lo:B,li:t[3]===">=",hi:A,hiI:t[1]===">="}; }
+  return null;
+}
+function parseIneq(s){ s=clean(s).toLowerCase(); const out=[];
+  for(const part of s.split(/\bor\b|∪|\|\|/)){ if(!part.trim()) continue;
+    const ands=part.split(/\band\b|,|&&/).filter(x=>x.trim()); let iv={lo:-Infinity,li:false,hi:Infinity,hiI:false};
+    for(const a of ands){ const r=parseIneqPart(a); if(!r) return null; if(r.lo>iv.lo||(r.lo===iv.lo&&!r.li)){ iv.lo=r.lo; iv.li=r.li; } if(r.hi<iv.hi||(r.hi===iv.hi&&!r.hiI)){ iv.hi=r.hi; iv.hiI=r.hiI; } }
+    out.push(iv); }
+  return out.length?out:null; }
+function sameIv(a,b){ const e=(x,y)=>(x===y)||(isFinite(x)&&isFinite(y)&&close(x,y)); return e(a.lo,b.lo)&&e(a.hi,b.hi)&&(!isFinite(a.lo)||a.li===b.li)&&(!isFinite(a.hi)||a.hiI===b.hiI); }
+function check(pr,input){
+  if(pr.type==="expanded"){ const parts=clean(input).replace(/\s+/g,"").split("+").filter(Boolean); if(!parts.length||parts.some(p=>!/^\d+$/.test(p))) return null;
+    const want=new Set(String(pr.ans).split("").reverse().map((d,i)=>+d*10**i).filter(Boolean)), got=parts.map(Number);
+    return got.length===want.size&&got.every(v=>want.has(v))&&new Set(got).size===got.length; }
+  if(pr.type==="mc"){ const m=/^\(?\s*([a-e])\s*[).]?\s*$/i.exec(String(input).trim()); if(!m) return null; return m[1].toUpperCase()===pr.ans; }
+  if(pr.type==="word"){ const w=String(input).toUpperCase().replace(/[^A-Z]/g,""); if(!w) return null; const opts=pr.opts||["SSS","SAS","ASA","AAS","HL","NONE"]; const n=/NONE|NOT|CANNOT|CANT|NEITHER/.test(w)||w==="NO"?"NONE":w; if(!opts.includes(n)) return null; return n===pr.ans; }
+  if(pr.type==="number"){ const v=val(clean(input).split("=").pop()); if(isNaN(v)) return null; if(pr.tol?Math.abs(v-pr.ans)>pr.tol:!close(v,pr.ans)) return false; if(pr.form==="rad"&&!radOK(input)) return false; return true; }
+  if(pr.type==="roots"){ const r=parseRoots(input); if(!r) return null; const u=a=>a.filter((x,i)=>a.findIndex(y=>close(x,y))===i); const su=u(r),eu=u(pr.ans); return su.length===eu.length&&eu.every(x=>su.some(y=>close(x,y))); }
+  if(pr.type==="nsol"){ const w=String(input).toLowerCase(); const k=/inf|many|all|∞/.test(w)?"INF":/none|no |^no$|zero|^0$|parallel/.test(w)?"NONE":/one|^1$|single|unique/.test(w)?"ONE":null; return k===null?null:k===pr.ans; }
+  if(pr.type==="set"){ const v=val(clean(input).split("=").pop()); return isNaN(v)?null:close(v,pr.ans[0]); }
+  if(pr.type==="expr") return exprEq(input,pr.ans,pr.form);
+  if(pr.type==="line") return lineEq(input,pr.ans,pr.form);
+  if(pr.type==="point"){ const m=/^\(?\s*([^,]+),([^)]+)\)?$/.exec(clean(input).split("=").pop().trim()); if(!m) return null; const x=val(m[1]),y=val(m[2]); if(isNaN(x)||isNaN(y)) return null; return close(x,pr.ans[0])&&close(y,pr.ans[1]); }
+  if(pr.type==="yn"){ const w=String(input).trim().toUpperCase(); if(/^(Y|YES|YEAH|IS)/.test(w)) return pr.ans==="YES"; if(/^(N|NO|NOT)/.test(w)) return pr.ans==="NO"; return null; }
+  if(pr.type==="list"){ const parts=clean(input).replace(/[{}]/g,"").split(/,|;|\s+and\s+/).map(x=>x.trim()).filter(Boolean); if(!parts.length) return null; const v=parts.map(val); if(v.some(isNaN)) return null; const u=a=>a.filter((x,i)=>a.findIndex(y=>close(x,y))===i); const su=u(v),eu=u(pr.ans); return su.length===eu.length&&eu.every(x=>su.some(y=>close(x,y))); }
+  const want=pr.type==="ineq"?[ray(pr.ans.op,pr.ans.v)]:pr.type==="between"?[pr.ans]:pr.ans.map(r=>ray(r.op,r.v));
+  const got=parseIneq(input); if(!got) return null;
+  const srt=a=>a.slice().sort((x,y)=>x.lo-y.lo); const g=srt(got),w=srt(want);
+  return g.length===w.length&&g.every((x,i)=>sameIv(x,w[i]));
+}
+function render(el){ if(window.renderMathInElement) renderMathInElement(el,{delimiters:[{left:"$",right:"$",display:false}],throwOnError:false}); }
+
+/* ================= state ================= */
+let ST={cur:"ch1",ch:{}}; try{ Object.assign(ST,JSON.parse(localStorage.getItem("fm-g3")||"{}")); }catch(e){}
+const save=()=>{ try{ localStorage.setItem("fm-g3",JSON.stringify(ST)); }catch(e){} };
+let CH=null, st=null, T=null, L=1, PR=null, tries=0, done=false, firstTry=true, streak=[];
+function useChapter(id){ CH=CHAPTERS.find(c=>c.id===id)||CHAPTERS[0]; ST.cur=CH.id; ST.ch[CH.id]=ST.ch[CH.id]||{rec:null,level:{},solved:{},learned:{}}; st=ST.ch[CH.id]; save(); }
+
+/* ================= page ================= */
+function chapters(){ const b=$("chapters"); b.innerHTML="";
+  ALLCH.forEach(([n,t,id])=>{ if(id&&CHAPTERS.some(c=>c.id===id)){ const x=document.createElement("button"); x.type="button"; x.className="chap"+(id===CH.id?" on":""); x.innerHTML=`<i>${n}</i>${t}`; x.onclick=()=>{ if(id!==CH.id) openChapter(id,"learn"); }; b.appendChild(x); }
+    else { const x=document.createElement("span"); x.className="chap soon"; x.title="Coming soon"; x.innerHTML=`<i>${n}</i>${t}`; b.appendChild(x); } }); }
+function legend(){ $("legend").innerHTML=""; LEVELS.forEach(l=>{ const d=document.createElement("div"); d.className="lg"; d.style.setProperty("--c",l.c); d.innerHTML=`<b>${l.n} · ${l.name}</b><span>${l.desc}</span>`; $("legend").appendChild(d); }); }
+function recText(){ $("recText").innerHTML=st.rec?`Suggested starting level for this unit: <span class="rec">${st.rec} · ${LEVELS[st.rec-1].name}</span> ★ — you can always change it.`:"Answer up to 5 questions and we'll suggest a level for this unit."; $("placeBtn").textContent=st.rec?"Retake the check":"Take the 5-question check"; }
+function pillsFor(t,cur,onPick){ const w=document.createElement("div"); w.className="pills";
+  LEVELS.forEach(l=>{ const b=document.createElement("button"); b.type="button"; b.className="pill"+(l.n===cur?" on":"")+(st.rec===l.n?" star":""); b.style.setProperty("--c",l.c); const n=st.solved[t.id+l.n]||0; b.innerHTML=`${l.n} ${l.name}`+(n?`<span class="n">✓${n}</span>`:""); b.onclick=()=>onPick(l.n); w.appendChild(b); }); return w; }
+function topics(){ const box=$("topics"); box.innerHTML="";
+  CH.topics.forEach(t=>{ const c=document.createElement("div"); c.className="card topic"; const lvl=st.level[t.id]||st.rec||1;
+    c.innerHTML=`<h2>${t.title}</h2><p class="idea">${t.idea}</p><div class="example"><span class="label">Simplest example</span>${t.lesson.steps.map(s=>`<div class="q">$${s[0]}$</div>`).join("")}</div><span class="label">Practice at level</span>`;
+    c.appendChild(pillsFor(t,lvl,n=>startPractice(t,n)));
+    const go=document.createElement("button"); go.className="btn teal sm"; go.style.alignSelf="flex-start"; go.textContent=`Practice level ${lvl} →`; go.onclick=()=>startPractice(t,lvl); c.appendChild(go); box.appendChild(c); });
+  render(box); }
+function startPractice(t,n){ T=t; L=n; st.level[t.id]=n; save(); streak=[]; $("practice").hidden=false; $("pTitle").textContent=t.title; newProblem(); $("practice").scrollIntoView({behavior:"smooth",block:"start"}); topics(); }
+function levelPills(){ $("pLevels").replaceWith(Object.assign(pillsFor(T,L,n=>{ L=n; st.level[T.id]=n; save(); streak=[]; newProblem(); topics(); }),{id:"pLevels"})); }
+function newProblem(){
+  PR=T.gen[L-1](); tries=0; done=false; firstTry=true;
+  $("pQ").innerHTML=`<span class="label" style="color:${LEVELS[L-1].c}">Level ${L} · ${LEVELS[L-1].name}</span><div>${PR.q}</div>`; render($("pQ"));
+  $("pAns").value=""; $("pAns").disabled=false; $("pPrev").textContent=""; $("pHow").textContent=PR.type==="word"&&PR.opts?"Type one of: "+PR.opts.map(o=>o==="NONE"?"none":o.length>3?o.toLowerCase():o).join(", ")+".":PR.form==="factored"?"Type the factored form, like 2(x - 3)(x + 4).":PR.form==="poly"?"Type the simplified polynomial, like 3x^2 - 5x + 2.":PR.form==="simp"?"Type the simplified expression with positive exponents, like 6x^5 or 3x^2/y^4.":PR.form==="rad"?"Type the simplest radical form, like 5sqrt(2).":PR.form==="si"?"Type it as y = mx + b, like y = -2x + 5.":PR.form==="std"?"Type it as Ax + By = C with whole numbers, like 3x - 2y = 6.":HOW[PR.type]; $("pFb").innerHTML=""; $("pSuggest").innerHTML="";
+  $("pCheck").hidden=false; $("pNext").hidden=true; $("pHint").disabled=false; $("pShow").hidden=true; levelPills(); drawStreak(); $("pAns").focus({preventScroll:true}); }
+function fb(kind,tag,html){ $("pFb").innerHTML=`<div class="fb ${kind}"><span class="tag">${tag}</span>${html}</div>`; render($("pFb")); }
+const solHtml=()=>`<ol class="sol">${PR.sol.map(s=>`<li>${s}</li>`).join("")}</ol>`;
+function finish(correct){ done=true; $("pAns").disabled=true; $("pCheck").hidden=true; $("pNext").hidden=false; $("pShow").hidden=true; $("pHint").disabled=true;
+  if(correct){ st.solved[T.id+L]=(st.solved[T.id+L]||0)+1; save(); }
+  streak.push(correct&&firstTry); if(streak.length>6) streak.shift(); drawStreak(); suggest(); levelPills(); $("pNext").focus({preventScroll:true}); }
+function submit(){ if(done||!PR) return; const v=$("pAns").value.trim(); if(!v) return; const r=check(PR,v);
+  if(r===null){ fb("hint","Try again","I couldn't read that. "+HOW[PR.type]); return; }
+  if(r){ fb("good","Correct"+(firstTry?" on the first try!":""),`$${PR.ansTex}$`+solHtml()); finish(true); return; }
+  tries++; firstTry=false;
+  if(tries===1){ fb("bad","Not yet",PR.hint+" Try again."); $("pShow").hidden=false; }
+  else { fb("bad","Not yet","Here's how it works:"+solHtml()); finish(false); } }
+function drawStreak(){ const s=$("pStreak"); s.innerHTML="Recent: "; streak.forEach(x=>{ const i=document.createElement("i"); i.className=x?"ok":"no"; s.appendChild(i); }); if(!streak.length) s.textContent="Get 3 right on the first try in a row to unlock a suggestion to move up."; }
+function suggest(){ const box=$("pSuggest"); box.innerHTML=""; const last=streak.slice(-3),last2=streak.slice(-2); let to=null,msg="";
+  if(L<5&&last.length===3&&last.every(Boolean)){ to=L+1; msg=`3 in a row on the first try! Ready for <b>Level ${L+1} · ${LEVELS[L].name}</b>?`; }
+  else if(L>1&&last2.length===2&&last2.every(x=>!x)){ to=L-1; msg=`These are tough — that's okay! Practice <b>Level ${L-1} · ${LEVELS[L-2].name}</b> first, then come back stronger.`; }
+  if(!to) return; const d=document.createElement("div"); d.className="suggest"; d.style.setProperty("--c",LEVELS[to-1].c); d.innerHTML=`<span>${msg}</span>`;
+  const b=document.createElement("button"); b.className="btn sm"; b.style.background=LEVELS[to-1].c; b.textContent=to>L?"Move up ↑":"Go to Level "+to; b.onclick=()=>{ L=to; st.level[T.id]=to; save(); streak=[]; newProblem(); topics(); }; d.appendChild(b); box.appendChild(d); }
+$("pCheck").onclick=submit; $("pAns").addEventListener("keydown",e=>{ if(e.key==="Enter"){ e.preventDefault(); done?newProblem():submit(); } });
+$("pNext").onclick=newProblem; $("closeP").onclick=()=>{ $("practice").hidden=true; };
+$("pHint").onclick=()=>{ if(done) return; firstTry=false; fb("hint","Hint",PR.hint); };
+$("pShow").onclick=()=>{ fb("hint","Solution",`$${PR.ansTex}$`+solHtml()); finish(false); };
+$("pAns").addEventListener("input",()=>{ const v=$("pAns").value.trim(),pv=$("pPrev"); if(!v||!window.katex){ pv.textContent=""; return; }
+  try{ let tex; const c=clean(v);
+    if(/<|>/.test(c)) tex=c.replace(/<=/g,"\\le ").replace(/>=/g,"\\ge ").replace(/\bor\b/gi,"\\text{ or }").replace(/\band\b/gi,"\\text{ and }");
+    else tex=c.split("=").map(x=>math.parse(x).toTex({parenthesis:"auto",implicit:"hide"})).join(" = ");
+    pv.innerHTML='<span class="pl">You wrote</span><span class="pm"></span>'; katex.render(tex,pv.querySelector(".pm"),{throwOnError:false}); }catch(e){ pv.textContent=""; } });
+
+/* ---- placement ---- */
+$("placeBtn").onclick=()=>{
+  const PL=[0,1,2,0,1].map((ti,k)=>[CH.topics[ti%CH.topics.length],k+1]); let i=0,res=[],pr;
+  const m=document.createElement("div"); m.className="modal"; m.innerHTML=`<div class="card"><div class="phead"><h2>Where should I start?</h2><button class="btn ghost sm" id="qx">Close</button></div><div class="qprog" id="qp"></div><div class="problem" id="qq"></div><div class="row" id="qr"><input id="qa" type="text" autocomplete="off" placeholder="Your answer" aria-label="Your answer"><button class="btn" id="qc">Check</button><button class="btn ghost" id="qs">I don't know</button></div><div class="howto" id="qh"></div><div id="qf"></div></div>`;
+  document.body.appendChild(m); const q=id=>m.querySelector("#"+id);
+  const prog=()=>{ q("qp").innerHTML=PL.map((_,k)=>`<i class="${k<res.length?(res[k]?"ok":"no"):k===i?"now":""}"></i>`).join(""); };
+  const ask=()=>{ const [t,lv]=PL[i]; pr=t.gen[lv-1](); q("qq").innerHTML=`<span class="label">Question ${i+1} of 5 · Level ${lv}</span><div>${pr.q}</div>`; render(q("qq")); q("qa").value=""; q("qh").textContent=HOW[pr.type]; q("qf").innerHTML=""; prog(); q("qa").focus(); };
+  const end=()=>{ const lvl=res.indexOf(false)===-1?5:res.indexOf(false)+1; st.rec=lvl; save(); recText(); topics(); prog();
+    q("qq").innerHTML=`<span class="label">Result</span><div>Start at <b style="color:${LEVELS[lvl-1].c}">Level ${lvl} · ${LEVELS[lvl-1].name}</b>.</div><div style="font-size:15px;color:var(--muted)">${lvl===5?"You answered every question correctly — go for Competition!":lvl===1?"Foundation builds the base everything else needs. Move up whenever you get 3 in a row.":"You got the first "+(lvl-1)+" level"+(lvl===2?"":"s")+" right. Level "+lvl+" is the right challenge for you."}</div>`;
+    q("qr").hidden=true; q("qh").textContent=""; q("qf").innerHTML=""; const b=document.createElement("button"); b.className="btn teal"; b.textContent="See the topics"; b.onclick=()=>m.remove(); q("qf").appendChild(b); };
+  const answer=r=>{ res.push(r); if(!r){ end(); return; } i++; i>=PL.length?end():ask(); };
+  q("qc").onclick=()=>{ const v=q("qa").value.trim(); if(!v) return; const r=check(pr,v); if(r===null){ q("qf").innerHTML=`<div class="fb hint">I couldn't read that. ${HOW[pr.type]}</div>`; return; } answer(r); };
+  q("qa").addEventListener("keydown",e=>{ if(e.key==="Enter"){ e.preventDefault(); q("qc").click(); } });
+  q("qs").onclick=()=>answer(false); q("qx").onclick=()=>m.remove(); m.addEventListener("click",e=>{ if(e.target===m) m.remove(); });
+  ask(); };
+
+/* ---- learn ---- */
+let LI=0, shown=1, TP=null, tDone=false, tTries=0;
+function road(){ const r=$("road"); r.innerHTML=""; CH.topics.forEach((t,i)=>{ const b=document.createElement("button"); b.type="button"; b.className="stop"+(st.learned[t.id]?" done":"")+(i===LI?" on":""); b.innerHTML=`<i>${st.learned[t.id]?"✓":i+1}</i>${t.title}`; b.onclick=()=>openLesson(i); r.appendChild(b); }); }
+function openLesson(i,scroll){ LI=i; shown=1; tDone=false; tTries=0; TP=null; road(); if(window.drawStory) drawStory(CH.id,CH.topics[i]); drawLesson(); if(scroll) ($("story")||$("lesson")).scrollIntoView({behavior:"smooth",block:"start"}); }
+function drawLesson(){
+  const t=CH.topics[LI], l=t.lesson, box=$("lesson");
+  box.innerHTML=`<span class="label">Lesson ${LI+1} of ${CH.topics.length}</span><h2>${t.title}</h2><div class="big">${t.idea}</div>${l.fig||""}<span class="label">Simplest example — one step at a time</span><ol class="steps">${l.steps.slice(0,shown).map(s=>`<li><div><div class="m">$${s[0]}$</div><div class="w">${s[1]}</div></div></li>`).join("")}</ol>`;
+  if(shown<l.steps.length){ const b=document.createElement("button"); b.className="btn"; b.style.alignSelf="flex-start"; b.textContent="Next step →"; b.onclick=()=>{ shown++; drawLesson(); }; box.appendChild(b);
+    const s=document.createElement("button"); s.className="btn ghost sm"; s.style.alignSelf="flex-start"; s.textContent="Show all steps"; s.onclick=()=>{ shown=l.steps.length; drawLesson(); }; box.appendChild(s); }
+  else {
+    box.insertAdjacentHTML("beforeend",`<div class="warn"><b>Watch out: </b>${l.warn}</div>`);
+    if(!TP) TP=t.gen[0]();
+    const w=document.createElement("div"); w.className="turn";
+    w.innerHTML=`<span class="label" style="color:var(--gold)">Your turn</span><div class="q">${TP.q}</div><div class="row"><input type="text" id="tAns" autocomplete="off" placeholder="Your answer" aria-label="Your answer"><button class="btn" id="tChk">Check</button><button class="btn ghost" id="tHint">Hint</button></div><div class="howto">${HOW[TP.type]}</div><div id="tFb"></div>`;
+    box.appendChild(w);
+    const nav=document.createElement("div"); nav.className="lnav"; const left=document.createElement("div"); left.className="row";
+    if(LI>0){ const pv=document.createElement("button"); pv.className="btn ghost sm"; pv.textContent="← Previous lesson"; pv.onclick=()=>openLesson(LI-1,true); left.appendChild(pv); }
+    const right=document.createElement("div"); right.className="row"; right.id="tNext"; nav.append(left,right); box.appendChild(nav);
+    const fbx=(k,tag,h)=>{ $("tFb").innerHTML=`<div class="fb ${k}"><span class="tag">${tag}</span>${h}</div>`; render($("tFb")); };
+    const win=()=>{ tDone=true; st.learned[t.id]=true; save(); road(); $("tAns").disabled=true; $("tChk").disabled=true; $("tHint").disabled=true; showNext(); };
+    const go=()=>{ if(tDone) return; const v=$("tAns").value.trim(); if(!v) return; const r=check(TP,v);
+      if(r===null){ fbx("hint","Try again","I couldn't read that. "+HOW[TP.type]); return; }
+      if(r){ fbx("good","Correct — you've got it!",`$${TP.ansTex}$`); win(); return; }
+      tTries++; if(tTries<2) fbx("bad","Not yet",TP.hint+" Try again."); else { fbx("hint","Answer",`$${TP.ansTex}$. Try another one to make sure.`); const a=document.createElement("button"); a.className="btn ghost sm"; a.textContent="Try another"; a.onclick=()=>{ TP=t.gen[0](); tTries=0; drawLesson(); }; $("tFb").appendChild(a); } };
+    $("tChk").onclick=go; $("tAns").addEventListener("keydown",e=>{ if(e.key==="Enter"){ e.preventDefault(); go(); } }); $("tHint").onclick=()=>fbx("hint","Hint",TP.hint);
+    if(st.learned[t.id]) showNext();
+  }
+  render(box);
+}
+function showNext(){ const r=$("tNext"); if(!r) return; r.innerHTML=""; const t=CH.topics[LI];
+  const pr=document.createElement("button"); pr.className="btn ghost sm"; pr.textContent="Practice this topic"; pr.onclick=()=>{ setTab("practice"); startPractice(t,st.level[t.id]||st.rec||1); }; r.appendChild(pr);
+  const n=document.createElement("button"); n.className="btn teal sm";
+  if(LI<CH.topics.length-1){ n.textContent="Next lesson →"; n.onclick=()=>openLesson(LI+1,true); } else { n.textContent="Start practicing →"; n.onclick=()=>{ setTab("practice"); window.scrollTo({top:0,behavior:"smooth"}); }; }
+  r.appendChild(n); }
+function setTab(t){ $("learnView").hidden=t!=="learn"; $("practiceView").hidden=t!=="practice"; $("tabLearn").classList.toggle("on",t==="learn"); $("tabPractice").classList.toggle("on",t==="practice"); try{ history.replaceState(null,"","#"+CH.id+"-"+t); }catch(e){} }
+function openChapter(id,tab){
+  useChapter(id); $("chTitle").textContent="Unit "+ALLCH.find(c=>c[2]===CH.id)[0]+": "+CH.title; $("practice").hidden=true;
+  chapters(); recText(); topics(); const first=CH.topics.findIndex(t=>!st.learned[t.id]); openLesson(first<0?0:first);
+  setTab(tab||(first<0?"practice":"learn")); }
+document.addEventListener("click",e=>{ const d=e.target.closest(".mc > div"); if(!d) return; const card=d.closest(".practice, .turn, .modal .card"); const inp=card&&card.querySelector("input[type=text]"); if(inp&&!inp.disabled){ inp.value=d.querySelector("b").textContent.trim()[0]; inp.focus(); d.parentElement.querySelectorAll("div").forEach(x=>x.classList.toggle("sel",x===d)); } });
+$("tabLearn").onclick=()=>setTab("learn"); $("tabPractice").onclick=()=>setTab("practice");
+window.addEventListener("load",()=>{ legend(); const m=/^#(ch\d+)(?:-(learn|practice))?$/.exec(location.hash); openChapter(m?m[1]:ST.cur,m?m[2]:null); });
+</script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="../mistakes.js"></script>
+<script src="fm-levels-bridge.js"></script>
+</body>
+</html>

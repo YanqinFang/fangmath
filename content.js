@@ -442,6 +442,7 @@ const COURSES = [
     geo:    [P + "geometry-levels.html", same(13)],
     alg2:   [P + "algebra2-levels.html", same(14)],
     calcab: [P + "calculus-ab-levels.html", same(8)],
+    grade3: [P + "grade3-levels.html", [[[1, "Place Value, Addition & Subtraction"]]]],
     precalc:[P + "precalculus-levels.html", [
       [[1, "Functions and Their Graphs"], [2, "Polynomial and Rational Functions"]],
       [[3, "Exponential and Logarithmic Functions"], [11, "Sequences, Series & Binomial Theorem"]],

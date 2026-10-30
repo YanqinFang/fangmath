@@ -511,6 +511,7 @@ function routeInner(){
 /* ---------------- home ---------------- */
 function levelsMeta(c){
   const chs = new Set(); c.units.forEach(u => (u.learn || []).forEach(l => chs.add(l.href + l.ch)));
+  if (c.group === "K–8") { const done = c.units.filter(u => (u.learn || []).length).length; return c.units.length + " units · Learn + 5-level practice" + (done < c.units.length ? " (Unit" + (done > 1 ? "s 1–" + done : " 1") + " ready)" : ""); }
   const units = c.units.length + (c.group === "Calculus & Beyond" || c.id === "precalc" ? " AP units" : " chapters");
   return (c.id === "alg1" || c.id === "geo" || c.id === "alg2" ? units : units + " · " + chs.size + " lessons") + " · Learn + 5-level practice";
 }

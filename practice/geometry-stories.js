@@ -391,7 +391,7 @@
         handle(lx(a), y, "a", "#1F3A68", "Mia " + a); handle(lx(b), y, "b", "#B7472A", "Leo " + b);
         const d = Math.abs(b - a);
         read.innerHTML = kind === "mid"
-          ? (() => { const sv = v => (v > 0 ? "+" : "") + fx(v), pv = v => v < 0 ? "(" + fx(v) + ")" : sv(v); return `Mia's trip $\\overrightarrow{AB} = ${b} - ${a < 0 ? "(" + a + ")" : a} = ${sv(b - a)}$, half is $${sv((b - a) / 2)}$, so $M = ${a} + ${pv((b - a) / 2)} = ${fx(m)}$ $= \\dfrac{${a} + ${b < 0 ? "(" + b + ")" : b}}{2}$.`; })()
+          ? (() => { const sv = v => (v > 0 ? "+" : "") + fx(v), pv = v => v < 0 ? "(" + fx(v) + ")" : fx(v); return `Mia's trip $\\overrightarrow{AB} = ${b} - ${a < 0 ? "(" + a + ")" : a} = ${sv(b - a)}$, half is $${sv((b - a) / 2)}$, so $M = ${a} + ${pv((b - a) / 2)} = ${fx(m)}$ $= \\dfrac{${a} + ${b < 0 ? "(" + b + ")" : b}}{2}$.`; })()
           : `On a line there is only one direction: distance $= |${b} - ${a < 0 ? "(" + a + ")" : a}| = ${d}$.`;
       } else {
         const W = 2 * GP + (G1 - G0) * GS;

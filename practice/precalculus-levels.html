@@ -154,6 +154,7 @@ footer{text-align:center;color:var(--faint);font-size:13px;padding:24px}
 #pLevels{display:none}
 .topic .tgo{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
 .topic .tgo small{color:var(--muted);font-size:13px}
+.watch{margin:-4px 0 4px;font-size:14px;color:var(--muted)} .watch b{color:var(--ink)}
 </style>
 </head>
 <body>
@@ -825,9 +826,9 @@ function road(){ const r=$("road"); r.innerHTML=""; CH.topics.forEach((t,i)=>{ c
 function openLesson(i,scroll){ LI=i; shown=1; tDone=false; tTries=0; TP=null; road(); drawLesson(); if(scroll) $("lesson").scrollIntoView({behavior:"smooth",block:"start"}); }
 function drawLesson(){
   const t=CH.topics[LI], l=t.lesson, box=$("lesson");
-  box.innerHTML=`<span class="label">Lesson ${LI+1} of ${CH.topics.length}</span><h2>${t.title}</h2><div class="big">${t.idea}</div>${l.fig||""}<span class="label">Simplest example — one step at a time</span><ol class="steps">${l.steps.slice(0,shown).map(s=>`<li><div><div class="m">$${s[0]}$</div><div class="w">${s[1]}</div></div></li>`).join("")}</ol>`;
-  if(shown<l.steps.length){ const b=document.createElement("button"); b.className="btn"; b.style.alignSelf="flex-start"; b.textContent="Next step →"; b.onclick=()=>{ shown++; drawLesson(); }; box.appendChild(b);
-    const s=document.createElement("button"); s.className="btn ghost sm"; s.style.alignSelf="flex-start"; s.textContent="Show all steps"; s.onclick=()=>{ shown=l.steps.length; drawLesson(); }; box.appendChild(s); }
+  box.innerHTML=`<span class="label">Lesson ${LI+1} of ${CH.topics.length}</span><h2>${t.title}</h2><div class="big">${t.idea}</div>${l.fig||""}<span class="label">👀 Watch me — simplest example</span><p class="watch">I'll solve it one step at a time. Read each step and think about <b>why</b>. When it makes sense, press <b>Got it — next step</b>.</p><ol class="steps">${l.steps.slice(0,shown).map(s=>`<li><div><div class="m">$${s[0]}$</div><div class="w">${s[1]}</div></div></li>`).join("")}</ol>`;
+  if(shown<l.steps.length){ const b=document.createElement("button"); b.className="btn"; b.style.alignSelf="flex-start"; b.textContent="Got it — next step →"; b.onclick=()=>{ shown++; drawLesson(); }; box.appendChild(b);
+    const s=document.createElement("button"); s.className="btn ghost sm"; s.style.alignSelf="flex-start"; s.textContent="Show all steps at once"; s.onclick=()=>{ shown=l.steps.length; drawLesson(); }; box.appendChild(s); }
   else {
     box.insertAdjacentHTML("beforeend",`<div class="warn"><b>Watch out: </b>${l.warn}</div>`);
     if(!TP) TP=t.gen[0]();

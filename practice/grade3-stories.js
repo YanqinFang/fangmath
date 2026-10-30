@@ -120,6 +120,88 @@
       <p><b>3. Compare → subtract.</b></p><div class="bar"><span style="background:#0F7C7C;flex:245">Mia 245</span></div><div class="bar"><span style="background:#1F3A68;flex:180">Leo 180</span><span style="background:#fff;color:#B3261E;border:2px dashed #B3261E;flex:65">?</span></div><p>The gap is $245 - 180 = 65$: Mia read $65$ more pages. “How many more” is a subtraction question!</p>`
   };
 
+
+  /* arrays of dots: r rows, c columns (optional split after column k) */
+  function dots(r, c, split) {
+    let out = ""; const g = 26, w = c * g + (split ? 14 : 0) + 20, hh = r * g + 16;
+    for (let i = 0; i < r; i++) for (let j = 0; j < c; j++) {
+      const x = 18 + j * g + (split && j >= split ? 14 : 0), y = 16 + i * g;
+      out += `<circle cx="${x}" cy="${y}" r="9" fill="${split && j >= split ? "#C9962B" : "#0F7C7C"}"/>`; }
+    if (split) out += `<line x1="${18 + split * g - 6}" y1="4" x2="${18 + split * g - 6}" y2="${hh - 4}" stroke="#B3261E" stroke-width="2" stroke-dasharray="5 4"/>`;
+    return `<svg viewBox="0 0 ${w} ${hh}" style="max-width:${Math.min(440, w * 1.2)}px" role="img" aria-label="${r} rows of ${c} dots">${out}</svg>`;
+  }
+
+  T["ch2/mul"] = {
+    title: "Chairs for the Class Play",
+    scene: S`<p>Ms. Lee sets up chairs for the class play. She makes <b>3 rows</b> with <b>6 chairs</b> in each row.</p>` + dots(3, 6) + S`<p>Ben counts the chairs one by one: $1, 2, 3, \dots$ It takes a long time.</p>`,
+    think: S`Can you count faster than Ben? Count <b>a row at a time</b>. Then walk around to the side of the room and look at the chairs again — what do you see now?`,
+    aha: S`<p>Row by row: $6, 12, 18$. That's $6 + 6 + 6 = 18$ chairs. We write it as $3 \times 6 = 18$: <b>3 groups of 6</b>.</p>
+      <p>From the side, you see <b>6 rows of 3</b>: $6 \times 3 = 18$. Same chairs, same number! So $3 \times 6 = 6 \times 3$.</p>
+      <p><b>Multiplication is a fast way to add equal groups.</b> Rows and columns of things are called an <b>array</b>.</p>`
+  };
+  T["ch2/div"] = {
+    title: "Two Ways to Share",
+    scene: S`<p>Grandma brings <b>24 stickers</b>.</p>
+      <p><b>Story A:</b> 4 cousins share them equally. Ava deals them out: one for you, one for you, one for you, one for you… again and again.</p>
+      <p><b>Story B:</b> Grandma puts them into little bags of <b>4 stickers</b> each.</p>`,
+    think: S`In Story A, how many stickers does each cousin get? In Story B, how many bags does Grandma fill? Use the picture: 4 rows of 6.`,
+    aha: dots(4, 6) + S`<p><b>A:</b> each row is one cousin's share: $24 \div 4 = 6$ stickers each.</p>
+      <p><b>B:</b> each <b>column</b> is one bag of 4: there are $6$ bags. $24 \div 4 = 6$ again!</p>
+      <p>Division answers both questions: “<b>how many in each group?</b>” and “<b>how many groups?</b>” And both come from the multiplication fact $4 \times 6 = 24$.</p>`
+  };
+  T["ch2/fam"] = {
+    title: "The Fact Family House",
+    scene: S`<p>The numbers $3$, $7$ and $21$ live together in one house. They like to make number sentences — but only with each other.</p>
+      <p>One day a sign appears on their door: $\square \times 7 = 21$.</p>`,
+    think: S`How many different true sentences can $3$, $7$ and $21$ make with $\times$ and $\div$? And who is hiding behind the box on the door?`,
+    aha: S`<table><tr><td>$3 \times 7 = 21$</td><td>$7 \times 3 = 21$</td></tr><tr><td>$21 \div 7 = 3$</td><td>$21 \div 3 = 7$</td></tr></table>
+      <p style="margin-top:10px">That's the whole <b>fact family</b>: four facts, three numbers. The biggest number (the <b>product</b>) is always the one being divided.</p>
+      <p>$\square \times 7 = 21$ asks “how many $7$s make $21$?” — that's $21 \div 7 = 3$. <b>Division undoes multiplication</b>, so it finds the missing factor.</p>`
+  };
+  T["ch2/f2510"] = {
+    title: "Socks, Nickels and Dimes",
+    scene: S`<p>Leo sorts his piggy bank. He has <b>7 dimes</b> (10¢ each) and <b>7 nickels</b> (5¢ each). He also finds <b>7 pairs of socks</b> in the laundry.</p>`,
+    think: S`How many socks? How many cents in dimes? How many cents in nickels? Do you see a shortcut for each one?`,
+    aha: S`<p><b>2s are doubles:</b> 7 pairs of socks $= 7 + 7 = 14$ socks. So $7 \times 2 = 14$.</p>
+      <p><b>10s add a zero:</b> 7 dimes $= 70$¢. So $7 \times 10 = 70$.</p>
+      <p><b>5s are half of 10s:</b> a nickel is half a dime, so 7 nickels are half of $70$¢ $= 35$¢. So $7 \times 5 = 35$. Every 5s answer ends in $0$ or $5$.</p>`
+  };
+  T["ch2/f01"] = {
+    title: "Empty Plates",
+    scene: S`<p>Mia sets out <b>8 plates</b> for a party. Before the cookies arrive, each plate has <b>0 cookies</b>. Then she puts <b>1 cookie</b> on each plate.</p>
+      <p>Later, 8 friends share 8 cookies equally.</p>`,
+    think: S`How many cookies are on the plates before? After? How many cookies does each friend get at the end?`,
+    aha: S`<p>Before: $8 \times 0 = 0$. Eight empty groups are still nothing.</p>
+      <p>After: $8 \times 1 = 8$. One in each group just gives the number back.</p>
+      <p>Sharing: $8 \div 8 = 1$ each. Any number divided by itself is $1$. And $8 \div 1 = 8$: one friend gets them all!</p>
+      <p>(Sharing <b>nothing</b>: $0 \div 8 = 0$. But we can't share among <b>zero</b> friends, so we never divide by $0$.)</p>`
+  };
+  T["ch2/f346"] = {
+    title: "Double It!",
+    scene: S`<p>Zoe knows her 2s facts really well. Today she needs $7 \times 4$. She draws 7 rows of 4 dots and a red line down the middle.</p>` + dots(7, 4, 2),
+    think: S`How many dots are on the left side of the red line? How does that help with the whole picture?`,
+    aha: S`<p>The left side is $7 \times 2 = 14$. The right side is the same: $14$. Together: $14 + 14 = 28$. So $7 \times 4 = 28$.</p>
+      <p><b>4s are double 2s.</b> In the same way, <b>6s are double 3s</b>: $6 \times 8$ is double $3 \times 8 = 24$, so $6 \times 8 = 48$. And 8s are double 4s!</p>`
+  };
+  T["ch2/f789"] = {
+    title: "Break Apart the Big Ones",
+    scene: S`<p>Max is stuck on $7 \times 8$. His sister says, “Draw 7 rows of 8. Then cut the picture where it's easy.”</p>` + dots(7, 8, 5),
+    think: S`The cut makes two smaller arrays. Which facts do they show? Do you already know them?`,
+    aha: S`<p>Left part: $7 \times 5 = 35$. Right part: $7 \times 3 = 21$. Total: $35 + 21 = 56$. So $7 \times 8 = 56$.</p>
+      <p>For <b>9s</b>, think of 10 groups and take one away: $9 \times 7 = 10 \times 7 - 7 = 70 - 7 = 63$.</p>
+      <p>Bonus pattern: in $9 \times 2 = 18$, $9 \times 3 = 27$, … $9 \times 9 = 81$, the digits always add up to $9$!</p>`
+  };
+  T["ch2/mword"] = {
+    title: "Do I Know the Total?",
+    scene: S`<p><b>1.</b> A pack has $6$ juice boxes. How many juice boxes are in $9$ packs?<br><b>2.</b> $54$ juice boxes are packed $6$ to a pack. How many packs?<br><b>3.</b> $54$ juice boxes are shared equally by $9$ classes. How many for each class?</p>`,
+    think: S`All three stories use the same numbers: $9$, $6$ and $54$. In each story, which number is missing: the number of groups, the size of each group, or the total?`,
+    aha: S`<table><tr><th>Story</th><th>Groups</th><th>Size</th><th>Total</th><th>So…</th></tr>
+      <tr><td>1</td><td>$9$</td><td>$6$</td><td>?</td><td>multiply: $9 \times 6 = 54$</td></tr>
+      <tr><td>2</td><td>?</td><td>$6$</td><td>$54$</td><td>divide: $54 \div 6 = 9$</td></tr>
+      <tr><td>3</td><td>$9$</td><td>?</td><td>$54$</td><td>divide: $54 \div 9 = 6$</td></tr></table>
+      <p style="margin-top:10px"><b>Missing the total? Multiply. Know the total? Divide.</b></p>`
+  };
+
   window.drawStory = function (chId, topic) {
     const lesson = document.getElementById("lesson"); if (!lesson) return;
     let box = document.getElementById("story");

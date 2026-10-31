@@ -59,6 +59,7 @@
   .wgroup h4 .gn{display:inline-grid;place-items:center;width:26px;height:26px;border-radius:50%;background:var(--navy);color:#fff;font:700 13px Inter,sans-serif;margin-right:8px;vertical-align:2px}
   .defb{margin-top:6px;border:1px solid var(--teal);background:#fff;color:var(--teal);border-radius:999px;padding:4px 12px;font:inherit;font-size:13px;font-weight:600;cursor:pointer}
   .tries{margin-top:12px} .tries .th{font-family:Fraunces,Georgia,serif;font-size:17px;font-weight:600;margin-bottom:2px}
+  .inlesson{margin:0 0 18px} .inlesson .wb{padding-top:14px} .ilh{padding:14px 20px 0}
   .chroute{background:#fff;border:1px solid var(--line);border-radius:16px;padding:12px 14px;margin:0 0 14px;box-shadow:var(--shadow)}
   .chroute .rk{font-size:14px;color:var(--ink);margin-bottom:8px} .chroute .rk span{color:var(--muted)}
   .chroute .rs{display:flex;flex-wrap:wrap;align-items:center;gap:6px} .chroute .rs>span{color:var(--faint)}
@@ -483,6 +484,7 @@
   /* ---------- "Your turn — on paper first": fill-in questions after the concept cards ---------- */
   const OL = t => `\\overleftrightarrow{${t}}`, OR = t => `\\overrightarrow{${t}}`, SG = t => `\\overline{${t}}`;
   const PL = t => `\\text{plane } ${t}`;
+  WORDS.ch1.inLesson = "terms";   // shown as the lesson for section 1.1, not as a separate card
   WORDS.ch1.groups = [
     { title: "Point, line, plane — the three building blocks", cards: [0, 1, 2],
       tries: { fig: `<svg viewBox="0 0 230 110" role="img" aria-label="plane P with line through A and B, point C in the plane and point E above"><defs><marker id="wa2" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0L10,5L0,10z" fill="${teal}"/></marker></defs><polygon points="20,100 170,100 215,50 65,50" fill="#DDF0EE" stroke="${teal}" stroke-width="2"/><line x1="38" y1="88" x2="196" y2="62" stroke="${teal}" stroke-width="3" marker-start="url(#wa2)" marker-end="url(#wa2)"/>${dot(75, 82, "A", 16)}${dot(150, 69.6, "B", 16)}${dot(120, 92, "C", 14)}${dot(170, 18, "E", -8)}<line x1="170" y1="18" x2="170" y2="66" stroke="#94A3B8" stroke-dasharray="3 3"/><text x="205" y="94" font-family="Fraunces,serif" font-size="16" font-style="italic" fill="${teal}">P</text><text x="198" y="58" font-family="Inter,sans-serif" font-size="13" font-style="italic" fill="${teal}">ℓ</text></svg>`,
@@ -526,14 +528,14 @@
   const triesHtml = (tr, gi) => !tr ? "" : `<div class="tries" data-g="${gi}"><div class="th">✍️ Your turn — on paper first</div><p class="tip">Write each answer on your paper first. Then choose what you wrote from the menu and press <b>Check</b>.</p>${tr.fig}
     ${tr.qs.map((t, qi) => `<div class="tq" data-q="${qi}"><div class="tqq"><b>${qi + 1}.</b> ${t.q}</div><div class="tqa">${Array.from({ length: t.n }, (_, k) => `<span class="dd" data-k="${k}"><button type="button" class="ddb">choose ▾</button><span class="ddm" hidden>${t.opts.map(o => `<button type="button" data-v="${o.replace(/"/g, "&quot;")}">$${o}$</button>`).join("")}</span></span>`).join(t.n > 1 ? `<span class="and">and</span>` : "")}<button type="button" class="tchk">Check</button></div><div class="tfb"></div></div>`).join("")}</div>`;
 
-  function draw(chId) {
+  function draw(chId, target) {
     const lv = document.getElementById("learnView"); if (!lv) return;
-    let box = document.getElementById("words");
+    let box = target || document.getElementById("words");
     const w = WORDS[chId];
-    if (!w) { if (box) box.remove(); return; }
+    if (!w || (w.inLesson && !target)) { if (box) box.remove(); return; }
     const known = load(), mine = known[chId] || [];
     if (!box) { box = document.createElement("details"); box.id = "words"; box.className = "words"; lv.insertBefore(box, lv.firstChild); }
-    box.open = !(known["_seen_" + chId]);
+    if (!target) box.open = !(known["_seen_" + chId]);
     const g = STUDY[chId], nPost = w.posts.length, pw = (w.postTitle || "Postulates").split(/[ —&]/)[0].toLowerCase();
     box.innerHTML = `<summary><span style="font-size:24px">📘</span><div><b>Start here: Words &amp; Postulates</b><br><span>${w.cards.length} concepts · ${nPost} ${pw === "postulates" ? "postulates" : "key facts"} · ${w.vocab.length} words to know — ${w.sub}</span></div><i>›</i></summary>
       <div class="wb">
@@ -556,6 +558,7 @@
         <h4>✅ Quick check</h4>
         ${w.checks.map(([q, a]) => `<div class="qc">${q}<button type="button">Show answer</button><div class="a" hidden>${a}</div></div>`).join("")}
       </div>`;
+    if (target) { const sm = box.querySelector(":scope > summary"); if (sm) sm.outerHTML = `<div class="ilh"><span class="label">📘 Section ${(CH.topics.find(t => t.id === w.inLesson) || {}).title || ""}</span></div>`; }
     const upd = () => { const n = box.querySelectorAll(".vocab input:checked").length; box.querySelector("#vocabN").textContent = `${n} of ${w.vocab.length} words ready${n === w.vocab.length ? " — great job! 🎉" : ""}`; };
     box.querySelectorAll(".vocab input").forEach(i => i.onchange = () => { const k = load(); k[chId] = [...box.querySelectorAll(".vocab input:checked")].map(x => x.value); save(k); upd(); });
     box.querySelectorAll(".defb").forEach(b => b.onclick = () => { const d = b.nextElementSibling; d.hidden = !d.hidden; b.textContent = d.hidden ? "Show the definition ▾" : "Hide the definition ▴"; });
@@ -568,7 +571,7 @@
         const good = t.ok(sel); fb.innerHTML = `<div class="fb ${good ? "good" : "bad"}"><span class="tag">${good ? "Correct!" : "Not yet"}</span>${good ? "" : "Check your paper again. "}${t.sol}</div>`;
         if (window.renderMathInElement) renderMathInElement(fb, { delimiters: [{ left: "$", right: "$", display: false }], throwOnError: false }); }; });
     box.querySelectorAll(".qc button").forEach(b => b.onclick = () => { const a = b.nextElementSibling; a.hidden = !a.hidden; b.textContent = a.hidden ? "Show answer" : "Hide"; });
-    box.addEventListener("toggle", e => { if (e.target !== box) return; const k = load(); k["_seen_" + chId] = !box.open; save(k); });
+    if (!target) box.addEventListener("toggle", e => { if (e.target !== box) return; const k = load(); k["_seen_" + chId] = !box.open; save(k); });
     const more = box.querySelector(".wmore"); if (more) more.addEventListener("toggle", () => box.querySelectorAll(".tg").forEach(t => t.hidden = !more.open));
     upd();
     if (window.renderMathInElement) renderMathInElement(box, { delimiters: [{ left: "$", right: "$", display: false }], throwOnError: false });
@@ -671,10 +674,10 @@
     if (!g || !tabs) { if (r) r.remove(); return; }
     if (!r) { r = document.createElement("div"); r.id = "chroute"; r.className = "chroute"; tabs.parentNode.insertBefore(r, tabs); }
     r.innerHTML = `<div class="rk">🧭 This chapter: <b>${g.kind}</b> <span>${g.why}</span></div>
-      <div class="rs"><button type="button" data-s="1"><i>1</i>Start here: words &amp; postulates</button><span>→</span><button type="button" data-s="2"><i>2</i>Stories &amp; lessons</button><span>→</span><button type="button" data-s="3"><i>3</i>Practice at your level</button><span>→</span><button type="button" data-s="4"><i>4</i>Ready for the test?</button></div>`;
+      <div class="rs"><button type="button" data-s="1"><i>1</i>Start here: ${WORDS[chId] && WORDS[chId].inLesson ? "1.1 words &amp; symbols" : "words &amp; postulates"}</button><span>→</span><button type="button" data-s="2"><i>2</i>Stories &amp; lessons</button><span>→</span><button type="button" data-s="3"><i>3</i>Practice at your level</button><span>→</span><button type="button" data-s="4"><i>4</i>Ready for the test?</button></div>`;
     const go = el => { if (el) setTimeout(() => el.scrollIntoView({ behavior: "smooth", block: "start" }), 60); };
     r.querySelectorAll("button").forEach(b => b.onclick = () => { const n = +b.dataset.s;
-      if (n === 1) { setTab("learn"); const w = document.getElementById("words"); if (w) { w.open = true; go(w); } }
+      if (n === 1) { setTab("learn"); const W1 = WORDS[chId]; if (W1 && W1.inLesson) { const i = CH.topics.findIndex(t => t.id === W1.inLesson); if (i >= 0) openLesson(i); go(document.getElementById("story")); } else { const w = document.getElementById("words"); if (w) { w.open = true; go(w); } } }
       else if (n === 2) { setTab("learn"); const w = document.getElementById("words"); if (w) w.open = false; go(document.getElementById("road")); }
       else if (n === 3) { setTab("practice"); go(document.getElementById("practiceView")); }
       else { setTab("practice"); const rd = document.getElementById("ready"); if (rd) { rd.open = true; go(rd); } } });
@@ -694,6 +697,18 @@
     if (window.renderMathInElement) { renderMathInElement(box, { delimiters: [{ left: "$", right: "$", display: false }], throwOnError: false }); renderMathInElement(r, { delimiters: [{ left: "$", right: "$", display: false }], throwOnError: false }); }
   }
 
+  const origStory = window.drawStory;
+  window.drawStory = function (chId, topic) {
+    const w = WORDS[chId]; let box = document.getElementById("story");
+    if (w && w.inLesson === topic.id) {
+      const lesson = document.getElementById("lesson");
+      if (box && !box.classList.contains("inlesson")) { box.remove(); box = null; }
+      if (!box) { box = document.createElement("div"); box.id = "story"; box.className = "words inlesson"; lesson.parentNode.insertBefore(box, lesson); }
+      draw(chId, box); return;
+    }
+    if (box && box.classList.contains("inlesson")) box.remove();
+    if (origStory) origStory(chId, topic);
+  };
   if (typeof openChapter === "function") {
     const orig = openChapter;
     window.openChapter = function (id, tab) { const r = orig.apply(this, arguments); try { draw(id); drawStudy(id); } catch (e) { console.warn("words", e); } return r; };

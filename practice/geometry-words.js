@@ -7,7 +7,9 @@
 (function () {
   const S = String.raw;
   const css = S`
-  .words{background:#fff;border:1.5px solid var(--navy);border-radius:var(--radius);margin:0 0 18px;box-shadow:var(--shadow);overflow:hidden}
+  .words{background:#fff;border:1.5px solid var(--navy);border-radius:var(--radius);margin:0 0 18px;box-shadow:var(--shadow)}
+  .words>summary{border-radius:calc(var(--radius) - 2px) calc(var(--radius) - 2px) 0 0}
+  .ddm.up{top:auto;bottom:110%}
   .words>summary{list-style:none;cursor:pointer;padding:16px 20px;display:flex;align-items:center;gap:12px;background:linear-gradient(135deg,#EEF2FA,#fff 70%)}
   .words>summary::-webkit-details-marker{display:none}
   .words>summary b{font-family:Fraunces,Georgia,serif;font-size:21px;font-weight:600}
@@ -799,7 +801,8 @@
     box.querySelectorAll(".defb").forEach(b => b.onclick = () => { const d = b.nextElementSibling; d.hidden = !d.hidden; b.textContent = d.hidden ? "Show the definition ▾" : "Hide the definition ▴"; });
     box.querySelectorAll(".tries .tq").forEach(el => { const gi = +el.closest(".tries").dataset.g, tr = w.groups ? w.groups[gi].tries : w.tries, t = tr.qs[+el.dataset.q], sel = Array(t.n).fill(null);
       el.querySelectorAll(".dd").forEach(dd => { const b = dd.querySelector(".ddb"), m = dd.querySelector(".ddm");
-        b.onclick = () => { box.querySelectorAll(".ddm").forEach(x => { if (x !== m) x.hidden = true; }); m.hidden = !m.hidden; };
+        b.onclick = () => { box.querySelectorAll(".ddm").forEach(x => { if (x !== m) x.hidden = true; }); m.hidden = !m.hidden;
+          if (!m.hidden) { m.classList.remove("up"); const r = m.getBoundingClientRect(); if (r.bottom > innerHeight - 8 && b.getBoundingClientRect().top > r.height + 8) m.classList.add("up"); } };
         m.querySelectorAll("button").forEach(o => o.onclick = () => { sel[+dd.dataset.k] = o.dataset.v; b.innerHTML = o.innerHTML; b.classList.add("on"); m.hidden = true; el.querySelector(".tfb").innerHTML = ""; }); });
       el.querySelector(".tchk").onclick = () => { const fb = el.querySelector(".tfb");
         if (sel.some(x => !x)) { fb.innerHTML = `<div class="fb hint"><span class="tag">Choose first</span>Pick ${t.n > 1 ? "both answers" : "an answer"} from the menu.</div>`; return; }

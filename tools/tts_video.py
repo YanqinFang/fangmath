@@ -34,5 +34,5 @@ with open(lst, "w") as f:
 subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-f", "concat", "-safe", "0", "-i", lst, "-i", wav,
     "-af", "loudnorm=I=-16:TP=-1.5:LRA=11", "-ar", "48000",
     "-vf", "fps=30,format=yuv420p", "-c:v", "libx264", "-preset", "veryfast", "-tune", "stillimage", "-crf", "20",
-    "-c:a", "aac", "-b:a", "160k", "-shortest", "-movflags", "+faststart", a.out], check=True)
+    "-ac", "2", "-c:a", "aac", "-b:a", "192k", "-shortest", "-movflags", "+faststart", a.out], check=True)
 shutil.rmtree(tmp); print(f"wrote {a.out}  ({sum(durs)/60:.1f} min)")

@@ -216,7 +216,16 @@ const COURSES = [
     app: "practice/algebra1.html",
     units: [
       { title: "1. Foundations of Algebraic Thinking", app: "practice/algebra1.html?chapter=a1", appTopics: 5, lessons: [] },
-      { title: "2. Solving Linear Equations", app: "practice/algebra1.html?chapter=a2", appTopics: 6, lessons: [] },
+      { title: "2. Solving Linear Equations", app: "practice/algebra1.html?chapter=a2", appTopics: 6, lessons: [
+        { title: "Equations, Ratio & Similarity — Practice Set",
+          notes: "materials/algebra1/ch02/Alg1_Equations_Ratio_Similarity_Worksheet.pdf",
+          worksheet: "materials/algebra1/ch02/Alg1_Equations_Ratio_Similarity_Worksheet.pdf",
+          answers: "materials/algebra1/ch02/Alg1_Equations_Ratio_Similarity_Key.pdf",
+          summary: "Five topics, one page each: solving equations, multi-step equations, literal equations, ratio & proportion, and similar figures. Each page has a worked example, then 3 Easy, 1 Medium and 1 Hard problem. 25 problems with an answer key.",
+          example: { q: "Solve $4(x - 2) + 3 = 2x + 9$.",
+            steps: ["Distribute: $4x - 8 + 3 = 2x + 9$, so $4x - 5 = 2x + 9$.", "Subtract $2x$ from both sides: $2x - 5 = 9$.", "Add $5$, then divide by $2$: $2x = 14$, so $x = 7$. Check: $4(5) + 3 = 23$ and $2(7) + 9 = 23$."],
+            simpler: "Start with $2x + 1 = 9$: subtract $1$, then divide by $2$, so $x = 4$." } }
+      ] },
       { title: "3. Linear Inequalities", app: "practice/algebra1.html?chapter=a3", appTopics: 5, lessons: [] },
       { title: "4. Functions & Function Notation", app: "practice/algebra1.html?chapter=a4", appTopics: 5, lessons: [] },
       { title: "5. Linear Functions & Graphing", app: "practice/algebra1.html?chapter=a5", appTopics: 5, lessons: [] },

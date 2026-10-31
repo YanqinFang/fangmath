@@ -198,7 +198,7 @@
     tabBtn = document.createElement("button");
     tabBtn.className = "tab"; tabBtn.id = "tabQuiz"; tabBtn.type = "button"; tabBtn.setAttribute("role", "tab");
     tabBtn.textContent = "③ Worksheets";
-    g("tabPractice").after(tabBtn);
+    g("tabPractice").after(tabBtn); tabBtn.hidden = true;   // quiz & test open from the lesson path; worksheets are on the main Worksheets page
     view = document.createElement("div"); view.id = "quizView"; view.className = "qt"; view.hidden = true;
     g("practiceView").after(view);
 
@@ -222,10 +222,16 @@
       const i = CH.topics.findIndex(x => x.id === t[3]);
       if (i >= 0) { if (t[2] === "learn" && typeof openLesson === "function") openLesson(i, true); else if (typeof startPractice === "function") startPractice(CH.topics[i]); }
     }
-    const m = /^#(ch\w+)-(quiz|ws|test)$/.exec(HASH0);
-    if (m) { if (CHAPTERS.some(c => c.id === m[1]) && CH.id !== m[1]) openChapter(m[1], "practice"); setTab("quiz");
-      if (m[2] === "ws") { const card = g("qtWsCard"); if (card) setTimeout(() => { card.scrollIntoView({ behavior: "smooth", block: "center" }); card.classList.add("qt-flash"); setTimeout(() => card.classList.remove("qt-flash"), 1800); }, 250); }
-      else setTimeout(() => gotoCp(m[2]), 100); }
+    const m = /^#(ch\w+)-(quiz|test|ws|pquiz|ptest)(?:-(easy|medium|hard|combined))?(?:-(\d+))?(?:-([\w,]+))?$/.exec(HASH0);
+    if (m) {
+      if (CHAPTERS.some(c => c.id === m[1]) && CH.id !== m[1]) openChapter(m[1], "learn");
+      const [, , what, wl, wn, wt] = m;
+      setTimeout(() => {
+        if (what === "quiz" || what === "test") return gotoCp(what);
+        if (what === "pquiz" || what === "ptest") { opt = what === "ptest" ? cpTestOpts() : cpQuizOpts(); return paper(what === "ptest" ? "test" : "quiz"); }
+        opt = Object.assign({}, opt || {}, { ch: CH.id, wsLv: wl || "combined", wsN: +wn || 21, wsTopic: wt || "all" }); paper("ws");
+      }, 150);
+    }
   }
 
   /* ---------- printable handouts (PDF worksheet + answer key) for this chapter ----------
@@ -316,7 +322,7 @@
         const box = g("tNext"); if (!box || !CH) return r; const P = cpPlan(), t = CH.topics[LI];
         const G = P.G.find(x => x.idx.includes(LI));
         const ws = document.createElement("button"); ws.className = "btn ghost sm"; ws.textContent = "📄 Worksheet";
-        ws.title = "Printable worksheet + answer key for this lesson"; ws.onclick = () => { setTab("quiz"); lessonWs(G ? G.idx.map(i => CH.topics[i].id).join(",") : t.id); };
+        ws.title = "Printable worksheet + answer key for this lesson"; ws.onclick = () => { lessonWs(G ? G.idx.map(i => CH.topics[i].id).join(",") : t.id); };
         box.insertBefore(ws, box.lastChild);
         if (LI === P.quiz.after || LI === P.testAfter) {
           const b = document.createElement("button"); b.className = "btn sm"; b.style.background = LI === P.testAfter ? "var(--navy)" : "var(--teal)";
@@ -449,39 +455,9 @@
     stopTick(); run = null;
     const n = chNum(CH), lv0 = (typeof curLv === "function" ? curLv() : 1);
     opt = opt && opt.ch === CH.id ? opt : { ch: CH.id, topic: "all", lv: lv0, scope: "chapter", diff: "standard", n: 15, wsTopic: "all", wsLv: "combined", wsN: 21 };
-    const H = hist().filter(r => r.ch === CH.id).slice(-5).reverse();
     const other = loadRun();
-    view.innerHTML = `
-      ${other && other.live && other.ch !== CH.id ? `<div class="fb hint qt-resume"><span class="tag">Unfinished test</span>${esc(other.title)} is still open (the clock keeps running). <button class="btn sm" id="qtResume">Go back to it →</button></div>` : ""}
-      <div class="qt-grid">
-        <div class="card qt-box qt-wide" id="qtWsCard">
-          <span class="label" style="color:#8A6415">Worksheet</span>
-          <h2>Printable practice — easy, medium, hard, or all three</h2>
-          <p class="qt-sub">A paper worksheet with room to work, plus an answer key with steps. “Combined” has three parts that go from easy to hard.</p>
-          <div class="qt-wsrow">
-            <div><label class="qt-lab">Topic</label>
-              <select id="wsTopic" class="qt-sel"><option value="all">All topics in Chapter ${n}</option>${CH.topics.map(t => `<option value="${t.id}">${esc(t.title)}</option>`).join("")}</select></div>
-            <div><label class="qt-lab">Level</label>
-              <div class="qt-seg" id="wsLv">${Object.entries(WS).map(([k, d]) => `<button data-v="${k}">${d.name}<small>${d.sub}</small></button>`).join("")}</div></div>
-            <div><label class="qt-lab">Problems</label>
-              <div class="qt-seg" id="wsN">${[12, 21, 30].map(k => `<button data-v="${k}">${k}</button>`).join("")}</div></div>
-          </div>
-          <div class="qt-go"><button class="btn" style="background:#8A6415" id="wsGo">📄 Make worksheet + answer key</button></div>
-          ${cpPrint()}
-        </div>
-      </div>
-      ${H.length ? `<div class="card qt-hist"><span class="label">Your recent results · Chapter ${n} · this device</span>
-        <table>${H.map(r => `<tr><td>${esc(r.title)}</td><td class="pct">${r.score} / ${r.total}</td><td><b>${r.pct}%</b>${r.kind === "test" ? " · " + grade(r.pct) : ""}</td><td class="qt-faint">${new Date(r.at).toLocaleDateString("en-US", { month: "short", day: "numeric" })}</td></tr>`).join("")}</table></div>` : ""}`;
-    const lvBox = g("qzLv") || document.createElement("div");
-    LEVELS.forEach(l => { const b = document.createElement("button"); b.type = "button"; b.className = "pill" + (l.n === opt.lv ? " on" : ""); b.style.setProperty("--c", l.c); b.textContent = l.n + " " + l.name; b.onclick = () => { opt.lv = l.n; home(); }; lvBox.appendChild(b); });
-    const seg = (id, key, num) => !g(id) ? 0 : g(id).querySelectorAll("button").forEach(b => { b.type = "button"; const v = num ? +b.dataset.v : b.dataset.v; b.classList.toggle("on", v === opt[key]); b.onclick = () => { opt[key] = v; home(); }; });
-    seg("tsScope", "scope"); seg("tsDiff", "diff"); seg("tsN", "n", true); seg("wsLv", "wsLv"); seg("wsN", "wsN", true);
-    g("wsTopic").value = opt.wsTopic; g("wsTopic").onchange = e => { opt.wsTopic = e.target.value; };
-    g("wsGo").onclick = () => paper("ws");
-
+    view.innerHTML = other && other.live && other.ch !== CH.id ? `<div class="fb hint qt-resume"><span class="tag">Unfinished test</span>${esc(other.title)} is still open (the clock keeps running). <button class="btn sm" id="qtResume">Go back to it →</button></div>` : "";
     if (g("qtResume")) g("qtResume").onclick = () => { openChapter(other.ch, "practice"); setTab("quiz"); };
-    wireCp();
-
   }
   function titleFor(kind, o) {
     const n = chNum(CH);
@@ -530,7 +506,7 @@
     const fbk = (k, tag, html) => { g("qtF").innerHTML = `<div class="fb ${k}"><span class="tag">${tag}</span>${html}</div>`; render(g("qtF")); };
     g("qtC").onclick = check1; g("qtN").onclick = next;
     inp.addEventListener("keydown", e => { if (e.key === "Enter") { e.preventDefault(); check1(); } });
-    g("qtQuit").onclick = () => { if (confirm("Quit this quiz? Your answers won't be saved.")) home(); };
+    g("qtQuit").onclick = () => { if (confirm("Quit this quiz? Your answers won't be saved.")) { home(); setTab("learn"); } };
     if (answered) lock(run.res[run.i]); else inp.focus({ preventScroll: true });
   }
 

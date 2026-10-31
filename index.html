@@ -48,6 +48,13 @@
   .ws-n{flex:none;width:28px;height:28px;border-radius:50%;background:var(--c);color:#fff;display:grid;place-items:center;font-weight:700;font-size:13px}
   .ws-t{flex:1 1 220px;font-weight:500}
   .ws-btns{display:flex;gap:6px;flex-wrap:wrap}
+  .ws-panel{display:flex;flex-direction:column;gap:10px;background:#FFF8EA;border:1.5px solid #E9D6A8;border-radius:14px;padding:14px 16px;margin:4px 0 10px}
+  .ws-seg{display:flex;flex-wrap:wrap;align-items:center;gap:6px}
+  .ws-lab{width:80px;font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--faint)}
+  .ws-seg button{border:1.5px solid var(--line);background:#fff;border-radius:999px;padding:5px 12px;font:inherit;font-size:13.5px;font-weight:600;cursor:pointer}
+  .ws-seg button.on{background:var(--navy);border-color:var(--navy);color:#fff}
+  .ws-sel{border:1px solid var(--line);border-radius:10px;padding:7px 10px;font:inherit;font-size:14px;background:#fff;min-width:260px;max-width:100%}
+  .ws-go{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
   .ws-handouts{margin-top:14px;padding-top:6px;border-top:2px dashed var(--line)}
   .ws-handouts h3{font-size:16px;margin:6px 0 4px;font-family:Inter,sans-serif;font-weight:700}
   .ws-handouts a.ws-t{text-decoration:none;color:var(--ink)}
@@ -713,6 +720,41 @@ function wsChapters(c){
     out.push({ href:l.href, ch:l.ch, t:l.t && !/same as AB/.test(l.t) ? l.t : u.title.replace(/^\d+\.\s*/, ""), extra:l.extra }); }));
   return out.sort((a, b) => a.href === b.href ? a.ch - b.ch : a.href < b.href ? -1 : 1);
 }
+/* worksheet maker for one chapter, opened under its row on the Worksheets page */
+const WS_TOPICS = {};
+function chapterLessons(href, ch){
+  if (!WS_TOPICS[href]) WS_TOPICS[href] = fetch(href).then(r => r.ok ? r.text() : "").catch(() => "").then(src => {
+    const out = {}; let cur = null;
+    src.split("\n").forEach(line => { let m = /^\{id:"(ch\d+)",title:"/.exec(line); if (m) { cur = out[m[1]] = []; return; }
+      m = /^ ?\{id:"([A-Za-z0-9_]+)",title:"((?:[^"\\]|\\.)*)",idea:/.exec(line); if (m && cur) cur.push({ id:m[1], t:m[2].replace(/\\(.)/g, "$1") }); });
+    return out; });
+  return WS_TOPICS[href].then(o => {
+    const ts = o["ch" + ch] || [], G = [];
+    ts.forEach((t, i) => { const m = /^(\d+\.\d+)\s+(.*)$/.exec(t.t), last = G[G.length - 1];
+      if (m && last && last.no === m[1]) { last.ids.push(t.id); last.parts.push(m[2]); } else G.push({ no:m ? m[1] : ch + "." + (i + 1), name:m ? m[2] : t.t, ids:[t.id], parts:[m ? m[2] : t.t] }); });
+    return G;
+  });
+}
+function wsPanel(row){
+  const open = row.nextElementSibling && row.nextElementSibling.classList.contains("ws-panel");
+  document.querySelectorAll(".ws-panel").forEach(p => p.remove()); if (open) return;
+  const href = row.dataset.href, ch = row.dataset.ch, st = { lv:"combined", n:21, t:"all" };
+  const seg = (name, items, key) => h("div", { class:"ws-seg", "data-k":key }, h("span", { class:"ws-lab" }, name),
+    items.map(([v, txt]) => h("button", { type:"button", class:String(st[key]) === String(v) ? "on" : "", onclick:e => { st[key] = v; e.currentTarget.parentNode.querySelectorAll("button").forEach(b => b.classList.toggle("on", b === e.currentTarget)); } }, txt)));
+  const lessons = h("select", { class:"ws-sel", onchange:e => { st.t = e.target.value; } }, h("option", { value:"all" }, "All lessons in this chapter"));
+  const go = () => { location.href = `${href}#ch${ch}-ws-${st.lv}-${st.n}${st.t === "all" ? "" : "-" + st.t}`; };
+  const p = h("div", { class:"ws-panel" },
+    h("div", { class:"ws-seg" }, h("span", { class:"ws-lab" }, "Lesson"), lessons),
+    seg("Level", [["easy", "Easy"], ["medium", "Medium"], ["hard", "Hard"], ["combined", "Combined (Easy → Hard)"]], "lv"),
+    seg("Problems", [[12, "12"], [21, "21"], [30, "30"]], "n"),
+    h("div", { class:"ws-go" },
+      h("button", { type:"button", class:"btn", style:"background:#8A6415", onclick:go }, "📄 Make worksheet + answer key"),
+      h("a", { class:"btn ghost sm", href:`${href}#ch${ch}-pquiz` }, "📝 Quiz on paper + key"),
+      h("a", { class:"btn ghost sm", href:`${href}#ch${ch}-ptest` }, "⏱ Test on paper + key")),
+    h("p", { class:"muted", style:"margin:0;font-size:13px" }, "Opens a printable page — download the worksheet, the answer key, or both in one PDF. A new version every time."));
+  row.after(p);
+  chapterLessons(href, ch).then(G => G.forEach(x => lessons.append(h("option", { value:x.ids.join(",") }, x.no + " " + x.parts.join(" + ")))));
+}
 function pageWorksheets(v, sel){
   const hasHandout = c => c.units.some(u => (u.lessons || []).some(l => l.worksheet || l.notes));
   const cs = COURSES.filter(c => (c.levels && wsChapters(c).length) || hasHandout(c));
@@ -721,9 +763,9 @@ function pageWorksheets(v, sel){
     h("div", { class:"page-head" }, h("h1", {}, "Worksheets, Quizzes & Tests"),
       h("p", {}, "Every chapter has a printable worksheet (Easy, Medium, Hard or Combined), a quiz and a chapter test — each with an answer key. Download them as PDF, or take the quiz and test online and get graded. A new version is made every time.")),
     h("div", { class:"ws-how" },
-      h("div", {}, h("b", {}, "📄 Worksheet"), h("span", {}, "Easy · Medium · Hard · Combined (A → B → C). 12, 21 or 30 problems.")),
+      h("div", {}, h("b", {}, "📄 Worksheet"), h("span", {}, "Pick one lesson or the whole chapter. Easy · Medium · Hard · Combined. 12, 21 or 30 problems.")),
       h("div", {}, h("b", {}, "📝 Quiz"), h("span", {}, "10 questions at one level. Online with instant feedback, or on paper.")),
-      h("div", {}, h("b", {}, "⏱ Test"), h("span", {}, "Timed, graded, with a topic report. Chapter or cumulative. Paper version too.")),
+      h("div", {}, h("b", {}, "⏱ Test"), h("span", {}, "Timed, graded, with a topic report. Paper version too.")),
       h("div", {}, h("b", {}, "🔑 Answer key"), h("span", {}, "Answers with steps — download it separately or in the same file."))),
     h("nav", { class:"ws-tabs" }, cs.map(c => h("a", { href:"#/worksheets/" + c.id, class:cur === c ? "on" : "", style:"--c:" + c.color }, c.title))));
   const list = cur ? [cur] : cs;
@@ -732,11 +774,11 @@ function pageWorksheets(v, sel){
     wrap.append(h("div", { class:"card ws-course", style:"--c:" + c.color },
       h("div", { class:"ws-ch-head" }, h("h2", {}, c.title), h("a", { class:"btn sm ghost", href:"#/course/" + c.id }, "Course page →")),
       chs.length ? null : h("p", { class:"muted", style:"margin:4px 0 0;font-size:14px" }, "Online quizzes and tests for this course are coming. Printable handouts:"),
-      h("div", { class:"ws-list" }, chs.map((x, i) => h("div", { class:"ws-row" },
+      h("div", { class:"ws-list" }, chs.map((x, i) => h("div", { class:"ws-row", "data-href":x.href, "data-ch":x.ch },
         h("span", { class:"ws-n" }, two ? i + 1 : x.ch),
         h("span", { class:"ws-t" }, x.t, x.extra ? h("span", { class:"tag", style:"margin-left:8px;background:var(--gold-soft);color:#8A6415" }, x.extra === "BC" ? "BC" : x.extra) : null, two && /calculus-bc/.test(x.href) && !x.extra ? h("span", { class:"tag", style:"margin-left:8px" }, "BC") : null),
         h("span", { class:"ws-btns" },
-          h("a", { class:"btn sm", style:"background:#8A6415", href:`${x.href}#ch${x.ch}-ws` }, "📄 Worksheet"),
+          h("button", { class:"btn sm", type:"button", style:"background:#8A6415", onclick:e => wsPanel(e.currentTarget.closest(".ws-row")) }, "📄 Worksheet ▾"),
           h("a", { class:"btn sm teal", href:`${x.href}#ch${x.ch}-quiz` }, "📝 Quiz"),
           h("a", { class:"btn sm", href:`${x.href}#ch${x.ch}-test` }, "⏱ Test"))))),
       (() => { const hs = []; c.units.forEach((u, ui) => (u.lessons || []).forEach((l, li) => { if (l.worksheet || l.notes) hs.push([u, ui, l, li]); }));

@@ -224,8 +224,8 @@
     }
     const m = /^#(ch\w+)-(quiz|ws|test)$/.exec(HASH0);
     if (m) { if (CHAPTERS.some(c => c.id === m[1]) && CH.id !== m[1]) openChapter(m[1], "practice"); setTab("quiz");
-      const card = (g(m[2] === "ws" ? "wsGo" : m[2] === "test" ? "tsGo" : "qzGo") || {}).closest && g(m[2] === "ws" ? "wsGo" : m[2] === "test" ? "tsGo" : "qzGo").closest(".qt-box");
-      if (card && m[2] !== "quiz") setTimeout(() => { card.scrollIntoView({ behavior: "smooth", block: "center" }); card.classList.add("qt-flash"); setTimeout(() => card.classList.remove("qt-flash"), 1800); }, 250); }
+      if (m[2] === "ws") { const card = g("qtWsCard"); if (card) setTimeout(() => { card.scrollIntoView({ behavior: "smooth", block: "center" }); card.classList.add("qt-flash"); setTimeout(() => card.classList.remove("qt-flash"), 1800); }, 250); }
+      else setTimeout(() => gotoCp(m[2]), 100); }
   }
 
   /* ---------- printable handouts (PDF worksheet + answer key) for this chapter ----------
@@ -452,29 +452,7 @@
     view.innerHTML = cpCard() + `
       ${other && other.live && other.ch !== CH.id ? `<div class="fb hint qt-resume"><span class="tag">Unfinished test</span>${esc(other.title)} is still open (the clock keeps running). <button class="btn sm" id="qtResume">Go back to it →</button></div>` : ""}
       <div class="qt-grid">
-        <div class="card qt-box">
-          <span class="label" style="color:var(--teal)">Quick Quiz</span>
-          <h2>Check one topic — or the whole chapter</h2>
-          <p class="qt-sub">10 questions · one level · you see right or wrong after each one · no hints.</p>
-          <label class="qt-lab">Topic</label>
-          <select id="qzTopic" class="qt-sel"><option value="all">All topics in Chapter ${n}</option>${CH.topics.map(t => `<option value="${t.id}">${esc(t.title)}</option>`).join("")}</select>
-          <label class="qt-lab">Level</label>
-          <div class="pills" id="qzLv"></div>
-          <div class="qt-go"><button class="btn teal" id="qzGo">Start quiz →</button><button class="btn ghost" id="qzPrint">📄 Paper quiz + answer key</button></div>
-        </div>
-        <div class="card qt-box">
-          <span class="label" style="color:var(--navy)">Chapter Test</span>
-          <h2>Like a real test</h2>
-          <p class="qt-sub">Timed · no hints · nothing is checked until you hand it in · graded with a topic-by-topic report.</p>
-          <label class="qt-lab">Covers</label>
-          <div class="qt-seg" id="tsScope"><button data-v="chapter">Chapter ${n} only</button>${n > 1 ? `<button data-v="cumul">Chapters 1–${n} (cumulative)</button>` : ""}</div>
-          <label class="qt-lab">Difficulty</label>
-          <div class="qt-seg" id="tsDiff">${Object.entries(DIFF).map(([k, d]) => `<button data-v="${k}">${d.name}<small>${d.sub}</small></button>`).join("")}</div>
-          <label class="qt-lab">Length</label>
-          <div class="qt-seg" id="tsN">${[10, 15, 20, 25].map(k => `<button data-v="${k}">${k} questions</button>`).join("")}</div>
-          <div class="qt-go"><button class="btn" id="tsGo">Start test →</button><button class="btn ghost" id="tsPrint">📄 Paper test + answer key</button><span class="qt-time" id="tsTime"></span></div>
-        </div>
-        <div class="card qt-box qt-wide">
+        <div class="card qt-box qt-wide" id="qtWsCard">
           <span class="label" style="color:#8A6415">Worksheet</span>
           <h2>Printable practice — easy, medium, hard, or all three</h2>
           <p class="qt-sub">A paper worksheet with room to work, plus an answer key with steps. “Combined” has three parts that go from easy to hard.</p>
@@ -491,21 +469,16 @@
       </div>
       ${H.length ? `<div class="card qt-hist"><span class="label">Your recent results · Chapter ${n} · this device</span>
         <table>${H.map(r => `<tr><td>${esc(r.title)}</td><td class="pct">${r.score} / ${r.total}</td><td><b>${r.pct}%</b>${r.kind === "test" ? " · " + grade(r.pct) : ""}</td><td class="qt-faint">${new Date(r.at).toLocaleDateString("en-US", { month: "short", day: "numeric" })}</td></tr>`).join("")}</table></div>` : ""}`;
-    const lvBox = g("qzLv");
+    const lvBox = g("qzLv") || document.createElement("div");
     LEVELS.forEach(l => { const b = document.createElement("button"); b.type = "button"; b.className = "pill" + (l.n === opt.lv ? " on" : ""); b.style.setProperty("--c", l.c); b.textContent = l.n + " " + l.name; b.onclick = () => { opt.lv = l.n; home(); }; lvBox.appendChild(b); });
-    g("qzTopic").value = opt.topic; g("qzTopic").onchange = e => { opt.topic = e.target.value; };
-    const seg = (id, key, num) => g(id).querySelectorAll("button").forEach(b => { b.type = "button"; const v = num ? +b.dataset.v : b.dataset.v; b.classList.toggle("on", v === opt[key]); b.onclick = () => { opt[key] = v; home(); }; });
+    const seg = (id, key, num) => !g(id) ? 0 : g(id).querySelectorAll("button").forEach(b => { b.type = "button"; const v = num ? +b.dataset.v : b.dataset.v; b.classList.toggle("on", v === opt[key]); b.onclick = () => { opt[key] = v; home(); }; });
     seg("tsScope", "scope"); seg("tsDiff", "diff"); seg("tsN", "n", true); seg("wsLv", "wsLv"); seg("wsN", "wsN", true);
     g("wsTopic").value = opt.wsTopic; g("wsTopic").onchange = e => { opt.wsTopic = e.target.value; };
     g("wsGo").onclick = () => paper("ws");
-    const estQs = levelList(DIFF[opt.diff].mix, opt.n).map(lv => ({ lv }));
-    g("tsTime").textContent = "⏱ " + minutes(estQs) + " minutes";
+
     if (g("qtResume")) g("qtResume").onclick = () => { openChapter(other.ch, "practice"); setTab("quiz"); };
     wireCp();
-    g("qzGo").onclick = () => start("quiz");
-    g("tsGo").onclick = () => start("test");
-    g("tsPrint").onclick = () => paper("test");
-    g("qzPrint").onclick = () => paper("quiz");
+
   }
   function titleFor(kind, o) {
     const n = chNum(CH);

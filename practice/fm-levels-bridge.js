@@ -708,6 +708,7 @@
       s.onload = ok; s.onerror = () => { h2pLoading = null; bad(); }; document.head.appendChild(s);
     }));
   }
+  const kindName = m => { const b = m.querySelector('[data-dl="paper"]'); return b ? b.textContent.trim() : "Worksheet"; };
   async function download(m, which, base) {
     const msg = m.querySelector("#qtpMsg"), btns = m.querySelectorAll("[data-dl]");
     btns.forEach(b => b.disabled = true); msg.textContent = "Making the PDF…";
@@ -738,17 +739,28 @@
         sv.setAttribute("width", w); sv.setAttribute("height", h); sv.style.width = w + "px"; sv.style.height = h + "px"; sv.style.maxWidth = "none"; });
       if (m.classList.contains("bw")) toGray(meas);
       const box = document.createElement("div"); box.className = meas.className; box.style.width = W + "px";
-      let page = null, used = 0;
+      let page = null, used = 0, part = 0; const pagePart = [];
       blocks.forEach(bk => {
         const hgt = bk.el.getBoundingClientRect().height;
-        if (!page || bk.newDoc || used + hgt > H) { page = document.createElement("div"); page.className = "qtp-pg" + (box.children.length ? " qtp-newpage" : ""); box.appendChild(page); used = 0; }
+        if (bk.newDoc) part++;
+        if (!page || bk.newDoc || used + hgt > H) { page = document.createElement("div"); page.className = "qtp-pg" + (box.children.length ? " qtp-newpage" : ""); box.appendChild(page); pagePart.push(part); used = 0; }
         page.appendChild(bk.el); used += hgt;
       });
       meas.remove();
       const name = base + (which === "key" ? "_AnswerKey" : which === "both" ? "_with-Answers" : "") + ".pdf";
       await html2pdf().set({ margin: [12, 12, 12, 12], filename: name, image: { type: "jpeg", quality: 0.96 },
         html2canvas: { scale: 2, useCORS: true, backgroundColor: "#ffffff", scrollX: 0, scrollY: 0 }, jsPDF: { unit: "mm", format: "letter", orientation: "portrait" },
-        pagebreak: { mode: ["css"], before: ".qtp-newpage" } }).from(box).save();
+        pagebreak: { mode: ["css"], before: ".qtp-newpage" } }).from(box).toPdf().get("pdf").then(pdf => {
+          // page numbers: "Page 2 / 4" — the worksheet and the answer key are numbered separately
+          const n = pdf.internal.getNumberOfPages(), same = n === pagePart.length, labels = which === "both" ? [kindName(m), "Answer key"] : [which === "key" ? "Answer key" : kindName(m)];
+          const pw = pdf.internal.pageSize.getWidth(), ph = pdf.internal.pageSize.getHeight();
+          for (let i = 1; i <= n; i++) {
+            const pt = same ? pagePart[i - 1] : 0, inPart = same ? pagePart.filter(x => x === pt) : Array(n).fill(0), k = same ? pagePart.slice(0, i).filter(x => x === pt).length : i;
+            pdf.setPage(i); pdf.setFontSize(9); pdf.setTextColor(120);
+            pdf.text("Prof. Fang Math \u00b7 fangmath.com", 12, ph - 5);
+            pdf.text(`${labels[pt] || labels[0]} \u00b7 Page ${k} / ${inPart.length}`, pw - 12, ph - 5, { align: "right" });
+          }
+        }).save();
       msg.textContent = "✓ Downloaded " + name;
     } catch (e) {
       msg.innerHTML = "Couldn't make the PDF here. Use <b>🖨 Print</b> and choose <b>Save as PDF</b> instead.";
@@ -871,7 +883,7 @@
   body.qt-printing .qtp{position:static;background:none;padding:0;overflow:visible}
   body.qt-printing .qtp-sheet{box-shadow:none;border-radius:0;padding:0;max-width:none}
   body.qt-printing .qtp-acts,body.qt-printing .qtp-msg{display:none}
-  @page{margin:14mm}
+  @page{margin:14mm 14mm 16mm;@bottom-right{content:"Page " counter(page) " / " counter(pages);font:9pt Inter,sans-serif;color:#777}@bottom-left{content:"Prof. Fang Math \\00B7  fangmath.com";font:9pt Inter,sans-serif;color:#777}}
 }`;
     document.head.appendChild(s);
   }
@@ -1040,7 +1052,7 @@
 .fc-line{border-bottom:1px solid #16233B;min-width:180px;padding-bottom:2px;font-size:clamp(11px,1.4vw,15px)}.fc-sig{font-family:"Brush Script MT","Segoe Script",cursive;font-size:clamp(16px,2.2vw,24px)}
 .fc-tiers{position:absolute;bottom:2.5%;font-family:Inter,sans-serif;font-size:clamp(8px,1vw,11px);color:#8C93A0}
 .fc-wm{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%) rotate(-18deg);font-family:Inter,sans-serif;font-weight:800;font-size:clamp(50px,11vw,130px);color:rgba(179,38,30,.10);pointer-events:none}
-@media print{body.cert-printing > *:not(.fm-certm){display:none!important}body.cert-printing .fm-certm{position:static;background:none;padding:0}body.cert-printing .fm-certbar{display:none}@page{size:letter landscape;margin:0}}`;
+@media print{body.cert-printing > *:not(.fm-certm){display:none!important}body.cert-printing .fm-certm{position:static;background:none;padding:0}body.cert-printing .fm-certbar{display:none}.fm-certm{page:cert}}@page cert{size:letter landscape;margin:0;@bottom-right{content:none}@bottom-left{content:none}}`;
     document.head.appendChild(css);
     const wrap = (name, after) => { const o = window[name]; if (typeof o !== "function") return; window[name] = function () { const r = o.apply(this, arguments); try { after(); } catch (e) {} return r; }; };
     wrap("chapters", () => setTimeout(() => progRefresh(true), 0));

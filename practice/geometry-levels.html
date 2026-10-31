@@ -186,6 +186,11 @@ footer{text-align:center;color:var(--faint);font-size:13px;padding:24px}
 .cs-top .cs-acts{display:flex;gap:8px}
 .cs-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
 @media (max-width:700px){.cs-grid{grid-template-columns:1fr}}
+.secbar{grid-column:1/-1;display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-bottom:2px}
+.secbar .label{margin-right:4px}
+.secbar .sb{display:flex;align-items:center;gap:6px;border:1.5px solid var(--line);background:var(--surface);border-radius:999px;padding:5px 12px 5px 5px;font:inherit;font-size:13.5px;font-weight:600;color:var(--ink);cursor:pointer}
+.secbar .sb i{font-style:normal;font-size:12px;min-width:26px;height:22px;border-radius:11px;display:grid;place-items:center;background:var(--bg);padding:0 4px}
+.secbar .sb.on{border-color:var(--teal);background:var(--teal-soft)} .secbar .sb.on i{background:var(--teal);color:#fff}
 .cs-card.cs-wide{grid-column:1/-1;overflow-x:auto} .cs-card .wtable{font-size:13.5px}
 .cs-card{border:1px solid var(--line);border-radius:12px;padding:12px 14px;break-inside:avoid;page-break-inside:avoid}
 .cs-card h3{margin:0 0 6px;font-size:16px;color:var(--navy);font-family:Fraunces,Georgia,serif}
@@ -240,7 +245,7 @@ footer{text-align:center;color:var(--faint);font-size:13px;padding:24px}
       <div class="lvsub"><span id="lvDesc"></span><span class="lvplace"><span id="recText"></span><button class="btn ghost sm" id="placeBtn">Take the 5-question check</button></span></div>
     </div>
     <div class="card practice" id="practice" hidden>
-      <div class="phead"><h2 id="pTitle"></h2><button class="btn ghost sm" id="closeP">All topics</button></div>
+      <div class="phead"><h2 id="pTitle"></h2><button class="btn ghost sm" id="closeP">← This section</button></div>
       <div class="pills" id="pLevels"></div>
       <div class="problem" id="pQ"></div>
       <div class="row">
@@ -1095,7 +1100,7 @@ function sections(){ const out=[]; CH.topics.forEach((t,i)=>{ const s=secOf(t,i)
 function tlab(t){ const i=CH.topics.indexOf(t), G=sections().find(g=>g.idx.includes(i)), m=/^(\d+\.\d+) (.*)$/.exec(t.title), part=m?m[2]:t.title;
   if(!G||G.idx.length<2) return {multi:false,sec:t.title,part,full:t.title};
   return {multi:true,sec:G.no+" "+G.name,part,k:G.idx.indexOf(i)+1,n:G.idx.length,first:G.idx[0]===i,full:G.no+" "+G.name+" · "+part}; }
-function secList(){ const box=$("secs"); if(!box||!CH) return; box.innerHTML=""; sections().forEach(g=>{ const x=document.createElement("button"); x.type="button"; const on=g.idx.includes(LI), done=g.idx.every(i=>st&&st.learned[CH.topics[i].id]); x.className="sec"+(on?" on":"")+(done?" done":""); x.innerHTML=`<b>${done?"✓":g.no}</b><span>${g.name}</span>`; x.onclick=()=>{ setTab("learn"); openLesson(g.idx[0],true); }; box.appendChild(x); }); }
+function secList(){ const box=$("secs"); if(!box||!CH) return; box.innerHTML=""; sections().forEach(g=>{ const x=document.createElement("button"); x.type="button"; const on=g.idx.includes(LI), done=g.idx.every(i=>st&&st.learned[CH.topics[i].id]); x.className="sec"+(on?" on":"")+(done?" done":""); x.innerHTML=`<b>${done?"✓":g.no}</b><span>${g.name}</span>`; x.onclick=()=>{ if(!$("practiceView").hidden){ LI=g.idx[0]; $("practice").hidden=true; road(); topics(); $("topics").scrollIntoView({behavior:"smooth",block:"start"}); return; } setTab("learn"); openLesson(g.idx[0],true); }; box.appendChild(x); }); }
 function legend(){ if(!st) return; const box=$("legend"); box.innerHTML=""; const cur=curLv(); LEVELS.forEach(l=>{ const b=document.createElement("button"); b.type="button"; b.className="lvc"+(l.n===cur?" on":"")+(st.rec===l.n?" star":""); b.style.setProperty("--c",l.c); b.title=l.desc; b.innerHTML=`<i>${l.n}</i>${l.name}`; b.onclick=()=>setLevel(l.n); box.appendChild(b); }); const L0=LEVELS[cur-1]; $("lvDesc").innerHTML=`<b style="color:${L0.c}">Level ${cur} · ${L0.name}</b> — ${L0.desc}. Every topic below uses this level.`; }
 
 function curLv(){ return st.lvl||st.rec||1; }
@@ -1104,7 +1109,13 @@ function recText(){ $("recText").innerHTML=st.rec?`★ Suggested: Level ${st.rec
 function pillsFor(t,cur,onPick){ const w=document.createElement("div"); w.className="pills";
   LEVELS.forEach(l=>{ const b=document.createElement("button"); b.type="button"; b.className="pill"+(l.n===cur?" on":"")+(st.rec===l.n?" star":""); b.style.setProperty("--c",l.c); const n=st.solved[t.id+l.n]||0; b.innerHTML=`${l.n} ${l.name}`+(n?`<span class="n">✓${n}</span>`:""); b.onclick=()=>onPick(l.n); w.appendChild(b); }); return w; }
 function topics(){ const box=$("topics"); box.innerHTML=""; legend(); const lvl=curLv();
-  CH.topics.forEach(t=>{ const c=document.createElement("div"); c.className="card topic"; const n=st.solved[t.id+lvl]||0;
+  /* practice follows the section: only the lessons of the section that is open */
+  const SG=sections(), G=SG.find(g=>g.idx.includes(LI))||SG[0];
+  const bar=document.createElement("div"); bar.className="secbar";
+  bar.innerHTML=`<span class="label">Practice for section</span>`;
+  SG.forEach(g=>{ const b=document.createElement("button"); b.type="button"; b.className="sb"+(g===G?" on":""); b.innerHTML=`<i>${g.no}</i>${g.name}`; b.onclick=()=>{ if(g===G) return; LI=g.idx[0]; $("practice").hidden=true; road(); topics(); box.scrollIntoView({behavior:"smooth",block:"start"}); }; bar.appendChild(b); });
+  box.appendChild(bar);
+  G.idx.map(i=>CH.topics[i]).forEach(t=>{ const c=document.createElement("div"); c.className="card topic"; const n=st.solved[t.id+lvl]||0;
     const tl=tlab(t); c.innerHTML=`${tl.multi?`<span class="label">${tl.first?tl.sec:"&nbsp;"}</span>`:""}<h2>${tl.multi?tl.part:t.title}</h2><p class="idea">${t.idea}</p><div class="example"><span class="label">Simplest example</span>${t.lesson.steps.map(s=>`<div class="q">$${s[0]}$</div>`).join("")}</div>`;
     const g=document.createElement("div"); g.className="tgo"; const go=document.createElement("button"); go.className="btn teal sm"; go.textContent="Practice →"; go.onclick=()=>startPractice(t,lvl); g.appendChild(go);
     const sm=document.createElement("small"); sm.textContent=n?`✓ ${n} solved at Level ${lvl}`:`Level ${lvl} · ${LEVELS[lvl-1].name}`; g.appendChild(sm); c.appendChild(g); box.appendChild(c); });
@@ -1180,7 +1191,7 @@ $("placeBtn").onclick=()=>{
 let LI=0, shown=1, TP=null, tDone=false, tTries=0;
 window.fmMarkLearned=id=>{ if(st){ st.learned[id]=true; save(); road(); } };   // used by geometry-words.js
 function road(){ const r=$("road"); r.innerHTML=""; const G=sections().find(g=>g.idx.includes(LI)); r.classList.toggle("single",!G||G.idx.length<2); secList(); CH.topics.forEach((t,i)=>{ const b=document.createElement("button"); b.type="button"; b.className="stop"+(st.learned[t.id]?" done":"")+(i===LI?" on":"")+(G&&!G.idx.includes(i)?" other":""); const sm=/^(\d+\.\d+) (.*)$/.exec(t.title); const tl=tlab(t); b.innerHTML=`<i>${st.learned[t.id]?"✓":tl.multi&&G&&G.idx.includes(i)?tl.k:sm?sm[1]:i+1}</i>${sm?sm[2]:t.title}`; b.onclick=()=>openLesson(i); r.appendChild(b); }); }
-function openLesson(i,scroll){ LI=i; shown=1; tDone=false; tTries=0; TP=null; road(); if(window.drawStory) drawStory(CH.id,CH.topics[i]); drawLesson(); if(scroll) ($("story")||$("lesson")).scrollIntoView({behavior:"smooth",block:"start"}); }
+function openLesson(i,scroll){ LI=i; shown=1; tDone=false; tTries=0; TP=null; road(); if($("topics")&&st){ const G=sections().find(g=>g.idx.includes(i)); if(T&&G&&!G.idx.includes(CH.topics.indexOf(T))) $("practice").hidden=true; topics(); } if(window.drawStory) drawStory(CH.id,CH.topics[i]); drawLesson(); if(scroll) ($("story")||$("lesson")).scrollIntoView({behavior:"smooth",block:"start"}); }
 function drawLesson(){
   const t=CH.topics[LI], l=t.lesson, box=$("lesson");
   const inl=window.GEOMETRY_WORDS&&GEOMETRY_WORDS[CH.id]&&GEOMETRY_WORDS[CH.id].inLesson===t.id;   // e.g. 1.1: the words card above IS the lesson

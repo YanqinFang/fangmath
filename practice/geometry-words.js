@@ -92,7 +92,7 @@
     plane: svg(`<polygon points="40,62 190,62 220,12 70,12" fill="#DDF0EE" stroke="${teal}" stroke-width="2"/>${dot(90, 44, "A", 16)}${dot(150, 30, "B", 16)}${dot(170, 50, "C", 16)}<text x="200" y="56" font-family="Fraunces,serif" font-size="16" font-style="italic" fill="${teal}">P</text>`, "plane P"),
     col: svg(`<line x1="14" y1="50" x2="216" y2="22" stroke="#94A3B8" stroke-width="2" stroke-dasharray="5 4"/>${dot(45, 46, "A")}${dot(105, 37.6, "B")}${dot(165, 29.3, "C")}${dot(130, 60, "D", -8)}`, "A, B, C collinear; D not"),
     inter: svg(`<line x1="20" y1="15" x2="210" y2="62" stroke="${teal}" stroke-width="3"/><line x1="20" y1="62" x2="210" y2="15" stroke="#6A4BD8" stroke-width="3"/>${dot(115, 38.5, "P")}`, "two lines crossing at P"),
-    angle: svg(`<line x1="40" y1="58" x2="216" y2="58" stroke="${teal}" stroke-width="3" marker-end="url(#wa)"/><line x1="40" y1="58" x2="170" y2="10" stroke="${teal}" stroke-width="3" marker-end="url(#wa)"/><path d="M70,58 A30,30 0 0 0 68,47" fill="none" stroke="${red}" stroke-width="2"/>${dot(40, 58, "B", -9)}${dot(130, 24.9, "A", 16)}${dot(180, 58, "C", -9)}`, "angle ABC")
+    angle: svg(`<line x1="40" y1="58" x2="216" y2="58" stroke="${teal}" stroke-width="3" marker-end="url(#wa)"/><line x1="40" y1="58" x2="170" y2="10" stroke="${teal}" stroke-width="3" marker-end="url(#wa)"/><path d="M70,58 A30,30 0 0 0 68,47" fill="none" stroke="${red}" stroke-width="2"/><text x="83" y="55" text-anchor="middle" font-family="Inter,sans-serif" font-size="12" font-weight="700" fill="${red}">1</text>${dot(40, 58, "B", -9)}${dot(130, 24.9, "A", 16)}${dot(180, 58, "C", -9)}`, "angle ABC")
   };
 
   /* ---------- the chapters ---------- */

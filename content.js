@@ -255,7 +255,24 @@ const COURSES = [
             { q:"A parabola has vertex $(3,1)$ and passes through $(5,9)$. Find $a$ in $f(x)=a(x-3)^2+1$.", answer:"2" } ] },
       ] },
       { title: "5. Polynomials & Polynomial Functions", app: "practice/algebra2.html?chapter=py", appTopics: 17, lessons: [] },
-      { title: "6. Radical Functions & Rational Exponents", app: "practice/algebra2.html?chapter=rf", appTopics: 7, lessons: [] },
+      { title: "6. Radical Functions & Rational Exponents", app: "practice/algebra2.html?chapter=rf", appTopics: 7, lessons: [
+        { title: "6-7 Inverse Relations & Functions",
+          notes: "materials/algebra2/ch06/Alg2_6-7_Inverse_Functions_Worksheet.pdf",
+          worksheet: "materials/algebra2/ch06/Alg2_6-7_Inverse_Functions_Worksheet.pdf",
+          answers: "materials/algebra2/ch06/Alg2_6-7_Inverse_Functions_Key.pdf",
+          summary: "Find an inverse in four steps, prove it by checking BOTH compositions, see it as a reflection over $y = x$, and get its domain and range by swapping the domain and range of $f$.",
+          example: { q: "Find the inverse of $f(x) = \\sqrt{x - 2}$ and give its domain.",
+            steps: ["Swap $x$ and $y$: $x = \\sqrt{y - 2}$.", "Square both sides: $x^2 = y - 2$, so $y = x^2 + 2$.", "The range of $f$ is $[0, \\infty)$, so the domain of $f^{-1}$ is $x \\ge 0$: $\\;f^{-1}(x) = x^2 + 2,\\ x \\ge 0$."],
+            simpler: "Try $f(x) = x + 3$ first: it is undone by subtracting $3$, so $f^{-1}(x) = x - 3$. Check: $f(4) = 7$ and $f^{-1}(7) = 4$." },
+          quiz: [
+            { q: "If $f(3) = 7$, what is $f^{-1}(7)$?", answer: "3", simpler: "The inverse sends each output back to its input." },
+            { q: "Find $f^{-1}(5)$ for $f(x) = 2x + 3$.", answer: "1", simpler: "Which input makes $2x + 3 = 5$?" },
+            { q: "The domain of $f$ is $[2, \\infty)$ and its range is $[0, \\infty)$. What is the domain of $f^{-1}$?", choices: ["$[2, \\infty)$", "$[0, \\infty)$", "all real numbers", "$(-\\infty, 2]$"], answer: 1, simpler: "Domain and range trade places." },
+            { q: "The graph of $f^{-1}$ is the graph of $f$ reflected over which line?", choices: ["the $x$-axis", "the $y$-axis", "$y = x$", "$y = -x$"], answer: 2 },
+            { q: "$(2, 9)$ is on the graph of $f$. Which point is on the graph of $f^{-1}$?", choices: ["$(9, 2)$", "$(-2, -9)$", "$(2, -9)$", "$\\left(\\tfrac12, \\tfrac19\\right)$"], answer: 0 },
+            { q: "Are $f(x) = 2x + 4$ and $g(x) = \\tfrac{x}{2} - 4$ inverses?", choices: ["Yes", "No"], answer: 1, simpler: "Try $x = 0$: $f(0) = 4$. Does $g(4)$ give back $0$?" }
+          ] }
+      ] },
       { title: "7. Exponential & Logarithmic Functions", app: "practice/algebra2.html?chapter=el", appTopics: 7, lessons: [] },
       { title: "8. Rational Functions", app: "practice/algebra2.html?chapter=rt", appTopics: 7, lessons: [] },
       { title: "9. Sequences & Series", app: "practice/algebra2.html?chapter=ss", appTopics: 7, lessons: [] },

@@ -13,9 +13,9 @@
    ===================================================================== */
 window.FM_VIDEOS = {
   geometry: {
-    // "1.1": "https://youtu.be/PASTE_ID_HERE",
-    // "1.2": "",
-    // "1.3": "",
+    "1.1": "https://youtu.be/7IZskPjEpQc",
+    "1.2": "https://youtu.be/gM7xeGs15SI",
+    "1.3": "https://youtu.be/ovFhnfDSNgA",
   },
   algebra1: {},
   algebra2: {},

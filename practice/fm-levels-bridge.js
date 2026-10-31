@@ -211,6 +211,7 @@
     tabBtn.onclick = () => setTab("quiz");
     cpHooks();
     progInit();
+    eocHooks();
     drawHandouts();
     const oc = window.openChapter;
     window.openChapter = function () { const r = oc.apply(this, arguments); try { drawHandouts(); } catch (e) {} return r; };
@@ -223,6 +224,8 @@
       const i = CH.topics.findIndex(x => x.id === t[3]);
       if (i >= 0) { if (t[2] === "learn" && typeof openLesson === "function") openLesson(i, true); else if (typeof startPractice === "function") startPractice(CH.topics[i]); }
     }
+    if (/^#p?eoc(-\w+)?$/.test(HASH0)) { const d = (/-(review|standard|honors)$/.exec(HASH0) || [])[1] || "standard";
+      setTimeout(() => HASH0.startsWith("#peoc") ? eocPaper(d) : eocHome(d), 150); }
     const m = /^#(ch\w+)-(quiz|test|ws|pquiz|ptest)(?:-(easy|medium|hard|combined))?(?:-(\d+))?(?:-([\w,]+))?$/.exec(HASH0);
     if (m) {
       if (CHAPTERS.some(c => c.id === m[1]) && CH.id !== m[1]) openChapter(m[1], "learn");
@@ -370,8 +373,8 @@
     return p;
   }
   function pool(scope) {           // [{t, c}] — topics in this chapter, or chapters 1 → this one interleaved
-    if (scope !== "cumul") return shuffle(CH.topics).map(t => ({ t, c: CH }));
-    const chs = CHAPTERS.slice(0, CHAPTERS.indexOf(CH) + 1).map(c => shuffle(c.topics).map(t => ({ t, c })));
+    if (scope !== "cumul" && scope !== "course") return shuffle(CH.topics).map(t => ({ t, c: CH }));
+    const chs = (scope === "course" ? CHAPTERS : CHAPTERS.slice(0, CHAPTERS.indexOf(CH) + 1)).map(c => shuffle(c.topics).map(t => ({ t, c })));
     const out = [], most = Math.max(...chs.map(x => x.length));
     for (let r = 0; r < most; r++) shuffle(chs).forEach(x => { if (x[r]) out.push(x[r]); });
     return out;
@@ -465,6 +468,7 @@
     if (kind === "ws") return `${topicName(o.wsTopic)} Worksheet · ${WS[o.wsLv].name}`;
     if (kind === "quiz" && o.cp) return `Chapter ${n} Quiz · ${o.cpLabel}`;
     if (kind === "quiz") return `Quiz · ${topicName(o.topic)} · Level ${o.lv} ${LEVELS[o.lv - 1].name}`;
+    if (o.scope === "course") return `End-of-Course Test · ${DIFF[o.diff].name}`;
     return (o.scope === "cumul" ? `Cumulative Test · Ch 1–${n}` : `Chapter ${n} Test`) + ` · ${DIFF[o.diff].name}`;
   }
   function start(kind) {
@@ -608,7 +612,7 @@
     const score = run.score, total = run.qs.length, pct = run.pct, test = run.kind === "test";
     const by = topicStats(), cum = run.qs.some(q => q.cid !== run.ch);
     const color = pct >= 80 ? "var(--green)" : pct >= 60 ? "var(--gold)" : "var(--red)";
-    const msg = pct === 100 ? "Perfect score! 🎉" : pct >= 90 ? "Excellent work." : pct >= 80 ? "Solid — fix the few you missed and you've got this chapter." : pct >= 60 ? "Getting there. Practice the weak topics below, then try again." : "This chapter needs more practice. Start with the weakest topic below.";
+    const msg = pct === 100 ? "Perfect score! 🎉" : pct >= 90 ? "Excellent work." : pct >= 80 ? (run.o.scope === "course" ? "Solid — fix the few you missed and you've got this course." : "Solid — fix the few you missed and you've got this chapter.") : pct >= 60 ? "Getting there. Practice the weak topics below, then try again." : (run.o.scope === "course" ? "Review the weakest chapters below first, then try a new version." : "This chapter needs more practice. Start with the weakest topic below.");
     view.innerHTML = `<div class="card qt-res">
         <div class="qt-score" style="--c:${color}"><div class="qt-ring" style="--p:${pct}"><b>${pct}%</b>${test ? `<span>${grade(pct)}</span>` : ""}</div>
           <div><span class="label">${esc(run.title)}</span><h2>${score} out of ${total} correct</h2><p>${msg}</p>
@@ -645,10 +649,11 @@
     const o = Object.assign({}, opt), qs = kind === "quiz" ? buildQuiz(o) : kind === "ws" ? buildWorksheet(o) : buildTest(o), title = titleFor(kind, o);
     const course = ((document.querySelector(".intro .label") || {}).textContent || "").split("·")[0].trim();
     const ver = Math.random().toString(36).slice(2, 6).toUpperCase();
-    const fileBase = ["FangMath", course, "Ch" + chNum(CH), kind === "quiz" ? "Quiz" : kind === "ws" ? "Worksheet" : (o.scope === "cumul" ? "Cumulative-Test" : "Test"), kind === "quiz" ? "L" + o.lv : kind === "ws" ? WS[o.wsLv].name : DIFF[o.diff].name, ver].join("_").replace(/[^\w-]+/g, "-");
+    const eoc = kind === "test" && o.scope === "course";
+    const fileBase = ["FangMath", course, eoc ? "End-of-Course" : "Ch" + chNum(CH), kind === "quiz" ? "Quiz" : kind === "ws" ? "Worksheet" : (o.scope === "cumul" ? "Cumulative-Test" : "Test"), kind === "quiz" ? "L" + o.lv : kind === "ws" ? WS[o.wsLv].name : DIFF[o.diff].name, ver].filter((x, i) => !(eoc && i === 3)).join("_").replace(/[^\w-]+/g, "-");
     const old = document.querySelector(".qtp"); if (old) old.remove();
     const m = document.createElement("div"); m.className = "qtp";
-    const head = (h, extra) => `<div class="qtp-head"><div><div class="qtp-brand">Prof. Fang <span>Math</span></div><h1>${h}</h1><div class="qtp-sub">${esc(course)} · ${esc(CH.title)} · ${qs.length} ${kind === "ws" ? "problems" : "questions"}${kind === "test" ? " · " + minutes(qs) + " minutes" : ""} · Version ${ver}</div></div>${extra || ""}</div>`;
+    const head = (h, extra) => `<div class="qtp-head"><div><div class="qtp-brand">Prof. Fang <span>Math</span></div><h1>${h}</h1><div class="qtp-sub">${esc(course)} · ${o.scope === "course" && kind === "test" ? "All " + CHAPTERS.length + " chapters" : esc(CH.title)} · ${qs.length} ${kind === "ws" ? "problems" : "questions"}${kind === "test" ? " · " + minutes(qs) + " minutes" : ""} · Version ${ver}</div></div>${extra || ""}</div>`;
     const groups = []; qs.forEach((q, i) => { const last = groups[groups.length - 1]; if (!last || last.name !== q.part) groups.push({ name: q.part, start: i + 1, qs: [q] }); else last.qs.push(q); });
     const partHead = gr => gr.name ? `<h3 class="qtp-part">${esc(gr.name)}</h3>` : "";
     m.innerHTML = `<div class="qtp-sheet${kind === "ws" ? " qtp-ws" : ""}">
@@ -675,7 +680,7 @@
       m.querySelectorAll(".qtp-mode button").forEach(x => x.classList.toggle("on", x === b)); });
     try { if (localStorage.getItem("fm-print-mode") === "bw") m.querySelector('.qtp-mode [data-mode="bw"]').click(); } catch (e) {}
     m.querySelector("#qtpX").onclick = close;
-    m.querySelector("#qtpNew").onclick = () => { close(); paper(kind); };
+    m.querySelector("#qtpNew").onclick = () => { close(); const save = opt; opt = o; paper(kind); opt = save; };
     m.querySelector("#qtpGo").onclick = () => { document.body.classList.add("qt-printing"); window.print(); setTimeout(() => document.body.classList.remove("qt-printing"), 600); };
     m.onclick = e => { if (e.target === m) close(); };
     m.querySelectorAll("[data-dl]").forEach(b => b.onclick = () => download(m, b.dataset.dl, fileBase));
@@ -893,7 +898,7 @@
       if (m && last && last.no === no) last.idx.push(i); else G.push({ no, idx: [i] }); });
     return G;
   }
-  function bestTest(c) { const H = hist().filter(r => r.ch === c.id && r.kind === "test"); return H.length ? Math.max(...H.map(r => r.pct)) : null; }
+  function bestTest(c) { const H = hist().filter(r => r.ch === c.id && r.kind === "test" && r.cp !== "eoc"); return H.length ? Math.max(...H.map(r => r.pct)) : null; }
   function chapterProg(c) {
     const S = chState(c), G = groupsOf(c), secs = G.map(g => g.idx.every(i => topicDone(S, c.topics[i])));
     const nd = secs.filter(Boolean).length, test = bestTest(c), allSecs = nd === G.length;
@@ -940,7 +945,7 @@
   }
   function progUI(C) {
     // 1) chapter list: green when done, small x/y otherwise
-    document.querySelectorAll("#chapters button.chap").forEach((b, i) => { const n = +((b.querySelector("i") || {}).textContent || 0);
+    document.querySelectorAll("#chapters button.chap:not(.eoc)").forEach((b, i) => { const n = +((b.querySelector("i") || {}).textContent || 0);
       let ci = CHAPTERS.findIndex(c => c.id === "ch" + n); if (ci < 0) ci = i; const p = C.P[ci]; if (!p) return;
       b.classList.toggle("pg-done", p.done); b.classList.toggle("pg-part", !p.done && p.nd > 0);
       let tag = b.querySelector(".pg-tag"); if (!tag) { tag = document.createElement("small"); tag.className = "pg-tag"; b.appendChild(tag); }
@@ -983,7 +988,7 @@
         <div class="fc-small">has successfully completed</div>
         <div class="fc-course">${esc(course)}</div>
         <div class="fc-tier">${T.name} · ${T.title}</div>
-        <div class="fc-stats"><span><b>${C.done}/${C.total}</b> chapters</span><span><b>${C.avg}%</b> average chapter test</span><span><b>${C.solved}</b> problems solved</span>${C.level ? `<span>practiced up to <b>Level ${C.level} · ${LV[C.level]}</b></span>` : ""}</div>
+        <div class="fc-stats"><span><b>${C.done}/${C.total}</b> chapters</span><span><b>${C.avg}%</b> average chapter test</span><span><b>${C.solved}</b> problems solved</span>${eocBest() != null ? `<span>End-of-course test <b>${eocBest()}%</b></span>` : ""}${C.level ? `<span>practiced up to <b>Level ${C.level} · ${LV[C.level]}</b></span>` : ""}</div>
         <div class="fc-sign"><div><div class="fc-line">${date}</div><small>Date</small></div><div><div class="fc-line fc-sig">Dr. Yanqin Fang</div><small>Prof. Fang Math</small></div></div>
         <div class="fc-tiers">🥇 Gold: tests 90%+ &nbsp;·&nbsp; 🥈 Silver: 80%+ &nbsp;·&nbsp; 🥉 Bronze: course completed</div>
         ${preview ? `<div class="fc-wm">PREVIEW</div>` : ""}
@@ -1044,7 +1049,52 @@
     progRefresh(true);
   }
 
+  /* ================= END-OF-COURSE TEST =================
+     Covers every chapter of the course (questions taken in turn from each chapter), timed, graded with a
+     chapter-by-chapter report. Opens from the bottom of the chapter list, the course page and the Worksheets page. */
+  const eocN = () => Math.max(20, Math.min(30, CHAPTERS.length * 2 + 4));
+  const eocOpts = d => Object.assign({}, opt || {}, { ch: CH.id, scope: "course", diff: d || "standard", n: eocN(), cp: "eoc" });
+  const eocBest = () => { const H = hist().filter(r => r.cp === "eoc"); return H.length ? Math.max(...H.map(r => r.pct)) : null; };
+  function eocPaper(d) { const save = opt; opt = eocOpts(d); paper("test"); opt = save; }
+  function eocHome(d) {
+    setTab("quiz"); if (run && run.live) return;          // an unfinished test is already on screen
+    let diff = d || "standard";
+    const C = courseProg(), b = eocBest(), course = ((document.querySelector(".intro .label") || {}).textContent || "").split("·")[0].trim();
+    const est = () => { const o = eocOpts(diff), lv = levelList(DIFF[diff].mix, o.n); return Math.max(5, Math.ceil(lv.reduce((a, l) => a + MIN_PER_LEVEL[l - 1], 0) / 5) * 5); };
+    const draw = () => {
+      view.innerHTML = `<div class="card qt-eoc">
+        <span class="label" style="color:var(--navy)">${esc(course)} · all ${CHAPTERS.length} chapters</span>
+        <h2>🏁 End-of-Course Test</h2>
+        <p>One big test over the whole course — questions from every chapter, easy to hard. Timed, no hints, graded at the end with a chapter-by-chapter report so you can see what to review.</p>
+        <div class="eoc-facts"><span><b>${eocN()}</b> questions</span><span><b>${est()}</b> minutes</span><span><b>${C.done}/${C.total}</b> chapters finished</span>${b != null ? `<span>best so far <b>${b}%</b></span>` : ""}</div>
+        <div class="eoc-diff" role="group" aria-label="Difficulty">${Object.entries(DIFF).map(([k, x]) => `<button type="button" data-d="${k}" class="${k === diff ? "on" : ""}"><b>${x.name}</b><small>${x.sub}</small></button>`).join("")}</div>
+        ${C.done < C.total ? `<p class="qt-faint">Tip: it's best taken after you finish every chapter — but you can try it any time.</p>` : ""}
+        <div class="qt-acts"><button class="btn" id="eocGo">Start the test →</button><button class="btn ghost" id="eocP">📄 Paper test + answer key</button><button class="btn ghost" id="eocX">Back to the lessons</button></div></div>`;
+      view.querySelectorAll("[data-d]").forEach(x => x.onclick = () => { diff = x.dataset.d; draw(); });
+      g("eocGo").onclick = () => { opt = eocOpts(diff); start("test"); };
+      g("eocP").onclick = () => eocPaper(diff);
+      g("eocX").onclick = () => { home(); setTab("learn"); };
+    };
+    draw(); try { history.replaceState(null, "", "#eoc"); } catch (e) {}
+    view.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+  function eocHooks() {
+    const add = () => { const b = g("chapters"); if (!b || b.querySelector(".eoc")) return;
+      const x = document.createElement("button"); x.type = "button"; x.className = "chap eoc"; const bb = eocBest();
+      x.innerHTML = `<i>🏁</i>End-of-Course Test${bb != null ? ` <small class="pg-tag" style="color:inherit">${bb}%</small>` : ""}`; x.onclick = () => eocHome(); b.appendChild(x); };
+    const o = window.chapters; if (typeof o === "function") window.chapters = function () { const r = o.apply(this, arguments); try { add(); } catch (e) {} return r; };
+    add();
+    const css = document.createElement("style"); css.textContent = `
+.chap.eoc{margin-top:8px;border:1.5px solid var(--navy)!important;color:var(--navy)!important;font-weight:700}.chap.eoc i{background:var(--gold-soft)!important}
+.chap.eoc:hover{background:var(--navy)!important;color:#fff!important}
+.qt-eoc h2{margin:6px 0 8px}.qt-eoc p{max-width:680px}
+.eoc-facts{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}.eoc-facts span{background:var(--bg);border:1px solid var(--line);border-radius:999px;padding:5px 12px;font-size:14px}
+.eoc-diff{display:flex;flex-wrap:wrap;gap:8px;margin:6px 0 12px}.eoc-diff button{display:flex;flex-direction:column;align-items:flex-start;border:1.5px solid var(--line);background:#fff;border-radius:12px;padding:8px 14px;cursor:pointer;font:inherit;color:var(--ink)}
+.eoc-diff button small{color:var(--muted);font-size:12px}.eoc-diff button.on{border-color:var(--navy);background:var(--navy);color:#fff}.eoc-diff button.on small{color:#cfd8e6}`;
+    document.head.appendChild(css);
+  }
   window.fmQuizState = () => run;
+  window.fmEOC = d => eocHome(d);
   window.fmCertificate = () => certificate();      // for checking in the browser console
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", ready); else ready();
 })();

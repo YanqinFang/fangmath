@@ -384,7 +384,7 @@ const CHAPTERS=[
  ]}
 ]},
 {id:"ch3",title:"Parallel & Perpendicular Lines",topics:[
- {id:"par",title:"Parallel Lines & Transversals",idea:"When parallel lines are cut by a transversal, the angles are either <b>equal</b> or <b>supplementary</b>: two acute angles are equal, two obtuse angles are equal, and an acute + an obtuse add to $180^\\circ$.",
+ {id:"par",title:"3.2 Parallel Lines & Transversals",idea:"When parallel lines are cut by a transversal, the angles are either <b>equal</b> or <b>supplementary</b>: two acute angles are equal, two obtuse angles are equal, and an acute + an obtuse add to $180^\\circ$.",
   lesson:{fig:figParallel({1:"110°",5:"?"}),steps:[["\\ell \\parallel m,\\ m\\angle 1 = 110^\\circ","Find $m\\angle 5$."],["\\angle 1 \\text{ and } \\angle 5 \\text{ are corresponding}","Same position at each intersection."],["m\\angle 5 = 110^\\circ","Corresponding angles are congruent."]],warn:"Same-side interior angles (like $\\angle 3$ and $\\angle 5$) are <b>supplementary</b>, not equal."},
   gen:[
   ()=>{const a=rnd(1,4),b=a+4,v=ACUTE.has(a)?rnd(35,80):rnd(100,145);return{q:`${figParallel({[a]:v+"°",[b]:"?"})}<div>Lines $\\ell$ and $m$ are parallel. If $m\\angle ${a} = ${deg(v)}$, find $m\\angle ${b}$.</div>`,type:"number",ans:v,ansTex:deg(v),hint:`$\\angle ${a}$ and $\\angle ${b}$ are corresponding angles.`,sol:[`$\\angle ${a}$ and $\\angle ${b}$ are corresponding, so they are congruent.`,`$m\\angle ${b} = ${deg(v)}$.`]}},
@@ -393,7 +393,7 @@ const CHAPTERS=[
   ()=>{const r=Math.random()<.5?"supp":"equal",[a,b]=pairGen(r);let p,q,c,d,x,va;do{x=rnd(5,30);p=rnd(2,6);q=rnd(2,6);va=ACUTE.has(a)?rnd(35,80):rnd(100,145);c=va-p*x;const vb=r==="equal"?va:180-va;d=vb-q*x}while(c===0||d===0||(r==="equal"&&p===q));return{q:`${figParallel({[a]:"("+lin(p,c)+")°",[b]:"("+lin(q,d)+")°"})}<div>$\\ell \\parallel m$, $m\\angle ${a} = (${lin(p,c)})^\\circ$ and $m\\angle ${b} = (${lin(q,d)})^\\circ$. Find $x$.</div>`,type:"number",ans:x,ansTex:`x = ${x}`,hint:`$\\angle ${a}$ and $\\angle ${b}$ are ${PAIRNAME(a,b)} angles. Are they equal or supplementary?`,sol:[r==="equal"?`They are congruent: $${lin(p,c)} = ${lin(q,d)}$.`:`They are supplementary: $(${lin(p,c)}) + (${lin(q,d)}) = 180$.`,`$x = ${x}$.`]}},
   ()=>{const [a,b]=pairGen("supp");let p,q,c,d,x,va;do{x=rnd(5,30);p=rnd(2,7);q=rnd(2,7);va=ACUTE.has(a)?rnd(35,80):rnd(100,145);c=va-p*x;d=(180-va)-q*x}while(c===0||d===0);const big=Math.max(va,180-va);return{q:`${figParallel({[a]:"("+lin(p,c)+")°",[b]:"("+lin(q,d)+")°"})}<div>$\\ell \\parallel m$, $m\\angle ${a} = (${lin(p,c)})^\\circ$ and $m\\angle ${b} = (${lin(q,d)})^\\circ$. Find the measure of the <b>larger</b> of the two angles.</div>`,type:"number",ans:big,ansTex:deg(big),hint:"First decide equal or supplementary, solve for $x$, then substitute.",sol:[`They are ${PAIRNAME(a,b)} angles, so supplementary: $${lin(p+q,c+d)} = 180$, so $x = ${x}$.`,`$m\\angle ${a} = ${va}^\\circ$, $m\\angle ${b} = ${180-va}^\\circ$. Larger: $${deg(big)}$.`]}}
  ]},
- {id:"slope",title:"Slopes of Parallel & Perpendicular Lines",idea:"<b>Parallel</b> lines have the <b>same</b> slope. <b>Perpendicular</b> lines have slopes that are <b>negative reciprocals</b> (they multiply to $-1$).",
+ {id:"slope",title:"3.5 Equations of Parallel & Perpendicular Lines",idea:"<b>Parallel</b> lines have the <b>same</b> slope. <b>Perpendicular</b> lines have slopes that are <b>negative reciprocals</b> (they multiply to $-1$).",
   lesson:{steps:[["y = \\tfrac{2}{3}x + 1","Slope $m = \\tfrac{2}{3}$."],["\\text{Parallel slope} = \\tfrac{2}{3}","Same slope."],["\\text{Perpendicular slope} = -\\tfrac{3}{2}","Flip the fraction and change the sign."]],warn:"Perpendicular needs <b>both</b> steps: flip <b>and</b> change the sign. The perpendicular slope of $2$ is $-\\tfrac{1}{2}$."},
   gen:[
   ()=>{const m=nz(-8,8),b=nz(-9,9);return{q:`What is the slope of a line parallel to $y = ${lin(m,b)}$?`,type:"number",ans:m,ansTex:`m = ${m}`,hint:"Parallel lines have the same slope.",sol:[`The slope of $y = ${lin(m,b)}$ is $${m}$.`,`Parallel slope: $${m}$.`]}},
@@ -404,7 +404,7 @@ const CHAPTERS=[
  ]}
 ]},
 {id:"ch4",title:"Congruent Triangles",topics:[
- {id:"tri",title:"Triangle Angle Sum & Exterior Angles",idea:"The angles of a triangle add to $180^\\circ$. An <b>exterior angle</b> equals the sum of the two <b>remote interior</b> angles.",
+ {id:"tri",title:"4.1 Angles of Triangles",idea:"The angles of a triangle add to $180^\\circ$. An <b>exterior angle</b> equals the sum of the two <b>remote interior</b> angles.",
   lesson:{steps:[["50^\\circ,\\ 70^\\circ,\\ x^\\circ","Two angles of a triangle are known."],["50 + 70 + x = 180","All three add to $180$."],["x = 60","Subtract."]],warn:"The exterior angle equals the two angles <b>not next to it</b> — not all three."},
   gen:[
   ()=>{let a,b;do{a=rnd(20,110);b=rnd(20,110)}while(a+b>=170);return{q:`Two angles of a triangle measure $${deg(a)}$ and $${deg(b)}$. Find the third angle.`,type:"number",ans:180-a-b,ansTex:deg(180-a-b),hint:"The three angles add to $180^\\circ$.",sol:[`$180 - ${a} - ${b} = ${180-a-b}$.`]}},
@@ -413,7 +413,7 @@ const CHAPTERS=[
   ()=>{let p,q,r,a,b,c,x;do{x=rnd(5,25);p=rnd(1,4);q=rnd(1,4);r=p+q+rnd(1,3);a=rnd(-10,30);b=rnd(-10,30);c=(p+q-r)*x+a+b}while(p*x+a<=10||q*x+b<=10||r*x+c>=180||r*x+c<=0);return{q:`In a triangle, the remote interior angles measure $(${lin(p,a)})^\\circ$ and $(${lin(q,b)})^\\circ$, and the exterior angle measures $(${lin(r,c)})^\\circ$. Find $x$.`,type:"number",ans:x,ansTex:`x = ${x}`,hint:"Exterior angle = sum of the remote interior angles.",sol:[`$(${lin(p,a)}) + (${lin(q,b)}) = ${lin(r,c)}$.`,`$${lin(p+q,a+b)} = ${lin(r,c)}$, so $x = ${x}$.`]}},
   ()=>{let k,A,d;do{k=pick([1,2]);A=rnd(30,70);d=A*(2+k)-180}while(d<=0||d>=A);const C=k*A;return{q:`In $\\triangle ABC$, $\\angle A$ is $${deg(d)}$ more than $\\angle B$, and $\\angle C$ is ${k===1?"equal to":"twice"} $\\angle A$. Find $m\\angle C$.`,type:"number",ans:C,ansTex:deg(C),hint:"Write everything in terms of $\\angle A$, then use the angle sum.",sol:[`$\\angle B = A - ${d}$, $\\angle C = ${k===1?"A":"2A"}$.`,`$A + (A - ${d}) + ${k===1?"A":"2A"} = 180$, so $${2+k}A = ${180+d}$ and $A = ${A}$.`,`$m\\angle C = ${C}^\\circ$.`]}}
  ]},
- {id:"iso",title:"Isosceles & Equilateral Triangles",idea:"In an <b>isosceles</b> triangle, the base angles are equal. An <b>equilateral</b> triangle has all sides equal and all angles $60^\\circ$.",
+ {id:"iso",title:"4.3 Isosceles & Equilateral Triangles",idea:"In an <b>isosceles</b> triangle, the base angles are equal. An <b>equilateral</b> triangle has all sides equal and all angles $60^\\circ$.",
   lesson:{steps:[["\\text{Vertex angle} = 40^\\circ","An isosceles triangle."],["180 - 40 = 140","The two base angles share what's left."],["140 \\div 2 = 70^\\circ","Each base angle is $70^\\circ$."]],warn:"Read carefully: is the given angle the <b>vertex</b> angle or a <b>base</b> angle? The answers are different."},
   gen:[
   ()=>{const v=2*rnd(10,80);return{q:`The vertex angle of an isosceles triangle measures $${deg(v)}$. Find each base angle.`,type:"number",ans:(180-v)/2,ansTex:deg((180-v)/2),hint:"The two base angles are equal and share $180 - $ vertex.",sol:[`$(180 - ${v}) \\div 2 = ${(180-v)/2}$.`]}},
@@ -422,7 +422,7 @@ const CHAPTERS=[
   ()=>{let a,b,c,d,x;do{x=rnd(2,9);a=rnd(2,6);c=rnd(1,5);b=nz(-8,8);d=(a-c)*x+b}while(a===c||a*x+b<=0||d===0);const s=a*x+b;return{q:`An equilateral triangle has sides $${lin(a,b)}$ and $${lin(c,d)}$. Find its perimeter.`,type:"number",ans:3*s,ansTex:`${3*s}`,hint:"All sides are equal. Solve for $x$, find one side, then multiply by $3$.",sol:[`$${lin(a,b)} = ${lin(c,d)}$, so $x = ${x}$.`,`Side $= ${s}$, perimeter $= 3 \\cdot ${s} = ${3*s}$.`]}},
   ()=>{const a=2*rnd(10,40),opts=[180-2*a,(180-a)/2,a],best=Math.max(180-2*a,(180-a)/2);return{q:`One angle of an isosceles triangle measures $${deg(a)}$. What is the <b>largest possible</b> measure of another angle of the triangle?`,type:"number",ans:best,ansTex:deg(best),hint:`Try both cases: $${a}^\\circ$ is a base angle, or $${a}^\\circ$ is the vertex angle.`,sol:[`If $${a}^\\circ$ is a base angle: angles $${a}, ${a}, ${180-2*a}$.`,`If $${a}^\\circ$ is the vertex angle: angles $${a}, ${(180-a)/2}, ${(180-a)/2}$.`,`Largest possible: $${deg(best)}$.`]}}
  ]},
- {id:"cong",title:"Proving Triangles Congruent",idea:"Five shortcuts: <b>SSS</b>, <b>SAS</b> (angle between the sides), <b>ASA</b> (side between the angles), <b>AAS</b>, and <b>HL</b> (right triangles). SSA and AAA do <b>not</b> work.",
+ {id:"cong",title:"4.4 Proving Triangles Congruent",idea:"Five shortcuts: <b>SSS</b>, <b>SAS</b> (angle between the sides), <b>ASA</b> (side between the angles), <b>AAS</b>, and <b>HL</b> (right triangles). SSA and AAA do <b>not</b> work.",
   lesson:{steps:[["\\overline{AB} \\cong \\overline{DE},\\ \\angle B \\cong \\angle E,\\ \\overline{BC} \\cong \\overline{EF}","What's given?"],["\\text{Side, Angle, Side}","$\\angle B$ is between sides $\\overline{AB}$ and $\\overline{BC}$."],["\\triangle ABC \\cong \\triangle DEF \\text{ by SAS}","The angle is included, so SAS works."]],warn:"For SAS the angle must be <b>between</b> the two sides. If it isn't, that's SSA — not enough to prove congruence."},
   gen:[
   ()=>congProb(pick(["SSS","SAS"])),
@@ -481,7 +481,7 @@ const QUADS=["parallelogram","rectangle","rhombus","square"];
 
 const MORE=[
 {id:"ch2",title:"Reasoning & Proof",topics:[
- {id:"pat",title:"Patterns & Inductive Reasoning",idea:"<b>Inductive reasoning</b>: look for a pattern, describe the rule, then use it to predict.",
+ {id:"pat",title:"2.1 Patterns & Inductive Reasoning",idea:"<b>Inductive reasoning</b>: look for a pattern, describe the rule, then use it to predict.",
   lesson:{steps:[["3, 7, 11, 15, \\ldots","What changes each time?"],["+4 \\text{ each time}","The rule: add $4$."],["15 + 4 = 19","Next term."]],warn:"Check the rule on <b>every</b> pair of terms, not just the first two."},
   gen:[
   ()=>{const a=nz(-10,20),d=nz(-7,9);return{q:`Find the next term: $${a}, ${a+d}, ${a+2*d}, ${a+3*d}, \\ldots$`,type:"number",ans:a+4*d,ansTex:`${a+4*d}`,hint:"Find the difference between consecutive terms.",sol:[`Each term changes by $${d}$.`,`Next: $${a+3*d} ${sg(d)} = ${a+4*d}$.`]}},
@@ -490,7 +490,7 @@ const MORE=[
   ()=>{const n=rnd(6,20);return Math.random()<.5?{q:`The pattern $1, 4, 9, 16, \\ldots$ continues. What is the $${n}$th term?`,type:"number",ans:n*n,ansTex:`${n*n}`,hint:"These are perfect squares.",sol:[`The $n$th term is $n^2 = ${n*n}$.`]}:{q:`The pattern $1, 3, 6, 10, 15, \\ldots$ continues (triangular numbers). What is the $${n}$th term?`,type:"number",ans:n*(n+1)/2,ansTex:`${n*(n+1)/2}`,hint:"The differences are $2, 3, 4, 5, \\ldots$ The $n$th term is $\\dfrac{n(n+1)}{2}$.",sol:[`$\\dfrac{${n}(${n+1})}{2} = ${n*(n+1)/2}$.`]}},
   ()=>{const n=rnd(6,20);return Math.random()<.5?{q:`Each of $${n}$ people shakes hands once with every other person. How many handshakes are there?`,type:"number",ans:n*(n-1)/2,ansTex:`${n*(n-1)/2}`,hint:"Each person shakes $n - 1$ hands, but each handshake is counted twice.",sol:[`$\\dfrac{${n}(${n-1})}{2} = ${n*(n-1)/2}$.`]}:{q:`How many diagonals does a polygon with $${n}$ sides have?`,type:"number",ans:n*(n-3)/2,ansTex:`${n*(n-3)/2}`,hint:"Each vertex connects to $n - 3$ others by a diagonal; each diagonal is counted twice.",sol:[`$\\dfrac{${n}(${n-3})}{2} = ${n*(n-3)/2}$.`]}}
  ]},
- {id:"cond",title:"Conditional Statements",idea:"<b>Conditional</b>: if $p$, then $q$. <b>Converse</b>: if $q$, then $p$. <b>Inverse</b>: if not $p$, then not $q$. <b>Contrapositive</b>: if not $q$, then not $p$.",
+ {id:"cond",title:"2.2 Conditional Statements",idea:"<b>Conditional</b>: if $p$, then $q$. <b>Converse</b>: if $q$, then $p$. <b>Inverse</b>: if not $p$, then not $q$. <b>Contrapositive</b>: if not $q$, then not $p$.",
   lesson:{steps:[["\\text{If it rains, the ground is wet.}","Conditional: $p \\to q$."],["\\text{If the ground is wet, it rained.}","Converse: switch."],["\\text{If the ground is not wet, it did not rain.}","Contrapositive: switch <b>and</b> negate."]],warn:"A conditional and its <b>contrapositive</b> are always both true or both false. The converse might not be."},
   gen:[
   ()=>{const [p,q]=pick(COND);return mcQ(`In the statement "If ${p}, then ${q}," what is the <b>hypothesis</b>?`,p,[q,neg(p),neg(q)],"The hypothesis is the part right after \"if\".",[`The hypothesis is "${p}".`]);},
@@ -499,7 +499,7 @@ const MORE=[
   ()=>{const [p,q,bi]=pick(COND);return{q:`The statement "If ${p}, then ${q}" is true. Is its <b>converse</b> also true? (Type yes or no.)`,type:"yn",ans:bi?"YES":"NO",ansTex:`\\text{${bi?"Yes":"No"}}`,hint:"Write the converse and look for a counterexample.",sol:[`Converse: "If ${q}, then ${p}." `+(bi?"This is also true.":"This is false — there is a counterexample.")]}},
   ()=>{const [p,q]=pick(COND);return mcQ(`"If ${p}, then ${q}" is true. Which statement <b>must</b> also be true?`,`If ${neg(q)}, then ${neg(p)}.`,[`If ${q}, then ${p}.`,`If ${neg(p)}, then ${neg(q)}.`,`If ${q}, then ${neg(p)}.`],"Only one related statement is always logically equivalent to the original.",["The contrapositive is logically equivalent to the conditional."]);}
  ]},
- {id:"proof",title:"Properties & Simple Proofs",idea:"Each step of a proof needs a <b>reason</b>: a definition, a property of equality, or a theorem (like vertical angles are congruent).",
+ {id:"proof",title:"2.4 Algebraic Reasoning & Properties",idea:"Each step of a proof needs a <b>reason</b>: a definition, a property of equality, or a theorem (like vertical angles are congruent).",
   lesson:{steps:[["x - 4 = 10","Given."],["x = 14","Addition Property of Equality: add $4$ to both sides."],["\\text{Reason names the operation done to both sides}","That's how you justify an algebra step."]],warn:"Reflexive: $AB = AB$. Symmetric: if $a = b$ then $b = a$. Transitive: if $a = b$ and $b = c$ then $a = c$."},
   gen:[
   ()=>{const a=rnd(2,9),b=rnd(2,20),k=pick([0,1,2,3]);const st=[[`If $x - ${a} = ${b}$, then $x = ${a+b}$.`,0],[`If $x + ${a} = ${b+a}$, then $x = ${b}$.`,1],[`If $\\frac{x}{${a}} = ${b}$, then $x = ${a*b}$.`,2],[`If $${a}x = ${a*b}$, then $x = ${b}$.`,3]][k];return mcQ(`Which property justifies this step? ${st[0]}`,PROPS[st[1]],pickWrong(PROPS.slice(0,6),PROPS[st[1]],3),"What was done to both sides?",[`This step uses the ${PROPS[st[1]]}.`]);},
@@ -508,7 +508,7 @@ const MORE=[
   ()=>{let a,b,c,x,v;do{x=rnd(5,25);a=rnd(2,6);b=rnd(-10,30);v=a*x+b;c=rnd(2,6)}while(v<=10||v>=170);const d=v-c*x;return{q:`Two lines intersect. One angle measures $(${lin(a,b)})^\\circ$ and its vertical angle measures $(${lin(c,d)})^\\circ$. Find the measure of an angle that forms a linear pair with them.`,type:"number",ans:180-v,ansTex:deg(180-v),hint:"Vertical angles are congruent: solve for $x$ first. Then use supplementary angles.",sol:[`$${lin(a,b)} = ${lin(c,d)}$${a===c?"":" gives $x = "+x+"$"}, so the angle is $${v}^\\circ$.`,`Linear pair: $180 - ${v} = ${180-v}^\\circ$.`]}},
   ()=>{let a,b,c,d,x,A;do{x=rnd(5,20);a=rnd(2,5);c=rnd(2,7);b=rnd(-10,30);A=a*x+b;d=A-c*x}while(a===c||A<=5||A>=85);return{q:`$\\angle A$ and $\\angle B$ are complementary, and $\\angle C$ and $\\angle B$ are complementary. If $m\\angle A = (${lin(a,b)})^\\circ$ and $m\\angle C = (${lin(c,d)})^\\circ$, find $m\\angle B$.`,type:"number",ans:90-A,ansTex:deg(90-A),hint:"Angles complementary to the same angle are congruent: $\\angle A \\cong \\angle C$.",sol:[`$${lin(a,b)} = ${lin(c,d)}$, so $x = ${x}$ and $m\\angle A = ${A}^\\circ$.`,`$m\\angle B = 90 - ${A} = ${90-A}^\\circ$.`]}}
  ]},
- {id:"tcp",title:"Two-Column Proofs",idea:"A <b>two-column proof</b> lists <b>statements</b> on the left and the <b>reason</b> for each one on the right. Start with what is <b>given</b>, end with what you must <b>prove</b>, and every line must follow from the lines above it.",
+ {id:"tcp",title:"2.5 Two-Column Proofs",idea:"A <b>two-column proof</b> lists <b>statements</b> on the left and the <b>reason</b> for each one on the right. Start with what is <b>given</b>, end with what you must <b>prove</b>, and every line must follow from the lines above it.",
   lesson:{steps:[["\\text{Given: } 2x + 5 = 13 \\qquad \\text{Prove: } x = 4","Read what you know and where you must end up."],["\\begin{array}{l|l} \\textbf{Statements} & \\textbf{Reasons} \\\\ \\hline 1.\\ 2x + 5 = 13 & \\text{Given} \\end{array}","Line 1 is always the given information."],["\\begin{array}{l|l} 2.\\ 2x = 8 & \\text{Subtraction Property of Equality} \\\\ 3.\\ x = 4 & \\text{Division Property of Equality} \\end{array}","Each line names exactly what you did to get it. The last line is what you had to prove."]],warn:"A reason must be a <b>given</b>, a <b>definition</b>, a <b>property</b>, a <b>postulate</b>, or a <b>theorem</b> — never “because it looks like it” or “I calculated it.”"},
   gen:[
   ()=>{const P_=tcpAlg(false),k=rnd(1,P_.rows.length-1);return tcpQ(P_,k,"reason",1);},
@@ -519,7 +519,7 @@ const MORE=[
  ]}
 ]},
 {id:"ch5",title:"Relationships Within Triangles",topics:[
- {id:"mid",title:"Midsegments, Bisectors & Medians",idea:"A <b>midsegment</b> is parallel to the third side and <b>half</b> as long. The <b>centroid</b> splits each median $2 : 1$.",
+ {id:"mid",title:"5.1 Midsegments, Bisectors & Medians",idea:"A <b>midsegment</b> is parallel to the third side and <b>half</b> as long. The <b>centroid</b> splits each median $2 : 1$.",
   lesson:{steps:[["\\overline{DE} \\text{ joins midpoints of } \\overline{AB}, \\overline{AC}","A midsegment."],["BC = 18","The third side."],["DE = \\tfrac12 \\cdot 18 = 9","Half as long."]],warn:"The midsegment is half the side it is <b>parallel</b> to — not half of either side it touches."},
   gen:[
   ()=>{const s=2*rnd(3,20),w=Math.random()<.5;return w?{q:`$\\overline{DE}$ is a midsegment of $\\triangle ABC$, parallel to $\\overline{BC}$. If $BC = ${s}$, find $DE$.`,type:"number",ans:s/2,ansTex:`${s/2}`,hint:"A midsegment is half the length of the parallel side.",sol:[`$DE = \\tfrac12(${s}) = ${s/2}$.`]}:{q:`$\\overline{DE}$ is a midsegment of $\\triangle ABC$, parallel to $\\overline{BC}$. If $DE = ${s/2}$, find $BC$.`,type:"number",ans:s,ansTex:`${s}`,hint:"The parallel side is twice the midsegment.",sol:[`$BC = 2(${s/2}) = ${s}$.`]}},
@@ -528,7 +528,7 @@ const MORE=[
   ()=>{const g=rnd(2,12),w=pick([0,1,2]);return w===0?{q:`$G$ is the centroid of $\\triangle ABC$ and $\\overline{AM}$ is a median. If $AG = ${2*g}$, find $GM$.`,type:"number",ans:g,ansTex:`${g}`,hint:"The centroid is $\\tfrac23$ of the way from the vertex: $AG = 2 \\cdot GM$.",sol:[`$GM = ${2*g} \\div 2 = ${g}$.`]}:w===1?{q:`$G$ is the centroid of $\\triangle ABC$ and $\\overline{AM}$ is a median. If $GM = ${g}$, find $AM$.`,type:"number",ans:3*g,ansTex:`${3*g}`,hint:"$AG = 2 \\cdot GM$, and $AM = AG + GM$.",sol:[`$AG = ${2*g}$, $AM = ${3*g}$.`]}:{q:`$G$ is the centroid of $\\triangle ABC$ and the median $\\overline{AM}$ has length $${3*g}$. Find $AG$.`,type:"number",ans:2*g,ansTex:`${2*g}`,hint:"$AG = \\tfrac23 AM$.",sol:[`$\\tfrac23(${3*g}) = ${2*g}$.`]}},
   ()=>{let a,b,c,d,x;do{x=rnd(2,10);a=rnd(1,5);b=rnd(-4,8);c=rnd(1,6);d=2*(a*x+b)-c*x}while(a*x+b<=0||c*x+d<=0||2*a===c);const gm=a*x+b;return{q:`$G$ is the centroid of $\\triangle ABC$, and $\\overline{AM}$ is a median with $GM = ${lin(a,b)}$ and $AG = ${lin(c,d)}$. Find $AM$.`,type:"number",ans:3*gm,ansTex:`${3*gm}`,hint:"$AG = 2 \\cdot GM$. Solve for $x$, then add.",sol:[`$${lin(c,d)} = 2(${lin(a,b)})$, so $x = ${x}$.`,`$GM = ${gm}$, $AM = 3 \\cdot ${gm} = ${3*gm}$.`]}}
  ]},
- {id:"ineq",title:"Triangle Inequalities",idea:"Any two sides must add to <b>more</b> than the third. The <b>largest angle</b> is opposite the <b>longest side</b>.",
+ {id:"ineq",title:"5.3 Triangle Inequalities",idea:"Any two sides must add to <b>more</b> than the third. The <b>largest angle</b> is opposite the <b>longest side</b>.",
   lesson:{steps:[["4,\\ 7,\\ 10","Can these be sides of a triangle?"],["4 + 7 = 11 > 10","Check the two shortest against the longest."],["\\text{Yes, it's a triangle}","If the two short sides add to more than the longest, it works."]],warn:"If the two shorter sides add to exactly the third side, it's <b>not</b> a triangle — it collapses into a segment."},
   gen:[
   ()=>{const a=rnd(2,12),b=rnd(2,12),ok=Math.random()<.5,c=ok?rnd(Math.abs(a-b)+1,a+b-1):a+b+rnd(0,4);return{q:`Can $${a}$, $${b}$, and $${c}$ be the side lengths of a triangle? (Type yes or no.)`,type:"yn",ans:ok?"YES":"NO",ansTex:`\\text{${ok?"Yes":"No"}}`,hint:"Do the two shortest sides add to more than the longest?",sol:[ok?"The two shorter sides add to more than the longest: yes.":"The two shorter sides don't add to more than the longest: no."]}},
@@ -537,7 +537,7 @@ const MORE=[
   ()=>{const a=rnd(3,15),b=rnd(3,15),n=a+b-1-Math.abs(a-b);return{q:`Two sides of a triangle are $${a}$ and $${b}$. How many <b>integer</b> lengths are possible for the third side?`,type:"number",ans:n,ansTex:`${n}`,hint:`The third side is strictly between $${Math.abs(a-b)}$ and $${a+b}$.`,sol:[`Integers from $${Math.abs(a-b)+1}$ to $${a+b-1}$: $${n}$ of them.`]}},
   ()=>{const p=rnd(7,20);let c=0;for(let a=1;a<=p;a++)for(let b=a;b<=p;b++){const d=p-a-b;if(d>=b&&a+b>d)c++;}return{q:`How many non-congruent triangles have integer side lengths and perimeter $${p}$?`,type:"number",ans:c,ansTex:`${c}`,hint:"List side lengths $a \\le b \\le c$ with $a + b + c = "+p+"$ and $a + b > c$.",sol:[`Systematic listing with $a \\le b \\le c$ and $a + b > c$ gives $${c}$ triangles.`]}}
  ]},
- {id:"conc",title:"Points of Concurrency",idea:"Medians meet at the <b>centroid</b>; perpendicular bisectors at the <b>circumcenter</b>; angle bisectors at the <b>incenter</b>; altitudes at the <b>orthocenter</b>.",
+ {id:"conc",title:"5.2 Points of Concurrency",idea:"Medians meet at the <b>centroid</b>; perpendicular bisectors at the <b>circumcenter</b>; angle bisectors at the <b>incenter</b>; altitudes at the <b>orthocenter</b>.",
   lesson:{steps:[["A(0, 0),\\ B(6, 0),\\ C(3, 9)","Find the centroid."],["\\left(\\dfrac{0 + 6 + 3}{3}, \\dfrac{0 + 0 + 9}{3}\\right)","Average the coordinates."],["(3, 3)","The centroid."]],warn:"The circumcenter is equally far from the <b>vertices</b>; the incenter is equally far from the <b>sides</b>."},
   gen:[
   ()=>{const D=[["medians","centroid"],["perpendicular bisectors","circumcenter"],["angle bisectors","incenter"],["altitudes","orthocenter"]],k=rnd(0,3);return mcQ(`The ${D[k][0]} of a triangle meet at the:`,D[k][1],D.filter((_,i)=>i!==k).map(d=>d[1]),"Medians → centroid, perpendicular bisectors → circumcenter, angle bisectors → incenter, altitudes → orthocenter.",[`The ${D[k][0]} meet at the ${D[k][1]}.`]);},
@@ -548,7 +548,7 @@ const MORE=[
  ]}
 ]},
 {id:"ch6",title:"Polygons & Quadrilaterals",topics:[
- {id:"poly",title:"Polygon Angle Sums",idea:"Interior angle sum of an $n$-gon: $(n - 2) \\cdot 180^\\circ$. Exterior angles always add to $360^\\circ$.",
+ {id:"poly",title:"6.1 Angles of Polygons",idea:"Interior angle sum of an $n$-gon: $(n - 2) \\cdot 180^\\circ$. Exterior angles always add to $360^\\circ$.",
   lesson:{steps:[["\\text{Hexagon: } n = 6","Six sides."],["(6 - 2) \\cdot 180 = 720^\\circ","Interior angle sum."],["720 \\div 6 = 120^\\circ","Each angle of a <b>regular</b> hexagon."]],warn:"Only divide by $n$ when the polygon is <b>regular</b> (all angles equal)."},
   gen:[
   ()=>{const n=rnd(3,15);return{q:`Find the sum of the interior angles of a polygon with $${n}$ sides.`,type:"number",ans:(n-2)*180,ansTex:deg((n-2)*180),hint:"$(n - 2) \\cdot 180^\\circ$.",sol:[`$(${n} - 2) \\cdot 180 = ${(n-2)*180}^\\circ$.`]}},
@@ -557,7 +557,7 @@ const MORE=[
   ()=>{const n=pick([5,6,8,9,10,12,15,18,20,24,36,40]);return Math.random()<.5?{q:`Find the measure of each exterior angle of a regular polygon with $${n}$ sides.`,type:"number",ans:360/n,ansTex:deg(360/n),hint:"Exterior angles add to $360^\\circ$.",sol:[`$360 \\div ${n} = ${360/n}^\\circ$.`]}:{q:`Each exterior angle of a regular polygon measures $${deg(360/n)}$. How many sides does it have?`,type:"number",ans:n,ansTex:`${n}`,hint:"Exterior angles add to $360^\\circ$.",sol:[`$360 \\div ${360/n} = ${n}$.`]}},
   ()=>{const n=pick([4,5,6]),S=(n-2)*180;let c,k;do{c=Array.from({length:n},()=>rnd(1,4));k=c.reduce((a,b)=>a+b,0)}while(S%k||S/k*Math.max(...c)>=180);const x=S/k;return{q:`The angles of a ${n===4?"quadrilateral":n===5?"pentagon":"hexagon"} measure $${c.map(v=>co(v,"x")+"^\\circ").join(", ")}$. Find the largest angle.`,type:"number",ans:x*Math.max(...c),ansTex:deg(x*Math.max(...c)),hint:`The angles add to $${S}^\\circ$.`,sol:[`$${k}x = ${S}$, so $x = ${x}$.`,`Largest: $${Math.max(...c)} \\cdot ${x} = ${x*Math.max(...c)}^\\circ$.`]}}
  ]},
- {id:"para",title:"Parallelograms",idea:"In a parallelogram: opposite sides are equal, opposite angles are equal, consecutive angles are supplementary, and the diagonals <b>bisect each other</b>.",
+ {id:"para",title:"6.2 Properties of Parallelograms",idea:"In a parallelogram: opposite sides are equal, opposite angles are equal, consecutive angles are supplementary, and the diagonals <b>bisect each other</b>.",
   lesson:{steps:[["ABCD \\text{ is a parallelogram},\\ m\\angle A = 70^\\circ","Find the other angles."],["m\\angle C = 70^\\circ","Opposite angles are equal."],["m\\angle B = m\\angle D = 110^\\circ","Consecutive angles add to $180^\\circ$."]],warn:"The diagonals of a parallelogram bisect each other, but they are <b>not</b> equal unless it's a rectangle."},
   gen:[
   ()=>{const a=rnd(40,140),w=pick(["B","C","D"]);const v=w==="C"?a:180-a;return{q:`$ABCD$ is a parallelogram and $m\\angle A = ${deg(a)}$. Find $m\\angle ${w}$.`,type:"number",ans:v,ansTex:deg(v),hint:"Opposite angles are equal; consecutive angles are supplementary.",sol:[w==="C"?`$\\angle C$ is opposite $\\angle A$: $${a}^\\circ$.`:`$\\angle ${w}$ is next to $\\angle A$: $180 - ${a} = ${v}^\\circ$.`]}},
@@ -566,7 +566,7 @@ const MORE=[
   ()=>{let a,b,c,d,x;do{x=rnd(2,12);a=rnd(2,6);c=rnd(1,5);b=nz(-6,8);d=(a-c)*x+b}while(a===c||a*x+b<=0||d===0);return{q:`$ABCD$ is a <b>rectangle</b> with diagonals $AC = ${lin(a,b)}$ and $BD = ${lin(c,d)}$. Find $AC$.`,type:"number",ans:a*x+b,ansTex:`${a*x+b}`,hint:"The diagonals of a rectangle are equal.",sol:[`$${lin(a,b)} = ${lin(c,d)}$, so $x = ${x}$.`,`$AC = ${a*x+b}$.`]}},
   ()=>{const T=pick([[3,4,5],[6,8,10],[5,12,13],[8,15,17],[9,12,15]]),w=Math.random()<.5;return w?{q:`The diagonals of a rhombus are $${2*T[0]}$ and $${2*T[1]}$. Find the length of a side.`,type:"number",ans:T[2],ansTex:`${T[2]}`,hint:"The diagonals of a rhombus are perpendicular bisectors of each other — use the Pythagorean Theorem on half-diagonals.",sol:[`Half-diagonals: $${T[0]}$ and $${T[1]}$.`,`Side $= \\sqrt{${T[0]**2} + ${T[1]**2}} = ${T[2]}$.`]}:{q:`A rhombus has side $${T[2]}$ and one diagonal $${2*T[0]}$. Find its area.`,type:"number",ans:2*T[0]*T[1],ansTex:`${2*T[0]*T[1]}`,hint:"Find the other half-diagonal with the Pythagorean Theorem. Area $= \\tfrac12 d_1 d_2$.",sol:[`Other half-diagonal: $\\sqrt{${T[2]**2} - ${T[0]**2}} = ${T[1]}$.`,`Area $= \\tfrac12(${2*T[0]})(${2*T[1]}) = ${2*T[0]*T[1]}$.`]}}
  ]},
- {id:"trap",title:"Trapezoids, Kites & Classifying",idea:"Trapezoid midsegment $= \\dfrac{b_1 + b_2}{2}$. Isosceles trapezoids have equal base angles. Kites have one pair of equal opposite angles.",
+ {id:"trap",title:"6.5 Trapezoids, Kites & Classifying",idea:"Trapezoid midsegment $= \\dfrac{b_1 + b_2}{2}$. Isosceles trapezoids have equal base angles. Kites have one pair of equal opposite angles.",
   lesson:{steps:[["b_1 = 10,\\ b_2 = 16","Bases of a trapezoid."],["\\dfrac{10 + 16}{2}","Average the bases."],["= 13","The midsegment."]],warn:"The trapezoid midsegment is the <b>average</b> of the two bases, not half of one base."},
   gen:[
   ()=>{const a=rnd(4,20),b=a+2*rnd(1,8);return{q:`A trapezoid has bases $${a}$ and $${b}$. Find the length of its midsegment.`,type:"number",ans:(a+b)/2,ansTex:`${(a+b)/2}`,hint:"Average the two bases.",sol:[`$\\dfrac{${a} + ${b}}{2} = ${(a+b)/2}$.`]}},
@@ -580,7 +580,7 @@ const MORE=[
  ]}
 ]},
 {id:"ch7",title:"Similarity",topics:[
- {id:"ratio",title:"Ratios, Proportions & Scale Factor",idea:"Similar figures have equal angles and <b>proportional</b> sides. If the scale factor is $k$, perimeters scale by $k$ and areas by $k^2$.",
+ {id:"ratio",title:"7.1 Ratios, Proportions & Scale Factor",idea:"Similar figures have equal angles and <b>proportional</b> sides. If the scale factor is $k$, perimeters scale by $k$ and areas by $k^2$.",
   lesson:{steps:[["\\dfrac{x}{6} = \\dfrac{10}{4}","A proportion."],["4x = 60","Cross-multiply."],["x = 15","Divide."]],warn:"Areas don't scale by $k$ — they scale by $k^2$. Doubling the sides makes the area $4$ times as big."},
   gen:[
   ()=>{const b=rnd(2,9),c=rnd(2,9),k=rnd(1,6),a=c*k;return{q:`Solve $\\dfrac{x}{${b}} = \\dfrac{${a}}{${c}}$.`,type:"number",ans:a*b/c,ansTex:`${a*b/c}`,hint:"Cross-multiply.",sol:[`$${c}x = ${a*b}$, so $x = ${a*b/c}$.`]}},
@@ -589,7 +589,7 @@ const MORE=[
   ()=>{const k=pick([2,3,4,5]),A=rnd(3,20),w=Math.random()<.5;return w?{q:`Two similar polygons have a scale factor of $${k}:1$. The smaller one has area $${A}$. Find the area of the larger one.`,type:"number",ans:A*k*k,ansTex:`${A*k*k}`,hint:"Areas scale by the square of the scale factor.",sol:[`$${A} \\times ${k}^2 = ${A*k*k}$.`]}:{q:`Two similar polygons have perimeters $${A}$ and $${A*k}$. What is the ratio of their areas (larger to smaller)? Give a single number.`,type:"number",ans:k*k,ansTex:`${k*k}`,hint:"Perimeter ratio = scale factor. Area ratio = scale factor squared.",sol:[`Scale factor $${k}$, area ratio $${k*k}$.`]}},
   ()=>{const a=rnd(2,6),b=a+rnd(1,4),s=rnd(2,12);return{q:`Two similar triangles have areas $${a*a*s}$ and $${b*b*s}$. A side of the smaller triangle is $${a*rnd(1,1)*2}$. Find the corresponding side of the larger.`,type:"number",ans:b*2,ansTex:`${b*2}`,hint:"Area ratio = $k^2$. Take the square root to get the side ratio.",sol:[`$k^2 = \\dfrac{${b*b*s}}{${a*a*s}} = \\dfrac{${b*b}}{${a*a}}$, so $k = \\dfrac{${b}}{${a}}$.`,`Side $= ${2*a} \\cdot \\dfrac{${b}}{${a}} = ${2*b}$.`]}}
  ]},
- {id:"prove",title:"Proving Triangles Similar",idea:"<b>AA</b>: two pairs of equal angles. <b>SSS~</b>: all three side ratios equal. <b>SAS~</b>: two side ratios equal and the included angles equal.",
+ {id:"prove",title:"7.3 Proving Triangles Similar",idea:"<b>AA</b>: two pairs of equal angles. <b>SSS~</b>: all three side ratios equal. <b>SAS~</b>: two side ratios equal and the included angles equal.",
   lesson:{steps:[["\\angle A \\cong \\angle D,\\ \\angle B \\cong \\angle E","Two pairs of angles."],["\\text{The third angles must match too}","Angles add to $180^\\circ$."],["\\triangle ABC \\sim \\triangle DEF \\text{ by AA}","Two angles are enough."]],warn:"For SSS~ and SAS~ check that the ratios are <b>equal</b> — sides don't have to be equal."},
   gen:[
   ()=>{const a=rnd(30,80),b=rnd(30,80);return{q:`In $\\triangle ABC$ and $\\triangle DEF$, $m\\angle A = m\\angle D = ${deg(a)}$ and $m\\angle B = m\\angle E = ${deg(b)}$. Which shortcut proves them similar? (Type AA, SSS, SAS, or none.)`,type:"word",opts:["AA","SSS","SAS","NONE"],ans:"AA",ansTex:"\\text{AA}",hint:"How many pairs of angles are congruent?",sol:["Two pairs of congruent angles: AA similarity."]}},
@@ -598,7 +598,7 @@ const MORE=[
   ()=>{const a=rnd(30,70),b=rnd(30,70),c=180-a-b,k=pick([0,1]);return{q:`$\\triangle ABC$ has angles $${a}^\\circ$ and $${b}^\\circ$. $\\triangle DEF$ has angles $${k?b:a}^\\circ$ and $${c}^\\circ$. Are they similar? Type AA if yes, or none.`,type:"word",opts:["AA","SSS","SAS","NONE"],ans:"AA",ansTex:"\\text{AA}",hint:"Find the third angle of each triangle.",sol:[`Third angle of $\\triangle ABC$: $${c}^\\circ$. Both triangles have angles $${a}^\\circ, ${b}^\\circ, ${c}^\\circ$: AA.`]}},
   ()=>{const h=rnd(4,7),s=rnd(2,6),k=rnd(3,8);return{q:`A $${h}$-ft person casts a $${s}$-ft shadow. At the same time, a tree casts a $${s*k}$-ft shadow. How tall is the tree?`,type:"number",ans:h*k,ansTex:`${h*k}\\text{ ft}`,hint:"The sun makes similar triangles: height/shadow is the same for both.",sol:[`$\\dfrac{${h}}{${s}} = \\dfrac{t}{${s*k}}$.`,`$t = ${h*k}$ ft.`]}}
  ]},
- {id:"split",title:"Side-Splitter & Geometric Mean",idea:"A line parallel to one side of a triangle divides the other two sides <b>proportionally</b>. In a right triangle, the altitude to the hypotenuse is the <b>geometric mean</b> of the two segments.",
+ {id:"split",title:"7.4 Proportionality Theorems",idea:"A line parallel to one side of a triangle divides the other two sides <b>proportionally</b>. In a right triangle, the altitude to the hypotenuse is the <b>geometric mean</b> of the two segments.",
   lesson:{steps:[["\\overline{DE} \\parallel \\overline{BC},\\ AD = 4,\\ DB = 6,\\ AE = 6","Side-splitter setup."],["\\dfrac{4}{6} = \\dfrac{6}{EC}","Proportional pieces."],["EC = 9","Cross-multiply: $4 \\cdot EC = 36$."]],warn:"Compare piece to piece ($AD$ with $AE$, $DB$ with $EC$) — don't mix a piece with a whole side."},
   gen:[
   ()=>{const a=rnd(2,8),b=rnd(2,8),k=pick([1,2,3,1.5]);return{q:`In $\\triangle ABC$, $\\overline{DE} \\parallel \\overline{BC}$ with $D$ on $\\overline{AB}$ and $E$ on $\\overline{AC}$. If $AD = ${a}$, $DB = ${b}$, and $AE = ${a*k}$, find $EC$.`,type:"number",ans:b*k,ansTex:`${b*k}`,hint:"$\\dfrac{AD}{DB} = \\dfrac{AE}{EC}$.",sol:[`$\\dfrac{${a}}{${b}} = \\dfrac{${a*k}}{EC}$, so $EC = ${b*k}$.`]}},
@@ -609,7 +609,7 @@ const MORE=[
  ]}
 ]},
 {id:"ch8",title:"Right Triangles & Trigonometry",topics:[
- {id:"special",title:"Pythagorean Theorem & Special Right Triangles",idea:"$45$-$45$-$90$: sides $x, x, x\\sqrt{2}$. $30$-$60$-$90$: sides $x, x\\sqrt{3}, 2x$.",
+ {id:"special",title:"8.1 Pythagorean Theorem & Special Right Triangles",idea:"$45$-$45$-$90$: sides $x, x, x\\sqrt{2}$. $30$-$60$-$90$: sides $x, x\\sqrt{3}, 2x$.",
   lesson:{steps:[["30^\\circ\\text{-}60^\\circ\\text{-}90^\\circ,\\ \\text{short leg } 5","Use the pattern $x, x\\sqrt3, 2x$."],["\\text{long leg} = 5\\sqrt{3}","Multiply the short leg by $\\sqrt{3}$."],["\\text{hypotenuse} = 10","Double the short leg."]],warn:"In a $30$-$60$-$90$ triangle the <b>short</b> leg is opposite $30^\\circ$; the hypotenuse is twice it — not the long leg."},
   gen:[
   ()=>{const T=pick([[3,4,5],[5,12,13],[8,15,17],[7,24,25],[20,21,29]]),k=rnd(1,3);return{q:`A right triangle has legs $${T[0]*k}$ and $${T[1]*k}$. Find the hypotenuse.`,type:"number",ans:T[2]*k,ansTex:`${T[2]*k}`,hint:"$c^2 = a^2 + b^2$.",sol:[`$c = \\sqrt{${(T[0]*k)**2} + ${(T[1]*k)**2}} = ${T[2]*k}$.`]}},
@@ -618,7 +618,7 @@ const MORE=[
   ()=>{const x=rnd(2,12);return Math.random()<.5?{q:`In a $30^\\circ$-$60^\\circ$-$90^\\circ$ triangle the hypotenuse is $${2*x}$. Find the long leg. (Type like 4sqrt(3).)`,type:"number",form:"rad",ans:x*Math.sqrt(3),ansTex:`${x}\\sqrt{3}`,hint:"Short leg = half the hypotenuse; then multiply by $\\sqrt3$.",sol:[`Short leg $${x}$, long leg $${x}\\sqrt{3}$.`]}:{q:`In a $30^\\circ$-$60^\\circ$-$90^\\circ$ triangle the long leg is $${x}\\sqrt{3}$. Find the hypotenuse.`,type:"number",ans:2*x,ansTex:`${2*x}`,hint:"Short leg = long leg ÷ $\\sqrt3$; hypotenuse = 2 × short leg.",sol:[`Short leg $${x}$, hypotenuse $${2*x}$.`]}},
   ()=>{let a,b,c;do{a=rnd(3,12);b=rnd(a,14);c=rnd(b,a+b-1)}while(false);const s=a*a+b*b-c*c,ans=s===0?"RIGHT":s>0?"ACUTE":"OBTUSE";return{q:`A triangle has sides $${a}$, $${b}$, and $${c}$. Is it acute, right, or obtuse?`,type:"word",opts:["ACUTE","RIGHT","OBTUSE"],ans,ansTex:`\\text{${ans.toLowerCase()}}`,hint:"Compare $c^2$ (longest side) with $a^2 + b^2$.",sol:[`$${a}^2 + ${b}^2 = ${a*a+b*b}$ and $${c}^2 = ${c*c}$.`,s===0?"Equal: right.":s>0?"$a^2 + b^2 > c^2$: acute.":"$a^2 + b^2 < c^2$: obtuse."]}}
  ]},
- {id:"trig",title:"Trigonometric Ratios",idea:"<b>SOH-CAH-TOA</b>: $\\sin = \\dfrac{\\text{opp}}{\\text{hyp}}$, $\\cos = \\dfrac{\\text{adj}}{\\text{hyp}}$, $\\tan = \\dfrac{\\text{opp}}{\\text{adj}}$.",
+ {id:"trig",title:"8.3 Trigonometric Ratios",idea:"<b>SOH-CAH-TOA</b>: $\\sin = \\dfrac{\\text{opp}}{\\text{hyp}}$, $\\cos = \\dfrac{\\text{adj}}{\\text{hyp}}$, $\\tan = \\dfrac{\\text{opp}}{\\text{adj}}$.",
   lesson:{steps:[["\\text{legs } 3, 4,\\ \\text{hypotenuse } 5","Angle $A$ is opposite the side $3$."],["\\sin A = \\dfrac{3}{5}","Opposite over hypotenuse."],["\\cos A = \\dfrac{4}{5},\\ \\tan A = \\dfrac{3}{4}","Adjacent over hypotenuse; opposite over adjacent."]],warn:"\"Opposite\" and \"adjacent\" depend on which angle you're looking from."},
   gen:[
   ()=>{const T=pick([[3,4,5],[5,12,13],[8,15,17],[7,24,25]]),f=pick(["sin","cos","tan"]);const v={sin:[T[0],T[2]],cos:[T[1],T[2]],tan:[T[0],T[1]]}[f];return{q:`In right triangle $ABC$ with right angle $C$, $BC = ${T[0]}$, $AC = ${T[1]}$, and $AB = ${T[2]}$. Find $\\${f} A$.`,type:"number",ans:v[0]/v[1],ansTex:frac(v[0],v[1]),hint:"$BC$ is opposite $\\angle A$; $AC$ is adjacent; $AB$ is the hypotenuse.",sol:[`$\\${f} A = ${frac(v[0],v[1])}$.`]}},
@@ -627,7 +627,7 @@ const MORE=[
   ()=>{const A=pick([20,25,30,35,40,45,50,55,60]),d=rnd(20,100),v=r1(d*Math.tan(A*Math.PI/180));return{q:`From a point $${d}$ m from the base of a building, the angle of elevation to the top is $${A}^\\circ$. How tall is the building? Round to the nearest tenth.`,type:"number",tol:0.051,ans:v,ansTex:`${v}\\text{ m}`,hint:"Height is opposite the angle, distance is adjacent: use tangent.",sol:[`$h = ${d}\\tan ${A}^\\circ \\approx ${v}$ m.`]}},
   ()=>{let a,b,c,x;do{a=rnd(1,4);c=rnd(1,4);b=rnd(-30,30);x=(90-b)/(a+c)}while(!Number.isInteger(x)||x<=0||a*x<=0||a*x>=90);const d=0;return{q:`If $\\sin(${co(a,"x")}^\\circ) = \\cos((${lin(c,b)})^\\circ)$, find $x$ (both angles acute).`,type:"number",ans:x,ansTex:`x = ${x}`,hint:"$\\sin \\theta = \\cos(90^\\circ - \\theta)$: the two angles are complementary.",sol:[`$${co(a,"x")} + (${lin(c,b)}) = 90$.`,`$${co(a+c,"x")} = ${90-b}$, so $x = ${x}$.`]}}
  ]},
- {id:"app",title:"Exact Values & Applications",idea:"Know these: $\\sin 30^\\circ = \\tfrac12$, $\\cos 60^\\circ = \\tfrac12$, $\\sin 45^\\circ = \\cos 45^\\circ = \\tfrac{\\sqrt2}{2}$, $\\tan 45^\\circ = 1$, $\\sin 60^\\circ = \\tfrac{\\sqrt3}{2}$.",
+ {id:"app",title:"8.4 Solving Right Triangles & Applications",idea:"Know these: $\\sin 30^\\circ = \\tfrac12$, $\\cos 60^\\circ = \\tfrac12$, $\\sin 45^\\circ = \\cos 45^\\circ = \\tfrac{\\sqrt2}{2}$, $\\tan 45^\\circ = 1$, $\\sin 60^\\circ = \\tfrac{\\sqrt3}{2}$.",
   lesson:{steps:[["\\text{A 10-ft ladder makes a } 60^\\circ \\text{ angle with the ground}","How high does it reach?"],["h = 10\\sin 60^\\circ","Height is opposite the angle."],["= 10 \\cdot \\tfrac{\\sqrt3}{2} = 5\\sqrt3 \\approx 8.7 \\text{ ft}","Exact value, then decimal."]],warn:"Make sure your calculator is in <b>degree</b> mode."},
   gen:[
   ()=>{const b=rnd(3,20),h=rnd(3,20);return{q:`A right triangle has legs $${b}$ and $${h}$. Find its area.`,type:"number",ans:b*h/2,ansTex:`${b*h/2}`,hint:"Area $= \\tfrac12 \\cdot$ leg $\\cdot$ leg.",sol:[`$\\tfrac12(${b})(${h}) = ${b*h/2}$.`]}},
@@ -638,7 +638,7 @@ const MORE=[
  ]}
 ]},
 {id:"ch9",title:"Transformations",topics:[
- {id:"tr",title:"Translations & Reflections",idea:"Reflect over the $x$-axis: $(x, y) \\to (x, -y)$. Over the $y$-axis: $(x, y) \\to (-x, y)$. Over $y = x$: $(x, y) \\to (y, x)$.",
+ {id:"tr",title:"9.1 Translations & Reflections",idea:"Reflect over the $x$-axis: $(x, y) \\to (x, -y)$. Over the $y$-axis: $(x, y) \\to (-x, y)$. Over $y = x$: $(x, y) \\to (y, x)$.",
   lesson:{steps:[["A(3, -2)","Reflect over the $y$-axis."],["(x, y) \\to (-x, y)","Change the sign of $x$."],["A'(-3, -2)","The image."]],warn:"Reflecting over the $x$-axis changes $y$ (not $x$) — the point flips up or down."},
   gen:[
   ()=>{const x=rnd(-8,8),y=rnd(-8,8),a=nz(-6,6),b=nz(-6,6);return{q:`Translate $A${pt(x,y)}$ by $(x, y) \\to (x ${sg(a)}, y ${sg(b)})$. Find $A'$.`,type:"point",ans:[x+a,y+b],ansTex:pt(x+a,y+b),hint:"Add to each coordinate.",sol:[`$${pt(x+a,y+b)}$.`]}},
@@ -647,7 +647,7 @@ const MORE=[
   ()=>{const x=rnd(-8,8),y=rnd(-8,8),k=nz(-5,5),w=Math.random()<.5;const r=w?[2*k-x,y]:[x,2*k-y];return{q:`Reflect $${pt(x,y)}$ over the line $${w?"x":"y"} = ${k}$.`,type:"point",ans:r,ansTex:pt(...r),hint:`The image is the same distance from the line on the other side: new ${w?"x":"y"} $= 2(${k}) - $ old ${w?"x":"y"}.`,sol:[`$${pt(...r)}$.`]}},
   ()=>{const x=nz(-6,6),y=nz(-6,6),a=nz(-5,5),b=nz(-5,5);const r=[-x+a,y+b];return{q:`Reflect $${pt(x,y)}$ over the $y$-axis, then translate the image by $(x, y) \\to (x ${sg(a)}, y ${sg(b)})$. Find the final point.`,type:"point",ans:r,ansTex:pt(...r),hint:"Do the steps in order: reflect first, then translate.",sol:[`Reflect: $${pt(-x,y)}$.`,`Translate: $${pt(...r)}$.`]}}
  ]},
- {id:"rot",title:"Rotations & Dilations",idea:"About the origin: $90^\\circ$ counterclockwise $(x, y) \\to (-y, x)$; $180^\\circ$ $(x, y) \\to (-x, -y)$. Dilation by $k$: $(x, y) \\to (kx, ky)$.",
+ {id:"rot",title:"9.2 Rotations & Dilations",idea:"About the origin: $90^\\circ$ counterclockwise $(x, y) \\to (-y, x)$; $180^\\circ$ $(x, y) \\to (-x, -y)$. Dilation by $k$: $(x, y) \\to (kx, ky)$.",
   lesson:{steps:[["A(2, 5)","Rotate $90^\\circ$ counterclockwise about the origin."],["(x, y) \\to (-y, x)","The rule."],["A'(-5, 2)","The image."]],warn:"$90^\\circ$ clockwise is $(x, y) \\to (y, -x)$ — the opposite direction of counterclockwise."},
   gen:[
   ()=>{const x=nz(-8,8),y=nz(-8,8);return{q:`Rotate $${pt(x,y)}$ $180^\\circ$ about the origin.`,type:"point",ans:[-x,-y],ansTex:pt(-x,-y),hint:"$(x, y) \\to (-x, -y)$.",sol:[`$${pt(-x,-y)}$.`]}},
@@ -656,7 +656,7 @@ const MORE=[
   ()=>{const cx=rnd(-4,4),cy=rnd(-4,4),dx=nz(-4,4),dy=nz(-4,4),k=pick([2,3]);return{q:`Dilate $${pt(cx+dx,cy+dy)}$ by a scale factor of $${k}$ centered at $${pt(cx,cy)}$.`,type:"point",ans:[cx+k*dx,cy+k*dy],ansTex:pt(cx+k*dx,cy+k*dy),hint:"Find how far the point is from the center, multiply that by $k$, and add it back to the center.",sol:[`From the center: $(${dx}, ${dy})$. Times $${k}$: $(${k*dx}, ${k*dy})$.`,`Image: $${pt(cx+k*dx,cy+k*dy)}$.`]}},
   ()=>{const cx=rnd(-4,4),cy=rnd(-4,4),dx=nz(-4,4),dy=nz(-4,4);return{q:`Rotate $${pt(cx+dx,cy+dy)}$ $90^\\circ$ counterclockwise about the point $${pt(cx,cy)}$.`,type:"point",ans:[cx-dy,cy+dx],ansTex:pt(cx-dy,cy+dx),hint:"Translate so the center is at the origin, rotate, then translate back.",sol:[`Relative to the center: $(${dx}, ${dy}) \\to (${-dy}, ${dx})$.`,`Add back: $${pt(cx-dy,cy+dx)}$.`]}}
  ]},
- {id:"sym",title:"Symmetry & Compositions",idea:"A regular $n$-gon has $n$ lines of symmetry and rotational symmetry of $\\dfrac{360^\\circ}{n}$. Two reflections = a translation (parallel lines) or a rotation (intersecting lines).",
+ {id:"sym",title:"9.3 Symmetry & Compositions",idea:"A regular $n$-gon has $n$ lines of symmetry and rotational symmetry of $\\dfrac{360^\\circ}{n}$. Two reflections = a translation (parallel lines) or a rotation (intersecting lines).",
   lesson:{steps:[["\\text{Regular hexagon}","$n = 6$."],["6 \\text{ lines of symmetry}","One for each vertex/side pair."],["\\text{rotational symmetry } 60^\\circ","$360 \\div 6$."]],warn:"Reflecting over two parallel lines $d$ apart translates by $2d$, not $d$."},
   gen:[
   ()=>{const n=rnd(3,12);return{q:`How many lines of symmetry does a regular polygon with $${n}$ sides have?`,type:"number",ans:n,ansTex:`${n}`,hint:"A regular $n$-gon has $n$ lines of symmetry.",sol:[`$${n}$.`]}},
@@ -667,7 +667,7 @@ const MORE=[
  ]}
 ]},
 {id:"ch10",title:"Circles",topics:[
- {id:"arcs",title:"Central & Inscribed Angles",idea:"A <b>central</b> angle equals its arc. An <b>inscribed</b> angle is <b>half</b> its intercepted arc.",
+ {id:"arcs",title:"10.2 Central & Inscribed Angles",idea:"A <b>central</b> angle equals its arc. An <b>inscribed</b> angle is <b>half</b> its intercepted arc.",
   lesson:{steps:[["\\text{arc } \\overset{\\frown}{AB} = 80^\\circ","An intercepted arc."],["\\text{inscribed } \\angle ACB = \\tfrac12 \\cdot 80","Inscribed angle = half the arc."],["= 40^\\circ","Done."]],warn:"An angle inscribed in a <b>semicircle</b> is always $90^\\circ$."},
   gen:[
   ()=>{const a=2*rnd(15,85);return{q:`An inscribed angle intercepts an arc of $${deg(a)}$. Find the inscribed angle.`,type:"number",ans:a/2,ansTex:deg(a/2),hint:"Inscribed angle = half the arc.",sol:[`$${a} \\div 2 = ${a/2}^\\circ$.`]}},
@@ -676,7 +676,7 @@ const MORE=[
   ()=>{let a,b;do{a=rnd(20,160);b=rnd(20,160)}while((a+b)%2||a+b>=340);return{q:`Two chords intersect inside a circle. The arcs intercepted by the angle and its vertical angle are $${a}^\\circ$ and $${b}^\\circ$. Find the angle.`,type:"number",ans:(a+b)/2,ansTex:deg((a+b)/2),hint:"Angle between two chords = half the <b>sum</b> of the intercepted arcs.",sol:[`$\\tfrac12(${a} + ${b}) = ${(a+b)/2}^\\circ$.`]}},
   ()=>{let a,b;do{b=rnd(20,120);a=b+2*rnd(10,60)}while(a+b>360);return{q:`Two secants meet outside a circle. They intercept a far arc of $${a}^\\circ$ and a near arc of $${b}^\\circ$. Find the angle between the secants.`,type:"number",ans:(a-b)/2,ansTex:deg((a-b)/2),hint:"Angle outside = half the <b>difference</b> of the arcs.",sol:[`$\\tfrac12(${a} - ${b}) = ${(a-b)/2}^\\circ$.`]}}
  ]},
- {id:"seg",title:"Tangents, Chords & Secants",idea:"A tangent is <b>perpendicular</b> to the radius. Two tangents from a point are <b>equal</b>. Intersecting chords: $a \\cdot b = c \\cdot d$.",
+ {id:"seg",title:"10.1 Lines & Segments That Intersect Circles",idea:"A tangent is <b>perpendicular</b> to the radius. Two tangents from a point are <b>equal</b>. Intersecting chords: $a \\cdot b = c \\cdot d$.",
   lesson:{steps:[["\\text{chords cross: pieces } 4, 6 \\text{ and } 3, x","Intersecting chords."],["4 \\cdot 6 = 3x","Product of the pieces of each chord."],["x = 8","Divide by $3$."]],warn:"For secants from an outside point, use <b>outside piece × whole secant</b>, not outside × inside."},
   gen:[
   ()=>{const T=pick([[3,4,5],[5,12,13],[8,15,17],[6,8,10],[7,24,25]]);return{q:`$\\overline{PA}$ is tangent to circle $O$ at $A$. If $OA = ${T[0]}$ and $OP = ${T[2]}$, find $PA$.`,type:"number",ans:T[1],ansTex:`${T[1]}`,hint:"The tangent is perpendicular to the radius, so $\\triangle OAP$ is a right triangle.",sol:[`$PA = \\sqrt{${T[2]**2} - ${T[0]**2}} = ${T[1]}$.`]}},
@@ -685,7 +685,7 @@ const MORE=[
   ()=>{let a,b,c,w;do{a=rnd(2,8);b=rnd(2,10);c=rnd(2,8);w=a*(a+b)/c-c}while(!Number.isInteger(w)||w<=0);return{q:`Two secants are drawn from point $P$. The first has outside piece $${a}$ and inside piece $${b}$. The second has outside piece $${c}$ and inside piece $x$. Find $x$.`,type:"number",ans:w,ansTex:`${w}`,hint:"Outside × whole = outside × whole.",sol:[`$${a}(${a+b}) = ${c}(${c} + x)$.`,`$${a*(a+b)} = ${c*c} + ${c}x$, so $x = ${w}$.`]}},
   ()=>{let a,b,t;do{a=rnd(2,9);b=rnd(2,20);t=Math.sqrt(a*(a+b))}while(!Number.isInteger(t));return{q:`From point $P$, a tangent and a secant are drawn to a circle. The secant has outside piece $${a}$ and inside piece $${b}$. Find the length of the tangent segment.`,type:"number",ans:t,ansTex:`${t}`,hint:"$t^2 = \\text{outside} \\times \\text{whole}$.",sol:[`$t^2 = ${a}(${a+b}) = ${a*(a+b)}$, $t = ${t}$.`]}}
  ]},
- {id:"eq",title:"Equations of Circles, Arc Length & Sectors",idea:"$(x - h)^2 + (y - k)^2 = r^2$: center $(h, k)$, radius $r$. Arc length $= \\dfrac{\\theta}{360} \\cdot 2\\pi r$; sector area $= \\dfrac{\\theta}{360} \\cdot \\pi r^2$.",
+ {id:"eq",title:"10.5 Equations of Circles, Arc Length & Sectors",idea:"$(x - h)^2 + (y - k)^2 = r^2$: center $(h, k)$, radius $r$. Arc length $= \\dfrac{\\theta}{360} \\cdot 2\\pi r$; sector area $= \\dfrac{\\theta}{360} \\cdot \\pi r^2$.",
   lesson:{steps:[["(x - 2)^2 + (y + 3)^2 = 25","Read off the center and radius."],["\\text{center } (2, -3)","Signs flip inside the parentheses."],["r = 5","$r^2 = 25$."]],warn:"$(y + 3)^2$ means $k = -3$. And the right side is $r^2$, not $r$."},
   gen:[
   ()=>{const h=nz(-8,8),k=nz(-8,8),r=rnd(1,9);return{q:`Find the center of the circle $${sq(h)} + ${sq(k,"y")} = ${r*r}$.`,type:"point",ans:[h,k],ansTex:pt(h,k),hint:"Center $(h, k)$ — watch the signs.",sol:[`Center $${pt(h,k)}$.`]}},
@@ -696,7 +696,7 @@ const MORE=[
  ]}
 ]},
 {id:"ch11",title:"Area",topics:[
- {id:"poly",title:"Triangles & Quadrilaterals",idea:"Triangle $\\tfrac12 bh$ · Parallelogram $bh$ · Trapezoid $\\tfrac12(b_1 + b_2)h$ · Rhombus/kite $\\tfrac12 d_1 d_2$.",
+ {id:"poly",title:"11.1 Triangles & Quadrilaterals",idea:"Triangle $\\tfrac12 bh$ · Parallelogram $bh$ · Trapezoid $\\tfrac12(b_1 + b_2)h$ · Rhombus/kite $\\tfrac12 d_1 d_2$.",
   lesson:{steps:[["\\text{Trapezoid: } b_1 = 6,\\ b_2 = 10,\\ h = 4","Average the bases, times the height."],["\\tfrac12(6 + 10) \\cdot 4","Plug in."],["= 32","Square units."]],warn:"The height must be <b>perpendicular</b> to the base — not a slanted side."},
   gen:[
   ()=>{const b=rnd(2,20),h=rnd(2,20),w=Math.random()<.5;return w?{q:`Find the area of a triangle with base $${b}$ and height $${h}$.`,type:"number",ans:b*h/2,ansTex:`${b*h/2}`,hint:"$\\tfrac12 bh$.",sol:[`$\\tfrac12(${b})(${h}) = ${b*h/2}$.`]}:{q:`Find the area of a parallelogram with base $${b}$ and height $${h}$.`,type:"number",ans:b*h,ansTex:`${b*h}`,hint:"$bh$.",sol:[`$${b} \\cdot ${h} = ${b*h}$.`]}},
@@ -705,7 +705,7 @@ const MORE=[
   ()=>{const w=rnd(4,15),l=rnd(5,20),h=rnd(2,10);return{q:`A figure is made of a $${l} \\times ${w}$ rectangle with a triangle on top whose base is the $${w}$-unit side and whose height is $${h}$. Find the total area.`,type:"number",ans:l*w+w*h/2,ansTex:`${l*w+w*h/2}`,hint:"Add the rectangle's area and the triangle's area.",sol:[`$${l} \\cdot ${w} + \\tfrac12(${w})(${h}) = ${l*w} + ${w*h/2} = ${l*w+w*h/2}$.`]}},
   ()=>{const s=2*rnd(1,6);return{q:`Find the exact area of an equilateral triangle with side $${s}$. (Type like 9sqrt(3).)`,type:"number",form:"rad",ans:s*s*Math.sqrt(3)/4,ansTex:`${s*s/4===1?"":s*s/4}\\sqrt{3}`,hint:"Area $= \\dfrac{s^2\\sqrt3}{4}$ (or find the height with a $30$-$60$-$90$ triangle).",sol:[`$\\dfrac{${s*s}\\sqrt3}{4} = ${s*s/4===1?"":s*s/4}\\sqrt{3}$.`]}}
  ]},
- {id:"circ",title:"Circles & Shaded Regions",idea:"Circumference $C = 2\\pi r$, area $A = \\pi r^2$. Shaded region = big area − small area.",
+ {id:"circ",title:"11.2 Circles & Shaded Regions",idea:"Circumference $C = 2\\pi r$, area $A = \\pi r^2$. Shaded region = big area − small area.",
   lesson:{steps:[["r = 3","Find the area."],["A = \\pi(3)^2","Square the radius first."],["= 9\\pi \\approx 28.3","Exact answer in terms of $\\pi$."]],warn:"Use the <b>radius</b>, not the diameter. If you're given $d = 10$, then $r = 5$."},
   gen:[
   ()=>{const r=rnd(1,15),w=Math.random()<.5;return{q:`Find the circumference of a circle with ${w?"radius":"diameter"} $${w?r:2*r}$. Give an exact answer (type like 8pi).`,type:"number",ans:2*Math.PI*r,ansTex:`${2*r}\\pi`,hint:"$C = 2\\pi r = \\pi d$.",sol:[`$C = ${2*r}\\pi$.`]}},
@@ -714,7 +714,7 @@ const MORE=[
   ()=>{const r=rnd(2,12),t=pick([30,45,60,90,120,180,270]),v=r*r*t/360;return{q:`Find the area of a sector with radius $${r}$ and central angle $${t}^\\circ$, in terms of $\\pi$.`,type:"number",ans:v*Math.PI,ansTex:`${Number.isInteger(v)?v:v.toFixed(2)}\\pi`,hint:"$\\dfrac{\\theta}{360} \\cdot \\pi r^2$.",sol:[`$\\dfrac{${t}}{360} \\cdot ${r*r}\\pi = ${Number.isInteger(v)?v:v.toFixed(2)}\\pi$.`]}},
   ()=>{const r=rnd(1,8),w=Math.random()<.5;return w?{q:`A circle is inscribed in a square with side $${2*r}$. Find the area of the region inside the square but outside the circle. (Type like 16-4pi.)`,type:"number",ans:4*r*r-Math.PI*r*r,ansTex:`${4*r*r} - ${r*r}\\pi`,hint:"Square area − circle area. The circle's diameter equals the side.",sol:[`$${2*r}^2 - \\pi(${r})^2 = ${4*r*r} - ${r*r}\\pi$.`]}:{q:`A square with side $${r*2}$ is inscribed in a circle. Find the area inside the circle but outside the square. (Type like 8pi-16.)`,type:"number",ans:2*r*r*Math.PI-4*r*r,ansTex:`${2*r*r}\\pi - ${4*r*r}`,hint:"The circle's diameter is the square's diagonal: $"+2*r+"\\sqrt2$.",sol:[`$r_{circle} = ${r}\\sqrt2$, circle area $${2*r*r}\\pi$.`,`$${2*r*r}\\pi - ${4*r*r}$.`]}}
  ]},
- {id:"reg",title:"Regular Polygons & Similar Figures",idea:"Regular polygon area $= \\tfrac12 \\cdot \\text{apothem} \\cdot \\text{perimeter}$. Triangle with two sides and included angle: $\\tfrac12 ab\\sin C$.",
+ {id:"reg",title:"11.3 Regular Polygons & Similar Figures",idea:"Regular polygon area $= \\tfrac12 \\cdot \\text{apothem} \\cdot \\text{perimeter}$. Triangle with two sides and included angle: $\\tfrac12 ab\\sin C$.",
   lesson:{steps:[["\\text{Regular hexagon, side } 6,\\ \\text{apothem } 3\\sqrt3","Perimeter $= 36$."],["\\tfrac12 \\cdot 3\\sqrt3 \\cdot 36","Half apothem times perimeter."],["= 54\\sqrt3","Area."]],warn:"The apothem goes from the center to the <b>midpoint</b> of a side, not to a vertex."},
   gen:[
   ()=>{const a=rnd(2,12),n=pick([5,6,8,10]),s=rnd(2,12);return{q:`A regular ${{5:"pentagon",6:"hexagon",8:"octagon",10:"decagon"}[n]} has side $${s}$ and apothem $${a}$. Find its area.`,type:"number",ans:a*n*s/2,ansTex:`${a*n*s/2}`,hint:"$\\tfrac12 \\cdot a \\cdot P$, with $P = "+n+" \\cdot "+s+"$.",sol:[`$P = ${n*s}$.`,`$\\tfrac12(${a})(${n*s}) = ${a*n*s/2}$.`]}},
@@ -725,7 +725,7 @@ const MORE=[
  ]}
 ]},
 {id:"ch12",title:"Surface Area & Volume",topics:[
- {id:"prism",title:"Prisms & Cylinders",idea:"Volume = base area × height. Cylinder: $V = \\pi r^2 h$, $SA = 2\\pi r^2 + 2\\pi r h$.",
+ {id:"prism",title:"12.2 Prisms & Cylinders",idea:"Volume = base area × height. Cylinder: $V = \\pi r^2 h$, $SA = 2\\pi r^2 + 2\\pi r h$.",
   lesson:{steps:[["\\text{Cylinder: } r = 3,\\ h = 5","Volume = base area × height."],["V = \\pi(3)^2(5)","Base is a circle."],["= 45\\pi","Exact volume."]],warn:"Surface area adds up the <b>areas</b> of all faces; volume measures the space <b>inside</b> (cubic units)."},
   gen:[
   ()=>{const l=rnd(2,12),w=rnd(2,12),h=rnd(2,12);return{q:`Find the volume of a rectangular prism $${l} \\times ${w} \\times ${h}$.`,type:"number",ans:l*w*h,ansTex:`${l*w*h}`,hint:"$V = lwh$.",sol:[`$${l} \\cdot ${w} \\cdot ${h} = ${l*w*h}$.`]}},
@@ -734,7 +734,7 @@ const MORE=[
   ()=>{const r=rnd(1,10),h=rnd(1,15);return{q:`Find the total surface area of a cylinder with radius $${r}$ and height $${h}$, in terms of $\\pi$.`,type:"number",ans:Math.PI*(2*r*r+2*r*h),ansTex:`${2*r*r+2*r*h}\\pi`,hint:"Two circles plus the curved side: $2\\pi r^2 + 2\\pi r h$.",sol:[`$2\\pi(${r*r}) + 2\\pi(${r})(${h}) = ${2*r*r+2*r*h}\\pi$.`]}},
   ()=>{const s=rnd(4,10),h=rnd(1,s-2);return{q:`A cube with edge $${s}$ has a square hole of side $${h}$ cut straight through the middle, from one face to the opposite face. Find the remaining volume.`,type:"number",ans:s**3-h*h*s,ansTex:`${s**3-h*h*s}`,hint:"Cube volume minus the volume of the square prism removed.",sol:[`$${s}^3 - ${h}^2 \\cdot ${s} = ${s**3} - ${h*h*s} = ${s**3-h*h*s}$.`]}}
  ]},
- {id:"pyr",title:"Pyramids & Cones",idea:"Pyramid and cone: $V = \\tfrac13 \\cdot$ base area $\\cdot h$ — one third of the matching prism or cylinder.",
+ {id:"pyr",title:"12.3 Pyramids & Cones",idea:"Pyramid and cone: $V = \\tfrac13 \\cdot$ base area $\\cdot h$ — one third of the matching prism or cylinder.",
   lesson:{steps:[["\\text{Cone: } r = 3,\\ h = 4","Volume."],["V = \\tfrac13\\pi(3)^2(4)","One third of a cylinder."],["= 12\\pi","Exact volume."]],warn:"Use the <b>height</b> (straight up) for volume and the <b>slant height</b> for lateral surface area."},
   gen:[
   ()=>{const s=rnd(2,12),h=3*rnd(1,6);return{q:`Find the volume of a square pyramid with base side $${s}$ and height $${h}$.`,type:"number",ans:s*s*h/3,ansTex:`${s*s*h/3}`,hint:"$V = \\tfrac13 s^2 h$.",sol:[`$\\tfrac13(${s*s})(${h}) = ${s*s*h/3}$.`]}},
@@ -743,7 +743,7 @@ const MORE=[
   ()=>{const s=rnd(2,12),l=rnd(3,15);return{q:`A square pyramid has base side $${s}$ and slant height $${l}$. Find its total surface area.`,type:"number",ans:s*s+2*s*l,ansTex:`${s*s+2*s*l}`,hint:"Base + 4 triangles, each $\\tfrac12 s \\ell$.",sol:[`$${s*s} + 4 \\cdot \\tfrac12(${s})(${l}) = ${s*s+2*s*l}$.`]}},
   ()=>{const r=rnd(1,6),h=rnd(2,12);return{q:`A cone has volume $${r*r*h}\\pi$ and radius $${r*Math.sqrt(3)%1===0?r:r}$... `.slice(0,0)+`A cone has volume $${r*r*h}\\pi$ and height $${3*h}$. Find its radius.`,type:"number",ans:r,ansTex:`${r}`,hint:"$\\tfrac13\\pi r^2 h = V$. Solve for $r^2$.",sol:[`$\\tfrac13\\pi r^2(${3*h}) = ${r*r*h}\\pi$.`,`$${h}r^2 = ${r*r*h}$, so $r = ${r}$.`]}}
  ]},
- {id:"sph",title:"Spheres & Similar Solids",idea:"Sphere: $V = \\tfrac43\\pi r^3$, $SA = 4\\pi r^2$. Similar solids with scale factor $k$: areas $\\times k^2$, volumes $\\times k^3$.",
+ {id:"sph",title:"12.4 Spheres & Similar Solids",idea:"Sphere: $V = \\tfrac43\\pi r^3$, $SA = 4\\pi r^2$. Similar solids with scale factor $k$: areas $\\times k^2$, volumes $\\times k^3$.",
   lesson:{steps:[["r = 3","Sphere volume."],["V = \\tfrac43\\pi(3)^3","Cube the radius."],["= 36\\pi","Exact volume."]],warn:"Volume scales by $k^3$: doubling every length makes the volume $8$ times as big."},
   gen:[
   ()=>{const r=3*rnd(1,4);return{q:`Find the volume of a sphere with radius $${r}$, in terms of $\\pi$.`,type:"number",ans:4*Math.PI*r**3/3,ansTex:`${4*r**3/3}\\pi`,hint:"$V = \\tfrac43\\pi r^3$.",sol:[`$\\tfrac43\\pi(${r**3}) = ${4*r**3/3}\\pi$.`]}},
@@ -754,7 +754,7 @@ const MORE=[
  ]}
 ]},
 {id:"ch13",title:"Probability",topics:[
- {id:"basic",title:"Basic Probability",idea:"$P(\\text{event}) = \\dfrac{\\text{favorable outcomes}}{\\text{total outcomes}}$. $P(\\text{not } A) = 1 - P(A)$.",
+ {id:"basic",title:"13.1 Basic Probability",idea:"$P(\\text{event}) = \\dfrac{\\text{favorable outcomes}}{\\text{total outcomes}}$. $P(\\text{not } A) = 1 - P(A)$.",
   lesson:{steps:[["\\text{Roll a die: } P(\\text{even})","Outcomes $1$–$6$."],["\\text{even: } 2, 4, 6","$3$ favorable outcomes."],["P = \\tfrac36 = \\tfrac12","Favorable over total."]],warn:"Probabilities are between $0$ and $1$. Answers can be fractions like 3/8 or decimals."},
   gen:[
   ()=>{const E=[["an even number",3],["a number greater than 4",2],["a 6",1],["a number less than 3",2],["a prime number",3],["a multiple of 3",2]],e=pick(E);return{q:`A fair die is rolled. What is the probability of rolling ${e[0]}?`,type:"number",ans:e[1]/6,ansTex:frac(e[1],6),hint:"Count the favorable outcomes out of $6$.",sol:[`$\\dfrac{${e[1]}}{6} = ${frac(e[1],6)}$.`]}},
@@ -763,7 +763,7 @@ const MORE=[
   ()=>{const s=rnd(2,12),c=6-Math.abs(7-s);return{q:`Two fair dice are rolled. What is the probability that the sum is $${s}$?`,type:"number",ans:c/36,ansTex:frac(c,36),hint:"There are $36$ equally likely outcomes. Count the pairs that add to "+s+".",sol:[`$${c}$ pairs give a sum of $${s}$.`,`$\\dfrac{${c}}{36} = ${frac(c,36)}$.`]}},
   ()=>{const n=rnd(2,6);return{q:`A fair coin is flipped $${n}$ times. What is the probability of getting <b>at least one</b> head?`,type:"number",ans:1-1/2**n,ansTex:frac(2**n-1,2**n),hint:"Use the complement: $1 - P(\\text{no heads})$.",sol:[`$P(\\text{all tails}) = \\left(\\tfrac12\\right)^{${n}} = \\tfrac{1}{${2**n}}$.`,`$1 - \\tfrac{1}{${2**n}} = ${frac(2**n-1,2**n)}$.`]}}
  ]},
- {id:"count",title:"Counting: Permutations & Combinations",idea:"<b>Permutations</b> (order matters): $_nP_r = \\dfrac{n!}{(n - r)!}$. <b>Combinations</b> (order doesn't matter): $_nC_r = \\dfrac{n!}{r!(n - r)!}$.",
+ {id:"count",title:"13.4 Permutations & Combinations",idea:"<b>Permutations</b> (order matters): $_nP_r = \\dfrac{n!}{(n - r)!}$. <b>Combinations</b> (order doesn't matter): $_nC_r = \\dfrac{n!}{r!(n - r)!}$.",
   lesson:{steps:[["\\text{Choose 2 of 5 friends}","Does order matter? No."],["_5C_2 = \\dfrac{5!}{2!\\,3!}","Combination."],["= 10","Ten different pairs."]],warn:"Ask: does swapping two choices make a new outcome? If yes, permutation; if no, combination."},
   gen:[
   ()=>{const a=rnd(2,6),b=rnd(2,6),c=rnd(1,5);return{q:`You have $${a}$ shirts, $${b}$ pairs of pants, and $${c}$ pairs of shoes. How many different outfits can you make?`,type:"number",ans:a*b*c,ansTex:`${a*b*c}`,hint:"Multiply the number of choices for each item.",sol:[`$${a} \\cdot ${b} \\cdot ${c} = ${a*b*c}$.`]}},
@@ -772,7 +772,7 @@ const MORE=[
   ()=>{const W=[["BOOK",[2]],["LEVEL",[2,2]],["APPLE",[2]],["BANANA",[3,2]],["TOOTH",[2,2]],["PEPPER",[3,2]],["COFFEE",[2,2]]],w=pick(W),v=fact(w[0].length)/w[1].reduce((a,b)=>a*fact(b),1);return{q:`How many different arrangements are there of the letters in ${w[0]}?`,type:"number",ans:v,ansTex:`${v}`,hint:"Total letters factorial, divided by the factorial of each repeated letter's count.",sol:[`$\\dfrac{${w[0].length}!}{${w[1].map(x=>x+"!").join(" \\cdot ")}} = ${v}$.`]}},
   ()=>{const b=rnd(4,8),g=rnd(4,8),k=rnd(1,2);return{q:`A team of $4$ is chosen from $${b}$ boys and $${g}$ girls. How many teams have exactly $${k}$ boy${k>1?"s":""}?`,type:"number",ans:nCr(b,k)*nCr(g,4-k),ansTex:`${nCr(b,k)*nCr(g,4-k)}`,hint:`Choose the boys and the girls separately, then multiply: $_{${b}}C_{${k}} \\cdot {}_{${g}}C_{${4-k}}$.`,sol:[`$${nCr(b,k)} \\cdot ${nCr(g,4-k)} = ${nCr(b,k)*nCr(g,4-k)}$.`]}}
  ]},
- {id:"comp",title:"Compound & Conditional Probability",idea:"Independent: $P(A \\text{ and } B) = P(A) \\cdot P(B)$. Conditional: $P(B \\mid A) = \\dfrac{P(A \\text{ and } B)}{P(A)}$.",
+ {id:"comp",title:"13.3 Compound & Conditional Probability",idea:"Independent: $P(A \\text{ and } B) = P(A) \\cdot P(B)$. Conditional: $P(B \\mid A) = \\dfrac{P(A \\text{ and } B)}{P(A)}$.",
   lesson:{steps:[["\\text{Flip a coin and roll a die}","Independent events."],["P(\\text{H and } 6) = \\tfrac12 \\cdot \\tfrac16","Multiply."],["= \\tfrac{1}{12}","Done."]],warn:"Without replacement, the second probability changes because one item is gone."},
   gen:[
   ()=>{const a=pick([[1,2],[1,6],[1,3],[2,5],[1,4]]),b=pick([[1,2],[1,6],[2,3],[3,4],[1,5]]);return{q:`Events $A$ and $B$ are independent with $P(A) = ${frac(...a)}$ and $P(B) = ${frac(...b)}$. Find $P(A \\text{ and } B)$.`,type:"number",ans:a[0]/a[1]*b[0]/b[1],ansTex:frac(a[0]*b[0],a[1]*b[1]),hint:"Multiply the probabilities.",sol:[`$${frac(...a)} \\cdot ${frac(...b)} = ${frac(a[0]*b[0],a[1]*b[1])}$.`]}},
@@ -785,6 +785,8 @@ const MORE=[
 ];
 
 CHAPTERS.push(...MORE);
+/* keep lessons in section order (1.1, 1.2, …) */
+CHAPTERS.forEach(c=>{ const k=t=>{ const m=/^\d+\.(\d+) /.exec(t.title); return m?+m[1]:99; }; c.topics.sort((x,y)=>k(x)-k(y)); });
 CHAPTERS.sort((a,b)=>Number(a.id.slice(2))-Number(b.id.slice(2)));
 const ALLCH=[[1,"Foundations of Geometry","ch1"],[2,"Reasoning & Proof","ch2"],[3,"Parallel & Perpendicular Lines","ch3"],[4,"Congruent Triangles","ch4"],[5,"Relationships Within Triangles","ch5"],[6,"Polygons & Quadrilaterals","ch6"],[7,"Similarity","ch7"],[8,"Right Triangles & Trigonometry","ch8"],[9,"Transformations","ch9"],[10,"Circles","ch10"],[11,"Area","ch11"],[12,"Surface Area & Volume","ch12"],[13,"Probability","ch13"]];
 const COMING=[];

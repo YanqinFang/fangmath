@@ -75,7 +75,7 @@ button:focus-visible,input:focus{outline:2px solid var(--teal);outline-offset:1p
 .phead{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between}
 .phead h2{font-size:24px}
 .problem{font-size:clamp(19px,2.6vw,24px);padding:16px 18px;border-radius:14px;background:var(--bg);overflow-x:auto;line-height:1.7}
-.row{display:flex;gap:8px;flex-wrap:wrap}
+.row{display:flex;gap:8px;flex-wrap:wrap} .row[hidden],.problem[hidden]{display:none}
 .row input{flex:1 1 240px;border:1px solid var(--line);border-radius:999px;padding:11px 16px;background:var(--bg)}
 .preview{font-size:18px;min-height:1.4em}
 .preview .pl{font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--faint);font-weight:700;margin-right:8px}
@@ -190,6 +190,11 @@ footer{text-align:center;color:var(--faint);font-size:13px;padding:24px}
 .cs-top .cs-acts{display:flex;gap:8px}
 .cs-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
 @media (max-width:700px){.cs-grid{grid-template-columns:1fr}}
+.streak i.todo{background:transparent;border:1.5px solid var(--line)} .streak span{margin-right:6px;font-weight:600;color:var(--ink)}
+.rres{border:1.5px solid var(--teal);border-radius:14px;padding:16px 18px;background:var(--teal-soft)}
+.rres .rsc{display:flex;align-items:baseline;gap:10px} .rres .rsc b{font-family:Fraunces,Georgia,serif;font-size:34px} .rres .rsc span{color:var(--muted)}
+.rres p{margin:6px 0 12px} .racts{display:flex;flex-wrap:wrap;gap:10px;align-items:center} .rdone{font-weight:600}
+.rres .suggest{margin-top:12px}
 .secbar{grid-column:1/-1;display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-bottom:2px}
 .secbar .label{margin-right:4px}
 .secbar .sb{display:flex;align-items:center;gap:6px;border:1.5px solid var(--line);background:var(--surface);border-radius:999px;padding:5px 12px 5px 5px;font:inherit;font-size:13.5px;font-weight:600;color:var(--ink);cursor:pointer}
@@ -1108,7 +1113,7 @@ function secList(){ const box=$("secs"); if(!box||!CH) return; box.innerHTML="";
 function legend(){ if(!st) return; const box=$("legend"); box.innerHTML=""; const cur=curLv(); LEVELS.forEach(l=>{ const b=document.createElement("button"); b.type="button"; b.className="lvc"+(l.n===cur?" on":"")+(st.rec===l.n?" star":""); b.style.setProperty("--c",l.c); b.title=l.desc; b.innerHTML=`<i>${l.n}</i>${l.name}`; b.onclick=()=>setLevel(l.n); box.appendChild(b); }); const L0=LEVELS[cur-1]; $("lvDesc").innerHTML=`<b style="color:${L0.c}">Level ${cur} · ${L0.name}</b> — ${L0.desc}. Every topic below uses this level.`; }
 
 function curLv(){ return st.lvl||st.rec||1; }
-function setLevel(n){ st.lvl=n; save(); if(T&&!$("practice").hidden){ L=n; streak=[]; newProblem(); } legend(); topics(); }
+function setLevel(n){ st.lvl=n; save(); if(T&&!$("practice").hidden){ L=n; streak=[]; newRound(); newProblem(); } legend(); topics(); }
 function recText(){ $("recText").innerHTML=st.rec?`★ Suggested: Level ${st.rec}`:"Not sure?"; $("placeBtn").textContent=st.rec?"Retake the check":"Take the 5-question check"; }
 function pillsFor(t,cur,onPick){ const w=document.createElement("div"); w.className="pills";
   LEVELS.forEach(l=>{ const b=document.createElement("button"); b.type="button"; b.className="pill"+(l.n===cur?" on":"")+(st.rec===l.n?" star":""); b.style.setProperty("--c",l.c); const n=st.solved[t.id+l.n]||0; b.innerHTML=`${l.n} ${l.name}`+(n?`<span class="n">✓${n}</span>`:""); b.onclick=()=>onPick(l.n); w.appendChild(b); }); return w; }
@@ -1122,31 +1127,52 @@ function topics(){ const box=$("topics"); box.innerHTML=""; legend(); const lvl=
     r.innerHTML=`<span class="pt">${G.idx.length>1?tlab(t).part:"5 levels · new problems every time"}</span><small>${n?`✓ ${n} solved`:""}</small>`;
     const go=document.createElement("button"); go.className="btn teal sm"; go.textContent=on?"Practicing ↓":"Practice →"; go.onclick=()=>startPractice(t,lvl); r.appendChild(go); c.appendChild(r); });
   box.appendChild(c); render(box); }
-function startPractice(t,n){ n=curLv(); T=t; L=n; st.level[t.id]=n; save(); streak=[]; $("practice").hidden=false; $("pTitle").textContent=tlab(t).full; newProblem(); $("practice").scrollIntoView({behavior:"smooth",block:"start"}); topics(); }
-function levelPills(){ $("pLevels").replaceWith(Object.assign(pillsFor(T,L,n=>{ L=n; st.level[T.id]=n; save(); streak=[]; newProblem(); topics(); }),{id:"pLevels"})); }
+function startPractice(t,n){ n=curLv(); T=t; L=n; st.level[t.id]=n; save(); streak=[]; newRound(); $("practice").hidden=false; $("pTitle").textContent=tlab(t).full; newProblem(); $("practice").scrollIntoView({behavior:"smooth",block:"start"}); topics(); }
+function levelPills(){ $("pLevels").replaceWith(Object.assign(pillsFor(T,L,n=>{ L=n; st.level[T.id]=n; save(); streak=[]; newRound(); newProblem(); topics(); }),{id:"pLevels"})); }
 function newProblem(){
   PR=T.gen[L-1](); tries=0; done=false; firstTry=true;
   $("pQ").innerHTML=`<span class="label" style="color:${LEVELS[L-1].c}">Level ${L} · ${LEVELS[L-1].name}</span><div>${PR.q}</div>`; render($("pQ"));
   $("pAns").value=""; $("pAns").disabled=false; $("pPrev").textContent=""; $("pHow").textContent=PR.type==="word"&&PR.opts?"Type one of: "+PR.opts.map(o=>o==="NONE"?"none":o.length>3?o.toLowerCase():o).join(", ")+".":PR.form==="factored"?"Type the factored form, like 2(x - 3)(x + 4).":PR.form==="poly"?"Type the simplified polynomial, like 3x^2 - 5x + 2.":PR.form==="simp"?"Type the simplified expression with positive exponents, like 6x^5 or 3x^2/y^4.":PR.form==="rad"?"Type the simplest radical form, like 5sqrt(2).":PR.form==="si"?"Type it as y = mx + b, like y = -2x + 5.":PR.form==="std"?"Type it as Ax + By = C with whole numbers, like 3x - 2y = 6.":HOW[PR.type]; $("pFb").innerHTML=""; $("pSuggest").innerHTML="";
-  $("pCheck").hidden=false; $("pNext").hidden=true; $("pHint").disabled=false; $("pShow").hidden=true; levelPills(); drawStreak(); $("pAns").focus({preventScroll:true}); }
+  $("pQ").hidden=false; $("pAns").closest(".row").hidden=false; $("pCheck").hidden=false; $("pNext").hidden=true; $("pHint").disabled=false; $("pShow").hidden=true; $("pAns").disabled=false; levelPills(); drawStreak(); $("pAns").focus({preventScroll:true}); }
 function fb(kind,tag,html){ $("pFb").innerHTML=`<div class="fb ${kind}"><span class="tag">${tag}</span>${html}</div>`; render($("pFb")); }
 const solHtml=()=>`<ol class="sol">${PR.sol.map(s=>`<li>${s}</li>`).join("")}</ol>`;
 function finish(correct){ done=true; $("pAns").disabled=true; $("pCheck").hidden=true; $("pNext").hidden=false; $("pShow").hidden=true; $("pHint").disabled=true;
   if(correct){ st.solved[T.id+L]=(st.solved[T.id+L]||0)+1; save(); }
-  streak.push(correct&&firstTry); if(streak.length>6) streak.shift(); drawStreak(); suggest(); levelPills(); $("pNext").focus({preventScroll:true}); }
+  streak.push(correct&&firstTry); if(streak.length>6) streak.shift();
+  RND.n++; if(correct) RND.right++; if(correct&&firstTry) RND.first++; drawStreak(); levelPills();
+  $("pNext").textContent=RND.n>=RLEN?"See my result →":"Next problem →"; $("pNext").focus({preventScroll:true}); }
 function submit(){ if(done||!PR) return; const v=$("pAns").value.trim(); if(!v) return; const r=check(PR,v);
   if(r===null){ fb("hint","Try again","I couldn't read that. "+HOW[PR.type]); return; }
   if(r){ fb("good","Correct"+(firstTry?" on the first try!":""),`$${PR.ansTex}$`+solHtml()); finish(true); return; }
   tries++; firstTry=false;
   if(tries===1){ fb("bad","Not yet",PR.hint+" Try again."); $("pShow").hidden=false; }
   else { fb("bad","Not yet","Here's how it works:"+solHtml()); finish(false); } }
-function drawStreak(){ const s=$("pStreak"); s.innerHTML="Recent: "; streak.forEach(x=>{ const i=document.createElement("i"); i.className=x?"ok":"no"; s.appendChild(i); }); if(!streak.length) s.textContent="Get 3 right on the first try in a row to unlock a suggestion to move up."; }
+/* ---- a round = 5 problems; then the student chooses: redo, or move to the next section ---- */
+const RLEN=5; let RND={n:0,right:0,first:0};
+function newRound(){ RND={n:0,right:0,first:0}; $("pSuggest").innerHTML=""; }
+function drawStreak(){ const s=$("pStreak"); s.innerHTML=`<span>Problem ${Math.min(RND.n+(done?0:1),RLEN)} of ${RLEN}</span> `; (RND.n?streak.slice(-RND.n):[]).forEach(x=>{ const i=document.createElement("i"); i.className=x?"ok":"no"; s.appendChild(i); }); for(let k=RND.n;k<RLEN;k++){ const i=document.createElement("i"); i.className="todo"; s.appendChild(i); } }
+function nextAfter(t){ const SG=sections(), i=CH.topics.indexOf(t), G=SG.find(g=>g.idx.includes(i)), k=G.idx.indexOf(i);
+  if(k<G.idx.length-1) return {t:CH.topics[G.idx[k+1]], label:`Next: ${tlab(CH.topics[G.idx[k+1]]).part}`};
+  const H=SG[SG.indexOf(G)+1]; return H?{t:CH.topics[H.idx[0]], label:`Move to ${H.no} ${H.name}`}:null; }
+function roundResult(){
+  const secKey="r_"+T.id+"_"+L, best=Math.max(st[secKey]||0,RND.right); st[secKey]=best; save();
+  $("pQ").hidden=true; $("pAns").closest(".row").hidden=true; $("pAns").disabled=true; $("pNext").hidden=true; $("pCheck").hidden=true; $("pHint").disabled=true; $("pShow").hidden=true; $("pPrev").textContent=""; $("pHow").textContent="";
+  const perfect=RND.first===RLEN, weak=RND.right<=2, nx=nextAfter(T);
+  const msg=perfect?`All ${RLEN} right on the first try — excellent!`:RND.right===RLEN?`All ${RLEN} right!`:RND.right>=3?`Good work — ${RND.right} out of ${RLEN}.`:`${RND.right} out of ${RLEN}. Look at the example in <b>Learn</b> once more, then redo it.`;
+  $("pFb").innerHTML=`<div class="rres"><div class="rsc"><b>${RND.right} / ${RLEN}</b><span>correct · ${RND.first} on the first try</span></div><p>${msg}</p><div class="racts"></div></div>`;
+  const A=$("pFb").querySelector(".racts");
+  const redo=document.createElement("button"); redo.className="btn ghost"; redo.textContent="↻ Redo it"; redo.onclick=()=>{ $("pFb").innerHTML=""; newRound(); newProblem(); }; A.appendChild(redo);
+  if(weak){ const lb=document.createElement("button"); lb.className="btn ghost"; lb.textContent="📘 Back to Learn"; lb.onclick=()=>{ setTab("learn"); openLesson(CH.topics.indexOf(T),true); }; A.appendChild(lb); }
+  if(nx){ const nb=document.createElement("button"); nb.className="btn teal"; nb.textContent=nx.label+" →"; nb.onclick=()=>{ $("pFb").innerHTML=""; LI=CH.topics.indexOf(nx.t); road(); startPractice(nx.t); }; A.appendChild(nb); }
+  else { const d=document.createElement("span"); d.className="rdone"; d.textContent="🎉 Last section of this chapter done!"; A.appendChild(d); }
+  if(perfect&&L<5){ const d=document.createElement("div"); d.className="suggest"; d.style.setProperty("--c",LEVELS[L].c); d.innerHTML=`<span>Ready for <b>Level ${L+1} · ${LEVELS[L].name}</b>?</span>`; const b=document.createElement("button"); b.className="btn sm"; b.style.background=LEVELS[L].c; b.textContent="Move up ↑"; b.onclick=()=>{ $("pFb").innerHTML=""; setLevel(L+1); }; d.appendChild(b); $("pFb").querySelector(".rres").appendChild(d); }
+  $("pStreak").innerHTML=""; render($("pFb")); topics(); }
 function suggest(){ const box=$("pSuggest"); box.innerHTML=""; const last=streak.slice(-3),last2=streak.slice(-2); let to=null,msg="";
   if(L<5&&last.length===3&&last.every(Boolean)){ to=L+1; msg=`3 in a row on the first try! Ready for <b>Level ${L+1} · ${LEVELS[L].name}</b>?`; }
   else if(L>1&&last2.length===2&&last2.every(x=>!x)){ to=L-1; msg=`These are tough — that's okay! Practice <b>Level ${L-1} · ${LEVELS[L-2].name}</b> first, then come back stronger.`; }
   if(!to) return; const d=document.createElement("div"); d.className="suggest"; d.style.setProperty("--c",LEVELS[to-1].c); d.innerHTML=`<span>${msg}</span>`;
   const b=document.createElement("button"); b.className="btn sm"; b.style.background=LEVELS[to-1].c; b.textContent=to>L?"Move up ↑":"Go to Level "+to; b.onclick=()=>{ setLevel(to); }; d.appendChild(b); box.appendChild(d); }
-$("pCheck").onclick=submit; $("pAns").addEventListener("keydown",e=>{ if(e.key==="Enter"){ e.preventDefault(); done?newProblem():submit(); } });
+$("pCheck").onclick=submit; $("pAns").addEventListener("keydown",e=>{ if(e.key==="Enter"){ e.preventDefault(); done?$("pNext").onclick():submit(); } });
 
 /* ---- chapter cheat sheet ---- */
 function cheatSheet(){
@@ -1164,7 +1190,7 @@ function cheatSheet(){
   document.addEventListener("keydown",function esc(e){ if(e.key==="Escape"){ close(); document.removeEventListener("keydown",esc); } });
 }
 $("csBtn").onclick=cheatSheet;
-$("pNext").onclick=newProblem; $("closeP").onclick=()=>{ $("practice").hidden=true; };
+$("pNext").onclick=()=>{ if(RND.n>=RLEN) roundResult(); else newProblem(); }; $("closeP").onclick=()=>{ $("practice").hidden=true; };
 $("pHint").onclick=()=>{ if(done) return; firstTry=false; fb("hint","Hint",PR.hint); };
 $("pShow").onclick=()=>{ fb("hint","Solution",`$${PR.ansTex}$`+solHtml()); finish(false); };
 $("pAns").addEventListener("input",()=>{ const v=$("pAns").value.trim(),pv=$("pPrev"); if(!v||!window.katex){ pv.textContent=""; return; }

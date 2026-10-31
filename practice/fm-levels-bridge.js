@@ -238,9 +238,9 @@
      To add one: put the PDFs in materials/..., then add a line here under the page and chapter. */
   const HANDOUTS = {
     "algebra2-levels": {
-      ch2: [{ t: "2-1 Domain & Range", ws: "../materials/algebra2/ch02/Alg2_2-1_Domain_Range_Worksheet.pdf", key: "../materials/algebra2/ch02/Alg2_2-1_Domain_Range_Key.pdf" }],
+      ch2: [{ t: "2-1 Domain & Range", ws: "../materials/algebra2/ch02/Alg2_2-1_Domain_Range_Worksheet.pdf", key: "../materials/algebra2/ch02/Alg2_2-1_Domain_Range_Key.pdf", bw: 1 }],
       ch4: [{ t: "4-1 Quadratic Functions & Transformations (notes)", ws: "../materials/algebra2/ch04/Alg2_4-1_Notes.pdf", key: "../materials/algebra2/ch04/Alg2_4-1_Notes_Key.pdf" }],
-      ch6: [{ t: "6-7 Inverse Relations & Functions", ws: "../materials/algebra2/ch06/Alg2_6-7_Inverse_Functions_Worksheet.pdf", key: "../materials/algebra2/ch06/Alg2_6-7_Inverse_Functions_Key.pdf" }],
+      ch6: [{ t: "6-7 Inverse Relations & Functions", ws: "../materials/algebra2/ch06/Alg2_6-7_Inverse_Functions_Worksheet.pdf", key: "../materials/algebra2/ch06/Alg2_6-7_Inverse_Functions_Key.pdf", bw: 1 }],
     },
   };
   function drawHandouts() {
@@ -249,7 +249,7 @@
     if (!list.length) { if (box) box.remove(); return; }
     if (!box) { box = document.createElement("div"); box.id = "handouts"; box.className = "qt-handouts"; tabs.parentNode.insertBefore(box, tabs); }
     box.innerHTML = `<span class="qt-hl">📎 Printable handout${list.length > 1 ? "s" : ""}</span>` + list.map(h => `<span class="qt-hrow"><b>${esc(h.t)}</b>
-      <a class="btn sm" style="background:#8A6415" href="${h.ws}" target="_blank" rel="noopener">📄 Worksheet PDF</a>${h.key ? `<a class="btn sm ghost" href="${h.key}" target="_blank" rel="noopener">🔑 Answer key</a>` : ""}</span>`).join("");
+      <a class="btn sm" style="background:#8A6415" href="${h.ws}" target="_blank" rel="noopener">📄 Worksheet PDF</a>${h.key ? `<a class="btn sm ghost" href="${h.key}" target="_blank" rel="noopener">🔑 Answer key</a>` : ""}${h.bw ? `<a class="btn sm ghost" href="${h.ws.replace(/\.pdf$/, "_BW.pdf")}" target="_blank" rel="noopener">⚫ B&amp;W</a>${h.key ? `<a class="btn sm ghost" href="${h.key.replace(/\.pdf$/, "_BW.pdf")}" target="_blank" rel="noopener">⚫ B&amp;W key</a>` : ""}` : ""}</span>`).join("");
   }
 
   /* ================= CHECKPOINTS: 1 quiz in the middle of each chapter, 1 test at the end =================
@@ -651,6 +651,7 @@
     const partHead = gr => gr.name ? `<h3 class="qtp-part">${esc(gr.name)}</h3>` : "";
     m.innerHTML = `<div class="qtp-sheet${kind === "ws" ? " qtp-ws" : ""}">
       <div class="qtp-acts">
+        <span class="qtp-mode" role="group" aria-label="Color or black and white"><button type="button" class="on" data-mode="color">🎨 Color</button><button type="button" data-mode="bw">⚫ Black &amp; white</button></span>
         <span class="qtp-dl">📥 Download PDF:</span>
         <button class="btn teal sm" data-dl="paper">${kind === "quiz" ? "Quiz" : kind === "ws" ? "Worksheet" : "Test"}</button>
         <button class="btn teal sm" data-dl="key">Answer key</button>
@@ -668,11 +669,28 @@
         <div class="qtp-foot">fangmath.com</div></div></div>`;
     document.body.appendChild(m); render(m);
     const close = () => { m.remove(); document.body.classList.remove("qt-printing"); };
+    m.querySelectorAll(".qtp-mode button").forEach(b => b.onclick = () => { m.classList.toggle("bw", b.dataset.mode === "bw"); try { localStorage.setItem("fm-print-mode", b.dataset.mode); } catch (e) {}
+      m.querySelectorAll(".qtp-mode button").forEach(x => x.classList.toggle("on", x === b)); });
+    try { if (localStorage.getItem("fm-print-mode") === "bw") m.querySelector('.qtp-mode [data-mode="bw"]').click(); } catch (e) {}
     m.querySelector("#qtpX").onclick = close;
     m.querySelector("#qtpNew").onclick = () => { close(); paper(kind); };
     m.querySelector("#qtpGo").onclick = () => { document.body.classList.add("qt-printing"); window.print(); setTimeout(() => document.body.classList.remove("qt-printing"), 600); };
     m.onclick = e => { if (e.target === m) close(); };
     m.querySelectorAll("[data-dl]").forEach(b => b.onclick = () => download(m, b.dataset.dl, fileBase));
+  }
+  /* black & white: every color becomes the gray of the same brightness */
+  function grayOf(c) {
+    const m = /rgba?\(\s*(\d+)[ ,]+(\d+)[ ,]+(\d+)(?:[ ,/]+([\d.]+))?/.exec(c); if (!m) return null;
+    const y = Math.round(0.299 * m[1] + 0.587 * m[2] + 0.114 * m[3]), v = y > 235 ? 255 : y < 120 ? Math.round(y * 0.4) : y;
+    return m[4] != null ? `rgba(${v},${v},${v},${m[4]})` : `rgb(${v},${v},${v})`;
+  }
+  function toGray(root) {
+    [root, ...root.querySelectorAll("*")].forEach(el => {
+      const cs = getComputedStyle(el);
+      for (const [prop, css] of [["color", "color"], ["backgroundColor", "background-color"], ["borderTopColor", "border-top-color"], ["borderBottomColor", "border-bottom-color"], ["borderLeftColor", "border-left-color"], ["borderRightColor", "border-right-color"]]) {
+        const g2 = grayOf(cs[prop]); if (g2) el.style.setProperty(css, g2, "important"); }
+      if (el instanceof SVGElement) for (const a of ["fill", "stroke"]) { const v = cs[a]; if (v && v !== "none" && !/url\(/.test(v)) { const g2 = grayOf(v); if (g2) el.style.setProperty(a, g2, "important"); } }
+    });
   }
   let h2pLoading = null;
   function loadH2P() {
@@ -710,6 +728,7 @@
       meas.querySelectorAll("svg[viewBox]").forEach(sv => {        // give every figure a fixed size so it draws the same in the PDF
         const vb = sv.getAttribute("viewBox").split(/[\s,]+/).map(Number), w = Math.min(340, vb[2] || 340), h = vb[2] ? w * vb[3] / vb[2] : w;
         sv.setAttribute("width", w); sv.setAttribute("height", h); sv.style.width = w + "px"; sv.style.height = h + "px"; sv.style.maxWidth = "none"; });
+      if (m.classList.contains("bw")) toGray(meas);
       const box = document.createElement("div"); box.className = meas.className; box.style.width = W + "px";
       let page = null, used = 0;
       blocks.forEach(bk => {
@@ -809,7 +828,11 @@
 .qtp{position:fixed;inset:0;z-index:100;background:rgba(22,35,59,.55);overflow:auto;padding:24px 14px}
 .qtp-sheet{background:#fff;max-width:860px;margin:0 auto;border-radius:14px;padding:26px 30px;box-shadow:0 20px 50px rgba(0,0,0,.25)}
 .qtp-acts{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:8px}
-.qtp-dl{font-weight:700;font-size:14px}.qtp-sp{flex:1}
+.qtp-dl{font-weight:700;font-size:14px}
+.qtp-mode{display:inline-flex;border:1.5px solid var(--line);border-radius:999px;overflow:hidden;margin-right:4px}
+.qtp-mode button{border:0;background:#fff;padding:6px 12px;font:inherit;font-size:13px;font-weight:600;cursor:pointer;color:var(--muted)}
+.qtp-mode button.on{background:var(--navy);color:#fff}
+.qtp.bw .qtp-paper,.qtp.bw .qtp-key{filter:grayscale(1)}.qtp-sp{flex:1}
 .qtp-msg{font-size:13.5px;color:var(--muted);min-height:1.3em;margin-bottom:10px}
 .qtp-pdf{background:#fff;color:#16233B;padding:0}
 .qtp-q .a2fig{max-width:380px;margin:8px 0}

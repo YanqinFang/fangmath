@@ -48,6 +48,7 @@
   .ws-n{flex:none;width:28px;height:28px;border-radius:50%;background:var(--c);color:#fff;display:grid;place-items:center;font-weight:700;font-size:13px}
   .ws-t{flex:1 1 220px;font-weight:500}
   .ws-btns{display:flex;gap:6px;flex-wrap:wrap}
+  .res-bw{display:flex;gap:6px;flex-wrap:wrap;margin-left:auto}
   .ws-panel{display:flex;flex-direction:column;gap:10px;background:#FFF8EA;border:1.5px solid #E9D6A8;border-radius:14px;padding:14px 16px;margin:4px 0 10px}
   .ws-seg{display:flex;flex-wrap:wrap;align-items:center;gap:6px}
   .ws-lab{width:80px;font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--faint)}
@@ -755,6 +756,7 @@ function wsPanel(row){
   row.after(p);
   chapterLessons(href, ch).then(G => G.forEach(x => lessons.append(h("option", { value:x.ids.join(",") }, x.no + " " + x.parts.join(" + ")))));
 }
+const bwOf = f => String(f).replace(/\.pdf$/i, "_BW.pdf");   // lessons with bw:true also have a black-and-white PDF
 function pageWorksheets(v, sel){
   const hasHandout = c => c.units.some(u => (u.lessons || []).some(l => l.worksheet || l.notes));
   const cs = COURSES.filter(c => (c.levels && wsChapters(c).length) || hasHandout(c));
@@ -787,7 +789,9 @@ function pageWorksheets(v, sel){
             h("a", { class:"ws-t", href:`#/lesson/${c.id}/${ui}/${li}` }, l.title, h("span", { class:"muted", style:"font-weight:400;font-size:13px;margin-left:8px" }, u.title.replace(/^\d+\.\s*/, "Ch " + (ui + 1) + " · "))),
             h("span", { class:"ws-btns" },
               l.worksheet ? h("a", { class:"btn sm", style:"background:#8A6415", href:l.worksheet, target:"_blank", rel:"noopener" }, "📄 Worksheet PDF") : l.notes ? h("a", { class:"btn sm", style:"background:#8A6415", href:l.notes, target:"_blank", rel:"noopener" }, "📄 Notes PDF") : null,
-              l.answers ? h("a", { class:"btn sm ghost", href:l.answers, target:"_blank", rel:"noopener" }, "🔑 Answer key") : null)))) : null; })()));
+              l.answers ? h("a", { class:"btn sm ghost", href:l.answers, target:"_blank", rel:"noopener" }, "🔑 Answer key") : null,
+              l.bw && l.worksheet ? h("a", { class:"btn sm ghost", href:bwOf(l.worksheet), target:"_blank", rel:"noopener", title:"Black & white worksheet" }, "⚫ B&W worksheet") : null,
+              l.bw && l.answers ? h("a", { class:"btn sm ghost", href:bwOf(l.answers), target:"_blank", rel:"noopener", title:"Black & white answer key" }, "⚫ B&W key") : null)))) : null; })()));
   });
   v.append(wrap);
 }
@@ -839,7 +843,9 @@ function pageLesson(v, cid, ui, li, mode){
   const c = courseById(cid), u = c && c.units[ui], l = u && u.lessons[li]; if (!l) return notFound(v);
   mode = mode === "practice" ? "practice" : "learn";
   const base = `#/lesson/${c.id}/${ui}/${li}/`;
-  const resRow = ([k, ic, t, s]) => h("a", { class:"res", href:l[k], target:"_blank", rel:"noopener" }, h("span", { class:"ic" }, ic), h("div", {}, h("b", {}, t), h("span", {}, s + " · PDF")));
+  const resRow = ([k, ic, t, s]) => !l.bw ? h("a", { class:"res", href:l[k], target:"_blank", rel:"noopener" }, h("span", { class:"ic" }, ic), h("div", {}, h("b", {}, t), h("span", {}, s + " · PDF")))
+    : h("div", { class:"res" }, h("span", { class:"ic" }, ic), h("div", { style:"flex:1" }, h("b", {}, t), h("span", {}, s + " · PDF")),
+        h("span", { class:"res-bw" }, h("a", { class:"btn sm", href:l[k], target:"_blank", rel:"noopener" }, "🎨 Color"), h("a", { class:"btn sm ghost", href:bwOf(l[k]), target:"_blank", rel:"noopener" }, "⚫ Black & white")));
   const RES = { notes:["notes", "📘", "Class notes", "Read and follow along"], worksheet:["worksheet", "✏️", "Worksheet", "Printable practice"], answers:["answers", "✅", "Answer key", "Check your work"] };
   const res = (mode === "learn" ? ["notes", "answers"] : ["worksheet"]).filter(k => l[k]).map(k => resRow(RES[k]));
   const hasQuiz = l.quiz && l.quiz.length;

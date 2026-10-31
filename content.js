@@ -177,7 +177,7 @@ const COURSES = [
       { title: "2. Proportional Relationships & Percents", cal: { id: "grade7", weeks: [5, 10] }, lessons: [
         { title: "Graphing on the Coordinate Plane (Test Review)", grade: "7",
           notes: "materials/grade7/unit2/G7_Coordinate_Plane_Worksheet.pdf",
-          worksheet: "materials/grade7/unit2/G7_Coordinate_Plane_Worksheet.pdf",
+          worksheet: "materials/grade7/unit2/G7_Coordinate_Plane_Worksheet.pdf", bw: true,
           answers: "materials/grade7/unit2/G7_Coordinate_Plane_Key.pdf",
           summary: "Plot and read points in all four quadrants, reflect over an axis, find distances (add across an axis), perimeter and area of shapes on the grid, and graph proportional relationships (a straight line through the origin, unit rate at (1, k)). 21 practice problems.",
           example: { q: "Find the distance between $(3, 7)$ and $(3, -2)$.",
@@ -196,7 +196,7 @@ const COURSES = [
       { title: "4. Scale Drawings, Angles & Circles", cal: { id: "grade7", weeks: [16, 21] }, lessons: [
         { title: "First Steps in Trigonometry: Sine, Cosine & Tangent", grade: "7",
           notes: "materials/grade7/unit4/G7_Trig_First_Steps_Worksheet.pdf",
-          worksheet: "materials/grade7/unit4/G7_Trig_First_Steps_Worksheet.pdf",
+          worksheet: "materials/grade7/unit4/G7_Trig_First_Steps_Worksheet.pdf", bw: true,
           answers: "materials/grade7/unit4/G7_Trig_First_Steps_Key.pdf",
           summary: "Enrichment for scale drawings: name the hypotenuse, opposite and adjacent sides; see why the same angle always gives the same ratio; SOH CAH TOA; find a missing side with a small table. 22 practice problems.",
           example: { q: "A $10$-foot ladder leans on a wall at a $60^\\circ$ angle with the ground. How high does it reach? ($\\sin 60^\\circ \\approx 0.87$)",
@@ -284,7 +284,7 @@ const COURSES = [
       { title: "2. Functions, Equations & Graphs", app: "practice/algebra2.html?chapter=gr", appTopics: 2, lessons: [
         { title: "2-1 Domain & Range",
           notes: "materials/algebra2/ch02/Alg2_2-1_Domain_Range_Worksheet.pdf",
-          worksheet: "materials/algebra2/ch02/Alg2_2-1_Domain_Range_Worksheet.pdf",
+          worksheet: "materials/algebra2/ch02/Alg2_2-1_Domain_Range_Worksheet.pdf", bw: true,
           answers: "materials/algebra2/ch02/Alg2_2-1_Domain_Range_Key.pdf",
           summary: "Interval notation; domain and range from points, tables and graphs (look at the shadows); from equations (what could go wrong?); real-world limits. 29 practice problems from Easy to Hard.",
           example: { q: "Find the domain and range of $g(x) = \\sqrt{2x - 6} + 1$.",
@@ -318,7 +318,7 @@ const COURSES = [
       { title: "6. Radical Functions & Rational Exponents", app: "practice/algebra2.html?chapter=rf", appTopics: 7, lessons: [
         { title: "6-7 Inverse Relations & Functions",
           notes: "materials/algebra2/ch06/Alg2_6-7_Inverse_Functions_Worksheet.pdf",
-          worksheet: "materials/algebra2/ch06/Alg2_6-7_Inverse_Functions_Worksheet.pdf",
+          worksheet: "materials/algebra2/ch06/Alg2_6-7_Inverse_Functions_Worksheet.pdf", bw: true,
           answers: "materials/algebra2/ch06/Alg2_6-7_Inverse_Functions_Key.pdf",
           summary: "Find an inverse in four steps, prove it by checking BOTH compositions, see it as a reflection over $y = x$, and get its domain and range by swapping the domain and range of $f$.",
           example: { q: "Find the inverse of $f(x) = \\sqrt{x - 2}$ and give its domain.",

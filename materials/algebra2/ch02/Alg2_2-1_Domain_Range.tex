@@ -27,6 +27,11 @@
 \definecolor{FangGreen}{HTML}{2E8B57}
 \definecolor{FangPurple}{HTML}{6A4BD8}
 \definecolor{Soft}{HTML}{F4F7FB}
+% black-and-white version: pdflatex with \def\isbw{1} before \input
+\ifdefined\isbw
+\definecolor{FangBlue}{HTML}{000000}\definecolor{FangTeal}{HTML}{000000}\definecolor{FangGold}{HTML}{555555}
+\definecolor{FangRed}{HTML}{000000}\definecolor{FangGreen}{HTML}{000000}\definecolor{FangPurple}{HTML}{000000}\definecolor{Soft}{HTML}{FFFFFF}
+\fi
 
 \newif\ifkey
 \ifdefined\iskey \keytrue \else \keyfalse \fi

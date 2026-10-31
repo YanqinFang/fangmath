@@ -209,6 +209,7 @@
       return orig.apply(this, arguments);
     };
     tabBtn.onclick = () => setTab("quiz");
+    cpHooks();
     drawHandouts();
     const oc = window.openChapter;
     window.openChapter = function () { const r = oc.apply(this, arguments); try { drawHandouts(); } catch (e) {} return r; };
@@ -243,6 +244,93 @@
     if (!box) { box = document.createElement("div"); box.id = "handouts"; box.className = "qt-handouts"; tabs.parentNode.insertBefore(box, tabs); }
     box.innerHTML = `<span class="qt-hl">📎 Printable handout${list.length > 1 ? "s" : ""}</span>` + list.map(h => `<span class="qt-hrow"><b>${esc(h.t)}</b>
       <a class="btn sm" style="background:#8A6415" href="${h.ws}" target="_blank" rel="noopener">📄 Worksheet PDF</a>${h.key ? `<a class="btn sm ghost" href="${h.key}" target="_blank" rel="noopener">🔑 Answer key</a>` : ""}</span>`).join("");
+  }
+
+  /* ================= CHECKPOINTS: 1 quiz in the middle of each chapter, 1 test at the end =================
+     The chapter's sections (1.1, 1.2, …) are split in half: the quiz covers the first half and sits right
+     after it in the lesson path; the chapter test covers everything and sits at the end. */
+  function secGroups() {
+    let G;
+    if (typeof sections === "function") { try { G = sections().map(x => ({ no: x.no, name: x.name, idx: x.idx })); } catch (e) {} }
+    if (!G) { G = []; CH.topics.forEach((t, i) => { const m = /^(\d+\.\d+)\s/.exec(t.title), no = m ? m[1] : chNum(CH) + "." + (i + 1); const last = G[G.length - 1];
+      if (m && last && last.no === no) last.idx.push(i); else G.push({ no, name: m ? t.title.slice(m[0].length) : t.title, idx: [i] }); }); }
+    G.forEach(x => x.label = x.no + " " + x.name);
+    return G;
+  }
+  function cpPlan() {
+    const G = secGroups(), k = G.length < 2 ? 1 : Math.ceil(G.length / 2) - (G.length % 2 ? 0 : 0);
+    const q = G.slice(0, Math.min(k, Math.max(1, G.length - 1))), lastIdx = Math.max(...q.flatMap(x => x.idx));
+    const label = q.length > 1 ? `${q[0].no}–${q[q.length - 1].no}` : q[0].no;
+    return { G, quiz: { secs: q, ids: q.flatMap(x => x.idx).map(i => CH.topics[i].id).join(","), after: lastIdx, label }, testAfter: CH.topics.length - 1 };
+  }
+  function best(cp) { const H = hist().filter(r => r.ch === CH.id && r.cp === cp); return H.length ? Math.max(...H.map(r => r.pct)) : null; }
+  const badge = p => p == null ? "" : `<span class="cp-best ${p >= 80 ? "ok" : p >= 60 ? "mid" : "low"}">best ${p}%</span>`;
+  function cpCard() {
+    const P = cpPlan(), n = chNum(CH), G = P.G;
+    return `<div class="card qt-cp" id="qtCp">
+      <span class="label" style="color:var(--navy)">Chapter ${n} checkpoints</span>
+      <div class="cp-row" id="cpQuizRow"><span class="cp-ic">📝</span><div class="cp-t"><b>Chapter ${n} Quiz · ${esc(P.quiz.label)}</b>
+          <small>After lesson ${esc(P.quiz.label.split("–").pop())} · 10 questions on ${esc(P.quiz.secs.map(x => x.name).join(", "))} · see right or wrong after each one</small></div>
+        ${badge(best("quiz"))}<span class="cp-btns"><button class="btn sm teal" id="cpQuiz">Start quiz →</button><button class="btn sm ghost" id="cpQuizP">📄 Paper + key</button></span></div>
+      <div class="cp-row" id="cpTestRow"><span class="cp-ic">⏱</span><div class="cp-t"><b>Chapter ${n} Test · all of Chapter ${n}</b>
+          <small>At the end of the chapter · 15 questions, timed, graded with a topic report</small></div>
+        ${badge(best("test"))}<span class="cp-btns"><button class="btn sm" id="cpTest">Start test →</button><button class="btn sm ghost" id="cpTestP">📄 Paper + key</button></span></div>
+      <div class="cp-ws"><span class="cp-wl">📄 Worksheet for each lesson <small>(Easy → Medium → Hard, with answer key)</small></span>
+        <span class="cp-wsb">${G.map((x, i) => `<button class="btn sm ghost" data-ws="${i}">${esc(x.no)}</button>`).join("")}</span></div>
+    </div>`;
+  }
+  function cpQuizOpts() { const P = cpPlan(), lv = Math.max(2, Math.min(4, typeof curLv === "function" ? curLv() : 2));
+    return Object.assign({}, opt || {}, { ch: CH.id, topic: P.quiz.ids, lv, cp: "quiz", cpLabel: P.quiz.label }); }
+  function cpTestOpts() { return Object.assign({}, opt || {}, { ch: CH.id, scope: "chapter", diff: "standard", n: 15, cp: "" }); }
+  function lessonWs(ids, label) { opt = Object.assign({}, opt || {}, { ch: CH.id, wsTopic: ids, wsLv: "combined", wsN: 12 }); paper("ws"); }
+  function wireCp() {
+    const P = cpPlan(), keep = () => Object.assign({}, opt);
+    const go = (o, k, pap) => { const save = keep(); opt = o; pap ? paper(k) : start(k); if (pap) opt = save; };
+    g("cpQuiz").onclick = () => go(cpQuizOpts(), "quiz");
+    g("cpQuizP").onclick = () => go(cpQuizOpts(), "quiz", true);
+    g("cpTest").onclick = () => go(cpTestOpts(), "test");
+    g("cpTestP").onclick = () => go(cpTestOpts(), "test", true);
+    view.querySelectorAll("[data-ws]").forEach(b => b.onclick = () => { const x = P.G[+b.dataset.ws]; lessonWs(x.idx.map(i => CH.topics[i].id).join(","), x.label); });
+  }
+  function gotoCp(which) {
+    setTab("quiz"); if (run && run.live) return;
+    const row = g(which === "test" ? "cpTestRow" : "cpQuizRow"); if (!row) return;
+    setTimeout(() => { row.scrollIntoView({ behavior: "smooth", block: "center" }); row.classList.add("qt-flash"); setTimeout(() => row.classList.remove("qt-flash"), 1800); }, 150);
+  }
+  // checkpoint stops in the lesson path, the end-of-lesson buttons and (Geometry) the section list
+  function cpHooks() {
+    const chip = (ic, txt, cls, fn) => { const b = document.createElement("button"); b.type = "button"; b.className = "stop cp-stop " + cls; b.innerHTML = `<i>${ic}</i>${txt}`; b.onclick = fn; return b; };
+    const oRoad = window.road;
+    if (oRoad) window.road = function () { const r = oRoad.apply(this, arguments); try {
+        const box = g("road"); if (!box || !CH) return r; const P = cpPlan(), stops = [...box.querySelectorAll(".stop:not(.cp-stop)")];
+        const qb = best("quiz"), tb = best("test");
+        const q = chip("📝", `Quiz ${esc(P.quiz.label)}${qb != null ? " · " + qb + "%" : ""}`, qb != null ? "done" : "", () => gotoCp("quiz"));
+        const t = chip("⏱", `Chapter test${tb != null ? " · " + tb + "%" : ""}`, tb != null ? "done" : "", () => gotoCp("test"));
+        const after = stops[P.quiz.after]; if (after) after.after(q); else box.appendChild(q);
+        box.appendChild(t);
+      } catch (e) { console.warn("cp road", e); } return r; };
+    const oNext = window.showNext;
+    if (oNext) window.showNext = function () { const r = oNext.apply(this, arguments); try {
+        const box = g("tNext"); if (!box || !CH) return r; const P = cpPlan(), t = CH.topics[LI];
+        const G = P.G.find(x => x.idx.includes(LI));
+        const ws = document.createElement("button"); ws.className = "btn ghost sm"; ws.textContent = "📄 Worksheet";
+        ws.title = "Printable worksheet + answer key for this lesson"; ws.onclick = () => { setTab("quiz"); lessonWs(G ? G.idx.map(i => CH.topics[i].id).join(",") : t.id); };
+        box.insertBefore(ws, box.lastChild);
+        if (LI === P.quiz.after || LI === P.testAfter) {
+          const b = document.createElement("button"); b.className = "btn sm"; b.style.background = LI === P.testAfter ? "var(--navy)" : "var(--teal)";
+          b.textContent = LI === P.testAfter ? "⏱ Take the Chapter Test →" : `📝 Take the Quiz (${P.quiz.label}) →`;
+          b.onclick = () => gotoCp(LI === P.testAfter ? "test" : "quiz"); box.appendChild(b);
+        }
+      } catch (e) { console.warn("cp next", e); } return r; };
+    const oSec = window.secList;
+    if (oSec) window.secList = function () { const r = oSec.apply(this, arguments); try {
+        const box = g("secs"); if (!box || !CH) return r; const P = cpPlan(), items = [...box.querySelectorAll(".sec")];
+        const mk = (ic, txt, fn) => { const x = document.createElement("button"); x.type = "button"; x.className = "sec cp-sec"; x.innerHTML = `<b>${ic}</b><span>${txt}</span>`; x.onclick = fn; return x; };
+        const qi = P.G.indexOf(P.quiz.secs[P.quiz.secs.length - 1]);
+        if (items[qi]) items[qi].after(mk("📝", "Quiz " + esc(P.quiz.label), () => gotoCp("quiz")));
+        box.appendChild(mk("⏱", "Chapter test", () => gotoCp("test")));
+      } catch (e) { console.warn("cp secs", e); } return r; };
+    try { if (CH && g("road")) road(); if (CH && g("secs") && window.secList) secList(); } catch (e) {}
   }
 
   function showQuiz() {
@@ -298,13 +386,14 @@
   }
   function buildQuiz(o) {
     const seen = new Set();
-    const P = o.topic === "all" ? pool("chapter") : [{ t: CH.topics.find(t => t.id === o.topic), c: CH }];
-    const out = []; for (let i = 0; i < 10; i++) out.push(pack(P[i % P.length], o.lv, seen));
+    const P = topicPool(o.topic);
+    const lvs = o.cp ? [o.lv, o.lv, Math.min(5, o.lv + 1)] : [o.lv];      // checkpoint quiz: mostly your level, some one step up
+    const out = []; for (let i = 0; i < 10; i++) out.push(pack(P[i % P.length], lvs[i % lvs.length], seen));
     return shuffle(out.filter(Boolean));
   }
   function buildWorksheet(o) {
     const seen = new Set(), n = o.wsN;
-    const P = o.wsTopic === "all" ? pool("chapter") : [{ t: CH.topics.find(t => t.id === o.wsTopic), c: CH }];
+    const P = topicPool(o.wsTopic);
     const parts = o.wsLv === "combined" ? [["Part A · Easy", WS.easy.lv, Math.floor(n / 3)], ["Part B · Medium", WS.medium.lv, n - 2 * Math.floor(n / 3)], ["Part C · Hard", WS.hard.lv, Math.floor(n / 3)]]
       : [[null, WS[o.wsLv].lv, n]];
     const out = [];
@@ -314,6 +403,16 @@
       items.sort((a, b) => a.lv - b.lv).forEach(({ s, lv }) => { const q = pack(s, lv, seen); if (q) { q.part = name; out.push(q); } });
     });
     return out;
+  }
+  function topicPool(sel) {           // "all", one topic id, or several ids joined by ","
+    if (!sel || sel === "all") return pool("chapter");
+    const ids = String(sel).split(","), P = shuffle(CH.topics.filter(t => ids.includes(t.id))).map(t => ({ t, c: CH }));
+    return P.length ? P : pool("chapter");
+  }
+  function topicName(sel) {
+    if (!sel || sel === "all") return "Chapter " + chNum(CH);
+    const ids = String(sel).split(","); if (ids.length === 1) return (CH.topics.find(t => t.id === ids[0]) || {}).title || "";
+    const g2 = secGroups().find(x => x.idx.map(i => CH.topics[i].id).join(",") === sel); return g2 ? g2.label : "Selected lessons";
   }
   function pack(s, lv, seen) {
     const p = make(s.t, lv, seen); if (!p) return null;
@@ -350,7 +449,7 @@
     opt = opt && opt.ch === CH.id ? opt : { ch: CH.id, topic: "all", lv: lv0, scope: "chapter", diff: "standard", n: 15, wsTopic: "all", wsLv: "combined", wsN: 21 };
     const H = hist().filter(r => r.ch === CH.id).slice(-5).reverse();
     const other = loadRun();
-    view.innerHTML = `
+    view.innerHTML = cpCard() + `
       ${other && other.live && other.ch !== CH.id ? `<div class="fb hint qt-resume"><span class="tag">Unfinished test</span>${esc(other.title)} is still open (the clock keeps running). <button class="btn sm" id="qtResume">Go back to it →</button></div>` : ""}
       <div class="qt-grid">
         <div class="card qt-box">
@@ -402,6 +501,7 @@
     const estQs = levelList(DIFF[opt.diff].mix, opt.n).map(lv => ({ lv }));
     g("tsTime").textContent = "⏱ " + minutes(estQs) + " minutes";
     if (g("qtResume")) g("qtResume").onclick = () => { openChapter(other.ch, "practice"); setTab("quiz"); };
+    wireCp();
     g("qzGo").onclick = () => start("quiz");
     g("tsGo").onclick = () => start("test");
     g("tsPrint").onclick = () => paper("test");
@@ -409,8 +509,9 @@
   }
   function titleFor(kind, o) {
     const n = chNum(CH);
-    if (kind === "ws") { const t = o.wsTopic === "all" ? "Chapter " + n : CH.topics.find(t => t.id === o.wsTopic).title; return `${t} Worksheet · ${WS[o.wsLv].name}`; }
-    if (kind === "quiz") { const t = o.topic === "all" ? "Chapter " + n : CH.topics.find(t => t.id === o.topic).title; return `Quiz · ${t} · Level ${o.lv} ${LEVELS[o.lv - 1].name}`; }
+    if (kind === "ws") return `${topicName(o.wsTopic)} Worksheet · ${WS[o.wsLv].name}`;
+    if (kind === "quiz" && o.cp) return `Chapter ${n} Quiz · ${o.cpLabel}`;
+    if (kind === "quiz") return `Quiz · ${topicName(o.topic)} · Level ${o.lv} ${LEVELS[o.lv - 1].name}`;
     return (o.scope === "cumul" ? `Cumulative Test · Ch 1–${n}` : `Chapter ${n} Test`) + ` · ${DIFF[o.diff].name}`;
   }
   function start(kind) {
@@ -514,7 +615,7 @@
     const score = run.res.filter(r => r === true).length, total = run.qs.length, pct = Math.round(100 * score / total);
     run.score = score; run.pct = pct;
     saveRun(); try { localStorage.removeItem(RUNKEY); } catch (e) {}
-    addHist({ ch: run.ch, kind: run.kind, title: run.title, score, total, pct, at: Date.now() });
+    addHist({ ch: run.ch, kind: run.kind, cp: run.o.cp || (run.kind === "test" && run.o.scope === "chapter" ? "test" : ""), title: run.title, score, total, pct, at: Date.now() });
     // missed → Mistake Log
     const L = window.fmLv || {};
     if (window.fmMistakes) run.qs.forEach((q, k) => {
@@ -689,6 +790,15 @@
 .qt-hl{font-weight:700;color:#8A6415;font-size:14px}
 .qt-hrow{display:flex;flex-wrap:wrap;align-items:center;gap:8px}.qt-hrow b{font-weight:600;font-size:14.5px}
 .qt-flash{box-shadow:0 0 0 3px var(--gold);transition:box-shadow .4s}
+.qt-cp{display:flex;flex-direction:column;gap:8px;border:1.5px solid var(--navy)}
+.cp-row{display:flex;align-items:center;gap:12px;flex-wrap:wrap;padding:10px 12px;border-radius:12px;background:var(--bg)}
+.cp-ic{font-size:22px}.cp-t{flex:1 1 260px;display:flex;flex-direction:column}.cp-t small{color:var(--muted);font-size:13px}
+.cp-btns{display:flex;gap:6px;flex-wrap:wrap}
+.cp-best{font-size:12.5px;font-weight:700;border-radius:999px;padding:3px 10px}.cp-best.ok{background:var(--green-soft);color:var(--green)}.cp-best.mid{background:var(--gold-soft);color:#8A6415}.cp-best.low{background:var(--red-soft);color:var(--red)}
+.cp-ws{display:flex;flex-wrap:wrap;align-items:center;gap:8px;padding:6px 2px 0}.cp-wl{font-weight:600;font-size:14px}.cp-wl small{font-weight:400;color:var(--muted)}.cp-wsb{display:flex;gap:6px;flex-wrap:wrap}
+.stop.cp-stop{border-style:dashed;border-color:var(--navy);color:var(--navy);font-weight:700}.stop.cp-stop i{background:none;font-style:normal}
+.stop.cp-stop.done{border-style:solid;background:var(--green-soft)}
+.sec.cp-sec b{background:none!important}.sec.cp-sec span{font-weight:700;color:var(--navy)}
 .qt-wsrow{display:grid;grid-template-columns:minmax(200px,1fr) auto auto;gap:16px;align-items:start}
 @media (max-width:900px){.qt-wsrow{grid-template-columns:1fr}}
 .qt-wsrow>div{display:flex;flex-direction:column;gap:8px}

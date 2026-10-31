@@ -1116,7 +1116,7 @@ function topics(){ const box=$("topics"); box.innerHTML=""; legend(); const lvl=
   /* practice = only the section that is open (pick another section in the list on the left) */
   const SG=sections(), G=SG.find(g=>g.idx.includes(LI))||SG[0];
   const c=document.createElement("div"); c.className="card psec";
-  c.innerHTML=`<span class="label">Practice · Level ${lvl} ${LEVELS[lvl-1].name}</span><h2>${G.no} ${G.name}</h2>`;
+  c.innerHTML=`<span class="label">Practice · Level ${lvl} ${LEVELS[lvl-1].name}</span>`;
   G.idx.map(i=>CH.topics[i]).forEach(t=>{ const n=st.solved[t.id+lvl]||0, on=T===t&&!$("practice").hidden;
     const r=document.createElement("div"); r.className="prow"+(on?" on":"");
     r.innerHTML=`<span class="pt">${G.idx.length>1?tlab(t).part:"5 levels · new problems every time"}</span><small>${n?`✓ ${n} solved`:""}</small>`;

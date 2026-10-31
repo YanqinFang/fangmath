@@ -210,6 +210,7 @@
     };
     tabBtn.onclick = () => setTab("quiz");
     cpHooks();
+    progInit();
     drawHandouts();
     const oc = window.openChapter;
     window.openChapter = function () { const r = oc.apply(this, arguments); try { drawHandouts(); } catch (e) {} return r; };
@@ -567,6 +568,7 @@
     const score = run.res.filter(r => r === true).length, total = run.qs.length, pct = Math.round(100 * score / total);
     run.score = score; run.pct = pct;
     saveRun(); try { localStorage.removeItem(RUNKEY); } catch (e) {}
+    setTimeout(() => progRefresh(), 300);
     addHist({ ch: run.ch, kind: run.kind, cp: run.o.cp || (run.kind === "test" && run.o.scope === "chapter" ? "test" : ""), title: run.title, score, total, pct, at: Date.now() });
     // missed → Mistake Log
     const L = window.fmLv || {};
@@ -868,6 +870,181 @@
     document.head.appendChild(s);
   }
 
-  window.fmQuizState = () => run;      // for checking in the browser console
+
+  /* ================= PROGRESS · colors · encouragement · certificate =================
+     A lesson is DONE when it was learned (its "Your turn" problem) and 3 practice problems were solved.
+     A section is done when all its lessons are done. A chapter is done when all sections are done
+     and the chapter test was passed (70%+). When every chapter is done, the student gets a certificate:
+     Gold = Highest Honors (tests average 90%+), Silver = Honors (80%+), Bronze = Completion.
+     Saved in this browser (per course page). */
+  const NEED = 3, PASS = 70;
+  const CHEERS = ["Awesome work — one more step done! 🌟", "You did it! Your brain just got stronger. 💪", "Great job! Keep that streak going. 🚀",
+    "Nice! Practice is paying off. 🎯", "Section complete — be proud of yourself! 🎉", "Way to go! Every expert started exactly like this. 🌱",
+    "Fantastic! You're building real understanding. 🧠", "Boom — finished! On to the next one. ⭐"];
+  const progKey = () => "fm-prog-" + PG;
+  const loadSeen = () => { try { return JSON.parse(localStorage.getItem(progKey()) || "{}"); } catch (e) { return {}; } };
+  const saveSeen = v => { try { localStorage.setItem(progKey(), JSON.stringify(v)); } catch (e) {} };
+  const chState = c => (typeof ST !== "undefined" && ST.ch && ST.ch[c.id]) || { learned: {}, solved: {} };
+  const solvedT = (S, t) => [1, 2, 3, 4, 5].reduce((a, l) => a + ((S.solved || {})[t.id + l] || 0), 0);
+  const topLevel = (S, t) => Math.max(0, ...[1, 2, 3, 4, 5].filter(l => ((S.solved || {})[t.id + l] || 0) > 0));
+  const topicDone = (S, t) => !!(S.learned || {})[t.id] && solvedT(S, t) >= NEED;
+  function groupsOf(c) {
+    const G = []; c.topics.forEach((t, i) => { const m = /^(\d+\.\d+)\s/.exec(t.title), no = m ? m[1] : (CHAPTERS.indexOf(c) + 1) + "." + (i + 1), last = G[G.length - 1];
+      if (m && last && last.no === no) last.idx.push(i); else G.push({ no, idx: [i] }); });
+    return G;
+  }
+  function bestTest(c) { const H = hist().filter(r => r.ch === c.id && r.kind === "test"); return H.length ? Math.max(...H.map(r => r.pct)) : null; }
+  function chapterProg(c) {
+    const S = chState(c), G = groupsOf(c), secs = G.map(g => g.idx.every(i => topicDone(S, c.topics[i])));
+    const nd = secs.filter(Boolean).length, test = bestTest(c), allSecs = nd === G.length;
+    const lessons = c.topics.filter(t => topicDone(S, t)).length;
+    return { G, secs, nd, total: G.length, test, done: allSecs && test != null && test >= PASS, allSecs, lessons,
+      level: Math.max(0, ...c.topics.map(t => topLevel(S, t))), solved: c.topics.reduce((a, t) => a + solvedT(S, t), 0) };
+  }
+  function courseProg() {
+    const P = CHAPTERS.map(chapterProg), done = P.filter(p => p.done).length;
+    const tests = P.map(p => p.test).filter(x => x != null), avg = tests.length ? Math.round(tests.reduce((a, b) => a + b, 0) / tests.length) : 0;
+    const tier = avg >= 90 ? { k: "gold", name: "Gold", title: "With Highest Honors", medal: "🥇" } : avg >= 80 ? { k: "silver", name: "Silver", title: "With Honors", medal: "🥈" } : { k: "bronze", name: "Bronze", title: "Course Completion", medal: "🥉" };
+    const lv = P.length ? Math.round(P.reduce((a, p) => a + p.level, 0) / P.length) : 0;
+    let total = P.length; try { if (typeof ALLCH !== "undefined") total = Math.max(total, ALLCH.length); else if (typeof COMING !== "undefined") total += COMING.length; } catch (e) {}
+    return { P, done, total, complete: done === total && P.length > 0, avg, tier, level: lv, solved: P.reduce((a, p) => a + p.solved, 0) };
+  }
+  function toast(msg, big) {
+    const t = document.createElement("div"); t.className = "fm-toast" + (big ? " big" : ""); t.innerHTML = msg; document.body.appendChild(t);
+    requestAnimationFrame(() => t.classList.add("in")); setTimeout(() => { t.classList.remove("in"); setTimeout(() => t.remove(), 400); }, big ? 6000 : 4200);
+  }
+  let progBusy = false;
+  function progRefresh(quiet) {
+    if (progBusy || typeof CHAPTERS === "undefined" || !CH) return; progBusy = true;
+    try {
+      const C = courseProg(), seen = loadSeen(); seen.secs = seen.secs || {}; seen.chs = seen.chs || {};
+      if (quiet && seen.init) { progUI(C); progBusy = false; return; }   // redraw only; celebrations happen after real work
+      const news = [];
+      C.P.forEach((p, ci) => { const c = CHAPTERS[ci];
+        p.G.forEach((g, gi) => { const k = c.id + ":" + g.no; if (p.secs[gi] && !seen.secs[k]) { seen.secs[k] = 1; news.push(["sec", g.no]); } });
+        if (p.done && !seen.chs[c.id]) { seen.chs[c.id] = 1; news.push(["ch", ci + 1]); }
+      });
+      const first = !seen.init; seen.init = 1;
+      if (C.complete && !seen.course) { seen.course = 1; news.push(["course"]); }
+      saveSeen(seen);
+      if (!quiet && !first && news.length) {
+        const last = news[news.length - 1], cheer = CHEERS[Math.floor(Math.random() * CHEERS.length)];
+        if (last[0] === "course") toast(`🎓 <b>You finished the whole course!</b> Your certificate is ready.<br><button class="btn sm" id="fmCertGo">Get my certificate →</button>`, true);
+        else if (last[0] === "ch") toast(`🏆 <b>Chapter ${last[1]} complete!</b> ${cheer}`, true);
+        else toast(`✅ <b>Section ${last[1]} complete!</b> ${cheer}`);
+        const go = document.getElementById("fmCertGo"); if (go) go.onclick = () => certificate();
+      }
+      progUI(C);
+    } catch (e) { console.warn("progress", e); }
+    progBusy = false;
+  }
+  function progUI(C) {
+    // 1) chapter list: green when done, small x/y otherwise
+    document.querySelectorAll("#chapters button.chap").forEach((b, i) => { const n = +((b.querySelector("i") || {}).textContent || 0);
+      let ci = CHAPTERS.findIndex(c => c.id === "ch" + n); if (ci < 0) ci = i; const p = C.P[ci]; if (!p) return;
+      b.classList.toggle("pg-done", p.done); b.classList.toggle("pg-part", !p.done && p.nd > 0);
+      let tag = b.querySelector(".pg-tag"); if (!tag) { tag = document.createElement("small"); tag.className = "pg-tag"; b.appendChild(tag); }
+      tag.textContent = p.done ? "✓" : p.nd ? `${p.nd}/${p.total}` : ""; });
+    // 2) section list (Geometry) and lesson path: green when done
+    const cur = C.P[CHAPTERS.indexOf(CH)];
+    if (cur) {
+      let k = 0; document.querySelectorAll("#secs .sec:not(.cp-sec)").forEach(x => { x.classList.toggle("pg-done", !!cur.secs[k]); k++; });
+      const S = chState(CH); document.querySelectorAll("#road .stop:not(.cp-stop)").forEach((x, i) => { const t = CH.topics[i]; if (t) x.classList.toggle("pg-done", topicDone(S, t)); });
+    }
+    // 3) progress card
+    let card = g("fmProg"); const tabs = document.querySelector(".tabs[role=tablist]"); if (!tabs) return;
+    if (!card) { card = document.createElement("div"); card.id = "fmProg"; card.className = "fm-prog"; tabs.parentNode.insertBefore(card, tabs); }
+    const n = CHAPTERS.indexOf(CH) + 1, pc = cur ? Math.round(100 * cur.nd / cur.total) : 0, pt = Math.round(100 * C.done / C.total);
+    const next = !cur ? "" : cur.done ? "Chapter complete! 🎉" : cur.allSecs ? `All sections done — pass the chapter test (${PASS}%+) to finish the chapter.` : `Finish a section: learn each lesson, then get ${NEED} practice problems right.`;
+    card.innerHTML = `<div class="pg-row"><span class="pg-lab">Chapter ${n}</span><span class="pg-bar"><i style="width:${pc}%"></i></span><span class="pg-n">${cur ? cur.nd : 0}/${cur ? cur.total : 0} sections</span></div>
+      <div class="pg-row"><span class="pg-lab">Course</span><span class="pg-bar c"><i style="width:${pt}%"></i></span><span class="pg-n">${C.done}/${C.total} chapters</span></div>
+      <div class="pg-foot"><span>${next}</span>${C.complete ? `<button class="btn sm" id="fmCert">🎓 My certificate</button>` : `<button class="pg-link" id="fmCert">🎓 See the certificate you'll earn</button>`}</div>`;
+    g("fmCert").onclick = () => certificate();
+  }
+  /* ---------- certificate ---------- */
+  function certificate() {
+    const C = courseProg(), course = ((document.querySelector(".intro .label") || {}).textContent || "").split("·")[0].trim() || "this course";
+    const k = (window.fmLv && window.fmLv.getKid && window.fmLv.getKid()) || null;
+    let name = ""; try { name = localStorage.getItem("fm-cert-name") || (k && k.nickname) || ""; } catch (e) {}
+    const preview = !C.complete, T = C.tier, LV = ["", "Foundation", "Basic", "Standard", "Challenge", "Competition"];
+    const date = new Date().toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" });
+    const old = document.querySelector(".fm-certm"); if (old) old.remove();
+    const m = document.createElement("div"); m.className = "fm-certm";
+    m.innerHTML = `<div class="fm-certw">
+      <div class="fm-certbar">${preview ? `<span class="pg-pv">Preview — finish all ${C.total} chapters (${C.done} done) to earn it.</span>` : ""}
+        <label>Name on certificate <input id="fmCertName" value="${esc(name)}" placeholder="Student name"></label>
+        <button class="btn sm teal" id="fmCertPdf" ${preview ? "disabled" : ""}>📥 Download PDF</button><button class="btn sm ghost" id="fmCertPrint" ${preview ? "disabled" : ""}>🖨 Print</button><button class="btn sm ghost" id="fmCertX">Close</button></div>
+      <div class="fm-cert ${T.k}${preview ? " pv" : ""}" id="fmCertDoc"><div class="fc-in">
+        <div class="fc-brand">Prof. Fang <span>Math</span></div>
+        <div class="fc-k">Certificate of ${T.k === "bronze" ? "Completion" : "Achievement"}</div>
+        <div class="fc-medal">${T.medal}</div>
+        <div class="fc-small">This certifies that</div>
+        <div class="fc-name" id="fmCertN">${esc(name) || "Student Name"}</div>
+        <div class="fc-small">has successfully completed</div>
+        <div class="fc-course">${esc(course)}</div>
+        <div class="fc-tier">${T.name} · ${T.title}</div>
+        <div class="fc-stats"><span><b>${C.done}/${C.total}</b> chapters</span><span><b>${C.avg}%</b> average chapter test</span><span><b>${C.solved}</b> problems solved</span>${C.level ? `<span>practiced up to <b>Level ${C.level} · ${LV[C.level]}</b></span>` : ""}</div>
+        <div class="fc-sign"><div><div class="fc-line">${date}</div><small>Date</small></div><div><div class="fc-line fc-sig">Dr. Yanqin Fang</div><small>Prof. Fang Math</small></div></div>
+        <div class="fc-tiers">🥇 Gold: tests 90%+ &nbsp;·&nbsp; 🥈 Silver: 80%+ &nbsp;·&nbsp; 🥉 Bronze: course completed</div>
+        ${preview ? `<div class="fc-wm">PREVIEW</div>` : ""}
+      </div></div></div>`;
+    document.body.appendChild(m);
+    const nm = m.querySelector("#fmCertName");
+    nm.oninput = () => { m.querySelector("#fmCertN").textContent = nm.value.trim() || "Student Name"; try { localStorage.setItem("fm-cert-name", nm.value.trim()); } catch (e) {} };
+    const close = () => { m.remove(); document.body.classList.remove("cert-printing"); };
+    m.querySelector("#fmCertX").onclick = close; m.onclick = e => { if (e.target === m) close(); };
+    m.querySelector("#fmCertPrint").onclick = () => { document.body.classList.add("cert-printing"); window.print(); setTimeout(() => document.body.classList.remove("cert-printing"), 600); };
+    m.querySelector("#fmCertPdf").onclick = async () => {
+      try { await loadH2P(); await html2pdf().set({ margin: 0, filename: `FangMath_Certificate_${course.replace(/\W+/g, "-")}_${(nm.value || "Student").replace(/\W+/g, "-")}.pdf`, image: { type: "jpeg", quality: 0.97 },
+        html2canvas: { scale: 2, backgroundColor: "#ffffff", scrollX: 0, scrollY: 0 }, jsPDF: { unit: "in", format: "letter", orientation: "landscape" } }).from(m.querySelector("#fmCertDoc")).save(); }
+      catch (e) { alert("Couldn't make the PDF here — use Print and choose Save as PDF."); }
+    };
+  }
+  function progInit() {
+    const css = document.createElement("style"); css.textContent = `
+.fm-prog{background:#fff;border:1px solid var(--line);border-radius:16px;padding:12px 16px;margin:0 0 14px;box-shadow:var(--shadow);display:flex;flex-direction:column;gap:6px}
+.pg-row{display:flex;align-items:center;gap:10px}.pg-lab{width:74px;font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--faint)}
+.pg-bar{flex:1;height:10px;border-radius:5px;background:var(--line);overflow:hidden}.pg-bar i{display:block;height:100%;background:var(--green);border-radius:5px;transition:width .6s}.pg-bar.c i{background:var(--gold)}
+.pg-n{width:110px;text-align:right;font-size:13px;font-weight:600;color:var(--muted)}
+.pg-foot{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;font-size:13.5px;color:var(--muted)}
+.pg-link{border:0;background:none;color:var(--teal);font:inherit;font-weight:600;cursor:pointer;padding:0}
+.chap.pg-done:not(.on){background:var(--green-soft)!important;color:var(--green)!important}.chap.pg-done i{background:var(--green)!important;color:#fff!important}
+.chap .pg-tag{margin-left:auto;font-size:11.5px;font-weight:700;color:var(--green);padding-left:6px}.chap.on .pg-tag{color:#cfe9da}
+.sec.pg-done{background:var(--green-soft)}.sec.pg-done b{color:var(--green)}.sec.pg-done span{color:var(--green)}
+.stop.pg-done{border-color:var(--green)!important;background:var(--green-soft)!important}.stop.pg-done i{background:var(--green)!important;border-color:var(--green)!important;color:#fff!important}
+.fm-toast{position:fixed;left:50%;bottom:24px;transform:translate(-50%,30px);opacity:0;z-index:200;background:#16233B;color:#fff;padding:12px 18px;border-radius:14px;box-shadow:0 12px 30px rgba(0,0,0,.25);font-size:15px;max-width:min(560px,92vw);text-align:center;transition:all .35s}
+.fm-toast.in{opacity:1;transform:translate(-50%,0)}.fm-toast.big{background:linear-gradient(135deg,#1E7A45,#0F7C7C);font-size:16.5px;padding:16px 22px}.fm-toast .btn{margin-top:8px;background:#fff;color:#0F7C7C}
+.fm-certm{position:fixed;inset:0;z-index:150;background:rgba(22,35,59,.6);overflow:auto;padding:20px 12px}
+.fm-certw{max-width:1000px;margin:0 auto}
+.fm-certbar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;background:#fff;border-radius:12px;padding:10px 12px;margin-bottom:10px;font-size:14px}
+.fm-certbar label{display:flex;gap:6px;align-items:center;font-weight:600;flex:1;min-width:240px}.fm-certbar input{flex:1;border:1px solid var(--line);border-radius:8px;padding:6px 10px;font:inherit}
+.pg-pv{width:100%;color:#8A6415;font-weight:600;font-size:13px}
+.fm-cert{position:relative;background:#fff;width:100%;aspect-ratio:11/8.5;padding:3.2%;box-sizing:border-box;font-family:Fraunces,Georgia,serif;color:#16233B;overflow:hidden}
+.fm-cert .fc-in{position:relative;height:100%;border:6px double var(--fc);border-radius:6px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.6%;text-align:center;padding:2% 4%;box-sizing:border-box}
+.fm-cert.gold{--fc:#C9962B}.fm-cert.silver{--fc:#8C93A0}.fm-cert.bronze{--fc:#B0703A}
+.fc-brand{font-family:Inter,sans-serif;font-weight:700;font-size:clamp(14px,2vw,20px)}.fc-brand span{color:#0F7C7C}
+.fc-k{font-size:clamp(22px,4vw,42px);font-weight:700;color:var(--fc);letter-spacing:.02em}
+.fc-medal{font-size:clamp(30px,5vw,54px);line-height:1.1}
+.fc-small{font-family:Inter,sans-serif;font-size:clamp(11px,1.4vw,15px);color:#5B6474}
+.fc-name{font-size:clamp(26px,4.6vw,50px);font-style:italic;border-bottom:2px solid var(--fc);padding:0 4% 1%;min-width:50%}
+.fc-course{font-size:clamp(18px,3vw,32px);font-weight:700}
+.fc-tier{font-family:Inter,sans-serif;font-weight:700;color:#fff;background:var(--fc);border-radius:999px;padding:.5% 2.4%;font-size:clamp(11px,1.5vw,16px)}
+.fc-stats{display:flex;flex-wrap:wrap;justify-content:center;gap:4px 18px;font-family:Inter,sans-serif;font-size:clamp(10px,1.3vw,14px);color:#5B6474;margin-top:.6%}
+.fc-sign{display:flex;justify-content:space-around;width:80%;margin-top:2%;font-family:Inter,sans-serif}.fc-sign small{color:#8C93A0;font-size:clamp(9px,1.1vw,12px)}
+.fc-line{border-bottom:1px solid #16233B;min-width:180px;padding-bottom:2px;font-size:clamp(11px,1.4vw,15px)}.fc-sig{font-family:"Brush Script MT","Segoe Script",cursive;font-size:clamp(16px,2.2vw,24px)}
+.fc-tiers{position:absolute;bottom:2.5%;font-family:Inter,sans-serif;font-size:clamp(8px,1vw,11px);color:#8C93A0}
+.fc-wm{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%) rotate(-18deg);font-family:Inter,sans-serif;font-weight:800;font-size:clamp(50px,11vw,130px);color:rgba(179,38,30,.10);pointer-events:none}
+@media print{body.cert-printing > *:not(.fm-certm){display:none!important}body.cert-printing .fm-certm{position:static;background:none;padding:0}body.cert-printing .fm-certbar{display:none}@page{size:letter landscape;margin:0}}`;
+    document.head.appendChild(css);
+    const wrap = (name, after) => { const o = window[name]; if (typeof o !== "function") return; window[name] = function () { const r = o.apply(this, arguments); try { after(); } catch (e) {} return r; }; };
+    wrap("chapters", () => setTimeout(() => progRefresh(true), 0));
+    wrap("road", () => setTimeout(() => progRefresh(), 0));
+    wrap("finish", () => setTimeout(() => progRefresh(), 0));
+    wrap("secList", () => setTimeout(() => progRefresh(true), 0));
+    progRefresh(true);
+  }
+
+  window.fmQuizState = () => run;
+  window.fmCertificate = () => certificate();      // for checking in the browser console
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", ready); else ready();
 })();

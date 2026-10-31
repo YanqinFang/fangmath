@@ -735,6 +735,9 @@
     ])
   ];
 
+  /* the chapter's summary table, for the Cheat Sheet (geometry-levels.html cheatSheet()) */
+  window.geoCsTable = chId => { const w = WORDS[chId]; return w && w.table ? { title: w.tableTitle || "Line, ray or segment?", html: w.table } : null; };
+
   const KEY = "fm-geo-words";
   const load = () => { try { return JSON.parse(localStorage.getItem(KEY) || "{}"); } catch (e) { return {}; } };
   const save = v => { try { localStorage.setItem(KEY, JSON.stringify(v)); } catch (e) {} };

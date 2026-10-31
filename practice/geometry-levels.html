@@ -13,7 +13,7 @@
 <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
 <script defer src="https://cdn.jsdelivr.net/npm/mathjs@14.9.1/lib/browser/math.js"></script>
 <script defer src="geometry-stories.js?v=20261030s"></script>
-<script defer src="geometry-words.js?v=20261030g"></script>
+<script defer src="geometry-words.js?v=20261031a"></script>
 <style>
 :root{
   --bg:#FBF8F3; --surface:#FFFFFF; --ink:#16233B; --muted:#5B6474; --faint:#8C93A0; --line:#E8E2D8;
@@ -186,6 +186,7 @@ footer{text-align:center;color:var(--faint);font-size:13px;padding:24px}
 .cs-top .cs-acts{display:flex;gap:8px}
 .cs-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
 @media (max-width:700px){.cs-grid{grid-template-columns:1fr}}
+.cs-card.cs-wide{grid-column:1/-1;overflow-x:auto} .cs-card .wtable{font-size:13.5px}
 .cs-card{border:1px solid var(--line);border-radius:12px;padding:12px 14px;break-inside:avoid;page-break-inside:avoid}
 .cs-card h3{margin:0 0 6px;font-size:16px;color:var(--navy);font-family:Fraunces,Georgia,serif}
 .cs-card .cs-idea{font-size:14px;line-height:1.55;margin-bottom:8px}
@@ -1132,7 +1133,7 @@ function cheatSheet(){
   const course=page.split("·")[0].trim();
   const m=document.createElement("div"); m.className="csm";
   m.innerHTML=`<div class="cs-sheet"><div class="cs-top"><div><h2>${$("chTitle").textContent}</h2><span class="sub">${course} · Cheat Sheet · Prof. Fang Math</span></div><div class="cs-acts"><button class="btn teal sm" id="csPrint">🖨 Print / Save PDF</button><button class="btn ghost sm" id="csClose">Close</button></div></div>
-    <div class="cs-grid">${CH.topics.map(t=>`<div class="cs-card"><h3>${!tlab(t).multi?t.title:tlab(t).first?`${tlab(t).sec}<small class="cs-part">${tlab(t).part}</small>`:tlab(t).part}</h3><div class="cs-idea">${t.idea}</div>${t.lesson&&t.lesson.steps&&t.lesson.steps.length?`<div class="cs-ex"><span class="lab">Example</span>${t.lesson.steps.map(s=>`<div>$${s[0]}$</div>`).join("")}</div>`:""}${t.lesson&&t.lesson.warn?`<div class="cs-warn"><span class="lab">Watch out</span>${t.lesson.warn}</div>`:""}</div>`).join("")}</div>
+    <div class="cs-grid">${(()=>{ const tb=window.geoCsTable&&geoCsTable(CH.id); return tb?`<div class="cs-card cs-wide"><h3>${tb.title}</h3>${tb.html}</div>`:""; })()}${CH.topics.map(t=>`<div class="cs-card"><h3>${!tlab(t).multi?t.title:tlab(t).first?`${tlab(t).sec}<small class="cs-part">${tlab(t).part}</small>`:tlab(t).part}</h3><div class="cs-idea">${t.idea}</div>${t.lesson&&t.lesson.steps&&t.lesson.steps.length?`<div class="cs-ex"><span class="lab">Example</span>${t.lesson.steps.map(s=>`<div>$${s[0]}$</div>`).join("")}</div>`:""}${t.lesson&&t.lesson.warn?`<div class="cs-warn"><span class="lab">Watch out</span>${t.lesson.warn}</div>`:""}</div>`).join("")}</div>
     <div class="cs-foot">fangmath.com</div></div>`;
   document.body.appendChild(m); render(m);
   const close=()=>{ m.remove(); document.body.classList.remove("cs-printing"); };

@@ -59,7 +59,7 @@
   .wgroup h4 .gn{display:inline-grid;place-items:center;width:26px;height:26px;border-radius:50%;background:var(--navy);color:#fff;font:700 13px Inter,sans-serif;margin-right:8px;vertical-align:2px}
   .defb{margin-top:6px;border:1px solid var(--teal);background:#fff;color:var(--teal);border-radius:999px;padding:4px 12px;font:inherit;font-size:13px;font-weight:600;cursor:pointer}
   .tries{margin-top:12px} .tries .th{font-family:Fraunces,Georgia,serif;font-size:17px;font-weight:600;margin-bottom:2px}
-  .inlesson{margin:0 0 18px} .inlesson .wb{padding-top:14px} .ilh{padding:14px 20px 0}
+  .inlesson{margin:0 0 18px} .inlesson .wb{padding-top:14px} .ilh{padding:16px 20px 0} .ilh .label{color:var(--teal)} .ilh-t{font-size:clamp(24px,3vw,32px);margin:4px 0 0}
   .chroute{background:#fff;border:1px solid var(--line);border-radius:16px;padding:12px 14px;margin:0 0 14px;box-shadow:var(--shadow)}
   .chroute .rk{font-size:14px;color:var(--ink);margin-bottom:8px} .chroute .rk span{color:var(--muted)}
   .chroute .rs{display:flex;flex-wrap:wrap;align-items:center;gap:6px} .chroute .rs>span{color:var(--faint)}
@@ -759,7 +759,7 @@
     return `${intro}<div class="wnav" role="tablist">${steps.map((st, i) => `<button type="button" role="tab" data-i="${i}"><i>${i + 1}</i><span>${st.short || SHORT(st.t)}</span></button>`).join("")}</div>
       ${steps.map((st, i) => `<section class="wstep" data-i="${i}" hidden><div class="wgroup"><h4><span class="gn">${i + 1}</span>${st.t}</h4>${st.h}</div>
         <div class="wfoot">${i ? `<button type="button" class="btn ghost sm wprev">← Back</button>` : "<span></span>"}<span class="wcount">${i + 1} of ${steps.length}</span>${i < steps.length - 1
-          ? `<button type="button" class="btn sm wnext">Next: ${steps[i + 1].short || SHORT(steps[i + 1].t)} →</button>` : `<button type="button" class="btn teal sm wdone">${w.inLesson ? "Done — keep going ↓" : "Done — go to the lessons →"}</button>`}</div></section>`).join("")}`;
+          ? `<button type="button" class="btn sm wnext">Next: ${steps[i + 1].short || SHORT(steps[i + 1].t)} →</button>` : `<button type="button" class="btn teal sm wdone">${w.inLesson ? "Done — go to Part 2: symbols ↓" : "Done — go to the lessons →"}</button>`}</div></section>`).join("")}`;
   }
   function paginate(box, chId, known) {
     const secs = [...box.querySelectorAll(".wstep")], tabs = [...box.querySelectorAll(".wnav button")], key = "_step_" + chId;
@@ -791,7 +791,8 @@
     const g = STUDY[chId], nPost = w.posts.length, pw = (w.postTitle || "Postulates").split(/[ —&]/)[0].toLowerCase();
     box.innerHTML = `<summary><span style="font-size:24px">📘</span><div><b>Start here: Words &amp; Postulates</b><br><span>${w.cards.length} concepts · ${nPost} ${pw === "postulates" ? "postulates" : "key facts"} · ${w.vocab.length} words to know — ${w.sub}</span></div><i>›</i></summary>
       <div class="wb">${stepsHtml(w, g, mine)}</div>`;
-    if (target) { const sm = box.querySelector(":scope > summary"); if (sm) sm.outerHTML = `<div class="ilh"><span class="label">📘 Section ${(CH.topics.find(t => t.id === w.inLesson) || {}).title || ""}</span></div>`; }
+    if (target) { const sm = box.querySelector(":scope > summary"); if (sm) { const ti = CH.topics.findIndex(t => t.id === w.inLesson), tt = (CH.topics[ti] || {}).title || "";
+      sm.outerHTML = `<div class="ilh"><span class="label">Lesson ${ti + 1} of ${CH.topics.length} · Part 1 of 2 · Words &amp; pictures</span><h2 class="ilh-t">${tt}</h2></div>`; } }
     paginate(box, chId, known);
     const upd = () => { const n = box.querySelectorAll(".vocab input:checked").length; box.querySelector("#vocabN").textContent = `${n} of ${w.vocab.length} words ready${n === w.vocab.length ? " — great job! 🎉" : ""}`; };
     box.querySelectorAll(".vocab input").forEach(i => i.onchange = () => { const k = load(); k[chId] = [...box.querySelectorAll(".vocab input:checked")].map(x => x.value); save(k); upd(); });

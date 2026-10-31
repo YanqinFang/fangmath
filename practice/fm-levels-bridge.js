@@ -122,6 +122,34 @@
   // shared with the Quiz & Test tab below
   window.fmLv = { client, getKid, loadQ, saveQ, flush, CID, CTITLE, page, NAMES, MLOG, SIGNIN };
 
+  /* ---------- arrowheads: give every SVG picture its own marker ids ----------
+     Many pictures reuse the same <marker id="..."> text. A browser draws url(#id) from the FIRST
+     element with that id — if that picture is in a hidden step, the arrowheads vanish everywhere.
+     So each SVG gets its own copy of the ids. */
+  let mk = 0;
+  function fixMarkers(root) {
+    if (!root || !root.querySelectorAll) return;
+    const svgs = root.tagName === "svg" ? [root] : root.querySelectorAll("svg");
+    svgs.forEach(sv => {
+      if (sv.dataset.mk) return; sv.dataset.mk = "1";
+      const ids = [...sv.querySelectorAll("marker[id], clipPath[id], linearGradient[id], pattern[id]")];
+      if (!ids.length) return;
+      const n = ++mk;
+      ids.forEach(el => {
+        const old = el.id, neu = old + "__" + n; el.id = neu;
+        sv.querySelectorAll("*").forEach(x => {
+          for (const at of ["marker-start", "marker-end", "marker-mid", "clip-path", "fill", "stroke"]) {
+            const v = x.getAttribute(at); if (v && v.includes("#" + old + ")")) x.setAttribute(at, v.split("#" + old + ")").join("#" + neu + ")"));
+          }
+          const st = x.getAttribute("style"); if (st && st.includes("#" + old + ")")) x.setAttribute("style", st.split("#" + old + ")").join("#" + neu + ")"));
+        });
+      });
+    });
+  }
+  new MutationObserver(ms => ms.forEach(m => m.addedNodes.forEach(nd => { if (nd.nodeType === 1) fixMarkers(nd); })))
+    .observe(document.documentElement, { childList: true, subtree: true });
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", () => fixMarkers(document.body)); else fixMarkers(document.body);
+
   document.addEventListener("visibilitychange", () => { if (document.visibilityState === "hidden") close(); });
   window.addEventListener("pagehide", close);
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", hook); else hook();

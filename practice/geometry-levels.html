@@ -189,6 +189,7 @@ footer{text-align:center;color:var(--faint);font-size:13px;padding:24px}
 .cs-card{border:1px solid var(--line);border-radius:12px;padding:12px 14px;break-inside:avoid;page-break-inside:avoid}
 .cs-card h3{margin:0 0 6px;font-size:16px;color:var(--navy);font-family:Fraunces,Georgia,serif}
 .cs-card .cs-idea{font-size:14px;line-height:1.55;margin-bottom:8px}
+.cs-card h3 .cs-part{display:block;font-family:Inter,sans-serif;font-size:12.5px;font-weight:600;color:var(--muted);margin-top:2px}
 .cs-card .cs-ex{background:var(--bg);border-radius:8px;padding:6px 10px;font-size:14px}
 .cs-card .cs-ex .lab,.cs-card .cs-warn .lab{display:block;font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--faint);font-weight:700;margin-bottom:2px}
 .cs-card .cs-ex div{margin:2px 0;padding:3px 0;overflow-x:auto;overflow-y:hidden}
@@ -893,6 +894,9 @@ function chapters(){ const b=$("chapters"); b.innerHTML="";
 const SECNAME={ch1:{"1.2":"Midpoint & Distance Formula","1.4":"Angles","1.5":"Constructions"}};
 function secOf(t,i){ const m=/^(\d+\.\d+) (.*)$/.exec(t.title); const n=ALLCH.find(c=>c[2]===CH.id)[0]; return m?{no:m[1],name:m[2]}:{no:n+"."+(i+1),name:t.title}; }
 function sections(){ const out=[]; CH.topics.forEach((t,i)=>{ const s=secOf(t,i); let g=out.find(x=>x.no===s.no); if(!g){ g={no:s.no,name:(SECNAME[CH.id]||{})[s.no]||s.name,idx:[]}; out.push(g); } g.idx.push(i); }); return out; }
+function tlab(t){ const i=CH.topics.indexOf(t), G=sections().find(g=>g.idx.includes(i)), m=/^(\d+\.\d+) (.*)$/.exec(t.title), part=m?m[2]:t.title;
+  if(!G||G.idx.length<2) return {multi:false,sec:t.title,part,full:t.title};
+  return {multi:true,sec:G.no+" "+G.name,part,k:G.idx.indexOf(i)+1,n:G.idx.length,first:G.idx[0]===i,full:G.no+" "+G.name+" · "+part}; }
 function secList(){ const box=$("secs"); if(!box||!CH) return; box.innerHTML=""; sections().forEach(g=>{ const x=document.createElement("button"); x.type="button"; const on=g.idx.includes(LI), done=g.idx.every(i=>st&&st.learned[CH.topics[i].id]); x.className="sec"+(on?" on":"")+(done?" done":""); x.innerHTML=`<b>${done?"✓":g.no}</b><span>${g.name}</span>`; x.onclick=()=>{ setTab("learn"); openLesson(g.idx[0],true); }; box.appendChild(x); }); }
 function legend(){ if(!st) return; const box=$("legend"); box.innerHTML=""; const cur=curLv(); LEVELS.forEach(l=>{ const b=document.createElement("button"); b.type="button"; b.className="lvc"+(l.n===cur?" on":"")+(st.rec===l.n?" star":""); b.style.setProperty("--c",l.c); b.title=l.desc; b.innerHTML=`<i>${l.n}</i>${l.name}`; b.onclick=()=>setLevel(l.n); box.appendChild(b); }); const L0=LEVELS[cur-1]; $("lvDesc").innerHTML=`<b style="color:${L0.c}">Level ${cur} · ${L0.name}</b> — ${L0.desc}. Every topic below uses this level.`; }
 
@@ -903,11 +907,11 @@ function pillsFor(t,cur,onPick){ const w=document.createElement("div"); w.classN
   LEVELS.forEach(l=>{ const b=document.createElement("button"); b.type="button"; b.className="pill"+(l.n===cur?" on":"")+(st.rec===l.n?" star":""); b.style.setProperty("--c",l.c); const n=st.solved[t.id+l.n]||0; b.innerHTML=`${l.n} ${l.name}`+(n?`<span class="n">✓${n}</span>`:""); b.onclick=()=>onPick(l.n); w.appendChild(b); }); return w; }
 function topics(){ const box=$("topics"); box.innerHTML=""; legend(); const lvl=curLv();
   CH.topics.forEach(t=>{ const c=document.createElement("div"); c.className="card topic"; const n=st.solved[t.id+lvl]||0;
-    c.innerHTML=`<h2>${t.title}</h2><p class="idea">${t.idea}</p><div class="example"><span class="label">Simplest example</span>${t.lesson.steps.map(s=>`<div class="q">$${s[0]}$</div>`).join("")}</div>`;
+    const tl=tlab(t); c.innerHTML=`${tl.multi?`<span class="label">${tl.first?tl.sec:"&nbsp;"}</span>`:""}<h2>${tl.multi?tl.part:t.title}</h2><p class="idea">${t.idea}</p><div class="example"><span class="label">Simplest example</span>${t.lesson.steps.map(s=>`<div class="q">$${s[0]}$</div>`).join("")}</div>`;
     const g=document.createElement("div"); g.className="tgo"; const go=document.createElement("button"); go.className="btn teal sm"; go.textContent="Practice →"; go.onclick=()=>startPractice(t,lvl); g.appendChild(go);
     const sm=document.createElement("small"); sm.textContent=n?`✓ ${n} solved at Level ${lvl}`:`Level ${lvl} · ${LEVELS[lvl-1].name}`; g.appendChild(sm); c.appendChild(g); box.appendChild(c); });
   render(box); }
-function startPractice(t,n){ n=curLv(); T=t; L=n; st.level[t.id]=n; save(); streak=[]; $("practice").hidden=false; $("pTitle").textContent=t.title; newProblem(); $("practice").scrollIntoView({behavior:"smooth",block:"start"}); topics(); }
+function startPractice(t,n){ n=curLv(); T=t; L=n; st.level[t.id]=n; save(); streak=[]; $("practice").hidden=false; $("pTitle").textContent=tlab(t).full; newProblem(); $("practice").scrollIntoView({behavior:"smooth",block:"start"}); topics(); }
 function levelPills(){ $("pLevels").replaceWith(Object.assign(pillsFor(T,L,n=>{ L=n; st.level[T.id]=n; save(); streak=[]; newProblem(); topics(); }),{id:"pLevels"})); }
 function newProblem(){
   PR=T.gen[L-1](); tries=0; done=false; firstTry=true;
@@ -940,7 +944,7 @@ function cheatSheet(){
   const course=page.split("·")[0].trim();
   const m=document.createElement("div"); m.className="csm";
   m.innerHTML=`<div class="cs-sheet"><div class="cs-top"><div><h2>${$("chTitle").textContent}</h2><span class="sub">${course} · Cheat Sheet · Prof. Fang Math</span></div><div class="cs-acts"><button class="btn teal sm" id="csPrint">🖨 Print / Save PDF</button><button class="btn ghost sm" id="csClose">Close</button></div></div>
-    <div class="cs-grid">${CH.topics.map(t=>`<div class="cs-card"><h3>${t.title}</h3><div class="cs-idea">${t.idea}</div>${t.lesson&&t.lesson.steps&&t.lesson.steps.length?`<div class="cs-ex"><span class="lab">Example</span>${t.lesson.steps.map(s=>`<div>$${s[0]}$</div>`).join("")}</div>`:""}${t.lesson&&t.lesson.warn?`<div class="cs-warn"><span class="lab">Watch out</span>${t.lesson.warn}</div>`:""}</div>`).join("")}</div>
+    <div class="cs-grid">${CH.topics.map(t=>`<div class="cs-card"><h3>${!tlab(t).multi?t.title:tlab(t).first?`${tlab(t).sec}<small class="cs-part">${tlab(t).part}</small>`:tlab(t).part}</h3><div class="cs-idea">${t.idea}</div>${t.lesson&&t.lesson.steps&&t.lesson.steps.length?`<div class="cs-ex"><span class="lab">Example</span>${t.lesson.steps.map(s=>`<div>$${s[0]}$</div>`).join("")}</div>`:""}${t.lesson&&t.lesson.warn?`<div class="cs-warn"><span class="lab">Watch out</span>${t.lesson.warn}</div>`:""}</div>`).join("")}</div>
     <div class="cs-foot">fangmath.com</div></div>`;
   document.body.appendChild(m); render(m);
   const close=()=>{ m.remove(); document.body.classList.remove("cs-printing"); };
@@ -976,11 +980,11 @@ $("placeBtn").onclick=()=>{
 
 /* ---- learn ---- */
 let LI=0, shown=1, TP=null, tDone=false, tTries=0;
-function road(){ const r=$("road"); r.innerHTML=""; const G=sections().find(g=>g.idx.includes(LI)); r.classList.toggle("single",!G||G.idx.length<2); secList(); CH.topics.forEach((t,i)=>{ const b=document.createElement("button"); b.type="button"; b.className="stop"+(st.learned[t.id]?" done":"")+(i===LI?" on":"")+(G&&!G.idx.includes(i)?" other":""); const sm=/^(\d+\.\d+) (.*)$/.exec(t.title); b.innerHTML=`<i>${st.learned[t.id]?"✓":sm?sm[1]:i+1}</i>${sm?sm[2]:t.title}`; b.onclick=()=>openLesson(i); r.appendChild(b); }); }
+function road(){ const r=$("road"); r.innerHTML=""; const G=sections().find(g=>g.idx.includes(LI)); r.classList.toggle("single",!G||G.idx.length<2); secList(); CH.topics.forEach((t,i)=>{ const b=document.createElement("button"); b.type="button"; b.className="stop"+(st.learned[t.id]?" done":"")+(i===LI?" on":"")+(G&&!G.idx.includes(i)?" other":""); const sm=/^(\d+\.\d+) (.*)$/.exec(t.title); const tl=tlab(t); b.innerHTML=`<i>${st.learned[t.id]?"✓":tl.multi&&G&&G.idx.includes(i)?tl.k:sm?sm[1]:i+1}</i>${sm?sm[2]:t.title}`; b.onclick=()=>openLesson(i); r.appendChild(b); }); }
 function openLesson(i,scroll){ LI=i; shown=1; tDone=false; tTries=0; TP=null; road(); if(window.drawStory) drawStory(CH.id,CH.topics[i]); drawLesson(); if(scroll) ($("story")||$("lesson")).scrollIntoView({behavior:"smooth",block:"start"}); }
 function drawLesson(){
   const t=CH.topics[LI], l=t.lesson, box=$("lesson");
-  box.innerHTML=`<span class="label">Lesson ${LI+1} of ${CH.topics.length}</span><h2>${t.title}</h2><div class="big">${t.idea}</div>${l.fig||""}<span class="label">👀 Watch me — simplest example</span><p class="watch">I'll solve it one step at a time. Read each step and think about <b>why</b>. When it makes sense, press <b>Got it — next step</b>.</p><ol class="steps">${l.steps.slice(0,shown).map(s=>`<li><div><div class="m">$${s[0]}$</div><div class="w">${s[1]}</div></div></li>`).join("")}</ol>`;
+  box.innerHTML=`<span class="label">${tlab(t).multi?`${tlab(t).sec} · Part ${tlab(t).k} of ${tlab(t).n}`:`Lesson ${LI+1} of ${CH.topics.length}`}</span><h2>${tlab(t).multi?tlab(t).part:t.title}</h2><div class="big">${t.idea}</div>${l.fig||""}<span class="label">👀 Watch me — simplest example</span><p class="watch">I'll solve it one step at a time. Read each step and think about <b>why</b>. When it makes sense, press <b>Got it — next step</b>.</p><ol class="steps">${l.steps.slice(0,shown).map(s=>`<li><div><div class="m">$${s[0]}$</div><div class="w">${s[1]}</div></div></li>`).join("")}</ol>`;
   if(shown<l.steps.length){ const b=document.createElement("button"); b.className="btn"; b.style.alignSelf="flex-start"; b.textContent="Got it — next step →"; b.onclick=()=>{ shown++; drawLesson(); }; box.appendChild(b);
     const s=document.createElement("button"); s.className="btn ghost sm"; s.style.alignSelf="flex-start"; s.textContent="Show all steps at once"; s.onclick=()=>{ shown=l.steps.length; drawLesson(); }; box.appendChild(s); }
   else {

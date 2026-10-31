@@ -181,6 +181,9 @@
       return orig.apply(this, arguments);
     };
     tabBtn.onclick = () => setTab("quiz");
+    drawHandouts();
+    const oc = window.openChapter;
+    window.openChapter = function () { const r = oc.apply(this, arguments); try { drawHandouts(); } catch (e) {} return r; };
     const hd = document.querySelector("header.top .in");
     if (hd && !hd.querySelector(".lv-search")) { const sl = document.createElement("a"); sl.className = "lv-search"; sl.href = "../index.html#/search"; sl.textContent = "🔍 Search";
       sl.style.cssText = "margin-left:auto;text-decoration:none;color:var(--muted);font-weight:600;font-size:14px;border:1px solid var(--line);border-radius:999px;padding:6px 13px;white-space:nowrap"; const back = hd.querySelector(".back"); if (back) { back.style.marginLeft = "0"; hd.insertBefore(sl, back); } else hd.appendChild(sl); }
@@ -194,6 +197,24 @@
     if (m) { if (CHAPTERS.some(c => c.id === m[1]) && CH.id !== m[1]) openChapter(m[1], "practice"); setTab("quiz");
       const card = (g(m[2] === "ws" ? "wsGo" : m[2] === "test" ? "tsGo" : "qzGo") || {}).closest && g(m[2] === "ws" ? "wsGo" : m[2] === "test" ? "tsGo" : "qzGo").closest(".qt-box");
       if (card && m[2] !== "quiz") setTimeout(() => { card.scrollIntoView({ behavior: "smooth", block: "center" }); card.classList.add("qt-flash"); setTimeout(() => card.classList.remove("qt-flash"), 1800); }, 250); }
+  }
+
+  /* ---------- printable handouts (PDF worksheet + answer key) for this chapter ----------
+     To add one: put the PDFs in materials/..., then add a line here under the page and chapter. */
+  const HANDOUTS = {
+    "algebra2-levels": {
+      ch2: [{ t: "2-1 Domain & Range", ws: "../materials/algebra2/ch02/Alg2_2-1_Domain_Range_Worksheet.pdf", key: "../materials/algebra2/ch02/Alg2_2-1_Domain_Range_Key.pdf" }],
+      ch4: [{ t: "4-1 Quadratic Functions & Transformations (notes)", ws: "../materials/algebra2/ch04/Alg2_4-1_Notes.pdf", key: "../materials/algebra2/ch04/Alg2_4-1_Notes_Key.pdf" }],
+      ch6: [{ t: "6-7 Inverse Relations & Functions", ws: "../materials/algebra2/ch06/Alg2_6-7_Inverse_Functions_Worksheet.pdf", key: "../materials/algebra2/ch06/Alg2_6-7_Inverse_Functions_Key.pdf" }],
+    },
+  };
+  function drawHandouts() {
+    const tabs = document.querySelector(".tabs[role=tablist]"); if (!tabs || !CH) return;
+    let box = g("handouts"); const list = (HANDOUTS[PG] || {})[CH.id] || [];
+    if (!list.length) { if (box) box.remove(); return; }
+    if (!box) { box = document.createElement("div"); box.id = "handouts"; box.className = "qt-handouts"; tabs.parentNode.insertBefore(box, tabs); }
+    box.innerHTML = `<span class="qt-hl">📎 Printable handout${list.length > 1 ? "s" : ""}</span>` + list.map(h => `<span class="qt-hrow"><b>${esc(h.t)}</b>
+      <a class="btn sm" style="background:#8A6415" href="${h.ws}" target="_blank" rel="noopener">📄 Worksheet PDF</a>${h.key ? `<a class="btn sm ghost" href="${h.key}" target="_blank" rel="noopener">🔑 Answer key</a>` : ""}</span>`).join("");
   }
 
   function showQuiz() {
@@ -636,6 +657,9 @@
 @media (max-width:820px){.qt-grid{grid-template-columns:1fr}}
 .qt-box{display:flex;flex-direction:column;gap:8px}
 .qt-wide{grid-column:1/-1;border-color:#E9D6A8}
+.qt-handouts{display:flex;flex-wrap:wrap;align-items:center;gap:8px 14px;background:#FFF8EA;border:1.5px solid #E9D6A8;border-radius:14px;padding:10px 14px;margin:0 0 12px}
+.qt-hl{font-weight:700;color:#8A6415;font-size:14px}
+.qt-hrow{display:flex;flex-wrap:wrap;align-items:center;gap:8px}.qt-hrow b{font-weight:600;font-size:14.5px}
 .qt-flash{box-shadow:0 0 0 3px var(--gold);transition:box-shadow .4s}
 .qt-wsrow{display:grid;grid-template-columns:minmax(200px,1fr) auto auto;gap:16px;align-items:start}
 @media (max-width:900px){.qt-wsrow{grid-template-columns:1fr}}

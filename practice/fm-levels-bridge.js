@@ -181,6 +181,15 @@
       return orig.apply(this, arguments);
     };
     tabBtn.onclick = () => setTab("quiz");
+    const hd = document.querySelector("header.top .in");
+    if (hd && !hd.querySelector(".lv-search")) { const sl = document.createElement("a"); sl.className = "lv-search"; sl.href = "../index.html#/search"; sl.textContent = "🔍 Search";
+      sl.style.cssText = "margin-left:auto;text-decoration:none;color:var(--muted);font-weight:600;font-size:14px;border:1px solid var(--line);border-radius:999px;padding:6px 13px;white-space:nowrap"; const back = hd.querySelector(".back"); if (back) { back.style.marginLeft = "0"; hd.insertBefore(sl, back); } else hd.appendChild(sl); }
+    const t = /^#(ch\w+)-(learn|practice)-(\w+)$/.exec(HASH0);       // a link to one lesson (from the site search)
+    if (t && CHAPTERS.some(c => c.id === t[1])) {
+      if (CH.id !== t[1]) openChapter(t[1], t[2]); else setTab(t[2]);
+      const i = CH.topics.findIndex(x => x.id === t[3]);
+      if (i >= 0) { if (t[2] === "learn" && typeof openLesson === "function") openLesson(i, true); else if (typeof startPractice === "function") startPractice(CH.topics[i]); }
+    }
     const m = /^#(ch\w+)-(quiz|ws|test)$/.exec(HASH0);
     if (m) { if (CHAPTERS.some(c => c.id === m[1]) && CH.id !== m[1]) openChapter(m[1], "practice"); setTab("quiz");
       const card = (g(m[2] === "ws" ? "wsGo" : m[2] === "test" ? "tsGo" : "qzGo") || {}).closest && g(m[2] === "ws" ? "wsGo" : m[2] === "test" ? "tsGo" : "qzGo").closest(".qt-box");

@@ -528,6 +528,211 @@
         ] } }
   ];
 
+  /* ---------- Ch 2–13: concepts in groups, definitions on click, 3 paper-first questions per group ---------- */
+  const TX = s => `\\text{${s}}`, ONE = v => s => s[0] === v, DG = v => `${v}^\\circ`;
+  const G = (title, cards, qs, fig) => ({ title, cards, tries: { fig: fig || "", qs } });
+  const Q1 = (q, ans, wrong, sol) => ({ q, n: 1, opts: [ans, ...wrong].sort(), ok: ONE(ans), sol });
+
+  WORDS.ch2.groups = [
+    G("If–then statements", [0, 1, 2], [
+      Q1("Statement: “If an angle is a right angle, then it measures $90^\\circ$.” What is the <b>hypothesis</b>?", TX("an angle is a right angle"), [TX("it measures 90°"), TX("an angle measures 90°"), TX("it is not a right angle")], "The hypothesis is the part right after <b>if</b>: “an angle is a right angle.”"),
+      Q1("Write the <b>converse</b> of “If it is a dog, then it has 4 legs.”", TX("If it has 4 legs, then it is a dog."), [TX("If it is not a dog, then it does not have 4 legs."), TX("If it does not have 4 legs, then it is not a dog."), TX("If it is a dog, then it does not have 4 legs.")], "The converse <b>swaps</b> the two parts. (It is false — a cat has 4 legs too.)"),
+      Q1("Which statement is the <b>contrapositive</b> of “If it is a dog, then it has 4 legs”?", TX("If it does not have 4 legs, then it is not a dog."), [TX("If it has 4 legs, then it is a dog."), TX("If it is not a dog, then it does not have 4 legs."), TX("It is a dog if and only if it has 4 legs.")], "Swap <b>and</b> negate. The contrapositive is true whenever the original is true.")
+    ]),
+    G("Two ways to reason", [4, 3, 5], [
+      Q1("You notice $2, 4, 8, 16$ and guess the next number is $32$. What kind of reasoning is that?", TX("inductive"), [TX("deductive"), TX("a proof"), TX("a counterexample")], "Guessing from a pattern is <b>inductive</b> reasoning. It makes a conjecture, not a proof."),
+      Q1("Find a <b>counterexample</b> to “Every prime number is odd.”", "2", ["3", "9", "15"], "$2$ is prime and even, so it breaks the statement. ($9$ and $15$ aren't prime; $3$ is odd.)"),
+      Q1("“If two angles are vertical, they are congruent.” $\\angle 1$ and $\\angle 2$ are vertical. What can you conclude?", "\\angle 1 \\cong \\angle 2", ["\\angle 1 + \\angle 2 = 180^\\circ", TX("nothing"), "\\angle 1 \\perp \\angle 2"], "Law of Detachment: the hypothesis is true, so the conclusion is true. That's <b>deductive</b> reasoning.")
+    ]),
+    G("Theorems & proofs", [6], [
+      Q1("Which property: if $AB = CD$, then $CD = AB$?", TX("Symmetric Property"), [TX("Reflexive Property"), TX("Transitive Property"), TX("Substitution Property")], "Flipping the two sides of an equation is the <b>Symmetric</b> Property."),
+      Q1("Which reason takes you from $x + 5 = 12$ to $x = 7$?", TX("Subtraction Property of Equality"), [TX("Addition Property of Equality"), TX("Division Property of Equality"), TX("Reflexive Property")], "You subtracted $5$ from both sides."),
+      Q1("In a proof, $\\overline{AC} \\cong \\overline{AC}$ (a side shared by two triangles). What is the reason?", TX("Reflexive Property"), [TX("Symmetric Property"), TX("Transitive Property"), TX("Given")], "Anything is congruent to itself: <b>Reflexive</b>.")
+    ])
+  ];
+  WORDS.ch3.groups = [
+    G("Parallel, perpendicular, skew", [0, 1, 2], [
+      Q1("Two edges of a box never meet and no face of the box contains both. They are…", TX("skew"), [TX("parallel"), TX("perpendicular"), TX("intersecting")], "Not coplanar and never meet: <b>skew</b>."),
+      Q1("How do you write “line $\\ell$ is perpendicular to line $m$”?", "\\ell \\perp m", ["\\ell \\parallel m", "\\ell \\cong m", "\\ell = m"], "$\\perp$ means perpendicular; $\\parallel$ means parallel."),
+      Q1("Two coplanar lines never intersect. They are…", TX("parallel"), [TX("skew"), TX("perpendicular"), TX("collinear")], "Coplanar + never meet = <b>parallel</b>.")
+    ]),
+    G("A transversal and its angle pairs", [3, 4, 5, 6], [
+      Q1("Angles in the <b>same position</b> at each crossing are called…", TX("corresponding angles"), [TX("alternate interior angles"), TX("same-side interior angles"), TX("vertical angles")], "Same corner, two crossings: <b>corresponding</b>."),
+      Q1("$\\ell \\parallel m$. Alternate interior angles: one is $65^\\circ$. The other is…", DG(65), [DG(115), DG(25), DG(130)], "Alternate interior angles are <b>congruent</b> when the lines are parallel."),
+      Q1("$\\ell \\parallel m$. Same-side interior angles: one is $65^\\circ$. The other is…", DG(115), [DG(65), DG(25), DG(130)], "Same-side interior angles are <b>supplementary</b>: $180 - 65 = 115$.")
+    ]),
+    G("Slopes of parallel & perpendicular lines", [7], [
+      Q1("A line has slope $\\tfrac23$. A <b>parallel</b> line has slope…", "\\tfrac23", ["-\\tfrac32", "\\tfrac32", "-\\tfrac23"], "Parallel lines have the <b>same</b> slope."),
+      Q1("A line has slope $\\tfrac23$. A <b>perpendicular</b> line has slope…", "-\\tfrac32", ["\\tfrac23", "\\tfrac32", "-\\tfrac23"], "Flip and change the sign: $-\\tfrac32$."),
+      Q1("The slopes of two perpendicular lines multiply to…", "-1", ["1", "0", TX("the same number")], "$\\tfrac23 \\cdot \\left(-\\tfrac32\\right) = -1$.")
+    ])
+  ];
+  WORDS.ch4.groups = [
+    G("Triangle parts & angles", [0, 1], [
+      Q1("Two angles of a triangle are $50^\\circ$ and $60^\\circ$. The third angle is…", DG(70), [DG(110), DG(80), DG(60)], "$180 - 50 - 60 = 70$."),
+      Q1("Remote interior angles $40^\\circ$ and $75^\\circ$. The exterior angle is…", DG(115), [DG(65), DG(35), DG(140)], "Exterior angle = sum of the two remote interior angles: $40 + 75 = 115$."),
+      Q1("In $\\triangle ABC$, which angle is <b>included</b> between $\\overline{AB}$ and $\\overline{BC}$?", "\\angle B", ["\\angle A", "\\angle C", TX("none")], "The included angle is at the vertex the two sides share: $B$.")
+    ]),
+    G("Congruent figures & CPCTC", [2, 5], [
+      Q1("$\\triangle ABC \\cong \\triangle XYZ$. Which side matches $\\overline{BC}$?", "\\overline{YZ}", ["\\overline{XY}", "\\overline{XZ}", "\\overline{ZY}\\ \\text{and}\\ \\overline{XY}"], "2nd and 3rd letters match: $\\overline{BC} \\leftrightarrow \\overline{YZ}$."),
+      Q1("$\\triangle ABC \\cong \\triangle XYZ$. Which angle matches $\\angle A$?", "\\angle X", ["\\angle Y", "\\angle Z", "\\angle B"], "1st letter with 1st letter."),
+      Q1("When can you use CPCTC?", TX("after proving the triangles congruent"), [TX("as the first step"), TX("to prove the triangles congruent"), TX("only for right triangles")], "Prove the triangles congruent first; then matching parts follow.")
+    ]),
+    G("Isosceles & equilateral", [3, 4], [
+      Q1("An isosceles triangle has a vertex angle of $40^\\circ$. Each base angle is…", DG(70), [DG(40), DG(140), DG(50)], "$(180 - 40) \\div 2 = 70$."),
+      Q1("Each angle of an equilateral triangle measures…", DG(60), [DG(90), DG(45), DG(180)], "$180 \\div 3 = 60$."),
+      Q1("In an isosceles triangle, the base angles are opposite the…", TX("congruent sides (legs)"), [TX("base"), TX("vertex angle"), TX("longest side")], "Base Angles Theorem: angles opposite congruent sides are congruent.")
+    ])
+  ];
+  WORDS.ch5.groups = [
+    G("Special segments", [0, 1, 2, 3], [
+      Q1("A midsegment is parallel to the third side, and its length is…", TX("half the third side"), [TX("twice the third side"), TX("equal to the third side"), TX("half of a side it touches")], "Midsegment = $\\tfrac12$ of the parallel side."),
+      Q1("Every point on the perpendicular bisector of $\\overline{AB}$ is…", TX("the same distance from A and B"), [TX("the midpoint of AB"), TX("on AB"), TX("closer to A")], "That's the Perpendicular Bisector Theorem."),
+      Q1("A segment from a vertex to the midpoint of the opposite side is a(n)…", TX("median"), [TX("altitude"), TX("angle bisector"), TX("midsegment")], "Median → midpoint. Altitude → perpendicular to the opposite side.")
+    ]),
+    G("Points of concurrency", [4], [
+      Q1("The three medians meet at the…", TX("centroid"), [TX("circumcenter"), TX("incenter"), TX("orthocenter")], "Medians → <b>centroid</b> (the balance point)."),
+      Q1("The perpendicular bisectors meet at the…", TX("circumcenter"), [TX("centroid"), TX("incenter"), TX("orthocenter")], "It's the center of the circle through all three vertices."),
+      Q1("$G$ is the centroid and median $\\overline{AM}$ has $GM = 4$. Then $AG = $", "8", ["4", "12", "2"], "The centroid splits a median $2 : 1$: $AG = 2 \\cdot GM = 8$.")
+    ]),
+    G("Triangle inequality", [5], [
+      Q1("Which three lengths can form a triangle?", "4, 5, 8", ["2, 3, 6", "1, 2, 3", "5, 5, 11"], "The two shorter sides must add to <b>more</b> than the longest: $4 + 5 > 8$."),
+      Q1("Two sides are $5$ and $9$. The third side must be between…", "4\\ \\text{and}\\ 14", ["5\\ \\text{and}\\ 9", "0\\ \\text{and}\\ 14", "4\\ \\text{and}\\ 9"], "Difference $< x <$ sum: $4 < x < 14$."),
+      Q1("In $\\triangle ABC$, $AB = 3$, $BC = 7$, $AC = 5$. The largest angle is…", "\\angle A", ["\\angle B", "\\angle C", TX("all equal")], "The largest angle is opposite the longest side $\\overline{BC}$: $\\angle A$.")
+    ])
+  ];
+  WORDS.ch6.groups = [
+    G("Polygons and their angles", [0, 1], [
+      Q1("The interior angles of a hexagon add to…", DG(720), [DG(360), DG(540), DG(1080)], "$(n - 2) \\cdot 180 = 4 \\cdot 180 = 720$."),
+      Q1("The exterior angles of <b>any</b> convex polygon add to…", DG(360), [DG(180), DG(540), TX("depends on n")], "Walk around the polygon: you turn one full circle."),
+      Q1("Each interior angle of a regular octagon is…", DG(135), [DG(45), DG(120), DG(150)], "Exterior $= 360 \\div 8 = 45$, interior $= 180 - 45 = 135$.")
+    ]),
+    G("Parallelograms & special ones", [2, 3], [
+      Q1("In a parallelogram, the diagonals…", TX("bisect each other"), [TX("are always congruent"), TX("are always perpendicular"), TX("bisect the angles")], "Bisecting each other is true for <b>every</b> parallelogram."),
+      Q1("Which shape has congruent diagonals (always)?", TX("rectangle"), [TX("rhombus"), TX("parallelogram"), TX("kite")], "Rectangle (and square)."),
+      Q1("Parallelogram $ABCD$ with $m\\angle A = 70^\\circ$. Then $m\\angle B = $", DG(110), [DG(70), DG(20), DG(140)], "Consecutive angles are supplementary.")
+    ]),
+    G("Trapezoids & kites", [4, 5], [
+      Q1("A trapezoid has bases $8$ and $14$. Its midsegment is…", "11", ["22", "6", "3"], "Average of the bases: $(8 + 14) \\div 2 = 11$."),
+      Q1("The base angles of an <b>isosceles</b> trapezoid are…", TX("congruent"), [TX("supplementary"), TX("right angles"), TX("complementary")], "Each pair of base angles is congruent."),
+      Q1("The diagonals of a kite are…", TX("perpendicular"), [TX("congruent"), TX("parallel"), TX("bisected by each other")], "Kite diagonals meet at right angles.")
+    ])
+  ];
+  WORDS.ch7.groups = [
+    G("Ratios & similar figures", [0, 1, 2], [
+      Q1("Solve $\\dfrac{x}{6} = \\dfrac{4}{8}$.", "3", ["12", "2", "48"], "Cross-multiply: $8x = 24$."),
+      Q1("Similar figures have congruent angles and…", TX("proportional sides"), [TX("congruent sides"), TX("equal areas"), TX("equal perimeters")], "Same shape, sides in the same ratio."),
+      Q1("Scale factor $3$. A side of $5$ becomes…", "15", ["8", "5", "45"], "Multiply by the scale factor.")
+    ]),
+    G("Proving triangles similar", [3], [
+      Q1("Two angles of one triangle match two angles of another. They are similar by…", TX("AA"), [TX("SSS~"), TX("SAS~"), TX("ASA")], "Two angles are enough: <b>AA</b>."),
+      Q1("Sides $3, 4, 5$ and $6, 8, 10$. Similar by…", TX("SSS~"), [TX("AA"), TX("SAS~"), TX("not similar")], "Every side doubles: <b>SSS~</b>."),
+      Q1("Which is <b>not</b> a similarity shortcut?", TX("SSA"), [TX("AA"), TX("SSS~"), TX("SAS~")], "SSA doesn't work for congruence or similarity.")
+    ]),
+    G("Side-Splitter & geometric mean", [4, 5], [
+      Q1("$\\overline{DE} \\parallel \\overline{BC}$, $AD = 3$, $DB = 6$, $AE = 4$. Then $EC = $", "8", ["2", "6", "12"], "$\\tfrac36 = \\tfrac{4}{EC}$, so $EC = 8$."),
+      Q1("The geometric mean of $4$ and $9$ is…", "6", ["6.5", "13", "36"], "$\\sqrt{4 \\cdot 9} = 6$."),
+      Q1("The geometric mean of $2$ and $8$ is…", "4", ["5", "10", "16"], "$\\sqrt{16} = 4$.")
+    ])
+  ];
+  WORDS.ch8.groups = [
+    G("Right-triangle words & the Pythagorean Theorem", [0, 1], [
+      Q1("Legs $6$ and $8$. The hypotenuse is…", "10", ["14", "12", "48"], "$\\sqrt{36 + 64} = 10$."),
+      Q1("The hypotenuse is always across from…", TX("the right angle"), [TX("the smallest angle"), TX("angle A"), TX("the longest leg")], "It's the longest side, opposite the $90^\\circ$ angle."),
+      Q1("Is $5, 12, 14$ a right triangle?", TX("no"), [TX("yes")], "$25 + 144 = 169 \\ne 196$.")
+    ]),
+    G("Special right triangles", [2, 3], [
+      Q1("A 45-45-90 triangle has legs $5$. The hypotenuse is…", "5\\sqrt2", ["10", "5\\sqrt3", "5"], "Hypotenuse = leg $\\cdot \\sqrt2$."),
+      Q1("A 30-60-90 triangle has short leg $4$. The hypotenuse is…", "8", ["4\\sqrt3", "4\\sqrt2", "12"], "Hypotenuse = $2 \\cdot$ short leg."),
+      Q1("A 30-60-90 triangle has short leg $4$. The long leg is…", "4\\sqrt3", ["8", "4\\sqrt2", "2"], "Long leg = short leg $\\cdot \\sqrt3$.")
+    ]),
+    G("Sine, cosine, tangent", [4, 5], [
+      Q1("Opposite $3$, adjacent $4$, hypotenuse $5$. $\\sin A = $", "\\tfrac35", ["\\tfrac45", "\\tfrac34", "\\tfrac53"], "SOH: opposite over hypotenuse."),
+      Q1("Same triangle. $\\tan A = $", "\\tfrac34", ["\\tfrac35", "\\tfrac45", "\\tfrac43"], "TOA: opposite over adjacent."),
+      Q1("Looking <b>up</b> from the ground to a kite makes an angle of…", TX("elevation"), [TX("depression"), TX("inclination"), TX("reflection")], "Up = elevation; down = depression.")
+    ])
+  ];
+  WORDS.ch9.groups = [
+    G("Slides, flips, turns", [0, 1, 2], [
+      Q1("Translate $(2, 3)$ by $(x, y) \\to (x + 4, y - 1)$.", "(6, 2)", ["(-2, 4)", "(6, 4)", "(2, 3)"], "Add $4$ to $x$, subtract $1$ from $y$."),
+      Q1("Reflect $(2, 3)$ over the $x$-axis.", "(2, -3)", ["(-2, 3)", "(3, 2)", "(-2, -3)"], "Over the $x$-axis: keep $x$, flip the sign of $y$."),
+      Q1("Rotate $(2, 3)$ by $180^\\circ$ about the origin.", "(-2, -3)", ["(3, -2)", "(-3, 2)", "(2, -3)"], "$180^\\circ$: flip both signs.")
+    ]),
+    G("Dilations & compositions", [3, 4], [
+      Q1("Dilate $(2, 3)$ by $k = 3$ about the origin.", "(6, 9)", ["(5, 6)", "(2, 9)", "(6, 3)"], "Multiply both coordinates by $3$."),
+      Q1("A dilation with $k = \\tfrac12$ makes a figure…", TX("smaller"), [TX("larger"), TX("the same size"), TX("flipped")], "$0 < k < 1$ shrinks."),
+      Q1("A composition is…", TX("two or more transformations in a row"), [TX("a single reflection"), TX("a dilation"), TX("a symmetry")], "Do one move, then the next.")
+    ]),
+    G("Symmetry", [5], [
+      Q1("How many lines of symmetry does a square have?", "4", ["2", "1", "8"], "2 through the midpoints of sides, 2 along the diagonals."),
+      Q1("A regular hexagon has rotational symmetry of order…", "6", ["3", "2", "12"], "It matches itself every $60^\\circ$: 6 times in a full turn."),
+      Q1("Which letter has a vertical line of symmetry?", TX("A"), [TX("F"), TX("G"), TX("R")], "A folds onto itself along a vertical line.")
+    ])
+  ];
+  WORDS.ch10.groups = [
+    G("Parts of a circle", [0, 1], [
+      Q1("Radius $7$. The diameter is…", "14", ["7", "3.5", "49"], "Diameter = $2r$."),
+      Q1("A line that touches a circle at exactly one point is a…", TX("tangent"), [TX("secant"), TX("chord"), TX("radius")], "Tangent: one point. Secant: two points."),
+      Q1("A tangent and the radius to the point of tangency are…", TX("perpendicular"), [TX("parallel"), TX("congruent"), TX("the same line")], "They meet at a right angle.")
+    ]),
+    G("Arcs and angles", [2, 3], [
+      Q1("A central angle of $80^\\circ$ intercepts an arc of…", DG(80), [DG(40), DG(160), DG(280)], "A central angle equals its arc."),
+      Q1("An inscribed angle intercepts an arc of $80^\\circ$. The angle is…", DG(40), [DG(80), DG(160), DG(20)], "Inscribed angle = half the arc."),
+      Q1("An inscribed angle that intercepts a semicircle is…", DG(90), [DG(180), DG(45), DG(60)], "Half of $180^\\circ$.")
+    ]),
+    G("Measuring circles", [4, 5], [
+      Q1("The circle $(x - 2)^2 + (y + 1)^2 = 9$ has center…", "(2, -1)", ["(-2, 1)", "(2, 1)", "(-2, -1)"], "Change the signs inside the parentheses."),
+      Q1("Same circle. The radius is…", "3", ["9", "81", "4.5"], "$r^2 = 9$, so $r = 3$."),
+      Q1("A $90^\\circ$ sector is what fraction of the circle?", "\\tfrac14", ["\\tfrac12", "\\tfrac13", "\\tfrac19"], "$\\tfrac{90}{360} = \\tfrac14$.")
+    ])
+  ];
+  WORDS.ch11.groups = [
+    G("Base, height & the basic shapes", [0, 1, 2], [
+      Q1("Area of a triangle with base $10$ and height $6$:", "30", ["60", "16", "15"], "$\\tfrac12 \\cdot 10 \\cdot 6 = 30$."),
+      Q1("Area of a trapezoid with bases $4$ and $10$, height $5$:", "35", ["70", "50", "19"], "$\\tfrac12(4 + 10)(5) = 35$."),
+      Q1("Area of a rhombus with diagonals $6$ and $8$:", "24", ["48", "14", "12"], "$\\tfrac12 d_1 d_2 = 24$.")
+    ]),
+    G("Circles & regular polygons", [3, 4], [
+      Q1("Area of a circle with radius $5$:", "25\\pi", ["10\\pi", "5\\pi", "50\\pi"], "$\\pi r^2 = 25\\pi$."),
+      Q1("Circumference of a circle with radius $5$:", "10\\pi", ["25\\pi", "5\\pi", "50\\pi"], "$2\\pi r = 10\\pi$."),
+      Q1("A regular polygon: area $= \\tfrac12 \\cdot$ apothem $\\cdot$ …", TX("perimeter"), [TX("side"), TX("radius"), TX("number of sides")], "$A = \\tfrac12 a P$.")
+    ]),
+    G("Shaded regions", [5], [
+      Q1("Shaded region = …", TX("big area − small area"), [TX("big area + small area"), TX("big area × small area"), TX("half the big area")], "Find the whole, subtract what is cut out."),
+      Q1("A $10 \\times 10$ square with a circle of radius $5$ cut out. Shaded area:", "100 - 25\\pi", ["100 - 10\\pi", "100 + 25\\pi", "25\\pi"], "$100 - \\pi(5)^2$."),
+      Q1("Two similar figures, scale factor $3$. The area ratio is…", "9", ["3", "6", "27"], "Areas scale by $k^2$.")
+    ])
+  ];
+  WORDS.ch12.groups = [
+    G("Prisms, cylinders, pyramids, cones, spheres", [0, 1, 2], [
+      Q1("Volume of a cylinder with $r = 3$, $h = 5$:", "45\\pi", ["15\\pi", "30\\pi", "9\\pi"], "$\\pi r^2 h = \\pi(9)(5)$."),
+      Q1("A cone with the same base and height as that cylinder has volume…", "15\\pi", ["45\\pi", "30\\pi", "135\\pi"], "Cones and pyramids are $\\tfrac13$ of the matching cylinder or prism."),
+      Q1("Volume of a sphere with $r = 3$:", "36\\pi", ["27\\pi", "12\\pi", "108\\pi"], "$\\tfrac43\\pi r^3 = \\tfrac43\\pi(27) = 36\\pi$.")
+    ]),
+    G("Nets, heights & counting faces", [3, 4, 5], [
+      Q1("A net of a cube is made of how many squares?", "6", ["4", "8", "12"], "One square for each face."),
+      Q1("The height of a cone measured <b>along its side</b> is the…", TX("slant height"), [TX("height"), TX("radius"), TX("apothem")], "Height goes straight down the middle; slant height goes along the side."),
+      Q1("A triangular prism has how many faces?", "5", ["6", "3", "9"], "2 triangles + 3 rectangles.")
+    ])
+  ];
+  WORDS.ch13.groups = [
+    G("Outcomes & probability", [0, 1], [
+      Q1("Roll one die. The sample space has how many outcomes?", "6", ["1", "3", "36"], "$\\{1, 2, 3, 4, 5, 6\\}$."),
+      Q1("Roll one die. $P(\\text{even})$ =", "\\tfrac12", ["\\tfrac13", "\\tfrac16", "\\tfrac23"], "$3$ even outcomes out of $6$."),
+      Q1("A probability is always between…", "0\\ \\text{and}\\ 1", ["1\\ \\text{and}\\ 100", "-1\\ \\text{and}\\ 1", "0\\ \\text{and}\\ 10"], "$0$ = impossible, $1$ = certain.")
+    ]),
+    G("Counting: permutations & combinations", [2, 3, 4], [
+      Q1("3 shirts and 4 pants. How many outfits?", "12", ["7", "34", "24"], "Counting Principle: $3 \\cdot 4$."),
+      Q1("Arrange 3 different books on a shelf. How many orders?", "6", ["3", "9", "27"], "$3! = 6$ — order matters: a permutation."),
+      Q1("Choose 2 of 4 friends to invite. How many ways?", "6", ["12", "8", "16"], "$_4C_2 = 6$ — order doesn't matter: a combination.")
+    ]),
+    G("Independent & conditional", [5], [
+      Q1("Flip a coin twice. $P(\\text{heads, heads})$ =", "\\tfrac14", ["\\tfrac12", "\\tfrac13", "1"], "Independent: $\\tfrac12 \\cdot \\tfrac12$."),
+      Q1("$P(B \\mid A)$ means…", TX("the probability of B given A"), [TX("the probability of A and B"), TX("the probability of A or B"), TX("A divided by B")], "Read the bar as “given.”"),
+      Q1("Events are independent when…", "P(B \\mid A) = P(B)", ["P(A) = P(B)", "P(A \\text{ and } B) = 0", "P(A) + P(B) = 1"], "Knowing $A$ doesn't change the chance of $B$.")
+    ])
+  ];
+
   const KEY = "fm-geo-words";
   const load = () => { try { return JSON.parse(localStorage.getItem(KEY) || "{}"); } catch (e) { return {}; } };
   const save = v => { try { localStorage.setItem(KEY, JSON.stringify(v)); } catch (e) {} };

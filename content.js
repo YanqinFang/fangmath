@@ -176,7 +176,24 @@ const COURSES = [
       { title: "1. Operations with Rational Numbers", cal: { id: "grade7", weeks: [1, 4] }, lessons: [] },
       { title: "2. Proportional Relationships & Percents", cal: { id: "grade7", weeks: [5, 10] }, lessons: [] },
       { title: "3. Expressions, Equations & Inequalities", cal: { id: "grade7", weeks: [11, 15] }, lessons: [] },
-      { title: "4. Scale Drawings, Angles & Circles", cal: { id: "grade7", weeks: [16, 21] }, lessons: [] },
+      { title: "4. Scale Drawings, Angles & Circles", cal: { id: "grade7", weeks: [16, 21] }, lessons: [
+        { title: "First Steps in Trigonometry: Sine, Cosine & Tangent", grade: "7",
+          notes: "materials/grade7/unit4/G7_Trig_First_Steps_Worksheet.pdf",
+          worksheet: "materials/grade7/unit4/G7_Trig_First_Steps_Worksheet.pdf",
+          answers: "materials/grade7/unit4/G7_Trig_First_Steps_Key.pdf",
+          summary: "Enrichment for scale drawings: name the hypotenuse, opposite and adjacent sides; see why the same angle always gives the same ratio; SOH CAH TOA; find a missing side with a small table. 22 practice problems.",
+          example: { q: "A $10$-foot ladder leans on a wall at a $60^\\circ$ angle with the ground. How high does it reach? ($\\sin 60^\\circ \\approx 0.87$)",
+            steps: ["The ladder is the hypotenuse. The height is opposite the $60^\\circ$ angle.", "Opposite and hypotenuse: SOH, so use sine: $\\sin 60^\\circ = \\dfrac{h}{10}$.", "$0.87 = \\dfrac{h}{10}$, so $h = 10 \\times 0.87 = 8.7$ feet."],
+            simpler: "Look at a $3$-$4$-$5$ triangle and its scale drawing $6$-$8$-$10$: $\\tfrac35 = \\tfrac{6}{10} = 0.6$. Same angle, same ratio." },
+          quiz: [
+            { q: "Which side of a right triangle is the hypotenuse?", choices: ["the shortest side", "the side across from the right angle", "the side next to the angle you look from", "the bottom side"], answer: 1 },
+            { q: "In a $3$-$4$-$5$ right triangle, angle $A$ is across from the side $3$. What is $\\sin A$?", choices: ["$\\tfrac35$", "$\\tfrac45$", "$\\tfrac34$", "$\\tfrac53$"], answer: 0, simpler: "SOH: opposite over hypotenuse." },
+            { q: "In the same triangle, what is $\\tan A$? (Give a decimal.)", answer: "0.75", simpler: "TOA: opposite over adjacent, $\\tfrac34$." },
+            { q: "You know the hypotenuse and want the adjacent side. Which ratio?", choices: ["sine", "cosine", "tangent"], answer: 1, simpler: "CAH: Cosine = Adjacent over Hypotenuse." },
+            { q: "The hypotenuse is $20$ and one angle is $30^\\circ$ ($\\sin 30^\\circ = 0.5$). How long is the side opposite the $30^\\circ$ angle?", answer: "10" },
+            { q: "A triangle with sides $6$, $8$, $10$ is a scale drawing of a $3$-$4$-$5$ triangle. Are its angles the same?", choices: ["Yes", "No"], answer: 0, simpler: "Scaling changes lengths, not angles." }
+          ] }
+      ] },
       { title: "5. Area, Surface Area & Volume", cal: { id: "grade7", weeks: [22, 26] }, lessons: [] },
       { title: "6. Probability & Statistics", cal: { id: "grade7", weeks: [27, 31] }, lessons: [] },
     ],

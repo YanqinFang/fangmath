@@ -671,7 +671,8 @@ function wsChapters(c){
   return out.sort((a, b) => a.href === b.href ? a.ch - b.ch : a.href < b.href ? -1 : 1);
 }
 function pageWorksheets(v, sel){
-  const cs = COURSES.filter(c => c.levels && wsChapters(c).length);
+  const hasHandout = c => c.units.some(u => (u.lessons || []).some(l => l.worksheet || l.notes));
+  const cs = COURSES.filter(c => (c.levels && wsChapters(c).length) || hasHandout(c));
   const cur = cs.find(c => c.id === sel) || null;
   const wrap = h("div", { class:"wrap" },
     h("div", { class:"page-head" }, h("h1", {}, "Worksheets, Quizzes & Tests"),
@@ -687,6 +688,7 @@ function pageWorksheets(v, sel){
     const chs = wsChapters(c), two = new Set(chs.map(x => x.href)).size > 1;
     wrap.append(h("div", { class:"card ws-course", style:"--c:" + c.color },
       h("div", { class:"ws-ch-head" }, h("h2", {}, c.title), h("a", { class:"btn sm ghost", href:"#/course/" + c.id }, "Course page →")),
+      chs.length ? null : h("p", { class:"muted", style:"margin:4px 0 0;font-size:14px" }, "Online quizzes and tests for this course are coming. Printable handouts:"),
       h("div", { class:"ws-list" }, chs.map((x, i) => h("div", { class:"ws-row" },
         h("span", { class:"ws-n" }, two ? i + 1 : x.ch),
         h("span", { class:"ws-t" }, x.t, x.extra ? h("span", { class:"tag", style:"margin-left:8px;background:var(--gold-soft);color:#8A6415" }, x.extra === "BC" ? "BC" : x.extra) : null, two && /calculus-bc/.test(x.href) && !x.extra ? h("span", { class:"tag", style:"margin-left:8px" }, "BC") : null),

@@ -36,6 +36,14 @@
 
   /* ---------- the stories ---------- */
   const T = {};
+  T["ch1/segadd"] = {
+    title: "The Road Trip",
+    scene: S`<p>You drive from home ($A$) to the gas station ($B$): $12$ miles. Then from the gas station to Grandma's house ($C$): $18$ miles. The gas station is right <b>on</b> the straight road between home and Grandma's.</p>`,
+    think: S`How far is Grandma's house from home? And if the whole road were $30$ miles and you had already driven $12$, how many miles would be left?`,
+    aha: S`<p>The two parts of the trip fill the whole road: $12 + 18 = 30$ miles. And $30 - 12 = 18$ miles are left.</p>
+      <p>That is the <b>Segment Addition Postulate</b>: if $B$ is between $A$ and $C$, then $AB + BC = AC$. Part $+$ part $=$ whole, and whole $-$ part $=$ the other part.</p>
+      <p><b>Careful:</b> if the gas station were <i>off</i> the road, the trip $A \to B \to C$ would be <b>longer</b> than going straight from $A$ to $C$. “Between” matters.</p>`,
+  };
   T["ch1/seg"] = {
     title: "Meet in the Middle",
     widget: "mid",

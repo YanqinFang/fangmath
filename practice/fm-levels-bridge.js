@@ -223,7 +223,11 @@
     const P = pool(o.scope), n = o.n, seen = new Set();
     const slots = []; for (let i = 0; i < n; i++) slots.push(P[i % P.length]);
     const lvs = shuffle(levelList(DIFF[o.diff].mix, n));
-    const items = slots.map((s, i) => ({ s, lv: lvs[i] })).sort((a, b) => a.lv - b.lv);
+    const items = [];                       // easy → hard, and inside each level take turns between topics
+    [1, 2, 3, 4, 5].forEach(lv => {
+      const by = new Map(); slots.forEach((s, i) => { if (lvs[i] !== lv) return; const k = s.c.id + s.t.id; by.set(k, (by.get(k) || []).concat(s)); });
+      const qs = shuffle([...by.values()]); for (let r = 0; qs.some(q => q[r]); r++) qs.forEach(q => { if (q[r]) items.push({ s: q[r], lv }); });
+    });
     return items.map(({ s, lv }) => pack(s, lv, seen)).filter(Boolean);
   }
   function buildQuiz(o) {
@@ -278,7 +282,7 @@
           <select id="qzTopic" class="qt-sel"><option value="all">All topics in Chapter ${n}</option>${CH.topics.map(t => `<option value="${t.id}">${esc(t.title)}</option>`).join("")}</select>
           <label class="qt-lab">Level</label>
           <div class="pills" id="qzLv"></div>
-          <div class="qt-go"><button class="btn teal" id="qzGo">Start quiz →</button></div>
+          <div class="qt-go"><button class="btn teal" id="qzGo">Start quiz →</button><button class="btn ghost" id="qzPrint">📄 Paper quiz + answer key</button></div>
         </div>
         <div class="card qt-box">
           <span class="label" style="color:var(--navy)">Chapter Test</span>
@@ -290,7 +294,7 @@
           <div class="qt-seg" id="tsDiff">${Object.entries(DIFF).map(([k, d]) => `<button data-v="${k}">${d.name}<small>${d.sub}</small></button>`).join("")}</div>
           <label class="qt-lab">Length</label>
           <div class="qt-seg" id="tsN">${[10, 15, 20, 25].map(k => `<button data-v="${k}">${k} questions</button>`).join("")}</div>
-          <div class="qt-go"><button class="btn" id="tsGo">Start test →</button><button class="btn ghost" id="tsPrint">🖨 Print test + answer key</button><span class="qt-time" id="tsTime"></span></div>
+          <div class="qt-go"><button class="btn" id="tsGo">Start test →</button><button class="btn ghost" id="tsPrint">📄 Paper test + answer key</button><span class="qt-time" id="tsTime"></span></div>
         </div>
       </div>
       ${H.length ? `<div class="card qt-hist"><span class="label">Your recent results · Chapter ${n} · this device</span>
@@ -305,7 +309,8 @@
     if (g("qtResume")) g("qtResume").onclick = () => { openChapter(other.ch, "practice"); setTab("quiz"); };
     g("qzGo").onclick = () => start("quiz");
     g("tsGo").onclick = () => start("test");
-    g("tsPrint").onclick = printTest;
+    g("tsPrint").onclick = () => paper("test");
+    g("qzPrint").onclick = () => paper("quiz");
   }
   function titleFor(kind, o) {
     const n = chNum(CH);
@@ -485,26 +490,67 @@
   }
 
   /* ---------------- printable test + answer key ---------------- */
-  function printTest() {
-    const o = Object.assign({}, opt), qs = buildTest(o), title = titleFor("test", o);
+  function paper(kind) {
+    const o = Object.assign({}, opt), qs = kind === "quiz" ? buildQuiz(o) : buildTest(o), title = titleFor(kind, o);
     const course = ((document.querySelector(".intro .label") || {}).textContent || "").split("·")[0].trim();
+    const ver = Math.random().toString(36).slice(2, 6).toUpperCase();
+    const fileBase = ["FangMath", course, "Ch" + chNum(CH), kind === "quiz" ? "Quiz" : (o.scope === "cumul" ? "Cumulative-Test" : "Test"), kind === "quiz" ? "L" + o.lv : DIFF[o.diff].name, ver].join("_").replace(/[^\w-]+/g, "-");
     const old = document.querySelector(".qtp"); if (old) old.remove();
     const m = document.createElement("div"); m.className = "qtp";
-    const sheet = `<div class="qtp-sheet">
-      <div class="qtp-acts"><button class="btn teal sm" id="qtpGo">🖨 Print / Save PDF</button><button class="btn ghost sm" id="qtpNew">New version</button><button class="btn ghost sm" id="qtpX">Close</button></div>
-      <div class="qtp-head"><div><div class="qtp-brand">Prof. Fang <span>Math</span></div><h1>${esc(title)}</h1><div class="qtp-sub">${esc(course)} · ${esc(CH.title)} · ${qs.length} questions · ${minutes(qs)} minutes</div></div>
-        <div class="qtp-lines"><div>Name <i></i></div><div>Date <i></i></div><div>Score <i></i> / ${qs.length}</div></div></div>
-      <p class="qtp-dir">Show your work in the space under each question. Write your final answer on the line. No calculator unless your teacher says so.</p>
-      <ol class="qtp-qs">${qs.map(q => `<li><div class="qtp-q">${q.p.q}</div><div class="qtp-work"></div><div class="qtp-ansline">Answer: <i></i></div></li>`).join("")}</ol>
-      <div class="qtp-key"><div class="qtp-brand">Prof. Fang <span>Math</span></div><h1>Answer Key — ${esc(title)}</h1>
-        <ol class="qtp-ks">${qs.map(q => `<li><div><b>$${q.p.ansTex}$</b> <span class="qtp-meta">${esc(q.tt)} · L${q.lv}</span></div>${solList(q.p)}</li>`).join("")}</ol></div>
-      <div class="qtp-foot">fangmath.com</div></div>`;
-    m.innerHTML = sheet; document.body.appendChild(m); render(m);
+    const head = (h, extra) => `<div class="qtp-head"><div><div class="qtp-brand">Prof. Fang <span>Math</span></div><h1>${h}</h1><div class="qtp-sub">${esc(course)} · ${esc(CH.title)} · ${qs.length} questions${kind === "test" ? " · " + minutes(qs) + " minutes" : ""} · Version ${ver}</div></div>${extra || ""}</div>`;
+    m.innerHTML = `<div class="qtp-sheet">
+      <div class="qtp-acts">
+        <span class="qtp-dl">📥 Download PDF:</span>
+        <button class="btn teal sm" data-dl="paper">${kind === "quiz" ? "Quiz" : "Test"}</button>
+        <button class="btn teal sm" data-dl="key">Answer key</button>
+        <button class="btn ghost sm" data-dl="both">Both in one file</button>
+        <span class="qtp-sp"></span>
+        <button class="btn ghost sm" id="qtpGo">🖨 Print</button><button class="btn ghost sm" id="qtpNew">New version</button><button class="btn ghost sm" id="qtpX">Close</button>
+      </div>
+      <div class="qtp-msg" id="qtpMsg"></div>
+      <div class="qtp-paper">${head(esc(title), `<div class="qtp-lines"><div>Name <i></i></div><div>Date <i></i></div><div>Score <i></i> / ${qs.length}</div></div>`)}
+        <p class="qtp-dir">Show your work in the space under each question. Write your final answer on the line. No calculator unless your teacher says so.</p>
+        <ol class="qtp-qs">${qs.map(q => `<li><div class="qtp-q">${q.p.q}</div><div class="qtp-work"></div><div class="qtp-ansline">Answer: <i></i></div></li>`).join("")}</ol>
+        <div class="qtp-foot">fangmath.com</div></div>
+      <div class="qtp-key">${head("Answer Key — " + esc(title))}
+        <ol class="qtp-ks">${qs.map(q => `<li><div><b>$${q.p.ansTex}$</b> <span class="qtp-meta">${esc(q.tt)} · Level ${q.lv}</span></div>${solList(q.p)}</li>`).join("")}</ol>
+        <div class="qtp-foot">fangmath.com</div></div></div>`;
+    document.body.appendChild(m); render(m);
     const close = () => { m.remove(); document.body.classList.remove("qt-printing"); };
     m.querySelector("#qtpX").onclick = close;
-    m.querySelector("#qtpNew").onclick = () => { close(); printTest(); };
+    m.querySelector("#qtpNew").onclick = () => { close(); paper(kind); };
     m.querySelector("#qtpGo").onclick = () => { document.body.classList.add("qt-printing"); window.print(); setTimeout(() => document.body.classList.remove("qt-printing"), 600); };
     m.onclick = e => { if (e.target === m) close(); };
+    m.querySelectorAll("[data-dl]").forEach(b => b.onclick = () => download(m, b.dataset.dl, fileBase));
+  }
+  let h2pLoading = null;
+  function loadH2P() {
+    if (window.html2pdf) return Promise.resolve();
+    return h2pLoading || (h2pLoading = new Promise((ok, bad) => {
+      const s = document.createElement("script"); s.src = "https://cdn.jsdelivr.net/npm/html2pdf.js@0.10.2/dist/html2pdf.bundle.min.js";
+      s.onload = ok; s.onerror = () => { h2pLoading = null; bad(); }; document.head.appendChild(s);
+    }));
+  }
+  async function download(m, which, base) {
+    const msg = m.querySelector("#qtpMsg"), btns = m.querySelectorAll("[data-dl]");
+    btns.forEach(b => b.disabled = true); msg.textContent = "Making the PDF…";
+    try {
+      await loadH2P();
+      const box = document.createElement("div"); box.className = "qtp-pdf";
+      const parts = which === "paper" ? [".qtp-paper"] : which === "key" ? [".qtp-key"] : [".qtp-paper", ".qtp-key"];
+      parts.forEach((sel, i) => { const c = m.querySelector(sel).cloneNode(true); if (i) c.classList.add("qtp-newpage"); box.appendChild(c); });
+      box.querySelectorAll("svg[viewBox]").forEach(sv => {        // give every figure a fixed size so it draws the same in the PDF
+        const vb = sv.getAttribute("viewBox").split(/[\s,]+/).map(Number), w = Math.min(340, vb[2] || 340), h = vb[2] ? w * vb[3] / vb[2] : w;
+        sv.setAttribute("width", w); sv.setAttribute("height", h); sv.style.width = w + "px"; sv.style.height = h + "px"; sv.style.maxWidth = "none"; });
+      const name = base + (which === "key" ? "_AnswerKey" : which === "both" ? "_with-Answers" : "") + ".pdf";
+      await html2pdf().set({ margin: [12, 12, 12, 12], filename: name, image: { type: "jpeg", quality: 0.96 },
+        html2canvas: { scale: 2, useCORS: true, backgroundColor: "#ffffff" }, jsPDF: { unit: "mm", format: "letter", orientation: "portrait" },
+        pagebreak: { mode: ["css", "legacy"], before: ".qtp-newpage", avoid: ["li", ".qtp-head"] } }).from(box).save();
+      msg.textContent = "✓ Downloaded " + name;
+    } catch (e) {
+      msg.innerHTML = "Couldn't make the PDF here. Use <b>🖨 Print</b> and choose <b>Save as PDF</b> instead.";
+    }
+    btns.forEach(b => b.disabled = false);
   }
 
   /* ---------------- styles ---------------- */
@@ -566,7 +612,13 @@
 .qt-rv.no .qt-ans>div:first-child div{color:var(--red)}
 .qtp{position:fixed;inset:0;z-index:100;background:rgba(22,35,59,.55);overflow:auto;padding:24px 14px}
 .qtp-sheet{background:#fff;max-width:860px;margin:0 auto;border-radius:14px;padding:26px 30px;box-shadow:0 20px 50px rgba(0,0,0,.25)}
-.qtp-acts{display:flex;gap:8px;justify-content:flex-end;margin-bottom:12px}
+.qtp-acts{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:8px}
+.qtp-dl{font-weight:700;font-size:14px}.qtp-sp{flex:1}
+.qtp-msg{font-size:13.5px;color:var(--muted);min-height:1.3em;margin-bottom:10px}
+.qtp-pdf{background:#fff;color:#16233B;padding:0}
+.qtp-q .a2fig{max-width:380px;margin:8px 0}
+.qtp-pdf .qtp-key{margin-top:0;padding-top:0;border-top:0;break-before:auto;page-break-before:auto}
+.qtp-pdf .qtp-work{height:150px}
 .qtp-head{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;border-bottom:2px solid var(--navy);padding-bottom:12px}
 .qtp-brand{font-weight:700;font-size:14px;color:var(--ink)}.qtp-brand span{color:var(--teal)}
 .qtp-sheet h1{font-family:Fraunces,Georgia,serif;font-size:24px;color:var(--navy);margin:2px 0}
@@ -588,7 +640,7 @@
   body.qt-printing > *:not(.qtp){display:none !important}
   body.qt-printing .qtp{position:static;background:none;padding:0;overflow:visible}
   body.qt-printing .qtp-sheet{box-shadow:none;border-radius:0;padding:0;max-width:none}
-  body.qt-printing .qtp-acts{display:none}
+  body.qt-printing .qtp-acts,body.qt-printing .qtp-msg{display:none}
   @page{margin:14mm}
 }`;
     document.head.appendChild(s);

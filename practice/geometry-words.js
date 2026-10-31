@@ -922,8 +922,7 @@
     let r = document.getElementById("chroute");
     if (!g || !tabs) { if (r) r.remove(); return; }
     if (!r) { r = document.createElement("div"); r.id = "chroute"; r.className = "chroute"; tabs.parentNode.insertBefore(r, tabs); }
-    r.innerHTML = `<div class="rk">🧭 This chapter: <b>${g.kind}</b> <span>${g.why}</span></div>
-      <div class="rs"><button type="button" data-s="1"><i>1</i>Start here: ${WORDS[chId] && WORDS[chId].inLesson ? "1.1 words &amp; symbols" : "words &amp; postulates"}</button><span>→</span><button type="button" data-s="2"><i>2</i>Stories &amp; lessons</button><span>→</span><button type="button" data-s="3"><i>3</i>Practice at your level</button><span>→</span><button type="button" data-s="4"><i>4</i>Ready for the test?</button></div>`;
+    r.innerHTML = `<div class="rk" style="margin:0">🧭 This chapter: <b>${g.kind}</b> <span>${g.why}</span></div>`;
     const go = el => { if (el) setTimeout(() => el.scrollIntoView({ behavior: "smooth", block: "start" }), 60); };
     r.querySelectorAll("button").forEach(b => b.onclick = () => { const n = +b.dataset.s;
       if (n === 1) { setTab("learn"); const W1 = WORDS[chId]; if (W1 && W1.inLesson) { const i = CH.topics.findIndex(t => t.id === W1.inLesson); if (i >= 0) openLesson(i); go(document.getElementById("story")); } else { const w = document.getElementById("words"); if (w) { w.open = true; go(w); } } }

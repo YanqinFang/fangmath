@@ -212,6 +212,7 @@
     cpHooks();
     progInit();
     eocHooks();
+    vidInit();
     drawHandouts();
     const oc = window.openChapter;
     window.openChapter = function () { const r = oc.apply(this, arguments); try { drawHandouts(); } catch (e) {} return r; };
@@ -1092,6 +1093,49 @@
 .eoc-diff{display:flex;flex-wrap:wrap;gap:8px;margin:6px 0 12px}.eoc-diff button{display:flex;flex-direction:column;align-items:flex-start;border:1.5px solid var(--line);background:#fff;border-radius:12px;padding:8px 14px;cursor:pointer;font:inherit;color:var(--ink)}
 .eoc-diff button small{color:var(--muted);font-size:12px}.eoc-diff button.on{border-color:var(--navy);background:var(--navy);color:#fff}.eoc-diff button.on small{color:#cfd8e6}`;
     document.head.appendChild(css);
+  }
+  /* ================= LESSON VIDEOS (links live in practice/videos.js) ================= */
+  const VKEY = () => "fm-vid-" + PG;
+  const vSeen = () => { try { return JSON.parse(localStorage.getItem(VKEY()) || "{}"); } catch (e) { return {}; } };
+  function ytId(u) { u = String(u || "").trim(); const m = /(?:youtu\.be\/|v=|\/embed\/|\/shorts\/|\/live\/)([\w-]{11})/.exec(u) || /^([\w-]{11})$/.exec(u); return m ? m[1] : null; }
+  function vidMap() { const V = window.FM_VIDEOS || {}; return V[PG.replace(/-levels$/, "")] || V[PG] || {}; }
+  function vidFor(i) {
+    const V = vidMap(), t = CH.topics[i]; if (!t) return null;
+    const G = secGroups().find(x => x.idx.includes(i)); const no = G ? G.no : chNum(CH) + "." + (i + 1);
+    const keys = [t.id, no, chNum(CH) + "." + (i + 1)];
+    for (const k of keys) if (V[k]) return { k: String(k), url: V[k], no, title: G ? G.label : t.title, first: !G || G.idx[0] === i };
+    return null;
+  }
+  function vidDraw() {
+    const road = g("road"); if (!road || !CH) return;
+    let box = g("fmVideo");
+    const v = typeof LI === "number" ? vidFor(LI) : null, cv = vidMap()["ch" + chNum(CH)];
+    const id = v && ytId(v.url), cid = !v && LI === 0 && cv ? ytId(cv) : null;   // chapter review video shows on lesson 1 when it has none
+    if (!id && !cid) { if (box) box.remove(); return; }
+    const key = id ? CH.id + ":" + v.k : CH.id + ":ch", seen = vSeen();
+    if (!box) { box = document.createElement("div"); box.id = "fmVideo"; box.className = "card fm-video"; }
+    road.after(box);
+    if (box.dataset.key === key) return;
+    box.dataset.key = key;
+    const title = id ? `${esc(v.no)} · ${esc(v.title.replace(/^\d+\.\d+\s*/, ""))}` : `Chapter ${chNum(CH)} review`;
+    box.innerHTML = `<div class="fv-head"><span class="label" style="color:var(--teal)">▶ Video lesson</span><b>${title}</b>
+        <button class="btn sm ${seen[key] ? "" : "ghost"}" id="fvSeen">${seen[key] ? "✓ Watched" : "Mark as watched"}</button><button class="btn sm ghost" id="fvHide" aria-expanded="true">Hide video</button></div>
+      <div class="fv-frame"><iframe src="https://www.youtube-nocookie.com/embed/${id || cid}?rel=0&modestbranding=1" title="${title.replace(/"/g, "")}" loading="lazy" allow="accelerometer; encrypted-media; gyroscope; picture-in-picture; fullscreen" allowfullscreen></iframe></div>
+      <p class="fv-tip">Watch first — pause when you see <b>“Your turn”</b> and try it yourself. Then do the steps below.</p>`;
+    g("fvSeen").onclick = () => { const s2 = vSeen(); s2[key] = s2[key] ? 0 : 1; try { localStorage.setItem(VKEY(), JSON.stringify(s2)); } catch (e) {}
+      g("fvSeen").textContent = s2[key] ? "✓ Watched" : "Mark as watched"; g("fvSeen").classList.toggle("ghost", !s2[key]); };
+    g("fvHide").onclick = () => { const f = box.querySelector(".fv-frame"), t2 = box.querySelector(".fv-tip"), hid = !f.hidden; f.hidden = t2.hidden = hid; g("fvHide").textContent = hid ? "Show video" : "Hide video"; };
+  }
+  function vidInit() {
+    const css = document.createElement("style"); css.textContent = `
+.fm-video{margin:0 0 14px;padding:14px 16px}.fv-head{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:10px}.fv-head b{flex:1;min-width:180px;font-size:16px}
+.fv-frame{position:relative;width:100%;aspect-ratio:16/9;border-radius:12px;overflow:hidden;background:#000}.fv-frame iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.fv-tip{margin:8px 0 0;font-size:13.5px;color:var(--muted)}`; document.head.appendChild(css);
+    const go = () => { const o = window.openLesson; if (typeof o === "function") window.openLesson = function () { const r = o.apply(this, arguments); try { vidDraw(); } catch (e) {} return r; };
+      const oc = window.openChapter; if (typeof oc === "function") window.openChapter = function () { const r = oc.apply(this, arguments); try { vidDraw(); } catch (e) {} return r; };
+      try { vidDraw(); } catch (e) {} };
+    if (window.FM_VIDEOS) return go();
+    const sc = document.createElement("script"); sc.src = "videos.js?v=" + Math.floor(Date.now() / 3.6e6); sc.onload = go; sc.onerror = go; document.head.appendChild(sc);
   }
   window.fmQuizState = () => run;
   window.fmEOC = d => eocHome(d);

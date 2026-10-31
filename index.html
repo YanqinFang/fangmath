@@ -45,6 +45,9 @@
   .ws-course{margin:0 0 16px;border-top:4px solid var(--c)}
   .ws-ch-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:8px}.ws-ch-head h2{font-size:22px}
   .ws-row{display:flex;align-items:center;gap:12px;padding:9px 0;border-top:1px solid var(--line);flex-wrap:wrap}
+  .eoc-lv{display:inline-flex;border:1.5px solid var(--gold);border-radius:999px;overflow:hidden;background:#fff}
+  .eoc-lv button{border:0;background:none;font:inherit;font-size:13px;font-weight:600;padding:4px 11px;cursor:pointer;color:#6B4E0E;display:flex;flex-direction:column;align-items:center;line-height:1.15}
+  .eoc-lv button small{font-size:10.5px;font-weight:500;opacity:.8}.eoc-lv button.on{background:var(--gold);color:#fff}
   .ws-row.eoc-row{background:var(--gold-soft);border:1.5px solid var(--gold);border-radius:12px;padding:10px 12px;margin-top:10px}
 
   .ws-n{flex:none;width:28px;height:28px;border-radius:50%;background:var(--c);color:#fff;display:grid;place-items:center;font-weight:700;font-size:13px}
@@ -762,12 +765,15 @@ function wsPanel(row){
 const eocHref = c => { const hs = [...new Set(wsChapters(c).map(x => x.href))]; return c.levels && hs.includes(c.levels) ? c.levels : hs[hs.length - 1] || c.levels || null; };
 function eocRow(c, cls){
   const href = eocHref(c); if (!href) return null;
+  const D = [["review", "Review", "Levels 1–2"], ["standard", "Standard", "Levels 2–4"], ["honors", "Honors", "Levels 3–5"]];
+  const on = h("a", { class:"btn sm", style:"background:var(--navy)", href:`${href}#eoc-standard` }, "🏁 Take it online");
+  const pp = h("a", { class:"btn sm ghost", href:`${href}#peoc-standard` }, "📄 Paper + answer key");
+  const seg = h("span", { class:"eoc-lv", role:"group", "aria-label":"Difficulty" }, D.map(([k, t, sub]) => h("button", { type:"button", class:k === "standard" ? "on" : "", title:sub,
+    onclick:e => { seg.querySelectorAll("button").forEach(x => x.classList.toggle("on", x === e.currentTarget)); on.href = `${href}#eoc-${k}`; pp.href = `${href}#peoc-${k}`; } }, t, h("small", {}, sub))));
   return h("div", { class:"ws-row eoc-row " + (cls || "") },
     h("span", { class:"ws-n" }, "🏁"),
     h("span", { class:"ws-t" }, h("b", {}, "End-of-Course Test"), h("span", { class:"muted", style:"font-weight:400;font-size:13px;margin-left:8px" }, "every chapter · timed · graded with a chapter report")),
-    h("span", { class:"ws-btns" },
-      h("a", { class:"btn sm", style:"background:var(--navy)", href:`${href}#eoc` }, "🏁 Take it online"),
-      h("a", { class:"btn sm ghost", href:`${href}#peoc` }, "📄 Paper + answer key")));
+    h("span", { class:"ws-btns", style:"align-items:center" }, seg, on, pp));
 }
 const bwOf = f => String(f).replace(/\.pdf$/i, "_BW.pdf");   // lessons with bw:true also have a black-and-white PDF
 function pageWorksheets(v, sel){

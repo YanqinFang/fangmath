@@ -238,7 +238,24 @@ const COURSES = [
     app: "practice/algebra2.html",
     units: [
       { title: "1. Expressions, Equations & Inequalities", lessons: [] },
-      { title: "2. Functions, Equations & Graphs", app: "practice/algebra2.html?chapter=gr", appTopics: 2, lessons: [] },
+      { title: "2. Functions, Equations & Graphs", app: "practice/algebra2.html?chapter=gr", appTopics: 2, lessons: [
+        { title: "2-1 Domain & Range",
+          notes: "materials/algebra2/ch02/Alg2_2-1_Domain_Range_Worksheet.pdf",
+          worksheet: "materials/algebra2/ch02/Alg2_2-1_Domain_Range_Worksheet.pdf",
+          answers: "materials/algebra2/ch02/Alg2_2-1_Domain_Range_Key.pdf",
+          summary: "Interval notation; domain and range from points, tables and graphs (look at the shadows); from equations (what could go wrong?); real-world limits. 29 practice problems from Easy to Hard.",
+          example: { q: "Find the domain and range of $g(x) = \\sqrt{2x - 6} + 1$.",
+            steps: ["Domain: what is under the root must be $\\ge 0$: $2x - 6 \\ge 0$, so $x \\ge 3$, i.e. $[3, \\infty)$.", "Range: the root starts at $0$ and grows, so $g$ starts at $0 + 1 = 1$: $[1, \\infty)$.", "Check: $g(3) = 1$ and $g(5) = 3$."],
+            simpler: "Try $f(x) = \\sqrt{x}$ first: $f(9) = 3$, $f(0) = 0$, but $f(-4)$ is not real. So $x \\ge 0$, and the outputs are $y \\ge 0$." },
+          quiz: [
+            { q: "What is the domain of $\\{(-1, 4), (0, 2), (3, 4)\\}$?", choices: ["$\\{-1, 0, 3\\}$", "$\\{2, 4\\}$", "$\\{-1, 0, 2, 3, 4\\}$", "$[-1, 3]$"], answer: 0 },
+            { q: "Write $-2 \\le x < 5$ in interval notation.", choices: ["$(-2, 5)$", "$[-2, 5)$", "$[-2, 5]$", "$(-2, 5]$"], answer: 1 },
+            { q: "What is the domain of $f(x) = \\dfrac{x + 1}{x - 7}$?", choices: ["all real numbers", "$x \\ne -1$", "$x \\ne 7$", "$x > 7$"], answer: 2, simpler: "Which $x$ makes the denominator $0$?" },
+            { q: "What is the domain of $f(x) = \\sqrt{x - 4}$?", choices: ["$(4, \\infty)$", "$[4, \\infty)$", "$[0, \\infty)$", "all real numbers"], answer: 1, simpler: "Is $\\sqrt{0}$ allowed?" },
+            { q: "What is the range of $f(x) = (x - 3)^2 + 2$?", choices: ["$[3, \\infty)$", "$[2, \\infty)$", "$(-\\infty, 2]$", "all real numbers"], answer: 1, simpler: "The vertex is $(3, 2)$ and the parabola opens up." },
+            { q: "What is the range of $f(x) = \\dfrac{2}{x + 3} - 1$?", choices: ["$y \\ne -3$", "$y \\ne -1$", "$y \\ne 2$", "all real numbers"], answer: 1, simpler: "Look for the horizontal asymptote." }
+          ] }
+      ] },
       { title: "3. Linear Systems", app: "practice/algebra2.html?chapter=sys", appTopics: 6, lessons: [] },
       { title: "4. Quadratic Functions & Equations", app: "practice/algebra2.html?chapter=qt", appTopics: 16, lessons: [
         { title:"4-1 Quadratic Functions & Transformations",

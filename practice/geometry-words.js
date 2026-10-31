@@ -495,7 +495,10 @@
   /* ---------- "Your turn — on paper first": fill-in questions after the concept cards ---------- */
   const OL = t => `\\overleftrightarrow{${t}}`, OR = t => `\\overrightarrow{${t}}`, SG = t => `\\overline{${t}}`;
   const PL = t => `\\text{plane } ${t}`;
-  WORDS.ch1.inLesson = "terms";   // shown as the lesson for section 1.1, not as a separate card
+  WORDS.ch1.inLesson = "terms";
+  WORDS.ch1.noQuick = true;        // 1.1 ends after the three concept groups
+  WORDS.ch1.postsIn = "segadd";    // the postulates open section 1.2 (Segment Addition Postulate) instead
+  WORDS.ch1.postNames = ["Two-Point Postulate", "Line Intersection Postulate", "Plane Intersection Postulate", "Three-Point (Plane) Postulate", "Ruler Postulate", "Segment Addition Postulate"];   // shown as the lesson for section 1.1, not as a separate card
   WORDS.ch1.groups = [
     { title: "Point, line, plane — the three building blocks", cards: [0, 1, 2],
       tries: { fig: `<svg viewBox="0 0 230 110" role="img" aria-label="plane P with line through A and B, point C in the plane and point E above"><defs><marker id="wa2" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0L10,5L0,10z" fill="${teal}"/></marker></defs><polygon points="20,100 170,100 215,50 65,50" fill="#DDF0EE" stroke="${teal}" stroke-width="2"/><line x1="38" y1="88" x2="196" y2="62" stroke="${teal}" stroke-width="3" marker-start="url(#wa2)" marker-end="url(#wa2)"/>${dot(75, 82, "A", 16)}${dot(150, 69.6, "B", 16)}${dot(120, 92, "C", 14)}${dot(170, 18, "E", -8)}<line x1="170" y1="18" x2="170" y2="66" stroke="#94A3B8" stroke-dasharray="3 3"/><text x="205" y="94" font-family="Fraunces,serif" font-size="16" font-style="italic" fill="${teal}">P</text><text x="198" y="58" font-family="Inter,sans-serif" font-size="13" font-style="italic" fill="${teal}">ℓ</text></svg>`,
@@ -754,10 +757,10 @@
     if (w.groups) w.groups.forEach((gr, gi) => steps.push({ t: gr.title, h: `<div class="wgrid">${gr.cards.map(i => cardHtml(w.cards[i], true)).join("")}</div>${triesHtml(gr.tries, gi)}` }));
     else steps.push({ t: "See it → Say it → Write it", short: "Concepts", h: `<div class="wgrid">${w.cards.map(c => cardHtml(c, false)).join("")}</div>${w.tries ? triesHtml(w.tries, 0) : ""}` });
     /* the summary table (w.table) now lives in the chapter Cheat Sheet only */
-    steps.push({ t: w.postTitle || "Postulates — try each one with your hands", short: (w.postTitle || "Postulates").replace(/\s+—.*$/, "").replace(/ you'll use as reasons$/, "").replace(/^Where the formulas come from$/, "Formulas"),
+    if (!w.postsIn) steps.push({ t: w.postTitle || "Postulates — try each one with your hands", short: (w.postTitle || "Postulates").replace(/\s+—.*$/, "").replace(/ you'll use as reasons$/, "").replace(/^Where the formulas come from$/, "Formulas"),
       h: w.posts.map(([t, x]) => `<div class="post"><div class="t">${t}</div><div class="x"><b>Try it: </b>${x}</div></div>`).join("") });
     /* last step: Quick check = words to know + what to memorize + check questions, in one place */
-    steps.push({ t: "Quick check", h: `<h4 class="wsubh">📝 Words to know</h4><p class="wsub">Tick each word you can explain in your own words.</p><div class="vocab">${w.vocab.map(v => `<label><input type="checkbox" value="${v}" ${mine.includes(v) ? "checked" : ""}>${v}</label>`).join("")}</div>
+    if (!w.noQuick) steps.push({ t: "Quick check", h: `<h4 class="wsubh">📝 Words to know</h4><p class="wsub">Tick each word you can explain in your own words.</p><div class="vocab">${w.vocab.map(v => `<label><input type="checkbox" value="${v}" ${mine.includes(v) ? "checked" : ""}>${v}</label>`).join("")}</div>
         <div id="vocabN" style="font-size:13.5px;color:var(--muted);margin-top:6px"></div>${g ? `
         <h4 class="wsubh">🧠 What to memorize — and how</h4><div class="smem">${g.mem.map(([a, b]) => `<div><div class="t">${a}</div><div class="x">💡 ${b}</div></div>`).join("")}</div>
         <div class="howmem">${HOWMEM}</div><h4 class="wsubh">🔍 Understand — don't just memorize</h4><ul class="sund">${g.und.map(x => `<li>${x}</li>`).join("")}</ul>` : ""}
@@ -804,7 +807,7 @@
     if (target) { const sm = box.querySelector(":scope > summary"); if (sm) { const ti = CH.topics.findIndex(t => t.id === w.inLesson), tt = (CH.topics[ti] || {}).title || "";
       sm.outerHTML = `<div class="ilh"><span class="label">Lesson ${ti + 1} of ${CH.topics.length}</span><h2 class="ilh-t">${tt}</h2></div>`; } }
     paginate(box, chId, known);
-    const upd = () => { const n = box.querySelectorAll(".vocab input:checked").length; box.querySelector("#vocabN").textContent = `${n} of ${w.vocab.length} words ready${n === w.vocab.length ? " — great job! 🎉" : ""}`; };
+    const upd = () => { const vn = box.querySelector("#vocabN"); if (!vn) return; const n = box.querySelectorAll(".vocab input:checked").length; vn.textContent = `${n} of ${w.vocab.length} words ready${n === w.vocab.length ? " — great job! 🎉" : ""}`; };
     box.querySelectorAll(".vocab input").forEach(i => i.onchange = () => { const k = load(); k[chId] = [...box.querySelectorAll(".vocab input:checked")].map(x => x.value); save(k); upd(); });
     box.querySelectorAll(".defb").forEach(b => b.onclick = () => { const d = b.nextElementSibling; d.hidden = !d.hidden; b.textContent = d.hidden ? "Show the definition ▾" : "Hide the definition ▴"; });
     box.querySelectorAll(".tries .tq").forEach(el => { const gi = +el.closest(".tries").dataset.g, tr = w.groups ? w.groups[gi].tries : w.tries, t = tr.qs[+el.dataset.q], sel = Array(t.n).fill(null);
@@ -943,6 +946,28 @@
     if (window.renderMathInElement) { renderMathInElement(box, { delimiters: [{ left: "$", right: "$", display: false }], throwOnError: false }); renderMathInElement(r, { delimiters: [{ left: "$", right: "$", display: false }], throwOnError: false }); }
   }
 
+  /* ---------- postulates at the start of a section (Ch 1: section 1.2) ---------- */
+  function postBox(chId, topic) {
+    let pb = document.getElementById("postbox"); const w = WORDS[chId];
+    if (!w || w.postsIn !== topic.id) { if (pb) pb.remove(); return; }
+    const lesson = document.getElementById("lesson"), anchor = document.getElementById("story") || lesson;
+    if (!pb) { pb = document.createElement("div"); pb.id = "postbox"; pb.className = "words inlesson pbox"; }
+    anchor.parentNode.insertBefore(pb, anchor);
+    pb.innerHTML = `<div class="wb"><span class="label">📐 Before we measure: postulates</span>
+      <div class="pvt"><div><b>Postulate</b><span>A rule everyone <b>agrees to accept without proof</b> — like the rules of a game. We use it as a starting point.</span><em>Through two points there is exactly one line.</em></div>
+        <div><b>Theorem</b><span>A statement that is <b>proved</b> step by step, using definitions, postulates and theorems already proved.</span><em>Vertical angles are congruent. (You'll prove it in 2.6.)</em></div></div>
+      <p class="wsub" style="margin-top:12px">Each card shows a picture from real life. Click to see the postulate.</p>
+      <div class="wgrid">${w.posts.map(([t, x], i) => `<div class="wcard"><h5>${(w.postNames || [])[i] || "Postulate " + (i + 1)}</h5><div class="wrow"><span class="lb">See it</span>${x}</div><button type="button" class="defb pdb">Show the postulate ▾</button><div class="defs" hidden><div class="wrow"><span class="lb">Say it</span>${t.replace(/^<b>[^<]*<\/b>\s*/, "")}</div></div></div>`).join("")}</div></div>`;
+    pb.querySelectorAll(".pdb").forEach(b => b.onclick = () => { const d = b.nextElementSibling; d.hidden = !d.hidden; b.textContent = d.hidden ? "Show the postulate ▾" : "Hide the postulate ▴"; });
+    if (window.renderMathInElement) renderMathInElement(pb, { delimiters: [{ left: "$", right: "$", display: false }], throwOnError: false });
+  }
+  const pcss = document.createElement("style");
+  pcss.textContent = `.pbox{border-color:var(--teal)} .pbox .wb{padding-top:14px}
+  .pvt{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:8px} @media (max-width:640px){.pvt{grid-template-columns:1fr}}
+  .pvt>div{border:1px solid var(--line);border-radius:12px;padding:10px 14px;background:var(--bg);display:flex;flex-direction:column;gap:4px;font-size:15px}
+  .pvt b{font-family:Fraunces,Georgia,serif;font-size:18px} .pvt em{font-size:14px;color:var(--muted)}`;
+  document.head.appendChild(pcss);
+
   const origStory = window.drawStory;
   window.drawStory = function (chId, topic) {
     const w = WORDS[chId]; let box = document.getElementById("story");
@@ -950,10 +975,11 @@
       const lesson = document.getElementById("lesson");
       if (box && !box.classList.contains("inlesson")) { box.remove(); box = null; }
       if (!box) { box = document.createElement("div"); box.id = "story"; box.className = "words inlesson"; lesson.parentNode.insertBefore(box, lesson); }
-      draw(chId, box); return;
+      draw(chId, box); postBox(chId, topic); return;
     }
     if (box && box.classList.contains("inlesson")) box.remove();
     if (origStory) origStory(chId, topic);
+    postBox(chId, topic);
   };
   if (typeof openChapter === "function") {
     const orig = openChapter;

@@ -148,6 +148,12 @@
     honors:   { name: "Honors",   sub: "Levels 3–5", mix: [0, 0, 0.3, 0.5, 0.2] },
   };
   const HASH0 = location.hash;          // read now: the page rewrites the hash when it loads
+  const WS = {
+    easy:     { name: "Easy",     sub: "Levels 1–2", lv: [1, 2] },
+    medium:   { name: "Medium",   sub: "Level 3",    lv: [3] },
+    hard:     { name: "Hard",     sub: "Levels 4–5", lv: [4, 4, 5] },
+    combined: { name: "Combined", sub: "Easy → Medium → Hard" },
+  };
   let PG, RUNKEY, HISTKEY, view, tabBtn, run = null, tick = null, opt = null;
 
   function ready() {
@@ -236,6 +242,19 @@
     const out = []; for (let i = 0; i < 10; i++) out.push(pack(P[i % P.length], o.lv, seen));
     return shuffle(out.filter(Boolean));
   }
+  function buildWorksheet(o) {
+    const seen = new Set(), n = o.wsN;
+    const P = o.wsTopic === "all" ? pool("chapter") : [{ t: CH.topics.find(t => t.id === o.wsTopic), c: CH }];
+    const parts = o.wsLv === "combined" ? [["Part A · Easy", WS.easy.lv, Math.floor(n / 3)], ["Part B · Medium", WS.medium.lv, n - 2 * Math.floor(n / 3)], ["Part C · Hard", WS.hard.lv, Math.floor(n / 3)]]
+      : [[null, WS[o.wsLv].lv, n]];
+    const out = [];
+    parts.forEach(([name, lvs, cnt]) => {
+      const off = Math.floor(Math.random() * P.length), items = [];
+      for (let i = 0; i < cnt; i++) items.push({ s: P[(i + off) % P.length], lv: lvs[i % lvs.length] });
+      items.sort((a, b) => a.lv - b.lv).forEach(({ s, lv }) => { const q = pack(s, lv, seen); if (q) { q.part = name; out.push(q); } });
+    });
+    return out;
+  }
   function pack(s, lv, seen) {
     const p = make(s.t, lv, seen); if (!p) return null;
     return { p, lv, tid: s.t.id, tt: s.t.title, cid: s.c.id, cn: chNum(s.c) };
@@ -268,7 +287,7 @@
   function home() {
     stopTick(); run = null;
     const n = chNum(CH), lv0 = (typeof curLv === "function" ? curLv() : 1);
-    opt = opt && opt.ch === CH.id ? opt : { ch: CH.id, topic: "all", lv: lv0, scope: "chapter", diff: "standard", n: 15 };
+    opt = opt && opt.ch === CH.id ? opt : { ch: CH.id, topic: "all", lv: lv0, scope: "chapter", diff: "standard", n: 15, wsTopic: "all", wsLv: "combined", wsN: 21 };
     const H = hist().filter(r => r.ch === CH.id).slice(-5).reverse();
     const other = loadRun();
     view.innerHTML = `
@@ -296,6 +315,20 @@
           <div class="qt-seg" id="tsN">${[10, 15, 20, 25].map(k => `<button data-v="${k}">${k} questions</button>`).join("")}</div>
           <div class="qt-go"><button class="btn" id="tsGo">Start test →</button><button class="btn ghost" id="tsPrint">📄 Paper test + answer key</button><span class="qt-time" id="tsTime"></span></div>
         </div>
+        <div class="card qt-box qt-wide">
+          <span class="label" style="color:#8A6415">Worksheet</span>
+          <h2>Printable practice — easy, medium, hard, or all three</h2>
+          <p class="qt-sub">A paper worksheet with room to work, plus an answer key with steps. “Combined” has three parts that go from easy to hard.</p>
+          <div class="qt-wsrow">
+            <div><label class="qt-lab">Topic</label>
+              <select id="wsTopic" class="qt-sel"><option value="all">All topics in Chapter ${n}</option>${CH.topics.map(t => `<option value="${t.id}">${esc(t.title)}</option>`).join("")}</select></div>
+            <div><label class="qt-lab">Level</label>
+              <div class="qt-seg" id="wsLv">${Object.entries(WS).map(([k, d]) => `<button data-v="${k}">${d.name}<small>${d.sub}</small></button>`).join("")}</div></div>
+            <div><label class="qt-lab">Problems</label>
+              <div class="qt-seg" id="wsN">${[12, 21, 30].map(k => `<button data-v="${k}">${k}</button>`).join("")}</div></div>
+          </div>
+          <div class="qt-go"><button class="btn" style="background:#8A6415" id="wsGo">📄 Make worksheet + answer key</button></div>
+        </div>
       </div>
       ${H.length ? `<div class="card qt-hist"><span class="label">Your recent results · Chapter ${n} · this device</span>
         <table>${H.map(r => `<tr><td>${esc(r.title)}</td><td class="pct">${r.score} / ${r.total}</td><td><b>${r.pct}%</b>${r.kind === "test" ? " · " + grade(r.pct) : ""}</td><td class="qt-faint">${new Date(r.at).toLocaleDateString("en-US", { month: "short", day: "numeric" })}</td></tr>`).join("")}</table></div>` : ""}`;
@@ -303,7 +336,9 @@
     LEVELS.forEach(l => { const b = document.createElement("button"); b.type = "button"; b.className = "pill" + (l.n === opt.lv ? " on" : ""); b.style.setProperty("--c", l.c); b.textContent = l.n + " " + l.name; b.onclick = () => { opt.lv = l.n; home(); }; lvBox.appendChild(b); });
     g("qzTopic").value = opt.topic; g("qzTopic").onchange = e => { opt.topic = e.target.value; };
     const seg = (id, key, num) => g(id).querySelectorAll("button").forEach(b => { b.type = "button"; const v = num ? +b.dataset.v : b.dataset.v; b.classList.toggle("on", v === opt[key]); b.onclick = () => { opt[key] = v; home(); }; });
-    seg("tsScope", "scope"); seg("tsDiff", "diff"); seg("tsN", "n", true);
+    seg("tsScope", "scope"); seg("tsDiff", "diff"); seg("tsN", "n", true); seg("wsLv", "wsLv"); seg("wsN", "wsN", true);
+    g("wsTopic").value = opt.wsTopic; g("wsTopic").onchange = e => { opt.wsTopic = e.target.value; };
+    g("wsGo").onclick = () => paper("ws");
     const estQs = levelList(DIFF[opt.diff].mix, opt.n).map(lv => ({ lv }));
     g("tsTime").textContent = "⏱ " + minutes(estQs) + " minutes";
     if (g("qtResume")) g("qtResume").onclick = () => { openChapter(other.ch, "practice"); setTab("quiz"); };
@@ -314,6 +349,7 @@
   }
   function titleFor(kind, o) {
     const n = chNum(CH);
+    if (kind === "ws") { const t = o.wsTopic === "all" ? "Chapter " + n : CH.topics.find(t => t.id === o.wsTopic).title; return `${t} Worksheet · ${WS[o.wsLv].name}`; }
     if (kind === "quiz") { const t = o.topic === "all" ? "Chapter " + n : CH.topics.find(t => t.id === o.topic).title; return `Quiz · ${t} · Level ${o.lv} ${LEVELS[o.lv - 1].name}`; }
     return (o.scope === "cumul" ? `Cumulative Test · Ch 1–${n}` : `Chapter ${n} Test`) + ` · ${DIFF[o.diff].name}`;
   }
@@ -491,17 +527,19 @@
 
   /* ---------------- printable test + answer key ---------------- */
   function paper(kind) {
-    const o = Object.assign({}, opt), qs = kind === "quiz" ? buildQuiz(o) : buildTest(o), title = titleFor(kind, o);
+    const o = Object.assign({}, opt), qs = kind === "quiz" ? buildQuiz(o) : kind === "ws" ? buildWorksheet(o) : buildTest(o), title = titleFor(kind, o);
     const course = ((document.querySelector(".intro .label") || {}).textContent || "").split("·")[0].trim();
     const ver = Math.random().toString(36).slice(2, 6).toUpperCase();
-    const fileBase = ["FangMath", course, "Ch" + chNum(CH), kind === "quiz" ? "Quiz" : (o.scope === "cumul" ? "Cumulative-Test" : "Test"), kind === "quiz" ? "L" + o.lv : DIFF[o.diff].name, ver].join("_").replace(/[^\w-]+/g, "-");
+    const fileBase = ["FangMath", course, "Ch" + chNum(CH), kind === "quiz" ? "Quiz" : kind === "ws" ? "Worksheet" : (o.scope === "cumul" ? "Cumulative-Test" : "Test"), kind === "quiz" ? "L" + o.lv : kind === "ws" ? WS[o.wsLv].name : DIFF[o.diff].name, ver].join("_").replace(/[^\w-]+/g, "-");
     const old = document.querySelector(".qtp"); if (old) old.remove();
     const m = document.createElement("div"); m.className = "qtp";
-    const head = (h, extra) => `<div class="qtp-head"><div><div class="qtp-brand">Prof. Fang <span>Math</span></div><h1>${h}</h1><div class="qtp-sub">${esc(course)} · ${esc(CH.title)} · ${qs.length} questions${kind === "test" ? " · " + minutes(qs) + " minutes" : ""} · Version ${ver}</div></div>${extra || ""}</div>`;
-    m.innerHTML = `<div class="qtp-sheet">
+    const head = (h, extra) => `<div class="qtp-head"><div><div class="qtp-brand">Prof. Fang <span>Math</span></div><h1>${h}</h1><div class="qtp-sub">${esc(course)} · ${esc(CH.title)} · ${qs.length} ${kind === "ws" ? "problems" : "questions"}${kind === "test" ? " · " + minutes(qs) + " minutes" : ""} · Version ${ver}</div></div>${extra || ""}</div>`;
+    const groups = []; qs.forEach((q, i) => { const last = groups[groups.length - 1]; if (!last || last.name !== q.part) groups.push({ name: q.part, start: i + 1, qs: [q] }); else last.qs.push(q); });
+    const partHead = gr => gr.name ? `<h3 class="qtp-part">${esc(gr.name)}</h3>` : "";
+    m.innerHTML = `<div class="qtp-sheet${kind === "ws" ? " qtp-ws" : ""}">
       <div class="qtp-acts">
         <span class="qtp-dl">📥 Download PDF:</span>
-        <button class="btn teal sm" data-dl="paper">${kind === "quiz" ? "Quiz" : "Test"}</button>
+        <button class="btn teal sm" data-dl="paper">${kind === "quiz" ? "Quiz" : kind === "ws" ? "Worksheet" : "Test"}</button>
         <button class="btn teal sm" data-dl="key">Answer key</button>
         <button class="btn ghost sm" data-dl="both">Both in one file</button>
         <span class="qtp-sp"></span>
@@ -509,11 +547,11 @@
       </div>
       <div class="qtp-msg" id="qtpMsg"></div>
       <div class="qtp-paper">${head(esc(title), `<div class="qtp-lines"><div>Name <i></i></div><div>Date <i></i></div><div>Score <i></i> / ${qs.length}</div></div>`)}
-        <p class="qtp-dir">Show your work in the space under each question. Write your final answer on the line. No calculator unless your teacher says so.</p>
-        <ol class="qtp-qs">${qs.map(q => `<li><div class="qtp-q">${q.p.q}</div><div class="qtp-work"></div><div class="qtp-ansline">Answer: <i></i></div></li>`).join("")}</ol>
+        <p class="qtp-dir">${kind === "ws" ? "Show your work under each problem and write your answer on the line. When you finish, check every answer with the answer key and redo any you missed." : "Show your work in the space under each question. Write your final answer on the line. No calculator unless your teacher says so."}</p>
+        ${groups.map(gr => `${partHead(gr)}<ol class="qtp-qs" start="${gr.start}">${gr.qs.map(q => `<li><div class="qtp-q">${q.p.q}</div><div class="qtp-work"></div><div class="qtp-ansline">Answer: <i></i></div></li>`).join("")}</ol>`).join("")}
         <div class="qtp-foot">fangmath.com</div></div>
       <div class="qtp-key">${head("Answer Key — " + esc(title))}
-        <ol class="qtp-ks">${qs.map(q => `<li><div><b>$${q.p.ansTex}$</b> <span class="qtp-meta">${esc(q.tt)} · Level ${q.lv}</span></div>${solList(q.p)}</li>`).join("")}</ol>
+        ${groups.map(gr => `${partHead(gr)}<ol class="qtp-ks" start="${gr.start}">${gr.qs.map(q => `<li><div><b>$${q.p.ansTex}$</b> <span class="qtp-meta">${esc(q.tt)} · Level ${q.lv}</span></div>${solList(q.p)}</li>`).join("")}</ol>`).join("")}
         <div class="qtp-foot">fangmath.com</div></div></div>`;
     document.body.appendChild(m); render(m);
     const close = () => { m.remove(); document.body.classList.remove("qt-printing"); };
@@ -536,16 +574,41 @@
     btns.forEach(b => b.disabled = true); msg.textContent = "Making the PDF…";
     try {
       await loadH2P();
-      const box = document.createElement("div"); box.className = "qtp-pdf";
+      const W = 725, H = 940;                 // px per letter page at 12 mm margins (width 725 ↔ height ≈ 965)
+      const meas = document.createElement("div"); meas.className = "qtp-pdf" + (m.querySelector(".qtp-ws") ? " qtp-ws" : "");
+      meas.style.cssText = `position:absolute;left:-20000px;top:0;width:${W}px`; document.body.appendChild(meas);
+      const blocks = [];                       // [{el, newDoc}] — head, part titles (kept with the next problem) and one problem each
       const parts = which === "paper" ? [".qtp-paper"] : which === "key" ? [".qtp-key"] : [".qtp-paper", ".qtp-key"];
-      parts.forEach((sel, i) => { const c = m.querySelector(sel).cloneNode(true); if (i) c.classList.add("qtp-newpage"); box.appendChild(c); });
-      box.querySelectorAll("svg[viewBox]").forEach(sv => {        // give every figure a fixed size so it draws the same in the PDF
+      parts.forEach((sel, pi) => {
+        const src = m.querySelector(sel).cloneNode(true); let first = true, carry = null;
+        [...src.children].forEach(ch => {
+          if (ch.classList.contains("qtp-foot")) return;
+          if (ch.tagName === "OL") {
+            const start = +ch.getAttribute("start") || 1;
+            [...ch.children].forEach((li, k) => {
+              const ol = document.createElement("ol"); ol.className = ch.className; ol.start = start + k; ol.appendChild(li);
+              const w = document.createElement("div"); w.className = "qtp-blk"; if (carry) { w.appendChild(carry); carry = null; } w.appendChild(ol);
+              blocks.push({ el: w, newDoc: first && pi > 0 }); first = false; });
+          } else if (ch.classList.contains("qtp-part")) carry = ch;
+          else { const w = document.createElement("div"); w.className = "qtp-blk"; w.appendChild(ch); blocks.push({ el: w, newDoc: first && pi > 0 }); first = false; }
+        });
+      });
+      blocks.forEach(bk => meas.appendChild(bk.el));
+      meas.querySelectorAll("svg[viewBox]").forEach(sv => {        // give every figure a fixed size so it draws the same in the PDF
         const vb = sv.getAttribute("viewBox").split(/[\s,]+/).map(Number), w = Math.min(340, vb[2] || 340), h = vb[2] ? w * vb[3] / vb[2] : w;
         sv.setAttribute("width", w); sv.setAttribute("height", h); sv.style.width = w + "px"; sv.style.height = h + "px"; sv.style.maxWidth = "none"; });
+      const box = document.createElement("div"); box.className = meas.className; box.style.width = W + "px";
+      let page = null, used = 0;
+      blocks.forEach(bk => {
+        const hgt = bk.el.getBoundingClientRect().height;
+        if (!page || bk.newDoc || used + hgt > H) { page = document.createElement("div"); page.className = "qtp-pg" + (box.children.length ? " qtp-newpage" : ""); box.appendChild(page); used = 0; }
+        page.appendChild(bk.el); used += hgt;
+      });
+      meas.remove();
       const name = base + (which === "key" ? "_AnswerKey" : which === "both" ? "_with-Answers" : "") + ".pdf";
       await html2pdf().set({ margin: [12, 12, 12, 12], filename: name, image: { type: "jpeg", quality: 0.96 },
-        html2canvas: { scale: 2, useCORS: true, backgroundColor: "#ffffff" }, jsPDF: { unit: "mm", format: "letter", orientation: "portrait" },
-        pagebreak: { mode: ["css", "legacy"], before: ".qtp-newpage", avoid: ["li", ".qtp-head"] } }).from(box).save();
+        html2canvas: { scale: 2, useCORS: true, backgroundColor: "#ffffff", scrollX: 0, scrollY: 0 }, jsPDF: { unit: "mm", format: "letter", orientation: "portrait" },
+        pagebreak: { mode: ["css"], before: ".qtp-newpage" } }).from(box).save();
       msg.textContent = "✓ Downloaded " + name;
     } catch (e) {
       msg.innerHTML = "Couldn't make the PDF here. Use <b>🖨 Print</b> and choose <b>Save as PDF</b> instead.";
@@ -561,6 +624,12 @@
 .qt-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
 @media (max-width:820px){.qt-grid{grid-template-columns:1fr}}
 .qt-box{display:flex;flex-direction:column;gap:8px}
+.qt-wide{grid-column:1/-1;border-color:#E9D6A8}
+.qt-wsrow{display:grid;grid-template-columns:minmax(200px,1fr) auto auto;gap:16px;align-items:start}
+@media (max-width:900px){.qt-wsrow{grid-template-columns:1fr}}
+.qt-wsrow>div{display:flex;flex-direction:column;gap:8px}
+.qtp-part{font-family:Fraunces,Georgia,serif;font-size:18px;color:var(--navy);margin:16px 0 4px;padding-bottom:4px;border-bottom:1px solid var(--line);break-after:avoid;page-break-after:avoid}
+.qtp-ws .qtp-work,.qtp-pdf.qtp-ws .qtp-work{height:95px}
 .qt-box h2{font-size:22px}
 .qt-sub{margin:0 0 4px;color:var(--muted);font-size:14.5px}
 .qt-lab{font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--faint);font-weight:700;margin-top:6px}
@@ -617,6 +686,9 @@
 .qtp-msg{font-size:13.5px;color:var(--muted);min-height:1.3em;margin-bottom:10px}
 .qtp-pdf{background:#fff;color:#16233B;padding:0}
 .qtp-q .a2fig{max-width:380px;margin:8px 0}
+.qtp-blk{display:flow-root}.qtp-blk>ol{margin:0}
+.qtp-pdf *{break-inside:auto!important;break-after:auto!important;page-break-inside:auto!important;page-break-after:auto!important}
+.qtp-pdf .qtp-key,.qtp-pdf .qtp-blk{break-before:auto!important;page-break-before:auto!important}
 .qtp-pdf .qtp-key{margin-top:0;padding-top:0;border-top:0;break-before:auto;page-break-before:auto}
 .qtp-pdf .qtp-work{height:150px}
 .qtp-head{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;border-bottom:2px solid var(--navy);padding-bottom:12px}

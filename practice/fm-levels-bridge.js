@@ -181,8 +181,10 @@
       return orig.apply(this, arguments);
     };
     tabBtn.onclick = () => setTab("quiz");
-    const m = /^#(ch\w+)-quiz$/.exec(HASH0);
-    if (m) { if (CHAPTERS.some(c => c.id === m[1]) && CH.id !== m[1]) openChapter(m[1], "practice"); setTab("quiz"); }
+    const m = /^#(ch\w+)-(quiz|ws|test)$/.exec(HASH0);
+    if (m) { if (CHAPTERS.some(c => c.id === m[1]) && CH.id !== m[1]) openChapter(m[1], "practice"); setTab("quiz");
+      const card = (g(m[2] === "ws" ? "wsGo" : m[2] === "test" ? "tsGo" : "qzGo") || {}).closest && g(m[2] === "ws" ? "wsGo" : m[2] === "test" ? "tsGo" : "qzGo").closest(".qt-box");
+      if (card && m[2] !== "quiz") setTimeout(() => { card.scrollIntoView({ behavior: "smooth", block: "center" }); card.classList.add("qt-flash"); setTimeout(() => card.classList.remove("qt-flash"), 1800); }, 250); }
   }
 
   function showQuiz() {
@@ -625,6 +627,7 @@
 @media (max-width:820px){.qt-grid{grid-template-columns:1fr}}
 .qt-box{display:flex;flex-direction:column;gap:8px}
 .qt-wide{grid-column:1/-1;border-color:#E9D6A8}
+.qt-flash{box-shadow:0 0 0 3px var(--gold);transition:box-shadow .4s}
 .qt-wsrow{display:grid;grid-template-columns:minmax(200px,1fr) auto auto;gap:16px;align-items:start}
 @media (max-width:900px){.qt-wsrow{grid-template-columns:1fr}}
 .qt-wsrow>div{display:flex;flex-direction:column;gap:8px}

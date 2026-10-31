@@ -438,6 +438,154 @@
   }
 
   /* ---------- draw a story above the lesson ---------- */
+  /* ---------- stories for the new sections (Ch 1–13) ---------- */
+  T["ch1/coordpa"] = {
+    title: "Fencing a Garden on Graph Paper",
+    scene: S`<p>Grandpa draws his garden on graph paper. The corners are at $(1, 1)$, $(7, 1)$, $(7, 5)$ and $(1, 5)$. Each square on the paper is $1$ meter.</p>`,
+    think: S`How many meters of fence go all the way around? How many square meters of soil are inside? Count squares if it helps.`,
+    aha: S`<p>Along the bottom, $y$ stays $1$, so the length is $7 - 1 = 6$. Up the side, $x$ stays $7$, so the height is $5 - 1 = 4$.</p>
+      <p>Fence (perimeter) $= 6 + 4 + 6 + 4 = 20$ m. Soil (area) $= 6 \cdot 4 = 24$ m². On a grid, <b>subtract coordinates</b> to get side lengths — and use the Distance Formula when a side is slanted.</p>`,
+  };
+  T["ch1/angm"] = {
+    title: "How Wide Is the Door Open?",
+    scene: S`<p>A door that's shut is $0^\circ$. Push it until it points straight out from the wall: $90^\circ$. Keep pushing until it lies flat against the wall on the other side: $180^\circ$.</p>`,
+    think: S`Is a door open "a little" acute or obtuse? What about "almost all the way"? If you open it $35^\circ$ and then another $50^\circ$, how far is it open?`,
+    aha: S`<p>Less than $90^\circ$ is <b>acute</b>, exactly $90^\circ$ is <b>right</b>, between $90^\circ$ and $180^\circ$ is <b>obtuse</b>, and $180^\circ$ is <b>straight</b>.</p>
+      <p>Two pushes add up: $35^\circ + 50^\circ = 85^\circ$. That's the <b>Angle Addition Postulate</b> — the small angles fill the big one.</p>`,
+  };
+  T["ch1/constr"] = {
+    title: "Geometry Without a Ruler",
+    scene: S`<p>2,000 years ago, Greek builders had no rulers with numbers. They had a <b>string with a stake</b> (to draw circles) and a <b>straight board</b> (to draw lines). With just those, they laid out perfect temples.</p>`,
+    think: S`Two trees stand at $A$ and $B$. Using only a string, how could you find spots that are the <b>same distance</b> from both trees?`,
+    aha: S`<p>Tie the string at $A$ and swing an arc; keep the same length and swing an arc from $B$. Where the arcs cross, you're the same distance from both trees.</p>
+      <p>Do it above and below, connect the two crossings — that line is the <b>perpendicular bisector</b>, and it hits $\overline{AB}$ exactly at the midpoint. That's a <b>construction</b>: compass and straightedge only.</p>`,
+  };
+  T["ch2/post"] = {
+    title: "The Rules Nobody Proves",
+    scene: S`<p>In a board game, some rules you just accept: "roll the die, move that many spaces." Nobody proves them — they're how the game works.</p>
+      <p>Geometry has rules like that too. Hammer two nails into a board and stretch a string between them.</p>`,
+    think: S`How many different straight strings can go through both nails? And if a picture <i>looks</i> like it has a right angle, can you be sure?`,
+    aha: S`<p>Only <b>one</b>: through two points there is exactly one line. Rules we accept without proof are <b>postulates</b>.</p>
+      <p>And no — a drawing can fool you. You may trust what is <b>drawn</b> (which points are on which line), but sizes like right angles or equal lengths count only if they are <b>marked</b>.</p>`,
+  };
+  T["ch2/angp"] = {
+    title: "The Scissors",
+    scene: S`<p>Open a pair of scissors. The two blades cross and make four angles.</p>`,
+    think: S`Open them wider. The top angle grows — what happens to the bottom angle across from it? What about the side angles?`,
+    aha: S`<p>The angles <b>across</b> from each other always stay equal: <b>vertical angles are congruent</b>. Angles <b>next to</b> each other always add to $180^\circ$ — they're a <b>linear pair</b>.</p>
+      <p>Why? The top angle and a side angle add to $180^\circ$; so do the bottom angle and that same side angle. Two angles supplementary to the same angle must be equal. That's a proof!</p>`,
+  };
+  T["ch3/pairs"] = {
+    title: "Lines in Your Classroom",
+    scene: S`<p>Look at the room around you. Two edges of the ceiling run side by side. A wall edge goes straight down from the ceiling. And one edge of the ceiling and one edge of the floor point in completely different directions and never touch.</p>`,
+    think: S`Find two edges that never meet but are <b>not</b> side by side. Could you lay a flat sheet of cardboard so it touches both edges?`,
+    aha: S`<p>Edges that never meet and point the same way are <b>parallel</b>. Edges that share a corner <b>intersect</b>.</p>
+      <p>Edges that never meet and <b>can't</b> be held on one flat sheet are <b>skew</b> — that only happens in 3D, like a ceiling edge and a floor edge going different directions.</p>`,
+  };
+  T["ch3/conv"] = {
+    title: "Are the Railroad Tracks Straight?",
+    scene: S`<p>A train-track inspector can't see miles ahead. She lays a straight board across both rails and measures the angle each rail makes with the board.</p>`,
+    think: S`If both angles in the same position measure $72^\circ$, what can she say about the rails? What if one is $72^\circ$ and the other $75^\circ$?`,
+    aha: S`<p>Equal corresponding angles mean the rails are <b>parallel</b> — the angle facts work <b>backwards</b> too. These are the <b>converses</b>.</p>
+      <p>$72^\circ$ vs $75^\circ$? The rails are tilting toward each other. Equal angles (or same-side angles adding to $180^\circ$) are the proof of parallel.</p>`,
+  };
+  T["ch3/perp"] = {
+    title: "The Shortest Way to the River",
+    scene: S`<p>You're standing in a field, and a straight river runs along the bottom. You're thirsty and want to reach the water as fast as possible.</p>`,
+    think: S`Should you walk diagonally, or straight down? Draw a few paths and compare.`,
+    aha: S`<p>Straight down — the path that meets the river at a <b>right angle</b>. Every slanted path is the hypotenuse of a right triangle, so it's longer.</p>
+      <p>That's why the <b>distance from a point to a line</b> always means the <b>perpendicular</b> segment.</p>`,
+  };
+  T["ch4/cpoly"] = {
+    title: "Two Copies of the Same Key",
+    scene: S`<p>A locksmith copies your house key. The copy is the same size and shape — it fits the same lock. Every bump on the copy matches a bump on the original.</p>`,
+    think: S`If you flip the copy over, does it still match? How would you tell someone <b>which</b> bump matches which?`,
+    aha: S`<p>Same size and shape = <b>congruent</b>. To say which parts match, we list the corners <b>in matching order</b>: $\triangle ABC \cong \triangle DEF$ means $A$ goes with $D$, $B$ with $E$, $C$ with $F$.</p>
+      <p>The order of the letters is a map: it tells you every matching side and angle.</p>`,
+  };
+  T["ch4/cpctc"] = {
+    title: "The Kite's Two Halves",
+    scene: S`<p>Two kite frames are built from identical sticks. You can prove the two halves of a kite are congruent triangles.</p>`,
+    think: S`Once you know the two triangles are identical copies, what else do you automatically know about their angles?`,
+    aha: S`<p>If two triangles are congruent, <b>every</b> matching part is congruent — not just the ones you used. That's <b>CPCTC</b>: Corresponding Parts of Congruent Triangles are Congruent.</p>
+      <p>So the plan is always: first prove the triangles congruent, <b>then</b> use CPCTC to get the side or angle you really wanted.</p>`,
+  };
+  T["ch5/hinge"] = {
+    title: "The Opening Door",
+    scene: S`<p>A door is hinged to the wall. The door doesn't change length, and the wall doesn't either. Now open the door wider and wider.</p>`,
+    think: S`What happens to the gap between the door's edge and the wall as the angle grows?`,
+    aha: S`<p>The wider the angle, the longer the gap. With two sides fixed, the <b>bigger included angle</b> makes the <b>longer third side</b>. That's the <b>Hinge Theorem</b>.</p>
+      <p>And a sneaky way to prove things: assume the opposite and show it leads to nonsense. That's an <b>indirect proof</b>.</p>`,
+  };
+  T["ch6/ppar"] = {
+    title: "Is It Really a Parallelogram?",
+    scene: S`<p>A carpenter builds a frame from two long boards and two short boards and nails the corners. A friend asks, "Are you sure the opposite sides are parallel? You didn't measure any angles."</p>`,
+    think: S`If both pairs of opposite boards are the same length, can the frame be anything other than a parallelogram?`,
+    aha: S`<p>No — equal opposite sides <b>force</b> a parallelogram. There are four such tests: both pairs of opposite sides congruent, both pairs of opposite angles congruent, one pair congruent <b>and</b> parallel, or diagonals that bisect each other.</p>
+      <p>Watch out: one pair parallel and the <b>other</b> pair equal could be an isosceles trapezoid.</p>`,
+  };
+  T["ch6/rrs"] = {
+    title: "Squash the Square",
+    scene: S`<p>Make a square out of four equal straws joined with pins at the corners. Now gently push one corner so it leans.</p>`,
+    think: S`The sides didn't change. What shape is it now? And what if instead you had a rectangle frame — what can you say about its two diagonals?`,
+    aha: S`<p>The leaning square is a <b>rhombus</b>: four equal sides, but no right angles. Its diagonals cross at <b>right angles</b>.</p>
+      <p>A rectangle keeps its right angles, and its diagonals are <b>equal</b>. A <b>square</b> is both, so it has every property.</p>`,
+  };
+  T["ch7/simp"] = {
+    title: "The Phone Photo",
+    scene: S`<p>You zoom in on a photo of a room. Everything gets bigger, but the doors still look like doors and the windows still look like windows.</p>`,
+    think: S`If zooming makes every length $2$ times as long, does the picture cover $2$ times as much screen? Draw a $1 \times 1$ square and a $2 \times 2$ square.`,
+    aha: S`<p>Same shape, different size = <b>similar</b>. Every length is multiplied by the <b>scale factor</b> $k$ — so the perimeter is too.</p>
+      <p>But the area is multiplied by $k^2$: the $2 \times 2$ square holds <b>4</b> little squares, not 2.</p>`,
+  };
+  T["ch8/simrt"] = {
+    title: "Three Triangles in One",
+    scene: S`<p>Cut a right triangle out of paper. Fold or cut along the altitude from the right angle down to the long side. You get two smaller right triangles.</p>`,
+    think: S`Turn the three triangles so they face the same way. What do you notice about their shapes?`,
+    aha: S`<p>All three are <b>similar</b>! Matching their sides gives two shortcuts: the altitude is the <b>geometric mean</b> of the two pieces of the hypotenuse ($h^2 = pq$), and each leg is the geometric mean of the whole hypotenuse and its neighboring piece.</p>`,
+  };
+  T["ch8/laws"] = {
+    title: "When There's No Right Angle",
+    scene: S`<p>A lighthouse spots a ship. The lighthouse is $10$ km from a harbor, the angle at the lighthouse is $40^\circ$, and the angle at the harbor is $75^\circ$. Nothing here is a right angle.</p>`,
+    think: S`SOH-CAH-TOA only works in right triangles. What could you do instead?`,
+    aha: S`<p>In <b>any</b> triangle, a bigger angle sits across from a longer side, in a fixed way: $\dfrac{a}{\sin A} = \dfrac{b}{\sin B} = \dfrac{c}{\sin C}$ — the <b>Law of Sines</b>.</p>
+      <p>When you don't know any angle-and-opposite-side pair (SAS or SSS), use the <b>Law of Cosines</b>: $c^2 = a^2 + b^2 - 2ab\cos C$. It's the Pythagorean Theorem with a correction for the angle.</p>`,
+  };
+  T["ch9/cst"] = {
+    title: "Stamp vs. Photocopier",
+    scene: S`<p>A rubber stamp can be slid, flipped or turned — every print is exactly the same size. A photocopier can also make copies at $200\%$ or $50\%$.</p>`,
+    think: S`Which machine makes copies that are <b>congruent</b> to the original? Which makes copies that are only the same <b>shape</b>?`,
+    aha: S`<p>Slides, flips and turns are <b>rigid motions</b> (translations, reflections, rotations): the copy is <b>congruent</b>.</p>
+      <p>Resizing is a <b>dilation</b>: the copy is <b>similar</b>. Mix them, and the result is similar — congruent only if no resizing happened.</p>`,
+  };
+  T["ch10/cang"] = {
+    title: "Where Do the Lines Cross?",
+    scene: S`<p>Two straight paths cross a round park. Sometimes they cross <b>inside</b> the park, sometimes right <b>on</b> the fence, and sometimes <b>outside</b>, before they even reach the park.</p>`,
+    think: S`When the paths cross outside, the angle between them looks small. When they cross inside, it looks bigger. Why might that be?`,
+    aha: S`<p>The angle depends on the arcs the paths cut off. <b>On</b> the circle: half the arc. <b>Inside</b>: half the <b>sum</b> of the two arcs. <b>Outside</b>: half the <b>difference</b> (far arc minus near arc).</p>`,
+  };
+  T["ch10/cseg"] = {
+    title: "Two Pizza Cuts",
+    scene: S`<p>Make two straight cuts across a round pizza that cross each other (not at the center). Each cut is split into two pieces by the crossing point.</p>`,
+    think: S`Measure all four pieces. Multiply the two pieces of one cut, then the two pieces of the other cut. What do you notice?`,
+    aha: S`<p>The products are <b>equal</b>! For two chords: piece $\times$ piece $=$ piece $\times$ piece.</p>
+      <p>Lines from a point outside follow a similar rule: outside part $\times$ whole $=$ outside part $\times$ whole, and for a tangent, tangent$^2$ = outside $\times$ whole.</p>`,
+  };
+  T["ch12/xsec"] = {
+    title: "Slicing and Spinning",
+    scene: S`<p>Slice a carrot straight across: the cut face is a circle. Slice it the long way: the face looks like a long triangle.</p>
+      <p>Now tape a paper rectangle to a pencil along one edge and spin the pencil fast between your hands.</p>`,
+    think: S`What 3D shape does the spinning rectangle seem to make? What would a spinning right triangle make?`,
+    aha: S`<p>The flat face from a slice is a <b>cross section</b>. A shape spun around a line makes a <b>solid of revolution</b>: a rectangle makes a <b>cylinder</b>, a right triangle makes a <b>cone</b>, a half-circle makes a <b>sphere</b>.</p>`,
+  };
+  T["ch13/twt"] = {
+    title: "The Class Survey",
+    scene: S`<p>100 students answer "Do you play a sport?" — 50 are in Grade 9 and 50 in Grade 10. In Grade 9, 30 say yes. In Grade 10, 15 say yes.</p>`,
+    think: S`Pick a random student. What's the chance they play a sport? Now pick a random <b>Grade 9</b> student — does the chance change?`,
+    aha: S`<p>A <b>two-way table</b> sorts everyone by two questions at once. Overall, $\tfrac{45}{100}$ play. But among Grade 9 only, $\tfrac{30}{50}$ play.</p>
+      <p>Narrowing to one row is a <b>conditional probability</b>: $P(\text{Yes} \mid \text{Grade 9})$. If it's different from the overall chance, the events are <b>not independent</b>.</p>`,
+  };
+
   window.drawStory = function (chId, topic) {
     const lesson = document.getElementById("lesson"); if (!lesson) return;
     let box = document.getElementById("story");

@@ -753,7 +753,7 @@
     const steps = [], intro = `<div class="intro">${w.intro}</div>${w.more ? `<details class="wmore"><summary>ℹ️ ${w.more[0]}</summary><div>${w.more[1]}</div></details>` : ""}`;
     if (w.groups) w.groups.forEach((gr, gi) => steps.push({ t: gr.title, h: `<div class="wgrid">${gr.cards.map(i => cardHtml(w.cards[i], true)).join("")}</div>${triesHtml(gr.tries, gi)}` }));
     else steps.push({ t: "See it → Say it → Write it", short: "Concepts", h: `<div class="wgrid">${w.cards.map(c => cardHtml(c, false)).join("")}</div>${w.tries ? triesHtml(w.tries, 0) : ""}` });
-    if (w.table) steps.push({ t: w.tableTitle || "Line, ray or segment?", h: w.table });
+    /* the summary table (w.table) now lives in the chapter Cheat Sheet only */
     steps.push({ t: w.postTitle || "Postulates — try each one with your hands", short: (w.postTitle || "Postulates").replace(/\s+—.*$/, "").replace(/ you'll use as reasons$/, "").replace(/^Where the formulas come from$/, "Formulas"),
       h: w.posts.map(([t, x]) => `<div class="post"><div class="t">${t}</div><div class="x"><b>Try it: </b>${x}</div></div>`).join("") });
     /* last step: Quick check = words to know + what to memorize + check questions, in one place */

@@ -53,7 +53,11 @@ button:focus-visible,input:focus{outline:2px solid var(--teal);outline-offset:1p
 .place .t span{color:var(--muted);font-size:15px}
 .rec{font-weight:600;color:var(--teal)}
 /* topics */
-.topics{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.topics{display:block}
+.psec{display:flex;flex-direction:column;gap:8px}.psec h2{font-size:22px;margin:0 0 4px}
+.prow{display:flex;align-items:center;gap:12px;padding:10px 12px;border:1px solid var(--line);border-radius:12px;background:var(--bg)}
+.prow.on{border-color:var(--teal);background:var(--teal-soft)}
+.prow .pt{flex:1;font-weight:600}.prow small{color:var(--green);font-size:13px;font-weight:600}
 @media (max-width:760px){.topics{grid-template-columns:minmax(0,1fr)}}
 .topic{display:flex;flex-direction:column;gap:12px}
 .topic h2{font-size:22px}
@@ -244,6 +248,7 @@ footer{text-align:center;color:var(--faint);font-size:13px;padding:24px}
       <div class="lvtop"><span class="label">Your level for this chapter</span><div class="lvchips" id="legend"></div></div>
       <div class="lvsub"><span id="lvDesc"></span><span class="lvplace"><span id="recText"></span><button class="btn ghost sm" id="placeBtn">Take the 5-question check</button></span></div>
     </div>
+    <div class="topics" id="topics"></div>
     <div class="card practice" id="practice" hidden>
       <div class="phead"><h2 id="pTitle"></h2><button class="btn ghost sm" id="closeP">← This section</button></div>
       <div class="pills" id="pLevels"></div>
@@ -261,7 +266,6 @@ footer{text-align:center;color:var(--faint);font-size:13px;padding:24px}
       <div id="pSuggest"></div>
       <div class="streak" id="pStreak"></div>
     </div>
-    <div class="topics" id="topics"></div>
   </div>
   </div>
 </div>
@@ -1109,17 +1113,15 @@ function recText(){ $("recText").innerHTML=st.rec?`★ Suggested: Level ${st.rec
 function pillsFor(t,cur,onPick){ const w=document.createElement("div"); w.className="pills";
   LEVELS.forEach(l=>{ const b=document.createElement("button"); b.type="button"; b.className="pill"+(l.n===cur?" on":"")+(st.rec===l.n?" star":""); b.style.setProperty("--c",l.c); const n=st.solved[t.id+l.n]||0; b.innerHTML=`${l.n} ${l.name}`+(n?`<span class="n">✓${n}</span>`:""); b.onclick=()=>onPick(l.n); w.appendChild(b); }); return w; }
 function topics(){ const box=$("topics"); box.innerHTML=""; legend(); const lvl=curLv();
-  /* practice follows the section: only the lessons of the section that is open */
+  /* practice = only the section that is open (pick another section in the list on the left) */
   const SG=sections(), G=SG.find(g=>g.idx.includes(LI))||SG[0];
-  const bar=document.createElement("div"); bar.className="secbar";
-  bar.innerHTML=`<span class="label">Practice for section</span>`;
-  SG.forEach(g=>{ const b=document.createElement("button"); b.type="button"; b.className="sb"+(g===G?" on":""); b.innerHTML=`<i>${g.no}</i>${g.name}`; b.onclick=()=>{ if(g===G) return; LI=g.idx[0]; $("practice").hidden=true; road(); topics(); box.scrollIntoView({behavior:"smooth",block:"start"}); }; bar.appendChild(b); });
-  box.appendChild(bar);
-  G.idx.map(i=>CH.topics[i]).forEach(t=>{ const c=document.createElement("div"); c.className="card topic"; const n=st.solved[t.id+lvl]||0;
-    const tl=tlab(t); c.innerHTML=`${tl.multi?`<span class="label">${tl.first?tl.sec:"&nbsp;"}</span>`:""}<h2>${tl.multi?tl.part:t.title}</h2><p class="idea">${t.idea}</p><div class="example"><span class="label">Simplest example</span>${t.lesson.steps.map(s=>`<div class="q">$${s[0]}$</div>`).join("")}</div>`;
-    const g=document.createElement("div"); g.className="tgo"; const go=document.createElement("button"); go.className="btn teal sm"; go.textContent="Practice →"; go.onclick=()=>startPractice(t,lvl); g.appendChild(go);
-    const sm=document.createElement("small"); sm.textContent=n?`✓ ${n} solved at Level ${lvl}`:`Level ${lvl} · ${LEVELS[lvl-1].name}`; g.appendChild(sm); c.appendChild(g); box.appendChild(c); });
-  render(box); }
+  const c=document.createElement("div"); c.className="card psec";
+  c.innerHTML=`<span class="label">Practice · Level ${lvl} ${LEVELS[lvl-1].name}</span><h2>${G.no} ${G.name}</h2>`;
+  G.idx.map(i=>CH.topics[i]).forEach(t=>{ const n=st.solved[t.id+lvl]||0, on=T===t&&!$("practice").hidden;
+    const r=document.createElement("div"); r.className="prow"+(on?" on":"");
+    r.innerHTML=`<span class="pt">${G.idx.length>1?tlab(t).part:"5 levels · new problems every time"}</span><small>${n?`✓ ${n} solved`:""}</small>`;
+    const go=document.createElement("button"); go.className="btn teal sm"; go.textContent=on?"Practicing ↓":"Practice →"; go.onclick=()=>startPractice(t,lvl); r.appendChild(go); c.appendChild(r); });
+  box.appendChild(c); render(box); }
 function startPractice(t,n){ n=curLv(); T=t; L=n; st.level[t.id]=n; save(); streak=[]; $("practice").hidden=false; $("pTitle").textContent=tlab(t).full; newProblem(); $("practice").scrollIntoView({behavior:"smooth",block:"start"}); topics(); }
 function levelPills(){ $("pLevels").replaceWith(Object.assign(pillsFor(T,L,n=>{ L=n; st.level[T.id]=n; save(); streak=[]; newProblem(); topics(); }),{id:"pLevels"})); }
 function newProblem(){

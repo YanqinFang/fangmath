@@ -100,6 +100,8 @@
   .wordmark .m{color:var(--teal);position:relative;display:inline-block}
   .wordmark .m::after{content:"";position:absolute;left:4%;right:4%;bottom:-.06em;height:.1em;border-radius:99px;background:var(--gold)}
   .tagline{font-size:clamp(17px,2.2vw,22px);color:var(--muted);margin:22px 0 0}
+  .hello{display:inline-block;margin:16px auto 0;padding:8px 18px;border-radius:999px;background:var(--gold-soft,#FBF1DC);color:#6B4E0E;font-size:clamp(14.5px,1.6vw,16.5px);line-height:1.5;max-width:640px}
+  .hello b{color:#8A6415}
   .tagline b{color:var(--ink);font-weight:600}
   .hero-cta{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:26px}
 
@@ -589,11 +591,52 @@ function courseCard(c){
     h("div", { class:"meta" }, c.levels ? levelsMeta(c) : c.units.length + " units · " + (n ? n + (n === 1 ? " lesson" : " lessons") : "lessons coming soon")),
     h("span", { class:"go" }, "Open course →"));
 }
+/* ---------------- one-line hello on the home page ----------------
+   Changes with the time of day and the day of the year; uses the student's nickname when signed in.
+   To add a sentence, add a line to CHEER. Special days are in CHEER_DAYS ("month-day"). */
+const CHEER = [
+  "Every expert was once a beginner. Let's learn one new thing today.",
+  "Mistakes are how your brain grows. Try it, check it, fix it.",
+  "Stuck? Try a simpler case first — then come back to the big one.",
+  "Ten focused minutes today beat an hour of worrying tomorrow.",
+  "You don't have to be fast. You just have to keep going.",
+  "Draw a picture. Math gets easier when you can see it.",
+  "Asking “why does this work?” is what real mathematicians do.",
+  "A hard problem is just a puzzle you haven't solved yet.",
+  "Check your answer a second way — that's how you know you're right.",
+  "Small steps every day add up to big progress.",
+  "You can do hard things. Start with the first step.",
+  "Today's practice is tomorrow's “that was easy.”",
+  "Curious beats perfect. Ask a question today.",
+  "Read the problem twice. Then make a plan.",
+  "If it doesn't work, that's information — try another way.",
+  "Your brain is a muscle. Practice makes it stronger.",
+  "Understanding lasts longer than memorizing. Ask why.",
+  "Be proud of the problems you finished, not just the easy ones.",
+  "Slow is smooth, and smooth is fast. Take your time.",
+  "Great job showing up today. That's the hardest part.",
+];
+const CHEER_DAYS = {
+  "1-1": "Happy New Year! A fresh start — let's make this your best math year.",
+  "3-14": "Happy Pi Day! π ≈ 3.14159… Can you find a circle in your room?",
+  "10-31": "Happy Halloween! 🎃 No tricks here — just treats for your brain.",
+  "11-11": "Today is 11/11 — a palindrome date! Can you find more?",
+  "12-25": "Merry Christmas! Even Santa needs math to deliver all those presents. 🎄",
+};
+function greeting(){
+  const d = new Date(), hr = d.getHours();
+  const hi = hr < 5 ? "Up late" : hr < 12 ? "Good morning" : hr < 18 ? "Good afternoon" : "Good evening";
+  const who = (typeof kid !== "undefined" && kid && kid.nickname) ? (kid.avatar ? kid.avatar + " " : "") + kid.nickname : "";
+  const doy = Math.floor((d - new Date(d.getFullYear(), 0, 0)) / 864e5);
+  const msg = CHEER_DAYS[(d.getMonth() + 1) + "-" + d.getDate()] || CHEER[doy % CHEER.length];
+  return h("p", { class:"hello" }, h("b", {}, hi + (who ? ", " + who : "") + "! "), msg);
+}
 function pageHome(v){
   const ch = CHALLENGES[0];
   v.append(h("section", { class:"hero" }, h("div", { class:"wrap" },
     h("h1", { class:"wordmark" }, "Prof. Fang ", h("span", { class:"m" }, "Math")),
     h("p", { class:"tagline" }, h("b", {}, "Experience first. "), "Symbols second. ", h("b", {}, "Understanding always.")),
+    greeting(),
     h("div", { class:"hero-cta" }, h("a", { class:"btn", href:"#/k8" }, "Grades 3–8"), h("a", { class:"btn teal", href:"#/highschool" }, "High School"), h("a", { class:"btn", style:"background:#D35400", href:"#/competition" }, "Competition"), h("a", { class:"btn", style:"background:#B7472A", href:"#/testprep" }, "SAT / ACT"), h("a", { class:"btn ghost", href:"#/challenge" }, "This week's challenge")),
     h("a", { class:"solve-hero", href:"#/solve" },
       h("span", { class:"ic", "aria-hidden":"true" }, "📸"),

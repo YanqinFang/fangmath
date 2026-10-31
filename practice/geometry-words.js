@@ -761,7 +761,7 @@
     return `${intro}<div class="wnav" role="tablist">${steps.map((st, i) => `<button type="button" role="tab" data-i="${i}"><i>${i + 1}</i><span>${st.short || SHORT(st.t)}</span></button>`).join("")}</div>
       ${steps.map((st, i) => `<section class="wstep" data-i="${i}" hidden><div class="wgroup"><h4><span class="gn">${i + 1}</span>${st.t}</h4>${st.h}</div>
         <div class="wfoot">${i ? `<button type="button" class="btn ghost sm wprev">← Back</button>` : "<span></span>"}<span class="wcount">${i + 1} of ${steps.length}</span>${i < steps.length - 1
-          ? `<button type="button" class="btn sm wnext">Next: ${steps[i + 1].short || SHORT(steps[i + 1].t)} →</button>` : `<button type="button" class="btn teal sm wdone">${w.inLesson ? "Done — go to Part 2: symbols ↓" : "Done — go to the lessons →"}</button>`}</div></section>`).join("")}`;
+          ? `<button type="button" class="btn sm wnext">Next: ${steps[i + 1].short || SHORT(steps[i + 1].t)} →</button>` : `<button type="button" class="btn teal sm wdone">${w.inLesson ? "Done — next lesson →" : "Done — go to the lessons →"}</button>`}</div></section>`).join("")}`;
   }
   function paginate(box, chId, known) {
     const secs = [...box.querySelectorAll(".wstep")], tabs = [...box.querySelectorAll(".wnav button")], key = "_step_" + chId;
@@ -778,7 +778,11 @@
     tabs.forEach((b, k) => b.onclick = () => show(k, true));
     box.querySelectorAll(".wprev").forEach(b => b.onclick = () => show(+b.closest(".wstep").dataset.i - 1, true));
     box.querySelectorAll(".wnext").forEach(b => b.onclick = () => show(+b.closest(".wstep").dataset.i + 1, true));
-    box.querySelectorAll(".wdone").forEach(b => b.onclick = () => { const inl = box.classList.contains("inlesson"); if (!inl) box.open = false; const r = document.getElementById(inl ? "lesson" : "road"); if (r) setTimeout(() => r.scrollIntoView({ behavior: "smooth", block: "start" }), 60); });
+    box.querySelectorAll(".wdone").forEach(b => b.onclick = () => { const inl = box.classList.contains("inlesson");
+      if (inl && typeof openLesson === "function") {             // this card is the whole lesson: mark it learned, go to the next lesson
+        try { const t = CH.topics[LI]; if (t && window.fmMarkLearned) fmMarkLearned(t.id); } catch (e) {}
+        openLesson(Math.min(LI + 1, CH.topics.length - 1), true); return; }
+      box.open = false; const r = document.getElementById("road"); if (r) setTimeout(() => r.scrollIntoView({ behavior: "smooth", block: "start" }), 60); });
     show(known[key] || 0, false);
   }
 
@@ -794,7 +798,7 @@
     box.innerHTML = `<summary><span style="font-size:24px">📘</span><div><b>Start here: Words &amp; Postulates</b><br><span>${w.cards.length} concepts · ${nPost} ${pw === "postulates" ? "postulates" : "key facts"} · ${w.vocab.length} words to know — ${w.sub}</span></div><i>›</i></summary>
       <div class="wb">${stepsHtml(w, g, mine)}</div>`;
     if (target) { const sm = box.querySelector(":scope > summary"); if (sm) { const ti = CH.topics.findIndex(t => t.id === w.inLesson), tt = (CH.topics[ti] || {}).title || "";
-      sm.outerHTML = `<div class="ilh"><span class="label">Lesson ${ti + 1} of ${CH.topics.length} · Part 1 of 2 · Words &amp; pictures</span><h2 class="ilh-t">${tt}</h2></div>`; } }
+      sm.outerHTML = `<div class="ilh"><span class="label">Lesson ${ti + 1} of ${CH.topics.length}</span><h2 class="ilh-t">${tt}</h2></div>`; } }
     paginate(box, chId, known);
     const upd = () => { const n = box.querySelectorAll(".vocab input:checked").length; box.querySelector("#vocabN").textContent = `${n} of ${w.vocab.length} words ready${n === w.vocab.length ? " — great job! 🎉" : ""}`; };
     box.querySelectorAll(".vocab input").forEach(i => i.onchange = () => { const k = load(); k[chId] = [...box.querySelectorAll(".vocab input:checked")].map(x => x.value); save(k); upd(); });

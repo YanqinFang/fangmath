@@ -174,7 +174,24 @@ const COURSES = [
     blurb: "Rational numbers, proportions and percents, equations and inequalities, geometry, probability.",
     units: [
       { title: "1. Operations with Rational Numbers", cal: { id: "grade7", weeks: [1, 4] }, lessons: [] },
-      { title: "2. Proportional Relationships & Percents", cal: { id: "grade7", weeks: [5, 10] }, lessons: [] },
+      { title: "2. Proportional Relationships & Percents", cal: { id: "grade7", weeks: [5, 10] }, lessons: [
+        { title: "Graphing on the Coordinate Plane (Test Review)", grade: "7",
+          notes: "materials/grade7/unit2/G7_Coordinate_Plane_Worksheet.pdf",
+          worksheet: "materials/grade7/unit2/G7_Coordinate_Plane_Worksheet.pdf",
+          answers: "materials/grade7/unit2/G7_Coordinate_Plane_Key.pdf",
+          summary: "Plot and read points in all four quadrants, reflect over an axis, find distances (add across an axis), perimeter and area of shapes on the grid, and graph proportional relationships (a straight line through the origin, unit rate at (1, k)). 21 practice problems.",
+          example: { q: "Find the distance between $(3, 7)$ and $(3, -2)$.",
+            steps: ["Same $x$, so the points are on one vertical line.", "They are on opposite sides of the $x$-axis, so add: $7 + 2 = 9$.", "Same answer with absolute value: $|7 - (-2)| = 9$ units."],
+            simpler: "From $(-1, 0)$ to $(1, 0)$: count the squares — $2$. And $|-1| + |1| = 2$. Across an axis, you add." },
+          quiz: [
+            { q: "Which quadrant is $(-4, 3)$ in?", choices: ["I", "II", "III", "IV"], answer: 1, simpler: "Negative $x$, positive $y$: left and up." },
+            { q: "Reflect $(5, -2)$ over the $x$-axis.", choices: ["$(5, 2)$", "$(-5, -2)$", "$(-5, 2)$", "$(2, 5)$"], answer: 0, simpler: "Over the $x$-axis, $x$ stays the same." },
+            { q: "Find the distance between $(-6, -1)$ and $(-2, -1)$.", answer: "4" },
+            { q: "A rectangle has vertices $(-4, 3)$, $(2, 3)$, $(2, -2)$, $(-4, -2)$. Find its area.", answer: "30", simpler: "Length $= 6$, width $= 5$." },
+            { q: "Which graph shows a proportional relationship?", choices: ["a straight line through $(0, 0)$", "a straight line through $(0, 5)$", "a curve through $(0, 0)$"], answer: 0 },
+            { q: "A proportional graph passes through $(6, 15)$. Find $k$.", answer: "2.5", simpler: "$k = \\dfrac{y}{x}$." }
+          ] }
+      ] },
       { title: "3. Expressions, Equations & Inequalities", cal: { id: "grade7", weeks: [11, 15] }, lessons: [] },
       { title: "4. Scale Drawings, Angles & Circles", cal: { id: "grade7", weeks: [16, 21] }, lessons: [
         { title: "First Steps in Trigonometry: Sine, Cosine & Tangent", grade: "7",

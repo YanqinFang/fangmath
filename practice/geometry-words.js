@@ -756,11 +756,12 @@
     if (w.table) steps.push({ t: w.tableTitle || "Line, ray or segment?", h: w.table });
     steps.push({ t: w.postTitle || "Postulates — try each one with your hands", short: (w.postTitle || "Postulates").replace(/\s+—.*$/, "").replace(/ you'll use as reasons$/, "").replace(/^Where the formulas come from$/, "Formulas"),
       h: w.posts.map(([t, x]) => `<div class="post"><div class="t">${t}</div><div class="x"><b>Try it: </b>${x}</div></div>`).join("") });
-    steps.push({ t: "Words to know", h: `<p class="wsub">Tick each word you can explain in your own words.</p><div class="vocab">${w.vocab.map(v => `<label><input type="checkbox" value="${v}" ${mine.includes(v) ? "checked" : ""}>${v}</label>`).join("")}</div>
-        <div id="vocabN" style="font-size:13.5px;color:var(--muted);margin-top:6px"></div>` });
-    if (g) steps.push({ t: "What to memorize — and how", short: "Memorize", h: `<div class="smem">${g.mem.map(([a, b]) => `<div><div class="t">${a}</div><div class="x">💡 ${b}</div></div>`).join("")}</div>
-        <div class="howmem">${HOWMEM}</div><h4 class="wsubh">🔍 Understand — don't just memorize</h4><ul class="sund">${g.und.map(x => `<li>${x}</li>`).join("")}</ul>` });
-    steps.push({ t: "Quick check", h: w.checks.map(([q, a]) => `<div class="qc">${q}<button type="button">Show answer</button><div class="a" hidden>${a}</div></div>`).join("") });
+    /* last step: Quick check = words to know + what to memorize + check questions, in one place */
+    steps.push({ t: "Quick check", h: `<h4 class="wsubh">📝 Words to know</h4><p class="wsub">Tick each word you can explain in your own words.</p><div class="vocab">${w.vocab.map(v => `<label><input type="checkbox" value="${v}" ${mine.includes(v) ? "checked" : ""}>${v}</label>`).join("")}</div>
+        <div id="vocabN" style="font-size:13.5px;color:var(--muted);margin-top:6px"></div>${g ? `
+        <h4 class="wsubh">🧠 What to memorize — and how</h4><div class="smem">${g.mem.map(([a, b]) => `<div><div class="t">${a}</div><div class="x">💡 ${b}</div></div>`).join("")}</div>
+        <div class="howmem">${HOWMEM}</div><h4 class="wsubh">🔍 Understand — don't just memorize</h4><ul class="sund">${g.und.map(x => `<li>${x}</li>`).join("")}</ul>` : ""}
+        <h4 class="wsubh">✅ Check yourself</h4>${w.checks.map(([q, a]) => `<div class="qc">${q}<button type="button">Show answer</button><div class="a" hidden>${a}</div></div>`).join("")}` });
     return `${intro}<div class="wnav" role="tablist">${steps.map((st, i) => `<button type="button" role="tab" data-i="${i}"><i>${i + 1}</i><span>${st.short || SHORT(st.t)}</span></button>`).join("")}</div>
       ${steps.map((st, i) => `<section class="wstep" data-i="${i}" hidden><div class="wgroup"><h4><span class="gn">${i + 1}</span>${st.t}</h4>${st.h}</div>
         <div class="wfoot">${i ? `<button type="button" class="btn ghost sm wprev">← Back</button>` : "<span></span>"}<span class="wcount">${i + 1} of ${steps.length}</span>${i < steps.length - 1

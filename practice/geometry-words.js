@@ -66,6 +66,15 @@
   .chroute button{display:flex;align-items:center;gap:7px;border:1px solid var(--line);background:var(--bg);border-radius:999px;padding:6px 12px 6px 6px;font:inherit;font-size:13.5px;font-weight:600;color:var(--ink);cursor:pointer}
   .chroute button:hover{border-color:var(--teal);background:var(--teal-soft)}
   .chroute button i{font-style:normal;width:22px;height:22px;border-radius:50%;background:var(--navy);color:#fff;display:grid;place-items:center;font-size:12px}
+  .wnav{display:flex;gap:6px;overflow-x:auto;padding:2px 0 10px;margin:4px 0 2px;scrollbar-width:thin}
+  .wnav button{flex:none;display:flex;align-items:center;gap:7px;border:1px solid var(--line);background:#fff;border-radius:999px;padding:5px 12px 5px 5px;font:inherit;font-size:13px;font-weight:600;color:var(--muted);cursor:pointer;white-space:nowrap}
+  .wnav button i{font-style:normal;width:22px;height:22px;border-radius:50%;background:var(--line);color:var(--ink);display:grid;place-items:center;font-size:12px}
+  .wnav button.past i{background:var(--teal-soft);color:var(--teal)}
+  .wnav button.on{border-color:var(--navy);color:var(--ink);background:#EEF2FA} .wnav button.on i{background:var(--navy);color:#fff}
+  .wstep .wgroup{border-top:0;margin-top:6px}
+  .wfoot{display:flex;align-items:center;justify-content:space-between;gap:10px;border-top:1px solid var(--line);margin-top:16px;padding-top:12px}
+  .wcount{font-size:13px;color:var(--faint)}
+  .wsub{margin:0 0 8px;font-size:14px;color:var(--muted)} .wsubh{font-size:17px!important}
   `;
   const st = document.createElement("style"); st.textContent = css; document.head.appendChild(st);
 
@@ -528,6 +537,44 @@
   const triesHtml = (tr, gi) => !tr ? "" : `<div class="tries" data-g="${gi}"><div class="th">✍️ Your turn — on paper first</div><p class="tip">Write each answer on your paper first. Then choose what you wrote from the menu and press <b>Check</b>.</p>${tr.fig}
     ${tr.qs.map((t, qi) => `<div class="tq" data-q="${qi}"><div class="tqq"><b>${qi + 1}.</b> ${t.q}</div><div class="tqa">${Array.from({ length: t.n }, (_, k) => `<span class="dd" data-k="${k}"><button type="button" class="ddb">choose ▾</button><span class="ddm" hidden>${t.opts.map(o => `<button type="button" data-v="${o.replace(/"/g, "&quot;")}">$${o}$</button>`).join("")}</span></span>`).join(t.n > 1 ? `<span class="and">and</span>` : "")}<button type="button" class="tchk">Check</button></div><div class="tfb"></div></div>`).join("")}</div>`;
 
+  /* ---------- the card as one-section-at-a-time steps (Next / Back) ---------- */
+  const SHORT = t => t.replace(/<[^>]+>/g, "").split(/\s+—\s+|:\s/)[0].replace(/^\W+\s*/, "");
+  function stepsHtml(w, g, mine) {
+    const steps = [], intro = `<div class="intro">${w.intro}</div>${w.more ? `<details class="wmore"><summary>ℹ️ ${w.more[0]}</summary><div>${w.more[1]}</div></details>` : ""}`;
+    if (w.groups) w.groups.forEach((gr, gi) => steps.push({ t: gr.title, h: `<div class="wgrid">${gr.cards.map(i => cardHtml(w.cards[i], true)).join("")}</div>${triesHtml(gr.tries, gi)}` }));
+    else steps.push({ t: "See it → Say it → Write it", short: "Concepts", h: `<div class="wgrid">${w.cards.map(c => cardHtml(c, false)).join("")}</div>${w.tries ? triesHtml(w.tries, 0) : ""}` });
+    if (w.table) steps.push({ t: w.tableTitle || "Line, ray or segment?", h: w.table });
+    steps.push({ t: w.postTitle || "Postulates — try each one with your hands", short: (w.postTitle || "Postulates").replace(/\s+—.*$/, "").replace(/ you'll use as reasons$/, "").replace(/^Where the formulas come from$/, "Formulas"),
+      h: w.posts.map(([t, x]) => `<div class="post"><div class="t">${t}</div><div class="x"><b>Try it: </b>${x}</div></div>`).join("") });
+    steps.push({ t: "Words to know", h: `<p class="wsub">Tick each word you can explain in your own words.</p><div class="vocab">${w.vocab.map(v => `<label><input type="checkbox" value="${v}" ${mine.includes(v) ? "checked" : ""}>${v}</label>`).join("")}</div>
+        <div id="vocabN" style="font-size:13.5px;color:var(--muted);margin-top:6px"></div>` });
+    if (g) steps.push({ t: "What to memorize — and how", short: "Memorize", h: `<div class="smem">${g.mem.map(([a, b]) => `<div><div class="t">${a}</div><div class="x">💡 ${b}</div></div>`).join("")}</div>
+        <div class="howmem">${HOWMEM}</div><h4 class="wsubh">🔍 Understand — don't just memorize</h4><ul class="sund">${g.und.map(x => `<li>${x}</li>`).join("")}</ul>` });
+    steps.push({ t: "Quick check", h: w.checks.map(([q, a]) => `<div class="qc">${q}<button type="button">Show answer</button><div class="a" hidden>${a}</div></div>`).join("") });
+    return `${intro}<div class="wnav" role="tablist">${steps.map((st, i) => `<button type="button" role="tab" data-i="${i}"><i>${i + 1}</i><span>${st.short || SHORT(st.t)}</span></button>`).join("")}</div>
+      ${steps.map((st, i) => `<section class="wstep" data-i="${i}" hidden><div class="wgroup"><h4><span class="gn">${i + 1}</span>${st.t}</h4>${st.h}</div>
+        <div class="wfoot">${i ? `<button type="button" class="btn ghost sm wprev">← Back</button>` : "<span></span>"}<span class="wcount">${i + 1} of ${steps.length}</span>${i < steps.length - 1
+          ? `<button type="button" class="btn sm wnext">Next: ${steps[i + 1].short || SHORT(steps[i + 1].t)} →</button>` : `<button type="button" class="btn teal sm wdone">${w.inLesson ? "Done — keep going ↓" : "Done — go to the lessons →"}</button>`}</div></section>`).join("")}`;
+  }
+  function paginate(box, chId, known) {
+    const secs = [...box.querySelectorAll(".wstep")], tabs = [...box.querySelectorAll(".wnav button")], key = "_step_" + chId;
+    const show = (i, scroll) => {
+      i = Math.max(0, Math.min(secs.length - 1, i | 0));
+      secs.forEach((s, k) => s.hidden = k !== i);
+      tabs.forEach((b, k) => { b.classList.toggle("on", k === i); b.classList.toggle("past", k < i); b.setAttribute("aria-selected", k === i); });
+      box.querySelector(".intro").hidden = i > 0; const m = box.querySelector(".wmore"); if (m) m.hidden = i > 0;
+      const k = load(); k[key] = i; save(k);
+      if (scroll) { const r = box.getBoundingClientRect(); if (r.top < 70 || r.top > innerHeight * 0.4) box.scrollIntoView({ behavior: "smooth", block: "start" }); }
+      const cur = tabs[i], nav = cur && cur.parentNode;
+      if (cur && box.open !== false) nav.scrollTo({ left: nav.scrollLeft + cur.getBoundingClientRect().left - nav.getBoundingClientRect().left - 40, behavior: "smooth" });
+    };
+    tabs.forEach((b, k) => b.onclick = () => show(k, true));
+    box.querySelectorAll(".wprev").forEach(b => b.onclick = () => show(+b.closest(".wstep").dataset.i - 1, true));
+    box.querySelectorAll(".wnext").forEach(b => b.onclick = () => show(+b.closest(".wstep").dataset.i + 1, true));
+    box.querySelectorAll(".wdone").forEach(b => b.onclick = () => { const inl = box.classList.contains("inlesson"); if (!inl) box.open = false; const r = document.getElementById(inl ? "lesson" : "road"); if (r) setTimeout(() => r.scrollIntoView({ behavior: "smooth", block: "start" }), 60); });
+    show(known[key] || 0, false);
+  }
+
   function draw(chId, target) {
     const lv = document.getElementById("learnView"); if (!lv) return;
     let box = target || document.getElementById("words");
@@ -538,27 +585,9 @@
     if (!target) box.open = !(known["_seen_" + chId]);
     const g = STUDY[chId], nPost = w.posts.length, pw = (w.postTitle || "Postulates").split(/[ —&]/)[0].toLowerCase();
     box.innerHTML = `<summary><span style="font-size:24px">📘</span><div><b>Start here: Words &amp; Postulates</b><br><span>${w.cards.length} concepts · ${nPost} ${pw === "postulates" ? "postulates" : "key facts"} · ${w.vocab.length} words to know — ${w.sub}</span></div><i>›</i></summary>
-      <div class="wb">
-        <div class="intro">${w.intro}</div>
-        ${w.more ? `<details class="wmore"><summary>ℹ️ ${w.more[0]}</summary><div>${w.more[1]}</div></details>` : ""}
-        ${w.groups ? w.groups.map((gr, gi) => `<div class="wgroup"><h4><span class="gn">${gi + 1}</span>${gr.title}</h4>
-          <div class="wgrid">${gr.cards.map(i => cardHtml(w.cards[i], true)).join("")}</div>
-          ${triesHtml(gr.tries, gi)}</div>`).join("") : `<h4>👀 See it → 🗣 Say it → ✏️ Write it</h4>
-        <div class="wgrid">${w.cards.map(c => cardHtml(c, false)).join("")}</div>${w.tries ? triesHtml(w.tries, 0) : ""}`}
-        ${w.table ? `<h4>${w.tableTitle || "Line, ray or segment?"}</h4>${w.table}` : ""}
-        <h4>📌 ${w.postTitle || "Postulates — try each one with your hands"}</h4>
-        ${w.posts.map(([t, x]) => `<div class="post"><div class="t">${t}</div><div class="x"><b>Try it: </b>${x}</div></div>`).join("")}
-        <h4>📝 Words to know <span style="font-size:14px;font-family:Inter;color:var(--muted);font-weight:500">— tick each word you can explain in your own words</span></h4>
-        <div class="vocab">${w.vocab.map(v => `<label><input type="checkbox" value="${v}" ${mine.includes(v) ? "checked" : ""}>${v}</label>`).join("")}</div>
-        <div id="vocabN" style="font-size:13.5px;color:var(--muted);margin-top:6px"></div>
-        ${g ? `<h4>🧠 What to memorize — and how</h4>
-        <div class="smem">${g.mem.map(([a, b]) => `<div><div class="t">${a}</div><div class="x">💡 ${b}</div></div>`).join("")}</div>
-        <div class="howmem">${HOWMEM}</div>
-        <h4>🔍 Understand — don't just memorize</h4><ul class="sund">${g.und.map(x => `<li>${x}</li>`).join("")}</ul>` : ""}
-        <h4>✅ Quick check</h4>
-        ${w.checks.map(([q, a]) => `<div class="qc">${q}<button type="button">Show answer</button><div class="a" hidden>${a}</div></div>`).join("")}
-      </div>`;
+      <div class="wb">${stepsHtml(w, g, mine)}</div>`;
     if (target) { const sm = box.querySelector(":scope > summary"); if (sm) sm.outerHTML = `<div class="ilh"><span class="label">📘 Section ${(CH.topics.find(t => t.id === w.inLesson) || {}).title || ""}</span></div>`; }
+    paginate(box, chId, known);
     const upd = () => { const n = box.querySelectorAll(".vocab input:checked").length; box.querySelector("#vocabN").textContent = `${n} of ${w.vocab.length} words ready${n === w.vocab.length ? " — great job! 🎉" : ""}`; };
     box.querySelectorAll(".vocab input").forEach(i => i.onchange = () => { const k = load(); k[chId] = [...box.querySelectorAll(".vocab input:checked")].map(x => x.value); save(k); upd(); });
     box.querySelectorAll(".defb").forEach(b => b.onclick = () => { const d = b.nextElementSibling; d.hidden = !d.hidden; b.textContent = d.hidden ? "Show the definition ▾" : "Hide the definition ▴"; });
@@ -588,7 +617,7 @@
   const STUDY = {
     ch1: { kind: "Understand, then memorize", why: "Every later chapter uses these words and symbols. If the words are fuzzy, proofs will be too.",
       steps: ["Read the <b>Words &amp; Postulates</b> card below. For each word, picture the real thing first (a road, a flashlight beam).", "Draw each figure yourself and label it: a line, a ray, a segment, an angle with its vertex.", "Cover the definitions and say each one aloud in your own words. Then check.", "Do the lessons in order: midpoint and distance first, then angle pairs.", "Practice at your level. Log every miss in the Mistake Log."],
-      mem: [["Notation: $\\overleftrightarrow{AB}$, $\\overrightarrow{AB}$, $\\overline{AB}$, $AB$", "the picture on top shows what the figure looks like: two arrows, one arrow, no arrows; no bar means a number (length)"], ["Midpoint $\\left(\\frac{x_1 + x_2}{2}, \\frac{y_1 + y_2}{2}\\right)$", "it's just the average — the middle of two numbers"], ["Distance $\\sqrt{(x_2 - x_1)^2 + (y_2 - y_1)^2}$", "it's the Pythagorean Theorem on a grid"], ["Complementary $= 90^\\circ$, supplementary $= 180^\\circ$", "C comes before S, and $90$ comes before $180$"]],
+      mem: [["Notation: $\\overleftrightarrow{AB}$, $\\overrightarrow{AB}$, $\\overline{AB}$, $AB$", "the picture on top shows what the figure looks like: two arrows, one arrow, no arrows; no bar means a number (length)"], ["Midpoint $\\left(\\frac{x_1 + x_2}{2}, \\frac{y_1 + y_2}{2}\\right)$", "<b>M</b>idpoint = <b>M</b>ean (add), <b>D</b>istance = <b>D</b>ifference (subtract). Forgot? Simple case: the middle of $2$ and $4$ is $3$, so you add. (Not $0$ and $2$ — both ways give $1$.)"], ["Missing endpoint: $B = 2M - A$", "take the same step again: from $3$ to the midpoint $5$ is $+2$, so the other end is $5 + 2 = 7$"], ["Distance $\\sqrt{(x_2 - x_1)^2 + (y_2 - y_1)^2}$", "it's the Pythagorean Theorem on a grid"], ["Complementary $= 90^\\circ$, supplementary $= 180^\\circ$", "C comes before S, and $90$ comes before $180$"]],
       und: ["Why point, line, plane can't be defined", "Why the vertex is the middle letter of $\\angle ABC$", "Why vertical angles are equal (both are supplementary to the same angle)"],
       traps: ["Writing $AB$ when you mean the segment $\\overline{AB}$ (or the other way)", "Subtracting in the midpoint formula, or adding in the distance formula"],
       ready: ["I can draw and name a line, ray, segment and angle without looking", "I can explain each postulate with a real example", "I can find a midpoint and a distance without the formula sheet", "I ticked all the Words to know"] },

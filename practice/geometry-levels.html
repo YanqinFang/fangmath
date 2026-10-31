@@ -136,7 +136,17 @@ footer{text-align:center;color:var(--faint);font-size:13px;padding:24px}
   .wrap>.chapters .chap i{flex:0 0 auto;min-width:24px;width:auto;padding:0 5px;height:24px;border-radius:12px}
   .wrap>.chapters .chap:hover{background:var(--bg)}
   .wrap>.chapters .chap.on{background:var(--navy);color:#fff}
+  .secs{display:flex;flex-direction:column;gap:1px;margin:2px 0 8px 18px;padding-left:10px;border-left:2px solid var(--line)}
+  .sec{display:flex;gap:7px;align-items:flex-start;border:0;background:transparent;text-align:left;font:inherit;font-size:13px;line-height:1.3;color:var(--muted,#555);padding:6px 8px;border-radius:8px;cursor:pointer}
+  .sec b{font-weight:700;color:var(--faint);min-width:24px;font-size:12px;padding-top:1px}
+  .sec:hover{background:var(--bg)}
+  .sec.on{background:var(--teal-soft);color:var(--ink);font-weight:600}
+  .sec.on b{color:var(--teal)}
+  .sec.done b{color:var(--green)}
+  .road .stop.other{display:none}
+  .road.single{display:none}
 }
+@media (max-width:719.98px){ .secs{display:none} }
 @media (min-width:1050px){ .wrap{grid-template-columns:260px minmax(0,1fr);gap:28px;padding-left:20px;padding-right:20px} }
 
 /* ---- compact level bar: one level for the whole chapter ---- */
@@ -877,7 +887,13 @@ function useChapter(id){ CH=CHAPTERS.find(c=>c.id===id)||CHAPTERS[0]; ST.cur=CH.
 /* ================= page ================= */
 function chapters(){ const b=$("chapters"); b.innerHTML="";
   ALLCH.forEach(([n,t,id])=>{ if(id&&CHAPTERS.some(c=>c.id===id)){ const x=document.createElement("button"); x.type="button"; x.className="chap"+(id===CH.id?" on":""); x.innerHTML=`<i>${n}</i>${t}`; x.onclick=()=>{ if(id!==CH.id) openChapter(id,"learn"); }; b.appendChild(x); }
-    else { const x=document.createElement("span"); x.className="chap soon"; x.title="Coming soon"; x.innerHTML=`<i>${n}</i>${t}`; b.appendChild(x); } }); }
+    else { const x=document.createElement("span"); x.className="chap soon"; x.title="Coming soon"; x.innerHTML=`<i>${n}</i>${t}`; b.appendChild(x); }
+    if(id===CH.id){ const s=document.createElement("div"); s.className="secs"; s.id="secs"; b.appendChild(s); } }); secList(); }
+/* sections of the open chapter, listed under it in the sidebar */
+const SECNAME={ch1:{"1.2":"Midpoint & Distance Formula","1.4":"Angles","1.5":"Constructions"}};
+function secOf(t,i){ const m=/^(\d+\.\d+) (.*)$/.exec(t.title); const n=ALLCH.find(c=>c[2]===CH.id)[0]; return m?{no:m[1],name:m[2]}:{no:n+"."+(i+1),name:t.title}; }
+function sections(){ const out=[]; CH.topics.forEach((t,i)=>{ const s=secOf(t,i); let g=out.find(x=>x.no===s.no); if(!g){ g={no:s.no,name:(SECNAME[CH.id]||{})[s.no]||s.name,idx:[]}; out.push(g); } g.idx.push(i); }); return out; }
+function secList(){ const box=$("secs"); if(!box||!CH) return; box.innerHTML=""; sections().forEach(g=>{ const x=document.createElement("button"); x.type="button"; const on=g.idx.includes(LI), done=g.idx.every(i=>st&&st.learned[CH.topics[i].id]); x.className="sec"+(on?" on":"")+(done?" done":""); x.innerHTML=`<b>${done?"✓":g.no}</b><span>${g.name}</span>`; x.onclick=()=>{ setTab("learn"); openLesson(g.idx[0],true); }; box.appendChild(x); }); }
 function legend(){ if(!st) return; const box=$("legend"); box.innerHTML=""; const cur=curLv(); LEVELS.forEach(l=>{ const b=document.createElement("button"); b.type="button"; b.className="lvc"+(l.n===cur?" on":"")+(st.rec===l.n?" star":""); b.style.setProperty("--c",l.c); b.title=l.desc; b.innerHTML=`<i>${l.n}</i>${l.name}`; b.onclick=()=>setLevel(l.n); box.appendChild(b); }); const L0=LEVELS[cur-1]; $("lvDesc").innerHTML=`<b style="color:${L0.c}">Level ${cur} · ${L0.name}</b> — ${L0.desc}. Every topic below uses this level.`; }
 
 function curLv(){ return st.lvl||st.rec||1; }
@@ -960,7 +976,7 @@ $("placeBtn").onclick=()=>{
 
 /* ---- learn ---- */
 let LI=0, shown=1, TP=null, tDone=false, tTries=0;
-function road(){ const r=$("road"); r.innerHTML=""; CH.topics.forEach((t,i)=>{ const b=document.createElement("button"); b.type="button"; b.className="stop"+(st.learned[t.id]?" done":"")+(i===LI?" on":""); const sm=/^(\d+\.\d+) (.*)$/.exec(t.title); b.innerHTML=`<i>${st.learned[t.id]?"✓":sm?sm[1]:i+1}</i>${sm?sm[2]:t.title}`; b.onclick=()=>openLesson(i); r.appendChild(b); }); }
+function road(){ const r=$("road"); r.innerHTML=""; const G=sections().find(g=>g.idx.includes(LI)); r.classList.toggle("single",!G||G.idx.length<2); secList(); CH.topics.forEach((t,i)=>{ const b=document.createElement("button"); b.type="button"; b.className="stop"+(st.learned[t.id]?" done":"")+(i===LI?" on":"")+(G&&!G.idx.includes(i)?" other":""); const sm=/^(\d+\.\d+) (.*)$/.exec(t.title); b.innerHTML=`<i>${st.learned[t.id]?"✓":sm?sm[1]:i+1}</i>${sm?sm[2]:t.title}`; b.onclick=()=>openLesson(i); r.appendChild(b); }); }
 function openLesson(i,scroll){ LI=i; shown=1; tDone=false; tTries=0; TP=null; road(); if(window.drawStory) drawStory(CH.id,CH.topics[i]); drawLesson(); if(scroll) ($("story")||$("lesson")).scrollIntoView({behavior:"smooth",block:"start"}); }
 function drawLesson(){
   const t=CH.topics[LI], l=t.lesson, box=$("lesson");

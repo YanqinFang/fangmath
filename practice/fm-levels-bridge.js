@@ -197,7 +197,7 @@
     css();
     tabBtn = document.createElement("button");
     tabBtn.className = "tab"; tabBtn.id = "tabQuiz"; tabBtn.type = "button"; tabBtn.setAttribute("role", "tab");
-    tabBtn.textContent = "③ Quiz & Test";
+    tabBtn.textContent = "③ Worksheets";
     g("tabPractice").after(tabBtn);
     view = document.createElement("div"); view.id = "quizView"; view.className = "qt"; view.hidden = true;
     g("practiceView").after(view);
@@ -283,19 +283,21 @@
     return Object.assign({}, opt || {}, { ch: CH.id, topic: P.quiz.ids, lv, cp: "quiz", cpLabel: P.quiz.label }); }
   function cpTestOpts() { return Object.assign({}, opt || {}, { ch: CH.id, scope: "chapter", diff: "standard", n: 15, cp: "" }); }
   function lessonWs(ids, label) { opt = Object.assign({}, opt || {}, { ch: CH.id, wsTopic: ids, wsLv: "combined", wsN: 12 }); paper("ws"); }
+  function cpPrint() {
+    const P = cpPlan();
+    return `<div class="cp-print"><div class="cp-ws"><span class="cp-wl">One lesson:</span><span class="cp-wsb">${P.G.map((x, i) => `<button class="btn sm ghost" data-ws="${i}" title="${esc(x.label)}">${esc(x.no)}</button>`).join("")}</span></div>
+      <div class="cp-ws"><span class="cp-wl">Printable quiz &amp; test:</span><span class="cp-wsb"><button class="btn sm ghost" id="cpQuizP">📝 Quiz ${esc(P.quiz.label)} + key</button><button class="btn sm ghost" id="cpTestP">⏱ Chapter ${chNum(CH)} Test + key</button></span></div></div>`;
+  }
   function wireCp() {
     const P = cpPlan(), keep = () => Object.assign({}, opt);
     const go = (o, k, pap) => { const save = keep(); opt = o; pap ? paper(k) : start(k); if (pap) opt = save; };
-    g("cpQuiz").onclick = () => go(cpQuizOpts(), "quiz");
-    g("cpQuizP").onclick = () => go(cpQuizOpts(), "quiz", true);
-    g("cpTest").onclick = () => go(cpTestOpts(), "test");
-    g("cpTestP").onclick = () => go(cpTestOpts(), "test", true);
+    if (g("cpQuizP")) g("cpQuizP").onclick = () => go(cpQuizOpts(), "quiz", true);
+    if (g("cpTestP")) g("cpTestP").onclick = () => go(cpTestOpts(), "test", true);
     view.querySelectorAll("[data-ws]").forEach(b => b.onclick = () => { const x = P.G[+b.dataset.ws]; lessonWs(x.idx.map(i => CH.topics[i].id).join(","), x.label); });
   }
   function gotoCp(which) {
-    setTab("quiz"); if (run && run.live) return;
-    const row = g(which === "test" ? "cpTestRow" : "cpQuizRow"); if (!row) return;
-    setTimeout(() => { row.scrollIntoView({ behavior: "smooth", block: "center" }); row.classList.add("qt-flash"); setTimeout(() => row.classList.remove("qt-flash"), 1800); }, 150);
+    setTab("quiz"); if (run && run.live && run.ch === CH.id) return;
+    opt = which === "test" ? cpTestOpts() : cpQuizOpts(); start(which === "test" ? "test" : "quiz");
   }
   // checkpoint stops in the lesson path, the end-of-lesson buttons and (Geometry) the section list
   function cpHooks() {
@@ -449,7 +451,7 @@
     opt = opt && opt.ch === CH.id ? opt : { ch: CH.id, topic: "all", lv: lv0, scope: "chapter", diff: "standard", n: 15, wsTopic: "all", wsLv: "combined", wsN: 21 };
     const H = hist().filter(r => r.ch === CH.id).slice(-5).reverse();
     const other = loadRun();
-    view.innerHTML = cpCard() + `
+    view.innerHTML = `
       ${other && other.live && other.ch !== CH.id ? `<div class="fb hint qt-resume"><span class="tag">Unfinished test</span>${esc(other.title)} is still open (the clock keeps running). <button class="btn sm" id="qtResume">Go back to it →</button></div>` : ""}
       <div class="qt-grid">
         <div class="card qt-box qt-wide" id="qtWsCard">
@@ -465,6 +467,7 @@
               <div class="qt-seg" id="wsN">${[12, 21, 30].map(k => `<button data-v="${k}">${k}</button>`).join("")}</div></div>
           </div>
           <div class="qt-go"><button class="btn" style="background:#8A6415" id="wsGo">📄 Make worksheet + answer key</button></div>
+          ${cpPrint()}
         </div>
       </div>
       ${H.length ? `<div class="card qt-hist"><span class="label">Your recent results · Chapter ${n} · this device</span>
@@ -633,7 +636,7 @@
           <div><span class="label">${esc(run.title)}</span><h2>${score} out of ${total} correct</h2><p>${msg}</p>
           <p class="qt-faint">${run.timeUp ? "⏰ Time ran out — it was handed in automatically. " : ""}Time used: ${fmtTime(run.sec)}${run.res.some(r => r !== true) ? " · missed questions were added to your " + ((window.fmLv || {}).MLOG || "Mistake Log") : ""}</p>
           <p class="qt-faint" id="qtSaved"></p></div></div>
-        <div class="qt-acts"><button class="btn" id="qtAgain">${test ? "New test (new questions)" : "New quiz"}</button><button class="btn ghost" id="qtHome">Back to Quiz &amp; Test</button></div>
+        <div class="qt-acts"><button class="btn" id="qtAgain">${test ? "New test (new questions)" : "New quiz"}</button><button class="btn ghost" id="qtHome">Back to the lessons</button></div>
       </div>
       <div class="card"><span class="label">By topic — weakest first</span><div class="qt-topics">${by.map((t, i) => `
         <div class="qt-trow"><div class="qt-tname">${cum ? `<span class="qt-faint">Ch ${t.cn} · </span>` : ""}${esc(t.tt)}</div>
@@ -654,7 +657,7 @@
       const topic = c.topics.find(x => x.id === t.tid); if (topic && typeof startPractice === "function") startPractice(topic);
     });
     g("qtAgain").onclick = () => { opt = Object.assign({}, run.o, { ch: CH.id }); start(run.kind); };
-    g("qtHome").onclick = home;
+    g("qtHome").onclick = () => { home(); setTab("learn"); };
     render(view);
     view.scrollIntoView({ behavior: "smooth", block: "start" });
   }
@@ -768,6 +771,7 @@
 .cp-ic{font-size:22px}.cp-t{flex:1 1 260px;display:flex;flex-direction:column}.cp-t small{color:var(--muted);font-size:13px}
 .cp-btns{display:flex;gap:6px;flex-wrap:wrap}
 .cp-best{font-size:12.5px;font-weight:700;border-radius:999px;padding:3px 10px}.cp-best.ok{background:var(--green-soft);color:var(--green)}.cp-best.mid{background:var(--gold-soft);color:#8A6415}.cp-best.low{background:var(--red-soft);color:var(--red)}
+.cp-print{border-top:1px dashed var(--line);margin-top:10px;padding-top:6px}
 .cp-ws{display:flex;flex-wrap:wrap;align-items:center;gap:8px;padding:6px 2px 0}.cp-wl{font-weight:600;font-size:14px}.cp-wl small{font-weight:400;color:var(--muted)}.cp-wsb{display:flex;gap:6px;flex-wrap:wrap}
 .stop.cp-stop{border-style:dashed;border-color:var(--navy);color:var(--navy);font-weight:700}.stop.cp-stop i{background:none;font-style:normal}
 .stop.cp-stop.done{border-style:solid;background:var(--green-soft)}

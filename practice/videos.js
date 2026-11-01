@@ -19,6 +19,7 @@ window.FM_VIDEOS = {
     "1.4": "https://youtu.be/DTbSuw06syM",
     "1.5": "https://youtu.be/enSKv1Kd0_s",
     "1.6": "https://youtu.be/gmc-M-tiobs",
+    "2.1": "https://youtu.be/n5U1R33VPrU",
   },
   algebra1: {},
   algebra2: {},

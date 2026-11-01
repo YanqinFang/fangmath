@@ -1,0 +1,144 @@
+\documentclass[11pt,letterpaper]{article}
+\usepackage[T1]{fontenc}
+\usepackage[scaled]{helvet}
+\renewcommand{\familydefault}{\sfdefault}
+\usepackage{amsmath,amssymb}
+\usepackage[margin=0.8in,bottom=0.9in]{geometry}
+\usepackage[most]{tcolorbox}
+\usepackage{tikz}
+\usetikzlibrary{calc}
+\usepackage{enumitem}
+\usepackage{array}
+\usepackage{needspace}
+\usepackage{fancyhdr}
+\usepackage{pifont}
+
+% ---- Palette "F. Bright & Playful" ----
+\definecolor{fmtitle}{HTML}{3D2C8D}
+\definecolor{fmkey}{HTML}{0096C7}
+\definecolor{fmwatch}{HTML}{2BB673}
+\definecolor{fmturn}{HTML}{F4A100}
+\definecolor{fmmistake}{HTML}{EF476F}
+\definecolor{fmnotice}{HTML}{9B5DE5}
+\definecolor{fmgray}{HTML}{6B6B6B}
+
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
+\fancyfoot[C]{\footnotesize\color{fmgray}\textcopyright\ 2026 FangMath. All rights reserved.}
+\fancyfoot[R]{\footnotesize\color{fmgray}\thepage}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{3pt}
+
+\newcommand{\badge}[1]{\colorbox{fmtitle}{\color{white}\bfseries\small\ #1\ }}
+\newcommand{\leveltag}[2]{\colorbox{#1}{\color{white}\bfseries\scriptsize\ #2\ }}
+\newcommand{\LE}{\leveltag{fmwatch}{EASY}}
+\newcommand{\LM}{\leveltag{fmturn}{MEDIUM}}
+\newcommand{\LH}{\leveltag{fmmistake}{HARD}}
+
+\newcommand{\sectionbar}[2]{\needspace{6cm}\par\vspace{4mm}
+  \begin{tcolorbox}[enhanced,colback=fmtitle,colframe=fmtitle,arc=2mm,
+    left=4mm,top=1.5mm,bottom=1.5mm]
+  \color{white}\bfseries\large #1\hfill{\normalsize\mdseries #2}
+  \end{tcolorbox}}
+
+\newtcolorbox{keyidea}{enhanced,breakable,colback=white,colframe=fmkey,boxrule=1pt,arc=2mm,
+  title={Key Idea},coltitle=fmkey,fonttitle=\bfseries,
+  attach boxed title to top left={xshift=4mm,yshift=-2mm},
+  boxed title style={colback=white,colframe=fmkey,boxrule=0.9pt}}
+\newtcolorbox{watchme}{enhanced,colback=white,colframe=fmwatch,boxrule=1pt,arc=2mm,
+  title={Watch Me --- Worked Example},coltitle=fmwatch,fonttitle=\bfseries,
+  attach boxed title to top left={xshift=4mm,yshift=-2mm},
+  boxed title style={colback=white,colframe=fmwatch,boxrule=0.9pt}}
+\newtcolorbox{mistakebox}{enhanced,breakable,colback=white,colframe=fmmistake,boxrule=1pt,arc=2mm,
+  title={Common Mistake},coltitle=fmmistake,fonttitle=\bfseries,
+  attach boxed title to top left={xshift=4mm,yshift=-2mm},
+  boxed title style={colback=white,colframe=fmmistake,boxrule=0.9pt}}
+\newtcolorbox{yourturn}{enhanced,breakable,colback=white,colframe=fmturn,boxrule=1pt,arc=2mm,
+  title={Your Turn},coltitle=fmturn,fonttitle=\bfseries,
+  attach boxed title to top left={xshift=4mm,yshift=-2mm},
+  boxed title style={colback=white,colframe=fmturn,boxrule=0.9pt}}
+\newtcolorbox{answerbox}[1]{enhanced,breakable,colback=white,colframe=fmwatch,boxrule=1pt,arc=2mm,
+  title={#1},coltitle=fmwatch,fonttitle=\bfseries,
+  attach boxed title to top left={xshift=4mm,yshift=-2mm},
+  boxed title style={colback=white,colframe=fmwatch,boxrule=0.9pt}}
+
+\newcommand{\work}[1]{\par\vspace{#1}}
+\setlist[enumerate]{itemsep=2pt,topsep=3pt}
+
+% ---------------- extra boxes ----------------
+\newtcolorbox{notebox}{enhanced,breakable,colback=white,colframe=fmnotice,boxrule=1pt,arc=2mm,
+  title={Notice},coltitle=fmnotice,fonttitle=\bfseries,
+  attach boxed title to top left={xshift=4mm,yshift=-2mm},
+  boxed title style={colback=white,colframe=fmnotice,boxrule=0.9pt}}
+\newtcolorbox{exbox}{enhanced,colback=white,colframe=fmwatch,boxrule=0.8pt,arc=2mm,
+  title={Example},coltitle=fmwatch,fonttitle=\bfseries\small,
+  attach boxed title to top left={xshift=4mm,yshift=-2mm},
+  boxed title style={colback=white,colframe=fmwatch,boxrule=0.8pt},fontupper=\small}
+\newcommand{\topicbar}[1]{\needspace{4.5cm}\par\vspace{5mm}
+  \begin{tcolorbox}[enhanced,colback=fmtitle,colframe=fmtitle,arc=2mm,left=4mm,top=1.5mm,bottom=1.5mm]
+  \color{white}\bfseries\large #1
+  \end{tcolorbox}}
+\usepackage{multicol}
+
+% ---------------- practice layout ----------------
+\newcommand{\workline}{\par\vspace{7mm}{\color{gray!55}\rule{\linewidth}{0.4pt}}}
+\newcommand{\worklines}[1]{\foreach \i in {1,...,#1}{\workline}}
+\newcommand{\prob}[3]{\needspace{#3}\par\vspace{3mm}{\color{fmturn}\bfseries #1.}\ #2\par}
+\newcommand{\ansline}{\par\vspace{4mm}\hfill\textbf{Answer:}\ \rule{5cm}{0.4pt}\par}
+\newcommand{\keyitem}[3]{\needspace{3.2cm}\par\vspace{2mm}
+  \begin{tcolorbox}[enhanced,colback=white,colframe=fmwatch!60,boxrule=0.6pt,arc=1.5mm,left=3mm,top=1.5mm,bottom=1.5mm]
+  {\color{fmwatch}\bfseries #1.}\quad\small #2\par\vspace{1mm}
+  \normalsize\textbf{Answer: #3}
+  \end{tcolorbox}}
+
+
+\usetikzlibrary{arrows.meta}
+\providecommand{\iskey}{0}
+% fill-in blank: line for students, pink answer in the key
+\newcommand{\fb}[2][2.6cm]{\ifnum\iskey=1 \underline{\makebox[#1][c]{\color{fmmistake}\bfseries #2}}\else\underline{\makebox[#1]{}}\fi}
+% answer line for practice problems
+\newcommand{\pans}[2][3.2cm]{\ifnum\iskey=1 \underline{\makebox[#1][c]{\color{fmmistake}\bfseries #2}}\else\rule{#1}{0.4pt}\fi}
+\newcommand{\vid}[1]{{\color{fmgray}\small\textit{\ding{43} Video: #1}}}
+\newcommand{\pt}[2]{\fill (#1) circle (2.2pt) node[above=1pt,font=\small]{$#2$};}
+
+\begin{document}
+\ifnum\iskey=1 \colorbox{fmwatch}{\color{white}\bfseries\small\ ANSWER KEY\ }\else\badge{PRACTICE}\fi\hfill{\small\color{fmgray}Geometry \textperiodcentered\ Lesson 1.1}\par\vspace{4mm}
+{\color{fmtitle}\LARGE\bfseries Undefined \& Defined Terms --- Practice\ifnum\iskey=1 \ --- Answer Key\fi}\par\vspace{1mm}
+{\color{fmgray}A worked example comes before each type. Show your thinking.}\par\vspace{3mm}
+Name: \rule{6cm}{0.4pt}\hspace{1cm}Date: \rule{3.5cm}{0.4pt}\par\vspace{2mm}
+
+\needspace{6cm}\topicbar{Type 1 \quad Name the Figure}
+\begin{watchme}\begin{minipage}[c]{0.4\linewidth}\centering\tikz{\draw[thick] (0,0)--(2.6,0);\fill (0,0) circle(2.2pt) node[above]{$M$} (2.6,0) circle(2.2pt) node[above]{$N$};}\end{minipage}\hfill
+\begin{minipage}[c]{0.56\linewidth}Two endpoints, no arrows $\Rightarrow$ a \textbf{segment}.\par\textbf{Answer:} \ $\boldsymbol{\overline{MN}}$ (or $\overline{NM}$)\end{minipage}\end{watchme}
+\newcommand{\figp}[3]{\begin{minipage}[t]{0.48\linewidth}{\color{fmturn}\bfseries #1.}\ Name the figure.\par\vspace{1mm}\centering #2\par\vspace{2mm}\raggedleft \pans[2.4cm]{#3}\end{minipage}}
+\needspace{3cm}\noindent\figp{1}{\tikz{\draw[thick,{Stealth}-{Stealth}] (0,0)--(3,0);\pt{0.6,0}{R}\pt{2.4,0}{S}}}{$\overleftrightarrow{RS}$}\hfill\figp{2}{\tikz{\draw[thick,-{Stealth}] (0.6,0)--(3,0);\pt{0.6,0}{K}\pt{2.2,0}{L}}}{$\overrightarrow{KL}$}\par\vspace{4mm}
+\needspace{3cm}\noindent\figp{3}{\tikz{\draw[thick,-{Stealth}] (2.4,0)--(0,0);\pt{0.8,0}{X}\pt{2.4,0}{Y}}}{$\overrightarrow{YX}$}\hfill\figp{4}{\tikz{\draw[thick] (0.4,0)--(2.6,0.6);\pt{0.4,0}{C}\pt{2.6,0.6}{D}}}{$\overline{CD}$}\par
+
+\needspace{6cm}\topicbar{Type 2 \quad Same or Different?}
+\begin{watchme}Are $\overleftrightarrow{AB}$ and $\overleftrightarrow{BA}$ the same?\par
+A line goes on forever both ways, so the order of the letters does not matter. \ \textbf{Answer: same.}\end{watchme}
+\newcommand{\sdp}[3]{\begin{minipage}[t][1.6cm]{0.48\linewidth}{\color{fmturn}\bfseries #1.}\ #2\par\vfill\hfill \pans[3.6cm]{#3}\end{minipage}}
+\needspace{2.2cm}\noindent\sdp{5}{Are $\overline{EF}$ and $\overline{FE}$ the same?}{same}\hfill\sdp{6}{Are $\overrightarrow{EF}$ and $\overrightarrow{FE}$ the same?}{different}\par\vspace{2mm}
+\needspace{2.2cm}\noindent\sdp{7}{Are $\overrightarrow{GH}$ and $\overrightarrow{HG}$ the same?}{different}\hfill\sdp{8}{Are $\overleftrightarrow{GH}$ and $\overleftrightarrow{HG}$ the same?}{same}\par
+
+\needspace{6cm}\topicbar{Type 3 \quad Segment or Length?}
+\begin{watchme}Which one is a \textbf{number}: $\overline{PQ}$ or $PQ$?\par
+The bar means the figure itself. No bar means its length. \ \textbf{Answer: $\boldsymbol{PQ}$} (for example $PQ = 7$).\end{watchme}
+\needspace{2.2cm}\noindent\sdp{9}{$\overline{AB}$ is 4 cm long. Fill in: \ $\square = 4$.}{$AB = 4$}\hfill\sdp{10}{Is ``$\overline{AB} = 4$'' written correctly? Why?}{No: $AB = 4$}\par\vspace{2mm}
+\needspace{2.2cm}\noindent\sdp{11}{Write ``the length of segment $CD$ is 9.''}{$CD = 9$}\hfill\sdp{12}{Which is a figure you can draw: $\overline{MN}$ or $MN$?}{$\overline{MN}$}\par
+
+\needspace{6cm}\topicbar{Type 4 \quad Name the Angle}
+\begin{watchme}\begin{minipage}[c]{0.34\linewidth}\centering\tikz[scale=0.8]{\draw[thick,-{Stealth}] (0,0)--(2.6,0);\draw[thick,-{Stealth}] (0,0)--(1.6,1.4);\pt{0,0}{T}\pt{1.2,1.05}{S}\fill (2.0,0) circle(2.2pt) node[below]{\small$U$};}\end{minipage}\hfill
+\begin{minipage}[c]{0.62\linewidth}The vertex is $T$, so $T$ goes in the middle.\par\textbf{Answer:} \ $\boldsymbol{\angle STU}$ or $\boldsymbol{\angle UTS}$ (or just $\angle T$).\end{minipage}\end{watchme}
+\newcommand{\angp}[3]{\begin{minipage}[t]{0.48\linewidth}{\color{fmturn}\bfseries #1.}\ Name the angle two ways.\par\vspace{1mm}\centering #2\par\vspace{2mm}\raggedleft \pans[3.4cm]{#3}\end{minipage}}
+\needspace{4cm}\noindent\angp{13}{\tikz[scale=0.8]{\draw[thick,-{Stealth}] (0,0)--(2.6,0);\draw[thick,-{Stealth}] (0,0)--(0.6,1.8);\fill (0,0) circle(2.2pt) node[below]{\small$Q$} (0.45,1.35) circle(2.2pt) node[left]{\small$P$} (2,0) circle(2.2pt) node[below]{\small$R$};}}{$\angle PQR$, $\angle RQP$}\hfill
+\angp{14}{\tikz[scale=0.8]{\draw[thick,-{Stealth}] (2.6,0)--(0,0);\draw[thick,-{Stealth}] (2.6,0)--(1.0,1.5);\fill (2.6,0) circle(2.2pt) node[below]{\small$Z$} (1.4,1.12) circle(2.2pt) node[above]{\small$X$} (0.6,0) circle(2.2pt) node[below]{\small$Y$};}}{$\angle XZY$, $\angle YZX$}\par\vspace{3mm}
+\needspace{2.2cm}\noindent\sdp{15}{In $\angle DEF$, which point is the vertex?}{$E$}\hfill\sdp{16}{Is $\angle ABC$ the same angle as $\angle BAC$? Why?}{no --- different vertex}\par
+
+\needspace{6cm}\topicbar{Type 5 \quad Collinear, Coplanar, Intersection}
+\begin{watchme}\begin{minipage}[c]{0.36\linewidth}\centering\tikz{\draw[thick,{Stealth}-{Stealth}] (-0.2,0)--(3.2,0);\pt{0.3,0}{A}\pt{1.5,0}{B}\pt{2.7,0}{C}\pt{1.5,1}{D}}\end{minipage}\hfill
+\begin{minipage}[c]{0.6\linewidth}Are $A$, $B$, $C$ collinear? They lie on one line: \textbf{yes}.\par Are $A$, $B$, $D$ collinear? $D$ is off the line: \textbf{no}.\end{minipage}\end{watchme}
+\needspace{2.2cm}\noindent\sdp{17}{In the example picture, are $B$, $C$, $D$ collinear?}{no}\hfill\sdp{18}{Two different lines cross. They intersect in a \ldots}{point}\par\vspace{2mm}
+\needspace{2.2cm}\noindent\sdp{19}{Two walls of a room meet. Two planes intersect in a \ldots}{line}\hfill\sdp{20}{Are any 3 points always coplanar?}{yes}\par
+\end{document}

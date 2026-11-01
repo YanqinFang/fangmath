@@ -1135,16 +1135,27 @@
     box.innerHTML = `<div class="fv-head"><span class="label" style="color:var(--teal)">▶ Video lesson</span><b>${title}</b>
         <button class="btn sm ${seen[key] ? "" : "ghost"}" id="fvSeen">${seen[key] ? "✓ Watched" : "Mark as watched"}</button><button class="btn sm ghost" id="fvHide" aria-expanded="true">Hide video</button></div>
       <div class="fv-frame"><iframe src="https://www.youtube-nocookie.com/embed/${id || cid}?rel=0&modestbranding=1" title="${title.replace(/"/g, "")}" loading="lazy" allow="accelerometer; encrypted-media; gyroscope; picture-in-picture; fullscreen" allowfullscreen></iframe></div>
-      <p class="fv-tip">Watch first — pause when you see <b>“Your turn”</b> and try it yourself. Then do the steps below.</p>`;
+      <p class="fv-tip">Watch first — pause when you see <b>“Your turn”</b> and try it yourself. Then do the steps below.</p>${id ? hoDraw(v) : ""}`;
     g("fvSeen").onclick = () => { const s2 = vSeen(); s2[key] = s2[key] ? 0 : 1; try { localStorage.setItem(VKEY(), JSON.stringify(s2)); } catch (e) {}
       g("fvSeen").textContent = s2[key] ? "✓ Watched" : "Mark as watched"; g("fvSeen").classList.toggle("ghost", !s2[key]); };
     g("fvHide").onclick = () => { const f = box.querySelector(".fv-frame"), t2 = box.querySelector(".fv-tip"), hid = !f.hidden; f.hidden = t2.hidden = hid; g("fvHide").textContent = hid ? "Show video" : "Hide video"; };
+  }
+  /* fill-in notes + practice for a video (practice/videos.js → FM_HANDOUTS): color, black & white, answer keys */
+  function hoDraw(v) {
+    const H = window.FM_HANDOUTS || {}, M = H[PG.replace(/-levels$/, "")] || H[PG] || {}, b = M[v.k] || M[v.no]; if (!b) return "";
+    const a = (f, t, cls) => `<a class="btn sm ${cls || ""}" href="${b}${f}.pdf" target="_blank" rel="noopener">${t}</a>`;
+    return `<div class="fv-ho"><div><b>📄 Fill-in notes</b><span>Fill in the <u>underlined</u> words while you watch.</span><p>${a("_Notes", "Color")}${a("_Notes_BW", "Black &amp; white", "ghost")}</p></div>
+      <div><b>✏️ Practice</b><span>A worked example before each type.</span><p>${a("_Practice", "Color")}${a("_Practice_BW", "Black &amp; white", "ghost")}</p></div>
+      <div><b>🔑 Answer keys</b><span>Check your work after you finish.</span><p>${a("_Notes_Key", "Notes key", "ghost")}${a("_Practice_Key", "Practice key", "ghost")}</p></div></div>`;
   }
   function vidInit() {
     const css = document.createElement("style"); css.textContent = `
 .fm-video{margin:0 0 14px;padding:14px 16px}.fv-head{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:10px}.fv-head b{flex:1;min-width:180px;font-size:16px}
 .fv-frame{position:relative;width:100%;aspect-ratio:16/9;border-radius:12px;overflow:hidden;background:#000}.fv-frame iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
-.fv-tip{margin:8px 0 0;font-size:13.5px;color:var(--muted)}`; document.head.appendChild(css);
+.fv-tip{margin:8px 0 0;font-size:13.5px;color:var(--muted)}
+.fv-ho{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:12px}@media (max-width:700px){.fv-ho{grid-template-columns:1fr}}
+.fv-ho>div{border:1px solid var(--line);border-radius:12px;padding:10px 12px;background:var(--bg);display:flex;flex-direction:column;gap:3px}
+.fv-ho span{font-size:13px;color:var(--muted)}.fv-ho p{margin:6px 0 0;display:flex;gap:6px;flex-wrap:wrap}`; document.head.appendChild(css);
     const go = () => { const o = window.openLesson; if (typeof o === "function") window.openLesson = function () { const r = o.apply(this, arguments); try { vidDraw(); } catch (e) {} return r; };
       const oc = window.openChapter; if (typeof oc === "function") window.openChapter = function () { const r = oc.apply(this, arguments); try { vidDraw(); } catch (e) {} return r; };
       try { vidDraw(); } catch (e) {} };

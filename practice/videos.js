@@ -30,3 +30,11 @@ window.FM_VIDEOS = {
   grade4: {},
   grade6: {},
 };
+
+/* Fill-in notes + practice that go with a video. Each entry is the start of the file names:
+   …_Notes.pdf, _Notes_BW.pdf, _Notes_Key.pdf, _Practice.pdf, _Practice_BW.pdf, _Practice_Key.pdf */
+window.FM_HANDOUTS = {
+  geometry: {
+    "1.1": "../materials/geometry/ch01/Geo_1-1_Terms",
+  },
+};

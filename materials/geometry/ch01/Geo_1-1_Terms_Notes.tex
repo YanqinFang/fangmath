@@ -1,0 +1,152 @@
+\documentclass[11pt,letterpaper]{article}
+\usepackage[T1]{fontenc}
+\usepackage[scaled]{helvet}
+\renewcommand{\familydefault}{\sfdefault}
+\usepackage{amsmath,amssymb}
+\usepackage[margin=0.8in,bottom=0.9in]{geometry}
+\usepackage[most]{tcolorbox}
+\usepackage{tikz}
+\usetikzlibrary{calc}
+\usepackage{enumitem}
+\usepackage{array}
+\usepackage{needspace}
+\usepackage{fancyhdr}
+\usepackage{pifont}
+
+% ---- Palette "F. Bright & Playful" ----
+\definecolor{fmtitle}{HTML}{3D2C8D}
+\definecolor{fmkey}{HTML}{0096C7}
+\definecolor{fmwatch}{HTML}{2BB673}
+\definecolor{fmturn}{HTML}{F4A100}
+\definecolor{fmmistake}{HTML}{EF476F}
+\definecolor{fmnotice}{HTML}{9B5DE5}
+\definecolor{fmgray}{HTML}{6B6B6B}
+
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
+\fancyfoot[C]{\footnotesize\color{fmgray}\textcopyright\ 2026 FangMath. All rights reserved.}
+\fancyfoot[R]{\footnotesize\color{fmgray}\thepage}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{3pt}
+
+\newcommand{\badge}[1]{\colorbox{fmtitle}{\color{white}\bfseries\small\ #1\ }}
+\newcommand{\leveltag}[2]{\colorbox{#1}{\color{white}\bfseries\scriptsize\ #2\ }}
+\newcommand{\LE}{\leveltag{fmwatch}{EASY}}
+\newcommand{\LM}{\leveltag{fmturn}{MEDIUM}}
+\newcommand{\LH}{\leveltag{fmmistake}{HARD}}
+
+\newcommand{\sectionbar}[2]{\needspace{6cm}\par\vspace{4mm}
+  \begin{tcolorbox}[enhanced,colback=fmtitle,colframe=fmtitle,arc=2mm,
+    left=4mm,top=1.5mm,bottom=1.5mm]
+  \color{white}\bfseries\large #1\hfill{\normalsize\mdseries #2}
+  \end{tcolorbox}}
+
+\newtcolorbox{keyidea}{enhanced,breakable,colback=white,colframe=fmkey,boxrule=1pt,arc=2mm,
+  title={Key Idea},coltitle=fmkey,fonttitle=\bfseries,
+  attach boxed title to top left={xshift=4mm,yshift=-2mm},
+  boxed title style={colback=white,colframe=fmkey,boxrule=0.9pt}}
+\newtcolorbox{watchme}{enhanced,colback=white,colframe=fmwatch,boxrule=1pt,arc=2mm,
+  title={Watch Me --- Worked Example},coltitle=fmwatch,fonttitle=\bfseries,
+  attach boxed title to top left={xshift=4mm,yshift=-2mm},
+  boxed title style={colback=white,colframe=fmwatch,boxrule=0.9pt}}
+\newtcolorbox{mistakebox}{enhanced,breakable,colback=white,colframe=fmmistake,boxrule=1pt,arc=2mm,
+  title={Common Mistake},coltitle=fmmistake,fonttitle=\bfseries,
+  attach boxed title to top left={xshift=4mm,yshift=-2mm},
+  boxed title style={colback=white,colframe=fmmistake,boxrule=0.9pt}}
+\newtcolorbox{yourturn}{enhanced,breakable,colback=white,colframe=fmturn,boxrule=1pt,arc=2mm,
+  title={Your Turn},coltitle=fmturn,fonttitle=\bfseries,
+  attach boxed title to top left={xshift=4mm,yshift=-2mm},
+  boxed title style={colback=white,colframe=fmturn,boxrule=0.9pt}}
+\newtcolorbox{answerbox}[1]{enhanced,breakable,colback=white,colframe=fmwatch,boxrule=1pt,arc=2mm,
+  title={#1},coltitle=fmwatch,fonttitle=\bfseries,
+  attach boxed title to top left={xshift=4mm,yshift=-2mm},
+  boxed title style={colback=white,colframe=fmwatch,boxrule=0.9pt}}
+
+\newcommand{\work}[1]{\par\vspace{#1}}
+\setlist[enumerate]{itemsep=2pt,topsep=3pt}
+
+% ---------------- extra boxes ----------------
+\newtcolorbox{notebox}{enhanced,breakable,colback=white,colframe=fmnotice,boxrule=1pt,arc=2mm,
+  title={Notice},coltitle=fmnotice,fonttitle=\bfseries,
+  attach boxed title to top left={xshift=4mm,yshift=-2mm},
+  boxed title style={colback=white,colframe=fmnotice,boxrule=0.9pt}}
+\newtcolorbox{exbox}{enhanced,colback=white,colframe=fmwatch,boxrule=0.8pt,arc=2mm,
+  title={Example},coltitle=fmwatch,fonttitle=\bfseries\small,
+  attach boxed title to top left={xshift=4mm,yshift=-2mm},
+  boxed title style={colback=white,colframe=fmwatch,boxrule=0.8pt},fontupper=\small}
+\newcommand{\topicbar}[1]{\needspace{4.5cm}\par\vspace{5mm}
+  \begin{tcolorbox}[enhanced,colback=fmtitle,colframe=fmtitle,arc=2mm,left=4mm,top=1.5mm,bottom=1.5mm]
+  \color{white}\bfseries\large #1
+  \end{tcolorbox}}
+\usepackage{multicol}
+
+% ---------------- practice layout ----------------
+\newcommand{\workline}{\par\vspace{7mm}{\color{gray!55}\rule{\linewidth}{0.4pt}}}
+\newcommand{\worklines}[1]{\foreach \i in {1,...,#1}{\workline}}
+\newcommand{\prob}[3]{\needspace{#3}\par\vspace{3mm}{\color{fmturn}\bfseries #1.}\ #2\par}
+\newcommand{\ansline}{\par\vspace{4mm}\hfill\textbf{Answer:}\ \rule{5cm}{0.4pt}\par}
+\newcommand{\keyitem}[3]{\needspace{3.2cm}\par\vspace{2mm}
+  \begin{tcolorbox}[enhanced,colback=white,colframe=fmwatch!60,boxrule=0.6pt,arc=1.5mm,left=3mm,top=1.5mm,bottom=1.5mm]
+  {\color{fmwatch}\bfseries #1.}\quad\small #2\par\vspace{1mm}
+  \normalsize\textbf{Answer: #3}
+  \end{tcolorbox}}
+
+
+\usetikzlibrary{arrows.meta}
+\providecommand{\iskey}{0}
+% fill-in blank: line for students, pink answer in the key
+\newcommand{\fb}[2][2.6cm]{\ifnum\iskey=1 \underline{\makebox[#1][c]{\color{fmmistake}\bfseries #2}}\else\underline{\makebox[#1]{}}\fi}
+% answer line for practice problems
+\newcommand{\pans}[2][3.2cm]{\ifnum\iskey=1 \underline{\makebox[#1][c]{\color{fmmistake}\bfseries #2}}\else\rule{#1}{0.4pt}\fi}
+\newcommand{\vid}[1]{{\color{fmgray}\small\textit{\ding{43} Video: #1}}}
+\newcommand{\pt}[2]{\fill (#1) circle (2.2pt) node[above=1pt,font=\small]{$#2$};}
+
+\begin{document}
+\ifnum\iskey=1 \colorbox{fmwatch}{\color{white}\bfseries\small\ ANSWER KEY\ }\else\badge{WATCH \& FILL IN}\fi\hfill{\small\color{fmgray}Geometry \textperiodcentered\ Lesson 1.1}\par\vspace{4mm}
+{\color{fmtitle}\LARGE\bfseries Undefined \& Defined Terms --- Notes\ifnum\iskey=1 \ --- Answer Key\fi}\par\vspace{1mm}
+{\color{fmgray}Watch the video. The \underline{underlined} words in the video are the ones you fill in here.}\par\vspace{3mm}
+Name: \rule{6cm}{0.4pt}\hspace{1cm}Date: \rule{3.5cm}{0.4pt}\par\vspace{2mm}
+
+\vid{Three words we never define}
+\begin{keyidea}Every word in geometry is built from three \fb{undefined} terms.\par\vspace{2mm}
+\begin{tabular}{@{}>{\raggedright\arraybackslash}p{0.31\linewidth}>{\raggedright\arraybackslash}p{0.31\linewidth}>{\raggedright\arraybackslash}p{0.31\linewidth}@{}}
+\centering\tikz{\fill[fmtitle] (0,0) circle (3pt) node[above=3pt]{$A$};\path (-1,-0.4) rectangle (1,0.7);} &
+\centering\tikz{\draw[thick,{Stealth}-{Stealth}] (-1.3,0)--(1.3,0);\fill (-0.5,0) circle (2.2pt) node[above=2pt]{$A$} (0.5,0) circle (2.2pt) node[above=2pt]{$B$};\path (-1,-0.4) rectangle (1,0.7);} &
+\centering\tikz{\filldraw[fmkey!15,draw=fmkey,thick] (-1.2,-0.4)--(0.8,-0.4)--(1.2,0.5)--(-0.8,0.5)--cycle;\node[fmkey] at (0.85,0.25){$P$};}\tabularnewline[1mm]
+\textbf{Point} $A$: a location with \fb[1.8cm]{no size}. Like the \fb[1.6cm]{pin} on a map. &
+\textbf{Line} $AB$: \fb[1.8cm]{straight}, goes on \fb[1.6cm]{forever} both ways. &
+\textbf{Plane} $P$: a \fb[1.6cm]{flat} surface that goes on forever, like a floor that never ends.
+\end{tabular}\end{keyidea}
+
+\vid{Defined terms --- and their symbols}
+\begin{keyidea}\renewcommand{\arraystretch}{1.9}
+\begin{tabular}{@{}l c c >{\raggedright\arraybackslash}p{6.6cm}@{}}
+\textbf{Term} & \textbf{Picture} & \textbf{Symbol} & \textbf{What the symbol tells you}\\ \hline
+Line & \tikz{\draw[thick,{Stealth}-{Stealth}] (0,0)--(2.4,0);\fill (0.5,0) circle(2pt) node[above]{\small$A$} (1.9,0) circle(2pt) node[above]{\small$B$};} & \fb[1.4cm]{$\overleftrightarrow{AB}$} & \fb[1cm]{two} arrows: goes on forever \fb[1.8cm]{both ways}\\
+Ray & \tikz{\draw[thick,-{Stealth}] (0.5,0)--(2.4,0);\fill (0.5,0) circle(2pt) node[above]{\small$A$} (1.9,0) circle(2pt) node[above]{\small$B$};} & \fb[1.4cm]{$\overrightarrow{AB}$} & starts at $A$ --- the endpoint is written \fb[1.4cm]{first}\\
+Segment & \tikz{\draw[thick] (0.5,0)--(1.9,0);\fill (0.5,0) circle(2pt) node[above]{\small$A$} (1.9,0) circle(2pt) node[above]{\small$B$};} & \fb[1.4cm]{$\overline{AB}$} & \fb[1cm]{two} endpoints --- it can be \fb[2cm]{measured}\\
+\end{tabular}\end{keyidea}
+
+\vid{Length and angle}
+\begin{keyidea}\textbf{Length:} \ $AB$ with \fb[1.6cm]{no bar} is a \fb[1.8cm]{number}, the length of $\overline{AB}$ (like $5$ cm).\par\vspace{2mm}
+\begin{minipage}[c]{0.36\linewidth}\centering\tikz[scale=0.8]{\draw[thick,-{Stealth}] (0.6,0)--(3,0);\draw[thick,-{Stealth}] (0.6,0)--(2.4,1.1);\fill (0.6,0) circle(2pt) node[below]{\small$B$} (1.9,0.8) circle(2pt) node[above]{\small$A$} (2.3,0) circle(2pt) node[below]{\small$C$};}\end{minipage}\hfill
+\begin{minipage}[c]{0.6\linewidth}\textbf{Angle:} \ written \fb[1.8cm]{$\angle ABC$}. The \fb[1.6cm]{vertex} $B$ always goes in the \fb[1.6cm]{middle}.\end{minipage}\end{keyidea}
+
+\vid{The mistake almost everyone makes}
+\begin{mistakebox}$\overrightarrow{AB}$ and $\overrightarrow{BA}$ are \fb[2cm]{different} rays --- they start at different points.\par\vspace{1mm}
+But $\overline{AB}$ and $\overline{BA}$ are the \fb[1.8cm]{same} segment.\end{mistakebox}
+
+\vid{Collinear, coplanar, intersection}
+\begin{keyidea}\renewcommand{\arraystretch}{1.6}\begin{tabular}{@{}l l@{}}
+\textbf{Collinear} & points on the same \fb[1.6cm]{line}\\
+\textbf{Coplanar} & points on the same \fb[1.6cm]{plane}\\
+Two lines intersect in a & \fb[1.6cm]{point}\\
+Two planes intersect in a & \fb[1.6cm]{line}\\
+\end{tabular}\end{keyidea}
+
+\vid{Your turn}
+\begin{yourturn}\begin{minipage}[c]{0.45\linewidth}\centering\tikz{\draw[very thick,-{Stealth}] (0,0)--(3.6,0);\fill (0,0) circle(2.5pt) node[above]{$P$} (2,0) circle(2.5pt) node[above]{$Q$};}\end{minipage}\hfill
+\begin{minipage}[c]{0.52\linewidth}Name this figure with the right symbol: \ \fb[1.5cm]{$\overrightarrow{PQ}$}\par\vspace{1mm}It is a \fb[1.4cm]{ray}; the endpoint \fb[0.8cm]{$P$} comes first.\end{minipage}\end{yourturn}
+
+\end{document}

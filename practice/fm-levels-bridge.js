@@ -214,6 +214,7 @@
     progInit();
     eocHooks();
     vidInit();
+    partsInit();
     drawHandouts();
     const oc = window.openChapter;
     window.openChapter = function () { const r = oc.apply(this, arguments); try { drawHandouts(); } catch (e) {} return r; };
@@ -1210,6 +1211,55 @@
 @media (max-width:719.98px){.secs{display:none}}`;
     document.head.appendChild(css);
     try { chapters(); road(); if (typeof drawLesson === "function") drawLesson(); if (g("topics") && st) topics(); } catch (e) { console.warn("fmt redraw", e); }
+  }
+  /* ================= ONE PART AT A TIME (like Geometry 1.1) =================
+     A lesson's Learn page can have several cards: the chapter's words, the postulates box, the story and the
+     lesson itself. Show one at a time, with numbered steps on top and "Next →" at the bottom. */
+  const PARTS = { fmVideo: "Video", words: "Words to know", postbox: "Postulates", story: "Story", lesson: "Learn it" };
+  const partAt = {};
+  function partsDraw() {
+    const lv = g("learnView"); if (!lv || !CH) return;
+    const all = ["fmVideo", "words", "postbox", "story", "lesson"].map(id => g(id)).filter(e => e && lv.contains(e));
+    all.forEach(e => e.classList.remove("fm-off"));
+    let parts = all.filter(e => !e.hidden && getComputedStyle(e).display !== "none" && e.innerHTML.trim());
+    let bar = g("fmParts"), nav = g("fmPartsNav");
+    if (parts.length < 2) { if (bar) bar.remove(); if (nav) nav.remove(); return; }
+    // the chapter's words come first on the chapter's first lesson, last (for review) on the others
+    const w = parts.find(e => e.id === "words");
+    if (w && LI !== 0) parts = parts.filter(e => e !== w).concat(w);
+    if (parts.length < 2) { if (bar) bar.remove(); if (nav) nav.remove(); parts.forEach(e => e.classList.remove("fm-off")); return; }
+    const key = CH.id + ":" + LI; let k = Math.min(partAt[key] || 0, parts.length - 1);
+    if (!bar) { bar = document.createElement("div"); bar.id = "fmParts"; bar.className = "fm-parts"; }
+    parts[0].before(bar);
+    bar.innerHTML = parts.map((e, i) => `<button type="button" class="fp-pill${i === k ? " on" : ""}${i < k ? " seen" : ""}" data-i="${i}"><i>${i < k ? "✓" : i + 1}</i>${PARTS[e.id]}</button>`).join("");
+    parts.forEach((e, i) => e.classList.toggle("fm-off", i !== k));
+    if (parts[k].tagName === "DETAILS") parts[k].open = true;
+    if (!nav) { nav = document.createElement("div"); nav.id = "fmPartsNav"; nav.className = "fm-parts-nav"; }
+    parts[k].after(nav);
+    const nxt = parts[k + 1];
+    nav.innerHTML = `${k > 0 ? `<button type="button" class="btn ghost sm" data-go="${k - 1}">← Back</button>` : "<span></span>"}<span class="fp-n">${k + 1} of ${parts.length}</span>${nxt ? `<button type="button" class="btn sm" data-go="${k + 1}">Next: ${PARTS[nxt.id]} →</button>` : "<span></span>"}`;
+    const go = i => { partAt[key] = i; partsDraw(); bar.scrollIntoView({ behavior: "smooth", block: "start" }); };
+    bar.querySelectorAll("[data-i]").forEach(b => b.onclick = () => go(+b.dataset.i));
+    nav.querySelectorAll("[data-go]").forEach(b => b.onclick = () => go(+b.dataset.go));
+  }
+  function partsInit() {
+    if (!/^geometry/.test(PG)) return;
+    const css = document.createElement("style"); css.textContent = `
+.fm-off{display:none!important}
+.fm-parts{display:flex;flex-wrap:wrap;gap:8px;background:#fff;border:1px solid var(--line);border-radius:16px;padding:10px 12px;margin:0 0 -6px;box-shadow:var(--shadow)}
+.fp-pill{display:flex;align-items:center;gap:8px;border:1.5px solid var(--line);background:var(--surface,#fff);border-radius:999px;padding:5px 14px 5px 5px;font:inherit;font-size:14px;font-weight:600;color:var(--ink);cursor:pointer}
+.fp-pill i{font-style:normal;width:24px;height:24px;border-radius:50%;display:grid;place-items:center;background:var(--bg);font-size:12px}
+.fp-pill.on{border-color:var(--navy);background:var(--soft,#EEF3F8)}.fp-pill.on i{background:var(--navy);color:#fff}
+.fp-pill.seen i{background:var(--green);color:#fff}
+.fm-parts-nav{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:4px 2px 0}
+.fm-parts-nav .fp-n{color:var(--faint);font-size:13px}
+.fm-parts-nav .btn:not(.ghost){background:var(--navy)}`;
+    document.head.appendChild(css);
+    const later = () => setTimeout(() => { try { partsDraw(); } catch (e) { console.warn("parts", e); } }, 30);
+    const o = window.openLesson; if (typeof o === "function") window.openLesson = function () { const r = o.apply(this, arguments); later(); return r; };
+    const oc = window.openChapter; if (typeof oc === "function") window.openChapter = function () { const r = oc.apply(this, arguments); later(); return r; };
+    const ot = window.setTab; window.setTab = function (t) { const r = ot.apply(this, arguments); if (t === "learn") later(); return r; };
+    later();
   }
   window.fmQuizState = () => run;
   window.fmEOC = d => eocHome(d);

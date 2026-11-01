@@ -22,11 +22,6 @@ L = dict(
     "We divide both sides by two. Done! x equals four."]),
  ],
  warn="Distribute to <b>{{every}}</b> term: $2(x + 3)$ is {{$2x + 6$}}, not $2x + 3$.",
- remember=[r"\textbf{Simplify} each side first: distribute, combine like terms.",
-           r"Then solve like a \textbf{two-step} equation: undo $+$ or $-$, then $\times$ or $\div$.",
-           r"Distribute to \textbf{every} term inside the parentheses."],
- own_words="How is a multi-step equation different from a two-step equation?",
- own_words_ex="you simplify each side first; after that it is just a two-step equation.",
  say=dict(
   title="Welcome to Prof. Fang Math. This is Algebra 1, lesson two point two: multi-step equations. Get your fill-in notes and a pencil ready. Every time you see a blank, fill it in with me.",
   idea=["Here's the big idea. It has four blanks. Let's fill them in together.~",
@@ -37,6 +32,6 @@ L = dict(
   warn=["Now, watch out! Here's the mistake a lot of students make.~",
         "Distribute to every term inside the parentheses, not just the first one.",
         "So two times the quantity x plus three is two x plus six, not two x plus three. The two multiplies the three, too!"],
-  end="Let's remember. First, simplify each side: distribute, and combine like terms. Then solve it like a two-step equation. And always distribute to every term. Check your notes: every blank should be filled in. Then go to fang math dot com, Algebra 1, lesson two point two, and practice at your level. See you next time!",
+  end="Let's remember. Simplify each side first: distribute, and combine like terms. Then solve like a two-step equation. And watch out: distribute to every term. Two times the quantity x plus three is two x plus six, not two x plus three. Check your notes: every blank should be filled in. Then go to fang math dot com, Algebra 1, lesson two point two, and practice at your level. See you next time!",
  ),
 )

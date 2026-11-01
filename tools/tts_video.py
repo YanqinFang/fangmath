@@ -13,7 +13,9 @@ import re
 def say(t):   # fix words the voice reads wrong: the letter A ("ay", not "uh") and "Prof."
     t = t.replace("Prof.", "Professor")
     return re.sub(r"\bA\b(?! (point|line|plane|ray|segment)\b)", "Eigh", t)
-G = {}; exec(open(a.narr).read(), G); lines = G["N"][a.key]
+import json as _j
+if a.narr.endswith(".json"): lines = _j.load(open(a.narr))[a.key]
+else: G = {}; exec(open(a.narr).read(), G); lines = G["N"][a.key]
 tmp = tempfile.mkdtemp()
 subprocess.run(["pdftoppm", "-png", "-scale-to-x", "1920", "-scale-to-y", "1080", a.pdf, os.path.join(tmp, "s")], check=True)
 pages = sorted(f for f in os.listdir(tmp) if f.endswith(".png"))

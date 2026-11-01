@@ -1,0 +1,92 @@
+\def\SECTION{2.4 Algebraic Reasoning}
+\documentclass[aspectratio=169,14pt]{beamer}
+\usepackage[T1]{fontenc}
+\usepackage{mathpazo}
+\usepackage{amsmath,amssymb}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,calc,decorations.pathreplacing}
+\definecolor{fblue}{HTML}{1F4E79}
+\definecolor{fteal}{HTML}{0F7C7C}
+\definecolor{fgold}{HTML}{C9962B}
+\definecolor{fred}{HTML}{B3261E}
+\definecolor{fink}{HTML}{16233B}
+\definecolor{fsoft}{HTML}{EEF3F8}
+\definecolor{fgoldsoft}{HTML}{FBF1DC}
+\setbeamertemplate{navigation symbols}{}
+\setbeamercolor{normal text}{fg=fink}
+\setbeamercolor{frametitle}{fg=fblue}
+\setbeamerfont{frametitle}{series=\bfseries,size=\Large}
+\setbeamercolor{structure}{fg=fteal}
+\setbeamertemplate{itemize item}{\color{fteal}$\blacktriangleright$}
+\setbeamertemplate{frametitle}{\vspace{6pt}\insertframetitle\par\vspace{-2pt}{\color{fgold}\rule{2.2cm}{2pt}}}
+\setbeamertemplate{footline}{\hspace{0.6cm}{\color{fblue}\scriptsize\bfseries Fang\textcolor{fteal}{Math}}\hfill{\scriptsize\color{gray}\SECTION\quad\insertframenumber}\hspace{0.6cm}\vspace{6pt}}
+\newcommand{\key}[1]{{\color{fteal}\textbf{#1}}}
+\newcommand{\ans}[1]{\colorbox{fgoldsoft}{\color{fink}\ensuremath{#1}}}
+\newcommand{\warn}[1]{\begin{beamercolorbox}[sep=8pt,rounded=true]{warnbox}{\color{fred}\textbf{Watch out!}}\enskip #1\end{beamercolorbox}}
+\setbeamercolor{warnbox}{bg=fred!8,fg=fink}
+\setbeamercolor{turnbox}{bg=fgoldsoft,fg=fink}
+\setbeamercolor{defbox}{bg=fsoft,fg=fink}
+\newcommand{\defn}[1]{\begin{beamercolorbox}[sep=8pt,rounded=true]{defbox}#1\end{beamercolorbox}}
+\newenvironment{yourturn}{\begin{beamercolorbox}[sep=10pt,rounded=true]{turnbox}{\color{fgold}\Large\bfseries Your turn!}\quad{\small Pause the video and try it.}\par\medskip}{\end{beamercolorbox}}
+\newcommand{\titleframe}[3]{%
+\begin{frame}[plain]
+\begin{tikzpicture}[remember picture,overlay]
+\fill[fblue] (current page.north west) rectangle ([yshift=-0.9cm]current page.north east);
+\node[anchor=west,text=white,font=\bfseries] at ([xshift=0.6cm,yshift=-0.45cm]current page.north west) {Fang\textcolor{fgold}{Math}};
+\node[anchor=east,text=white,font=\small] at ([xshift=-0.6cm,yshift=-0.45cm]current page.north east) {Geometry $\cdot$ Chapter \CHNO};
+\end{tikzpicture}
+\vfill
+{\color{fteal}\large\bfseries #1}\par\medskip
+{\color{fblue}\fontsize{30}{34}\selectfont\bfseries #2}\par\medskip
+{\color{fgold}\rule{3cm}{3pt}}\par\bigskip
+{\large #3}
+\vfill
+{\small\color{gray} fangmath.com $\cdot$ YouTube @fangmathcom}
+\end{frame}}
+\newcommand{\closeframe}[1]{%
+\begin{frame}{Remember}
+#1
+\vfill
+\begin{center}{\color{fblue}\large\bfseries Now practice at your level:}\par\smallskip
+{\Large\color{fteal}\bfseries fangmath.com} \enskip{\color{gray}$\to$ Geometry $\to$ Chapter \CHNO}\end{center}
+\end{frame}}
+
+\usepackage{pgfplots}\pgfplotsset{compat=1.17}
+\newcommand{\grid}[4]{\draw[step=1,gray!25] (#1,#2) grid (#3,#4);\draw[-{Stealth},gray] (#1,0)--(#3+0.3,0) node[right]{\small$x$};\draw[-{Stealth},gray] (0,#2)--(0,#4+0.3) node[above]{\small$y$};}
+\def\CHNO{2}
+\usetikzlibrary{angles,quotes}
+\begin{document}
+\titleframe{Lesson 2.4}{Algebraic Reasoning \& Properties}{Every step needs a reason}
+\begin{frame}{Every step needs a reason}
+\onslide<1->{\defn{In geometry we don't just get the answer --- we \key{justify} every step with a \key{reason}: a definition, a property, a postulate or a theorem.}}\par\medskip
+\end{frame}
+\begin{frame}{Solve and justify}
+\onslide<1->{$x - 4 = 10$ \hfill Given}\par\medskip
+\onslide<2->{$x = 14$ \hfill Addition Property of Equality}\par\medskip
+\onslide<3->{\defn{The reason names \textbf{what you did to both sides}.}}\par\medskip
+\end{frame}
+\begin{frame}{Properties of equality}
+\onslide<1->{\key{Addition / Subtraction}: add or subtract the same number on both sides. \\ \key{Multiplication / Division}: multiply or divide both sides by the same number (not 0).}\par\medskip
+\onslide<2->{\key{Substitution}: if $a = b$, you can replace $a$ with $b$. \\ \key{Distributive}: $a(b + c) = ab + ac$.}\par\medskip
+\end{frame}
+\begin{frame}{Reflexive, symmetric, transitive}
+\onslide<1->{\key{Reflexive}: $a = a$ \quad {\small\color{gray}e.g. $AB = AB$}}\par\medskip
+\onslide<2->{\key{Symmetric}: if $a = b$, then $b = a$.}\par\medskip
+\onslide<3->{\key{Transitive}: if $a = b$ and $b = c$, then $a = c$.}\par\medskip
+\end{frame}
+\begin{frame}{A longer example}
+\onslide<1->{$3(x + 2) = 21$ \hfill Given}\par\medskip
+\onslide<2->{$3x + 6 = 21$ \hfill Distributive Property}\par\medskip
+\onslide<3->{$3x = 15$ \hfill Subtraction Property of Equality}\par\medskip
+\onslide<4->{$x = 5$ \hfill Division Property of Equality}\par\medskip
+\end{frame}
+\begin{frame}{}
+\begin{yourturn}Name the property. \\ (a) If $AB = CD$, then $CD = AB$. \qquad (b) If $m\angle 1 = m\angle 2$ and $m\angle 2 = m\angle 3$, then $m\angle 1 = m\angle 3$.\end{yourturn}\par\medskip
+\onslide<2->{(a) \ans{\text{Symmetric}} --- the equation is flipped. \qquad (b) \ans{\text{Transitive}} --- a chain.}\par\medskip
+\end{frame}
+\closeframe{\begin{itemize}\setlength\itemsep{8pt}
+\item Every step needs a \key{reason}.
+\item Did something to both sides? Name that property of equality.
+\item \key{Reflexive} $a = a$, \key{symmetric} flip, \key{transitive} chain.
+\end{itemize}}
+\end{document}

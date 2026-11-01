@@ -299,8 +299,7 @@
 
     let r = document.getElementById("chroute");
     if (!r) { r = document.createElement("div"); r.id = "chroute"; r.className = "chroute"; tabs.parentNode.insertBefore(r, tabs); }
-    r.innerHTML = `<div class="rk">🧭 This chapter: <b>${g.kind}</b> <span>${g.why}</span></div>
-      ${PAGE==="precalculus"?"":`<div class="rs"><button type="button" data-s="1"><i>1</i>How to study</button><span>→</span><button type="button" data-s="2"><i>2</i>Lessons</button><span>→</span><button type="button" data-s="3"><i>3</i>Practice at your level</button><span>→</span><button type="button" data-s="4"><i>4</i>Ready for the test?</button></div>`}`;
+    r.innerHTML = `<div class="rk">🧭 This chapter: <b>${g.kind}</b> <span>${g.why}</span></div>`;
 
     let s = document.getElementById("fmstudy");
     if (!s) { s = document.createElement("details"); s.id = "fmstudy"; s.className = "fms"; lv.insertBefore(s, lv.firstChild); }

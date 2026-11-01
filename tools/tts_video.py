@@ -18,11 +18,13 @@ tmp = tempfile.mkdtemp()
 subprocess.run(["pdftoppm", "-png", "-scale-to-x", "1920", "-scale-to-y", "1080", a.pdf, os.path.join(tmp, "s")], check=True)
 pages = sorted(f for f in os.listdir(tmp) if f.endswith(".png"))
 assert len(pages) == len(lines), f"{len(pages)} pages but {len(lines)} lines"
-k = Kokoro(os.path.join(M, "kokoro.onnx"), os.path.join(M, "voices.bin"))
+mf = next(os.path.join(M, f) for f in ("kokoro.onnx", "kokoro-v1.0.onnx") if os.path.exists(os.path.join(M, f)))
+vf = next(os.path.join(M, f) for f in ("voices.bin", "voices-v1.0.bin") if os.path.exists(os.path.join(M, f)))
+k = Kokoro(mf, vf)
 SR = 24000; chunks = []; durs = []
 for i, ln in enumerate(lines):
-    wait = 3.5 if ln.endswith("|") else 0.0
-    audio, sr = k.create(say(ln.rstrip("|")), voice=a.voice, speed=a.speed, lang="en-us"); assert sr == SR
+    wait = 3.5 if ln.endswith("|") else 2.0 if ln.endswith("~") else 0.0   # "~" = short thinking pause (fill-in blanks)
+    audio, sr = k.create(say(ln.rstrip("|~")), voice=a.voice, speed=a.speed, lang="en-us"); assert sr == SR
     lead = np.zeros(int(0.35 * SR), dtype=np.float32); tail = np.zeros(int((0.55 + wait) * SR), dtype=np.float32)
     seg = np.concatenate([lead, audio.astype(np.float32), tail]); chunks.append(seg); durs.append(len(seg) / SR)
     print(f"page {i+1:2d}: {durs[-1]:5.1f}s")

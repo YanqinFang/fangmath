@@ -18,6 +18,7 @@
   .story .think b{color:#8A6415}
   .story .aha{background:var(--teal-soft);border-radius:12px;padding:12px 14px;margin-top:12px}
   .story .aha p:last-child{margin-bottom:0}
+  .story .more{border-top:1.5px dashed var(--gold);margin-top:20px;padding-top:16px}
   .story table{border-collapse:collapse;width:100%;margin:10px 0 0;font-size:15px;background:#fff;border-radius:10px;overflow:hidden}
   .story th,.story td{border:1px solid var(--line);padding:8px 10px;text-align:left;vertical-align:top}
   .story th{background:var(--bg)}
@@ -141,7 +142,22 @@
     scene: S`<p>One square in a row uses $4$ toothpicks. Two squares in a row use $7$. Three squares use $10$.</p>`,
     think: S`How many toothpicks do $50$ squares need? Find the rule before you count.`,
     aha: S`<p>Each new square adds $3$ toothpicks, so $n$ squares need $3n + 1$. For $50$ squares that's $151$. Spotting a pattern and using it to predict is <b>inductive reasoning</b>.</p>
-      <p>But be careful: patterns can fool you. Dots on a circle joined in every way cut it into $1, 2, 4, 8, 16, \ldots$ regions, and then $31$, not $32$! A pattern is a good guess. A proof makes it certain.</p>`,
+      <p>A rule you guess from a pattern is called a <b>conjecture</b>. But be careful: patterns can fool you. Dots on a circle joined in every way cut it into $1, 2, 4, 8, 16, \ldots$ regions, and then $31$, not $32$! That single case breaks the “doubling” guess. One case that breaks a guess has a name — read Story 2 to find out what it is.</p>`,
+    more: [{
+      title: "Can I Have It, Mom?",
+      scene: S`<p>You really want a new pair of sneakers. So you go to Mom and make your case:</p>
+        <p><i>“<b>Everybody</b> in my class has them! Jake has them. Mia has them. Leo has them too!”</i></p>
+        <p>Jake, Mia and Leo are <b>examples</b>. You use examples to <b>convince</b> someone — the more you name, the stronger your case sounds.</p>
+        <p>Mom smiles and says just one sentence: <i>“Sam doesn't have them.”</i></p>`,
+      think: S`Did Mom need to name ten kids without the sneakers? How many does it take to show that “everybody has them” is not true?`,
+      aha: S`<p><b>Just one.</b> Sam is a <b>counterexample</b>. <i>Counter</i> means <b>against</b>: examples speak <b>for</b> a claim, a counterexample speaks <b>against</b> it.</p>
+        <table><tr><th></th><th>Example</th><th>Counterexample</th></tr>
+          <tr><td><b>Job</b></td><td>Supports the claim — tries to convince you</td><td>Shows the claim is <b>false</b></td></tr>
+          <tr><td><b>How many?</b></td><td>Even $100$ examples can't prove “every”</td><td><b>One</b> is enough</td></tr>
+          <tr><td><b>Sneakers</b></td><td>Jake, Mia, Leo</td><td>Sam</td></tr></table>
+        <p style="margin-top:12px"><b>Now in math.</b> Claim: “Every prime number is odd.” $3, 5, 7, 11$ are examples — they make it sound true. But $2$ is prime and <b>even</b>. One counterexample, and the claim is false.</p>
+        <p>For an if–then claim, a counterexample makes the <b>“if” part true</b> but the <b>“then” part false</b>. “If a number is divisible by $2$, then it is divisible by $4$”: try $6$. Divisible by $2$ ✓, divisible by $4$ ✗. Claim broken!</p>`
+    }]
   };
   T["ch2/cond"] = {
     title: "Rain and Wet Ground",
@@ -608,6 +624,14 @@
     const aha = document.createElement("div"); aha.className = "aha"; aha.hidden = true; aha.innerHTML = s.aha;
     btn.onclick = () => { aha.hidden = !aha.hidden; btn.textContent = aha.hidden ? "💡 Show the idea" : "Hide the idea"; };
     box.append(btn, aha);
+    (s.more || []).forEach((m, j) => {   // extra stories in the same lesson, shown after the first one
+      const part = document.createElement("div"); part.className = "more";
+      part.innerHTML = `<span class="label">📖 Story ${j + 2}</span><h3>${m.title}</h3>${m.scene}<div class="think"><b>🤔 Think first: </b>${m.think}</div>`;
+      const b2 = document.createElement("button"); b2.type = "button"; b2.className = "sbtn"; b2.textContent = "💡 Show the idea";
+      const a2 = document.createElement("div"); a2.className = "aha"; a2.hidden = true; a2.innerHTML = m.aha;
+      b2.onclick = () => { a2.hidden = !a2.hidden; b2.textContent = a2.hidden ? "💡 Show the idea" : "Hide the idea"; };
+      part.append(b2, a2); box.append(part);
+    });
     if (window.renderMathInElement) renderMathInElement(box, { delimiters: [{ left: "$", right: "$", display: false }], throwOnError: false });
     else setTimeout(() => drawStory(chId, topic), 300);
   };

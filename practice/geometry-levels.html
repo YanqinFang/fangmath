@@ -12,8 +12,8 @@
 <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
 <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
 <script defer src="https://cdn.jsdelivr.net/npm/mathjs@14.9.1/lib/browser/math.js"></script>
-<script defer src="geometry-stories.js?v=20261030s"></script>
-<script defer src="geometry-words.js?v=20261101t"></script>
+<script defer src="geometry-stories.js?v=20261101u"></script>
+<script defer src="geometry-words.js?v=20261101u"></script>
 <style>
 :root{
   --bg:#FBF8F3; --surface:#FFFFFF; --ink:#16233B; --muted:#5B6474; --faint:#8C93A0; --line:#E8E2D8;
@@ -605,8 +605,8 @@ const QUADS=["parallelogram","rectangle","rhombus","square"];
 
 const MORE=[
 {id:"ch2",title:"Reasoning & Proof",topics:[
- {id:"pat",title:"2.1 Patterns & Inductive Reasoning",idea:"<b>Inductive reasoning</b>: look for a pattern, describe the rule, then use it to predict.",
-  lesson:{steps:[["3, 7, 11, 15, \\ldots","What changes each time?"],["+4 \\text{ each time}","The rule: add $4$."],["15 + 4 = 19","Next term."]],warn:"Check the rule on <b>every</b> pair of terms, not just the first two."},
+ {id:"pat",title:"2.1 Patterns & Inductive Reasoning",idea:"<b>Inductive reasoning</b>: look for a pattern, describe the rule, then use it to predict. The rule you guess is a <b>conjecture</b>. Examples can make a conjecture <b>convincing</b>, but one <b>counterexample</b> is enough to show it is <b>false</b>.",
+  lesson:{steps:[["3, 7, 11, 15, \\ldots","What changes each time?"],["+4 \\text{ each time}","The rule: add $4$."],["15 + 4 = 19","Next term."]],warn:"Check the rule on <b>every</b> pair of terms, not just the first two. Many examples never <b>prove</b> a conjecture — but <b>one</b> counterexample <b>disproves</b> it."},
   gen:[
   ()=>{const a=nz(-10,20),d=nz(-7,9);return{q:`Find the next term: $${a}, ${a+d}, ${a+2*d}, ${a+3*d}, \\ldots$`,type:"number",ans:a+4*d,ansTex:`${a+4*d}`,hint:"Find the difference between consecutive terms.",sol:[`Each term changes by $${d}$.`,`Next: $${a+3*d} ${sg(d)} = ${a+4*d}$.`]}},
   ()=>{const a=pick([1,2,3,4,5,-2]),r=pick([2,3,-2,4]);return{q:`Find the next term: $${a}, ${a*r}, ${a*r*r}, ${a*r**3}, \\ldots$`,type:"number",ans:a*r**4,ansTex:`${a*r**4}`,hint:"Is it adding the same number, or multiplying by the same number?",sol:[`Each term is multiplied by $${r}$.`,`Next: $${a*r**3} \\cdot ${P(r)} = ${a*r**4}$.`]}},
@@ -1078,6 +1078,9 @@ const XY_EXTRA={
     const ar=Math.abs(S)/2, x0=Math.min(A[0],B[0],C[0]), x1=Math.max(A[0],B[0],C[0]), y0=Math.min(A[1],B[1],C[1]), y1=Math.max(A[1],B[1],C[1]);
     return{q:`Find the area of $\\triangle ABC$. (No side is horizontal or vertical — try the box method.)${figXY({polys:[[A,B,C]],pts:[[...A,"A"],[...B,"B"],[...C,"C"]],alt:"slanted triangle ABC on the coordinate plane"})}`,type:"number",ans:ar,ansTex:`${ar}`,hint:"Draw the smallest rectangle around the triangle. Area of the box minus the three right triangles in the corners.",sol:[xyRead([[...A,"A"],[...B,"B"],[...C,"C"]]),`Box: $${x1-x0} \\times ${y1-y0} = ${(x1-x0)*(y1-y0)}$. Subtract the three corner right triangles.`,`(Shoelace check: $\\tfrac12|${S}| = ${ar}$.)`]}; },
 };
+{ const CEX=[["Every prime number is odd.","$2$",["$3$","$7$","$11$"],"$2$ is prime, but it is even."],["If a number is divisible by $2$, then it is divisible by $4$.","$6$",["$8$","$12$","$16$"],"$6$ is divisible by $2$ but not by $4$."],["If $x^2 = 9$, then $x = 3$.","$x = -3$",["$x = 3$","$x = 9$","$x = 0$"],"$(-3)^2 = 9$, but $-3 \\neq 3$."],["Adding a number always makes the total bigger.","$5 + (-2) = 3$",["$5 + 2 = 7$","$1 + 1 = 2$","$10 + 3 = 13$"],"$3$ is smaller than $5$: adding a negative number makes it smaller."],["Every four-sided figure with four equal sides is a square.","a rhombus with angles $60^\\circ$ and $120^\\circ$",["a square with side $3$","a square with side $10$","a rectangle that is $2$ by $2$"],"A rhombus has four equal sides but its angles are not $90^\\circ$."],["The product of two numbers is always bigger than each number.","$\\tfrac12 \\cdot 4 = 2$",["$3 \\cdot 4 = 12$","$2 \\cdot 5 = 10$","$6 \\cdot 7 = 42$"],"$2$ is smaller than $4$."]];
+  const cexQ=()=>{ const c=pick(CEX); return mcQ(`Claim: “${c[0]}” Which one is a <b>counterexample</b>?`,c[1],c[2],"Examples agree with the claim. A counterexample makes the claim false — for an if–then claim, the “if” part is true but the “then” part is false.",[`${c[1]}: ${c[3]}`,"One counterexample is enough: the claim is false."]); };
+  const ch=CHAPTERS.find(c=>c.id==="ch2"), t=ch&&ch.topics.find(x=>x.id==="pat"); if(t) [1,2].forEach(lv=>{ const orig=t.gen[lv]; t.gen[lv]=()=>Math.random()<.5?cexQ():orig(); }); }
 { const ch=CHAPTERS.find(c=>c.id==="ch1"); if(ch) Object.entries(XY_EXTRA).forEach(([k,f])=>{ const [tid,lv]=k.split("-"), t=ch.topics.find(x=>x.id===tid); if(!t) return; const orig=t.gen[+lv]; t.gen[+lv]=()=>Math.random()<.5?f():orig(); }); }
 const COMING=[];
 

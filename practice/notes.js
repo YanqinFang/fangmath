@@ -52,5 +52,22 @@ window.FM_NOTES = {
       tryit: [["Name the property: $(4 + 9) + 6 = 4 + (9 + 6)$", "Associative — same order, the parentheses moved."], ["Name the property: $n + 15 = 15 + n$", "Commutative — the terms switched places."], ["Simplify $4(x + 2) - 3x$", "$4x + 8 - 3x = x + 8$"]],
       pdf: [["Practice · Properties of Real Numbers", "../materials/algebra1/ch01/Alg1_ch01_Properties_Worksheet.pdf"]],
     },
+    /* ---------- 1.4 Real Numbers & Roots ---------- */
+    realnum: {
+      key: [
+        { t: "Number families (nested bags)", b: "<b>Natural</b> $\\{1, 2, 3, \\ldots\\}$ ⊂ <b>Whole</b> $\\{0, 1, 2, \\ldots\\}$ ⊂ <b>Integers</b> $\\{\\ldots, -2, -1, 0, 1, 2, \\ldots\\}$ ⊂ <b>Rational</b> (any $\\tfrac{a}{b}$). <b>Irrational</b>: the decimal never ends and never repeats, like $\\pi$ or $\\sqrt{12}$." },
+        { t: "Every decimal is one of three types", b: "<b>Terminating</b> ($0.25$) → rational · <b>Repeating</b> ($0.\\overline{2}$) → rational · <b>Never ends, never repeats</b> ($\\pi$) → irrational." },
+        { t: "Roots undo powers — watch the sign", b: "$\\sqrt{16} = 4$ (the positive root), but $x^2 = 16$ gives $x = \\pm 4$. Cube roots keep the sign: $\\sqrt[3]{27} = 3$ and $\\sqrt[3]{-27} = -3$." },
+        { t: "Estimating a square root", b: "Find the perfect squares on each side: $16 < 17 < 25$, so $\\sqrt{17}$ is between $4$ and $5$ — close to $4$, about $4.1$." },
+        { t: "Repeating decimal → fraction", b: "Multiply by $10$ (one repeating digit) or $100$ (two digits), then subtract. Shortcut: $0.\\overline{d} = \\tfrac{d}{9}$, $0.\\overline{ab} = \\tfrac{ab}{99}$ — then reduce." },
+      ],
+      ex: [
+        ["Convert $0.\\overline{23}$", "$x = 0.2323\\ldots,\\ 100x = 23.2323\\ldots$ → $99x = 23$ → $x = \\tfrac{23}{99}$"],
+        ["Classify $\\sqrt{9}$ and $\\sqrt{12}$", "Simplify first: $\\sqrt{9} = 3$ is natural (and whole, integer, rational). $\\sqrt{12} = 3.464\\ldots$ never ends or repeats: irrational."],
+        ["Order $\\sqrt{10},\\ 3.1,\\ \\tfrac{16}{5}$", "As decimals: $3.162\\ldots,\\ 3.1,\\ 3.2$ → $3.1 < \\sqrt{10} < \\tfrac{16}{5}$"],
+      ],
+      tryit: [["Write $0.\\overline{6}$ as a fraction", "$\\tfrac{6}{9} = \\tfrac{2}{3}$"], ["Estimate $\\sqrt{50}$ to the nearest whole number", "$49 < 50 < 64$, and $50$ is very close to $49$: about $7$"], ["Is $-\\tfrac{3}{8}$ an integer? Is it rational?", "Not an integer, but rational — it is a fraction of two integers."]],
+      pdf: [["Notes · Real Numbers, Exponents & Roots", "../materials/algebra1/ch01/Alg1_ch01_Real_Numbers_Exponents_Roots.pdf"], ["Practice · Real Numbers & Algebraic Expressions", "../materials/algebra1/ch01/Alg1_ch01_Real_Numbers_Algebraic_Expressions.pdf"]],
+    },
   },
 };

@@ -1087,6 +1087,8 @@ function put(el, ...kids){ el.replaceChildren(...clean(kids)); }
 function add(el, ...kids){ el.append(...clean(kids)); }
 const SUPABASE_URL = "https://zelwkxoefgywnktauyuq.supabase.co";          // fangmath project → Project Settings → API
 const SUPABASE_ANON_KEY = "sb_publishable_7qJFwmQ-6RXRllYG-wXx9Q_GU6YSYWd";  // the sb_publishable_... key (safe to be public)
+/* "Failed to fetch" = the browser could not reach the account server at all */
+const netMsg = m => /failed to fetch|network|load failed|fetch/i.test(String(m || "")) ? "Can't reach the account server right now. Please try again in a few minutes. (Your practice on this device is still saved.)" : m;
 const accountsOn = !!(window.supabase && !SUPABASE_URL.startsWith("PASTE") && !SUPABASE_ANON_KEY.startsWith("PASTE"));
 const sb = accountsOn ? window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY) : null;
 let adult = null, adultProfile = null;
@@ -1242,7 +1244,7 @@ function kidStep1(card, prefill){
   go.onclick = async () => {
     const c = code.value.trim().toUpperCase(); if (c.length !== 6) return err.textContent = "The code has 6 letters and numbers.";
     go.disabled = true; const { data, error } = await sb.rpc("fm_roster", { p_code: c }); go.disabled = false;
-    if (error) return err.textContent = error.message;
+    if (error) return err.textContent = netMsg(error.message);
     if (!data || !data.length) return err.textContent = "We couldn't find that code. Check with your parent or teacher.";
     kidStep2(card, c, data);
   };
@@ -1297,14 +1299,14 @@ function adultForm(card, mode){
       ? await sb.auth.signUp({ email: email.value.trim(), password: pw.value, options: { data: { display_name: name.value.trim(), consent: "yes" }, emailRedirectTo: location.origin + location.pathname } })
       : await sb.auth.signInWithPassword({ email: email.value.trim(), password: pw.value });
     btn.disabled = false;
-    if (res.error) return err.textContent = /invalid login/i.test(res.error.message) ? "Email or password is not right." : res.error.message;
+    if (res.error) return err.textContent = /invalid login/i.test(res.error.message) ? "Email or password is not right." : netMsg(res.error.message);
     if (mode === "signup" && !res.data.session) { put(card, h("h2", { style:"font-size:22px" }, "📬 Check your email"), h("p", {}, "Click the link we sent to " + email.value.trim() + ", then sign in.")); return; }
     await loadAdult(); location.hash = "#/dashboard";
   };
   const forgot = h("button", { class:"btn sm ghost", style:"margin-top:10px", onclick:async () => {
     if (!email.value.trim()) return err.textContent = "Type your email first.";
     const { error } = await sb.auth.resetPasswordForEmail(email.value.trim(), { redirectTo: location.origin + location.pathname });
-    err.textContent = ""; card.append(h("p", { class:"okmsg" }, error ? error.message : "If that email has an account, a reset link is on its way."));
+    err.textContent = ""; if (error) { err.textContent = netMsg(error.message); return; } card.append(h("p", { class:"okmsg" }, "If that email has an account, a reset link is on its way."));
   } }, "Forgot password?");
   put(card, h("h2", { style:"font-size:24px" }, "👩‍🏫 Parent or teacher"), h("p", { class:"muted", style:"margin:6px 0 14px" }, "Add your children, see their progress, and (for teachers) manage classes."), tabs,
     mode === "signup" ? h("label", { class:"f" }, "Your name", name) : null, h("label", { class:"f" }, "Email", email), h("label", { class:"f" }, "Password (6+ characters)", pw),

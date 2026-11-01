@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Prof. Fang Math — Experience first. Symbols second. Understanding always.</title>
-<meta name="description" content="Free Grades 3–12 math lessons, notes, worksheets, videos, games, flash cards and a weekly challenge from Prof. Fang Math.">
+<title>FangMath — Experience first. Symbols second. Understanding always.</title>
+<meta name="description" content="Free Grades 3–12 math lessons, notes, worksheets, videos, games, flash cards and a weekly challenge from FangMath.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -110,6 +110,7 @@
   /* hero */
   .hero{text-align:center;padding:56px 0 34px}
   .wordmark{font-family:Inter,sans-serif;font-weight:800;font-size:clamp(46px,9vw,112px);line-height:1;letter-spacing:-.045em;margin:0}
+  .byline{margin:24px 0 0;font-size:16px;font-weight:600;color:var(--muted);letter-spacing:.04em}
   .wordmark .m{color:var(--teal);position:relative;display:inline-block}
   .wordmark .m::after{content:"";position:absolute;left:4%;right:4%;bottom:-.06em;height:.1em;border-radius:99px;background:var(--gold)}
   .tagline{font-size:clamp(17px,2.2vw,22px);color:var(--muted);margin:22px 0 0}
@@ -454,7 +455,7 @@
 </head>
 <body>
 <header class="top"><div class="in">
-  <a class="brand" href="#/" aria-label="Prof. Fang Math — home">Prof. Fang <span>Math</span></a>
+  <a class="brand" href="#/" aria-label="FangMath — home">Fang<span>Math</span></a>
   <button class="menu-btn" aria-label="Menu" aria-expanded="false" id="menuBtn">☰</button>
   <button class="search-btn" id="searchBtn" type="button" aria-label="Search the site" title="Search (press /)"><span aria-hidden="true">🔍</span><span class="sb-t">Search</span></button>
   <nav class="main" id="nav">
@@ -475,7 +476,7 @@
 <main id="view"></main>
 
 <footer><div class="wrap in">
-  <div>© <span id="yr"></span> Prof. Fang Math. All rights reserved.</div>
+  <div>© <span id="yr"></span> FangMath. All rights reserved.</div>
   <div id="footLinks"></div>
 </div></footer>
 
@@ -586,7 +587,7 @@ function routeInner(){
   else if (page === "mistakes") { if (typeof pageMistakes === "undefined") notFound(v); else pageMistakes(v); }
   else if (page === "app") pageApp(v, parts[1], parts[2], parts[3]);
   else pageHome(v);
-  document.title = (page === "home" ? "" : (v.querySelector("h1") ? v.querySelector("h1").textContent + " — " : "")) + "Prof. Fang Math" + (page === "home" ? " — " + SITE.tagline : "");
+  document.title = (page === "home" ? "" : (v.querySelector("h1") ? v.querySelector("h1").textContent + " — " : "")) + "FangMath" + (page === "home" ? " — " + SITE.tagline : "");
   renderMath(v);
 }
 
@@ -647,7 +648,8 @@ function greeting(){
 function pageHome(v){
   const ch = CHALLENGES[0];
   v.append(h("section", { class:"hero" }, h("div", { class:"wrap" },
-    h("h1", { class:"wordmark" }, "Prof. Fang ", h("span", { class:"m" }, "Math")),
+    h("h1", { class:"wordmark" }, "Fang", h("span", { class:"m" }, "Math")),
+    h("p", { class:"byline" }, "with Prof. Fang"),
     h("p", { class:"tagline" }, h("b", {}, "Experience first. "), "Symbols second. ", h("b", {}, "Understanding always.")),
     greeting(),
     h("div", { class:"hero-cta" }, h("a", { class:"btn", href:"#/k8" }, "Grades 3–8"), h("a", { class:"btn teal", href:"#/highschool" }, "High School"), h("a", { class:"btn", style:"background:#D35400", href:"#/competition" }, "Competition"), h("a", { class:"btn", style:"background:#B7472A", href:"#/testprep" }, "SAT / ACT"), h("a", { class:"btn ghost", href:"#/challenge" }, "This week's challenge")),
@@ -1539,7 +1541,7 @@ function tpHub(v){
   v.append(h("div", { class:"wrap" }, h("div", { class:"page-head" }, h("h1", {}, "SAT & ACT Practice"),
     h("p", {}, "Practice by topic with step-by-step explanations, try a timed section at real test pace, or generate unlimited math questions. Signed-in students' scores are saved.")),
     h("div", { class:"grid", style:"grid-template-columns:repeat(auto-fill,minmax(300px,1fr))" }, card("sat"), card("act")),
-    h("p", { class:"muted", style:"font-size:13.5px;margin-top:18px" }, "All questions are original Prof. Fang Math practice items written to match the skills each test measures. They are not official College Board® or ACT® questions. SAT® is a trademark of the College Board; ACT® is a trademark of ACT, Inc.; neither is affiliated with this site.")));
+    h("p", { class:"muted", style:"font-size:13.5px;margin-top:18px" }, "All questions are original FangMath practice items written to match the skills each test measures. They are not official College Board® or ACT® questions. SAT® is a trademark of the College Board; ACT® is a trademark of ACT, Inc.; neither is affiliated with this site.")));
 }
 function tpExam(v, exam, pm){
   const T = TESTS[exam]; pm = pm === "practice" ? "practice" : "learn";
@@ -1976,7 +1978,7 @@ function pageApp(v, cid, ui, mode){
       : "Practice: choose a topic and difficulty, then start a quiz. No hints. Your quiz score is saved.") : null,
     local ? h("div", { style:"display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin:-4px 0 10px" }, live, note) : null,
     frame,
-    external ? h("p", { class:"muted", style:"font-size:13px;margin-top:8px" }, "This app is on another website, so its scores are not added to the student's Prof. Fang Math record.") : null));
+    external ? h("p", { class:"muted", style:"font-size:13px;margin-top:8px" }, "This app is on another website, so its scores are not added to the student's FangMath record.") : null));
   if (!local) return;
   const cap = s => s ? s[0].toUpperCase() + s.slice(1) : "";
   let ses = null;   // current Learn session: one topic + difficulty

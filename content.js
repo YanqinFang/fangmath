@@ -26,7 +26,7 @@
    ===================================================================== */
 
 const SITE = {
-  name: "Prof. Fang Math",
+  name: "FangMath",
   tagline: "Experience first. Symbols second. Understanding always.",
   email: "fangacademy@fangmath.com",
   youtube: "",            // your YouTube channel link, e.g. "https://www.youtube.com/@ProfFangMath"

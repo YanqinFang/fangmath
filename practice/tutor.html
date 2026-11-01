@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Step-by-Step Tutor — Prof. Fang Math</title>
-<meta name="description" content="Solve equations one step at a time with hints and instant checking — Prof. Fang Math.">
+<title>Step-by-Step Tutor — FangMath</title>
+<meta name="description" content="Solve equations one step at a time with hints and instant checking — FangMath.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -114,7 +114,7 @@ footer{text-align:center;color:var(--faint);font-size:13px;padding:24px}
 </head>
 <body>
 <header class="top"><div class="in">
-  <a class="brand" href="../index.html#/" aria-label="Prof. Fang Math — home">Prof. Fang <span>Math</span></a>
+  <a class="brand" href="../index.html#/" aria-label="FangMath — home">Fang<span>Math</span></a>
   <a class="back" href="../index.html#/highschool">← Back to lessons</a>
 </div></header>
 
@@ -165,7 +165,7 @@ footer{text-align:center;color:var(--faint);font-size:13px;padding:24px}
     </section>
   </div>
 </div>
-<footer>© 2026 Prof. Fang Math</footer>
+<footer>© 2026 FangMath</footer>
 
 <script>
 "use strict";
@@ -631,7 +631,7 @@ $("undoBtn").onclick=()=>{ strokes.pop(); padDraw(); }; $("clearBtn").onclick=pa
 $("padBtn").onclick=()=>{ const pad=$("pad"); pad.hidden=!pad.hidden; $("padBtn").setAttribute("aria-expanded",String(!pad.hidden)); if(!pad.hidden) padSize(); };
 window.addEventListener("resize",()=>{ if(!$("pad").hidden) padSize(); });
 $("saveBtn").onclick=()=>{ const r=cv.getBoundingClientRect(), d=2, out=document.createElement("canvas"); out.width=r.width*d; out.height=(r.height+50)*d; const o=out.getContext("2d"); o.scale(d,d);
-  o.fillStyle="#fff"; o.fillRect(0,0,r.width,r.height+50); o.fillStyle="#16233B"; o.font="600 18px Inter, sans-serif"; o.fillText("Prof. Fang Math — Solve "+P.eq.replace(/\\frac\{([^}]*)\}\{([^}]*)\}/g,"($1)/($2)"),14,30);
+  o.fillStyle="#fff"; o.fillRect(0,0,r.width,r.height+50); o.fillStyle="#16233B"; o.font="600 18px Inter, sans-serif"; o.fillText("FangMath — Solve "+P.eq.replace(/\\frac\{([^}]*)\}\{([^}]*)\}/g,"($1)/($2)"),14,30);
   o.drawImage(cv,0,50,r.width,r.height); const a=document.createElement("a"); a.download="my-work-"+P.id+".png"; a.href=out.toDataURL("image/png"); a.click(); };
 /* ---- events ---- */
 ans.addEventListener("keydown",e=>{ if(e.key==="Enter"){ e.preventDefault(); submit(); } });

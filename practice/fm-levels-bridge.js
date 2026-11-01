@@ -655,7 +655,7 @@
     const fileBase = ["FangMath", course, eoc ? "End-of-Course" : "Ch" + chNum(CH), kind === "quiz" ? "Quiz" : kind === "ws" ? "Worksheet" : (o.scope === "cumul" ? "Cumulative-Test" : "Test"), kind === "quiz" ? "L" + o.lv : kind === "ws" ? WS[o.wsLv].name : DIFF[o.diff].name, ver].filter((x, i) => !(eoc && i === 3)).join("_").replace(/[^\w-]+/g, "-");
     const old = document.querySelector(".qtp"); if (old) old.remove();
     const m = document.createElement("div"); m.className = "qtp";
-    const head = (h, extra) => `<div class="qtp-head"><div><div class="qtp-brand">Prof. Fang <span>Math</span></div><h1>${h}</h1><div class="qtp-sub">${esc(course)} · ${o.scope === "course" && kind === "test" ? "All " + CHAPTERS.length + " chapters" : esc(CH.title)} · ${qs.length} ${kind === "ws" ? "problems" : "questions"}${kind === "test" ? " · " + minutes(qs) + " minutes" : ""} · Version ${ver}</div></div>${extra || ""}</div>`;
+    const head = (h, extra) => `<div class="qtp-head"><div><div class="qtp-brand">Fang<span>Math</span></div><h1>${h}</h1><div class="qtp-sub">${esc(course)} · ${o.scope === "course" && kind === "test" ? "All " + CHAPTERS.length + " chapters" : esc(CH.title)} · ${qs.length} ${kind === "ws" ? "problems" : "questions"}${kind === "test" ? " · " + minutes(qs) + " minutes" : ""} · Version ${ver}</div></div>${extra || ""}</div>`;
     const groups = []; qs.forEach((q, i) => { const last = groups[groups.length - 1]; if (!last || last.name !== q.part) groups.push({ name: q.part, start: i + 1, qs: [q] }); else last.qs.push(q); });
     const partHead = gr => gr.name ? `<h3 class="qtp-part">${esc(gr.name)}</h3>` : "";
     m.innerHTML = `<div class="qtp-sheet${kind === "ws" ? " qtp-ws" : ""}">
@@ -758,7 +758,7 @@
           for (let i = 1; i <= n; i++) {
             const pt = same ? pagePart[i - 1] : 0, inPart = same ? pagePart.filter(x => x === pt) : Array(n).fill(0), k = same ? pagePart.slice(0, i).filter(x => x === pt).length : i;
             pdf.setPage(i); pdf.setFontSize(9); pdf.setTextColor(120);
-            pdf.text("Prof. Fang Math \u00b7 fangmath.com", 12, ph - 5);
+            pdf.text("FangMath \u00b7 fangmath.com", 12, ph - 5);
             pdf.text(`${labels[pt] || labels[0]} \u00b7 Page ${k} / ${inPart.length}`, pw - 12, ph - 5, { align: "right" });
           }
         }).save();
@@ -884,7 +884,7 @@
   body.qt-printing .qtp{position:static;background:none;padding:0;overflow:visible}
   body.qt-printing .qtp-sheet{box-shadow:none;border-radius:0;padding:0;max-width:none}
   body.qt-printing .qtp-acts,body.qt-printing .qtp-msg{display:none}
-  @page{margin:14mm 14mm 16mm;@bottom-right{content:"Page " counter(page) " / " counter(pages);font:9pt Inter,sans-serif;color:#777}@bottom-left{content:"Prof. Fang Math \\00B7  fangmath.com";font:9pt Inter,sans-serif;color:#777}}
+  @page{margin:14mm 14mm 16mm;@bottom-right{content:"Page " counter(page) " / " counter(pages);font:9pt Inter,sans-serif;color:#777}@bottom-left{content:"FangMath \\00B7  fangmath.com";font:9pt Inter,sans-serif;color:#777}}
 }`;
     document.head.appendChild(s);
   }
@@ -994,7 +994,7 @@
         <label>Name on certificate <input id="fmCertName" value="${esc(name)}" placeholder="Student name"></label>
         <button class="btn sm teal" id="fmCertPdf" ${preview ? "disabled" : ""}>📥 Download PDF</button><button class="btn sm ghost" id="fmCertPrint" ${preview ? "disabled" : ""}>🖨 Print</button><button class="btn sm ghost" id="fmCertX">Close</button></div>
       <div class="fm-cert ${T.k}${preview ? " pv" : ""}" id="fmCertDoc"><div class="fc-in">
-        <div class="fc-brand">Prof. Fang <span>Math</span></div>
+        <div class="fc-brand">Fang<span>Math</span></div>
         <div class="fc-k">Certificate of ${T.k === "bronze" ? "Completion" : "Achievement"}</div>
         <div class="fc-medal">${T.medal}</div>
         <div class="fc-small">This certifies that</div>
@@ -1003,7 +1003,7 @@
         <div class="fc-course">${esc(course)}</div>
         <div class="fc-tier">${T.name} · ${T.title}</div>
         <div class="fc-stats"><span><b>${C.done}/${C.total}</b> chapters</span><span><b>${C.avg}%</b> average chapter test</span><span><b>${C.solved}</b> problems solved</span>${eocBest() != null ? `<span>End-of-course test <b>${eocBest()}%</b></span>` : ""}${C.level ? `<span>practiced up to <b>Level ${C.level} · ${LV[C.level]}</b></span>` : ""}</div>
-        <div class="fc-sign"><div><div class="fc-line">${date}</div><small>Date</small></div><div><div class="fc-line fc-sig">Dr. Yanqin Fang</div><small>Prof. Fang Math</small></div></div>
+        <div class="fc-sign"><div><div class="fc-line">${date}</div><small>Date</small></div><div><div class="fc-line fc-sig">Dr. Yanqin Fang</div><small>FangMath</small></div></div>
         <div class="fc-tiers">🥇 Gold: tests 90%+ &nbsp;·&nbsp; 🥈 Silver: 80%+ &nbsp;·&nbsp; 🥉 Bronze: course completed</div>
         ${preview ? `<div class="fc-wm">PREVIEW</div>` : ""}
       </div></div></div>`;

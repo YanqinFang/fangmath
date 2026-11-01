@@ -1,6 +1,6 @@
 /* =====================================================================
    PROF. FANG MATH — SAT & ACT PRACTICE BANK
-   All questions are original (written for Prof. Fang Math), modeled on the
+   All questions are original (written for FangMath), modeled on the
    skills each test measures. They are NOT official College Board / ACT items.
 
    HOW TO ADD A QUESTION — copy one line and change it:

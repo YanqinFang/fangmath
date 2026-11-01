@@ -23,7 +23,7 @@ L = dict(
  ],
  warn="Distribute to <b>{{every}}</b> term: $2(x + 3)$ is {{$2x + 6$}}, not $2x + 3$.",
  say=dict(
-  title="Welcome to Prof. Fang Math. This is Algebra 1, lesson two point two: multi-step equations. Get your fill-in notes and a pencil ready. Every time you see a blank, fill it in with me.",
+  title="Welcome to Fang Math. This is Algebra 1, lesson two point two: multi-step equations. Get your fill-in notes and a pencil ready. Every time you see a blank, fill it in with me.",
   idea=["Here's the big idea. It has four blanks. Let's fill them in together.~",
         "When an equation takes more than two steps, first, simplify each side.",
         "To simplify, we distribute,",

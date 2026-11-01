@@ -1,7 +1,7 @@
 # One line of narration per PDF page (each \pause step is its own page). "|" = a 3 s "Your turn" pause after the line.
 N = {}
 N["1-1"] = [
- "Welcome to Prof. Fang Math. This is Geometry, lesson one point one: undefined and defined terms.",
+ "Welcome to Fang Math. This is Geometry, lesson one point one: undefined and defined terms.",
  "Every word in geometry is built from three words we never define. The first one is a point. A point is just a location. It has no size. Think of the pin on a map. We name it with a capital letter, like point A.",
  "The second one is a line. A line is perfectly straight, and it goes on forever in both directions. That's why we draw two arrows. We name it with two points on it, like line A B.",
  "The third one is a plane. A plane is a flat surface that goes on forever, like a floor that never ends. We call these three undefined, because we can only describe them with examples. Everything else in geometry is defined from them.",
@@ -22,7 +22,7 @@ N["1-1"] = [
  "Remember: a line has two arrows. A ray has one arrow, and the endpoint comes first. A segment has a bar. No bar means a length. And in an angle, the vertex goes in the middle. Now go to fang math dot com, Geometry chapter one, and practice at your level. See you next time!",
 ]
 N["1-2"] = [
- "Welcome to Prof. Fang Math. This is Geometry, lesson one point two: the segment addition postulate. Part plus part equals whole.",
+ "Welcome to Fang Math. This is Geometry, lesson one point two: the segment addition postulate. Part plus part equals whole.",
  "Let's start with something simple. Imagine you're standing at the start of a line.",
  "You walk four steps.",
  "Then you walk seven more steps.",
@@ -53,7 +53,7 @@ N["1-2"] = [
  "Remember: part plus part equals whole. A B plus B C equals A C, when B is between A and C. If a piece is missing, subtract it from the whole. And after you solve for x, answer the question they actually asked. Now go to fang math dot com and practice at your level. See you next time!",
 ]
 N["1-3"] = [
- "Welcome to Prof. Fang Math. This is Geometry, lesson one point three: the midpoint and distance formulas, and how to never mix them up.",
+ "Welcome to Fang Math. This is Geometry, lesson one point three: the midpoint and distance formulas, and how to never mix them up.",
  "Here's the trick. Midpoint equals mean. Both start with M. To find a midpoint, you take the average, the mean.",
  "And distance equals difference. Both start with D. To find a distance, you start by subtracting.",
  "Let's start with a simple case. Here are two points on a number line: negative three, and three.",
@@ -81,7 +81,7 @@ N["1-3"] = [
  "Remember: midpoint equals mean. Add the coordinates and divide by two. Distance equals difference. Subtract, square, add, and take the square root. The distance formula is just the Pythagorean theorem. Now go to fang math dot com and practice at your level. See you next time!",
 ]
 N["1-4"] = [
- "Welcome to Prof. Fang Math. This is Geometry, lesson one point four: perimeter and area in the coordinate plane.",
+ "Welcome to Fang Math. This is Geometry, lesson one point four: perimeter and area in the coordinate plane.",
  "Here is rectangle A B C D on a grid. A is one, one. B is five, one. C is five, four. And D is one, four.",
  "First, side A B. A and B have the same y coordinate, so the side is flat. Subtract the x coordinates: five minus one is four.",
  "Next, side B C. B and C have the same x coordinate, so the side goes straight up. Subtract the y coordinates: four minus one is three.",
@@ -102,7 +102,7 @@ N["1-4"] = [
  "Remember: same y, subtract the x's. Same x, subtract the y's. Perimeter adds the sides. Area is base times height for a rectangle, and one half base times height for a triangle. And for a slanted side, use Pythagoras. Now go to fang math dot com and practice at your level. See you next time!",
 ]
 N["1-5"] = [
- "Welcome to Prof. Fang Math. This is Geometry, lesson one point five: angles. We'll measure them, classify them, add them, and learn the angle pairs.",
+ "Welcome to Fang Math. This is Geometry, lesson one point five: angles. We'll measure them, classify them, add them, and learn the angle pairs.",
  "There are four kinds of angles. An acute angle is less than ninety degrees. It's small and sharp.",
  "Next, the right angle: exactly ninety degrees, like the corner of a page. We mark it with a little square.",
  "An obtuse angle is bigger than ninety degrees, but less than one hundred eighty.",
@@ -130,7 +130,7 @@ N["1-5"] = [
  "Remember: acute is less than ninety, right is ninety, obtuse is in between ninety and one eighty, and straight is one eighty. The vertex is the middle letter. Small angles add up to the big one. Complementary angles add to ninety, supplementary angles add to one eighty, and vertical angles are equal. Now go to fang math dot com and practice at your level. See you next time!",
 ]
 N["1-6"] = [
- "Welcome to Prof. Fang Math. This is Geometry, lesson one point six: constructions. Exact drawings with only a compass and a straightedge.",
+ "Welcome to Fang Math. This is Geometry, lesson one point six: constructions. Exact drawings with only a compass and a straightedge.",
  "Here are the two tools. The compass draws circles and arcs, and it can copy a length. The straightedge draws straight lines, but there are no numbers on it. No measuring allowed!",
  "There are four basic constructions: copy a segment, copy an angle, bisect a segment, and bisect an angle. Let's do the two bisections.",
  "To bisect a segment means to find its midpoint. Here's segment Eigh B.",

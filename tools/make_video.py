@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Prof. Fang Math — turn Beamer slides + one voice recording into a YouTube video.
+"""FangMath — turn Beamer slides + one voice recording into a YouTube video.
 
 Yan records her voice while flipping through the slide PDF, pausing ~2 s each time she
 moves to the next page. This script finds the (pages - 1) longest pauses, uses them as the

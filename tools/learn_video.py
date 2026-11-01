@@ -62,7 +62,7 @@ def build(L, out):
 \setbeamerfont{frametitle}{series=\bfseries,size=\Large}
 \setbeamercolor{structure}{fg=fkey}
 \setbeamertemplate{frametitle}{\vspace{8pt}\insertframetitle\par\vspace{-1pt}{\color{fturn}\rule{2.2cm}{2.5pt}}}
-\setbeamertemplate{footline}{\hspace{0.6cm}{\color{ftitle}\scriptsize\bfseries Prof.\ Fang \textcolor{fkey}{Math}}\hfill{\scriptsize\color{gray}\SECTION}\hspace{0.6cm}\vspace{6pt}}
+\setbeamertemplate{footline}{\hspace{0.6cm}{\color{ftitle}\scriptsize\bfseries Fang\textcolor{fkey}{Math}}\hfill{\scriptsize\color{gray}\SECTION}\hspace{0.6cm}\vspace{6pt}}
 % fill-in blank: empty line before overlay #1, the answer (pink) from overlay #1 on; same width both ways
 \newcommand{\fb}[2]{\underline{\makebox[\widthof{#2}+1.2em][c]{\alt<#1->{\textcolor{fpink}{\bfseries #2}}{\phantom{#2}}}}}
 \newenvironment{lbox}[3]{\begin{beamercolorbox}[sep=9pt,rounded=true]{#1}{\color{#2}\bfseries #3}\par\smallskip}{\end{beamercolorbox}}
@@ -75,7 +75,7 @@ def build(L, out):
     B.append(rf"""\begin{{frame}}[plain]
 \begin{{tikzpicture}}[remember picture,overlay]
 \fill[ftitle] (current page.north west) rectangle ([yshift=-0.9cm]current page.north east);
-\node[anchor=west,text=white,font=\bfseries] at ([xshift=0.6cm,yshift=-0.45cm]current page.north west) {{Prof.\ Fang \textcolor{{fturn}}{{Math}}}};
+\node[anchor=west,text=white,font=\bfseries] at ([xshift=0.6cm,yshift=-0.45cm]current page.north west) {{Fang\textcolor{{fturn}}{{Math}}}};
 \node[anchor=east,text=white,font=\small] at ([xshift=-0.6cm,yshift=-0.45cm]current page.north east) {{{L['course']} $\cdot$ Chapter {L['no'].split('.')[0]}}};
 \end{{tikzpicture}}
 \vfill
@@ -150,7 +150,7 @@ def build(L, out):
              r"\begin{lbox}{fwatch}{Watch Me --- " + L["watch_intro"] + "}\n" + r"\renewcommand{\arraystretch}{1.9}\begin{tabular}{@{}>{\large}p{0.36\linewidth}p{0.55\linewidth}@{}}" + "\n" + r"\textbf{Step} & \textbf{Why}\\" + "\n"
              + "\n".join(rf"${fill(m, mode)}$ & {fill(w, mode)}\\" for m, w, _ in L["steps"]) + "\n" + r"\end{tabular}\end{lbox}\par\bigskip",
              r"\begin{lbox}{fpink}{Common Mistake}" + "\n" + html2tex(fill(L["warn"], mode)) + r"\\[2pt]\end{lbox}\par\bigskip",
-             r"\vfill{\centering\small\color{gray} Practice at your level: \textbf{fangmath.com} $\to$ " + L["course"] + r" $\to$ " + L["no"] + r"\par \textcopyright\ 2026 Prof.\ Fang Math. All rights reserved.\par}",
+             r"\vfill{\centering\small\color{gray} Practice at your level: \textbf{fangmath.com} $\to$ " + L["course"] + r" $\to$ " + L["no"] + r"\par \textcopyright\ 2026 FangMath. All rights reserved.\par}",
              r"\end{document}"]
         return "\n".join(T) + "\n"
     open(f"{out}/{base}_Fill_In_Notes.tex", "w").write(sheet("blank"))

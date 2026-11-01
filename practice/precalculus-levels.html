@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Precalculus: Learn &amp; Practice — Prof. Fang Math</title>
+<title>Precalculus: Learn &amp; Practice — FangMath</title>
 <meta name="description" content="Precalculus chapter by chapter: learn each idea from the simplest example, then practice in five levels from Foundation to Competition.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -210,7 +210,7 @@ footer{text-align:center;color:var(--faint);font-size:13px;padding:24px}
 </head>
 <body>
 <header class="top"><div class="in">
-  <a class="brand" href="../index.html#/">Prof. Fang <span>Math</span></a>
+  <a class="brand" href="../index.html#/">Fang<span>Math</span></a>
   <a class="back" href="../index.html#/highschool">← Back to lessons</a>
 </div></header>
 
@@ -261,7 +261,7 @@ footer{text-align:center;color:var(--faint);font-size:13px;padding:24px}
   </div>
   </div>
 </div>
-<footer>© 2026 Prof. Fang Math</footer>
+<footer>© 2026 FangMath</footer>
 
 <script>
 "use strict";
@@ -890,7 +890,7 @@ function cheatSheet(){
   const page=(document.querySelector(".intro .label")||{}).textContent||"";
   const course=page.split("·")[0].trim();
   const m=document.createElement("div"); m.className="csm";
-  m.innerHTML=`<div class="cs-sheet"><div class="cs-top"><div><h2>${$("chTitle").textContent}</h2><span class="sub">${course} · Cheat Sheet · Prof. Fang Math</span></div><div class="cs-acts"><button class="btn teal sm" id="csPrint">🖨 Print / Save PDF</button><button class="btn ghost sm" id="csClose">Close</button></div></div>
+  m.innerHTML=`<div class="cs-sheet"><div class="cs-top"><div><h2>${$("chTitle").textContent}</h2><span class="sub">${course} · Cheat Sheet · FangMath</span></div><div class="cs-acts"><button class="btn teal sm" id="csPrint">🖨 Print / Save PDF</button><button class="btn ghost sm" id="csClose">Close</button></div></div>
     <div class="cs-grid">${CH.topics.map(t=>`<div class="cs-card"><h3>${!tlab(t).multi?t.title:tlab(t).first?`${tlab(t).sec}<small class="cs-part">${tlab(t).part}</small>`:tlab(t).part}</h3><div class="cs-idea">${t.idea}</div>${t.lesson&&t.lesson.steps&&t.lesson.steps.length?`<div class="cs-ex"><span class="lab">Example</span>${t.lesson.steps.map(s=>`<div>$${s[0]}$</div>`).join("")}</div>`:""}${t.lesson&&t.lesson.warn?`<div class="cs-warn"><span class="lab">Watch out</span>${t.lesson.warn}</div>`:""}</div>`).join("")}</div>
     <div class="cs-foot">fangmath.com</div></div>`;
   document.body.appendChild(m); render(m);

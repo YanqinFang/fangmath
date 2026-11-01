@@ -209,6 +209,7 @@
       return orig.apply(this, arguments);
     };
     tabBtn.onclick = () => setTab("quiz");
+    fmtInit();
     cpHooks();
     progInit();
     eocHooks();
@@ -1021,7 +1022,7 @@
   function progInit() {
     const css = document.createElement("style"); css.textContent = `
 .fm-prog{background:#fff;border:1px solid var(--line);border-radius:16px;padding:12px 16px;margin:0 0 14px;box-shadow:var(--shadow);display:flex;flex-direction:column;gap:6px}
-.pg-row{display:flex;align-items:center;gap:10px}.pg-lab{width:74px;font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--faint)}
+.pg-row{display:flex;align-items:center;gap:10px}.pg-lab{width:96px;white-space:nowrap;font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--faint)}
 .pg-bar{flex:1;height:10px;border-radius:5px;background:var(--line);overflow:hidden}.pg-bar i{display:block;height:100%;background:var(--green);border-radius:5px;transition:width .6s}.pg-bar.c i{background:var(--gold)}
 .pg-n{width:110px;text-align:right;font-size:13px;font-weight:600;color:var(--muted)}
 .pg-foot{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;font-size:13.5px;color:var(--muted)}
@@ -1148,6 +1149,67 @@
       try { vidDraw(); } catch (e) {} };
     if (window.FM_VIDEOS) return go();
     const sc = document.createElement("script"); sc.src = "videos.js?v=" + Math.floor(Date.now() / 3.6e6); sc.onload = go; sc.onerror = go; document.head.appendChild(sc);
+  }
+  /* ================= GEOMETRY LAYOUT FOR EVERY COURSE =================
+     Pages that don't have it yet (no sections()) get: numbered lessons (1.1, 1.2, …), the sections of the open
+     chapter listed under it in the sidebar (with the quiz and chapter test), and a clean Practice tab that shows
+     only the section you are on. Geometry and Precalculus already work this way. */
+  function fmtInit() {
+    if (typeof window.sections === "function" || !g("chapters")) return;
+    const chNo = c => { try { if (typeof ALLCH !== "undefined") { const a = ALLCH.find(x => x[2] === c.id), n = a && parseInt(String(a[0]), 10); if (n) return n; } } catch (e) {} return CHAPTERS.indexOf(c) + 1; };
+    CHAPTERS.forEach(c => { const n = chNo(c); c.topics.forEach((t, i) => { if (!/^\d+\.\d+\s/.test(t.title)) t.title = `${n}.${i + 1} ${t.title}`; }); });
+    window.sections = function () {
+      const out = []; CH.topics.forEach((t, i) => { const m = /^(\d+\.\d+)\s+(.*)$/.exec(t.title) || [0, chNo(CH) + "." + (i + 1), t.title];
+        let G = out.find(x => x.no === m[1]); if (!G) { G = { no: m[1], name: m[2], idx: [] }; out.push(G); } G.idx.push(i); });
+      return out;
+    };
+    const part = t => t.title.replace(/^\d+\.\d+\s+/, "");
+    window.secList = function () {
+      const box = g("secs"); if (!box || !CH) return; box.innerHTML = "";
+      sections().forEach(G => { const x = document.createElement("button"); x.type = "button";
+        const on = G.idx.includes(LI), done = G.idx.every(i => st && st.learned[CH.topics[i].id]);
+        x.className = "sec" + (on ? " on" : "") + (done ? " done" : ""); x.innerHTML = `<b>${done ? "✓" : G.no}</b><span>${esc(G.name)}</span>`;
+        x.onclick = () => { if (!g("practiceView").hidden) { LI = G.idx[0]; if (g("practice")) g("practice").hidden = true; road(); topics(); g("topics").scrollIntoView({ behavior: "smooth", block: "start" }); return; }
+          setTab("learn"); openLesson(G.idx[0], true); };
+        box.appendChild(x); });
+    };
+    const oCh = window.chapters;
+    window.chapters = function () { const r = oCh.apply(this, arguments); try {
+        const b = g("chapters"), on = b && b.querySelector(".chap.on");
+        if (on && !g("secs")) { const s2 = document.createElement("div"); s2.className = "secs"; s2.id = "secs"; on.after(s2); }
+        secList(); } catch (e) { console.warn("fmt chapters", e); } return r; };
+    const oRoad = window.road;
+    window.road = function () { const r = oRoad.apply(this, arguments); try {
+        const box = g("road"), G = sections().find(x => x.idx.includes(LI));
+        if (box) { box.classList.toggle("single", !G || G.idx.length < 2);
+          [...box.querySelectorAll(".stop:not(.cp-stop)")].forEach((b, i) => b.classList.toggle("other", !!G && !G.idx.includes(i))); }
+        secList(); } catch (e) { console.warn("fmt road", e); } return r; };
+    window.topics = function () {
+      const box = g("topics"); if (!box) return; box.innerHTML = ""; legend(); const lvl = curLv();
+      const SG = sections(), G = SG.find(x => x.idx.includes(LI)) || SG[0];
+      const c = document.createElement("div"); c.className = "card psec";
+      c.innerHTML = `<span class="label">Practice · Level ${lvl} ${LEVELS[lvl - 1].name}</span><h2>${esc(G.no + " " + G.name)}</h2>`;
+      G.idx.map(i => CH.topics[i]).forEach(t => { const n = st.solved[t.id + lvl] || 0, on = T === t && g("practice") && !g("practice").hidden;
+        const r = document.createElement("div"); r.className = "prow" + (on ? " on" : "");
+        r.innerHTML = `<span class="pt">${G.idx.length > 1 ? esc(part(t)) : "5 levels · new problems every time"}</span><small>${n ? `✓ ${n} solved` : ""}</small>`;
+        const go = document.createElement("button"); go.className = "btn teal sm"; go.textContent = on ? "Practicing ↓" : "Practice →"; go.onclick = () => startPractice(t, lvl); r.appendChild(go); c.appendChild(r); });
+      box.appendChild(c); render(box);
+    };
+    const oOpen = window.openLesson;
+    window.openLesson = function (i) { const r = oOpen.apply(this, arguments); try { if (g("topics") && st) { const G = sections().find(x => x.idx.includes(i));
+        if (T && G && !G.idx.includes(CH.topics.indexOf(T)) && g("practice")) g("practice").hidden = true; topics(); } } catch (e) {} return r; };
+    const css = document.createElement("style"); css.textContent = `
+.psec{display:flex;flex-direction:column;gap:8px;grid-column:1/-1}.psec h2{font-size:22px;margin:0 0 4px}
+.prow{display:flex;align-items:center;gap:12px;padding:10px 12px;border:1px solid var(--line);border-radius:12px;background:var(--bg)}
+.prow.on{border-color:var(--teal);background:var(--teal-soft)}.prow .pt{flex:1;font-weight:600}.prow small{color:var(--green);font-size:13px;font-weight:600}
+.secs{display:flex;flex-direction:column;gap:1px;margin:2px 0 8px 18px;padding-left:10px;border-left:2px solid var(--line)}
+.sec{display:flex;gap:7px;align-items:flex-start;border:0;background:transparent;text-align:left;font:inherit;font-size:13px;line-height:1.3;color:var(--muted,#555);padding:6px 8px;border-radius:8px;cursor:pointer}
+.sec b{font-weight:700;color:var(--faint);min-width:24px;font-size:12px;padding-top:1px}.sec:hover{background:var(--bg)}
+.sec.on{background:var(--teal-soft);color:var(--ink);font-weight:600}.sec.on b{color:var(--teal)}.sec.done b{color:var(--green)}
+@media (min-width:720px){.road .stop.other{display:none}.road.single{display:none}}
+@media (max-width:719.98px){.secs{display:none}}`;
+    document.head.appendChild(css);
+    try { chapters(); road(); if (typeof drawLesson === "function") drawLesson(); if (g("topics") && st) topics(); } catch (e) { console.warn("fmt redraw", e); }
   }
   window.fmQuizState = () => run;
   window.fmEOC = d => eocHome(d);

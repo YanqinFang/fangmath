@@ -1215,11 +1215,11 @@
   /* ================= ONE PART AT A TIME (like Geometry 1.1) =================
      A lesson's Learn page can have several cards: the chapter's words, the postulates box, the story and the
      lesson itself. Show one at a time, with numbered steps on top and "Next →" at the bottom. */
-  const PARTS = { fmVideo: "Video", words: "Words to know", postbox: "Postulates", story: "Story", lesson: "Learn it" };
+  const PARTS = { fmVideo: "Video", words: "Words to know", postbox: "Postulates", story: "Story", lesson: "Learn it", fmNotes: "Notes" };
   const partAt = {};
   function partsDraw() {
     const lv = g("learnView"); if (!lv || !CH) return;
-    const all = ["fmVideo", "words", "postbox", "story", "lesson"].map(id => g(id)).filter(e => e && lv.contains(e));
+    const all = ["fmVideo", "words", "postbox", "story", "lesson", "fmNotes"].map(id => g(id)).filter(e => e && lv.contains(e));
     all.forEach(e => e.classList.remove("fm-off"));
     let parts = all.filter(e => !e.hidden && getComputedStyle(e).display !== "none" && e.innerHTML.trim());
     let bar = g("fmParts"), nav = g("fmPartsNav");
@@ -1242,8 +1242,39 @@
     bar.querySelectorAll("[data-i]").forEach(b => b.onclick = () => go(+b.dataset.i));
     nav.querySelectorAll("[data-go]").forEach(b => b.onclick = () => go(+b.dataset.go));
   }
+  /* Dr. Fang's notes (practice/notes.js): the key ideas from her handouts, as a "Notes" step after "Learn it" */
+  function notesDraw() {
+    const lesson = g("lesson"); if (!lesson || !CH) return;
+    const N = ((window.FM_NOTES || {})[PG.replace(/-levels$/, "")] || {})[(CH.topics[LI] || {}).id];
+    let box = g("fmNotes");
+    if (!N) { if (box) box.remove(); return; }
+    if (!box) { box = document.createElement("div"); box.id = "fmNotes"; box.className = "card fm-notes"; }
+    lesson.after(box);
+    const key = CH.id + ":" + LI; if (box.dataset.key === key) return; box.dataset.key = key;
+    box.innerHTML = `<span class="label" style="color:var(--navy)">📘 Dr. Fang's notes · ${esc(CH.topics[LI].title)}</span>
+      ${(N.key || []).map(k => `<div class="fn-key"><b>${k.t}</b><div>${k.b}</div></div>`).join("")}
+      ${(N.ex || []).length ? `<div class="fn-h">Worked examples</div>` + N.ex.map(([q, a]) => `<div class="fn-ex"><div class="fn-q">${q}</div><div class="fn-a">${a}</div></div>`).join("") : ""}
+      ${(N.tryit || []).length ? `<div class="fn-h">Try it</div>` + N.tryit.map(([q, a]) => `<details class="fn-try"><summary>${q}</summary><div>${a}</div></details>`).join("") : ""}
+      ${(N.pdf || []).length ? `<div class="fn-pdf">${N.pdf.map(([t, f]) => `<a class="btn sm ghost" href="${f}" target="_blank" rel="noopener">📄 ${esc(t)}</a>`).join("")}</div>` : ""}`;
+    if (typeof render === "function") render(box);
+  }
   function partsInit() {
-    if (!/^geometry/.test(PG)) return;
+    const hasNotes = () => !!((window.FM_NOTES || {})[PG.replace(/-levels$/, "")]);
+    const notesCss = document.createElement("style"); notesCss.textContent = `
+.fm-notes{display:flex;flex-direction:column;gap:10px}
+.fn-key{background:var(--teal-soft,#DDF0EE);border-radius:12px;padding:10px 14px}.fn-key>b{color:var(--teal);display:block;margin-bottom:2px}
+.fn-h{font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--faint);margin-top:6px}
+.fn-ex{border:1px solid var(--line);border-radius:12px;padding:10px 14px;background:var(--bg)}.fn-q{font-weight:600;margin-bottom:4px}
+.fn-try{border:1px dashed var(--line);border-radius:12px;padding:8px 14px}.fn-try summary{cursor:pointer;font-weight:600}.fn-try summary::after{content:"  — show answer";font-weight:400;color:var(--teal);font-size:13px}.fn-try[open] summary::after{content:""}.fn-try div{margin-top:6px;color:var(--green)}
+.fn-pdf{display:flex;flex-wrap:wrap;gap:8px;margin-top:4px}
+.fn-tab{border-collapse:collapse;width:100%;font-size:14px}.fn-tab td,.fn-tab th{border-bottom:1px solid var(--line);padding:5px 8px;text-align:left;vertical-align:top}`;
+    document.head.appendChild(notesCss);
+    const loadNotes = () => new Promise(ok => { if (window.FM_NOTES) return ok(); const sc = document.createElement("script"); sc.src = "notes.js?v=" + Math.floor(Date.now() / 3.6e6); sc.onload = sc.onerror = () => ok(); document.head.appendChild(sc); });
+    loadNotes().then(() => { const on = /^geometry/.test(PG) || hasNotes(); partsSetup(on); });
+  }
+  function partsSetup(on) {
+    const drawN = () => { try { notesDraw(); } catch (e) { console.warn("notes", e); } };
+    if (!on) { const o = window.openLesson; if (typeof o === "function") window.openLesson = function () { const r = o.apply(this, arguments); drawN(); return r; }; drawN(); return; }
     const css = document.createElement("style"); css.textContent = `
 .fm-off{display:none!important}
 .fm-parts{display:flex;flex-wrap:wrap;gap:8px;background:#fff;border:1px solid var(--line);border-radius:16px;padding:10px 12px;margin:0 0 -6px;box-shadow:var(--shadow)}
@@ -1255,7 +1286,7 @@
 .fm-parts-nav .fp-n{color:var(--faint);font-size:13px}
 .fm-parts-nav .btn:not(.ghost){background:var(--navy)}`;
     document.head.appendChild(css);
-    const later = () => setTimeout(() => { try { partsDraw(); } catch (e) { console.warn("parts", e); } }, 30);
+    const later = () => setTimeout(() => { drawN(); try { partsDraw(); } catch (e) { console.warn("parts", e); } }, 30);
     const o = window.openLesson; if (typeof o === "function") window.openLesson = function () { const r = o.apply(this, arguments); later(); return r; };
     const oc = window.openChapter; if (typeof oc === "function") window.openChapter = function () { const r = oc.apply(this, arguments); later(); return r; };
     const ot = window.setTab; window.setTab = function (t) { const r = ot.apply(this, arguments); if (t === "learn") later(); return r; };

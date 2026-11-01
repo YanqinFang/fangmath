@@ -110,7 +110,6 @@
   /* hero */
   .hero{text-align:center;padding:56px 0 34px}
   .wordmark{font-family:Inter,sans-serif;font-weight:800;font-size:clamp(46px,9vw,112px);line-height:1;letter-spacing:-.045em;margin:0}
-  .byline{margin:24px 0 0;font-size:16px;font-weight:600;color:var(--muted);letter-spacing:.04em}
   .wordmark .m{color:var(--teal);position:relative;display:inline-block}
   .wordmark .m::after{content:"";position:absolute;left:4%;right:4%;bottom:-.06em;height:.1em;border-radius:99px;background:var(--gold)}
   .tagline{font-size:clamp(17px,2.2vw,22px);color:var(--muted);margin:22px 0 0}
@@ -649,7 +648,6 @@ function pageHome(v){
   const ch = CHALLENGES[0];
   v.append(h("section", { class:"hero" }, h("div", { class:"wrap" },
     h("h1", { class:"wordmark" }, "Fang", h("span", { class:"m" }, "Math")),
-    h("p", { class:"byline" }, "with Prof. Fang"),
     h("p", { class:"tagline" }, h("b", {}, "Experience first. "), "Symbols second. ", h("b", {}, "Understanding always.")),
     greeting(),
     h("div", { class:"hero-cta" }, h("a", { class:"btn", href:"#/k8" }, "Grades 3–8"), h("a", { class:"btn teal", href:"#/highschool" }, "High School"), h("a", { class:"btn", style:"background:#D35400", href:"#/competition" }, "Competition"), h("a", { class:"btn", style:"background:#B7472A", href:"#/testprep" }, "SAT / ACT"), h("a", { class:"btn ghost", href:"#/challenge" }, "This week's challenge")),

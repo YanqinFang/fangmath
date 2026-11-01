@@ -38,6 +38,8 @@ def fill(s, mode, k=None, start=None):
         a = m.group(1); box = a if a.startswith("$") else a
         if mode == "beamer":
             r = rf"\fb{{{start[i]}}}{{{box}}}"
+        elif mode == "plain":
+            r = box
         elif mode == "blank":
             r = rf"\nb{{{box}}}"
         else:
@@ -116,8 +118,10 @@ def build(L, out):
     # watch out
     frame("Watch out!", "warnb", "fpink", "Common mistake", [L["warn"]], L["say"]["warn"])
     # remember
-    B.append(r"\begin{frame}{Remember}" + "\n" + r"\begin{itemize}\setlength\itemsep{10pt}" + "\n" + "\n".join(r"\item " + x for x in L["remember"]) + "\n" + r"\end{itemize}\vfill" + "\n"
-             + rf"\begin{{center}}{{\color{{ftitle}}\large\bfseries Now practice at your level:}}\par\smallskip{{\Large\color{{fkey}}\bfseries fangmath.com}}\enskip{{\color{{gray}}$\to$ {L['course']} $\to$ {L['no']}}}\end{{center}}" + "\n" + r"\end{frame}")
+    # remember = the Learn page's own key idea and warning, word for word (blanks filled in)
+    B.append(r"\begin{frame}{Remember}" + "\n" + r"\begin{lbox}{keyb}{fkey}{Key idea}" + "\n" + html2tex(fill(L["idea"], "plain")) + "\n" + r"\end{lbox}\medskip" + "\n"
+             + r"\begin{lbox}{warnb}{fpink}{Watch out}" + "\n" + html2tex(fill(L["warn"], "plain")) + "\n" + r"\end{lbox}\vfill" + "\n"
+             + rf"\begin{{center}}{{\color{{ftitle}}\bfseries Now practice at your level:}}\enskip{{\large\color{{fkey}}\bfseries fangmath.com}}\enskip{{\small\color{{gray}}$\to$ {L['course']} $\to$ {L['no']}}}\end{{center}}" + "\n" + r"\end{frame}")
     narr.append(L["say"]["end"])
     B.append(r"\end{document}")
     open(f"{out}/{base}_Video_Slides.tex", "w").write("\n".join(B) + "\n")
@@ -146,7 +150,6 @@ def build(L, out):
              r"\begin{lbox}{fwatch}{Watch Me --- " + L["watch_intro"] + "}\n" + r"\renewcommand{\arraystretch}{1.9}\begin{tabular}{@{}>{\large}p{0.36\linewidth}p{0.55\linewidth}@{}}" + "\n" + r"\textbf{Step} & \textbf{Why}\\" + "\n"
              + "\n".join(rf"${fill(m, mode)}$ & {fill(w, mode)}\\" for m, w, _ in L["steps"]) + "\n" + r"\end{tabular}\end{lbox}\par\bigskip",
              r"\begin{lbox}{fpink}{Common Mistake}" + "\n" + html2tex(fill(L["warn"], mode)) + r"\\[2pt]\end{lbox}\par\bigskip",
-             r"\begin{lbox}{fnotice}{In my own words}" + "\n" + L["own_words"] + r"\par\medskip" + ("\n" + r"\underline{\makebox[\linewidth]{}}\par\medskip\underline{\makebox[\linewidth]{}}" if mode == "blank" else "\n" + r"{\color{fpink} Answers will vary, e.g.\ " + L["own_words_ex"] + "}") + r"\end{lbox}",
              r"\vfill{\centering\small\color{gray} Practice at your level: \textbf{fangmath.com} $\to$ " + L["course"] + r" $\to$ " + L["no"] + r"\par \textcopyright\ 2026 Prof.\ Fang Math. All rights reserved.\par}",
              r"\end{document}"]
         return "\n".join(T) + "\n"

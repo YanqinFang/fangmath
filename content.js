@@ -273,11 +273,15 @@ const COURSES = [
         { title: "Practice · Function Transformations Practice", worksheet: "materials/algebra1/ch04/Alg1_ch04_Function_Transformations.pdf", summary: "Translations, dilations and reflections of $f(x)$: tables of rules, then practice problems with an answer key." },
         { title: "Practice · Arithmetic Sequences", worksheet: "materials/algebra1/ch04/Alg1_ch04_Arithmetic_Sequences.pdf", summary: "A handout in five topics — common difference, the explicit formula and applications — with 2 easy, 2 medium and 1 hard problem per topic and a detailed answer key." }
       ] },
-      { title: "5. Linear Functions & Graphing", app: "practice/algebra1.html?chapter=a5", appTopics: 5, lessons: [] },
+      { title: "5. Linear Functions & Graphing", app: "practice/algebra1.html?chapter=a5", appTopics: 5, lessons: [
+        { title: "Practice · Linear Functions & Graphing", worksheet: "materials/algebra1/ch05/Alg1_ch05_Linear_Functions_Graphing.pdf", answers: "materials/algebra1/ch05/Alg1_ch05_Linear_Functions_Graphing_Key.pdf", summary: "30 problems in six types, each after a worked example: slope from two points and from a graph, intercepts, slope-intercept form $y = mx + b$, graphing a line, and real-life linear functions. Separate answer key with graphs." }
+      ] },
       { title: "6. Writing Linear Equations", app: "practice/algebra1.html?chapter=a6", appTopics: 5, lessons: [
         { title: "Notes · Flash Cards: Slopes of Parallel & Perpendicular Lines", notes: "materials/algebra1/ch06/Alg1_ch06_Parallel_Perpendicular_Flashcards.pdf", summary: "Cut-out flash cards: compare the slopes of two lines, and write the equation of a parallel or perpendicular line through a point." }
       ] },
-      { title: "7. Systems of Linear Equations", app: "practice/algebra1.html?chapter=a7", appTopics: 4, lessons: [] },
+      { title: "7. Systems of Linear Equations", app: "practice/algebra1.html?chapter=a7", appTopics: 4, lessons: [
+        { title: "Practice · Systems of Linear Equations", worksheet: "materials/algebra1/ch07/Alg1_ch07_Systems_of_Equations.pdf", answers: "materials/algebra1/ch07/Alg1_ch07_Systems_of_Equations_Key.pdf", summary: "30 problems in six types, each after a worked example: checking a solution, solving by graphing, substitution, elimination, how many solutions, and word problems. Separate answer key with graphs." }
+      ] },
       { title: "8. Exponents & Exponent Rules", app: "practice/algebra1.html?chapter=a8", appTopics: 5, lessons: [
         { title: "Notes · Exponents, Radicals & Exponential Functions", notes: "materials/algebra1/ch08/Alg1_ch08_Exponents_Radicals_Exponential_Functions.pdf", summary: "A textbook-style chapter: the five laws of exponents, radical notation and rational exponents, and the exponential function $y = 2^x$ — domain, range, table, graph and end behavior." },
         { title: "Notes · Rational Exponents: Building Intuition", notes: "materials/algebra1/ch08/Alg1_ch08_Rational_Exponents_Intuition.pdf", summary: "Short pages that build the idea step by step: repeated multiplication, finding the base, radical notation, and why roots undo powers, ending with a fill-in page." },

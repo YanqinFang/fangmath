@@ -1,0 +1,661 @@
+\documentclass[11pt]{article}
+% ============ FangMath self-contained preamble (pdflatex) ============
+\usepackage[T1]{fontenc}
+\usepackage{mathpazo}            % Palatino text + math
+\usepackage[margin=0.9in,top=1in,bottom=1in]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage{xcolor}
+\usepackage[most]{tcolorbox}
+\usepackage{fancyhdr}
+\usepackage{enumitem}
+\usepackage{pifont}
+\usepackage{needspace}
+\usepackage{multicol}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta}
+
+\definecolor{FangBlue}{HTML}{1F4E79}
+\definecolor{FangLight}{HTML}{EAF1F8}
+\definecolor{FangGreen}{HTML}{1D9E75}
+\definecolor{FangRed}{HTML}{C0392B}
+\definecolor{FangGold}{HTML}{B7862C}
+\definecolor{FangPurple}{HTML}{6C3483}
+
+% ---- Headers / footers ----
+\setlength{\headheight}{26pt}
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0.8pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{FangBlue}\leaders\hrule height \headrulewidth\hfill}}
+\lhead{\color{FangBlue}\textbf{FangMath}}
+\rhead{\color{FangBlue}Absolute Value Inequalities --- Practice}
+\cfoot{\color{FangBlue}\thepage}
+
+% ---- Step box (from the In/Out notes) ----
+\newtcolorbox{stepbox}[1]{
+  colback=FangLight, colframe=FangBlue, boxrule=0.8pt, arc=3pt,
+  left=10pt, right=10pt, top=6pt, bottom=6pt,
+  fonttitle=\bfseries\color{white},
+  colbacktitle=FangBlue, coltitle=white,
+  title={#1}, breakable}
+% ---- Mistake box ----
+\newtcolorbox{mistakebox}{
+  colback=white, colframe=FangRed, boxrule=1pt, arc=3pt,
+  left=10pt, right=10pt, top=6pt, bottom=6pt,
+  fonttitle=\bfseries\color{white},
+  colbacktitle=FangRed, coltitle=white,
+  title={Common Mistake to Avoid}, breakable}
+% ---- Answer box ----
+\newtcolorbox{answerbox}{
+  colback=white, colframe=FangGreen, boxrule=1.2pt, arc=3pt,
+  left=10pt, right=10pt, top=6pt, bottom=6pt}
+\newcommand{\In}{\textbf{\color{FangGreen}in}}
+\newcommand{\Out}{\textbf{\color{FangRed}out}}
+
+% ---- Leveled practice box (structure borrowed from the equations worksheet) ----
+\newtcolorbox{partbox}[2]{
+  enhanced, breakable,
+  colback=#1!7, colframe=#1, coltitle=white,
+  fonttitle=\bfseries\large,
+  title={#2},
+  arc=3pt, boxrule=1.2pt,
+  left=10pt, right=10pt, top=7pt, bottom=7pt}
+
+% ---- Fill-in-the-blank helpers ----
+\newcommand{\blank}{\underline{\hspace{2.6cm}}}
+\newcommand{\sblank}{\underline{\hspace{1.3cm}}}
+\newcommand{\ans}[1]{{\color{FangGreen}\bfseries #1}}
+\newcommand{\wspA}{\vspace{0.3cm}}
+\newcommand{\wspB}{\vspace{0.3cm}}
+\newcommand{\wspC}{\vspace{0.4cm}}
+
+% ---- Blank scratch number line for practice problems (fixed width, no numbers --
+%      student plots boundaries/labels/shading themselves) ----
+\newcommand{\blanknumline}{%
+\begin{center}
+\begin{tikzpicture}[x=0.5cm]
+  \draw[thick,-{Stealth[length=2mm]}] (-6,0) -- (6,0);
+  \draw[thick,-{Stealth[length=2mm]}] (6,0) -- (-6,0);
+  \foreach \i in {-6,...,6} {\draw (\i,0.07) -- (\i,-0.07);}
+\end{tikzpicture}
+\end{center}}
+
+% ---- Number line: just the two boundary dots, no shading yet ----
+\newcommand{\numlineDots}[6]{%
+\begin{center}
+\begin{tikzpicture}[x=0.42cm]
+  \draw[thick,-{Stealth[length=2mm]}] (#1-0.5,0) -- (#2+0.5,0);
+  \draw[thick,-{Stealth[length=2mm]}] (#2+0.5,0) -- (#1-0.5,0);
+  \filldraw[FangBlue] (#3,0) circle (3.2pt);
+  \filldraw[FangBlue] (#4,0) circle (3.2pt);
+  \node[below=5pt] at (#3,0) {#5};
+  \node[below=5pt] at (#4,0) {#6};
+\end{tikzpicture}
+\end{center}}
+% ---- Number line: shaded interval BETWEEN two closed endpoints (And / In) ----
+\newcommand{\numlineIn}[6]{%
+\begin{center}
+\begin{tikzpicture}[x=0.42cm]
+  \draw[thick,-{Stealth[length=2mm]}] (#1-0.5,0) -- (#2+0.5,0);
+  \draw[thick,-{Stealth[length=2mm]}] (#2+0.5,0) -- (#1-0.5,0);
+  \draw[line width=3pt,FangGreen] (#3,0) -- (#4,0);
+  \filldraw[FangGreen] (#3,0) circle (3.2pt);
+  \filldraw[FangGreen] (#4,0) circle (3.2pt);
+  \node[below=5pt] at (#3,0) {#5};
+  \node[below=5pt] at (#4,0) {#6};
+\end{tikzpicture}
+\end{center}}
+% ---- Number line: shaded rays OUTSIDE two closed endpoints (Or / Out) ----
+\newcommand{\numlineOut}[6]{%
+\begin{center}
+\begin{tikzpicture}[x=0.42cm]
+  \draw[thick,-{Stealth[length=2mm]}] (#1-0.8,0) -- (#2+0.8,0);
+  \draw[thick,-{Stealth[length=2mm]}] (#2+0.8,0) -- (#1-0.8,0);
+  \draw[line width=3pt,FangGreen] (#1-0.8,0) -- (#3,0);
+  \draw[line width=3pt,FangGreen] (#4,0) -- (#2+0.8,0);
+  \filldraw[FangGreen] (#3,0) circle (3.2pt);
+  \filldraw[FangGreen] (#4,0) circle (3.2pt);
+  \node[below=5pt] at (#3,0) {#5};
+  \node[below=5pt] at (#4,0) {#6};
+\end{tikzpicture}
+\end{center}}
+
+% ---- Compact answer-key graphs (small scale, args: min max leftEndpoint rightEndpoint) ----
+\newcommand{\gIn}[4]{%
+\begin{center}
+\begin{tikzpicture}[x=0.32cm]
+  \draw[thick,-{Stealth[length=1.8mm]}] (#1-0.5,0) -- (#2+0.5,0);
+  \draw[thick,-{Stealth[length=1.8mm]}] (#2+0.5,0) -- (#1-0.5,0);
+  \draw[line width=2.4pt,FangGreen] (#3,0) -- (#4,0);
+  \filldraw[FangGreen] (#3,0) circle (2.6pt);
+  \filldraw[FangGreen] (#4,0) circle (2.6pt);
+  \node[below=3pt,font=\footnotesize] at (#3,0) {$#3$};
+  \node[below=3pt,font=\footnotesize] at (#4,0) {$#4$};
+\end{tikzpicture}
+\end{center}}
+\newcommand{\gInOpen}[4]{%
+\begin{center}
+\begin{tikzpicture}[x=0.32cm]
+  \draw[thick,-{Stealth[length=1.8mm]}] (#1-0.5,0) -- (#2+0.5,0);
+  \draw[thick,-{Stealth[length=1.8mm]}] (#2+0.5,0) -- (#1-0.5,0);
+  \draw[line width=2.4pt,FangGreen] (#3,0) -- (#4,0);
+  \draw[FangGreen,thick,fill=white] (#3,0) circle (2.6pt);
+  \draw[FangGreen,thick,fill=white] (#4,0) circle (2.6pt);
+  \node[below=3pt,font=\footnotesize] at (#3,0) {$#3$};
+  \node[below=3pt,font=\footnotesize] at (#4,0) {$#4$};
+\end{tikzpicture}
+\end{center}}
+\newcommand{\gOut}[4]{%
+\begin{center}
+\begin{tikzpicture}[x=0.32cm]
+  \draw[thick,-{Stealth[length=1.8mm]}] (#1-0.8,0) -- (#2+0.8,0);
+  \draw[thick,-{Stealth[length=1.8mm]}] (#2+0.8,0) -- (#1-0.8,0);
+  \draw[line width=2.4pt,FangGreen] (#1-0.8,0) -- (#3,0);
+  \draw[line width=2.4pt,FangGreen] (#4,0) -- (#2+0.8,0);
+  \filldraw[FangGreen] (#3,0) circle (2.6pt);
+  \filldraw[FangGreen] (#4,0) circle (2.6pt);
+  \node[below=3pt,font=\footnotesize] at (#3,0) {$#3$};
+  \node[below=3pt,font=\footnotesize] at (#4,0) {$#4$};
+\end{tikzpicture}
+\end{center}}
+\newcommand{\gOutOpen}[4]{%
+\begin{center}
+\begin{tikzpicture}[x=0.32cm]
+  \draw[thick,-{Stealth[length=1.8mm]}] (#1-0.8,0) -- (#2+0.8,0);
+  \draw[thick,-{Stealth[length=1.8mm]}] (#2+0.8,0) -- (#1-0.8,0);
+  \draw[line width=2.4pt,FangGreen] (#1-0.8,0) -- (#3,0);
+  \draw[line width=2.4pt,FangGreen] (#4,0) -- (#2+0.8,0);
+  \draw[FangGreen,thick,fill=white] (#3,0) circle (2.6pt);
+  \draw[FangGreen,thick,fill=white] (#4,0) circle (2.6pt);
+  \node[below=3pt,font=\footnotesize] at (#3,0) {$#3$};
+  \node[below=3pt,font=\footnotesize] at (#4,0) {$#4$};
+\end{tikzpicture}
+\end{center}}
+\newcommand{\gPoint}[3]{%
+\begin{center}
+\begin{tikzpicture}[x=0.32cm]
+  \draw[thick,-{Stealth[length=1.8mm]}] (#1-0.5,0) -- (#2+0.5,0);
+  \draw[thick,-{Stealth[length=1.8mm]}] (#2+0.5,0) -- (#1-0.5,0);
+  \filldraw[FangGreen] (#3,0) circle (2.8pt);
+  \node[below=3pt,font=\footnotesize] at (#3,0) {$#3$};
+\end{tikzpicture}
+\end{center}}
+\newcommand{\gAll}[2]{%
+\begin{center}
+\begin{tikzpicture}[x=0.32cm]
+  \draw[line width=2.4pt,FangGreen,{Stealth[length=2.2mm]}-{Stealth[length=2.2mm]}] (#1-0.5,0) -- (#2+0.5,0);
+  \node[below=3pt,font=\footnotesize] at (0,0) {all real numbers};
+\end{tikzpicture}
+\end{center}}
+
+\begin{document}
+
+% ─── TITLE BANNER ─────────────────────────────────────────────────────
+\begin{tcolorbox}[enhanced, arc=6pt,
+  colback=FangBlue, colframe=FangGreen, boxrule=2.2pt,
+  left=12pt, right=12pt, top=10pt, bottom=10pt]
+  \begin{center}
+    {\color{white}\fontsize{19}{23}\selectfont\bfseries
+      Solving Absolute Value Inequalities}\\[4pt]
+    {\color{FangLight}\normalsize The ``In or Out'' Method --- Step-by-Step Practice}
+  \end{center}
+\end{tcolorbox}
+
+\vspace{6pt}
+\begin{tcolorbox}[colback=FangLight, colframe=FangBlue!50, arc=3pt, boxrule=0.8pt,
+  left=8pt, right=8pt, top=5pt, bottom=5pt]
+\begin{tabular}{p{6cm} p{4cm} p{4cm}}
+Name:\;\underline{\hspace{5cm}} &
+Date:\;\underline{\hspace{2.8cm}} &
+Period:\;\underline{\hspace{2cm}}
+\end{tabular}
+\end{tcolorbox}
+
+\vspace{8pt}
+\begin{stepbox}{The Big Rule}
+Absolute value bars ask: how far is the inside expression from $0$? Instead of memorizing which symbol
+means \emph{and} and which means \emph{or}, \textbf{test the middle point} (where the inside expression
+equals $0$) to see whether it belongs to the solution:
+\begin{center}
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{|c|c|c|}
+\hline
+\textbf{Test result at the middle} & \textbf{Region} & \textbf{Compound inequality} \\\hline
+True & \In\ (between the boundaries) & \textbf{and} \\\hline
+False & \Out\ (outside the boundaries) & \textbf{or} \\\hline
+\end{tabular}
+\end{center}
+Every practice problem below uses the \textbf{same three steps}: (1) find the boundaries, (2) test the
+middle point True/False, (3) write \emph{and}/\emph{or} and solve. Fill in every blank!
+\end{stepbox}
+
+\vspace{6pt}
+\noindent{\color{FangBlue}\Large\bfseries Example 1 \quad Solve $\lvert 3x-4\rvert \le 8$ \normalsize (an ``And'' case)}
+\vspace{2pt}
+
+\begin{stepbox}{Step 1 \ Find the boundaries}
+Since $\lvert -8\rvert = 8$ and $\lvert 8\rvert = 8$, the expression $3x-4$ hits the edge at
+$-8$ and $8$. Mark both as \textbf{closed} dots (the inequality is $\le$, so the ends are included).
+\numlineDots{-8}{8}{-8}{8}{$-8$}{$8$}
+\end{stepbox}
+\begin{stepbox}{Step 2 \ Check: In or Out?}
+Test the middle point $3x-4 = 0$:
+\[
+\lvert 0\rvert = 0 \le 8 \quad\text{\textbf{\color{FangGreen}True}.}
+\]
+The point \emph{between} the boundaries works, so we keep the \In\ region. That makes this an
+\textbf{and} statement (a \emph{between} inequality), not an \emph{or}.
+\end{stepbox}
+\begin{stepbox}{Step 3 \ Write the compound inequality and solve}
+Because it is ``in,'' $3x-4$ stays \emph{between} $-8$ and $8$:
+\[
+-8 \le 3x-4 \le 8.
+\]
+Solve all three parts at once. Add $4$:
+\[
+-8+4 \le 3x-4+4 \le 8+4
+\qquad\Longrightarrow\qquad
+-4 \le 3x \le 12.
+\]
+Divide by $3$:
+\[
+\frac{-4}{3} \le x \le \frac{12}{3}
+\qquad\Longrightarrow\qquad
+-\frac{4}{3} \le x \le 4.
+\]
+\end{stepbox}
+\begin{center}
+\begin{answerbox}
+\centering
+\textbf{Solution:} \quad $\displaystyle -\frac{4}{3} \le x \le 4$
+\quad or \quad $\left[-\dfrac{4}{3},\, 4\right]$
+\end{answerbox}
+\end{center}
+\numlineIn{-2}{5}{-1.333}{4}{$-\frac{4}{3}$}{$4$}
+\vspace{2pt}
+\begin{center}
+\small\itshape Check: at $x=0$, $\lvert 3(0)-4\rvert = 4 \le 8$ \checkmark
+\end{center}
+
+\vspace{10pt}
+\noindent{\color{FangBlue}\Large\bfseries Example 2 \quad Solve $\lvert 2x+4\rvert \ge 6$ \normalsize (an ``Or'' case)}
+\vspace{2pt}
+
+\noindent Same method as Example 1 -- but this time the test point will fail, which flips it to an
+\emph{or} statement.
+
+\begin{stepbox}{Step 1 \ Find the boundaries}
+Since $\lvert -6\rvert = 6$ and $\lvert 6\rvert = 6$, the expression $2x+4$ hits the edge at
+$-6$ and $6$. Mark both as \textbf{closed} dots (the inequality is $\ge$, so the ends are included).
+\numlineDots{-6}{6}{-6}{6}{$-6$}{$6$}
+\end{stepbox}
+\begin{stepbox}{Step 2 \ Check: In or Out?}
+Test the middle point $2x+4 = 0$:
+\[
+\lvert 0\rvert = 0 \ge 6 \quad\text{\textbf{\color{FangRed}False}.}
+\]
+The point \emph{between} the boundaries does \textbf{not} work, so the solution is the \Out\ region.
+That makes this an \textbf{or} statement (an \emph{outside} inequality), not an \emph{and}.
+\end{stepbox}
+\begin{stepbox}{Step 3 \ Write the compound inequality and solve}
+Because it is ``out,'' $2x+4$ stays \emph{outside} $-6$ and $6$ --- less than or equal to the left
+boundary, \textbf{or} greater than or equal to the right boundary:
+\[
+2x+4 \le -6 \qquad\text{\textbf{or}}\qquad 2x+4 \ge 6.
+\]
+Solve each piece on its own. Subtract $4$ from both sides:
+\[
+2x \le -10 \qquad\text{\textbf{or}}\qquad 2x \ge 2.
+\]
+Divide both sides by $2$:
+\[
+x \le -5 \qquad\text{\textbf{or}}\qquad x \ge 1.
+\]
+\end{stepbox}
+
+\needspace{9\baselineskip}
+\begin{mistakebox}
+The original inequality is $\ge$, not a strict $>$ -- so the boundary points themselves are part of the
+solution, and the compound inequality must use $\le$ and $\ge$, not $<$ and $>$. Writing ``$2x+4<-6$ or
+$2x+4>6$'' would quietly kick $x=-5$ and $x=1$ back out of the answer. Always check: plug the boundary
+value into the \emph{original} inequality --- at $x=-5$, $\lvert 2(-5)+4\rvert = \lvert -6\rvert = 6 \ge 6$
+\checkmark, so it belongs, and the dots on the number line stay \textbf{closed}.
+\end{mistakebox}
+
+\begin{center}
+\begin{answerbox}
+\centering
+\textbf{Solution:} \quad $x \le -5 \ \text{ or } \ x \ge 1$
+\quad or \quad $(-\infty,-5\,] \cup [\,1,\infty)$
+\end{answerbox}
+\end{center}
+\numlineOut{-9}{4}{-5}{1}{$-5$}{$1$}
+\vspace{2pt}
+\begin{center}
+\small\itshape Check: at $x=-10$ (outside), $\lvert 2(-10)+4\rvert = 16 \ge 6$ \checkmark \qquad
+at $x=0$ (between), $\lvert 2(0)+4\rvert = 4 \ge 6$? \ding{55}\ (correctly excluded)
+\end{center}
+
+\vspace{6pt}
+\begin{stepbox}{Key Idea --- And vs.\ Or at a Glance}
+\begin{center}
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{|c|c|c|}
+\hline
+\textbf{Form} & \textbf{Test at the middle} & \textbf{Solution shape}\\\hline
+$\lvert \text{expr}\rvert \le k$ & always True (In) & \textbf{and}: one connected interval\\\hline
+$\lvert \text{expr}\rvert \ge k$ & always False (Out) & \textbf{or}: two separate rays\\\hline
+\end{tabular}
+\end{center}
+(Assuming $k>0$.) The middle-point test is a shortcut for the graph of $y=\lvert\text{expr}\rvert$: it
+dips \emph{below} the line $y=k$ only in the middle (giving an \emph{and}), so anywhere it stays at or
+above $y=k$ gives an \emph{or}.
+\end{stepbox}
+
+\newpage
+%% ══════════════════════════════════════════════════════════════════
+%%  PART A --- Level 1 : direct |x|
+%% ══════════════════════════════════════════════════════════════════
+\begin{partbox}{FangBlue}{Part A \quad Level 1 --- Direct Absolute Value
+  \hfill{\normalfont\small $|x| \; \square \; c$}}
+\textit{Follow the three steps. The boundaries of $|x|$ are just $x=c$ and $x=-c$.}
+\vspace{6pt}
+\begin{multicols}{2}
+\begin{enumerate}[label=\textbf{\arabic*.},itemsep=0pt]
+
+\item $|x| \le 4$\\[3pt]
+Step 1 --- Boundaries: $x=\sblank$ and $x=\sblank$\\[3pt]
+Step 2 --- Test $x=0$: $|0|\;\underline{\hspace{0.7cm}}\;4$ $\Rightarrow$ True / False (circle one)\\[3pt]
+In / Out \quad $\Rightarrow$ \quad and / or (circle one)\\[3pt]
+Step 3: \sblank $\le x \le$ \sblank\\[3pt]
+\textbf{Answer:} \blank\\[3pt]
+Step 4 --- Graph it: \blanknumline
+\wspB
+
+\item $|x| \ge 3$\\[3pt]
+Step 1 --- Boundaries: $x=\sblank$ and $x=\sblank$\\[3pt]
+Step 2 --- Test $x=0$: $|0|\;\underline{\hspace{0.7cm}}\;3$ $\Rightarrow$ True / False (circle one)\\[3pt]
+In / Out \quad $\Rightarrow$ \quad and / or (circle one)\\[3pt]
+Step 3: $x\le$ \sblank\ \ or\ \ $x\ge$ \sblank\\[3pt]
+\textbf{Answer:} \blank\\[3pt]
+Step 4 --- Graph it: \blanknumline
+\wspB
+
+\item $|x| < 6$\\[3pt]
+Step 1 --- Boundaries: $x=\sblank$ and $x=\sblank$\\[3pt]
+Step 2 --- Test $x=0$: $|0|\;\underline{\hspace{0.7cm}}\;6$ $\Rightarrow$ True / False (circle one)\\[3pt]
+In / Out \quad $\Rightarrow$ \quad and / or (circle one)\\[3pt]
+Step 3: \sblank $< x <$ \sblank\\[3pt]
+\textbf{Answer:} \blank\\[3pt]
+Step 4 --- Graph it: \blanknumline
+\wspB
+
+\item $|x| > 2$\\[3pt]
+Step 1 --- Boundaries: $x=\sblank$ and $x=\sblank$\\[3pt]
+Step 2 --- Test $x=0$: $|0|\;\underline{\hspace{0.7cm}}\;2$ $\Rightarrow$ True / False (circle one)\\[3pt]
+In / Out \quad $\Rightarrow$ \quad and / or (circle one)\\[3pt]
+Step 3: $x<$ \sblank\ \ or\ \ $x>$ \sblank\\[3pt]
+\textbf{Answer:} \blank\\[3pt]
+Step 4 --- Graph it: \blanknumline
+\wspB
+
+\item $|x| \le 0$\\[3pt]
+\textit{(Hint: absolute value can never be negative --- when can it equal exactly $0$?)}\\[3pt]
+\textbf{Answer:} \blank\\[3pt]
+Graph it: \blanknumline
+\wspA
+
+\item $|x| \ge 0$\\[3pt]
+\textit{(Hint: absolute value is always $\ge 0$ --- for which $x$ is this ever false?)}\\[3pt]
+\textbf{Answer:} \blank\\[3pt]
+Graph it: \blanknumline
+\wspA
+
+\end{enumerate}
+\end{multicols}
+\end{partbox}
+
+\vspace{10pt}
+%% ══════════════════════════════════════════════════════════════════
+%%  PART B --- Level 2 : shifted inside
+%% ══════════════════════════════════════════════════════════════════
+\begin{partbox}{FangPurple}{Part B \quad Level 2 --- Shift Inside
+  \hfill{\normalfont\small $|x \pm a| \; \square \; c$}}
+\textit{Same three steps --- but the middle point is no longer $x=0$; solve $x\pm a = 0$ first.}
+\vspace{6pt}
+\begin{multicols}{2}
+\begin{enumerate}[label=\textbf{\arabic*.},itemsep=0pt]
+
+\item $|x-2| \le 5$\\[3pt]
+Step 1: $x-2=\sblank$ and $x-2=\sblank$ $\Rightarrow$ $x=\sblank$ and $x=\sblank$\\[3pt]
+Step 2 --- Test middle ($x=2$): $|0|\;\underline{\hspace{0.7cm}}\;5$ $\Rightarrow$ True/False\\[3pt]
+In/Out $\Rightarrow$ and/or (circle)\\[3pt]
+Step 3: \sblank $\le x \le$ \sblank\\[3pt]
+\textbf{Answer:} \blank\\[3pt]
+Step 4 --- Graph it: \blanknumline
+\wspC
+
+\item $|x+4| \ge 3$\\[3pt]
+Step 1: $x+4=\sblank$ and $x+4=\sblank$ $\Rightarrow$ $x=\sblank$ and $x=\sblank$\\[3pt]
+Step 2 --- Test middle ($x=-4$): $|0|\;\underline{\hspace{0.7cm}}\;3$ $\Rightarrow$ True/False\\[3pt]
+In/Out $\Rightarrow$ and/or (circle)\\[3pt]
+Step 3: $x\le$ \sblank\ \ or\ \ $x\ge$ \sblank\\[3pt]
+\textbf{Answer:} \blank\\[3pt]
+Step 4 --- Graph it: \blanknumline
+\wspC
+
+\item $|x-5| < 2$\\[3pt]
+Step 1: $x-5=\sblank$ and $x-5=\sblank$ $\Rightarrow$ $x=\sblank$ and $x=\sblank$\\[3pt]
+Step 2 --- Test middle ($x=5$): $|0|\;\underline{\hspace{0.7cm}}\;2$ $\Rightarrow$ True/False\\[3pt]
+In/Out $\Rightarrow$ and/or (circle)\\[3pt]
+Step 3: \sblank $< x <$ \sblank\\[3pt]
+\textbf{Answer:} \blank\\[3pt]
+Step 4 --- Graph it: \blanknumline
+\wspC
+
+\item $|x+1| > 4$\\[3pt]
+Step 1: $x+1=\sblank$ and $x+1=\sblank$ $\Rightarrow$ $x=\sblank$ and $x=\sblank$\\[3pt]
+Step 2 --- Test middle ($x=-1$): $|0|\;\underline{\hspace{0.7cm}}\;4$ $\Rightarrow$ True/False\\[3pt]
+In/Out $\Rightarrow$ and/or (circle)\\[3pt]
+Step 3: $x<$ \sblank\ \ or\ \ $x>$ \sblank\\[3pt]
+\textbf{Answer:} \blank\\[3pt]
+Step 4 --- Graph it: \blanknumline
+\wspC
+
+\item $|x+3| \le 6$\\[3pt]
+Step 1: $x+3=\sblank$ and $x+3=\sblank$ $\Rightarrow$ $x=\sblank$ and $x=\sblank$\\[3pt]
+Step 2 --- Test middle ($x=-3$): $|0|\;\underline{\hspace{0.7cm}}\;6$ $\Rightarrow$ True/False\\[3pt]
+In/Out $\Rightarrow$ and/or (circle)\\[3pt]
+Step 3: \sblank $\le x \le$ \sblank\\[3pt]
+\textbf{Answer:} \blank\\[3pt]
+Step 4 --- Graph it: \blanknumline
+\wspC
+
+\item $|x-7| \ge 5$\\[3pt]
+Step 1: $x-7=\sblank$ and $x-7=\sblank$ $\Rightarrow$ $x=\sblank$ and $x=\sblank$\\[3pt]
+Step 2 --- Test middle ($x=7$): $|0|\;\underline{\hspace{0.7cm}}\;5$ $\Rightarrow$ True/False\\[3pt]
+In/Out $\Rightarrow$ and/or (circle)\\[3pt]
+Step 3: $x\le$ \sblank\ \ or\ \ $x\ge$ \sblank\\[3pt]
+\textbf{Answer:} \blank\\[3pt]
+Step 4 --- Graph it: \blanknumline
+\wspC
+
+\end{enumerate}
+\end{multicols}
+\end{partbox}
+
+\vspace{10pt}
+%% ══════════════════════════════════════════════════════════════════
+%%  PART C --- Level 3 : isolate first
+%% ══════════════════════════════════════════════════════════════════
+\begin{partbox}{FangGold}{Part C \quad Level 3 --- Isolate First!
+  \hfill{\normalfont\small Get $|\cdot|$ alone, then run the 3 steps}}
+\textit{Add, subtract, or divide to isolate the absolute value first --- just like Example 2 required
+solving for $2x+4$ before testing.}
+\vspace{6pt}
+\begin{enumerate}[label=\textbf{\arabic*.},itemsep=6pt]
+
+\item $|x|+3 \le 7$\\[3pt]
+Isolate: $|x| \le$ \sblank\\[3pt]
+Step 1 --- Boundaries: $x=\sblank$ and $x=\sblank$\\[3pt]
+Step 2 --- Test $x=0$: True / False\\[3pt]
+In / Out $\Rightarrow$ and / or (circle)\\[3pt]
+Step 3: \sblank $\le x \le$ \sblank\\[3pt]
+\textbf{Answer:} \blank\\[3pt]
+Graph it: \blanknumline
+
+\item $2|x| \ge 10$\\[3pt]
+Isolate: $|x| \ge$ \sblank\\[3pt]
+Step 1 --- Boundaries: $x=\sblank$ and $x=\sblank$\\[3pt]
+Step 2 --- Test $x=0$: True / False\\[3pt]
+In / Out $\Rightarrow$ and / or (circle)\\[3pt]
+Step 3: $x\le$ \sblank\ \ or\ \ $x\ge$ \sblank\\[3pt]
+\textbf{Answer:} \blank\\[3pt]
+Graph it: \blanknumline
+
+\item $|x-1|+2 < 6$\\[3pt]
+Isolate: $|x-1| <$ \sblank\\[3pt]
+Step 1 --- Boundaries: $x-1=\sblank$ and $x-1=\sblank$ $\Rightarrow$ $x=\sblank$, $x=\sblank$\\[3pt]
+Step 2 --- Test $x=1$: True / False \quad In / Out $\Rightarrow$ and / or\\[3pt]
+Step 3: \sblank $< x <$ \sblank\\[3pt]
+\textbf{Answer:} \blank\\[3pt]
+Graph it: \blanknumline
+
+\item $3|x+2| > 9$\\[3pt]
+Isolate: $|x+2| >$ \sblank\\[3pt]
+Step 1 --- Boundaries: $x+2=\sblank$ and $x+2=\sblank$ $\Rightarrow$ $x=\sblank$, $x=\sblank$\\[3pt]
+Step 2 --- Test $x=-2$: True / False \quad In / Out $\Rightarrow$ and / or\\[3pt]
+Step 3: $x<$ \sblank\ \ or\ \ $x>$ \sblank\\[3pt]
+\textbf{Answer:} \blank\\[3pt]
+Graph it: \blanknumline
+
+\item $|x+4|-1 \le 3$\\[3pt]
+Isolate: $|x+4| \le$ \sblank\\[3pt]
+Step 1 --- Boundaries: $x+4=\sblank$ and $x+4=\sblank$ $\Rightarrow$ $x=\sblank$, $x=\sblank$\\[3pt]
+Step 2 --- Test $x=-4$: True / False \quad In / Out $\Rightarrow$ and / or\\[3pt]
+Step 3: \sblank $\le x \le$ \sblank\\[3pt]
+\textbf{Answer:} \blank\\[3pt]
+Graph it: \blanknumline
+
+\item $4|x-3| \ge 8$\\[3pt]
+Isolate: $|x-3| \ge$ \sblank\\[3pt]
+Step 1 --- Boundaries: $x-3=\sblank$ and $x-3=\sblank$ $\Rightarrow$ $x=\sblank$, $x=\sblank$\\[3pt]
+Step 2 --- Test $x=3$: True / False \quad In / Out $\Rightarrow$ and / or\\[3pt]
+Step 3: $x\le$ \sblank\ \ or\ \ $x\ge$ \sblank\\[3pt]
+\textbf{Answer:} \blank\\[3pt]
+Graph it: \blanknumline
+
+\end{enumerate}
+\end{partbox}
+
+\vspace{10pt}
+%% ══════════════════════════════════════════════════════════════════
+%%  PART D --- Challenge
+%% ══════════════════════════════════════════════════════════════════
+\begin{partbox}{FangRed}{Part D \quad Challenge
+  \hfill{\normalfont\small Show all 3 steps on your own --- no scaffold}}
+\vspace{4pt}
+\begin{enumerate}[label=\textbf{\arabic*.},itemsep=14pt]
+
+\item $|2x-4| \le 6$
+
+\vspace{0.15cm}
+Step 1 (boundaries): \underline{\hspace{5.5cm}}\\[10pt]
+Step 2 (test the middle, True/False, In/Out, and/or): \underline{\hspace{5.5cm}}\\[10pt]
+Step 3 (compound inequality, solved): \underline{\hspace{5.5cm}}
+
+\vspace{0.2cm}
+\textbf{Answer:} \blank\\[4pt]
+Step 4 --- Graph it: \blanknumline
+
+\item $|3x+3| \ge 9$
+
+\vspace{0.15cm}
+Step 1 (boundaries): \underline{\hspace{5.5cm}}\\[10pt]
+Step 2 (test the middle, True/False, In/Out, and/or): \underline{\hspace{5.5cm}}\\[10pt]
+Step 3 (compound inequality, solved): \underline{\hspace{5.5cm}}
+
+\vspace{0.2cm}
+\textbf{Answer:} \blank\\[4pt]
+Step 4 --- Graph it: \blanknumline
+
+\item $|2x+1| < 5$
+
+\vspace{0.15cm}
+Step 1 (boundaries): \underline{\hspace{5.5cm}}\\[10pt]
+Step 2 (test the middle, True/False, In/Out, and/or): \underline{\hspace{5.5cm}}\\[10pt]
+Step 3 (compound inequality, solved): \underline{\hspace{5.5cm}}
+
+\vspace{0.2cm}
+\textbf{Answer:} \blank\\[4pt]
+Step 4 --- Graph it: \blanknumline
+
+\item $|4x-8| \ge 0$
+\hfill{\small\itshape Hint: can an absolute value ever be negative?}
+
+\vspace{0.3cm}
+\textbf{Answer:} \blank\\[4pt]
+Graph it: \blanknumline
+
+\end{enumerate}
+\end{partbox}
+
+%% ══════════════════════════════════════════════════════════════════
+%%  ANSWER KEY
+%% ══════════════════════════════════════════════════════════════════
+\newpage
+\begin{tcolorbox}[enhanced, breakable, arc=5pt,
+  colback=FangGreen!10, colframe=FangGreen, coltitle=white,
+  fonttitle=\bfseries\large,
+  title={\quad Answer Key \quad (Teacher Copy)},
+  boxrule=1.5pt, left=10pt, right=10pt, top=8pt, bottom=8pt]
+
+\textbf{\color{FangBlue}Part A} --- each: boundaries, center test, and/or, final answer, graph
+\begin{multicols}{2}
+\begin{enumerate}[label=\textbf{\arabic*.},itemsep=4pt]
+  \item $x=-4,4$; True; \ans{In, and} $\Rightarrow$ \ans{$-4\le x\le 4$}\\ \gIn{-6}{6}{-4}{4}
+  \item $x=-3,3$; False; \ans{Out, or} $\Rightarrow$ \ans{$x\le -3$ or $x\ge 3$}\\ \gOut{-5}{5}{-3}{3}
+  \item $x=-6,6$; True; \ans{In, and} $\Rightarrow$ \ans{$-6< x< 6$} (open circles)\\ \gInOpen{-8}{8}{-6}{6}
+  \item $x=-2,2$; False; \ans{Out, or} $\Rightarrow$ \ans{$x< -2$ or $x> 2$} (open circles)\\ \gOutOpen{-4}{4}{-2}{2}
+  \item \ans{$x=0$ (single point)}\\ \gPoint{-3}{3}{0}
+  \item \ans{All real numbers}\\ \gAll{-4}{4}
+\end{enumerate}
+\end{multicols}
+
+\vspace{4pt}\textbf{\color{FangPurple}Part B}
+\begin{multicols}{2}
+\begin{enumerate}[label=\textbf{\arabic*.},itemsep=4pt]
+  \item $x=-3,7$; True; \ans{In, and} $\Rightarrow$ \ans{$-3\le x\le 7$}\\ \gIn{-5}{9}{-3}{7}
+  \item $x=-7,-1$; False; \ans{Out, or} $\Rightarrow$ \ans{$x\le -7$ or $x\ge -1$}\\ \gOut{-9}{1}{-7}{-1}
+  \item $x=3,7$; True; \ans{In, and} $\Rightarrow$ \ans{$3< x< 7$} (open circles)\\ \gInOpen{1}{9}{3}{7}
+  \item $x=-5,3$; False; \ans{Out, or} $\Rightarrow$ \ans{$x< -5$ or $x> 3$} (open circles)\\ \gOutOpen{-7}{5}{-5}{3}
+  \item $x=-9,3$; True; \ans{In, and} $\Rightarrow$ \ans{$-9\le x\le 3$}\\ \gIn{-11}{5}{-9}{3}
+  \item $x=2,12$; False; \ans{Out, or} $\Rightarrow$ \ans{$x\le 2$ or $x\ge 12$}\\ \gOut{0}{14}{2}{12}
+\end{enumerate}
+\end{multicols}
+
+\vspace{4pt}\textbf{\color{FangGold}Part C}
+\begin{multicols}{2}
+\begin{enumerate}[label=\textbf{\arabic*.},itemsep=4pt]
+  \item $|x|\le 4$; $x=-4,4$; True; \ans{In, and} $\Rightarrow$ \ans{$-4\le x\le 4$}\\ \gIn{-6}{6}{-4}{4}
+  \item $|x|\ge 5$; $x=-5,5$; False; \ans{Out, or} $\Rightarrow$ \ans{$x\le -5$ or $x\ge 5$}\\ \gOut{-7}{7}{-5}{5}
+  \item $|x-1|<4$; $x=-3,5$; True; \ans{In, and} $\Rightarrow$ \ans{$-3< x< 5$} (open circles)\\ \gInOpen{-5}{7}{-3}{5}
+  \item $|x+2|>3$; $x=-5,1$; False; \ans{Out, or} $\Rightarrow$ \ans{$x< -5$ or $x> 1$} (open circles)\\ \gOutOpen{-7}{3}{-5}{1}
+  \item $|x+4|\le 4$; $x=-8,0$; True; \ans{In, and} $\Rightarrow$ \ans{$-8\le x\le 0$}\\ \gIn{-10}{2}{-8}{0}
+  \item $|x-3|\ge 2$; $x=1,5$; False; \ans{Out, or} $\Rightarrow$ \ans{$x\le 1$ or $x\ge 5$}\\ \gOut{-1}{7}{1}{5}
+\end{enumerate}
+\end{multicols}
+
+\vspace{4pt}\textbf{\color{FangRed}Part D}
+\begin{multicols}{2}
+\begin{enumerate}[label=\textbf{\arabic*.},itemsep=4pt]
+  \item boundaries $-1,5$; True; \ans{In, and} $\Rightarrow$ \ans{$-1\le x\le 5$}\\ \gIn{-3}{7}{-1}{5}
+  \item boundaries $-4,2$; False; \ans{Out, or} $\Rightarrow$ \ans{$x\le -4$ or $x\ge 2$}\\ \gOut{-6}{4}{-4}{2}
+  \item boundaries $-3,2$; True; \ans{In, and} $\Rightarrow$ \ans{$-3< x< 2$} (open circles)\\ \gInOpen{-5}{4}{-3}{2}
+  \item \ans{All real numbers}\\ \gAll{-4}{4}
+\end{enumerate}
+\end{multicols}
+
+\end{tcolorbox}
+
+\end{document}

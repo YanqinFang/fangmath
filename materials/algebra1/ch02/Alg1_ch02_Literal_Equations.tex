@@ -1,0 +1,333 @@
+\documentclass[11pt]{article}
+
+\usepackage[letterpaper,margin=1in]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage{enumitem}
+\usepackage{fancyhdr}
+\usepackage[most]{tcolorbox}
+\usepackage{array}
+\usepackage{titlesec}
+\usepackage{xcolor}
+
+\definecolor{fangblue}{RGB}{20,60,110}
+\definecolor{fanggray}{RGB}{90,90,90}
+\definecolor{boxgray}{RGB}{245,245,245}
+\definecolor{reasonclr}{RGB}{70,100,150}
+\definecolor{levE}{RGB}{20,120,60}
+\definecolor{levM}{RGB}{200,120,0}
+\definecolor{levH}{RGB}{190,40,40}
+
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0.4pt}
+\lhead{\small\itshape Literal Equations \& Formulas}
+\rhead{\small\itshape FangMath}
+\lfoot{\small\textcopyright\ 2026 FangMath $\cdot$ All rights reserved.}
+\rfoot{\small\thepage}
+
+\titleformat{\section}{\large\bfseries\color{fangblue}}{\thesection.}{0.6em}{}
+\titleformat{\subsection}{\normalsize\bfseries\color{fangblue}}{}{0em}{}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{4pt}
+
+\newtcolorbox{keybox}{colback=boxgray,colframe=fangblue,boxrule=0.6pt,
+  arc=2pt,left=8pt,right=8pt,top=6pt,bottom=6pt}
+
+% difficulty tags
+\newcommand{\E}{\textcolor{levE}{\small[Easy]}\ }
+\newcommand{\M}{\textcolor{levM}{\small[Medium]}\ }
+\newcommand{\Hd}{\textcolor{levH}{\small[Hard]}\ }
+
+% problem list with room to work
+\newlist{prob}{enumerate}{1}
+\setlist[prob]{label=\arabic*.,leftmargin=2.2em,itemsep=0.2cm}
+
+\newcommand{\example}{\textit{\textcolor{fangblue}{Detailed Example.}}\ }
+
+% two ruled writing lines for student work
+\newcommand{\twolines}{\par\vspace{0.7cm}%
+  \textcolor{gray!55}{\rule{\linewidth}{0.3pt}}\par\vspace{0.7cm}%
+  \textcolor{gray!55}{\rule{\linewidth}{0.3pt}}\par\vspace{2mm}}
+
+\begin{document}
+
+\begin{center}
+  {\LARGE\bfseries\color{fangblue} Literal Equations \& Formulas}\\[3pt]
+  {\normalsize\color{fanggray} Lesson 2-5 $\cdot$ Rewriting Formulas / Solving for a Variable}
+\end{center}
+
+\vspace{2pt}
+\begin{center}
+\begin{tabular}{@{}p{7.5cm}@{\hspace{1cm}}p{5cm}@{}}
+\textbf{Name:} \underline{\hspace{5cm}} & \textbf{Date:} \underline{\hspace{3.5cm}}
+\end{tabular}
+\end{center}
+
+\vspace{2pt}\hrule\vspace{6pt}
+
+\begin{keybox}
+A \textbf{literal equation} is an equation with more than one variable --- usually a
+\textbf{formula}. To \emph{rewrite} (or \emph{solve}) it for one variable, isolate that variable
+with inverse operations, treating every other letter as if it were a constant.
+Difficulty tags: \textcolor{levE}{\small[Easy]}\ \textcolor{levM}{\small[Medium]}\ \textcolor{levH}{\small[Hard]}.
+\end{keybox}
+
+% =====================================================================
+\section{Circumference of a Circle}
+\begin{keybox}
+$C = \pi d = 2\pi r$. \quad Solve for the radius: $r = \dfrac{C}{2\pi}$; \quad
+solve for the diameter: $d = \dfrac{C}{\pi}$.
+\end{keybox}
+
+\example Solve $C = 2\pi r$ for $r$, then find $r$ when $C = 2\pi$.
+\begin{align*}
+C &= 2\pi r &&\color{reasonclr}\text{original formula}\\
+\frac{C}{2\pi} &= r &&\color{reasonclr}\text{divide both sides by } 2\pi\\
+r &= \frac{C}{2\pi} = \frac{2\pi}{2\pi} = 1 &&\color{reasonclr}\text{substitute } C=2\pi \text{ and simplify}
+\end{align*}
+
+\begin{prob}
+\item \E Solve $C = 2\pi r$ for $r$. \twolines
+\item \E A circle has circumference $C = 12\pi$. Find $r$. \twolines
+\item \M Solve $C = \pi d$ for $d$, then find $d$ when $C = 15\pi$. \twolines
+\item \M Find $r$ when $C = 9\pi$. \twolines
+\item \Hd A circle has circumference $31.4$. Find $r$ \ (use $\pi \approx 3.14$). \twolines
+\item \Hd Solve $C = 2\pi r$ for $r$, then find $r$ when $C = 100$ \ ($\pi \approx 3.14$, round to a tenth). \twolines
+\end{prob}
+
+% =====================================================================
+\section{Area of a Rectangle}
+\begin{keybox}
+$A = \ell w$. \quad Solve for width: $w = \dfrac{A}{\ell}$; \quad solve for length: $\ell = \dfrac{A}{w}$.
+\end{keybox}
+
+\example Solve $A = \ell w$ for $w$, then find $w$ when $A = 12$ and $\ell = 2$.
+\begin{align*}
+A &= \ell w &&\color{reasonclr}\text{original formula}\\
+\frac{A}{\ell} &= w &&\color{reasonclr}\text{divide both sides by } \ell\ (\text{treat } A \text{ as a constant})\\
+w &= \frac{A}{\ell} = \frac{12}{2} = 6 &&\color{reasonclr}\text{substitute and simplify}
+\end{align*}
+
+\begin{prob}
+\item \E Solve $A = \ell w$ for $w$. \twolines
+\item \E Solve $A = \ell w$ for $\ell$. \twolines
+\item \M Find $w$ when $A = 48$ and $\ell = 6$. \twolines
+\item \M A rectangle has area $54$ and length $9$. Find the width. \twolines
+\item \Hd Find $\ell$ when $A = \tfrac34$ and $w = \tfrac12$. \twolines
+\item \Hd A rectangle has area $2.4\ \text{m}^2$ and length $0.8\ \text{m}$. Find the width. \twolines
+\end{prob}
+
+% =====================================================================
+\section{Area of a Triangle}
+\begin{keybox}
+$A = \dfrac12 b h$. \quad Solve for height: $h = \dfrac{2A}{b}$; \quad solve for base: $b = \dfrac{2A}{h}$.
+\end{keybox}
+
+\example Solve $A = \dfrac12 bh$ for $h$.
+\begin{align*}
+\tfrac12 b h &= A &&\color{reasonclr}\text{original formula (symmetric property)}\\
+b h &= 2A &&\color{reasonclr}\text{multiply both sides by } 2\\
+h &= \frac{2A}{b} &&\color{reasonclr}\text{divide both sides by } b
+\end{align*}
+
+\begin{prob}
+\item \E Solve $A = \tfrac12 bh$ for $h$. \twolines
+\item \E Solve $A = \tfrac12 bh$ for $b$. \twolines
+\item \M Find $h$ when $A = 24$ and $b = 6$. \twolines
+\item \M A triangle has area $30$ and height $5$. Find the base. \twolines
+\item \Hd Find $h$ when $A = 15$ and $b = 2.5$. \twolines
+\item \Hd Find $h$ when $A = \tfrac38$ and $b = \tfrac34$. \twolines
+\end{prob}
+
+% =====================================================================
+\section{Perimeter of a Rectangle}
+\begin{keybox}
+$P = 2\ell + 2w$. \quad Solve for width: $w = \dfrac{P - 2\ell}{2}$; \quad
+solve for length: $\ell = \dfrac{P - 2w}{2}$.
+\end{keybox}
+
+\example Solve $P = 2\ell + 2w$ for $w$.
+\begin{align*}
+2\ell + 2w &= P &&\color{reasonclr}\text{original formula}\\
+2w &= P - 2\ell &&\color{reasonclr}\text{subtract } 2\ell \text{ from both sides}\\
+w &= \frac{P - 2\ell}{2} &&\color{reasonclr}\text{divide both sides by } 2
+\end{align*}
+
+\begin{prob}
+\item \E Solve $P = 2\ell + 2w$ for $w$. \twolines
+\item \E Solve $P = 2\ell + 2w$ for $\ell$. \twolines
+\item \M Find $w$ when $P = 20$ and $\ell = 6$. \twolines
+\item \M A rectangle has perimeter $30$ and width $4$. Find the length. \twolines
+\item \Hd Find $\ell$ when $P = 25$ and $w = 3.5$. \twolines
+\item \Hd A rectangle has perimeter $15$ and length $4.5$. Find the width. \twolines
+\end{prob}
+
+% =====================================================================
+\section{Distance $=$ Rate $\times$ Time}
+\begin{keybox}
+$d = rt$. \quad Solve for time: $t = \dfrac{d}{r}$; \quad solve for rate: $r = \dfrac{d}{t}$.
+\end{keybox}
+
+\example Solve $d = rt$ for $t$, given $r = 60$.
+\begin{align*}
+d &= rt &&\color{reasonclr}\text{original formula}\\
+\frac{d}{r} &= t &&\color{reasonclr}\text{divide both sides by } r\\
+t &= \frac{d}{r} = \frac{d}{60} &&\color{reasonclr}\text{substitute } r = 60
+\end{align*}
+
+\begin{prob}
+\item \E Solve $d = rt$ for $t$. \twolines
+\item \E Solve $d = rt$ for $r$. \twolines
+\item \M Find $t$ when $d = 150$ and $r = 50$. \twolines
+\item \M A car travels $240$ mi at $60$ mph. Find the time. \twolines
+\item \Hd Find $r$ when $d = 0.5$ mi and $t = 0.25$ h. \twolines
+\item \Hd A runner covers $13.1$ mi in $2$ h. Find the average rate (round to a tenth). \twolines
+\end{prob}
+
+% =====================================================================
+\section{Temperature Conversion}
+\begin{keybox}
+$C = \dfrac{5}{9}(F - 32)$. \quad To solve for $F$: multiply by $\dfrac{9}{5}$, then add $32$:
+$\ F = \dfrac{9}{5}C + 32$.
+\end{keybox}
+
+\example If $F = 77^\circ$, find $C$; then if $C = 25^\circ$, solve for $F$.
+\begin{align*}
+C &= \tfrac{5}{9}(77 - 32) = \tfrac{5}{9}(45) = 25^\circ &&\color{reasonclr}\text{substitute } F = 77\\
+25 &= \tfrac{5}{9}(F - 32) &&\color{reasonclr}\text{now solve for } F\\
+25 \cdot \tfrac{9}{5} &= F - 32 \ \Rightarrow\ 45 = F - 32 &&\color{reasonclr}\text{multiply both sides by } \tfrac{9}{5}\\
+F &= 77^\circ &&\color{reasonclr}\text{add } 32 \text{ to both sides}
+\end{align*}
+
+\begin{prob}
+\item \E Find $C$ when $F = 41^\circ$. \twolines
+\item \E Find $C$ when $F = 59^\circ$. \twolines
+\item \M Solve $C = \tfrac{5}{9}(F - 32)$ for $F$. \twolines
+\item \M Find $F$ when $C = 100^\circ$. \twolines
+\item \Hd Find $F$ when $C = 37^\circ$ (round to a tenth). \twolines
+\item \Hd Find $C$ when $F = 98.6^\circ$. \twolines
+\end{prob}
+
+% =====================================================================
+\section{General Literal Equations}
+\begin{keybox}
+To solve a multi-variable equation for one variable, treat the other letters as constants.
+Undo addition/subtraction first, then multiplication/division. Recall the \emph{symmetric
+property}: if $a = b$, then $b = a$.
+\end{keybox}
+
+\example Solve $4 = 2m - 5n$ for $m$, then evaluate at $n = -2$.
+\begin{align*}
+2m - 5n &= 4 &&\color{reasonclr}\text{symmetric property of equality}\\
+2m &= 4 + 5n &&\color{reasonclr}\text{add } 5n \text{ to both sides}\\
+m &= \frac{4 + 5n}{2} &&\color{reasonclr}\text{divide both sides by } 2\\
+m &= \frac{4 + 5(-2)}{2} = \frac{-6}{2} = -3 &&\color{reasonclr}\text{substitute } n = -2
+\end{align*}
+
+\begin{prob}
+\item \E Solve $y = x + 7$ for $x$. \twolines
+\item \E Solve $3x = y$ for $x$. \twolines
+\item \M Solve $2m - 5n = 4$ for $m$. \twolines
+\item \M Solve $ax + b = c$ for $x$. \twolines
+\item \Hd Solve $3p - 2q = 12$ for $q$, then find $q$ when $p = 6$. \twolines
+\item \Hd Solve $5a + 2b = 20$ for $b$, then find $b$ when $a = 2$. \twolines
+\end{prob}
+
+% =====================================================================
+\section{Word Problems}
+\begin{prob}
+\item \E The circumference of a circle is $C = 2\pi r$. A circular garden has circumference \twolines
+$18\pi$ ft. What is its radius?
+\item \M The area of a rectangular rug is $24\ \text{ft}^2$ and its length is $6$ ft. Rewrite \twolines
+$A = \ell w$ to solve for width, then find the width.
+\item \M The distance formula is $d = rt$. A train travels $330$ miles in $5.5$ hours. Rewrite \twolines
+the formula to solve for rate, then find the average rate.
+\item \Hd The formula $C = \tfrac{5}{9}(F - 32)$ converts Fahrenheit to Celsius. \twolines
+(a) Rewrite the formula to solve for $F$. \ (b) A recipe says to bake at $190^\circ$C.
+What is that in $^\circ$F?
+\end{prob}
+
+% =====================================================================
+\newpage
+\section{Detailed Answer Key}
+
+\subsection*{1. Circumference of a Circle}
+\begin{enumerate}[label=\arabic*.,leftmargin=2em,itemsep=2pt]
+\item $r = \dfrac{C}{2\pi}$.
+\item $r = \dfrac{12\pi}{2\pi} = 6$.
+\item $d = \dfrac{C}{\pi}$; \ $d = \dfrac{15\pi}{\pi} = 15$.
+\item $r = \dfrac{9\pi}{2\pi} = 4.5$.
+\item $r = \dfrac{31.4}{2(3.14)} = \dfrac{31.4}{6.28} = 5$.
+\item $r = \dfrac{C}{2\pi} = \dfrac{100}{6.28} \approx 15.9$.
+\end{enumerate}
+
+\subsection*{2. Area of a Rectangle}
+\begin{enumerate}[label=\arabic*.,leftmargin=2em,itemsep=2pt]
+\item $w = \dfrac{A}{\ell}$.
+\item $\ell = \dfrac{A}{w}$.
+\item $w = \dfrac{48}{6} = 8$.
+\item $w = \dfrac{54}{9} = 6$.
+\item $\ell = \dfrac{3/4}{1/2} = \dfrac34 \cdot 2 = \dfrac32$.
+\item $w = \dfrac{2.4}{0.8} = 3$ m.
+\end{enumerate}
+
+\subsection*{3. Area of a Triangle}
+\begin{enumerate}[label=\arabic*.,leftmargin=2em,itemsep=2pt]
+\item $h = \dfrac{2A}{b}$.
+\item $b = \dfrac{2A}{h}$.
+\item $h = \dfrac{2(24)}{6} = 8$.
+\item $b = \dfrac{2(30)}{5} = 12$.
+\item $h = \dfrac{2(15)}{2.5} = \dfrac{30}{2.5} = 12$.
+\item $h = \dfrac{2(3/8)}{3/4} = \dfrac{3/4}{3/4} = 1$.
+\end{enumerate}
+
+\subsection*{4. Perimeter of a Rectangle}
+\begin{enumerate}[label=\arabic*.,leftmargin=2em,itemsep=2pt]
+\item $w = \dfrac{P - 2\ell}{2}$.
+\item $\ell = \dfrac{P - 2w}{2}$.
+\item $w = \dfrac{20 - 12}{2} = 4$.
+\item $\ell = \dfrac{30 - 8}{2} = 11$.
+\item $\ell = \dfrac{25 - 7}{2} = 9$.
+\item $w = \dfrac{15 - 9}{2} = 3$.
+\end{enumerate}
+
+\subsection*{5. Distance $=$ Rate $\times$ Time}
+\begin{enumerate}[label=\arabic*.,leftmargin=2em,itemsep=2pt]
+\item $t = \dfrac{d}{r}$.
+\item $r = \dfrac{d}{t}$.
+\item $t = \dfrac{150}{50} = 3$.
+\item $t = \dfrac{240}{60} = 4$ h.
+\item $r = \dfrac{0.5}{0.25} = 2$ mph.
+\item $r = \dfrac{13.1}{2} = 6.55 \approx 6.6$ mph.
+\end{enumerate}
+
+\subsection*{6. Temperature Conversion}
+\begin{enumerate}[label=\arabic*.,leftmargin=2em,itemsep=2pt]
+\item $C = \tfrac{5}{9}(41 - 32) = \tfrac{5}{9}(9) = 5^\circ$.
+\item $C = \tfrac{5}{9}(59 - 32) = \tfrac{5}{9}(27) = 15^\circ$.
+\item $F = \tfrac{9}{5}C + 32$.
+\item $F = \tfrac{9}{5}(100) + 32 = 180 + 32 = 212^\circ$.
+\item $F = \tfrac{9}{5}(37) + 32 = 66.6 + 32 = 98.6^\circ$.
+\item $C = \tfrac{5}{9}(98.6 - 32) = \tfrac{5}{9}(66.6) = 37^\circ$.
+\end{enumerate}
+
+\subsection*{7. General Literal Equations}
+\begin{enumerate}[label=\arabic*.,leftmargin=2em,itemsep=2pt]
+\item $x = y - 7$.
+\item $x = \dfrac{y}{3}$.
+\item $m = \dfrac{4 + 5n}{2}$.
+\item $x = \dfrac{c - b}{a}$.
+\item $q = \dfrac{3p - 12}{2}$; \ at $p = 6$: $q = \dfrac{18 - 12}{2} = 3$.
+\item $b = \dfrac{20 - 5a}{2}$; \ at $a = 2$: $b = \dfrac{20 - 10}{2} = 5$.
+\end{enumerate}
+
+\subsection*{Word Problems}
+\begin{enumerate}[label=\arabic*.,leftmargin=2em,itemsep=2pt]
+\item $r = \dfrac{C}{2\pi} = \dfrac{18\pi}{2\pi} = 9$ ft.
+\item $w = \dfrac{A}{\ell} = \dfrac{24}{6} = 4$ ft.
+\item $r = \dfrac{d}{t} = \dfrac{330}{5.5} = 60$ mph.
+\item (a) $F = \tfrac{9}{5}C + 32$. \ (b) $F = \tfrac{9}{5}(190) + 32 = 342 + 32 = 374^\circ$F.
+\end{enumerate}
+
+\end{document}

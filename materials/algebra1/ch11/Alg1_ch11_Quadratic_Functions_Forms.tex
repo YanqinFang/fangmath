@@ -1,0 +1,727 @@
+\documentclass[11pt]{article}
+\usepackage[a4paper, top=1in, bottom=1in, left=1in, right=1in]{geometry}
+\usepackage{amsmath, amssymb}
+\usepackage{mdframed}
+\usepackage{enumitem}
+\usepackage{multicol}
+\usepackage{tikz}
+\usetikzlibrary{calc}
+\usepackage{array}
+\usepackage{fancyhdr}
+\usepackage[T1]{fontenc}
+\usepackage{booktabs}
+\usepackage{xcolor}
+
+\setlength{\headheight}{26pt}
+\pagestyle{fancy}
+\fancyhf{}
+\lhead{\textbf{Quadratic Functions: Notes \& Practice}}
+\rhead{Name: \underline{\hspace{4cm}}}
+\cfoot{\thepage}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5pt}
+
+% -- Key Idea box --
+\newmdenv[
+  linewidth=0.8pt,
+  innerleftmargin=10pt, innerrightmargin=10pt,
+  innertopmargin=6pt,   innerbottommargin=6pt,
+  skipabove=8pt, skipbelow=8pt,
+  backgroundcolor=gray!8
+]{keybox}
+\newcommand{\KeyIdea}[1]{\begin{keybox}\textbf{Key Idea.} #1\end{keybox}}
+
+% -- Example box --
+\newmdenv[
+  linewidth=0.6pt,
+  innerleftmargin=10pt, innerrightmargin=10pt,
+  innertopmargin=5pt,   innerbottommargin=5pt,
+  skipabove=6pt, skipbelow=6pt,
+  linecolor=blue!50!black
+]{exbox}
+
+% -- workspace --
+\newcommand{\ws}[1][3cm]{\vspace{#1}}
+
+\begin{document}
+
+% ==============================================================
+\begin{center}
+  {\Large\textbf{Quadratic Functions}}\\[4pt]
+  {\large Three Forms $\cdot$ Transformations $\cdot$ Graphing $\cdot$ Analysis}
+\end{center}
+\hrule
+\vspace{0.4cm}
+
+% ==============================================================
+\section*{Part 1 \quad Three Forms of a Quadratic Function}
+% ==============================================================
+
+Every quadratic function can be written in three different but equivalent forms.
+Each form highlights different features of the parabola.
+
+\vspace{0.3cm}
+\begin{center}
+\renewcommand{\arraystretch}{2}
+\begin{tabular}{|c|c|c|}
+\hline
+\textbf{Form} & \textbf{Equation} & \textbf{What it tells you} \\
+\hline
+Vertex Form   & $y = a(x - h)^2 + k$ & Vertex $= (h,\, k)$; direction; stretch \\
+\hline
+Standard Form & $y = ax^2 + bx + c$  & $y$-intercept $= (0,c)$; axis of symmetry \\
+\hline
+Intercept Form & $y = a(x - x_1)(x - x_2)$ & $x$-intercepts (zeros) $= x_1$ and $x_2$ \\
+\hline
+\end{tabular}
+\end{center}
+
+\vspace{0.3cm}
+\KeyIdea{In all three forms, the sign of $a$ tells you the direction of the
+parabola: $a > 0$ opens \textbf{up}; $a < 0$ opens \textbf{down}.
+The value of $|a|$ controls width: $|a|>1$ is narrower than $y=x^2$;
+$0 < |a| < 1$ is wider.}
+
+\vspace{0.3cm}
+\begin{exbox}
+\textbf{Example 1.} Identify the form and key features of each function.
+
+\textbf{(a)} $y = 2(x-3)^2 + 1$ \quad Vertex form. \quad Vertex $= (3,1)$, opens up, narrower than $y=x^2$.
+
+\textbf{(b)} $y = x^2 - 5x + 6$ \quad Standard form. \quad $y$-intercept $= (0,6)$.
+
+\textbf{(c)} $y = -2(x-1)(x+4)$ \quad Intercept form. \quad Zeros at $x=1$ and $x=-4$, opens down.
+\end{exbox}
+
+% ==============================================================
+\section*{Part 2 \quad Transformations of $f(x) = x^2$}
+% ==============================================================
+
+A \textbf{transformation} changes the position, size, or orientation of the parent
+parabola $y = f(x) = x^2$. There are four main types.
+
+% ----------------------------------------------------------
+\subsection*{1. \; Translation (Shift)}
+% ----------------------------------------------------------
+
+A translation moves the parabola without changing its shape.
+
+\begin{center}
+\renewcommand{\arraystretch}{1.6}
+\begin{tabular}{|l|l|l|}
+\hline
+\textbf{Transformation} & \textbf{Equation} & \textbf{Effect on graph} \\
+\hline
+Shift right $h$ units  & $g(x) = f(x - h) = (x-h)^2$  & Vertex moves right \\
+Shift left  $h$ units  & $g(x) = f(x + h) = (x+h)^2$  & Vertex moves left \\
+Shift up    $k$ units  & $g(x) = f(x) + k = x^2 + k$  & Vertex moves up \\
+Shift down  $k$ units  & $g(x) = f(x) - k = x^2 - k$  & Vertex moves down \\
+\hline
+\end{tabular}
+\end{center}
+
+\medskip
+\textbf{Important:} Inside the parentheses, the sign is opposite to the direction.
+$f(x+2)$ shifts \textit{left} 2; $\; f(x-2)$ shifts \textit{right} 2.
+
+\begin{exbox}
+\textbf{Example 2.} Start with $f(x)=x^2$.
+
+$g(x) = (x - 3)^2 + 4$: shift \textbf{right 3}, then \textbf{up 4}.
+Vertex moves from $(0,0)$ to $(3,4)$.
+
+$g(x) = (x + 2)^2 - 1$: shift \textbf{left 2}, then \textbf{down 1}.
+Vertex moves to $(-2,-1)$.
+\end{exbox}
+
+% ----------------------------------------------------------
+\subsection*{2. \; Vertical Stretch and Shrink}
+% ----------------------------------------------------------
+
+Multiplying $f(x)$ by a positive constant $a$ changes the \textit{width}.
+
+\begin{center}
+\renewcommand{\arraystretch}{1.5}
+\begin{tabular}{|l|l|}
+\hline
+$|a| > 1$ \quad (e.g., $y = 3x^2$)          & Vertical \textbf{stretch} --- parabola is \textbf{narrower} \\
+$0 < |a| < 1$ \quad (e.g., $y = \tfrac{1}{2}x^2$) & Vertical \textbf{shrink} --- parabola is \textbf{wider} \\
+\hline
+\end{tabular}
+\end{center}
+
+\medskip
+Every $y$-value is multiplied by $a$.
+The point $(1,1)$ on $y = x^2$ becomes $(1,a)$ on $y = ax^2$.
+
+\begin{exbox}
+\textbf{Example 3.}
+
+$y = 2x^2$: vertical stretch by factor 2 --- \textbf{narrower} than $y = x^2$.
+
+$y = \tfrac{1}{2}x^2$: vertical shrink by factor $\tfrac{1}{2}$ --- \textbf{wider} than $y = x^2$.
+\end{exbox}
+
+% ----------------------------------------------------------
+\subsection*{3. \; Reflection}
+% ----------------------------------------------------------
+
+\begin{center}
+\renewcommand{\arraystretch}{1.5}
+\begin{tabular}{|l|l|l|}
+\hline
+\textbf{Type} & \textbf{Equation} & \textbf{Effect} \\
+\hline
+Reflect over $x$-axis & $g(x) = -f(x) = -x^2$    & Flips upside down (opens down) \\
+Reflect over $y$-axis & $g(x) = f(-x) = (-x)^2 = x^2$ & For $y=x^2$, no visible change \\
+\hline
+\end{tabular}
+\end{center}
+
+\medskip
+For a general function, reflection over the $y$-axis replaces $x$ with $-x$.
+For asymmetric quadratics like $y = (x-3)^2$, it matters:
+$g(x) = f(-x) = (-x-3)^2 = (x+3)^2$ --- the vertex moves from $(3,0)$ to $(-3,0)$.
+
+\begin{exbox}
+\textbf{Example 4.} Start with $y = x^2$.
+
+\textbf{Step 1} Reflect over $x$-axis: $y = -x^2$.
+
+\textbf{Step 2} Vertical stretch by 2: $y = -2x^2$.
+
+\textbf{Step 3} Shift right 5: $y = -2(x-5)^2$.
+
+\textbf{Step 4} Shift up 8: $y = -2(x-5)^2 + 8$. \quad Vertex $(5, 8)$.
+\end{exbox}
+
+% ----------------------------------------------------------
+\subsection*{4. \; Summary Table --- All Transformations}
+% ----------------------------------------------------------
+
+Starting from $y = f(x) = x^2$:
+
+\begin{center}
+\renewcommand{\arraystretch}{1.6}
+\begin{tabular}{|l|l|}
+\hline
+\textbf{New function} & \textbf{Transformation} \\
+\hline
+$g(x) = f(x) + k$     & Shift up $k$ units \\
+$g(x) = f(x) - k$     & Shift down $k$ units \\
+$g(x) = f(x - h)$     & Shift right $h$ units \\
+$g(x) = f(x + h)$     & Shift left $h$ units \\
+$g(x) = a\,f(x),\; a>1$    & Vertical stretch (narrower) \\
+$g(x) = a\,f(x),\; 0<a<1$  & Vertical shrink (wider) \\
+$g(x) = -f(x)$        & Reflection over $x$-axis \\
+$g(x) = f(-x)$        & Reflection over $y$-axis \\
+\hline
+\end{tabular}
+\end{center}
+
+% ==============================================================
+\section*{Part 3 \quad Writing Equations from a Graph}
+% ==============================================================
+
+When you see a graph, pick the form that matches the information given.
+
+\textbf{Strategy A --- Use intercept form} when you can read the $x$-intercepts $x_1, x_2$:
+\[
+  y = a(x - x_1)(x - x_2)
+\]
+Then plug in one other known point to solve for $a$.
+
+\textbf{Strategy B --- Use vertex form} when you can read the vertex $(h,k)$:
+\[
+  y = a(x - h)^2 + k
+\]
+Then plug in one other known point to solve for $a$.
+
+\begin{exbox}
+\textbf{Example 5.} A parabola has zeros at $x = 3$ and $x = 7$, and passes through $(5,\,8)$.
+
+\textbf{Step 1} Write intercept form: $y = a(x-3)(x-7)$.
+
+\textbf{Step 2} Plug in $(5,8)$: \quad $8 = a(5-3)(5-7) = a \cdot 2 \cdot (-2) = -4a$.
+
+\textbf{Step 3} Solve: $a = -2$.
+
+\textbf{Result:} $y = -2(x-3)(x-7)$
+
+\textbf{Standard form:} $y = -2(x^2 - 10x + 21) = -2x^2 + 20x - 42$.
+\end{exbox}
+
+% ==============================================================
+\section*{Part 4 \quad Converting to Vertex Form}
+% ==============================================================
+
+Given $y = ax^2 + bx + c$ in standard form, find the vertex $(h,k)$:
+
+\[
+  \boxed{h = -\frac{b}{2a}} \qquad \boxed{k = f(h)}
+\]
+
+Then rewrite as $y = a(x-h)^2 + k$.
+
+\begin{exbox}
+\textbf{Example 6.} Convert $y = -2x^2 + 20x - 42$ to vertex form.
+
+\textbf{Step 1} Find $h$: $\displaystyle h = -\frac{20}{2(-2)} = -\frac{20}{-4} = 5$.
+
+\textbf{Step 2} Find $k$: $k = f(5) = -2(25) + 20(5) - 42 = -50 + 100 - 42 = 8$.
+
+\textbf{Result:} $y = -2(x-5)^2 + 8$. \quad Vertex $(5,8)$.
+\end{exbox}
+
+\begin{exbox}
+\textbf{Example 7 (Completing the Square).} Convert $y = 2x^2 - 8x + 8$.
+
+\begin{align*}
+y &= 2(x^2 - 4x) + 8 \\
+  &= 2(x^2 - 4x + 4 - 4) + 8 \\
+  &= 2(x-2)^2 - 8 + 8 \\
+  &= 2(x-2)^2
+\end{align*}
+
+Vertex $(2, 0)$. The parabola touches the $x$-axis at its vertex.
+\end{exbox}
+
+% ==============================================================
+\section*{Part 5 \quad Domain, Range, and Zeros}
+% ==============================================================
+
+For any quadratic $y = ax^2 + bx + c$:
+
+\begin{center}
+\renewcommand{\arraystretch}{1.6}
+\begin{tabular}{|l|l|}
+\hline
+\textbf{Feature}  & \textbf{Rule} \\
+\hline
+Domain            & Always $(-\infty,\, +\infty)$ \\
+Range ($a > 0$, opens up)  & $[\,k,\, +\infty)$ where $k$ is the minimum \\
+Range ($a < 0$, opens down) & $(-\infty,\, k\,]$ where $k$ is the maximum \\
+Zeros (x-intercepts)  & Set $y = 0$ and solve \\
+\hline
+\end{tabular}
+\end{center}
+
+\begin{exbox}
+\textbf{Example 8.} $h(x) = 16x^2 - 4$.
+
+Vertex form: $h(x) = 16(x-0)^2 - 4$, so vertex $= (0, -4)$, opens up.
+
+\textbf{Zeros:} $16x^2 - 4 = 0 \Rightarrow x^2 = \tfrac{1}{4} \Rightarrow x = \pm\tfrac{1}{2}$.
+
+\textbf{Domain:} $(-\infty, +\infty)$. \quad \textbf{Range:} $[-4, +\infty)$.
+\end{exbox}
+
+\begin{exbox}
+\textbf{Example 9.} $y = -(x+5)(x-1)$.
+
+Zeros: $x = -5$ and $x = 1$.
+
+Vertex $x$-coordinate: midpoint of zeros $= \dfrac{-5+1}{2} = -2$.
+
+$y(-2) = -(-2+5)(-2-1) = -(3)(-3) = 9$. \quad Vertex $= (-2, 9)$. Opens down.
+
+\textbf{Domain:} $(-\infty, +\infty)$. \quad \textbf{Range:} $(-\infty,\, 9\,]$.
+\end{exbox}
+
+\newpage
+% ==============================================================
+\begin{center}
+  {\Large\textbf{Practice Problems}}\\[4pt]
+  \textit{30 problems covering all five topics above.}
+\end{center}
+\hrule
+\vspace{0.4cm}
+
+% ==============================================================
+\subsection*{Section A \quad Three Forms (Problems 1--5)}
+% ==============================================================
+
+\textbf{1.} Identify the form of each function and state the indicated feature.
+
+\hspace{1cm}(a) $y = -3(x-4)^2 + 7$ \hspace{1cm} Form: \underline{\hspace{3cm}} \hspace{0.5cm} Vertex: \underline{\hspace{2.5cm}}
+
+\hspace{1cm}(b) $y = x^2 - 7x + 10$ \hspace{1.2cm} Form: \underline{\hspace{3cm}} \hspace{0.5cm} $y$-intercept: \underline{\hspace{1.5cm}}
+
+\hspace{1cm}(c) $y = 5(x+2)(x-6)$ \hspace{1.1cm} Form: \underline{\hspace{3cm}} \hspace{0.5cm} Zeros: \underline{\hspace{2.5cm}}
+
+\ws[2cm]
+
+\textbf{2.} Write the function in \textbf{standard form}: $y = (x-3)(x+5)$.
+
+\ws[3cm]
+
+\textbf{3.} Write the function in \textbf{standard form}: $y = -2(x-1)(x-6)$.
+
+\ws[3cm]
+
+\textbf{4.} Write a \textbf{vertex form} equation for a parabola with vertex $(-2, 5)$ that passes through $(0, 1)$.
+Find the value of $a$ first.
+
+\ws[3.5cm]
+
+\textbf{5.} A quadratic has $y$-intercept $(0, 12)$ and zeros at $x = 3$ and $x = 4$.
+Write the function in intercept form, find $a$, then convert to standard form.
+
+\ws[3.5cm]
+
+% ==============================================================
+\subsection*{Section B \quad Translations (Problems 6--10)}
+% ==============================================================
+
+\textbf{6.} Starting with $f(x) = x^2$, write the equation after shifting \textbf{right 4 units} and \textbf{up 3 units}.
+State the new vertex.
+
+\ws[2.5cm]
+
+\textbf{7.} Starting with $f(x) = x^2$, write the equation after shifting \textbf{left 5 units} and \textbf{down 2 units}.
+
+\ws[2.5cm]
+
+\textbf{8.} Describe the transformations that take $f(x) = x^2$ to $g(x) = (x + 3)^2 - 7$.
+State the vertex.
+
+\ws[2.5cm]
+
+\textbf{9.} The graph of $g(x) = f(x - 2) + 6$ is a translation of $f(x) = x^2$.
+\; (a) Describe the translation.\quad (b) Write the equation of $g(x)$.\quad (c) State the vertex.
+
+\ws[3cm]
+
+\textbf{10.} Point $(1, 1)$ is on $y = x^2$. After the translation $g(x) = (x-4)^2 + 2$, what are the
+new coordinates of this point?
+
+\ws[2.5cm]
+
+% ==============================================================
+\subsection*{Section C \quad Vertical Stretch and Shrink (Problems 11--14)}
+% ==============================================================
+
+\textbf{11.} Compare each function to $y = x^2$. State whether the parabola is \textit{narrower},
+\textit{wider}, or the \textit{same width}, and by what factor.
+
+\hspace{1cm}(a) $y = 5x^2$ \hspace{2.5cm} (b) $y = \tfrac{1}{4}x^2$
+\hspace{2.5cm} (c) $y = 0.8\,x^2$
+
+\ws[2.5cm]
+
+\textbf{12.} Starting with $f(x) = x^2$, write the equation after a \textbf{vertical stretch by factor 3},
+then a \textbf{shift up 5 units}.
+
+\ws[2.5cm]
+
+\textbf{13.} Starting with $f(x) = x^2$, write the equation after a \textbf{vertical shrink by $\tfrac{1}{2}$},
+then a \textbf{shift right 3 units} and \textbf{down 1 unit}.
+
+\ws[2.5cm]
+
+\textbf{14.} The point $(2, 4)$ is on $y = x^2$. What is the corresponding point on $y = \tfrac{3}{4}x^2$?
+What about on $y = 4x^2$?
+
+\ws[2.5cm]
+
+% ==============================================================
+\subsection*{Section D \quad Reflections (Problems 15--17)}
+% ==============================================================
+
+\textbf{15.} Reflect $f(x) = 2(x - 3)^2 + 1$ over the \textbf{$x$-axis}.
+Write the new equation and state the new vertex and direction.
+
+\ws[2.5cm]
+
+\textbf{16.} Reflect $f(x) = (x - 4)^2$ over the \textbf{$y$-axis}.
+Write the new equation and state the new vertex.
+
+\ws[2.5cm]
+
+\textbf{17.} Starting with $y = x^2$: first reflect over the $x$-axis, then shift left 3, then up 5.
+Write the final equation and identify the vertex.
+
+\ws[3cm]
+
+% ==============================================================
+\subsection*{Section E \quad Combined Transformations (Problems 18--22)}
+% ==============================================================
+
+\textbf{18.} List ALL transformations applied to $f(x) = x^2$ to produce $g(x) = -4(x + 1)^2 - 3$.
+State them in the correct order.
+
+\ws[3.5cm]
+
+\textbf{19.} List ALL transformations applied to $f(x) = x^2$ to produce $p(x) = \tfrac{1}{2}(x - 2)^2 + 4$.
+
+\ws[3cm]
+
+\textbf{20.} Write the equation obtained by applying these steps to $y = x^2$ in order:
+
+\hspace{1cm}(1) Reflect over $x$-axis \hspace{1cm} (2) Stretch vertically by factor 2
+\hspace{0.5cm}(3) Shift right 1 unit \hspace{0.5cm}(4) Shift down 4 units
+
+\ws[3cm]
+
+\textbf{21.} The function $g(x) = -\tfrac{1}{2}(x + 3)^2 + 5$ is compared to $f(x) = x^2$.
+Describe all differences in direction, width, and position.
+
+\ws[3cm]
+
+\textbf{22.} Write the vertex form equation of a parabola that is:
+\textit{reflected over the $x$-axis, vertically stretched by 3, shifted right 2, shifted up 6.}
+What is the vertex?
+
+\ws[3cm]
+
+% ==============================================================
+\subsection*{Section F \quad Writing Equations from Graphs (Problems 23--26)}
+% ==============================================================
+
+\textbf{23.} A parabola opens upward, has $x$-intercepts at $x = -1$ and $x = 5$,
+and passes through $(2,\,-9)$.
+Write the equation in intercept form, then convert to standard form.
+
+\ws[3.5cm]
+
+\textbf{24.} A parabola has vertex $(3, -2)$ and passes through $(5, 6)$.
+Write in vertex form, then standard form.
+
+\ws[3.5cm]
+
+\textbf{25.} A parabola has $x$-intercepts $(-4, 0)$ and $(2, 0)$ and vertex $(-1,\,9)$.
+Find $a$, write the intercept form, then expand to standard form.
+
+\ws[3.5cm]
+
+\textbf{26.} From a graph: the parabola opens downward with vertex $(1, 4)$ and
+$y$-intercept $(0, 3)$.
+Find $a$, write the vertex form, and state the domain and range.
+
+\ws[3.5cm]
+
+% ==============================================================
+\subsection*{Section G \quad Converting to Vertex Form (Problems 27--28)}
+% ==============================================================
+
+\textbf{27.} Convert each function to vertex form using the vertex formula
+$h = -\dfrac{b}{2a}$, $\; k = f(h)$.
+
+\hspace{1cm}(a) $y = x^2 - 6x + 5$
+
+\ws[3cm]
+
+\hspace{1cm}(b) $y = 3x^2 + 12x - 1$
+
+\ws[3cm]
+
+\hspace{1cm}(c) $y = -x^2 + 4x + 12$
+
+\ws[3cm]
+
+\textbf{28.} Convert $y = 2x^2 - 12x + 10$ to vertex form by
+\textbf{completing the square} (show all steps).
+Then state the vertex.
+
+\ws[4cm]
+
+% ==============================================================
+\subsection*{Section H \quad Domain, Range, and Zeros (Problems 29--30)}
+% ==============================================================
+
+\textbf{29.} For each function, find: \textbf{(i)} the zeros, \textbf{(ii)} the vertex,
+\textbf{(iii)} the domain, \textbf{(iv)} the range.
+
+\hspace{1cm}(a) $f(x) = 2x^2 - 8x + 8$
+
+\ws[4cm]
+
+\hspace{1cm}(b) $y = -(x + 5)(x - 1)$
+
+\ws[4cm]
+
+\hspace{1cm}(c) $h(x) = 16x^2 - 4$
+
+\ws[4cm]
+
+\textbf{30.} A quadratic function opens downward, has zeros at $x = -3$ and $x = 7$,
+and a maximum value of 20.
+
+\hspace{1cm}(a) Find the $x$-coordinate of the vertex (midpoint of zeros).
+
+\hspace{1cm}(b) Write the vertex form equation.
+
+\hspace{1cm}(c) Find $a$.
+
+\hspace{1cm}(d) State the range.
+
+\ws[4cm]
+
+% ==============================================================
+\newpage
+\begin{center}
+  {\Large\textbf{Answer Key}}
+\end{center}
+\hrule
+\vspace{0.4cm}
+% ==============================================================
+
+\begin{multicols}{2}
+
+\textbf{1.}
+(a) Vertex form; vertex $(4,7)$\\
+(b) Standard form; $y$-int $(0,10)$\\
+(c) Intercept form; zeros $x=-2,\,6$
+
+\medskip
+\textbf{2.} $y=(x-3)(x+5)=x^2+2x-15$
+
+\medskip
+\textbf{3.} $-2(x-1)(x-6)=-2(x^2-7x+6)$\\
+$= -2x^2+14x-12$
+
+\medskip
+\textbf{4.} $y=a(x+2)^2+5$. Plug in $(0,1)$:\\
+$1=a(4)+5 \Rightarrow a=-1$.\\
+$y=-(x+2)^2+5$
+
+\medskip
+\textbf{5.} $y=a(x-3)(x-4)$. Plug in $(0,12)$:\\
+$12=a(3)(4)=12a \Rightarrow a=1$.\\
+$y=(x-3)(x-4)=x^2-7x+12$
+
+\medskip
+\textbf{6.} $g(x)=(x-4)^2+3$; vertex $(4,3)$
+
+\medskip
+\textbf{7.} $g(x)=(x+5)^2-2$; vertex $(-5,-2)$
+
+\medskip
+\textbf{8.} Left 3, down 7; vertex $(-3,-7)$
+
+\medskip
+\textbf{9.} (a) Right 2, up 6\\
+(b) $g(x)=(x-2)^2+6$\\
+(c) Vertex $(2,6)$
+
+\medskip
+\textbf{10.} $(1,1)$ shifts to $(1+4,\,1+2)=(5,3)$
+
+\medskip
+\textbf{11.}
+(a) $a=5>1$: narrower, factor 5\\
+(b) $a=\frac{1}{4}<1$: wider, factor $\frac{1}{4}$\\
+(c) $a=0.8<1$: wider, factor $0.8$
+
+\medskip
+\textbf{12.} $g(x)=3x^2+5$
+
+\medskip
+\textbf{13.} $g(x)=\tfrac{1}{2}(x-3)^2-1$
+
+\medskip
+\textbf{14.} On $\tfrac{3}{4}x^2$: $(2,\,3)$. On $4x^2$: $(2,16)$
+
+\medskip
+\textbf{15.} $g(x)=-2(x-3)^2-1$;\\ vertex $(3,-1)$, opens down
+
+\medskip
+\textbf{16.} $g(x)=(-x-4)^2=(x+4)^2$;\\ vertex $(-4,0)$
+
+\medskip
+\textbf{17.} $g(x)=-(x+3)^2+5$; vertex $(-3,5)$
+
+\medskip
+\textbf{18.} (1) Vertical stretch $\times 4$\\
+(2) Reflect over $x$-axis\\
+(3) Shift left 1\\
+(4) Shift down 3
+
+\medskip
+\textbf{19.} (1) Vertical shrink $\times\tfrac{1}{2}$\\
+(2) Shift right 2\\
+(3) Shift up 4
+
+\medskip
+\textbf{20.} $g(x)=-2(x-1)^2-4$
+
+\medskip
+\textbf{21.} Opens down ($a<0$); wider ($|a|=\tfrac{1}{2}$); shifted left 3 and up 5; vertex $(-3,5)$
+
+\medskip
+\textbf{22.} $g(x)=-3(x-2)^2+6$; vertex $(2,6)$
+
+\medskip
+\textbf{23.} $y=a(x+1)(x-5)$. Plug in $(2,-9)$:\\
+$-9=a(3)(-3)=-9a \Rightarrow a=1$.\\
+$y=(x+1)(x-5)=x^2-4x-5$
+
+\medskip
+\textbf{24.} $y=a(x-3)^2-2$. Plug in $(5,6)$:\\
+$6=a(4)-2 \Rightarrow a=2$.\\
+$y=2(x-3)^2-2=2x^2-12x+16$
+
+\medskip
+\textbf{25.} Vertex $x=\frac{-4+2}{2}=-1$.\\
+$y=a(x+4)(x-2)$. Plug in $(-1,9)$:\\
+$9=a(3)(-3)=-9a \Rightarrow a=-1$.\\
+$y=-(x+4)(x-2)=-x^2-2x+8$
+
+\medskip
+\textbf{26.} $y=a(x-1)^2+4$. Plug in $(0,3)$:\\
+$3=a(1)+4 \Rightarrow a=-1$.\\
+$y=-(x-1)^2+4$\\
+Domain: $(-\infty,+\infty)$; Range: $(-\infty,4]$
+
+\medskip
+\textbf{27a.} $h=-\frac{-6}{2}=3$, $k=9-18+5=-4$.\\
+$y=(x-3)^2-4$
+
+\medskip
+\textbf{27b.} $h=-\frac{12}{6}=-2$, $k=12-24-1=-13$.\\
+$y=3(x+2)^2-13$
+
+\medskip
+\textbf{27c.} $h=-\frac{4}{-2}=2$, $k=-4+8+12=16$.\\
+$y=-(x-2)^2+16$
+
+\medskip
+\textbf{28.}
+\begin{align*}
+y &= 2(x^2-6x)+10\\
+  &= 2(x^2-6x+9-9)+10\\
+  &= 2(x-3)^2-18+10\\
+  &= 2(x-3)^2-8
+\end{align*}
+Vertex $(3,-8)$
+
+\medskip
+\textbf{29a.} $f(x)=2(x-2)^2$; zero: $x=2$;\\
+vertex $(2,0)$; domain $(-\infty,+\infty)$; range $[0,+\infty)$
+
+\medskip
+\textbf{29b.} Zeros $x=-5,1$; vertex $(-2,9)$;\\
+domain $(-\infty,+\infty)$; range $(-\infty,9]$
+
+\medskip
+\textbf{29c.} Zeros $x=\pm\tfrac{1}{2}$; vertex $(0,-4)$;\\
+domain $(-\infty,+\infty)$; range $[-4,+\infty)$
+
+\medskip
+\textbf{30.}
+(a) $x = \frac{-3+7}{2} = 2$\\
+(b) $y = a(x-2)^2+20$\\
+(c) Use zero $x=7$: $0=a(25)+20 \Rightarrow a=-\tfrac{4}{5}$.\\
+$y=-\tfrac{4}{5}(x-2)^2+20$\\
+(d) Range: $(-\infty,\,20]$
+
+\end{multicols}
+
+\vspace{0.5cm}
+\hrule
+\begin{center}
+  \textit{End of Quadratic Functions Notes \& Practice}
+\end{center}
+
+\end{document}

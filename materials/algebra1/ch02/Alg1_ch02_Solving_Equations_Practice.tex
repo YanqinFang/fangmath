@@ -1,0 +1,236 @@
+\documentclass[11pt]{article}
+\usepackage[a4paper,margin=1.8cm]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{titlesec}
+\usepackage{fancyhdr}
+\usepackage{tabularx}
+\usepackage{lmodern}
+
+\definecolor{brandred}{RGB}{196,30,30}
+\definecolor{brandblue}{RGB}{30,90,160}
+\definecolor{brandgreen}{RGB}{40,120,90}
+\definecolor{brandpurple}{RGB}{108,58,148}
+\definecolor{lightgray}{RGB}{240,240,240}
+
+\titleformat{\section}{\large\bfseries\color{brandred}}{\thesection}{0.5em}{}
+\titleformat{\subsection}{\normalsize\bfseries\color{brandblue}}{\thesubsection}{0.5em}{}
+
+\setlength{\headheight}{14pt}
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0.3pt}
+\fancyhead[L]{\small Solving Equations Practice}
+\fancyhead[R]{\small Name: \underline{\hspace{2.6cm}}\quad Date: \underline{\hspace{2cm}}}
+\fancyfoot[L]{\small \copyright\ FangMath}
+\fancyfoot[C]{\small\thepage}
+\fancyfoot[R]{\small All Rights Reserved}
+
+\newtcolorbox{examplebox}[1][]{
+  colback=blue!5, colframe=brandblue, boxrule=1.2pt, arc=1.5mm,
+  left=3mm, right=3mm, top=2mm, bottom=2mm,
+  title={\textbf{Worked Example --- Follow These Steps}}, coltitle=white, colbacktitle=brandblue, #1
+}
+\newtcolorbox{tipbox}[1][]{
+  colback=lightgray, colframe=black!50, boxrule=0.8pt, arc=1.5mm,
+  left=3mm, right=3mm, top=2mm, bottom=2mm,
+  title={\textbf{Tips}}, coltitle=white, colbacktitle=black!55, #1
+}
+\newtcolorbox{wordbox}[1][]{
+  colback=green!5, colframe=brandgreen, boxrule=1pt, arc=1.5mm,
+  left=3mm, right=3mm, top=2mm, bottom=2mm, #1
+}
+
+\newcommand{\banner}[2]{%
+  \begin{center}
+  \colorbox{#1}{\parbox{0.97\linewidth}{\centering\color{white}\bfseries\large\vspace{1.2mm} #2 \vspace{1.2mm}}}
+  \end{center}%
+  \vspace{2mm}
+}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{4pt}
+
+\begin{document}
+
+% ===== Title =====
+\begin{center}
+  {\Huge\bfseries\color{brandred} Solving Equations}\\[2mm]
+  {\large\color{brandblue} Practice Worksheet --- One-Step, Two-Step, Multi-Step \& Word Problems}\\[1mm]
+  {\small Level: Pre-Algebra \,/\, Algebra 1}\\[2mm]
+  {\small \copyright\ FangMath --- All Rights Reserved}
+\end{center}
+
+\vspace{1mm}
+\hrule
+\vspace{3mm}
+
+{\bfseries Instructions:} Show all of your work for full credit. Study the worked example at the start of each section before you begin that section's problems.
+
+% ===================================================
+\banner{brandred}{PART 1 --- ONE-STEP EQUATIONS (10 problems)}
+
+\begin{examplebox}
+Solve for $x$: \quad $x + 7 = 12$
+\begin{align*}
+x + 7 &= 12 &&\text{Given equation}\\
+x + 7 - 7 &= 12 - 7 &&\text{Subtract 7 from each side (undo the addition)}\\
+x &= 5 &&\text{Simplify}
+\end{align*}
+\textbf{Remember:} addition and subtraction are inverse operations; multiplication and division are inverse operations. Undo whatever is being done to $x$.
+\end{examplebox}
+
+Solve each equation for $x$. Show your work in the space provided.
+
+\begin{tabularx}{\linewidth}{@{}p{0.6cm} X p{0.6cm} X@{}}
+\textbf{1.} & $x + 9 = 14$ & \textbf{2.} & $x - 6 = 8$ \\[13mm]
+\textbf{3.} & $x - 4 = -9$ & \textbf{4.} & $7 + x = 2$ \\[13mm]
+\textbf{5.} & $5x = 35$ & \textbf{6.} & $-3x = 21$ \\[13mm]
+\textbf{7.} & $\dfrac{x}{4} = 9$ & \textbf{8.} & $\dfrac{x}{6} = -3$ \\[13mm]
+\textbf{9.} & $-x = 9$ & \textbf{10.} & $12 = x + 5$ \\[13mm]
+\end{tabularx}
+
+% ===================================================
+\newpage
+\banner{brandred}{PART 2 --- TWO-STEP EQUATIONS (10 problems)}
+
+\begin{examplebox}
+Solve for $x$: \quad $3x + 4 = 19$
+\begin{align*}
+3x + 4 &= 19 &&\text{Given equation}\\
+3x + 4 - 4 &= 19 - 4 &&\text{Subtract 4 from each side (undo the addition)}\\
+3x &= 15 &&\text{Simplify}\\
+\dfrac{3x}{3} &= \dfrac{15}{3} &&\text{Divide each side by 3 (undo the coefficient)}\\
+x &= 5 &&\text{Simplify}
+\end{align*}
+\textbf{Remember:} undo addition/subtraction \emph{first}, then undo multiplication/division.
+\end{examplebox}
+
+Solve each equation for $x$. Show your work in the space provided.
+
+\begin{tabularx}{\linewidth}{@{}p{0.6cm} X p{0.6cm} X@{}}
+\textbf{1.} & $2x + 5 = 17$ & \textbf{2.} & $3x - 7 = 11$ \\[15mm]
+\textbf{3.} & $4x + 9 = -7$ & \textbf{4.} & $-2x + 6 = 14$ \\[15mm]
+\textbf{5.} & $5x - 3 = -18$ & \textbf{6.} & $-6x - 4 = 20$ \\[15mm]
+\textbf{7.} & $\dfrac{x}{2} + 3 = 10$ & \textbf{8.} & $\dfrac{x}{3} - 5 = -2$ \\[15mm]
+\textbf{9.} & $-\dfrac{x}{4} + 6 = 2$ & \textbf{10.} & $7 - 2x = -5$ \\[15mm]
+\end{tabularx}
+
+% ===================================================
+\newpage
+\banner{brandred}{PART 3 --- MULTI-STEP EQUATIONS WITH FRACTIONS \& DECIMALS (10 problems)}
+
+\begin{examplebox}
+Solve for $x$: \quad $2(x - 3) + 1.5 = 9.5$
+\begin{align*}
+2(x-3) + 1.5 &= 9.5 &&\text{Given equation}\\
+2x - 6 + 1.5 &= 9.5 &&\text{Distribute the 2}\\
+2x - 4.5 &= 9.5 &&\text{Combine like terms}\\
+2x - 4.5 + 4.5 &= 9.5 + 4.5 &&\text{Add 4.5 to each side}\\
+2x &= 14 &&\text{Simplify}\\
+x &= 7 &&\text{Divide each side by 2}
+\end{align*}
+\end{examplebox}
+
+\begin{tipbox}
+\textbf{Fractions:} multiply both sides by the denominator (or the LCD, if there is more than one fraction) to clear it before doing anything else. \quad\textbf{Decimals:} treat them just like whole numbers --- add, subtract, multiply, and divide the same way, just watch your decimal point.
+\end{tipbox}
+
+Solve each equation for $x$. Show your work in the space provided.
+
+\begin{tabularx}{\linewidth}{@{}p{0.6cm} X p{0.6cm} X@{}}
+\textbf{1.} & $0.5x + 3 = 11$ & \textbf{2.} & $\dfrac{x}{3} - 2 = 5$ \\[16mm]
+\textbf{3.} & $2x + 0.75 = 4.75$ & \textbf{4.} & $\dfrac{x+5}{4} = 3$ \\[16mm]
+\textbf{5.} & $0.2x - 1 = 0.6x - 9$ & \textbf{6.} & $\dfrac{2}{3}x + 1 = 7$ \\[16mm]
+\textbf{7.} & $3(x - 1.5) = 10.5$ & \textbf{8.} & $\dfrac{x}{5} + \dfrac{x}{2} = 7$ \\[16mm]
+\textbf{9.} & $0.25(x + 8) = 5$ & \textbf{10.} & $\dfrac{3x-2}{5} = 2$ \\[16mm]
+\end{tabularx}
+
+% ===================================================
+\newpage
+\banner{brandred}{PART 4 --- WORD PROBLEMS (5 problems)}
+
+\begin{examplebox}
+The sum of a number and 8 is 23. Find the number.
+\begin{align*}
+\text{Let } x &= \text{the unknown number.}\\
+x + 8 &= 23 &&\text{Translate the sentence into an equation}\\
+x + 8 - 8 &= 23 - 8 &&\text{Subtract 8 from each side}\\
+x &= 15 &&\text{Simplify}
+\end{align*}
+\textbf{The number is 15.}\\[1mm]
+\textbf{Tip:} underline the key phrase, define what $x$ represents in words, write the equation, solve it, then answer the original question in a full sentence.
+\end{examplebox}
+
+Solve each word problem below. Define your variable, write an equation, and show all your work.
+
+\begin{wordbox}
+\textbf{1.} Five more than three times a number is 26. Find the number.
+\vspace{22mm}
+\end{wordbox}
+
+\begin{wordbox}
+\textbf{2.} The sum of two consecutive integers is 45. Find the two integers.
+\vspace{22mm}
+\end{wordbox}
+
+\begin{wordbox}
+\textbf{3.} Maria is 4 years older than twice her brother's age. If Maria is 22 years old, how old is her brother?
+\vspace{22mm}
+\end{wordbox}
+
+\begin{wordbox}
+\textbf{4.} A gym membership charges a \$20 sign-up fee plus \$15 per month. If Sam paid a total of \$110, how many months did he pay for?
+\vspace{22mm}
+\end{wordbox}
+
+\begin{wordbox}
+\textbf{5.} The length of a rectangle is 3 cm more than twice its width. If the perimeter of the rectangle is 36 cm, find the width and the length.
+\vspace{26mm}
+\end{wordbox}
+
+% ===================================================
+\newpage
+\hrule
+\vspace{3mm}
+\section*{Answer Key}
+
+\subsection*{Part 1 --- One-Step Equations}
+{\small
+\begin{tabularx}{\linewidth}{@{}X@{}}
+1. $x=5$ \quad 2. $x=14$ \quad 3. $x=-5$ \quad 4. $x=-5$ \quad 5. $x=7$ \quad 6. $x=-7$ \quad 7. $x=36$ \quad 8. $x=-18$ \quad 9. $x=-9$ \quad 10. $x=7$
+\end{tabularx}}
+
+\subsection*{Part 2 --- Two-Step Equations}
+{\small
+\begin{tabularx}{\linewidth}{@{}X@{}}
+1. $x=6$ \quad 2. $x=6$ \quad 3. $x=-4$ \quad 4. $x=-4$ \quad 5. $x=-3$ \quad 6. $x=-4$ \quad 7. $x=14$ \quad 8. $x=9$ \quad 9. $x=16$ \quad 10. $x=6$
+\end{tabularx}}
+
+\subsection*{Part 3 --- Multi-Step Equations with Fractions \& Decimals}
+{\small
+\begin{tabularx}{\linewidth}{@{}X@{}}
+1. $x=16$ \quad 2. $x=21$ \quad 3. $x=2$ \quad 4. $x=7$ \quad 5. $x=20$ \quad 6. $x=9$ \quad 7. $x=5$ \quad 8. $x=10$ \quad 9. $x=12$ \quad 10. $x=4$
+\end{tabularx}}
+
+\subsection*{Part 4 --- Word Problems}
+{\small
+\begin{tabularx}{\linewidth}{@{}X@{}}
+\textbf{1.} Let $x$ = the number. $3x+5=26 \Rightarrow 3x=21 \Rightarrow x=7$. \textbf{The number is 7.}\\[2mm]
+\textbf{2.} Let $x$ = the first integer, $x+1$ = the second. $x+(x+1)=45 \Rightarrow 2x+1=45 \Rightarrow 2x=44 \Rightarrow x=22$. \textbf{The integers are 22 and 23.}\\[2mm]
+\textbf{3.} Let $x$ = her brother's age. $2x+4=22 \Rightarrow 2x=18 \Rightarrow x=9$. \textbf{Her brother is 9 years old.}\\[2mm]
+\textbf{4.} Let $x$ = the number of months. $15x+20=110 \Rightarrow 15x=90 \Rightarrow x=6$. \textbf{Sam paid for 6 months.}\\[2mm]
+\textbf{5.} Let $w$ = the width, so the length is $2w+3$. Perimeter: $2(w+(2w+3))=36 \Rightarrow 2(3w+3)=36 \Rightarrow 6w+6=36 \Rightarrow 6w=30 \Rightarrow w=5$. Length $=2(5)+3=13$. \textbf{Width $=5$ cm, Length $=13$ cm.}
+\end{tabularx}}
+
+\vspace{4mm}
+\hrule
+\vspace{2mm}
+\begin{center}
+{\small \copyright\ FangMath --- All Rights Reserved. Not to be reproduced or distributed without permission.}
+\end{center}
+
+\end{document}

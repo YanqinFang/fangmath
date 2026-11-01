@@ -1,0 +1,162 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath, amssymb}
+\usepackage{tikz}
+\usepackage{enumitem}
+\usepackage{parskip}
+\usepackage{multicol}
+
+\title{Solving Absolute Value Equations}
+\author{}
+\date{}
+
+% A reusable number line.
+% #1 = x-min, #2 = x-max, #3 = comma-separated tick labels,
+% #4 = comma-separated solution x-values (filled dots),
+% #5 = optional center label (e.g. center of distance).
+\newcommand{\numline}[5]{%
+\begin{center}
+\begin{tikzpicture}[x=0.7cm,y=0.7cm]
+  \draw[->,thick] (#1-0.6,0) -- (#2+0.6,0);
+  \foreach \x in {#3} {
+    \draw (\x,0.12) -- (\x,-0.12);
+    \node[below=2pt,font=\small] at (\x,-0.12) {$\x$};
+  }
+  \foreach \x in {#4} {
+    \filldraw[fill=black] (\x,0) circle (3.2pt);
+  }
+  #5
+\end{tikzpicture}
+\end{center}
+}
+
+\begin{document}
+\maketitle
+
+\section*{1. Introduction}
+
+The \textbf{absolute value} of a real number $x$, written $|x|$, is the distance from $x$ to $0$ on the number line. Because distance is never negative, $|x| \geq 0$ for every real number $x$.
+
+\textbf{Definition (piecewise):}
+\[
+|x| \;=\; \begin{cases} \;x, & \text{if } x \geq 0,\\[2pt] -x, & \text{if } x < 0. \end{cases}
+\]
+
+\textbf{Distance interpretation.} For any real number $a$, $|x - a|$ is the distance between $x$ and $a$ on the number line.
+
+\numline{-5}{5}{-5,-4,-3,-2,-1,0,1,2,3,4,5}{}{%
+  \draw[<->, thick, red] (-3,0.55) -- (2,0.55);
+  \node[above, red, font=\small] at (-0.5,0.55) {distance $|x-a|$};
+  \filldraw[red] (-3,0) circle (2.5pt) node[below=10pt,red,font=\small] {$a$};
+  \filldraw[red] (2,0) circle (2.5pt) node[below=10pt,red,font=\small] {$x$};
+}
+
+\textbf{The rule for solving $|E| = c$.} Let $E$ be any expression (like $x$, $x-3$, $2x+1$, \dots) and let $c$ be a real number.
+\begin{itemize}[leftmargin=2em,itemsep=2pt,topsep=2pt]
+  \item If $c > 0$, then $|E| = c$ means $E = c$ \;or\; $E = -c$.
+  \item If $c = 0$, then $|E| = 0$ means $E = 0$ (one solution).
+  \item If $c < 0$, then $|E| = c$ has \textbf{no solution} (distance can't be negative).
+\end{itemize}
+
+\textbf{Three-step procedure.}
+\begin{enumerate}[leftmargin=2em,itemsep=2pt,topsep=2pt]
+  \item Isolate the absolute value (get $|E|$ alone on one side).
+  \item Apply the definition: $E = c$ \;or\; $E = -c$.
+  \item Solve each linear equation. Check on a number line that solutions are at the correct distance.
+\end{enumerate}
+
+\bigskip
+\section*{2. Two Worked Examples}
+
+\subsection*{Example 1.\quad Solve $|x| = 5$.}
+\textbf{Solution.} By the definition, $|x| = 5$ means $x$ is $5$ units away from $0$. So
+\[
+x = 5 \quad \text{or} \quad x = -5.
+\]
+\textbf{Solution set:} $\{-5,\; 5\}$.
+
+\numline{-7}{7}{-7,-6,-5,-4,-3,-2,-1,0,1,2,3,4,5,6,7}{-5,5}{%
+  \draw[<->, thick, blue] (-5,0.55) -- (0,0.55);
+  \node[above, blue, font=\small] at (-2.5,0.55) {5 units};
+  \draw[<->, thick, blue] (0,0.55) -- (5,0.55);
+  \node[above, blue, font=\small] at (2.5,0.55) {5 units};
+}
+
+\subsection*{Example 2.\quad Solve $|x - 3| = 4$.}
+\textbf{Solution.} $|x-3| = 4$ says the distance from $x$ to $3$ is $4$. So $x$ is $4$ units to the left of $3$ or $4$ units to the right of $3$:
+\[
+x - 3 = 4 \quad \text{or} \quad x - 3 = -4
+\]
+\[
+x = 7 \qquad \text{or} \qquad x = -1.
+\]
+\textbf{Solution set:} $\{-1,\; 7\}$.
+
+\numline{-3}{8}{-3,-2,-1,0,1,2,3,4,5,6,7,8}{-1,7}{%
+  \filldraw[red] (3,0) circle (2.5pt);
+  \node[below=10pt, red, font=\small] at (3,-0.1) {center $3$};
+  \draw[<->, thick, blue] (-1,0.55) -- (3,0.55);
+  \node[above, blue, font=\small] at (1,0.55) {4 units};
+  \draw[<->, thick, blue] (3,0.55) -- (7,0.55);
+  \node[above, blue, font=\small] at (5,0.55) {4 units};
+}
+
+\bigskip
+\section*{3. Twenty Practice Problems}
+
+\textit{Solve each equation using the definition of absolute value. For each problem, draw a quick number line and mark the solutions (and the "center" $a$ when the equation has the form $|x-a|=c$).}
+
+\begin{multicols}{2}
+\begin{enumerate}[leftmargin=1.6em,itemsep=4pt]
+  \item $|x| = 7$
+  \item $|x| = 0$
+  \item $|x| = -3$
+  \item $|x - 2| = 5$
+  \item $|x + 4| = 6$
+  \item $|x - 1| = 0$
+  \item $|2x| = 10$
+  \item $|3x| = 12$
+  \item $|2x - 1| = 7$
+  \item $|3x + 2| = 11$
+  \item $|x - 5| = 2$
+  \item $|x + 7| = 3$
+  \item $|4 - x| = 6$
+  \item $|1 - 2x| = 5$
+  \item $\left|\dfrac{x}{2}\right| = 4$
+  \item $|x - 3| + 2 = 9$
+  \item $2|x + 1| = 8$
+  \item $|3x - 6| = 9$
+  \item $|2x + 5| = 11$
+  \item $|5 - 2x| = 7$
+\end{enumerate}
+\end{multicols}
+
+\bigskip
+\section*{Answer Key}
+
+\begin{multicols}{2}
+\begin{enumerate}[leftmargin=1.8em,itemsep=2pt]
+  \item $x = \pm 7$
+  \item $x = 0$
+  \item No solution
+  \item $x = 7$ or $x = -3$
+  \item $x = 2$ or $x = -10$
+  \item $x = 1$
+  \item $x = \pm 5$
+  \item $x = \pm 4$
+  \item $x = 4$ or $x = -3$
+  \item $x = 3$ or $x = -\tfrac{13}{3}$
+  \item $x = 7$ or $x = 3$
+  \item $x = -4$ or $x = -10$
+  \item $x = -2$ or $x = 10$
+  \item $x = -2$ or $x = 3$
+  \item $x = \pm 8$
+  \item $x = 10$ or $x = -4$
+  \item $x = 3$ or $x = -5$
+  \item $x = 5$ or $x = -1$
+  \item $x = 3$ or $x = -8$
+  \item $x = -1$ or $x = 6$
+\end{enumerate}
+\end{multicols}
+
+\end{document}

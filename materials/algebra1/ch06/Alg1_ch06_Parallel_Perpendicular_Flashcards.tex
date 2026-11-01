@@ -1,0 +1,146 @@
+\documentclass[11pt,letterpaper]{article}
+% =====================================================================
+%  FangMath -- FLASH CARDS
+%  Linear Functions: Parallel and Perpendicular Lines (2 cards)
+%  Page 1 = fronts, Page 2 = backs (same top/bottom order).
+%  Print double-sided, "flip on long edge", then cut along the dashed line.
+%  Single-sided fallback: print both pages, cut, and glue back to back.
+% =====================================================================
+\usepackage[T1]{fontenc}
+\usepackage[scaled]{helvet}
+\renewcommand{\familydefault}{\sfdefault}
+\usepackage{amsmath,amssymb}
+\usepackage[margin=0.6in,top=0.55in,bottom=0.7in]{geometry}
+\usepackage[most]{tcolorbox}
+\usepackage{tikz}
+\usepackage{array}
+\usepackage{fancyhdr}
+
+% ---- Palette "F. Bright & Playful" ----
+\definecolor{fmtitle}{HTML}{3D2C8D}   % titles / card fronts
+\definecolor{fmkey}{HTML}{0096C7}     % Key Idea / card backs
+\definecolor{fmwatch}{HTML}{2BB673}   % Watch Me
+\definecolor{fmturn}{HTML}{F4A100}    % Your Turn
+\definecolor{fmmistake}{HTML}{EF476F} % Common Mistake
+\definecolor{fmnotice}{HTML}{9B5DE5}  % Notice
+\definecolor{fmgray}{HTML}{6B6B6B}
+
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
+\fancyfoot[C]{\footnotesize\color{fmgray}\textcopyright\ 2026 FangMath. All rights reserved.}
+\setlength{\parindent}{0pt}
+
+% ---- Card styles ----
+\newtcolorbox{cardfront}[1]{enhanced, width=\linewidth, height=11.4cm,
+  colback=white, colframe=fmtitle, boxrule=1.6pt, arc=4mm,
+  valign=center, halign=center, left=10mm, right=10mm,
+  overlay={\node[anchor=north west, font=\footnotesize\bfseries, text=fmtitle]
+     at ([xshift=5mm,yshift=-4mm]frame.north west) {FLASH CARD 1};
+     \node[anchor=south east, font=\scriptsize, text=fmgray]
+     at ([xshift=-5mm,yshift=3mm]frame.south east) {Linear Functions \textperiodcentered\ Parallel \& Perpendicular Lines};}}
+\newtcolorbox{cardback}[1]{enhanced, width=\linewidth, height=11.4cm,
+  colback=white, colframe=fmkey, boxrule=1.6pt, arc=4mm,
+  valign=top, left=6mm, right=6mm, top=4mm,
+  overlay={\node[anchor=south east, font=\scriptsize, text=fmgray]
+     at ([xshift=-5mm,yshift=3mm]frame.south east) {Card 1 \textperiodcentered\ Answer};}}
+
+\newcommand{\cardtitle}[1]{{\large\bfseries\color{fmkey}#1}\par\vspace{1mm}
+  {\color{fmkey}\rule{\linewidth}{0.8pt}}\par\vspace{2mm}}
+\newcommand{\cutline}{\par\vspace{3mm}\noindent
+  \begin{tikzpicture}\draw[dashed,fmgray] (0,0) -- (\linewidth-1pt,0);
+  \node[fill=white,font=\scriptsize,text=fmgray] at (0.5\linewidth-0.5pt,0) {cut here};
+  \end{tikzpicture}\par\vspace{3mm}}
+\newcommand{\mistake}[1]{{\color{fmmistake}\bfseries Common Mistake:}\ #1}
+
+% ---- Tiny pictures (two lines in a small window) ----
+% \twolines{slope1}{int1}{slope2}{int2}
+\newcommand{\twolines}[4]{%
+  \begin{tikzpicture}[scale=0.4,baseline=(c.base)]
+    \coordinate (c) at (0,-0.3);
+    \clip (-2.2,-2.2) rectangle (2.2,2.2);
+    \draw[gray!45,line width=0.4pt] (-2.2,0)--(2.2,0) (0,-2.2)--(0,2.2);
+    \draw[fmtitle,line width=1.1pt,domain=-2.5:2.5] plot (\x,{#1*\x+#2});
+    \draw[fmmistake,line width=1.1pt,domain=-2.5:2.5] plot (\x,{#3*\x+#4});
+  \end{tikzpicture}}
+
+\begin{document}
+% =====================================================================
+%  PAGE 1 -- FRONTS
+% =====================================================================
+\begin{cardfront}{1}
+  \centering
+  {\color{fmtitle}\Large\bfseries Slopes of Two Lines}\par\vspace{7mm}
+  {\large Two lines lie in the \textbf{same plane}.\\[2mm]
+  Their slopes are $m_1$ and $m_2$.}\par\vspace{7mm}
+  {\Large\color{fmtitle} What are the \textbf{3 cases}?}\par\vspace{4mm}
+  {\large\color{fmgray} What does the sign $\perp$ mean?}
+\end{cardfront}
+
+\cutline
+
+\begin{tcolorbox}[enhanced, width=\linewidth, height=11.4cm,
+  colback=white, colframe=fmtitle, boxrule=1.6pt, arc=4mm,
+  valign=center, halign=center, left=10mm, right=10mm,
+  overlay={\node[anchor=north west, font=\footnotesize\bfseries, text=fmtitle]
+     at ([xshift=5mm,yshift=-4mm]frame.north west) {FLASH CARD 2};
+     \node[anchor=south east, font=\scriptsize, text=fmgray]
+     at ([xshift=-5mm,yshift=3mm]frame.south east) {Linear Functions \textperiodcentered\ Parallel \& Perpendicular Lines};}]
+  \centering
+  {\color{fmtitle}\Large\bfseries Writing a Parallel or\\[1mm] Perpendicular Line}\par\vspace{7mm}
+  {\large Write the equation of the line through $(2,\,1)$ that is}\par\vspace{3mm}
+  {\large \textbf{(a)} parallel to $y = 2x + 5$\qquad \textbf{(b)} perpendicular to $y = 2x + 5$.}\par\vspace{6mm}
+  {\large\color{fmgray} Give your answers in slope-intercept form, $y = mx + b$.}
+\end{tcolorbox}
+
+\newpage
+% =====================================================================
+%  PAGE 2 -- BACKS (same top/bottom order as page 1)
+% =====================================================================
+\begin{cardback}{1}
+\cardtitle{Slopes of Two Lines --- 3 Cases}
+{\small Compare the slopes $m_1$ and $m_2$ of two lines in the same plane:}\par\vspace{2mm}
+\renewcommand{\arraystretch}{1.6}
+\begin{tabular}{@{}>{\centering\arraybackslash}m{2.0cm} m{3.4cm} m{3.4cm} m{5.4cm}@{}}
+\textbf{\color{fmkey}Picture} & \textbf{\color{fmkey}Slopes} & \textbf{\color{fmkey}The lines are\ldots} & \textbf{\color{fmkey}Example}\\[1mm]
+\twolines{1}{-0.9}{1}{0.9} & $m_1 = m_2$ & \textbf{parallel} & $y=3x-2$ and $y=3x+4$\newline {\footnotesize same slope $3$}\\
+\twolines{2}{0}{-0.5}{0} & $m_1 \cdot m_2 = -1$\newline {\footnotesize opposite reciprocals} & \textbf{perpendicular} ($\perp$) & $y=2x+1$ and $y=-\tfrac12 x+4$\newline {\footnotesize $2 \cdot \left(-\tfrac12\right) = -1$}\\
+\twolines{2}{0}{0.4}{0.4} & neither & \textbf{intersect, but\newline not perpendicular} & $y=2x$ and $y=x+3$\newline {\footnotesize $2 \neq 1$, and $2 \cdot 1 = 2 \neq -1$}
+\end{tabular}\par\vspace{3mm}
+{\small $\perp$ is the \textbf{perpendicular sign}: $\ell_1 \perp \ell_2$ means ``line $\ell_1$ is perpendicular to line $\ell_2$'' (they meet at a right angle).}\par\vspace{2mm}
+{\footnotesize\color{fmnotice}\bfseries Watch out:}\ {\footnotesize
+(1) Same slope \emph{and} same $y$-intercept means the \emph{same line}, not two parallel lines.\
+(2) A vertical line ($x=a$) and a horizontal line ($y=b$) are perpendicular, even though a vertical line has no slope, so $m_1 \cdot m_2 = -1$ cannot be used.}
+\end{cardback}
+
+\cutline
+
+\begin{tcolorbox}[enhanced, width=\linewidth, height=11.4cm,
+  colback=white, colframe=fmkey, boxrule=1.6pt, arc=4mm,
+  valign=top, left=6mm, right=6mm, top=4mm,
+  overlay={\node[anchor=south east, font=\scriptsize, text=fmgray]
+     at ([xshift=-5mm,yshift=3mm]frame.south east) {Card 2 \textperiodcentered\ Answer};}]
+\cardtitle{Writing a Parallel or Perpendicular Line}
+{\small\textbf{Steps:} \ \textbf{1.} Find the slope you need. \ \textbf{2.} Use point-slope form $y - y_1 = m(x - x_1)$. \ \textbf{3.} Solve for $y$.}\par\vspace{3mm}
+\begin{minipage}[t]{0.48\linewidth}
+{\color{fmwatch}\bfseries (a) Parallel}\par\vspace{1mm}
+{\small Same slope as $y=2x+5$: \ $m = 2$.}
+\begin{align*}
+y - 1 &= 2(x - 2)\\
+y - 1 &= 2x - 4\\
+y &= 2x - 3
+\end{align*}
+\end{minipage}\hfill
+\begin{minipage}[t]{0.48\linewidth}
+{\color{fmwatch}\bfseries (b) Perpendicular}\par\vspace{1mm}
+{\small Opposite reciprocal of $2$: \ $m = -\tfrac12$.}
+\begin{align*}
+y - 1 &= -\tfrac12(x - 2)\\
+y - 1 &= -\tfrac12 x + 1\\
+y &= -\tfrac12 x + 2
+\end{align*}
+\end{minipage}\par\vspace{2mm}
+{\small\textbf{Check:} put in $x = 2$. \ (a) $2 \cdot 2 - 3 = 1$ \checkmark \qquad (b) $-\tfrac12 \cdot 2 + 2 = 1$ \checkmark}\par\vspace{3mm}
+{\small\mistake{stopping at $y - 1 = 2x - 4$, or dropping the $-1$ and writing $y = 2x - 4$. Finish the last step: add $1$ to \emph{both} sides so $y$ is alone.}}
+\end{tcolorbox}
+\end{document}

@@ -1,0 +1,828 @@
+
+\documentclass[12pt]{article}
+\usepackage{amsmath, amssymb, geometry, multicol, enumitem, array, booktabs}
+\usepackage{fancyhdr, tikz}
+\usetikzlibrary{arrows.meta}
+
+\geometry{margin=1in, top=0.75in, bottom=0.9in}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\textbf{Algebra Practice Worksheet}}
+\fancyhead[R]{Score:\;\underline{\hspace{2cm}}}
+\fancyfoot[C]{\thepage}
+\renewcommand{\headrulewidth}{1pt}
+
+\newcommand{\wsp}{\vspace{2.4cm}}
+\newcommand{\wspm}{\vspace{2.0cm}}
+\newcommand{\wsps}{\vspace{1.6cm}}
+\newcommand{\blank}{\underline{\hspace{2.5cm}}}
+\newcommand{\sblank}{\underline{\hspace{1.4cm}}}
+
+\newcommand{\topictitle}[1]{%
+  \vspace{10pt}
+  \begin{center}
+  \rule{\textwidth}{1.2pt}\\[4pt]
+  {\LARGE\bfseries #1}\\[4pt]
+  \rule{\textwidth}{1.2pt}
+  \end{center}
+  \vspace{6pt}
+}
+
+\newcommand{\sectionbar}[1]{%
+  \vspace{8pt}
+  \noindent\rule{\textwidth}{0.8pt}\\[2pt]
+  {\large\bfseries #1}\\[-4pt]
+  \rule{\textwidth}{0.8pt}
+  \vspace{4pt}
+}
+
+\newcommand{\examplebox}[1]{%
+  \vspace{4pt}
+  \noindent\fbox{%
+    \begin{minipage}{\dimexpr\textwidth-2\fboxsep-2\fboxrule\relax}
+    \vspace{3pt}
+    #1
+    \vspace{3pt}
+    \end{minipage}%
+  }
+  \vspace{6pt}
+}
+
+\begin{document}
+
+%%═══════════════════════════════════════════════════════════════════════════════
+%%  TITLE PAGE
+%%═══════════════════════════════════════════════════════════════════════════════
+\begin{center}
+  {\LARGE\bfseries Algebra Practice Worksheet}\\[8pt]
+  {\large Topics: Equations $\cdot$ Absolute Value $\cdot$ Inequalities}\\[6pt]
+  \rule{\textwidth}{1.4pt}
+\end{center}
+
+\vspace{6pt}
+\noindent
+Name:\;\underline{\hspace{6cm}}\quad
+Date:\;\underline{\hspace{3cm}}\quad
+Period:\;\underline{\hspace{2.2cm}}
+
+\vspace{10pt}
+
+\noindent\textbf{Instructions:} Show all steps clearly in the space provided.
+Write your final answer on the answer line. Check your answer when possible.
+
+\vspace{8pt}
+\noindent\fbox{%
+  \begin{minipage}{\dimexpr\textwidth-2\fboxsep-2\fboxrule\relax}
+  \vspace{4pt}
+  \textbf{Golden Rule:} Whatever you do to one side of an equation or inequality,
+  do the \textbf{same} to the other side.\\[4pt]
+  \textbf{Inequality Warning:} When you multiply or divide both sides by a
+  \textbf{negative} number, \textbf{flip the inequality sign!}
+  \quad Example: $-2x > 6 \;\Rightarrow\; x < -3$
+  \vspace{4pt}
+  \end{minipage}
+}
+
+\vspace{10pt}
+
+\noindent\textbf{Table of Contents}
+\begin{center}
+\renewcommand{\arraystretch}{1.4}
+\begin{tabular}{@{}lll@{}}
+\toprule
+\textbf{Topic} & \textbf{Section} & \textbf{Problems}\\
+\midrule
+1 & One-Step Equations & 10 problems\\
+1 & Two-Step Equations & 10 problems\\
+2 & Absolute Value Equations & 10 problems\\
+3 & Inequalities: Adding & 8 problems\\
+3 & Inequalities: Subtracting & 8 problems\\
+3 & Inequalities: Multiplying & 8 problems\\
+3 & Inequalities: Dividing & 8 problems\\
+\midrule
+& \textbf{Total} & \textbf{62 problems}\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\newpage
+
+%%═══════════════════════════════════════════════════════════════════════════════
+%%  TOPIC 1 — SOLVING EQUATIONS
+%%═══════════════════════════════════════════════════════════════════════════════
+\topictitle{Topic 1 \quad Solving Equations}
+
+\noindent\fbox{%
+  \begin{minipage}{\dimexpr\textwidth-2\fboxsep-2\fboxrule\relax}
+  \vspace{4pt}
+  \textbf{Goal:} Get $x$ alone on one side by undoing what is done to it.\\[6pt]
+  \begin{tabular}{@{}p{2.8cm} p{5cm} p{5.5cm}@{}}
+  \textbf{Form} & \textbf{Undo with\ldots} & \textbf{Quick Example}\\[2pt]
+  $x + a = b$ & subtract $a$ from both sides & $x+4=9 \Rightarrow x=5$\\[2pt]
+  $x - a = b$ & add $a$ to both sides        & $x-3=8 \Rightarrow x=11$\\[2pt]
+  $ax = b$    & divide both sides by $a$      & $4x=20 \Rightarrow x=5$\\[2pt]
+  $\frac{x}{a}=b$ & multiply both sides by $a$ & $\frac{x}{3}=5 \Rightarrow x=15$
+  \end{tabular}
+  \vspace{4pt}
+  \end{minipage}
+}
+
+\vspace{12pt}
+
+%%── PART A: One-Step Equations ──────────────────────────────────────────────
+\sectionbar{Part A \quad One-Step Equations \hfill{\normalfont\normalsize(10 problems)}}
+
+\examplebox{%
+\textbf{Example:} Solve $x + 6 = 10$\\[4pt]
+\textit{The number 6 is added to $x$.  Undo it by subtracting 6 from both sides:}
+\[
+  x + 6 \;-\; 6 \;=\; 10 \;-\; 6 \qquad\Longrightarrow\qquad \boxed{x = 4}
+\]
+\textit{Check:} $4 + 6 = 10$ \checkmark
+}
+
+\begin{multicols}{2}
+\begin{enumerate}[label=\textbf{\arabic*.}, itemsep=0pt]
+
+  \item $x + 5 = 9$\\[3pt]
+  Undo: \sblank\\[3pt]
+  $x = $ \sblank\\[3pt]
+  \textbf{Check:} \underline{\hspace{3.2cm}}
+  \wspm
+
+  \item $x - 3 = 7$\\[3pt]
+  Undo: \sblank\\[3pt]
+  $x = $ \sblank\\[3pt]
+  \textbf{Check:} \underline{\hspace{3.2cm}}
+  \wspm
+
+  \item $2x = 14$\\[3pt]
+  Undo: \sblank\\[3pt]
+  $x = $ \sblank\\[3pt]
+  \textbf{Check:} \underline{\hspace{3.2cm}}
+  \wspm
+
+  \item $\dfrac{x}{4} = 3$\\[6pt]
+  Undo: \sblank\\[3pt]
+  $x = $ \sblank\\[3pt]
+  \textbf{Check:} \underline{\hspace{3.2cm}}
+  \wspm
+
+  \item $x + 8 = 2$\\[3pt]
+  Undo: \sblank\\[3pt]
+  $x = $ \sblank\\[3pt]
+  \textbf{Check:} \underline{\hspace{3.2cm}}
+  \wspm
+
+  \item $x - 6 = -1$\\[3pt]
+  Undo: \sblank\\[3pt]
+  $x = $ \sblank\\[3pt]
+  \textbf{Check:} \underline{\hspace{3.2cm}}
+  \wspm
+
+  \item $3x = -12$\\[3pt]
+  Undo: \sblank\\[3pt]
+  $x = $ \sblank\\[3pt]
+  \textbf{Check:} \underline{\hspace{3.2cm}}
+  \wspm
+
+  \item $\dfrac{x}{5} = -2$\\[6pt]
+  Undo: \sblank\\[3pt]
+  $x = $ \sblank\\[3pt]
+  \textbf{Check:} \underline{\hspace{3.2cm}}
+  \wspm
+
+  \item $-x = 9$ \quad\textit{(Hint: divide by $-1$)}\\[3pt]
+  $x = $ \sblank\\[3pt]
+  \textbf{Check:} \underline{\hspace{3.2cm}}
+  \wspm
+
+  \item $x + 4 = -3$\\[3pt]
+  Undo: \sblank\\[3pt]
+  $x = $ \sblank\\[3pt]
+  \textbf{Check:} \underline{\hspace{3.2cm}}
+  \wspm
+
+\end{enumerate}
+\end{multicols}
+
+\newpage
+
+%%── PART B: Two-Step Equations ──────────────────────────────────────────────
+\sectionbar{Part B \quad Two-Step Equations \hfill{\normalfont\normalsize(10 problems)}}
+
+\examplebox{%
+\textbf{Example:} Solve $3x - 5 = 7$\\[4pt]
+\textbf{Step \textcircled{1}} Add 5 to both sides (undo the subtraction):
+\[
+  3x - 5 + 5 = 7 + 5 \qquad\Longrightarrow\qquad 3x = 12
+\]
+\textbf{Step \textcircled{2}} Divide both sides by 3 (undo the multiplication):
+\[
+  \frac{3x}{3} = \frac{12}{3} \qquad\Longrightarrow\qquad \boxed{x = 4}
+\]
+\textit{Check:} $3(4)-5 = 12-5 = 7$ \checkmark
+}
+
+\begin{multicols}{2}
+\begin{enumerate}[label=\textbf{\arabic*.}, itemsep=0pt]
+
+  \item $2x + 3 = 11$\\[3pt]
+  Step \textcircled{1}: $2x = \sblank$\\[3pt]
+  Step \textcircled{2}: $x = \sblank$\\[3pt]
+  \textbf{Check:} \underline{\hspace{3.2cm}}
+  \wsp
+
+  \item $3x - 5 = 10$\\[3pt]
+  Step \textcircled{1}: $3x = \sblank$\\[3pt]
+  Step \textcircled{2}: $x = \sblank$\\[3pt]
+  \textbf{Check:} \underline{\hspace{3.2cm}}
+  \wsp
+
+  \item $4x + 1 = 17$\\[3pt]
+  Step \textcircled{1}: $4x = \sblank$\\[3pt]
+  Step \textcircled{2}: $x = \sblank$\\[3pt]
+  \textbf{Check:} \underline{\hspace{3.2cm}}
+  \wsp
+
+  \item $2x - 7 = 1$\\[3pt]
+  Step \textcircled{1}: $2x = \sblank$\\[3pt]
+  Step \textcircled{2}: $x = \sblank$\\[3pt]
+  \textbf{Check:} \underline{\hspace{3.2cm}}
+  \wsp
+
+  \item $5x + 2 = -8$\\[3pt]
+  Step \textcircled{1}: $5x = \sblank$\\[3pt]
+  Step \textcircled{2}: $x = \sblank$\\[3pt]
+  \textbf{Check:} \underline{\hspace{3.2cm}}
+  \wsp
+
+  \item $3x - 4 = -13$\\[3pt]
+  Step \textcircled{1}: $3x = \sblank$\\[3pt]
+  Step \textcircled{2}: $x = \sblank$\\[3pt]
+  \textbf{Check:} \underline{\hspace{3.2cm}}
+  \wsp
+
+  \item $\dfrac{x}{2} + 3 = 7$\\[5pt]
+  Step \textcircled{1}: $\dfrac{x}{2} = \sblank$\\[5pt]
+  Step \textcircled{2}: $x = \sblank$\\[3pt]
+  \textbf{Check:} \underline{\hspace{3.2cm}}
+  \wsp
+
+  \item $\dfrac{x}{3} - 2 = 4$\\[5pt]
+  Step \textcircled{1}: $\dfrac{x}{3} = \sblank$\\[5pt]
+  Step \textcircled{2}: $x = \sblank$\\[3pt]
+  \textbf{Check:} \underline{\hspace{3.2cm}}
+  \wsp
+
+  \item $2x + 9 = 3$\\[3pt]
+  Step \textcircled{1}: $2x = \sblank$\\[3pt]
+  Step \textcircled{2}: $x = \sblank$\\[3pt]
+  \textbf{Check:} \underline{\hspace{3.2cm}}
+  \wsp
+
+  \item $4x - 3 = 9$\\[3pt]
+  Step \textcircled{1}: $4x = \sblank$\\[3pt]
+  Step \textcircled{2}: $x = \sblank$\\[3pt]
+  \textbf{Check:} \underline{\hspace{3.2cm}}
+  \wsp
+
+\end{enumerate}
+\end{multicols}
+
+\newpage
+
+%%═══════════════════════════════════════════════════════════════════════════════
+%%  TOPIC 2 — ABSOLUTE VALUE EQUATIONS
+%%═══════════════════════════════════════════════════════════════════════════════
+\topictitle{Topic 2 \quad Solving Absolute Value Equations}
+
+\noindent\fbox{%
+  \begin{minipage}{\dimexpr\textwidth-2\fboxsep-2\fboxrule\relax}
+  \vspace{4pt}
+  \textbf{Key Fact:} $|x|$ = distance from $x$ to $0$. Distance is never negative.\\[5pt]
+  \begin{tabular}{@{}p{2.2cm} l@{}}
+  $c > 0$: & $|E| = c \;\Longrightarrow\; E = c \;\text{ or }\; E = -c$ \quad (two solutions)\\[3pt]
+  $c = 0$: & $|E| = 0 \;\Longrightarrow\; E = 0$ \quad (one solution)\\[3pt]
+  $c < 0$: & $|E| = c \;\Longrightarrow\;$ \textbf{No solution}
+  \end{tabular}\\[5pt]
+  \textbf{3 Steps:}\quad
+  \textcircled{1}~Isolate $|\cdot|$\quad
+  \textcircled{2}~Split: $E = c$ \;or\; $E = -c$\quad
+  \textcircled{3}~Solve each equation
+  \vspace{4pt}
+  \end{minipage}
+}
+
+\vspace{10pt}
+
+%%── Type 1: |x| = c ────────────────────────────────────────────────────────
+\examplebox{%
+\textbf{Type 1 Example} (Basic): Solve $|x| = 4$\\[4pt]
+Already isolated. Split: $x = 4$ \;or\; $x = -4$\\[2pt]
+\textit{Think of it on a number line: 4 units left of 0 and 4 units right of 0.}
+\[
+  \boxed{x = 4 \quad\text{or}\quad x = -4}
+\]
+}
+
+%%── Type 2: |x ± a| = c ────────────────────────────────────────────────────
+\examplebox{%
+\textbf{Type 2 Example} (Shift): Solve $|x - 3| = 5$\\[4pt]
+Already isolated. Split:\\[2pt]
+$x - 3 = 5 \;\Rightarrow\; x = 8$
+\qquad or \qquad
+$x - 3 = -5 \;\Rightarrow\; x = -2$
+\[
+  \boxed{x = 8 \quad\text{or}\quad x = -2}
+\]
+\textit{Check: $|8-3|=|5|=5$ \checkmark \quad $|-2-3|=|-5|=5$ \checkmark}
+}
+
+%%── Type 3: Isolate first ───────────────────────────────────────────────────
+\examplebox{%
+\textbf{Type 3 Example} (Isolate First): Solve $|x + 4| + 2 = 9$\\[4pt]
+\textbf{Step \textcircled{1}} Subtract 2 from both sides: $|x+4| = 7$\\[3pt]
+\textbf{Step \textcircled{2}} Split: $x+4=7 \;\Rightarrow\; x=3$
+\quad or \quad $x+4=-7 \;\Rightarrow\; x=-11$
+\[
+  \boxed{x = 3 \quad\text{or}\quad x = -11}
+\]
+}
+
+%%── Type 4: |ax + b| = c ───────────────────────────────────────────────────
+\examplebox{%
+\textbf{Type 4 Example} (Challenge): Solve $|2x - 1| = 7$\\[4pt]
+\textbf{Case 1:} $2x-1=7 \;\Rightarrow\; 2x=8 \;\Rightarrow\; x=4$\\[3pt]
+\textbf{Case 2:} $2x-1=-7 \;\Rightarrow\; 2x=-6 \;\Rightarrow\; x=-3$
+\[
+  \boxed{x = 4 \quad\text{or}\quad x = -3}
+\]
+}
+
+\vspace{6pt}
+\noindent\textit{Problems 1--3: Type 1 \quad Problems 4--6: Type 2 \quad
+Problems 7--8: Type 3 \quad Problems 9--10: Type 4}
+
+\vspace{8pt}
+\begin{multicols}{2}
+\begin{enumerate}[label=\textbf{\arabic*.}, itemsep=0pt]
+
+  \item $|x| = 5$\\[3pt]
+  Split: $x = \sblank$ \;or\; $x = \sblank$\\[3pt]
+  \textbf{Answer:} \blank
+  \wsp
+
+  \item $|x| = 0$\\[3pt]
+  \textit{(Hint: $c=0$, one answer)}\\[3pt]
+  \textbf{Answer:} \blank
+  \wsp
+
+  \item $|x| = -2$\\[3pt]
+  \textit{(Hint: can distance be negative?)}\\[3pt]
+  \textbf{Answer:} \blank
+  \wsp
+
+  \item $|x - 3| = 4$\\[3pt]
+  $x-3=\sblank$ or $x-3=\sblank$\\[3pt]
+  $x=\sblank$ \hspace{1cm} $x=\sblank$\\[3pt]
+  \textbf{Answer:} \blank
+  \wsp
+
+  \item $|x + 2| = 6$\\[3pt]
+  $x+2=\sblank$ or $x+2=\sblank$\\[3pt]
+  $x=\sblank$ \hspace{1cm} $x=\sblank$\\[3pt]
+  \textbf{Answer:} \blank
+  \wsp
+
+  \item $|x - 1| = 0$\\[3pt]
+  \textit{(One solution)}\\[3pt]
+  $x-1=\sblank \;\Rightarrow\; x=\sblank$\\[3pt]
+  \textbf{Answer:} \blank
+  \wsp
+
+  \item $|x + 4| + 2 = 9$\\[3pt]
+  Step \textcircled{1}: $|x+4|=\sblank$\\[3pt]
+  $x+4=\sblank$ or $x+4=\sblank$\\[3pt]
+  $x=\sblank$ \hspace{1cm} $x=\sblank$\\[3pt]
+  \textbf{Answer:} \blank
+  \wsp
+
+  \item $2|x| = 10$\\[3pt]
+  Step \textcircled{1}: $|x|=\sblank$\\[3pt]
+  Split: $x=\sblank$ or $x=\sblank$\\[3pt]
+  \textbf{Answer:} \blank
+  \wsp
+
+  \item $|2x - 3| = 7$\\[3pt]
+  Case 1: $2x-3=7 \;\Rightarrow\; x=\sblank$\\[3pt]
+  Case 2: $2x-3=-7 \;\Rightarrow\; x=\sblank$\\[3pt]
+  \textbf{Answer:} \blank
+  \wsp
+
+  \item $|3x + 2| = 11$\\[3pt]
+  Case 1: $3x+2=11 \;\Rightarrow\; x=\sblank$\\[3pt]
+  Case 2: $3x+2=-11 \;\Rightarrow\; x=\sblank$\\[3pt]
+  \textbf{Answer:} \blank
+  \wsp
+
+\end{enumerate}
+\end{multicols}
+
+\newpage
+
+%%═══════════════════════════════════════════════════════════════════════════════
+%%  TOPIC 3 — INEQUALITIES
+%%═══════════════════════════════════════════════════════════════════════════════
+\topictitle{Topic 3 \quad Solving Inequalities}
+
+\noindent\fbox{%
+  \begin{minipage}{\dimexpr\textwidth-2\fboxsep-2\fboxrule\relax}
+  \vspace{4pt}
+  \textbf{Inequality Symbols:}
+  \quad $<$ less than \quad
+  $>$ greater than \quad
+  $\leq$ less than or equal to \quad
+  $\geq$ greater than or equal to\\[5pt]
+  \textbf{Rules:} Same as equations EXCEPT ---\\
+  \hspace*{1cm}$\bullet$ Multiply or divide by a \textbf{positive} number: symbol stays the same.\\
+  \hspace*{1cm}$\bullet$ Multiply or divide by a \textbf{negative} number: \textbf{FLIP the symbol!}\\[4pt]
+  \textit{Example}: $-2x > 6 \;\div(-2)\;\Rightarrow\; x < -3$ \quad (symbol flipped from $>$ to $<$)
+  \vspace{4pt}
+  \end{minipage}
+}
+
+\vspace{12pt}
+
+%%── Section 3A: Adding ──────────────────────────────────────────────────────
+\sectionbar{Section 3A \quad Solving by Adding \hfill{\normalfont\normalsize(8 problems)}}
+
+\examplebox{%
+\textbf{Example:} Solve $x - 4 < 8$\\[4pt]
+Add 4 to both sides to undo the subtraction:
+\[
+  x - 4 + 4 < 8 + 4 \qquad\Longrightarrow\qquad \boxed{x < 12}
+\]
+\textit{The symbol does NOT flip because we are adding (not multiplying/dividing by a negative).}
+}
+
+\begin{multicols}{2}
+\begin{enumerate}[label=\textbf{\arabic*.}, itemsep=0pt]
+
+  \item $x - 2 < 5$\\[3pt]
+  Add \sblank\ to both sides:\\[3pt]
+  $x$ \underline{\hspace{0.4cm}} \sblank
+  \wsp
+
+  \item $x - 4 > 1$\\[3pt]
+  Add \sblank\ to both sides:\\[3pt]
+  $x$ \underline{\hspace{0.4cm}} \sblank
+  \wsp
+
+  \item $x - 1 \leq 6$\\[3pt]
+  Add \sblank\ to both sides:\\[3pt]
+  $x$ \underline{\hspace{0.4cm}} \sblank
+  \wsp
+
+  \item $x - 3 \geq -2$\\[3pt]
+  Add \sblank\ to both sides:\\[3pt]
+  $x$ \underline{\hspace{0.4cm}} \sblank
+  \wsp
+
+  \item $x - 5 < -1$\\[3pt]
+  Add \sblank\ to both sides:\\[3pt]
+  $x$ \underline{\hspace{0.4cm}} \sblank
+  \wsp
+
+  \item $x - 7 > 0$\\[3pt]
+  Add \sblank\ to both sides:\\[3pt]
+  $x$ \underline{\hspace{0.4cm}} \sblank
+  \wsp
+
+  \item $x - 2 \leq -4$\\[3pt]
+  Add \sblank\ to both sides:\\[3pt]
+  $x$ \underline{\hspace{0.4cm}} \sblank
+  \wsp
+
+  \item $x - 6 \geq 3$\\[3pt]
+  Add \sblank\ to both sides:\\[3pt]
+  $x$ \underline{\hspace{0.4cm}} \sblank
+  \wsp
+
+\end{enumerate}
+\end{multicols}
+
+\vspace{10pt}
+
+%%── Section 3B: Subtracting ──────────────────────────────────────────────────
+\sectionbar{Section 3B \quad Solving by Subtracting \hfill{\normalfont\normalsize(8 problems)}}
+
+\examplebox{%
+\textbf{Example:} Solve $x + 5 > 9$\\[4pt]
+Subtract 5 from both sides:
+\[
+  x + 5 - 5 > 9 - 5 \qquad\Longrightarrow\qquad \boxed{x > 4}
+\]
+\textit{Symbol stays the same (subtracting a positive).}
+}
+
+\begin{multicols}{2}
+\begin{enumerate}[label=\textbf{\arabic*.}, itemsep=0pt]
+
+  \item $x + 3 > 7$\\[3pt]
+  Subtract \sblank\ from both sides:\\[3pt]
+  $x$ \underline{\hspace{0.4cm}} \sblank
+  \wsp
+
+  \item $x + 5 < 2$\\[3pt]
+  Subtract \sblank\ from both sides:\\[3pt]
+  $x$ \underline{\hspace{0.4cm}} \sblank
+  \wsp
+
+  \item $x + 1 \geq 8$\\[3pt]
+  Subtract \sblank\ from both sides:\\[3pt]
+  $x$ \underline{\hspace{0.4cm}} \sblank
+  \wsp
+
+  \item $x + 4 \leq -1$\\[3pt]
+  Subtract \sblank\ from both sides:\\[3pt]
+  $x$ \underline{\hspace{0.4cm}} \sblank
+  \wsp
+
+  \item $x + 6 > 0$\\[3pt]
+  Subtract \sblank\ from both sides:\\[3pt]
+  $x$ \underline{\hspace{0.4cm}} \sblank
+  \wsp
+
+  \item $x + 2 < -3$\\[3pt]
+  Subtract \sblank\ from both sides:\\[3pt]
+  $x$ \underline{\hspace{0.4cm}} \sblank
+  \wsp
+
+  \item $x + 8 \geq 5$\\[3pt]
+  Subtract \sblank\ from both sides:\\[3pt]
+  $x$ \underline{\hspace{0.4cm}} \sblank
+  \wsp
+
+  \item $x + 3 \leq -6$\\[3pt]
+  Subtract \sblank\ from both sides:\\[3pt]
+  $x$ \underline{\hspace{0.4cm}} \sblank
+  \wsp
+
+\end{enumerate}
+\end{multicols}
+
+\newpage
+
+%%── Section 3C: Multiplying ──────────────────────────────────────────────────
+\sectionbar{Section 3C \quad Solving by Multiplying \hfill{\normalfont\normalsize(8 problems)}}
+
+\examplebox{%
+\textbf{Example A} (positive): Solve $\dfrac{x}{3} < 4$\\[4pt]
+Multiply both sides by $3$:
+\[
+  3\cdot\frac{x}{3} < 3 \cdot 4 \qquad\Longrightarrow\qquad \boxed{x < 12}
+  \quad\textit{(symbol stays)}
+\]
+\textbf{Example B} (negative --- flip!): Solve $\dfrac{x}{-2} < 3$\\[4pt]
+Multiply both sides by $-2$ and FLIP the symbol:
+\[
+  x > -6 \quad\textit{(symbol flipped from $<$ to $>$)}
+\]
+}
+
+\begin{multicols}{2}
+\begin{enumerate}[label=\textbf{\arabic*.}, itemsep=0pt]
+
+  \item $\dfrac{x}{2} < 5$\\[5pt]
+  Multiply by \sblank:\\[3pt]
+  $x$ \underline{\hspace{0.4cm}} \sblank \quad \textit{(flip? Y/N)}
+  \wsp
+
+  \item $\dfrac{x}{3} > 4$\\[5pt]
+  Multiply by \sblank:\\[3pt]
+  $x$ \underline{\hspace{0.4cm}} \sblank \quad \textit{(flip? Y/N)}
+  \wsp
+
+  \item $\dfrac{x}{4} \leq -2$\\[5pt]
+  Multiply by \sblank:\\[3pt]
+  $x$ \underline{\hspace{0.4cm}} \sblank \quad \textit{(flip? Y/N)}
+  \wsp
+
+  \item $\dfrac{x}{5} \geq 3$\\[5pt]
+  Multiply by \sblank:\\[3pt]
+  $x$ \underline{\hspace{0.4cm}} \sblank \quad \textit{(flip? Y/N)}
+  \wsp
+
+  \item $\dfrac{x}{2} > -4$\\[5pt]
+  Multiply by \sblank:\\[3pt]
+  $x$ \underline{\hspace{0.4cm}} \sblank \quad \textit{(flip? Y/N)}
+  \wsp
+
+  \item $\dfrac{x}{-2} < 3$\\[5pt]
+  Multiply by $-2$ \textbf{(FLIP!)}:\\[3pt]
+  $x$ \underline{\hspace{0.4cm}} \sblank
+  \wsp
+
+  \item $\dfrac{x}{-3} \geq 2$\\[5pt]
+  Multiply by $-3$ \textbf{(FLIP!)}:\\[3pt]
+  $x$ \underline{\hspace{0.4cm}} \sblank
+  \wsp
+
+  \item $\dfrac{x}{4} < -1$\\[5pt]
+  Multiply by \sblank:\\[3pt]
+  $x$ \underline{\hspace{0.4cm}} \sblank \quad \textit{(flip? Y/N)}
+  \wsp
+
+\end{enumerate}
+\end{multicols}
+
+\vspace{10pt}
+
+%%── Section 3D: Dividing ──────────────────────────────────────────────────────
+\sectionbar{Section 3D \quad Solving by Dividing \hfill{\normalfont\normalsize(8 problems)}}
+
+\examplebox{%
+\textbf{Example A} (positive): Solve $3x > 12$\\[4pt]
+Divide both sides by $3$:
+\[
+  \frac{3x}{3} > \frac{12}{3} \qquad\Longrightarrow\qquad \boxed{x > 4}
+  \quad\textit{(symbol stays)}
+\]
+\textbf{Example B} (negative --- flip!): Solve $-4x \leq 8$\\[4pt]
+Divide both sides by $-4$ and FLIP the symbol:
+\[
+  x \geq -2 \quad\textit{(symbol flipped from $\leq$ to $\geq$)}
+\]
+}
+
+\begin{multicols}{2}
+\begin{enumerate}[label=\textbf{\arabic*.}, itemsep=0pt]
+
+  \item $2x > 8$\\[3pt]
+  Divide by \sblank:\\[3pt]
+  $x$ \underline{\hspace{0.4cm}} \sblank \quad \textit{(flip? Y/N)}
+  \wsp
+
+  \item $3x < 15$\\[3pt]
+  Divide by \sblank:\\[3pt]
+  $x$ \underline{\hspace{0.4cm}} \sblank \quad \textit{(flip? Y/N)}
+  \wsp
+
+  \item $4x \geq -12$\\[3pt]
+  Divide by \sblank:\\[3pt]
+  $x$ \underline{\hspace{0.4cm}} \sblank \quad \textit{(flip? Y/N)}
+  \wsp
+
+  \item $5x \leq 20$\\[3pt]
+  Divide by \sblank:\\[3pt]
+  $x$ \underline{\hspace{0.4cm}} \sblank \quad \textit{(flip? Y/N)}
+  \wsp
+
+  \item $-2x > 6$\\[3pt]
+  Divide by $-2$ \textbf{(FLIP!)}:\\[3pt]
+  $x$ \underline{\hspace{0.4cm}} \sblank
+  \wsp
+
+  \item $-3x < 9$\\[3pt]
+  Divide by $-3$ \textbf{(FLIP!)}:\\[3pt]
+  $x$ \underline{\hspace{0.4cm}} \sblank
+  \wsp
+
+  \item $-4x \geq 8$\\[3pt]
+  Divide by $-4$ \textbf{(FLIP!)}:\\[3pt]
+  $x$ \underline{\hspace{0.4cm}} \sblank
+  \wsp
+
+  \item $-5x \leq -10$\\[3pt]
+  Divide by $-5$ \textbf{(FLIP!)}:\\[3pt]
+  $x$ \underline{\hspace{0.4cm}} \sblank
+  \wsp
+
+\end{enumerate}
+\end{multicols}
+
+\newpage
+
+%%═══════════════════════════════════════════════════════════════════════════════
+%%  ANSWER KEY
+%%═══════════════════════════════════════════════════════════════════════════════
+\begin{center}
+  {\large\bfseries Answer Key \quad (Teacher Copy)}\\[4pt]
+  \rule{\textwidth}{1.2pt}
+\end{center}
+
+\vspace{8pt}
+
+\noindent\textbf{Topic 1A --- One-Step Equations}
+\begin{multicols}{2}
+\begin{enumerate}[label=\textbf{\arabic*.}, itemsep=3pt]
+  \item $x + 5 = 9$ \hfill $x = 4$
+  \item $x - 3 = 7$ \hfill $x = 10$
+  \item $2x = 14$ \hfill $x = 7$
+  \item $\frac{x}{4} = 3$ \hfill $x = 12$
+  \item $x + 8 = 2$ \hfill $x = -6$
+  \item $x - 6 = -1$ \hfill $x = 5$
+  \item $3x = -12$ \hfill $x = -4$
+  \item $\frac{x}{5} = -2$ \hfill $x = -10$
+  \item $-x = 9$ \hfill $x = -9$
+  \item $x + 4 = -3$ \hfill $x = -7$
+\end{enumerate}
+\end{multicols}
+
+\vspace{8pt}
+\noindent\textbf{Topic 1B --- Two-Step Equations}
+\begin{multicols}{2}
+\begin{enumerate}[label=\textbf{\arabic*.}, itemsep=3pt]
+  \item $2x + 3 = 11$ \hfill $x = 4$
+  \item $3x - 5 = 10$ \hfill $x = 5$
+  \item $4x + 1 = 17$ \hfill $x = 4$
+  \item $2x - 7 = 1$ \hfill $x = 4$
+  \item $5x + 2 = -8$ \hfill $x = -2$
+  \item $3x - 4 = -13$ \hfill $x = -3$
+  \item $\frac{x}{2} + 3 = 7$ \hfill $x = 8$
+  \item $\frac{x}{3} - 2 = 4$ \hfill $x = 18$
+  \item $2x + 9 = 3$ \hfill $x = -3$
+  \item $4x - 3 = 9$ \hfill $x = 3$
+\end{enumerate}
+\end{multicols}
+
+\vspace{8pt}
+\noindent\textbf{Topic 2 --- Absolute Value Equations}
+\begin{multicols}{2}
+\begin{enumerate}[label=\textbf{\arabic*.}, itemsep=3pt]
+  \item $|x|=5$ \hfill $x=5$ or $x=-5$
+  \item $|x|=0$ \hfill $x=0$
+  \item $|x|=-2$ \hfill No solution
+  \item $|x-3|=4$ \hfill $x=7$ or $x=-1$
+  \item $|x+2|=6$ \hfill $x=4$ or $x=-8$
+  \item $|x-1|=0$ \hfill $x=1$
+  \item $|x+4|+2=9$ \hfill $x=3$ or $x=-11$
+  \item $2|x|=10$ \hfill $x=5$ or $x=-5$
+  \item $|2x-3|=7$ \hfill $x=5$ or $x=-2$
+  \item $|3x+2|=11$ \hfill $x=3$ or $x=-\frac{13}{3}$
+\end{enumerate}
+\end{multicols}
+
+\vspace{8pt}
+\noindent\textbf{Topic 3A --- Inequalities: Adding}
+\begin{multicols}{2}
+\begin{enumerate}[label=\textbf{\arabic*.}, itemsep=3pt]
+  \item $x - 2 < 5$ \hfill $x < 7$
+  \item $x - 4 > 1$ \hfill $x > 5$
+  \item $x - 1 \leq 6$ \hfill $x \leq 7$
+  \item $x - 3 \geq -2$ \hfill $x \geq 1$
+  \item $x - 5 < -1$ \hfill $x < 4$
+  \item $x - 7 > 0$ \hfill $x > 7$
+  \item $x - 2 \leq -4$ \hfill $x \leq -2$
+  \item $x - 6 \geq 3$ \hfill $x \geq 9$
+\end{enumerate}
+\end{multicols}
+
+\vspace{8pt}
+\noindent\textbf{Topic 3B --- Inequalities: Subtracting}
+\begin{multicols}{2}
+\begin{enumerate}[label=\textbf{\arabic*.}, itemsep=3pt]
+  \item $x + 3 > 7$ \hfill $x > 4$
+  \item $x + 5 < 2$ \hfill $x < -3$
+  \item $x + 1 \geq 8$ \hfill $x \geq 7$
+  \item $x + 4 \leq -1$ \hfill $x \leq -5$
+  \item $x + 6 > 0$ \hfill $x > -6$
+  \item $x + 2 < -3$ \hfill $x < -5$
+  \item $x + 8 \geq 5$ \hfill $x \geq -3$
+  \item $x + 3 \leq -6$ \hfill $x \leq -9$
+\end{enumerate}
+\end{multicols}
+
+\vspace{8pt}
+\noindent\textbf{Topic 3C --- Inequalities: Multiplying}
+\begin{multicols}{2}
+\begin{enumerate}[label=\textbf{\arabic*.}, itemsep=3pt]
+  \item $\frac{x}{2}<5$ \hfill $x<10$
+  \item $\frac{x}{3}>4$ \hfill $x>12$
+  \item $\frac{x}{4}\leq -2$ \hfill $x\leq -8$
+  \item $\frac{x}{5}\geq 3$ \hfill $x\geq 15$
+  \item $\frac{x}{2}>-4$ \hfill $x>-8$
+  \item $\frac{x}{-2}<3$ \hfill $x>-6$ \;(\textit{flipped})
+  \item $\frac{x}{-3}\geq 2$ \hfill $x\leq -6$ \;(\textit{flipped})
+  \item $\frac{x}{4}<-1$ \hfill $x<-4$
+\end{enumerate}
+\end{multicols}
+
+\vspace{8pt}
+\noindent\textbf{Topic 3D --- Inequalities: Dividing}
+\begin{multicols}{2}
+\begin{enumerate}[label=\textbf{\arabic*.}, itemsep=3pt]
+  \item $2x>8$ \hfill $x>4$
+  \item $3x<15$ \hfill $x<5$
+  \item $4x\geq -12$ \hfill $x\geq -3$
+  \item $5x\leq 20$ \hfill $x\leq 4$
+  \item $-2x>6$ \hfill $x<-3$ \;(\textit{flipped})
+  \item $-3x<9$ \hfill $x>-3$ \;(\textit{flipped})
+  \item $-4x\geq 8$ \hfill $x\leq -2$ \;(\textit{flipped})
+  \item $-5x\leq -10$ \hfill $x\geq 2$ \;(\textit{flipped})
+\end{enumerate}
+\end{multicols}
+
+\end{document}

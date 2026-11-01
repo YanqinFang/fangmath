@@ -1,0 +1,462 @@
+\documentclass[11pt]{article}
+\usepackage[letterpaper, margin=0.9in]{geometry}
+\usepackage{amsmath, amssymb, mathtools}
+\usepackage{enumitem}
+\usepackage{tasks}
+\usepackage{tcolorbox}
+\usepackage{xcolor}
+\usepackage{titlesec}
+\usepackage{fancyhdr}
+
+\tcbuselibrary{skins}
+
+\definecolor{sectionblue}{HTML}{1F3864}
+\definecolor{examplebg}{HTML}{FFF6DA}
+\definecolor{exampleframe}{HTML}{C9A227}
+\definecolor{rulegray}{HTML}{999999}
+
+\titleformat{\section}{\large\bfseries\color{sectionblue}}{Section \thesection:}{0.5em}{}
+\titlespacing*{\section}{0pt}{18pt}{8pt}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small Exponential Functions Worksheet}
+\fancyhead[R]{\small Name: \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+
+\newtcolorbox{example}[1][]{%
+  colback=examplebg, colframe=exampleframe, boxrule=0.6pt,
+  arc=2pt, left=6pt, right=6pt, top=4pt, bottom=4pt,
+  title={\textbf{Worked Example}},
+  fonttitle=\bfseries\color{black},
+  coltitle=black,
+  #1
+}
+
+\newcommand{\workline}{\par\vspace{6pt}\textcolor{rulegray}{\hrule height 0.4pt}\vspace{18pt}}
+
+\settasks{label=\Alph*., label-width=1.6em, item-indent=0pt, column-sep=1em}
+
+\begin{document}
+
+\begin{center}
+  {\LARGE\bfseries Transformations, Domain \& Range, and Growth/Decay of Exponential Functions}\\[4pt]
+  {\itshape\color{gray} Exponential Functions Practice Worksheet}
+\end{center}
+
+\vspace{6pt}
+\noindent
+Name: \makebox[2.3in]{\hrulefill} \hfill
+Date: \makebox[1.4in]{\hrulefill} \hfill
+Class: \makebox[1.2in]{\hrulefill}
+\vspace{4pt}
+\hrule
+
+%=================================================================
+\section{Transformations of Exponential Functions}
+\textit{Directions: Circle the letter of the best answer.}
+
+\begin{example}
+Describe how $g(x) = 2^{x+1} - 5$ is transformed from the parent function $f(x) = 2^x$, and give the equation of its horizontal asymptote.
+
+\textbf{Solution:} Compare $g(x) = 2^{x+1} - 5$ to the form $f(x-h) + k$ with $h = -1$ and $k = -5$.
+\begin{itemize}[nosep]
+  \item The $+1$ inside the exponent shifts the graph \textbf{left 1 unit}.
+  \item The $-5$ outside shifts the graph \textbf{down 5 units}.
+  \item Since $f(x)=2^x$ has horizontal asymptote $y=0$, shifting down 5 gives asymptote $\boxed{y=-5}$.
+\end{itemize}
+\end{example}
+
+\begin{enumerate}[leftmargin=1.5em, itemsep=10pt]
+
+\item Compared to the parent function $f(x) = 2^x$, how is $g(x) = 2^x - 3$ transformed?
+\begin{tasks}(2)
+  \task Shift left 3 units
+  \task Shift right 3 units
+  \task Shift up 3 units
+  \task Shift down 3 units
+\end{tasks}
+
+\item Compared to $f(x) = 3^x$, how is $g(x) = 3^{x+4}$ transformed?
+\begin{tasks}(2)
+  \task Shift left 4 units
+  \task Shift right 4 units
+  \task Shift up 4 units
+  \task Shift down 4 units
+\end{tasks}
+
+\item Compared to $f(x) = 2^x$, how is $g(x) = -2^x$ transformed?
+\begin{tasks}(2)
+  \task Reflection over the $x$-axis
+  \task Reflection over the $y$-axis
+  \task Vertical stretch
+  \task Horizontal shift
+\end{tasks}
+
+\item Compared to $f(x) = 5^x$, how is $g(x) = 5^{-x}$ transformed?
+\begin{tasks}(2)
+  \task Reflection over the $x$-axis
+  \task Reflection over the $y$-axis
+  \task Vertical compression
+  \task Horizontal stretch
+\end{tasks}
+
+\item Compared to $f(x) = 2^x$, how is $g(x) = 4 \cdot 2^x$ transformed?
+\begin{tasks}(2)
+  \task Vertical stretch by a factor of 4
+  \task Horizontal stretch by a factor of 4
+  \task Vertical shift up 4
+  \task Horizontal shift left 4
+\end{tasks}
+
+\item Compared to $f(x) = 5^x$, how is $g(x) = \tfrac{1}{3} \cdot 5^x$ transformed?
+\begin{tasks}(2)
+  \task Vertical stretch
+  \task Vertical compression
+  \task Horizontal compression
+  \task Reflection over the $x$-axis
+\end{tasks}
+
+\item The parent function $f(x) = 2^x$ is shifted right 5 units and up 2 units. Which equation represents this transformation?
+\begin{tasks}(2)
+  \task $g(x) = 2^{x-5} + 2$
+  \task $g(x) = 2^{x+5} + 2$
+  \task $g(x) = 2^{x-5} - 2$
+  \task $g(x) = 2^{x+2} - 5$
+\end{tasks}
+
+\item The parent function $f(x) = 3^x$ is reflected over the $x$-axis and shifted down 1 unit. Which equation represents this transformation?
+\begin{tasks}(2)
+  \task $g(x) = -3^x - 1$
+  \task $g(x) = -3^x + 1$
+  \task $g(x) = 3^{-x} - 1$
+  \task $g(x) = 3^x - 1$
+\end{tasks}
+
+\item What is the equation of the horizontal asymptote of $g(x) = 2^{x-1} + 3$?
+\begin{tasks}(2)
+  \task $y = 1$
+  \task $y = -1$
+  \task $y = 3$
+  \task $y = -3$
+\end{tasks}
+
+\item Which function represents $f(x) = b^x$ shifted down 4 units, with no other changes?
+\begin{tasks}(2)
+  \task $g(x) = b^x - 4$
+  \task $g(x) = b^{x-4}$
+  \task $g(x) = b^x + 4$
+  \task $g(x) = -b^x - 4$
+\end{tasks}
+
+\end{enumerate}
+
+\newpage
+%=================================================================
+\section{Domain and Range of Transformed Exponential Functions}
+\textit{Directions: Circle the letter of the best answer.}
+
+\begin{example}
+Find the domain and range of $g(x) = 3^{x-2} + 4$.
+
+\textbf{Solution:} Exponential functions $b^{x-h}$ are defined for every real input, and transformations (shifts, stretches, reflections) never restrict that. So the \textbf{domain is all real numbers}.
+
+For the range, look at $a$ and $k$ in $a\cdot b^{x-h}+k$: here $a = 1 > 0$ and $k = 4$. Since $b^{x-2} > 0$ for all $x$, we get $g(x) = 3^{x-2} + 4 > 4$. So the \textbf{range is $y > 4$}.
+\end{example}
+
+\begin{enumerate}[leftmargin=1.5em, itemsep=10pt]
+
+\item What is the domain of $f(x) = 2^x$?
+\begin{tasks}(2)
+  \task $x > 0$
+  \task All real numbers
+  \task $x \neq 0$
+  \task $x \geq 0$
+\end{tasks}
+
+\item What is the range of $f(x) = 2^x$?
+\begin{tasks}(2)
+  \task $y > 0$
+  \task All real numbers
+  \task $y \geq 0$
+  \task $y < 0$
+\end{tasks}
+
+\item What is the range of $g(x) = 2^x + 5$?
+\begin{tasks}(2)
+  \task $y > 5$
+  \task $y > 0$
+  \task $y \geq 5$
+  \task All real numbers
+\end{tasks}
+
+\item What is the range of $g(x) = 2^x - 3$?
+\begin{tasks}(2)
+  \task $y > -3$
+  \task $y < -3$
+  \task $y \geq -3$
+  \task All real numbers
+\end{tasks}
+
+\item What is the range of $g(x) = -2^x$?
+\begin{tasks}(2)
+  \task $y > 0$
+  \task $y < 0$
+  \task $y \geq 0$
+  \task All real numbers
+\end{tasks}
+
+\item What is the range of $g(x) = -3^x + 4$?
+\begin{tasks}(2)
+  \task $y < 4$
+  \task $y > 4$
+  \task $y \leq 4$
+  \task $y \geq 4$
+\end{tasks}
+
+\item What is the domain of $g(x) = 2^{x-3}$?
+\begin{tasks}(2)
+  \task $x > 3$
+  \task All real numbers
+  \task $x \geq 3$
+  \task $x \neq 3$
+\end{tasks}
+
+\item What is the range of $g(x) = 5^{x+2} - 1$?
+\begin{tasks}(2)
+  \task $y > -1$
+  \task $y < -1$
+  \task $y \geq -1$
+  \task All real numbers
+\end{tasks}
+
+\item For any function of the form $g(x) = a \cdot b^{x-h} + k$ (where $b>0$, $b \neq 1$, $a \neq 0$), what is the domain?
+\begin{tasks}(2)
+  \task All real numbers
+  \task $x > h$
+  \task $x \neq h$
+  \task It depends on the value of $k$
+\end{tasks}
+
+\item What is the range of $g(x) = -\left(\tfrac{1}{2}\right)^x - 6$?
+\begin{tasks}(2)
+  \task $y < -6$
+  \task $y > -6$
+  \task $y \leq -6$
+  \task $y \geq -6$
+\end{tasks}
+
+\end{enumerate}
+
+\newpage
+%=================================================================
+\section{Exponential Growth and Decay}
+\textit{Directions: Circle the letter of the best answer. Recall: for $y = a(1+r)^t$, the quantity $(1+r)$ is the \textbf{growth factor} and $r$ is the \textbf{rate of growth}; for $y = a(1-r)^t$, the quantity $(1-r)$ is the \textbf{decay factor} and $r$ is the \textbf{rate of decay}.}
+
+\begin{example}
+A town's population is modeled by $P(t) = 12{,}000(1.045)^t$, where $t$ is measured in years. Identify the growth factor and the rate of growth.
+
+\textbf{Solution:} Match $P(t) = 12{,}000(1.045)^t$ to the form $a(1+r)^t$.
+The base is $1.045$, so the \textbf{growth factor is $1.045$}.
+Since $1 + r = 1.045$, we get $r = 0.045$, so the \textbf{rate of growth is $4.5\%$}.
+\end{example}
+
+\begin{enumerate}[leftmargin=1.5em, itemsep=10pt]
+
+\item The function $y = 500(1.08)^t$ models growth. What is the growth factor?
+\begin{tasks}(2)
+  \task $1.08$
+  \task $0.08$
+  \task $8$
+  \task $500$
+\end{tasks}
+
+\item The function $y = 500(1.08)^t$ models growth. What is the rate of growth?
+\begin{tasks}(2)
+  \task $108\%$
+  \task $8\%$
+  \task $1.08\%$
+  \task $0.8\%$
+\end{tasks}
+
+\item The function $y = 200(0.95)^t$ models decay. What is the decay factor?
+\begin{tasks}(2)
+  \task $0.95$
+  \task $0.05$
+  \task $5\%$
+  \task $95$
+\end{tasks}
+
+\item The function $y = 200(0.95)^t$ models decay. What is the rate of decay?
+\begin{tasks}(2)
+  \task $95\%$
+  \task $5\%$
+  \task $0.95\%$
+  \task $0.05\%$
+\end{tasks}
+
+\item A population grows at a rate of $3\%$ per year. What is the growth factor?
+\begin{tasks}(2)
+  \task $1.03$
+  \task $0.03$
+  \task $3$
+  \task $0.97$
+\end{tasks}
+
+\item A car depreciates (decreases in value) by $12\%$ per year. What is the decay factor?
+\begin{tasks}(2)
+  \task $1.12$
+  \task $0.12$
+  \task $0.88$
+  \task $12$
+\end{tasks}
+
+\item The function $y = 1000(1.045)^t$ models growth. What is the rate of growth?
+\begin{tasks}(2)
+  \task $1.045\%$
+  \task $4.5\%$
+  \task $45\%$
+  \task $104.5\%$
+\end{tasks}
+
+\item The function $y = 800(0.82)^t$ models decay. What is the rate of decay?
+\begin{tasks}(2)
+  \task $82\%$
+  \task $8.2\%$
+  \task $18\%$
+  \task $0.18\%$
+\end{tasks}
+
+\item If the growth factor of an exponential model is $1.25$, what is the rate of growth?
+\begin{tasks}(2)
+  \task $125\%$
+  \task $1.25\%$
+  \task $25\%$
+  \task $2.5\%$
+\end{tasks}
+
+\item If the decay factor of an exponential model is $0.6$, what is the rate of decay?
+\begin{tasks}(2)
+  \task $60\%$
+  \task $40\%$
+  \task $6\%$
+  \task $4\%$
+\end{tasks}
+
+\end{enumerate}
+
+\newpage
+%=================================================================
+\section{Solving Exponential Equations}
+\textit{Directions: Solve each equation for $x$. Show your work in the space provided.}
+
+\begin{example}
+Solve for $x$: \quad $4^{x+1} = 32$.
+
+\textbf{Solution:} Rewrite both sides with base $2$: $4 = 2^2$ and $32 = 2^5$.
+\[
+4^{x+1} = \left(2^2\right)^{x+1} = 2^{2x+2}, \qquad 32 = 2^5
+\]
+Since the bases match, set the exponents equal:
+\[
+2x + 2 = 5 \;\;\Longrightarrow\;\; 2x = 3 \;\;\Longrightarrow\;\; x = \tfrac{3}{2}
+\]
+\end{example}
+
+\begin{enumerate}[leftmargin=1.5em, itemsep=2pt]
+
+\item Solve for $x$: \quad $2^x = 32$
+\workline
+
+\item Solve for $x$: \quad $3^{x+1} = 81$
+\workline
+
+\item Solve for $x$: \quad $5^{2x} = 125$
+\workline
+
+\item Solve for $x$: \quad $4^x = 64$
+\workline
+
+\item Solve for $x$: \quad $2^{x-3} = 16$
+\workline
+
+\item Solve for $x$: \quad $9^x = 27$
+\workline
+
+\item Solve for $x$: \quad $7^{3x} = 7^{x+8}$
+\workline
+
+\item Solve for $x$: \quad $2^{x+2} = 2^{3x-4}$
+\workline
+
+\item Solve for $x$: \quad $8^x = 16$
+\workline
+
+\item Solve for $x$: \quad $3^{2x-1} = 27^{x-2}$
+\workline
+
+\end{enumerate}
+
+\newpage
+%=================================================================
+\section*{Answer Key}
+\addcontentsline{toc}{section}{Answer Key}
+
+\subsection*{Section 1: Transformations of Exponential Functions}
+\begin{enumerate}[leftmargin=1.5em, itemsep=6pt]
+  \item \textbf{D.} Subtracting $3$ outside the exponent shifts the graph down $3$ units.
+  \item \textbf{A.} Adding $4$ inside the exponent ($x+4$) shifts the graph left $4$ units.
+  \item \textbf{A.} The negative sign in front of $2^x$ flips the graph over the $x$-axis.
+  \item \textbf{B.} Replacing $x$ with $-x$ flips the graph over the $y$-axis.
+  \item \textbf{A.} Multiplying the whole function by $4$ stretches it vertically by a factor of $4$.
+  \item \textbf{B.} Multiplying by $\tfrac13$ (a factor between $0$ and $1$) compresses the graph vertically.
+  \item \textbf{A.} A shift right $5$ replaces $x$ with $x-5$; a shift up $2$ adds $2$: $g(x)=2^{x-5}+2$.
+  \item \textbf{A.} A reflection over the $x$-axis negates the function; a shift down $1$ subtracts $1$: $g(x)=-3^x-1$.
+  \item \textbf{C.} The parent asymptote $y=0$ shifts up $3$ units (from the $+3$), giving $y=3$. (The $x-1$ only shifts horizontally and does not affect the asymptote.)
+  \item \textbf{A.} A vertical shift down $4$ only changes the outside constant: $g(x)=b^x-4$.
+\end{enumerate}
+
+\subsection*{Section 2: Domain and Range of Transformed Exponential Functions}
+\begin{enumerate}[leftmargin=1.5em, itemsep=6pt]
+  \item \textbf{B.} Exponential functions accept any real input, so the domain is all real numbers.
+  \item \textbf{A.} $2^x$ is always positive and gets arbitrarily close to (but never equals) $0$, so range is $y>0$.
+  \item \textbf{A.} Shifting $2^x$ ($y>0$) up $5$ gives $y>5$.
+  \item \textbf{A.} Shifting $2^x$ ($y>0$) down $3$ gives $y>-3$.
+  \item \textbf{B.} Reflecting $2^x$ ($y>0$) over the $x$-axis flips the inequality: $y<0$.
+  \item \textbf{A.} Reflecting $3^x$ gives $y<0$; shifting up $4$ gives $y<4$.
+  \item \textbf{B.} Horizontal shifts never restrict the domain; it remains all real numbers.
+  \item \textbf{A.} $5^{x+2}>0$ for all $x$; subtracting $1$ gives $y>-1$.
+  \item \textbf{A.} No transformation (shift, stretch, or reflection) of $b^x$ restricts which $x$-values are allowed.
+  \item \textbf{A.} $\left(\tfrac12\right)^x>0$, so $-\left(\tfrac12\right)^x<0$; subtracting $6$ gives $y<-6$.
+\end{enumerate}
+
+\subsection*{Section 3: Exponential Growth and Decay}
+\begin{enumerate}[leftmargin=1.5em, itemsep=6pt]
+  \item \textbf{A.} In $y=a(1+r)^t$, the base itself is the growth factor: $1.08$.
+  \item \textbf{B.} Since $1+r=1.08$, $r=0.08=8\%$.
+  \item \textbf{A.} In $y=a(1-r)^t$, the base is the decay factor: $0.95$.
+  \item \textbf{B.} Since $1-r=0.95$, $r=0.05=5\%$.
+  \item \textbf{A.} $r=0.03 \Rightarrow$ growth factor $=1+r=1.03$.
+  \item \textbf{C.} $r=0.12 \Rightarrow$ decay factor $=1-r=1-0.12=0.88$.
+  \item \textbf{B.} Growth factor $1.045 \Rightarrow r = 0.045 = 4.5\%$.
+  \item \textbf{C.} Decay factor $0.82 \Rightarrow r = 1-0.82 = 0.18 = 18\%$.
+  \item \textbf{C.} Growth factor $1.25 = 1+r \Rightarrow r=0.25=25\%$.
+  \item \textbf{B.} Decay factor $0.6 = 1-r \Rightarrow r=0.4=40\%$.
+\end{enumerate}
+
+\subsection*{Section 4: Solving Exponential Equations}
+\begin{enumerate}[leftmargin=1.5em, itemsep=8pt]
+  \item $2^x=32=2^5 \Rightarrow x=5$
+  \item $3^{x+1}=81=3^4 \Rightarrow x+1=4 \Rightarrow x=3$
+  \item $5^{2x}=125=5^3 \Rightarrow 2x=3 \Rightarrow x=\tfrac{3}{2}$
+  \item $4^x=64=4^3 \Rightarrow x=3$
+  \item $2^{x-3}=16=2^4 \Rightarrow x-3=4 \Rightarrow x=7$
+  \item $9^x=(3^2)^x=3^{2x}$ and $27=3^3 \Rightarrow 2x=3 \Rightarrow x=\tfrac{3}{2}$
+  \item $7^{3x}=7^{x+8} \Rightarrow 3x=x+8 \Rightarrow 2x=8 \Rightarrow x=4$
+  \item $2^{x+2}=2^{3x-4} \Rightarrow x+2=3x-4 \Rightarrow 6=2x \Rightarrow x=3$
+  \item $8^x=(2^3)^x=2^{3x}$ and $16=2^4 \Rightarrow 3x=4 \Rightarrow x=\tfrac{4}{3}$
+  \item $3^{2x-1}=27^{x-2}=(3^3)^{x-2}=3^{3x-6} \Rightarrow 2x-1=3x-6 \Rightarrow x=5$
+\end{enumerate}
+
+\end{document}

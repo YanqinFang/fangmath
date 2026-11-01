@@ -1,0 +1,297 @@
+\documentclass[11pt]{article}
+\usepackage[letterpaper,margin=1in]{geometry}
+\usepackage{amsmath}
+\usepackage{xcolor}
+\usepackage{enumitem}
+\usepackage{titlesec}
+\usepackage{tabularx}
+\usepackage{hyperref}
+\hypersetup{colorlinks=false,pdfborder={0 0 0}}
+
+\definecolor{navy}{HTML}{1F3864}
+\definecolor{gold}{HTML}{B8860B}
+\definecolor{gray}{HTML}{666666}
+\definecolor{easy}{HTML}{2E7D32}
+\definecolor{medium}{HTML}{B8860B}
+\definecolor{hard}{HTML}{C0392B}
+
+\titleformat{\section}{\large\bfseries\color{navy}}{\thesection}{0.5em}{}[{\color{gray}\titlerule}]
+\titlespacing*{\section}{0pt}{18pt}{10pt}
+
+\newcommand{\subhead}[1]{\vspace{6pt}\noindent{\bfseries\color{navy}#1}\par\vspace{4pt}}
+\newcommand{\ex}[1]{\par\noindent\hspace{1em}{\itshape\color{gold}Example:} {\itshape #1}\par\vspace{6pt}}
+\usepackage{pgffor}
+\newcommand{\workline}{\par\vspace{6pt}\noindent\textcolor{gray!60}{\hrulefill}\par}
+\newcommand{\worklines}[1]{\foreach \n in {1,...,#1}{\workline}}
+
+\newcommand{\tageasy}{\textcolor{easy}{\textit{\textbf{[Easy]}}}}
+\newcommand{\tagmedium}{\textcolor{medium}{\textit{\textbf{[Medium]}}}}
+\newcommand{\taghard}{\textcolor{hard}{\textit{\textbf{[Hard]}}}}
+
+\pagestyle{empty}
+
+\begin{document}
+
+% ---------------- TITLE BLOCK ----------------
+\begin{center}
+  {\fontsize{24}{28}\selectfont\bfseries\color{navy} Algebra 1 Worksheet}\\[4pt]
+  {\large\bfseries\color{gold} Properties of Real Numbers, Simplifying Expressions,\\ and Operations with Signed Numbers}\\[4pt]
+  {\itshape\small\color{gray} \copyright\ FangMath --- All Rights Reserved}
+\end{center}
+
+\vspace{10pt}
+\noindent Name: \hrulefill \hspace{2em} Date: \hrulefill \\[6pt]
+\noindent Class/Period: \hrulefill
+
+% ================= PART 1 =================
+\section*{Part 1 --- Quick Reference: Key Properties \& Rules}
+
+\subhead{A. Properties of Addition}
+\begin{itemize}[leftmargin=1.2em]
+\item \textbf{Commutative Property:} $a+b=b+a$ (you can add in any order)
+\ex{$3+7=7+3=10$}
+\item \textbf{Associative Property:} $(a+b)+c=a+(b+c)$ (you can regroup)
+\ex{$(2+5)+8=2+(5+8)=15$}
+\item \textbf{Identity Property:} $a+0=a$ (adding 0 changes nothing)
+\ex{$-9+0=-9$}
+\item \textbf{Inverse Property:} $a+(-a)=0$ (opposites add to zero)
+\ex{$6+(-6)=0$}
+\end{itemize}
+
+\subhead{B. Properties of Multiplication}
+\begin{itemize}[leftmargin=1.2em]
+\item \textbf{Commutative Property:} $a\cdot b=b\cdot a$ (you can multiply in any order)
+\ex{$4\times9=9\times4=36$}
+\item \textbf{Associative Property:} $(a\cdot b)\cdot c=a\cdot(b\cdot c)$ (you can regroup)
+\ex{$(2\times3)\times5=2\times(3\times5)=30$}
+\item \textbf{Identity Property:} $a\cdot1=a$ (multiplying by 1 changes nothing)
+\ex{$-7\times1=-7$}
+\item \textbf{Inverse Property:} $a\times(1/a)=1$, where $a\neq0$ (reciprocals multiply to 1)
+\ex{$5\times(1/5)=1$}
+\item \textbf{Zero Property:} $a\times0=0$ (anything times zero is zero)
+\ex{$-12\times0=0$}
+\item \textbf{Distributive Property:} $a(b+c)=ab+ac$ (multiply through the parentheses)
+\ex{$3(x+4)=3x+12$}
+\end{itemize}
+
+\subhead{C. Simplifying Expressions Using Properties}
+\noindent Use the Distributive Property to clear parentheses, then combine like terms (using the Commutative and Associative Properties to reorder and regroup).
+\ex{$5(2x-3)+4 \;\to\; 10x-15+4$ (distribute) $\;\to\; 10x-11$ (combine like terms)}
+
+\subhead{D. Adding \& Subtracting Real Numbers (including negatives, decimals, and fractions)}
+\begin{itemize}[leftmargin=1.2em]
+\item Same signs: add the absolute values and keep the common sign.
+\ex{$-4+(-9)=-13$}
+\item Different signs: subtract the smaller absolute value from the larger, and keep the sign of the number with the larger absolute value.
+\ex{$-8+5=-3$}
+\item Subtracting a number = adding its opposite: $a-b=a+(-b)$
+\ex{$7-12=7+(-12)=-5$}
+\item Decimals: line up the decimal points, then add/subtract as usual.
+\ex{$-3.6+1.25=-2.35$}
+\item Fractions: rewrite with a common denominator, then add/subtract the numerators.
+\ex{$3/4+(-1/2)=3/4-2/4=1/4$}
+\end{itemize}
+
+\newpage
+% ================= PART 2 =================
+\section*{Part 2 --- Multiple Choice (10 Questions: 3 Easy, 4 Medium, 3 Hard)}
+\noindent{\itshape\color{gray}Circle the best answer.}
+
+\vspace{8pt}
+\noindent\textbf{1.} Which property is shown below? \tageasy\\
+\hspace*{1.5em}$5+8=8+5$\\
+\hspace*{1.5em}A)\ Associative Property of Addition\\
+\hspace*{1.5em}B)\ Commutative Property of Addition\\
+\hspace*{1.5em}C)\ Identity Property of Addition\\
+\hspace*{1.5em}D)\ Distributive Property
+
+\vspace{10pt}
+\noindent\textbf{2.} Simplify: $-7+3$ \tageasy\\
+\hspace*{1.5em}A) $-10$ \quad B) $10$ \quad C) $-4$ \quad D) $4$
+
+\vspace{10pt}
+\noindent\textbf{3.} Which property is shown below? \tageasy\\
+\hspace*{1.5em}$6\times1=6$\\
+\hspace*{1.5em}A)\ Identity Property of Multiplication\\
+\hspace*{1.5em}B)\ Zero Property of Multiplication\\
+\hspace*{1.5em}C)\ Commutative Property of Multiplication\\
+\hspace*{1.5em}D)\ Inverse Property of Multiplication
+
+\vspace{10pt}
+\noindent\textbf{4.} Which property justifies the equation below? \tagmedium\\
+\hspace*{1.5em}$4(x+5)=4x+20$\\
+\hspace*{1.5em}A)\ Associative Property\\
+\hspace*{1.5em}B)\ Commutative Property\\
+\hspace*{1.5em}C)\ Distributive Property\\
+\hspace*{1.5em}D)\ Identity Property
+
+\vspace{10pt}
+\noindent\textbf{5.} Simplify: $-3.5-(-2.8)$ \tagmedium\\
+\hspace*{1.5em}A) $-6.3$ \quad B) $-0.7$ \quad C) $0.7$ \quad D) $6.3$
+
+\vspace{10pt}
+\noindent\textbf{6.} Simplify: $\dfrac{2}{3}+\left(-\dfrac{5}{6}\right)$ \tagmedium\\
+\hspace*{1.5em}A) $-\dfrac{1}{6}$ \quad B) $\dfrac{1}{6}$ \quad C) $-\dfrac{3}{2}$ \quad D) $\dfrac{3}{2}$
+
+\vspace{10pt}
+\noindent\textbf{7.} Simplify the expression using the properties of real numbers: $5(2x-3)+4$ \tagmedium\\
+\hspace*{1.5em}A) $10x-11$ \quad B) $10x+11$ \quad C) $7x-11$ \quad D) $2x-11$
+
+\vspace{10pt}
+\noindent\textbf{8.} Simplify: $-4(2x-5)-3(x+1)$ \taghard\\
+\hspace*{1.5em}A) $-11x+17$ \quad B) $-11x-17$ \quad C) $-5x+17$ \quad D) $11x+17$
+
+\vspace{10pt}
+\noindent\textbf{9.} Simplify: $-\dfrac{3}{4}-1\dfrac{5}{8}$ \taghard\\
+\hspace*{1.5em}A) $-2\dfrac{3}{8}$ \quad B) $-1\dfrac{3}{8}$ \quad C) $2\dfrac{3}{8}$ \quad D) $-2\dfrac{5}{8}$
+
+\vspace{10pt}
+\noindent\textbf{10.} Which property is used to rewrite the expression below? \taghard\\
+\hspace*{1.5em}$6+(4+x)=(6+4)+x$\\
+\hspace*{1.5em}A)\ Associative Property of Addition\\
+\hspace*{1.5em}B)\ Commutative Property of Addition\\
+\hspace*{1.5em}C)\ Distributive Property\\
+\hspace*{1.5em}D)\ Identity Property of Addition
+
+% ================= PART 3 =================
+\section*{Part 3 --- Fill in the Blank (10 Questions)}
+\noindent{\itshape\color{gray}Write your answer in the blank, and show your work in the space provided.}
+
+\vspace{8pt}
+\noindent\textbf{1.} $-8 + \underline{\hspace{2.2cm}} = 0$ \tageasy\\
+\textit{\color{gray}Show your work:}\worklines{2}
+
+\vspace{4pt}
+\noindent\textbf{2.} Simplify: $-5 + (-6) = \underline{\hspace{2.2cm}}$ \tageasy\\
+\textit{\color{gray}Show your work:}\worklines{2}
+
+\vspace{4pt}
+\noindent\textbf{3.} $9 + 4 = 4 + 9$ illustrates the \underline{\hspace{3.4cm}} Property of Addition. \tageasy\\
+\textit{\color{gray}Show your work:}\worklines{2}
+
+\vspace{4pt}
+\noindent\textbf{4.} Simplify: $-2.4 - 3.9 = \underline{\hspace{2.2cm}}$ \tagmedium\\
+\textit{\color{gray}Show your work:}\worklines{3}
+
+\vspace{4pt}
+\noindent\textbf{5.} Simplify: $-\dfrac{1}{4} + \dfrac{5}{8} = \underline{\hspace{2.2cm}}$ \tagmedium\\
+\textit{\color{gray}Show your work:}\worklines{3}
+
+\newpage
+\noindent\textbf{6.} Complete the equation using the Distributive Property: $6(x-2) = \underline{\hspace{3.2cm}}$ \tagmedium\\
+\textit{\color{gray}Show your work:}\worklines{3}
+
+\vspace{4pt}
+\noindent\textbf{7.} Simplify the expression: $3(4x+1) - 5x = \underline{\hspace{3.2cm}}$ \tagmedium\\
+\textit{\color{gray}Show your work:}\worklines{3}
+
+\vspace{4pt}
+\noindent\textbf{8.} Simplify: $-6\dfrac{1}{3} - 2\dfrac{3}{4} = \underline{\hspace{2.2cm}}$ \taghard\\
+\textit{\color{gray}Show your work:}\worklines{4}
+
+\vspace{4pt}
+\noindent\textbf{9.} Simplify: $-5(2x-4) + 3(x-6) = \underline{\hspace{3.2cm}}$ \taghard\\
+\textit{\color{gray}Show your work:}\worklines{4}
+
+\vspace{4pt}
+\noindent\textbf{10.} $2\times(3\times7) = (2\times3)\times7$ illustrates the \underline{\hspace{3.4cm}} Property of Multiplication. \taghard\\
+\textit{\color{gray}Show your work:}\worklines{3}
+
+\newpage
+% ================= PART 4 =================
+\section*{Part 4 --- Word Problems (Apply the Skills Above)}
+
+\noindent\textbf{1.} The temperature was $-6^{\circ}$F early in the morning. By noon, the temperature had risen $15^{\circ}$F. What was the temperature at noon? \tageasy\\
+\textit{\color{gray}Show your work:}\worklines{3}
+
+\vspace{4pt}
+\noindent\textbf{2.} Maria is buying 4 notebooks. Each notebook normally costs \$3.25, but there is a \$0.50 discount on every notebook today. Use the Distributive Property to write an expression for the cost of the notebooks, then simplify it. She also buys one pack of pens for \$4.50 --- what is her total cost? \tagmedium\\
+\textit{\color{gray}Show your work:}\worklines{5}
+
+\newpage
+\noindent\textbf{3.} A scuba diver starts at a depth of $18\frac{3}{4}$ feet below sea level ($-18\frac{3}{4}$ ft). She descends (goes down) another $12\frac{1}{2}$ feet, then ascends (comes up) $7\frac{1}{3}$ feet. Write an expression for her final position relative to sea level and simplify it. Name one property you could use to reorder the terms before combining them. \taghard\\
+\textit{\color{gray}Show your work:}\worklines{6}
+
+\newpage
+% ================= ANSWER KEY =================
+\section*{Answer Key --- Detailed Solutions}
+
+\subhead{Part 2 --- Multiple Choice}
+
+\noindent\textbf{1. Answer: B --- Commutative Property of Addition}\\
+\hspace*{1em}The equation only swaps the order of the two addends ($5+8$ becomes $8+5$); the values themselves and the grouping don't change. Reordering addition is exactly the Commutative Property.
+
+\vspace{6pt}\noindent\textbf{2. Answer: C --- $-4$}\\
+\hspace*{1em}$-7$ and $3$ have different signs, so subtract the smaller absolute value from the larger: $|-7|=7$, $|3|=3$, and $7-3=4$. The sign of the answer matches $-7$ (the larger absolute value), so $-7+3=-4$.
+
+\vspace{6pt}\noindent\textbf{3. Answer: A --- Identity Property of Multiplication}\\
+\hspace*{1em}Multiplying any number by 1 leaves it unchanged: $6\times1=6$. This is the defining feature of the Identity Property of Multiplication (the Identity Property of Addition instead uses 0).
+
+\vspace{6pt}\noindent\textbf{4. Answer: C --- Distributive Property}\\
+\hspace*{1em}$4(x+5)=4x+20$ multiplies the 4 through both terms inside the parentheses ($4\cdot x$ and $4\cdot5$). Multiplying a factor across a sum like this is the Distributive Property.
+
+\vspace{6pt}\noindent\textbf{5. Answer: B --- $-0.7$}\\
+\hspace*{1em}Subtracting a negative is the same as adding its opposite: $-3.5-(-2.8)=-3.5+2.8$. These have different signs, so subtract absolute values: $3.5-2.8=0.7$, and the sign follows $-3.5$ (larger absolute value), giving $-0.7$.
+
+\vspace{6pt}\noindent\textbf{6. Answer: A --- $-\dfrac{1}{6}$}\\
+\hspace*{1em}Rewrite with a common denominator of 6: $\dfrac{2}{3}=\dfrac{4}{6}$. Then $\dfrac{4}{6}+\left(-\dfrac{5}{6}\right)=\dfrac{4-5}{6}=-\dfrac{1}{6}$.
+
+\vspace{6pt}\noindent\textbf{7. Answer: A --- $10x-11$}\\
+\hspace*{1em}Distribute: $5(2x-3)=10x-15$. Then combine like terms with the $+4$: $10x-15+4=10x-11$.
+
+\vspace{6pt}\noindent\textbf{8. Answer: A --- $-11x+17$}\\
+\hspace*{1em}Distribute both terms: $-4(2x-5)=-8x+20$, and $-3(x+1)=-3x-3$. Combine: $(-8x-3x)+(20-3)=-11x+17$.
+
+\vspace{6pt}\noindent\textbf{9. Answer: A --- $-2\dfrac{3}{8}$}\\
+\hspace*{1em}Write $1\dfrac{5}{8}$ as an improper fraction: $\dfrac{13}{8}$. Rewrite $-\dfrac{3}{4}$ with denominator 8: $-\dfrac{6}{8}$. Then $-\dfrac{6}{8}-\dfrac{13}{8}=-\dfrac{19}{8}$, which as a mixed number is $-2\dfrac{3}{8}$.
+
+\vspace{6pt}\noindent\textbf{10. Answer: A --- Associative Property of Addition}\\
+\hspace*{1em}The three terms ($6$, $4$, and $x$) stay in the same order the entire time --- only the grouping (parentheses) moves from around $(4+x)$ to around $(6+4)$. Regrouping without changing order is the Associative Property.
+
+\subhead{Part 3 --- Fill in the Blank}
+
+\noindent\textbf{1. Answer: $8$}\\
+\hspace*{1em}The Inverse Property of Addition says a number plus its opposite equals 0: $a + (-a) = 0$. Since $-8$'s opposite is $8$, the blank is $8$: $-8 + 8 = 0$.
+
+\vspace{6pt}\noindent\textbf{2. Answer: $-11$}\\
+\hspace*{1em}$-5$ and $-6$ have the same sign, so add their absolute values ($5+6=11$) and keep the common sign (negative): $-5+(-6)=-11$.
+
+\vspace{6pt}\noindent\textbf{3. Answer: Commutative}\\
+\hspace*{1em}The two addends simply switch places ($9+4$ becomes $4+9$) with no change in grouping or value --- that is the Commutative Property of Addition.
+
+\vspace{6pt}\noindent\textbf{4. Answer: $-6.3$}\\
+\hspace*{1em}Both numbers are negative in effect ($-2.4$ and $-3.9$ is like adding $-2.4+(-3.9)$), so add the absolute values ($2.4+3.9=6.3$) and keep the negative sign: $-2.4-3.9=-6.3$.
+
+\vspace{6pt}\noindent\textbf{5. Answer: $\dfrac{3}{8}$}\\
+\hspace*{1em}Rewrite with a common denominator of 8: $-\dfrac{1}{4}=-\dfrac{2}{8}$. Then $-\dfrac{2}{8}+\dfrac{5}{8}=\dfrac{-2+5}{8}=\dfrac{3}{8}$.
+
+\vspace{6pt}\noindent\textbf{6. Answer: $6x-12$}\\
+\hspace*{1em}Distribute the 6 through both terms inside the parentheses: $6(x-2)=6\cdot x - 6\cdot 2 = 6x-12$.
+
+\vspace{6pt}\noindent\textbf{7. Answer: $7x+3$}\\
+\hspace*{1em}Distribute: $3(4x+1)=12x+3$. Then combine like terms with $-5x$: $12x+3-5x=7x+3$.
+
+\vspace{6pt}\noindent\textbf{8. Answer: $-9\dfrac{1}{12}$}\\
+\hspace*{1em}Rewrite both fractions with denominator 12: $-6\dfrac{1}{3}=-6\dfrac{4}{12}$ and $-2\dfrac{3}{4}=-2\dfrac{9}{12}$. Add the whole numbers and fractions separately: $-6-2=-8$, and $-\dfrac{4}{12}-\dfrac{9}{12}=-\dfrac{13}{12}=-1\dfrac{1}{12}$. Combine: $-8-1\dfrac{1}{12}=-9\dfrac{1}{12}$.
+
+\vspace{6pt}\noindent\textbf{9. Answer: $-7x+2$}\\
+\hspace*{1em}Distribute both terms: $-5(2x-4)=-10x+20$, and $3(x-6)=3x-18$. Combine: $(-10x+3x)+(20-18)=-7x+2$.
+
+\vspace{6pt}\noindent\textbf{10. Answer: Associative}\\
+\hspace*{1em}The three factors ($2$, $3$, and $7$) stay in the same order --- only the grouping (parentheses) moves from around $(3\times7)$ to around $(2\times3)$. Regrouping without changing order is the Associative Property.
+
+\subhead{Part 4 --- Word Problems}
+
+\noindent\textbf{1. Answer: $9^{\circ}$F}\\
+\hspace*{1em}Start at $-6^{\circ}$F and add a rise of $15^{\circ}$F: $-6+15$. These have different signs, so subtract absolute values ($15-6=9$) and keep the sign of the larger absolute value (positive, since $|15|>|-6|$). Final temperature: $-6+15=9^{\circ}$F.
+
+\vspace{6pt}\noindent\textbf{2. Answer: Expression $4(3.25-0.50)$; Notebooks cost \$11.00; Total with pens = \$15.50}\\
+\hspace*{1em}Each notebook costs \$3.25 with a \$0.50 discount, so each one really costs $(3.25-0.50)$. For 4 notebooks: $4(3.25-0.50)$. Using the Distributive Property: $4(3.25)-4(0.50)=13.00-2.00=11.00$. Adding the \$4.50 pack of pens: $11.00+4.50=\$15.50$.
+
+\vspace{6pt}\noindent\textbf{3. Answer: Expression $-18\frac{3}{4}-12\frac{1}{2}+7\frac{1}{3}$; Final position $=-23\frac{11}{12}$ ft ($23\frac{11}{12}$ feet below sea level)}\\
+\hspace*{1em}Convert all fractions to twelfths: $-18\frac{3}{4}=-18\frac{9}{12}$, $-12\frac{1}{2}=-12\frac{6}{12}$, and $7\frac{1}{3}=7\frac{4}{12}$. You can use the Commutative Property of Addition to reorder the terms so the whole numbers and fractions are easier to combine: $(-18-12+7)+\left(-\frac{9}{12}-\frac{6}{12}+\frac{4}{12}\right)=-23+\left(-\frac{11}{12}\right)=-23\frac{11}{12}$ ft.
+
+\vspace{20pt}
+\noindent{\itshape\small\color{gray}\copyright\ FangMath --- All Rights Reserved}
+
+\end{document}

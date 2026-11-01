@@ -1,0 +1,304 @@
+
+\documentclass[12pt]{article}
+\usepackage{amsmath, amssymb, geometry, multicol, enumitem, array}
+\usepackage{fancyhdr, tikz}
+\usetikzlibrary{arrows.meta}
+
+\geometry{margin=1in, top=0.75in, bottom=0.9in}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\textbf{One-Step \& Two-Step Equations} --- Practice Worksheet}
+\fancyhead[R]{Score:\;\underline{\hspace{2cm}}}
+\fancyfoot[C]{\thepage}
+\renewcommand{\headrulewidth}{1pt}
+
+\newcommand{\wsp}{\vspace{2.6cm}}
+\newcommand{\wspm}{\vspace{2.0cm}}
+\newcommand{\blank}{\underline{\hspace{2.5cm}}}
+\newcommand{\sblank}{\underline{\hspace{1.4cm}}}
+
+\newcommand{\sectionbar}[1]{%
+  \vspace{8pt}
+  \noindent\rule{\textwidth}{0.8pt}\\[2pt]
+  {\large\bfseries #1}\\[-4pt]
+  \rule{\textwidth}{0.8pt}
+  \vspace{4pt}
+}
+
+\begin{document}
+
+%%─── TITLE ────────────────────────────────────────────────────────────────────
+\begin{center}
+  {\LARGE\bfseries One-Step \& Two-Step Equations}\\[6pt]
+  {\large Practice Worksheet}\\[4pt]
+  \rule{\textwidth}{1.2pt}
+\end{center}
+
+\vspace{4pt}
+\noindent
+Name:\;\underline{\hspace{6cm}}\quad
+Date:\;\underline{\hspace{3cm}}\quad
+Period:\;\underline{\hspace{2.2cm}}
+
+\vspace{10pt}
+
+%%─── Key Idea Box ─────────────────────────────────────────────────────────────
+\noindent\fbox{%
+  \begin{minipage}{\dimexpr\textwidth-2\fboxsep-2\fboxrule\relax}
+  \vspace{4pt}
+  \textbf{Goal:} Get $x$ alone on one side by doing the \textbf{same operation to both sides}.\\[6pt]
+  \begin{tabular}{@{}p{3cm} p{5cm} p{5.5cm}@{}}
+  \textbf{Operation} & \textbf{Undo it with\ldots} & \textbf{Example}\\[3pt]
+  $x + a = b$ & subtract $a$ from both sides & $x+3=7 \;\Rightarrow\; x=4$\\[3pt]
+  $x - a = b$ & add $a$ to both sides        & $x-5=2 \;\Rightarrow\; x=7$\\[3pt]
+  $ax = b$    & divide both sides by $a$      & $3x=12 \;\Rightarrow\; x=4$\\[3pt]
+  $\dfrac{x}{a}=b$ & multiply both sides by $a$ & $\dfrac{x}{4}=3 \;\Rightarrow\; x=12$\\[5pt]
+  \end{tabular}
+  \vspace{4pt}
+  \end{minipage}
+}
+
+\vspace{14pt}
+
+%%──────────────────────────────────────────────────────────────────────────────
+%%  WORKED EXAMPLES
+%%──────────────────────────────────────────────────────────────────────────────
+\sectionbar{Worked Examples}
+
+\begin{multicols}{2}
+
+\noindent\textbf{One-Step Example:}\quad Solve $\;x + 6 = 10$
+
+\vspace{4pt}
+\noindent Subtract 6 from both sides:
+\[
+  x + 6 - 6 = 10 - 6
+\]
+\[
+  \boxed{x = 4}
+\]
+\noindent\textit{Check:} $4 + 6 = 10$ \checkmark
+
+\columnbreak
+
+\noindent\textbf{Two-Step Example:}\quad Solve $\;3x - 5 = 7$
+
+\vspace{4pt}
+\noindent Step \textcircled{1} Add 5 to both sides:
+\[
+  3x - 5 + 5 = 7 + 5 \;\Rightarrow\; 3x = 12
+\]
+\noindent Step \textcircled{2} Divide both sides by 3:
+\[
+  \frac{3x}{3} = \frac{12}{3} \;\Rightarrow\; \boxed{x = 4}
+\]
+\noindent\textit{Check:} $3(4)-5 = 12-5 = 7$ \checkmark
+
+\end{multicols}
+
+\vspace{4pt}
+
+%%──────────────────────────────────────────────────────────────────────────────
+%%  PART A — ONE-STEP EQUATIONS
+%%──────────────────────────────────────────────────────────────────────────────
+\sectionbar{Part A \quad One-Step Equations \hfill{\normalfont\normalsize (10 problems)}}
+
+\noindent\textit{One operation separates $x$ from the answer. Undo it and solve.}
+
+\vspace{8pt}
+\begin{multicols}{2}
+\begin{enumerate}[label=\textbf{\arabic*.}, itemsep=0pt]
+
+  \item $x + 5 = 9$\\[4pt]
+  Operation: \sblank\\[4pt]
+  $x = $ \sblank\\[4pt]
+  \textbf{Check:} \underline{\hspace{3.5cm}}
+  \wspm
+
+  \item $x - 3 = 7$\\[4pt]
+  Operation: \sblank\\[4pt]
+  $x = $ \sblank\\[4pt]
+  \textbf{Check:} \underline{\hspace{3.5cm}}
+  \wspm
+
+  \item $2x = 14$\\[4pt]
+  Operation: \sblank\\[4pt]
+  $x = $ \sblank\\[4pt]
+  \textbf{Check:} \underline{\hspace{3.5cm}}
+  \wspm
+
+  \item $\dfrac{x}{4} = 3$\\[8pt]
+  Operation: \sblank\\[4pt]
+  $x = $ \sblank\\[4pt]
+  \textbf{Check:} \underline{\hspace{3.5cm}}
+  \wspm
+
+  \item $x + 8 = 2$\\[4pt]
+  Operation: \sblank\\[4pt]
+  $x = $ \sblank\\[4pt]
+  \textbf{Check:} \underline{\hspace{3.5cm}}
+  \wspm
+
+  \item $x - 6 = -1$\\[4pt]
+  Operation: \sblank\\[4pt]
+  $x = $ \sblank\\[4pt]
+  \textbf{Check:} \underline{\hspace{3.5cm}}
+  \wspm
+
+  \item $3x = -12$\\[4pt]
+  Operation: \sblank\\[4pt]
+  $x = $ \sblank\\[4pt]
+  \textbf{Check:} \underline{\hspace{3.5cm}}
+  \wspm
+
+  \item $\dfrac{x}{5} = -2$\\[8pt]
+  Operation: \sblank\\[4pt]
+  $x = $ \sblank\\[4pt]
+  \textbf{Check:} \underline{\hspace{3.5cm}}
+  \wspm
+
+  \item $-x = 9$\\[4pt]
+  \textit{Hint: divide by $-1$}\\[4pt]
+  $x = $ \sblank\\[4pt]
+  \textbf{Check:} \underline{\hspace{3.5cm}}
+  \wspm
+
+  \item $x + 4 = -3$\\[4pt]
+  Operation: \sblank\\[4pt]
+  $x = $ \sblank\\[4pt]
+  \textbf{Check:} \underline{\hspace{3.5cm}}
+  \wspm
+
+\end{enumerate}
+\end{multicols}
+
+\newpage
+
+%%──────────────────────────────────────────────────────────────────────────────
+%%  PART B — TWO-STEP EQUATIONS
+%%──────────────────────────────────────────────────────────────────────────────
+\sectionbar{Part B \quad Two-Step Equations \hfill{\normalfont\normalsize (10 problems)}}
+
+\noindent\textit{%
+Step \textcircled{1}: Add or subtract to move the constant.
+\quad Step \textcircled{2}: Multiply or divide to isolate $x$.}
+
+\vspace{8pt}
+\begin{multicols}{2}
+\begin{enumerate}[label=\textbf{\arabic*.}, itemsep=0pt]
+
+  \item $2x + 3 = 11$\\[4pt]
+  Step \textcircled{1}: $2x = \sblank$\\[4pt]
+  Step \textcircled{2}: $x = \sblank$\\[4pt]
+  \textbf{Check:} \underline{\hspace{3.5cm}}
+  \wsp
+
+  \item $3x - 5 = 10$\\[4pt]
+  Step \textcircled{1}: $3x = \sblank$\\[4pt]
+  Step \textcircled{2}: $x = \sblank$\\[4pt]
+  \textbf{Check:} \underline{\hspace{3.5cm}}
+  \wsp
+
+  \item $4x + 1 = 17$\\[4pt]
+  Step \textcircled{1}: $4x = \sblank$\\[4pt]
+  Step \textcircled{2}: $x = \sblank$\\[4pt]
+  \textbf{Check:} \underline{\hspace{3.5cm}}
+  \wsp
+
+  \item $2x - 7 = 1$\\[4pt]
+  Step \textcircled{1}: $2x = \sblank$\\[4pt]
+  Step \textcircled{2}: $x = \sblank$\\[4pt]
+  \textbf{Check:} \underline{\hspace{3.5cm}}
+  \wsp
+
+  \item $5x + 2 = -8$\\[4pt]
+  Step \textcircled{1}: $5x = \sblank$\\[4pt]
+  Step \textcircled{2}: $x = \sblank$\\[4pt]
+  \textbf{Check:} \underline{\hspace{3.5cm}}
+  \wsp
+
+  \item $3x - 4 = -13$\\[4pt]
+  Step \textcircled{1}: $3x = \sblank$\\[4pt]
+  Step \textcircled{2}: $x = \sblank$\\[4pt]
+  \textbf{Check:} \underline{\hspace{3.5cm}}
+  \wsp
+
+  \item $\dfrac{x}{2} + 3 = 7$\\[6pt]
+  Step \textcircled{1}: $\dfrac{x}{2} = \sblank$\\[6pt]
+  Step \textcircled{2}: $x = \sblank$\\[4pt]
+  \textbf{Check:} \underline{\hspace{3.5cm}}
+  \wsp
+
+  \item $\dfrac{x}{3} - 2 = 4$\\[6pt]
+  Step \textcircled{1}: $\dfrac{x}{3} = \sblank$\\[6pt]
+  Step \textcircled{2}: $x = \sblank$\\[4pt]
+  \textbf{Check:} \underline{\hspace{3.5cm}}
+  \wsp
+
+  \item $2x + 9 = 3$\\[4pt]
+  Step \textcircled{1}: $2x = \sblank$\\[4pt]
+  Step \textcircled{2}: $x = \sblank$\\[4pt]
+  \textbf{Check:} \underline{\hspace{3.5cm}}
+  \wsp
+
+  \item $4x - 3 = 9$\\[4pt]
+  Step \textcircled{1}: $4x = \sblank$\\[4pt]
+  Step \textcircled{2}: $x = \sblank$\\[4pt]
+  \textbf{Check:} \underline{\hspace{3.5cm}}
+  \wsp
+
+\end{enumerate}
+\end{multicols}
+
+%%──────────────────────────────────────────────────────────────────────────────
+%%  ANSWER KEY
+%%──────────────────────────────────────────────────────────────────────────────
+\newpage
+
+\begin{center}
+  {\large\bfseries Answer Key \quad (Teacher Copy)}\\[4pt]
+  \rule{\textwidth}{1pt}
+\end{center}
+
+\vspace{10pt}
+
+\noindent\textbf{Part A --- One-Step Equations}
+
+\vspace{6pt}
+\begin{multicols}{2}
+\begin{enumerate}[label=\textbf{\arabic*.}, itemsep=5pt]
+  \item $x + 5 = 9$ \hfill $x = 4$
+  \item $x - 3 = 7$ \hfill $x = 10$
+  \item $2x = 14$ \hfill $x = 7$
+  \item $\dfrac{x}{4} = 3$ \hfill $x = 12$
+  \item $x + 8 = 2$ \hfill $x = -6$
+  \item $x - 6 = -1$ \hfill $x = 5$
+  \item $3x = -12$ \hfill $x = -4$
+  \item $\dfrac{x}{5} = -2$ \hfill $x = -10$
+  \item $-x = 9$ \hfill $x = -9$
+  \item $x + 4 = -3$ \hfill $x = -7$
+\end{enumerate}
+\end{multicols}
+
+\vspace{16pt}
+
+\noindent\textbf{Part B --- Two-Step Equations}
+
+\vspace{6pt}
+\begin{multicols}{2}
+\begin{enumerate}[label=\textbf{\arabic*.}, itemsep=5pt]
+  \item $2x + 3 = 11$ \hfill $x = 4$
+  \item $3x - 5 = 10$ \hfill $x = 5$
+  \item $4x + 1 = 17$ \hfill $x = 4$
+  \item $2x - 7 = 1$ \hfill $x = 4$
+  \item $5x + 2 = -8$ \hfill $x = -2$
+  \item $3x - 4 = -13$ \hfill $x = -3$
+  \item $\dfrac{x}{2} + 3 = 7$ \hfill $x = 8$
+  \item $\dfrac{x}{3} - 2 = 4$ \hfill $x = 18$
+  \item $2x + 9 = 3$ \hfill $x = -3$
+  \item $4x - 3 = 9$ \hfill $x = 3$
+\end{enumerate}
+\end{multicols}
+
+\end{document}

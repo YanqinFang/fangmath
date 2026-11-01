@@ -1,0 +1,577 @@
+\documentclass[11pt]{article}
+
+% =====================================================================
+% The Box (Area) Method  --  Lesson + Practice Worksheet + Answer Key
+% FangMath   |   single self-contained file, grayscale for B&W
+% =====================================================================
+% =====================================================================
+% Shared preamble for the Box (Area) Method lesson + worksheet
+% FangMath  --  grayscale, optimized for black & white printing
+% =====================================================================
+\usepackage[letterpaper,margin=0.85in,top=0.8in,bottom=0.9in]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage[table]{xcolor}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage{pifont}
+\usepackage{fancyhdr}
+\usepackage{tikz}
+\usetikzlibrary{calc}
+
+% ---------- grayscale palette ----------
+\definecolor{primary}{gray}{0.12}
+\definecolor{boxfill}{gray}{0.92}
+\definecolor{accent}{gray}{0.80}
+\definecolor{reasonclr}{gray}{0.42}
+\definecolor{tipfill}{gray}{0.96}
+\definecolor{keyfill}{gray}{0.95}
+
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0.4pt}
+\rhead{\small\itshape FangMath}
+\lfoot{\small\itshape \textcopyright\ 2026 FangMath $\cdot$ All rights reserved.}
+\rfoot{\small\thepage}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{4pt}
+
+% ---------- section banner ----------
+\newcounter{partnum}
+\newcommand{\partbanner}[1]{%
+  \stepcounter{partnum}%
+  \vspace{8pt}\par\noindent
+  \begin{tcolorbox}[colback=primary,colframe=primary,arc=2pt,
+    left=10pt,right=10pt,top=5pt,bottom=5pt,boxrule=0pt]
+  {\color{accent}\bfseries Part \thepartnum\ \ \textbullet\ \ }{\color{white}\bfseries\large #1}
+  \end{tcolorbox}\par\vspace{3pt}}
+
+% ---------- boxes ----------
+\newtcolorbox{keybox}{colback=boxfill,colframe=primary,coltitle=white,
+  colbacktitle=primary,fonttitle=\bfseries,title={Key Idea},
+  arc=2pt,boxrule=0.8pt,left=7pt,right=7pt,top=4pt,bottom=4pt}
+\newtcolorbox{exbox}{colback=tipfill,colframe=primary,coltitle=white,
+  colbacktitle=primary,fonttitle=\bfseries,title={\ding{43}\ \ Worked Example},
+  arc=2pt,boxrule=0.8pt,left=7pt,right=7pt,top=4pt,bottom=4pt}
+\newtcolorbox{warnbox}{colback=tipfill,colframe=primary,coltitle=white,
+  colbacktitle=primary,fonttitle=\bfseries,title={\ding{55}\ \ Common Mistakes},
+  arc=2pt,boxrule=0.8pt,left=7pt,right=7pt,top=4pt,bottom=4pt}
+\newtcolorbox{anskey}{colback=keyfill,colframe=primary,coltitle=white,
+  colbacktitle=primary,fonttitle=\bfseries,title={Answer Key},
+  arc=2pt,boxrule=0.8pt,left=7pt,right=7pt,top=4pt,bottom=4pt,breakable}
+
+% ---------- difficulty dots (read clearly in B&W) ----------
+\newcommand{\LvE}{{\footnotesize\ding{108}\ding{109}\ding{109}}\ \textbf{\small Easy}\ \ }
+\newcommand{\LvM}{{\footnotesize\ding{108}\ding{108}\ding{109}}\ \textbf{\small Medium}\ \ }
+\newcommand{\LvH}{{\footnotesize\ding{108}\ding{108}\ding{108}}\ \textbf{\small Hard}\ \ }
+
+% ---------- ruled work lines ----------
+\newcommand{\worklines}[1]{\par\nobreak\vspace{2mm}%
+  \foreach \zz in {1,...,#1}{\noindent\textcolor{gray!55}{\rule{\linewidth}{0.3pt}}\par\vspace{0.72cm}}%
+  \vspace{1mm}}
+
+\newlist{prob}{enumerate}{1}
+\setlist[prob]{label=\textbf{\arabic*.},leftmargin=2.3em,itemsep=3pt,topsep=3pt}
+
+% =====================================================================
+% THE BOX (AREA) MODEL
+%   \boxmodel[scale]{top-left}{top-right}{left-top}{left-bottom}
+%                   {cell TL}{cell TR}{cell BL}{cell BR}
+% =====================================================================
+\newcommand{\boxmodel}[9][1.0]{%
+\begin{tikzpicture}[scale=#1,baseline=(current bounding box.center)]
+  \draw[line width=0.9pt] (0,0) rectangle (3.4,2.2);
+  \draw[line width=0.9pt] (1.7,0)--(1.7,2.2);
+  \draw[line width=0.9pt] (0,1.1)--(3.4,1.1);
+  \node[above,font=\small] at (0.85,2.24) {#2};
+  \node[above,font=\small] at (2.55,2.24) {#3};
+  \node[left,font=\small]  at (-0.06,1.65) {#4};
+  \node[left,font=\small]  at (-0.06,0.55) {#5};
+  \node[font=\small] at (0.85,1.65) {#6};
+  \node[font=\small] at (2.55,1.65) {#7};
+  \node[font=\small] at (0.85,0.55) {#8};
+  \node[font=\small] at (2.55,0.55) {#9};
+\end{tikzpicture}}
+
+% empty box for students to fill in
+\newcommand{\blankbox}[1][1.0]{%
+\begin{tikzpicture}[scale=#1,baseline=(current bounding box.center)]
+  \draw[line width=0.9pt] (0,0) rectangle (3.4,2.2);
+  \draw[line width=0.9pt] (1.7,0)--(1.7,2.2);
+  \draw[line width=0.9pt] (0,1.1)--(3.4,1.1);
+  \draw[gray!55,line width=0.3pt] (0.15,2.5)--(1.55,2.5);
+  \draw[gray!55,line width=0.3pt] (1.85,2.5)--(3.25,2.5);
+  \draw[gray!55,line width=0.3pt] (-1.25,1.65)--(-0.15,1.65);
+  \draw[gray!55,line width=0.3pt] (-1.25,0.55)--(-0.15,0.55);
+\end{tikzpicture}}
+
+% =====================================================================
+% THE "X" DIAGRAM   \xdiag{top(product)}{left}{right}{bottom(sum)}
+% =====================================================================
+\newcommand{\xdiag}[5][0.85]{%
+\begin{tikzpicture}[scale=#1,baseline=(current bounding box.center)]
+  \draw[line width=0.9pt] (-1.05,1.05)--(1.05,-1.05);
+  \draw[line width=0.9pt] (1.05,1.05)--(-1.05,-1.05);
+  \node[font=\small] at (0,1.42) {#2};
+  \node[font=\small,left]  at (-1.12,0) {#3};
+  \node[font=\small,right] at (1.12,0)  {#4};
+  \node[font=\small] at (0,-1.42) {#5};
+\end{tikzpicture}}
+
+
+% ---- practice-part banner (letters, separate from the numbered lesson parts) ----
+\newcounter{practnum}
+\newcommand{\practbanner}[1]{%
+  \stepcounter{practnum}%
+  \vspace{8pt}\par\noindent
+  \begin{tcolorbox}[colback=primary,colframe=primary,arc=2pt,
+    left=10pt,right=10pt,top=5pt,bottom=5pt,boxrule=0pt]
+  {\color{accent}\bfseries Practice \Alph{practnum}\ \ \textbullet\ \ }{\color{white}\bfseries\large #1}
+  \end{tcolorbox}\par\vspace{3pt}}
+
+\begin{document}
+\begin{center}
+{\color{primary}\rule{\linewidth}{2pt}}\\[12pt]
+{\color{primary}\bfseries\fontsize{24}{28}\selectfont The Box (Area) Method}\\[6pt]
+{\bfseries\large Multiplying and Factoring Binomials}\\[8pt]
+{\color{primary}\rule{\linewidth}{2pt}}\\[10pt]
+{\itshape Class Notes $\cdot$ Organized Lesson with Worked Examples}
+\end{center}
+
+\vspace{4pt}
+\begin{tabular}{@{}p{7.5cm}@{\hspace{1.2cm}}p{5cm}@{}}
+\textbf{Name:} \underline{\hspace{5cm}} & \textbf{Date:} \underline{\hspace{3.5cm}}
+\end{tabular}
+
+\vspace{6pt}
+\begin{keybox}
+\textbf{The big idea.} The area of a rectangle is (length)\,$\times$\,(width).
+If each side is a \emph{binomial}, split the rectangle into four smaller rectangles ---
+one for each pair of terms. The four little areas add up to the answer.
+\medskip
+
+We will learn the box in \textbf{two directions}:
+\begin{itemize}[nosep,leftmargin=1.4em]
+\item \textbf{Forward} (Part 1): given the two sides, \emph{multiply} to find the area.
+\item \textbf{Backward} (Parts 2--3): given the area, \emph{factor} to find the two sides.
+\end{itemize}
+Learning the forward direction first is what makes the backward direction make sense.
+\end{keybox}
+
+% =====================================================================
+\partbanner{Forward --- Multiplying Two Binomials}
+
+\subsection*{1.1\quad Simple case: leading coefficient $=1$}
+
+\begin{exbox}
+Multiply $(x+4)(x+5)$.
+
+\vspace{4pt}
+\begin{minipage}[c]{0.42\linewidth}
+\centering
+\boxmodel[0.85]{$x$}{$+4$}{$x$}{$+5$}{$x^2$}{$4x$}{$5x$}{$20$}
+\end{minipage}
+\hfill
+\begin{minipage}[c]{0.55\linewidth}
+\begin{align*}
+&x \text{ and } +4 \text{ across the top} &&\color{reasonclr}\text{first factor}\\
+&x \text{ and } +5 \text{ down the side} &&\color{reasonclr}\text{second factor}\\
+&\text{cell} = (\text{row})\times(\text{column}) &&\color{reasonclr}\text{area of each piece}\\
+&x^2 + 4x + 5x + 20 &&\color{reasonclr}\text{add all four cells}\\
+&= x^2 + 9x + 20 &&\color{reasonclr}\text{combine middle terms}
+\end{align*}
+\end{minipage}
+
+\vspace{3pt}
+\textbf{Notice:} the two \emph{diagonal} cells, $4x$ and $5x$, are the ones that combine into the
+middle term $9x$. Remember this --- it is the key to factoring later.
+\end{exbox}
+
+\subsection*{1.2\quad General case: leading coefficient $\neq 1$}
+
+\begin{exbox}
+Multiply $(2x+3)(5x+7)$.
+
+\vspace{4pt}
+\begin{minipage}[c]{0.42\linewidth}
+\centering
+\boxmodel[0.85]{$2x$}{$+3$}{$5x$}{$+7$}{$10x^2$}{$15x$}{$14x$}{$21$}
+\end{minipage}
+\hfill
+\begin{minipage}[c]{0.55\linewidth}
+\begin{align*}
+10x^2 + 15x + 14x + 21 &&&\color{reasonclr}\text{add the four cells}\\
+= 10x^2 + 29x + 21 &&&\color{reasonclr}\text{combine } 15x + 14x
+\end{align*}
+\end{minipage}
+
+\vspace{4pt}
+The box is just the distributive property done twice:
+\[
+(2x+3)(5x+7) = (2x+3)(5x) + (2x+3)(7) = 10x^2 + 15x + 14x + 21.
+\]
+\end{exbox}
+
+\subsection*{1.3\quad The general pattern}
+
+\begin{exbox}
+Multiply $(ax+b)(cx+d)$ in general.
+
+\vspace{4pt}
+\begin{minipage}[c]{0.42\linewidth}
+\centering
+\boxmodel[0.85]{$ax$}{$+b$}{$cx$}{$+d$}{$acx^2$}{$bcx$}{$adx$}{$bd$}
+\end{minipage}
+\hfill
+\begin{minipage}[c]{0.55\linewidth}
+\[
+(ax+b)(cx+d) = acx^2 + (ad+bc)x + bd
+\]
+\end{minipage}
+\end{exbox}
+
+\begin{keybox}
+\textbf{The corner property.} In every box, multiply the two \emph{corner} cells and compare with
+the two \emph{diagonal} cells:
+\[
+\underbrace{(acx^2)(bd)}_{\text{corners}} = abcd\,x^2
+\qquad\text{and}\qquad
+\underbrace{(bcx)(adx)}_{\text{diagonals}} = abcd\,x^2 .
+\]
+They are \textbf{always equal}. And the two diagonal cells \emph{add} to the middle term.
+\medskip
+
+So to factor $ax^2+bx+c$, we need two terms whose
+\ \textbf{product} is $(ax^2)(c) = ac\,x^2$ \ and whose \ \textbf{sum} is $bx$.
+That is exactly what the ``X'' diagram organizes.
+\end{keybox}
+
+\newpage
+% =====================================================================
+\partbanner{Backward --- Factoring when the Leading Coefficient is $1$}
+
+\begin{exbox}
+Factor $x^2 + 9x + 20$.
+
+\vspace{4pt}
+\begin{minipage}[c]{0.34\linewidth}
+\centering
+\boxmodel[0.78]{$x$}{$+4$}{$x$}{$+5$}{$x^2$}{$4x$}{$5x$}{$20$}
+\end{minipage}
+\hfill
+\begin{minipage}[c]{0.28\linewidth}
+\centering
+\xdiag[0.80]{$20$}{$4$}{$5$}{$9$}
+\end{minipage}
+\hfill
+\begin{minipage}[c]{0.33\linewidth}
+{\footnotesize
+top $=$ product $=20$\\[2pt]
+bottom $=$ sum $=9$\\[2pt]
+sides $=$ the two numbers}
+\end{minipage}
+
+\vspace{6pt}
+\begin{align*}
+\text{Place } x^2 \text{ and } 20 \text{ in the corners} &&&\color{reasonclr}\text{what we are given}\\
+\text{need product } 20,\ \text{sum } 9 \ \Rightarrow\ 4 \text{ and } 5 &&&\color{reasonclr}\text{fill the diagonal: } 4x \text{ and } 5x\\
+\text{read the sides: } x{+}4 \ \text{and}\ x{+}5 &&&\color{reasonclr}\text{take the GCF of each row/column}
+\end{align*}
+\[
+\boxed{\,x^2+9x+20 = (x+4)(x+5)\,}
+\]
+\end{exbox}
+
+\begin{keybox}
+\textbf{Shortcut when $a=1$.} You only need two numbers with
+\textbf{product} $=c$ and \textbf{sum} $=b$. Then $x^2+bx+c = (x+p)(x+q)$ directly ---
+no grouping required.
+\end{keybox}
+
+% =====================================================================
+\partbanner{Backward --- Factoring when the Leading Coefficient is not $1$}
+
+\subsection*{3.1\quad Why guessing is slow}
+
+To factor $6x^2 + 13x + 5$ by trial and error you would test every pairing:
+\begin{center}
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{@{}l l l@{}}
+\textbf{Guess} & \textbf{Expands to} & \textbf{Middle term} \\ \hline
+$(x+1)(6x+5)$ & $6x^2 + 5x + 6x + 5$ & $11x$ \ \ding{55} \\
+$(6x+1)(x+5)$ & $6x^2 + 30x + x + 5$ & $31x$ \ \ding{55} \\
+$(2x+1)(3x+5)$ & $6x^2 + 10x + 3x + 5$ & $13x$ \ \ding{51} \\
+\end{tabular}
+\end{center}
+The X method finds the right one \emph{directly}, with no guessing.
+
+\subsection*{3.2\quad The X method (product--sum), then the box}
+
+\begin{exbox}
+Factor $6x^2 + 13x + 5$.
+
+\vspace{4pt}
+\begin{minipage}[c]{0.30\linewidth}
+\centering
+\xdiag[0.82]{$30x^2$}{$10x$}{$3x$}{$13x$}
+\end{minipage}
+\hfill
+\begin{minipage}[c]{0.36\linewidth}
+\centering
+\boxmodel[0.78]{$3x$}{$+5$}{$2x$}{$+1$}{$6x^2$}{$10x$}{$3x$}{$5$}
+\end{minipage}
+\hfill
+\begin{minipage}[c]{0.30\linewidth}
+{\footnotesize
+$ac = 6\cdot 5 = 30$\\[2pt]
+need product $30$, sum $13$\\[2pt]
+$\Rightarrow 10$ and $3$}
+\end{minipage}
+
+\vspace{6pt}
+\begin{align*}
+6x^2 + 13x + 5 &= 6x^2 + 10x + 3x + 5 &&\color{reasonclr}\text{split the middle term using } 10 \text{ and } 3\\
+&= 2x(3x+5) + 1(3x+5) &&\color{reasonclr}\text{GCF of each row of the box}\\
+&= (2x+1)(3x+5) &&\color{reasonclr}\text{factor out the common } (3x+5)
+\end{align*}
+\emph{Check by re-multiplying:} $(2x+1)(3x+5) = 6x^2+10x+3x+5 = 6x^2+13x+5$ \ding{51}
+\end{exbox}
+
+\begin{keybox}
+\textbf{Reading the sides off the box.}
+\begin{itemize}[nosep,leftmargin=1.4em]
+\item Take the \textbf{GCF of the top row} $\to$ first term of one factor.
+\item Take the \textbf{GCF of the bottom row} $\to$ second term of that factor.
+\item Take the \textbf{GCF of each column} $\to$ the other factor.
+\end{itemize}
+For the box above: rows give $2x$ and $+1$; columns give $3x$ and $+5$.
+\end{keybox}
+
+\begin{warnbox}
+\begin{itemize}[nosep,leftmargin=1.4em]
+\item \textbf{Using $c$ instead of $ac$.} When $a \neq 1$ the product you need is $a\cdot c$,
+not just $c$. For $6x^2+13x+5$ it is $30$, not $5$.
+\item \textbf{Forgetting the signs.} The product's sign tells you whether the two numbers have the
+same sign ($+$) or opposite signs ($-$).
+\item \textbf{Putting the diagonal terms in the corners.} $x^2$ and the constant go in
+\emph{opposite corners}; the two $x$-terms go in the other diagonal.
+\item \textbf{Stopping too early.} Always re-multiply to check.
+\end{itemize}
+\end{warnbox}
+
+\newpage
+% =====================================================================
+\partbanner{Summary --- The Whole Method on One Page}
+
+\begin{keybox}
+\textbf{To MULTIPLY $(ax+b)(cx+d)$:}
+\begin{enumerate}[nosep,leftmargin=1.6em]
+\item Write one factor across the top, the other down the side.
+\item Fill each cell with (row)\,$\times$\,(column).
+\item Add all four cells and combine the two middle terms.
+\end{enumerate}
+\medskip
+
+\textbf{To FACTOR $ax^2+bx+c$:}
+\begin{enumerate}[nosep,leftmargin=1.6em]
+\item Factor out any \textbf{GCF} of all three terms first.
+\item Compute $a\cdot c$. Find two numbers with product $ac$ and sum $b$ (use the X).
+\item Put $ax^2$ and $c$ in opposite corners; put the two $x$-terms in the other diagonal.
+\item Take GCFs of the rows and columns to read off the two factors.
+\item \textbf{Check} by multiplying back.
+\end{enumerate}
+\end{keybox}
+
+\vspace{6pt}
+\subsection*{Quick Check --- try these before the worksheet}
+
+\begin{prob}
+\item Multiply $(x+3)(x+6)$ using a box.
+\hfill \blankbox[0.62]
+\worklines{2}
+
+\item Factor $x^2 + 8x + 15$.
+\hfill \blankbox[0.62]
+\worklines{2}
+
+\item Factor $2x^2 + 7x + 3$. \ (Remember: $ac = 2\cdot 3 = 6$.)
+\hfill \blankbox[0.62]
+\worklines{3}
+\end{prob}
+
+\vspace{4pt}
+\begin{anskey}[title={Quick Check --- Answers}]
+\textbf{1.} Cells $x^2,\ 6x,\ 3x,\ 18 \Rightarrow \mathbf{x^2+9x+18}$.
+\qquad
+\textbf{2.} Product $15$, sum $8 \Rightarrow 3,5$; \ $\mathbf{(x+3)(x+5)}$.
+\qquad
+\textbf{3.} $ac=6$, sum $7 \Rightarrow 6,1$; \ $2x^2+6x+x+3 = 2x(x+3)+1(x+3) = \mathbf{(2x+1)(x+3)}$.
+\end{anskey}
+
+\clearpage
+% =====================================================================
+% SECTION II --- PRACTICE WORKSHEET
+% =====================================================================
+\begin{center}
+{\color{primary}\rule{\linewidth}{2pt}}\\[10pt]
+{\color{primary}\bfseries\fontsize{22}{26}\selectfont Practice Worksheet}\\[6pt]
+{\itshape Multiplying and Factoring Binomials}\\[8pt]
+{\color{primary}\rule{\linewidth}{2pt}}
+\end{center}
+
+\vspace{4pt}
+\begin{keybox}
+\textbf{Reminders.}
+\ Multiply: fill each cell with (row)$\times$(column), then add.
+\ Factor: find two numbers with \textbf{product} $a\cdot c$ and \textbf{sum} $b$, split the
+middle term, then take GCFs of the rows and columns.
+\ \textbf{Always check by multiplying back.}
+\medskip
+
+Difficulty: {\footnotesize\ding{108}\ding{109}\ding{109}} Easy \quad
+{\footnotesize\ding{108}\ding{108}\ding{109}} Medium \quad
+{\footnotesize\ding{108}\ding{108}\ding{108}} Hard
+\end{keybox}
+
+\practbanner{Multiplying Binomials with a Box}
+
+\textit{Draw and fill the box, then write the product in standard form.}
+
+\begin{prob}
+\item \LvE $(x+2)(x+6)$ \hfill \blankbox[0.60] \worklines{2}
+\item \LvE $(x+3)(x-5)$ \hfill \blankbox[0.60] \worklines{2}
+\item \LvM $(2x+1)(x+4)$ \hfill \blankbox[0.60] \worklines{2}
+\item \LvM $(3x+2)(2x+5)$ \hfill \blankbox[0.60] \worklines{2}
+\item \LvH $(4x-3)(2x+7)$ \hfill \blankbox[0.60] \worklines{3}
+\item \LvH $(5x-2)(3x-4)$ \hfill \blankbox[0.60] \worklines{3}
+\end{prob}
+
+\newpage
+% =====================================================================
+\practbanner{Factoring when the Leading Coefficient is $1$}
+
+\textit{Find two numbers with product $c$ and sum $b$. Use the X, then the box.}
+
+\begin{prob}
+\item \LvE $x^2 + 7x + 12$ \hfill \xdiag[0.62]{}{}{}{} \worklines{2}
+\item \LvE $x^2 + 10x + 21$ \hfill \xdiag[0.62]{}{}{}{} \worklines{2}
+\item \LvM $x^2 - 9x + 20$ \hfill \xdiag[0.62]{}{}{}{} \worklines{2}
+\item \LvM $x^2 + 2x - 15$ \hfill \xdiag[0.62]{}{}{}{} \worklines{2}
+\item \LvM $x^2 - 3x - 28$ \hfill \xdiag[0.62]{}{}{}{} \worklines{2}
+\item \LvH $x^2 - 16$ \ \emph{(what is the middle term?)} \hfill \xdiag[0.62]{}{}{}{} \worklines{3}
+\end{prob}
+
+\newpage
+% =====================================================================
+\practbanner{Factoring when the Leading Coefficient is not $1$}
+
+\textit{Compute $a\cdot c$ first. Product $=ac$, sum $=b$.}
+
+\begin{prob}
+\item \LvE $2x^2 + 7x + 3$ \hfill \blankbox[0.60] \worklines{3}
+\item \LvM $3x^2 + 10x + 8$ \hfill \blankbox[0.60] \worklines{3}
+\item \LvM $6x^2 + 17x + 5$ \hfill \blankbox[0.60] \worklines{3}
+\item \LvM $4x^2 - 4x - 15$ \hfill \blankbox[0.60] \worklines{3}
+\item \LvH $10x^2 + 29x + 21$ \hfill \blankbox[0.60] \worklines{3}
+\item \LvH $6x^2 - 7x - 3$ \hfill \blankbox[0.60] \worklines{3}
+\end{prob}
+
+\newpage
+% =====================================================================
+\practbanner{Reasoning \& Applications}
+
+\begin{prob}
+\item \LvM A rectangle has area $2x^2 + 11x + 12$ square units. One side measures $2x+3$.
+Find the other side. \worklines{3}
+
+\item \LvM The product $12x^2 + bx + 15$ factors as $(3x+5)$ times another binomial.
+Find the other binomial and the value of $b$. \worklines{3}
+
+\item \LvH Complete the box. Two cells are filled in; find the missing cells \emph{and}
+both binomial factors.
+\begin{center}
+\boxmodel[0.85]{}{}{}{}{$6x^2$}{}{}{$-10$}
+\end{center}
+\emph{Hint: there is more than one correct answer. Give one and check it.}
+\worklines{4}
+
+\item \LvH Marcus factored $8x^2 + 10x - 3$ and got $(4x-1)(2x+3)$.
+Multiply his answer back out. Is he right? If not, find the correct factorization
+and explain his mistake. \worklines{4}
+\end{prob}
+
+\newpage
+% =====================================================================
+\begin{center}
+{\color{primary}\Large\bfseries Complete Answer Key}\\[2pt]
+{\small\itshape with the product--sum reasoning for each problem}
+\end{center}
+\vspace{4pt}{\color{primary}\rule{\linewidth}{1.2pt}}\vspace{6pt}
+
+\begin{anskey}[title={Part 1 --- Multiplying Binomials}]
+\begin{enumerate}[label=\textbf{\arabic*.},leftmargin=2em,itemsep=4pt]
+\item Cells $x^2,\ 6x,\ 2x,\ 12 \Rightarrow \mathbf{x^2+8x+12}$
+\item Cells $x^2,\ -5x,\ 3x,\ -15 \Rightarrow \mathbf{x^2-2x-15}$
+\item Cells $2x^2,\ 8x,\ x,\ 4 \Rightarrow \mathbf{2x^2+9x+4}$
+\item Cells $6x^2,\ 15x,\ 4x,\ 10 \Rightarrow \mathbf{6x^2+19x+10}$
+\item Cells $8x^2,\ -6x,\ 28x,\ -21 \Rightarrow \mathbf{8x^2+22x-21}$
+\item Cells $15x^2,\ -6x,\ -20x,\ 8 \Rightarrow \mathbf{15x^2-26x+8}$
+\end{enumerate}
+\end{anskey}
+
+\begin{anskey}[title={Part 2 --- Factoring, Leading Coefficient $=1$}]
+\begin{enumerate}[label=\textbf{\arabic*.},leftmargin=2em,itemsep=4pt]
+\item Product $12$, sum $7 \Rightarrow 3,4$. \quad $\mathbf{(x+3)(x+4)}$
+\item Product $21$, sum $10 \Rightarrow 3,7$. \quad $\mathbf{(x+3)(x+7)}$
+\item Product $20$, sum $-9 \Rightarrow -4,-5$ (both negative). \quad $\mathbf{(x-4)(x-5)}$
+\item Product $-15$, sum $2 \Rightarrow 5,-3$ (opposite signs). \quad $\mathbf{(x+5)(x-3)}$
+\item Product $-28$, sum $-3 \Rightarrow -7,4$. \quad $\mathbf{(x-7)(x+4)}$
+\item Write it as $x^2 + 0x - 16$: product $-16$, sum $0 \Rightarrow 4,-4$. \quad $\mathbf{(x-4)(x+4)}$
+--- a \emph{difference of squares}.
+\end{enumerate}
+\end{anskey}
+
+\begin{anskey}[title={Part 3 --- Factoring, Leading Coefficient $\neq 1$}]
+\begin{enumerate}[label=\textbf{\arabic*.},leftmargin=2em,itemsep=5pt]
+\item $ac = 6$, sum $7 \Rightarrow 6,1$: \ $2x^2+6x+x+3 = 2x(x+3)+1(x+3) = \mathbf{(2x+1)(x+3)}$
+\item $ac = 24$, sum $10 \Rightarrow 6,4$: \ $3x^2+6x+4x+8 = 3x(x+2)+4(x+2) = \mathbf{(3x+4)(x+2)}$
+\item $ac = 30$, sum $17 \Rightarrow 15,2$: \ $6x^2+15x+2x+5 = 3x(2x+5)+1(2x+5) = \mathbf{(3x+1)(2x+5)}$
+\item $ac = -60$, sum $-4 \Rightarrow -10,6$: \ $4x^2-10x+6x-15 = 2x(2x-5)+3(2x-5) = \mathbf{(2x-5)(2x+3)}$
+\item $ac = 210$, sum $29 \Rightarrow 14,15$: \ $10x^2+14x+15x+21 = 2x(5x+7)+3(5x+7) = \mathbf{(2x+3)(5x+7)}$
+\item $ac = -18$, sum $-7 \Rightarrow -9,2$: \ $6x^2-9x+2x-3 = 3x(2x-3)+1(2x-3) = \mathbf{(2x-3)(3x+1)}$
+\end{enumerate}
+\end{anskey}
+
+\begin{anskey}[title={Part 4 --- Reasoning \& Applications}]
+\begin{enumerate}[label=\textbf{\arabic*.},leftmargin=2em,itemsep=6pt]
+\item Factor the area: $ac = 2\cdot12 = 24$, sum $11 \Rightarrow 8,3$;
+\ $2x^2+8x+3x+12 = 2x(x+4)+3(x+4) = (2x+3)(x+4)$.
+Since one side is $2x+3$, the other side is $\mathbf{x+4}$.
+\emph{Check:} $(2x+3)(x+4) = 2x^2+11x+12$ \ding{51}
+
+\item The $x^2$ cells must give $12x^2$, so the other leading term is $4x$;
+the constants must give $15$, so the other constant is $3$.
+The other binomial is $\mathbf{4x+3}$.
+Multiplying: $(3x+5)(4x+3) = 12x^2+9x+20x+15 = 12x^2+29x+15$, so $\mathbf{b = 29}$.
+
+\item One valid answer: put $6x^2$ and $-10$ in opposite corners.
+Since $ac = 6\cdot(-10) = -60$, choose any pair with product $-60$, for example $15$ and $-4$
+(sum $11$). The box becomes
+\[
+6x^2 + 15x - 4x - 10 = 3x(2x+5) - 2(2x+5) = \mathbf{(3x-2)(2x+5)},
+\]
+which expands to $6x^2 + 11x - 10$.
+\emph{Other answers are possible} --- e.g. $-12$ and $5$ give $(3x+5)(2x-2)$, i.e.\
+$6x^2-6x-10$; any pair with product $-60$ works, and each gives a different middle term.
+
+\item Multiply back: $(4x-1)(2x+3) = 8x^2 + 12x - 2x - 3 = 8x^2 + 10x - 3$.
+\ \textbf{Marcus is correct!} \ding{51}
+His factorization checks out, which is exactly why re-multiplying is worth doing ---
+it confirms a right answer just as clearly as it catches a wrong one.
+\emph{(Verify with the X: $ac = 8\cdot(-3) = -24$, sum $10 \Rightarrow 12$ and $-2$
+\ $\Rightarrow 8x^2+12x-2x-3 = 4x(2x+3)-1(2x+3) = (4x-1)(2x+3)$.)}
+\end{enumerate}
+\end{anskey}
+
+\end{document}

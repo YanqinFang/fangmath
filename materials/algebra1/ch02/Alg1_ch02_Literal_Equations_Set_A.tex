@@ -1,0 +1,243 @@
+\documentclass[11pt,letterpaper]{article}
+\usepackage[T1]{fontenc}
+\usepackage[scaled]{helvet}
+\renewcommand{\familydefault}{\sfdefault}
+\usepackage{amsmath,amssymb}
+\usepackage[margin=0.8in,bottom=0.9in]{geometry}
+\usepackage[most]{tcolorbox}
+\usepackage{tikz}
+\usetikzlibrary{calc}
+\usepackage{enumitem}
+\usepackage{array}
+\usepackage{needspace}
+\usepackage{fancyhdr}
+\usepackage{pifont}
+
+% ---- Palette "F. Bright & Playful" ----
+\definecolor{fmtitle}{HTML}{3D2C8D}
+\definecolor{fmkey}{HTML}{0096C7}
+\definecolor{fmwatch}{HTML}{2BB673}
+\definecolor{fmturn}{HTML}{F4A100}
+\definecolor{fmmistake}{HTML}{EF476F}
+\definecolor{fmnotice}{HTML}{9B5DE5}
+\definecolor{fmgray}{HTML}{6B6B6B}
+
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
+\fancyfoot[C]{\footnotesize\color{fmgray}\textcopyright\ 2026 FangMath. All rights reserved.}
+\fancyfoot[R]{\footnotesize\color{fmgray}\thepage}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{3pt}
+
+\newcommand{\badge}[1]{\colorbox{fmtitle}{\color{white}\bfseries\small\ #1\ }}
+\newcommand{\leveltag}[2]{\colorbox{#1}{\color{white}\bfseries\scriptsize\ #2\ }}
+\newcommand{\LE}{\leveltag{fmwatch}{EASY}}
+\newcommand{\LM}{\leveltag{fmturn}{MEDIUM}}
+\newcommand{\LH}{\leveltag{fmmistake}{HARD}}
+
+\newcommand{\sectionbar}[2]{\needspace{6cm}\par\vspace{4mm}
+  \begin{tcolorbox}[enhanced,colback=fmtitle,colframe=fmtitle,arc=2mm,
+    left=4mm,top=1.5mm,bottom=1.5mm]
+  \color{white}\bfseries\large #1\hfill{\normalsize\mdseries #2}
+  \end{tcolorbox}}
+
+\newtcolorbox{keyidea}{enhanced,breakable,colback=white,colframe=fmkey,boxrule=1pt,arc=2mm,
+  title={Key Idea},coltitle=fmkey,fonttitle=\bfseries,
+  attach boxed title to top left={xshift=4mm,yshift=-2mm},
+  boxed title style={colback=white,colframe=fmkey,boxrule=0.9pt}}
+\newtcolorbox{watchme}{enhanced,colback=white,colframe=fmwatch,boxrule=1pt,arc=2mm,
+  title={Watch Me --- Worked Example},coltitle=fmwatch,fonttitle=\bfseries,
+  attach boxed title to top left={xshift=4mm,yshift=-2mm},
+  boxed title style={colback=white,colframe=fmwatch,boxrule=0.9pt}}
+\newtcolorbox{mistakebox}{enhanced,breakable,colback=white,colframe=fmmistake,boxrule=1pt,arc=2mm,
+  title={Common Mistake},coltitle=fmmistake,fonttitle=\bfseries,
+  attach boxed title to top left={xshift=4mm,yshift=-2mm},
+  boxed title style={colback=white,colframe=fmmistake,boxrule=0.9pt}}
+\newtcolorbox{yourturn}{enhanced,breakable,colback=white,colframe=fmturn,boxrule=1pt,arc=2mm,
+  title={Your Turn},coltitle=fmturn,fonttitle=\bfseries,
+  attach boxed title to top left={xshift=4mm,yshift=-2mm},
+  boxed title style={colback=white,colframe=fmturn,boxrule=0.9pt}}
+\newtcolorbox{answerbox}[1]{enhanced,breakable,colback=white,colframe=fmwatch,boxrule=1pt,arc=2mm,
+  title={#1},coltitle=fmwatch,fonttitle=\bfseries,
+  attach boxed title to top left={xshift=4mm,yshift=-2mm},
+  boxed title style={colback=white,colframe=fmwatch,boxrule=0.9pt}}
+
+\newcommand{\work}[1]{\par\vspace{#1}}
+\setlist[enumerate]{itemsep=2pt,topsep=3pt}
+
+% ---------------- extra boxes ----------------
+\newtcolorbox{notebox}{enhanced,breakable,colback=white,colframe=fmnotice,boxrule=1pt,arc=2mm,
+  title={Notice},coltitle=fmnotice,fonttitle=\bfseries,
+  attach boxed title to top left={xshift=4mm,yshift=-2mm},
+  boxed title style={colback=white,colframe=fmnotice,boxrule=0.9pt}}
+\newtcolorbox{exbox}{enhanced,colback=white,colframe=fmwatch,boxrule=0.8pt,arc=2mm,
+  title={Example},coltitle=fmwatch,fonttitle=\bfseries\small,
+  attach boxed title to top left={xshift=4mm,yshift=-2mm},
+  boxed title style={colback=white,colframe=fmwatch,boxrule=0.8pt},fontupper=\small}
+\newcommand{\topicbar}[1]{\needspace{4.5cm}\par\vspace{5mm}
+  \begin{tcolorbox}[enhanced,colback=fmtitle,colframe=fmtitle,arc=2mm,left=4mm,top=1.5mm,bottom=1.5mm]
+  \color{white}\bfseries\large #1
+  \end{tcolorbox}}
+\usepackage{multicol}
+
+% ---------------- figures (not to scale) ----------------
+\tikzset{fig/.style={line width=0.7pt,line join=round},hid/.style={dashed,gray}}
+% cube with square pyramid on top: #1 cube edge label, #2 slant height label
+\newcommand{\cubepyr}[2]{%
+\begin{tikzpicture}[fig,scale=0.8]
+ \draw (0,0) rectangle (2,2);
+ \draw (2,0)--(2.8,0.55)--(2.8,2.55)--(2,2);
+ \draw[hid] (0,0)--(0.8,0.55)--(2.8,0.55) (0.8,0.55)--(0.8,2.55);
+ \draw (0,2)--(0.8,2.55)--(2.8,2.55);
+ \coordinate (A) at (1.4,4.0);
+ \draw (A)--(0,2) (A)--(2,2) (A)--(2.8,2.55);
+ \draw[hid] (A)--(0.8,2.55);
+ \draw[dashed,fmmistake] (A)--(1,2);
+ \draw[fmmistake,thin] (1.2,3.0)--(-0.1,3.3); \node[font=\small,fmmistake,left] at (-0.1,3.3) {#2};
+ \node[font=\small,below] at (1,0) {#1};
+ \node[font=\small,right] at (2.8,1.5) {#1};
+\end{tikzpicture}}
+% big cube with small cube centered on top: #1 big label, #2 small label
+\newcommand{\cubecube}[2]{%
+\begin{tikzpicture}[fig,scale=0.8]
+ \draw (0,0) rectangle (2.4,2.4);
+ \draw (2.4,0)--(3.3,0.6)--(3.3,3.0)--(2.4,2.4);
+ \draw (0,2.4)--(0.9,3.0)--(3.3,3.0);
+ \draw[hid] (0,0)--(0.9,0.6)--(3.3,0.6) (0.9,0.6)--(0.9,3.0);
+ \begin{scope}[shift={(0.85,2.55)}]
+  \draw[fill=white] (0,0) rectangle (1.2,1.2);
+  \draw[fill=white] (1.2,0)--(1.65,0.3)--(1.65,1.5)--(1.2,1.2)--cycle;
+  \draw[fill=white] (0,1.2)--(0.45,1.5)--(1.65,1.5)--(1.2,1.2)--cycle;
+ \end{scope}
+ \node[font=\small,below] at (1.2,0) {#1};
+ \node[font=\small,right] at (2.6,3.4) {#2};
+\end{tikzpicture}}
+% tower of three cubes: #1 #2 #3 labels (bottom, middle, top)
+\newcommand{\towercubes}[3]{%
+\begin{tikzpicture}[fig,scale=0.75]
+ \draw (0,0) rectangle (2.4,2.4);
+ \draw (2.4,0)--(3.3,0.6)--(3.3,3.0)--(2.4,2.4);
+ \draw (0,2.4)--(0.9,3.0)--(3.3,3.0);
+ \begin{scope}[shift={(0.85,2.55)}]
+  \draw[fill=white] (0,0) rectangle (1.2,1.2);
+  \draw[fill=white] (1.2,0)--(1.65,0.3)--(1.65,1.5)--(1.2,1.2)--cycle;
+  \draw[fill=white] (0,1.2)--(0.45,1.5)--(1.65,1.5)--(1.2,1.2)--cycle;
+ \end{scope}
+ \begin{scope}[shift={(1.28,3.85)}]
+  \draw[fill=white] (0,0) rectangle (0.6,0.6);
+  \draw[fill=white] (0.6,0)--(0.83,0.15)--(0.83,0.75)--(0.6,0.6)--cycle;
+  \draw[fill=white] (0,0.6)--(0.23,0.75)--(0.83,0.75)--(0.6,0.6)--cycle;
+ \end{scope}
+ \node[font=\small,below] at (1.2,0) {#1};
+ \node[font=\small,left] at (0.85,3.15) {#2};
+ \node[font=\small,left] at (1.28,4.15) {#3};
+\end{tikzpicture}}
+% house-shaped prism: #1 front width, #2 depth, #3 wall height, #4 left roof leg, #5 right roof leg
+\newcommand{\housefig}[5]{%
+\begin{tikzpicture}[fig,scale=0.8]
+ \coordinate (P) at (1.25,3.35);
+ \draw (0,0)--(3.4,0)--(3.4,2)--(P)--(0,2)--cycle;
+ \draw (3.4,0)--(4.6,0.8)--(4.6,2.8)--(3.4,2);
+ \draw (P)--($(P)+(1.2,0.8)$)--(4.6,2.8);
+ \draw[hid] (0,0)--(1.2,0.8)--(4.6,0.8) (1.2,0.8)--(1.2,2.8)--(0,2) (1.2,2.8)--($(P)+(1.2,0.8)$);
+  \draw[fmmistake] ($(P)!2.2mm!(0,2)$)--($($(P)!2.2mm!(0,2)$)+($(P)!2.2mm!(3.4,2)$)-(P)$)--($(P)!2.2mm!(3.4,2)$);
+ \node[font=\small,below] at (1.7,0) {#1};
+ \node[font=\small,below right] at (4.0,0.4) {#2};
+ \node[font=\small,right] at (4.6,1.8) {#3};
+ \node[font=\small,left,fmmistake] at (0.55,2.75) {#4};
+ \node[font=\small,right,fmmistake] at (2.35,2.75) {#5};
+\end{tikzpicture}}
+% cube with a square hole through the center, front to back: #1 cube label, #2 hole label
+\newcommand{\holecube}[2]{%
+\begin{tikzpicture}[fig,scale=0.8]
+ \fill[gray!20] (0,0) rectangle (2.6,2.6);
+ \fill[white] (0.9,0.9) rectangle (1.7,1.7);
+ \draw (0,0) rectangle (2.6,2.6);
+ \draw (2.6,0)--(3.5,0.6)--(3.5,3.2)--(2.6,2.6);
+ \draw (0,2.6)--(0.9,3.2)--(3.5,3.2);
+ \draw (0.9,0.9) rectangle (1.7,1.7);
+ \draw[hid] (0.9,1.7)--(1.35,2.0) (1.7,1.7)--(2.15,2.0) (1.7,0.9)--(2.15,1.2);
+ \draw[hid] (1.35,2.0)--(2.15,2.0)--(2.15,1.2);
+ \node[font=\small,below] at (1.3,0) {#1};
+ \node[font=\small,right] at (3.5,1.9) {#1};
+ \node[font=\scriptsize,below] at (1.3,0.9) {#2};
+\end{tikzpicture}}
+
+% ---------------- practice layout ----------------
+\newcommand{\workline}{\par\vspace{7mm}{\color{gray!55}\rule{\linewidth}{0.4pt}}}
+\newcommand{\worklines}[1]{\foreach \i in {1,...,#1}{\workline}}
+\newcommand{\prob}[3]{\needspace{#3}\par\vspace{3mm}{\color{fmturn}\bfseries #1.}\ #2\par}
+\newcommand{\ansline}{\par\vspace{4mm}\hfill\textbf{Answer:}\ \rule{5cm}{0.4pt}\par}
+\newcommand{\keyitem}[3]{\needspace{3.2cm}\par\vspace{2mm}
+  \begin{tcolorbox}[enhanced,colback=white,colframe=fmwatch!60,boxrule=0.6pt,arc=1.5mm,left=3mm,top=1.5mm,bottom=1.5mm]
+  {\color{fmwatch}\bfseries #1.}\quad\small #2\par\vspace{1mm}
+  \normalsize\textbf{Answer: #3}
+  \end{tcolorbox}}
+
+\begin{document}
+\badge{WORKSHEET}\hfill{\small\color{fmgray}Algebra 1 \textperiodcentered\ Literal Equations}\par\vspace{4mm}
+{\color{fmtitle}\LARGE\bfseries Solving Literal Equations --- Set A}\par\vspace{1mm}
+{\color{fmgray}Easy level \textperiodcentered\ 30 problems \textperiodcentered\ A worked example comes before each type. Show every step.}\par\vspace{3mm}
+Name: \rule{6cm}{0.4pt}\hspace{1cm}Date: \rule{3.5cm}{0.4pt}\par\vspace{1mm}
+\begin{keyidea}A \textbf{literal equation} has more than one letter. To ``solve for'' one letter, get it alone on one side.
+\begin{itemize}[itemsep=1pt,topsep=2pt]
+\item Treat every \emph{other} letter exactly like a number.
+\item Use the same moves as always: undo $+$/$-$ first, then undo $\times$/$\div$.
+\item \textbf{Ask yourself:} ``If these letters were numbers, what would I do?'' \ Then do it with the letters.
+\end{itemize}\end{keyidea}
+\begin{mistakebox}Undo \emph{everything} attached to your letter. From $d = rt$, dividing by $r$ gives $t = \dfrac{d}{r}$, \textbf{not} $t = d - r$ ($rt$ means multiply, so undo by dividing).\par
+In a fraction answer, divide the \emph{whole} side: from $ax = c - b$, \ $x = \dfrac{c - b}{a}$, \textbf{not} $c - \dfrac{b}{a}$.\end{mistakebox}
+\needspace{9cm}\topicbar{Type 1 \quad One Step: Add or Subtract}
+\begin{watchme}\textbf{Solve $x + a = b$ for $x$.}\par\vspace{1mm}
+Treat every letter except $x$ like a number. If it were $x + 3 = 10$, you would subtract 3.\par\vspace{1mm}
+\renewcommand{\arraystretch}{2.1}\begin{tabular}{@{}l l@{}}
+\textbf{Step 1} \ Subtract $a$ from both sides & $x + a - a = b - a$\\
+\textbf{Answer} & $\boldsymbol{x = b - a}$
+\end{tabular}\end{watchme}
+\needspace{3.5cm}\par\vspace{3mm}\noindent \begin{minipage}[t][3.0cm]{0.48\linewidth}\raggedright{\color{fmturn}\bfseries 1.}\ Solve $x + y = 10$ for $x$.\par\vfill\hfill $x = $\ \rule{3.2cm}{0.4pt}\end{minipage}\hfill \begin{minipage}[t][3.0cm]{0.48\linewidth}\raggedright{\color{fmturn}\bfseries 2.}\ Solve $a + b = c$ for $a$.\par\vfill\hfill $a = $\ \rule{3.2cm}{0.4pt}\end{minipage}\par
+\needspace{3.5cm}\par\vspace{3mm}\noindent \begin{minipage}[t][3.0cm]{0.48\linewidth}\raggedright{\color{fmturn}\bfseries 3.}\ Solve $m - n = p$ for $m$.\par\vfill\hfill $m = $\ \rule{3.2cm}{0.4pt}\end{minipage}\hfill \begin{minipage}[t][3.0cm]{0.48\linewidth}\raggedright{\color{fmturn}\bfseries 4.}\ Solve $y - 4 = k$ for $y$.\par\vfill\hfill $y = $\ \rule{3.2cm}{0.4pt}\end{minipage}\par
+\needspace{3.5cm}\par\vspace{3mm}\noindent \begin{minipage}[t][3.0cm]{0.48\linewidth}\raggedright{\color{fmturn}\bfseries 5.}\ Solve $d + e = f$ for $e$.\par\vfill\hfill $e = $\ \rule{3.2cm}{0.4pt}\end{minipage}\hfill \begin{minipage}[t][3.0cm]{0.48\linewidth}\raggedright{\color{fmturn}\bfseries 6.}\ Solve $t - s = r$ for $t$.\par\vfill\hfill $t = $\ \rule{3.2cm}{0.4pt}\end{minipage}\par
+\needspace{9cm}\topicbar{Type 2 \quad One Step: Multiply or Divide}
+\begin{watchme}\textbf{Solve $d = rt$ for $t$.}\par\vspace{1mm}
+$rt$ means $r \cdot t$, so $t$ is being \emph{multiplied} by $r$. Undo it by dividing.\par\vspace{1mm}
+\renewcommand{\arraystretch}{2.1}\begin{tabular}{@{}l l@{}}
+\textbf{Step 1} \ Divide both sides by $r$ & $\dfrac{d}{r} = \dfrac{rt}{r}$\\
+\textbf{Answer} & $\boldsymbol{t = \dfrac{d}{r}}$
+\end{tabular}\end{watchme}
+\needspace{3.5cm}\par\vspace{3mm}\noindent \begin{minipage}[t][3.0cm]{0.48\linewidth}\raggedright{\color{fmturn}\bfseries 7.}\ Solve $A = lw$ for $w$.\par\vfill\hfill $w = $\ \rule{3.2cm}{0.4pt}\end{minipage}\hfill \begin{minipage}[t][3.0cm]{0.48\linewidth}\raggedright{\color{fmturn}\bfseries 8.}\ Solve $V = Bh$ for $h$.\par\vfill\hfill $h = $\ \rule{3.2cm}{0.4pt}\end{minipage}\par
+\needspace{3.5cm}\par\vspace{3mm}\noindent \begin{minipage}[t][3.0cm]{0.48\linewidth}\raggedright{\color{fmturn}\bfseries 9.}\ Solve $F = ma$ for $a$.\par\vfill\hfill $a = $\ \rule{3.2cm}{0.4pt}\end{minipage}\hfill \begin{minipage}[t][3.0cm]{0.48\linewidth}\raggedright{\color{fmturn}\bfseries 10.}\ Solve $C = \pi d$ for $d$.\par\vfill\hfill $d = $\ \rule{3.2cm}{0.4pt}\end{minipage}\par
+\needspace{3.5cm}\par\vspace{3mm}\noindent \begin{minipage}[t][3.0cm]{0.48\linewidth}\raggedright{\color{fmturn}\bfseries 11.}\ Solve $\dfrac{a}{b} = c$ for $a$.\par\vfill\hfill $a = $\ \rule{3.2cm}{0.4pt}\end{minipage}\hfill \begin{minipage}[t][3.0cm]{0.48\linewidth}\raggedright{\color{fmturn}\bfseries 12.}\ Solve $\dfrac{y}{4} = k$ for $y$.\par\vfill\hfill $y = $\ \rule{3.2cm}{0.4pt}\end{minipage}\par
+\needspace{9cm}\topicbar{Type 3 \quad Two Steps}
+\begin{watchme}\textbf{Solve $y = mx + b$ for $x$.}\par\vspace{1mm}
+Undo in reverse order: first undo the $+b$, then undo the $\times m$.\par\vspace{1mm}
+\renewcommand{\arraystretch}{2.1}\begin{tabular}{@{}l l@{}}
+\textbf{Step 1} \ Subtract $b$ from both sides & $y - b = mx$\\
+\textbf{Step 2} \ Divide both sides by $m$ & $\dfrac{y - b}{m} = x$\\
+\textbf{Answer} & $\boldsymbol{x = \dfrac{y - b}{m}}$
+\end{tabular}\end{watchme}
+\needspace{3.5cm}\par\vspace{3mm}\noindent \begin{minipage}[t][3.0cm]{0.48\linewidth}\raggedright{\color{fmturn}\bfseries 13.}\ Solve $ax + b = c$ for $x$.\par\vfill\hfill $x = $\ \rule{3.2cm}{0.4pt}\end{minipage}\hfill \begin{minipage}[t][3.0cm]{0.48\linewidth}\raggedright{\color{fmturn}\bfseries 14.}\ Solve $P = 2l + 2w$ for $l$.\par\vfill\hfill $l = $\ \rule{3.2cm}{0.4pt}\end{minipage}\par
+\needspace{3.5cm}\par\vspace{3mm}\noindent \begin{minipage}[t][3.0cm]{0.48\linewidth}\raggedright{\color{fmturn}\bfseries 15.}\ Solve $y = 3x - 5$ for $x$.\par\vfill\hfill $x = $\ \rule{3.2cm}{0.4pt}\end{minipage}\hfill \begin{minipage}[t][3.0cm]{0.48\linewidth}\raggedright{\color{fmturn}\bfseries 16.}\ Solve $2x + y = 8$ for $y$.\par\vfill\hfill $y = $\ \rule{3.2cm}{0.4pt}\end{minipage}\par
+\needspace{3.5cm}\par\vspace{3mm}\noindent \begin{minipage}[t][3.0cm]{0.48\linewidth}\raggedright{\color{fmturn}\bfseries 17.}\ Solve $5x - y = 10$ for $y$.\par\vfill\hfill $y = $\ \rule{3.2cm}{0.4pt}\end{minipage}\hfill \begin{minipage}[t][3.0cm]{0.48\linewidth}\raggedright{\color{fmturn}\bfseries 18.}\ Solve $ax - c = d$ for $x$.\par\vfill\hfill $x = $\ \rule{3.2cm}{0.4pt}\end{minipage}\par
+\needspace{9cm}\topicbar{Type 4 \quad Parentheses}
+\begin{watchme}\textbf{Solve $P = 2(l + w)$ for $w$.}\par\vspace{1mm}
+The quickest way: divide by the number outside the parentheses first.\par\vspace{1mm}
+\renewcommand{\arraystretch}{2.1}\begin{tabular}{@{}l l@{}}
+\textbf{Step 1} \ Divide both sides by 2 & $\dfrac{P}{2} = l + w$\\
+\textbf{Step 2} \ Subtract $l$ from both sides & $\dfrac{P}{2} - l = w$\\
+\textbf{Answer} & $\boldsymbol{w = \dfrac{P}{2} - l}$
+\end{tabular}\end{watchme}
+\needspace{3.5cm}\par\vspace{3mm}\noindent \begin{minipage}[t][3.0cm]{0.48\linewidth}\raggedright{\color{fmturn}\bfseries 19.}\ Solve $a(x + b) = c$ for $x$.\par\vfill\hfill $x = $\ \rule{3.2cm}{0.4pt}\end{minipage}\hfill \begin{minipage}[t][3.0cm]{0.48\linewidth}\raggedright{\color{fmturn}\bfseries 20.}\ Solve $3(x + y) = z$ for $x$.\par\vfill\hfill $x = $\ \rule{3.2cm}{0.4pt}\end{minipage}\par
+\needspace{3.5cm}\par\vspace{3mm}\noindent \begin{minipage}[t][3.0cm]{0.48\linewidth}\raggedright{\color{fmturn}\bfseries 21.}\ Solve $2(a - b) = c$ for $a$.\par\vfill\hfill $a = $\ \rule{3.2cm}{0.4pt}\end{minipage}\hfill \begin{minipage}[t][3.0cm]{0.48\linewidth}\raggedright{\color{fmturn}\bfseries 22.}\ Solve $k(m + n) = p$ for $m$.\par\vfill\hfill $m = $\ \rule{3.2cm}{0.4pt}\end{minipage}\par
+\needspace{3.5cm}\par\vspace{3mm}\noindent \begin{minipage}[t][3.0cm]{0.48\linewidth}\raggedright{\color{fmturn}\bfseries 23.}\ Solve $4(x - y) = t$ for $x$.\par\vfill\hfill $x = $\ \rule{3.2cm}{0.4pt}\end{minipage}\hfill \begin{minipage}[t][3.0cm]{0.48\linewidth}\raggedright{\color{fmturn}\bfseries 24.}\ Solve $2(x + 5) = y$ for $x$.\par\vfill\hfill $x = $\ \rule{3.2cm}{0.4pt}\end{minipage}\par
+\needspace{9cm}\topicbar{Type 5 \quad Fractions and Formulas}
+\begin{watchme}\textbf{Solve $A = \tfrac12 bh$ for $h$.}\par\vspace{1mm}
+Clear the fraction first by multiplying by its denominator.\par\vspace{1mm}
+\renewcommand{\arraystretch}{2.1}\begin{tabular}{@{}l l@{}}
+\textbf{Step 1} \ Multiply both sides by 2 & $2A = bh$\\
+\textbf{Step 2} \ Divide both sides by $b$ & $\dfrac{2A}{b} = h$\\
+\textbf{Answer} & $\boldsymbol{h = \dfrac{2A}{b}}$
+\end{tabular}\end{watchme}
+\needspace{3.5cm}\par\vspace{3mm}\noindent \begin{minipage}[t][3.0cm]{0.48\linewidth}\raggedright{\color{fmturn}\bfseries 25.}\ Solve $A = \tfrac12 bh$ for $b$.\par\vfill\hfill $b = $\ \rule{3.2cm}{0.4pt}\end{minipage}\hfill \begin{minipage}[t][3.0cm]{0.48\linewidth}\raggedright{\color{fmturn}\bfseries 26.}\ Solve $\dfrac{x + y}{2} = m$ for $x$.\par\vfill\hfill $x = $\ \rule{3.2cm}{0.4pt}\end{minipage}\par
+\needspace{3.5cm}\par\vspace{3mm}\noindent \begin{minipage}[t][3.0cm]{0.48\linewidth}\raggedright{\color{fmturn}\bfseries 27.}\ Solve $C = 2\pi r$ for $r$.\par\vfill\hfill $r = $\ \rule{3.2cm}{0.4pt}\end{minipage}\hfill \begin{minipage}[t][3.0cm]{0.48\linewidth}\raggedright{\color{fmturn}\bfseries 28.}\ Solve $I = Prt$ for $P$.\par\vfill\hfill $P = $\ \rule{3.2cm}{0.4pt}\end{minipage}\par
+\needspace{3.5cm}\par\vspace{3mm}\noindent \begin{minipage}[t][3.0cm]{0.48\linewidth}\raggedright{\color{fmturn}\bfseries 29.}\ Solve $y = \dfrac{x - 3}{2}$ for $x$.\par\vfill\hfill $x = $\ \rule{3.2cm}{0.4pt}\end{minipage}\hfill \begin{minipage}[t][3.0cm]{0.48\linewidth}\raggedright{\color{fmturn}\bfseries 30.}\ Solve $V = lwh$ for $h$.\par\vfill\hfill $h = $\ \rule{3.2cm}{0.4pt}\end{minipage}\par\end{document}

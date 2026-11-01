@@ -1,0 +1,173 @@
+\documentclass[12pt]{article}
+\usepackage[letterpaper,margin=1in]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage{enumitem}
+\usepackage{multicol}
+\usepackage{tikz}
+
+\setlength{\parindent}{0pt}
+\pagestyle{empty}
+
+% vertical work space after each problem
+\newcommand{\work}[1][2.2cm]{\vspace{#1}}
+
+% X-method diagram: \Xdiagram{product}{sum}{left}{right}
+\newcommand{\Xdiagram}[4]{%
+\begin{tikzpicture}[baseline=(current bounding box.center), line width=0.6pt]
+  \draw (-0.7,-0.7) -- (0.7,0.7);
+  \draw (-0.7,0.7) -- (0.7,-0.7);
+  \node at (0,0.95)  {$#1$};
+  \node at (0,-0.95) {$#2$};
+  \node at (-1.05,0) {$#3$};
+  \node at (1.05,0)  {$#4$};
+\end{tikzpicture}}
+
+\begin{document}
+
+\begin{center}
+  {\Large\bfseries Factoring Quadratics \& the Zero Product Property}
+\end{center}
+
+\vspace{0.5em}
+Name: \rule{5.5cm}{0.4pt} \hfill Date: \rule{3cm}{0.4pt}
+
+\vspace{0.5em}\hrule\vspace{1em}
+
+\section*{Example: The X Method}
+To factor $x^2 + 8x + 15$, find two numbers whose \emph{product} is $c = 15$ (top)
+and whose \emph{sum} is $b = 8$ (bottom). The pair goes on the sides.
+
+\begin{center}
+\begin{tikzpicture}[line width=0.6pt]
+  \node at (0,1.45)  {\footnotesize product ($c$)};
+  \node at (0,-1.45) {\footnotesize sum ($b$)};
+  \node at (0,0) {\Xdiagram{15}{8}{3}{5}};
+  \draw[->] (1.9,0) -- (2.9,0);
+  \node[anchor=west] at (3.1,0) {$x^2 + 8x + 15 = (x+3)(x+5)$};
+\end{tikzpicture}
+\end{center}
+
+Since $3 \times 5 = 15$ and $3 + 5 = 8$, the numbers are $3$ and $5$,
+so the factors are $(x+3)$ and $(x+5)$.
+
+\section*{A. Warm-Up: The Diamond (X) Method}
+Fill in the sides of each X: the two numbers must multiply to the top and add to the bottom.
+
+\begin{multicols}{2}
+\begin{enumerate}[itemsep=1.0cm]
+  \item \Xdiagram{12}{7}{?}{?}
+  \item \Xdiagram{24}{10}{?}{?}
+  \item \Xdiagram{-18}{3}{?}{?}
+  \item \Xdiagram{20}{-9}{?}{?}
+\end{enumerate}
+\end{multicols}
+
+\newpage
+
+\section*{B. Factor Each Trinomial}
+Use the X method or an area (box) model. Check by multiplying.
+
+\begin{multicols}{2}
+\begin{enumerate}[itemsep=2.2cm]
+  \item $x^2 + 7x + 12$
+  \item $x^2 + 9x + 18$
+  \item $x^2 + 11x + 24$
+  \item $x^2 - x - 20$
+  \item $x^2 - 10x + 21$
+  \item $x^2 + 2x - 35$
+  \item $x^2 - 13x + 40$
+  \item $x^2 - 4x - 45$
+\end{enumerate}
+\end{multicols}
+
+\newpage
+
+\section*{Example: Factor by Grouping}
+When $a \neq 1$, as in $2x^2 + 11x + 12$, the X still works --- but the
+\emph{product} is now $a \cdot c = 2 \cdot 12 = 24$, and the pair splits
+the middle term instead of giving the factors directly.
+
+\begin{center}
+\begin{tikzpicture}[line width=0.6pt]
+  \node at (0,1.45)  {\footnotesize product ($a \cdot c$)};
+  \node at (0,-1.45) {\footnotesize sum ($b$)};
+  \node at (0,0) {\Xdiagram{24}{11}{3}{8}};
+  \draw[->] (1.9,0) -- (2.9,0);
+  \node[anchor=west] at (3.1,0) {split: $11x = 3x + 8x$};
+\end{tikzpicture}
+\end{center}
+
+\begin{align*}
+2x^2 + 11x + 12 &= 2x^2 + 3x + 8x + 12 && \text{split the middle term}\\
+&= (2x^2 + 3x) + (8x + 12) && \text{group}\\
+&= x(2x + 3) + 4(2x + 3) && \text{factor each group}\\
+&= (2x + 3)(x + 4) && \text{common factor } (2x+3)
+\end{align*}
+
+\section*{C. Factor by Grouping}
+Split the middle term, then group. \emph{Hint: find two numbers whose product is $a\cdot c$ and whose sum is $b$.}
+
+\begin{enumerate}[itemsep=2.8cm]
+  \item $2x^2 + 7x + 3$
+  \item $3x^2 + 10x + 8$
+  \item $4x^2 - 4x - 15$
+  \item $6x^2 + 11x - 10$
+\end{enumerate}
+
+\section*{D. Solve Using the Zero Product Property}
+Get one side equal to $0$, factor, then set each factor equal to $0$.
+
+\begin{enumerate}[itemsep=2.6cm]
+  \item $(x+2)(x-7) = 0$
+  \item $x^2 + 8x + 15 = 0$
+  \item $x^2 - 5x - 14 = 0$
+  \item $x^2 + 6x = 27$
+  \item $2x^2 + 5x - 3 = 0$
+  \item $x^2 = 9x$ \quad \emph{(Careful: don't divide both sides by $x$!)}
+\end{enumerate}
+
+\newpage
+
+\begin{center}
+  {\Large\bfseries Answer Key}
+\end{center}
+
+\section*{A. Warm-Up}
+\begin{enumerate}[itemsep=2pt]
+  \item $3$ and $4$
+  \item $4$ and $6$
+  \item $6$ and $-3$
+  \item $-4$ and $-5$
+\end{enumerate}
+
+\section*{B. Factoring}
+\begin{enumerate}[itemsep=2pt]
+  \item $(x+3)(x+4)$
+  \item $(x+3)(x+6)$
+  \item $(x+3)(x+8)$
+  \item $(x-5)(x+4)$
+  \item $(x-3)(x-7)$
+  \item $(x+7)(x-5)$
+  \item $(x-5)(x-8)$
+  \item $(x-9)(x+5)$
+\end{enumerate}
+
+\section*{C. Grouping}
+\begin{enumerate}[itemsep=2pt]
+  \item $2x^2 + x + 6x + 3 = x(2x+1) + 3(2x+1) = (2x+1)(x+3)$
+  \item $3x^2 + 6x + 4x + 8 = 3x(x+2) + 4(x+2) = (3x+4)(x+2)$
+  \item $4x^2 + 6x - 10x - 15 = 2x(2x+3) - 5(2x+3) = (2x+3)(2x-5)$
+  \item $6x^2 + 15x - 4x - 10 = 3x(2x+5) - 2(2x+5) = (3x-2)(2x+5)$
+\end{enumerate}
+
+\section*{D. Zero Product Property}
+\begin{enumerate}[itemsep=2pt]
+  \item $x = -2$ or $x = 7$
+  \item $(x+3)(x+5) = 0$, so $x = -3$ or $x = -5$
+  \item $(x-7)(x+2) = 0$, so $x = 7$ or $x = -2$
+  \item $x^2 + 6x - 27 = 0$; $(x+9)(x-3) = 0$, so $x = -9$ or $x = 3$
+  \item $(2x-1)(x+3) = 0$, so $x = \tfrac{1}{2}$ or $x = -3$
+  \item $x^2 - 9x = 0$; $x(x-9) = 0$, so $x = 0$ or $x = 9$ \; (dividing by $x$ loses the solution $x = 0$)
+\end{enumerate}
+
+\end{document}

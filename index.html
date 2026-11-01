@@ -892,7 +892,7 @@ function pageLesson(v, cid, ui, li, mode){
     : h("div", { class:"res" }, h("span", { class:"ic" }, ic), h("div", { style:"flex:1" }, h("b", {}, t), h("span", {}, s + " · PDF")),
         h("span", { class:"res-bw" }, h("a", { class:"btn sm", href:l[k], target:"_blank", rel:"noopener" }, "🎨 Color"), h("a", { class:"btn sm ghost", href:bwOf(l[k]), target:"_blank", rel:"noopener" }, "⚫ Black & white")));
   const RES = { notes:["notes", "📘", "Class notes", "Read and follow along"], worksheet:["worksheet", "✏️", "Worksheet", "Printable practice"], answers:["answers", "✅", "Answer key", "Check your work"] };
-  const res = (mode === "learn" ? ["notes", "answers"] : ["worksheet"]).filter(k => l[k]).map(k => resRow(RES[k]));
+  const res = (mode === "learn" ? [l.notes ? "notes" : "worksheet", "answers"] : ["worksheet"]).filter(k => l[k]).map(k => resRow(RES[k]));
   const hasQuiz = l.quiz && l.quiz.length;
   const head = h("div", { class:"page-head" }, h("div", { class:"crumbs" }, h("a", { href:"#/course/" + c.id }, c.title), " / " + u.title), h("h1", {}, l.title), l.summary ? mathEl("p", l.summary) : null);
   const side = h("div", {}, h("div", { class:"card" }, h("h3", { style:"font-size:20px;margin-bottom:12px" }, mode === "learn" ? "Learn materials" : "Practice materials"),

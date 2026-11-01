@@ -1,0 +1,446 @@
+\documentclass[11pt]{article}
+\usepackage[a4paper,margin=1.9cm]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{titlesec}
+\usepackage{fancyhdr}
+\usepackage{tabularx}
+\usepackage{lmodern}
+
+\definecolor{brandred}{RGB}{196,30,30}
+\definecolor{brandblue}{RGB}{30,90,160}
+\definecolor{brandgreen}{RGB}{40,120,90}
+\definecolor{brandpurple}{RGB}{108,58,148}
+\definecolor{brandteal}{RGB}{18,128,128}
+\definecolor{lightblue}{RGB}{223,238,246}
+\definecolor{lightgreen}{RGB}{224,241,232}
+\definecolor{lightpurple}{RGB}{236,228,245}
+\definecolor{lightteal}{RGB}{218,240,240}
+\definecolor{lightgray}{RGB}{240,240,240}
+
+\titleformat{\section}{\large\bfseries\color{brandred}}{\thesection}{0.5em}{}
+\titleformat{\subsection}{\normalsize\bfseries\color{brandblue}}{\thesubsection}{0.5em}{}
+
+\setlength{\headheight}{14pt}
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0.4pt}
+\fancyhead[L]{\small Solving Equations}
+\fancyhead[R]{\small Name: \underline{\hspace{2.8cm}}\quad Date: \underline{\hspace{2.2cm}}}
+\fancyfoot[C]{\small\thepage}
+
+\newtcolorbox{targetbox}[1][]{
+  colback=white, colframe=brandred, boxrule=1.3pt, arc=1.5mm,
+  left=3mm, right=3mm, top=2mm, bottom=2mm,
+  title={\textbf{\large Target Problem}}, coltitle=white, colbacktitle=brandred, #1
+}
+\newtcolorbox{choosebox}[1][]{
+  colback=lightblue, colframe=brandblue, boxrule=1pt, arc=1.5mm,
+  left=3mm, right=3mm, top=2mm, bottom=2mm,
+  title={\textbf{Step 1 \; Choose: Which Equation Can Help You?}}, coltitle=white, colbacktitle=brandblue, #1
+}
+\newtcolorbox{helperbox}[1][]{
+  colback=lightgreen, colframe=brandgreen, boxrule=1pt, arc=1.5mm,
+  left=3mm, right=3mm, top=2mm, bottom=2mm,
+  title={\textbf{Step 2 \; Solve the ``Assistant Equation'' First}}, coltitle=white, colbacktitle=brandgreen, #1
+}
+\newtcolorbox{applybox}[1][]{
+  colback=white, colframe=brandred, boxrule=1.1pt, arc=1.5mm,
+  left=3mm, right=3mm, top=2mm, bottom=2mm,
+  title={\textbf{Step 3 \; Worked Example --- Solve the Target Problem}}, coltitle=white, colbacktitle=brandred, #1
+}
+\newtcolorbox{mcbox}[1][]{
+  colback=lightpurple, colframe=brandpurple, boxrule=1pt, arc=1.5mm,
+  left=3mm, right=3mm, top=2mm, bottom=2mm,
+  title={\textbf{Practice 1 \; Multiple Choice (Modeled on the Example)}}, coltitle=white, colbacktitle=brandpurple, #1
+}
+\newtcolorbox{fillbox}[1][]{
+  colback=lightteal, colframe=brandteal, boxrule=1pt, arc=1.5mm,
+  left=3mm, right=3mm, top=2mm, bottom=2mm,
+  title={\textbf{Practice 2 \; Fill in the Blanks (with Reasons)}}, coltitle=white, colbacktitle=brandteal, #1
+}
+\newtcolorbox{indepbox}[1][]{
+  colback=white, colframe=black!70, boxrule=1.2pt, arc=1.5mm,
+  left=3mm, right=3mm, top=2mm, bottom=2mm,
+  title={\textbf{Practice 3 \; Solve It Completely on Your Own}}, coltitle=white, colbacktitle=black!70, #1
+}
+\newtcolorbox{bonusbox}[1][]{
+  colback=lightgray, colframe=black!50, boxrule=0.8pt, arc=1.5mm,
+  left=3mm, right=3mm, top=2mm, bottom=2mm,
+  title={\textbf{Bonus \; Reasoning}}, coltitle=white, colbacktitle=black!60, #1
+}
+\newtcolorbox{warmbox}{
+  colback=yellow!12, colframe=orange!80!black, boxrule=1pt, arc=1.5mm,
+  left=3mm, right=3mm, top=2mm, bottom=2mm,
+  title={\textbf{Warm-Up · Review of One-Step Equations}}, coltitle=white, colbacktitle=orange!80!black
+}
+
+\newcommand{\choice}[2]{\hspace{2mm}$\bigcirc$\; \textbf{#1.} #2}
+\newcommand{\banner}[2]{%
+  \begin{center}
+  \colorbox{#1}{\parbox{0.97\linewidth}{\centering\color{white}\bfseries\Large\vspace{1.2mm} #2 \vspace{1.2mm}}}
+  \end{center}%
+  \vspace{2mm}
+}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{4pt}
+
+\begin{document}
+
+% ===== Title =====
+\begin{center}
+  {\Huge\bfseries\color{brandred} Solving Equations}\\[2mm]
+  {\large\color{brandblue} From One-Step to Fraction Equations --- ``Pick an Assistant $\to$ Practice $\to$ Conquer'' Handout}\\[1mm]
+  {\small Level: Middle School Algebra (Pre-Algebra \,$\to$\, Algebra 1)}
+\end{center}
+
+\vspace{2mm}
+\hrule
+\vspace{3mm}
+
+{\bfseries Learning Goals:}
+\begin{enumerate}[itemsep=1pt, topsep=2pt]
+  \item Solve one-step equations using inverse operations (addition, subtraction, multiplication, division);
+  \item Learn to \textbf{spot an "assistant equation"} with the same structure as a harder problem, and use it to rehearse the solving steps;
+  \item \textbf{Transfer} the method learned from the assistant equation to a fully worked example, explaining the reason for every step;
+  \item Practice each skill through multiple choice, fill-in-the-blank with reasoning, and fully independent problems, then apply it on homework.
+\end{enumerate}
+
+{\bfseries How to use this handout:} Each topic follows the same path: \textbf{\textcircled{\small 1} Pick a similar assistant equation $\to$ \textcircled{\small 2} Solve that simpler assistant equation first $\to$ \textcircled{\small 3} Study a fully worked example with a reason for every step.} Then, under \textbf{Class Work}, you move through three practice problems that get progressively more independent: multiple choice, fill-in-the-blank with reasoning, and solving completely on your own. \textbf{Homework} gives you more of the same to build fluency.
+
+% ===================================================
+\section*{Part 1 \ · \ Warm-Up: One-Step Equations}
+
+\begin{warmbox}
+Solve each equation for $y$ using an inverse operation. Remember: addition and subtraction are inverses; multiplication and division are inverses.
+\begin{enumerate}[label=(\alph*), itemsep=3pt]
+  \item $y + 8 = 15$
+  \item $y - 7 = -10$
+  \item $5y = -30$
+  \item $\dfrac{y}{4} = 9$
+\end{enumerate}
+\end{warmbox}
+
+\vspace{1mm}
+\textit{Hint: a one-step equation needs only a single operation to isolate $y$.}
+
+% ===================================================
+\newpage
+\section*{Part 2 \ · \ Example 1 (Easy): Two-Step Equations}
+
+\begin{targetbox}
+Solve \; $2y - 5 = 9$.
+\end{targetbox}
+
+\begin{choosebox}
+Which equation below is \textbf{most similar in structure} to the target problem, and could help you plan your steps? (Circle your choice.) Notice these use a different letter, $n$ --- that's a signal they're practice equations, not the target itself.
+
+\choice{A}{$n - 5 = 9$ \quad (subtraction only, no coefficient)}\\[1mm]
+\choice{B}{$2n = 9$ \quad (coefficient only, no constant term)}\\[1mm]
+\choice{C}{$3n - 4 = 11$ \quad (has both a coefficient and a constant term --- same structure as the target)}\\[1mm]
+\choice{D}{$\dfrac{n}{2} = 9$ \quad (fraction structure --- not the same)}
+\end{choosebox}
+
+\begin{helperbox}
+Choose \textbf{C}! $3n - 4 = 11$ has the same structure as the target: ``coefficient $\times\, n$ $\pm$ constant $=$ number.'' Solve it first:
+\begin{align*}
+3n - 4 &= 11\\
+3n - 4 + 4 &= 11 + 4 &&\text{Add 4 to each side}\\
+3n &= 15 &&\text{Simplify}\\
+n &= 5 &&\text{Divide each side by 3}
+\end{align*}
+\textbf{Method summary: undo addition/subtraction first, then undo multiplication/division.}
+\end{helperbox}
+
+\begin{applybox}
+Now watch every step of the target problem worked out, with a reason given for each one:
+\begin{align*}
+2y - 5 &= 9 &&\text{Given equation}\\
+2y - 5 + 5 &= 9 + 5 &&\text{Add 5 to each side (undo the subtraction)}\\
+2y &= 14 &&\text{Simplify}\\
+\dfrac{2y}{2} &= \dfrac{14}{2} &&\text{Divide each side by 2 (undo the coefficient)}\\
+y &= 7 &&\text{Simplify}
+\end{align*}
+\end{applybox}
+
+\banner{brandred}{CLASS WORK}
+Now it's your turn. Work through the three problems below, from most guided to fully independent.
+
+\begin{mcbox}
+Solve $4y - 3 = 13$ by choosing the correct answer at each stage.
+
+\textbf{Step A --- What should you do first?}\\
+\choice{A}{Divide both sides by 4}\quad
+\choice{B}{Add 3 to both sides}\quad
+\choice{C}{Subtract 4 from both sides}\quad
+\choice{D}{Multiply both sides by 3}
+
+\vspace{2mm}
+\textbf{Step B --- After that step, what do you get?}\\
+\choice{A}{$4y = 16$}\quad
+\choice{B}{$4y = 10$}\quad
+\choice{C}{$4y = 13$}\quad
+\choice{D}{$y = 16$}
+
+\vspace{2mm}
+\textbf{Step C --- What is $y$?}\\
+\choice{A}{$y = 4$}\quad
+\choice{B}{$y = 13$}\quad
+\choice{C}{$y = 16$}\quad
+\choice{D}{$y = \tfrac{1}{4}$}
+\end{mcbox}
+
+\begin{fillbox}
+Solve $5y + 2 = -18$. Fill in the missing numbers \emph{and} the missing reasons.
+\begin{align*}
+5y + 2 &= -18 &&\text{Given equation}\\
+5y + 2 - \underline{\hspace{1cm}} &= -18 - \underline{\hspace{1cm}} &&\text{Reason: }\underline{\hspace{5.5cm}}\\
+5y &= \underline{\hspace{1.5cm}} &&\text{Reason: }\underline{\hspace{5.5cm}}\\
+y &= \underline{\hspace{1.5cm}} &&\text{Reason: }\underline{\hspace{5.5cm}}
+\end{align*}
+\end{fillbox}
+
+\begin{indepbox}
+Solve $-2y - 7 = 9$. Show every step in the space below.
+
+\vspace{22mm}
+\end{indepbox}
+
+\vspace{2mm}
+\banner{black!75}{HOMEWORK}
+Solve each equation completely on your own. Show all steps.
+
+\begin{tabularx}{\linewidth}{@{}p{0.5cm} X p{0.5cm} X@{}}
+\textbf{1.} & $3y - 8 = 7$ & \textbf{2.} & $-4y + 5 = -11$ \\[10mm]
+\textbf{3.} & $6y - 1 = 17$ & \textbf{4.} & $-y + 9 = 2$ \\[10mm]
+\end{tabularx}
+
+% ===================================================
+\newpage
+\section*{Part 3 \ · \ Example 2 (Medium): Single-Term Denominator}
+
+\begin{targetbox}
+Solve \; $\dfrac{y}{4} = -9$.
+\end{targetbox}
+
+\begin{choosebox}
+Which equation's solving process can guide you here? (Again written with $n$, not $y$, so it's clearly a separate practice equation.)
+
+\choice{A}{$4n = -9$ \quad (multiplication structure --- different)}\\[1mm]
+\choice{B}{$\dfrac{n}{3} = 8$ \quad (division/fraction structure --- same as the target)}\\[1mm]
+\choice{C}{$n - 4 = -9$ \quad (subtraction structure --- different)}
+\end{choosebox}
+
+\begin{helperbox}
+Choose \textbf{B}! In $\dfrac{n}{3}=8$, $n$ is divided by 3. To clear the denominator, multiply both sides by it:
+\begin{align*}
+\dfrac{n}{3} &= 8\\
+3\cdot\dfrac{n}{3} &= 3 \cdot 8 &&\text{Multiply each side by 3}\\
+n &= 24 &&\text{Simplify}
+\end{align*}
+\textbf{Method summary: when the denominator is a single number, multiply both sides by it to clear the fraction in one step.}
+\end{helperbox}
+
+\begin{applybox}
+Now watch every step of the target problem worked out, with a reason given for each one:
+\begin{align*}
+\dfrac{y}{4} &= -9 &&\text{Given equation}\\
+4\cdot\dfrac{y}{4} &= 4\cdot(-9) &&\text{Multiply each side by 4 (undo the division)}\\
+y &= -36 &&\text{Simplify}
+\end{align*}
+\end{applybox}
+
+\banner{brandred}{CLASS WORK}
+Now it's your turn. Work through the three problems below, from most guided to fully independent.
+
+\begin{mcbox}
+Solve $\dfrac{y}{6} = -5$ by choosing the correct answer at each stage.
+
+\textbf{Step A --- What is the correct first step?}\\
+\choice{A}{Multiply both sides by 6}\quad
+\choice{B}{Divide both sides by 6}\quad
+\choice{C}{Add 6 to both sides}\quad
+\choice{D}{Subtract 5 from both sides}
+
+\vspace{2mm}
+\textbf{Step B --- After that step, what do you get?}\\
+\choice{A}{$y = -30$}\quad
+\choice{B}{$y = -11$}\quad
+\choice{C}{$y = 1$}\quad
+\choice{D}{$y = 30$}
+
+\vspace{2mm}
+\textbf{Step C --- Why do we multiply instead of divide?}\\
+\choice{A}{Multiplication is the inverse of division}\quad
+\choice{B}{Because 6 is negative}\quad
+\choice{C}{Because $y$ is negative}\quad
+\choice{D}{Equations always start with multiplication}
+\end{mcbox}
+
+\begin{fillbox}
+Solve $\dfrac{y}{5} = -7$. Fill in the missing numbers \emph{and} the missing reasons.
+\begin{align*}
+\dfrac{y}{5} &= -7 &&\text{Given equation}\\
+5\cdot\dfrac{y}{5} &= 5\cdot(\underline{\hspace{1cm}}) &&\text{Reason: }\underline{\hspace{5.5cm}}\\
+y &= \underline{\hspace{1.5cm}} &&\text{Reason: }\underline{\hspace{5.5cm}}
+\end{align*}
+\end{fillbox}
+
+\begin{indepbox}
+Solve $\dfrac{y}{8} = -3$. Show every step in the space below.
+
+\vspace{18mm}
+\end{indepbox}
+
+\vspace{2mm}
+\banner{black!75}{HOMEWORK}
+Solve each equation completely on your own. Show all steps.
+
+\begin{tabularx}{\linewidth}{@{}p{0.5cm} X p{0.5cm} X@{}}
+\textbf{1.} & $\dfrac{y}{3} = -9$ & \textbf{2.} & $\dfrac{y}{7} = 4$ \\[10mm]
+\textbf{3.} & $\dfrac{y}{2} = -15$ & \textbf{4.} & $\dfrac{y}{9} = -6$ \\[10mm]
+\end{tabularx}
+
+% ===================================================
+\newpage
+\section*{Part 4 \ · \ Example 3 (Key/Hard): Two Terms in the Numerator}
+
+\begin{targetbox}
+Solve \; $\dfrac{y-9}{2} = -13$.
+\end{targetbox}
+
+\begin{choosebox}
+This numerator has \textbf{two terms} ($y$ and $-9$). Which equation shares that structure and can help you figure out the first step? (These options use $n$, not $y$, since they're stand-in practice equations.)
+
+\choice{A}{$\dfrac{n}{2} - 9 = -13$ \quad ($-9$ sits outside the fraction --- different structure)}\\[1mm]
+\choice{B}{$\dfrac{n+3}{5} = 4$ \quad (numerator is also ``$n$ plus a number,'' as a whole divided by the denominator --- same structure)}\\[1mm]
+\choice{C}{$2n - 9 = -13$ \quad (no fraction --- different structure)}\\[1mm]
+\choice{D}{$n - \dfrac{9}{2} = -13$ \quad (only the 9 sits in the fraction --- different structure)}
+\end{choosebox}
+
+\begin{helperbox}
+Choose \textbf{B}! In $\dfrac{n+3}{5}=4$, the numerator $n+3$ is \textbf{a single quantity} divided by 5. The first move should be to \textbf{multiply both sides by the denominator}, freeing the whole numerator at once:
+\begin{align*}
+\dfrac{n+3}{5} &= 4\\
+5\left(\dfrac{n+3}{5}\right) &= 5(4) &&\text{Multiply each side by 5}\\
+n + 3 &= 20 &&\text{Simplify (numerator comes out as a whole)}\\
+n + 3 - 3 &= 20 - 3 &&\text{Subtract 3 from each side}\\
+n &= 17 &&\text{Simplify}
+\end{align*}
+\textbf{Method summary: when the numerator has two terms, treat it as one quantity, multiply both sides by the denominator to clear the fraction, then use addition/subtraction to isolate the variable.}
+\end{helperbox}
+
+\begin{applybox}
+Now watch every step of the target problem worked out, with a reason given for each one:
+\begin{align*}
+\dfrac{y-9}{2} &= -13 &&\text{Given equation}\\[2pt]
+2\left(\dfrac{y-9}{2}\right) &= 2(-13) &&\text{Multiply each side by 2 (clears the fraction)}\\[2pt]
+y - 9 &= -26 &&\text{Simplify (numerator comes out as a whole)}\\
+y - 9 + 9 &= -26 + 9 &&\text{Add 9 to each side (undo the subtraction)}\\
+y &= -17 &&\text{Simplify}
+\end{align*}
+\end{applybox}
+
+\banner{brandred}{CLASS WORK}
+Now it's your turn. Work through the three problems below, from most guided to fully independent.
+
+\begin{mcbox}
+Solve $\dfrac{y+6}{4} = -2$ by choosing the correct answer at each stage.
+
+\textbf{Step A --- What is the correct first step?}\\
+\choice{A}{Multiply both sides by 4}\quad
+\choice{B}{Subtract 6 from both sides}\quad
+\choice{C}{Divide both sides by 4}\quad
+\choice{D}{Multiply both sides by $-2$}
+
+\vspace{2mm}
+\textbf{Step B --- After that step, what equation do you get?}\\
+\choice{A}{$y + 6 = -8$}\quad
+\choice{B}{$y = -8$}\quad
+\choice{C}{$y + 6 = -2$}\quad
+\choice{D}{$y = 4$}
+
+\vspace{2mm}
+\textbf{Step C --- What is $y$?}\\
+\choice{A}{$y = -14$}\quad
+\choice{B}{$y = -2$}\quad
+\choice{C}{$y = 2$}\quad
+\choice{D}{$y = 14$}
+\end{mcbox}
+
+\begin{fillbox}
+Solve $\dfrac{y-5}{3} = 6$. Fill in the missing numbers \emph{and} the missing reasons.
+\begin{align*}
+\dfrac{y-5}{3} &= 6 &&\text{Given equation}\\[2pt]
+3\left(\dfrac{y-5}{3}\right) &= 3(6) &&\text{Reason: }\underline{\hspace{5.5cm}}\\[2pt]
+y - 5 &= \underline{\hspace{1.5cm}} &&\text{Reason: Simplify (numerator as a whole)}\\
+y - 5 + \underline{\hspace{1cm}} &= \underline{\hspace{1.5cm}} + 5 &&\text{Reason: }\underline{\hspace{5.5cm}}\\
+y &= \underline{\hspace{1.5cm}} &&\text{Reason: }\underline{\hspace{5.5cm}}
+\end{align*}
+\end{fillbox}
+
+\begin{indepbox}
+Solve $\dfrac{y+2}{7} = -3$. Show every step in the space below.
+
+\vspace{22mm}
+\end{indepbox}
+
+\begin{bonusbox}
+Rewrite $\dfrac{y-9}{2}=-13$ (the target problem above) so the left side is a \textbf{difference of two fractions}:
+$$\dfrac{y}{2} - \dfrac{9}{2} = -13$$
+Solve this rewritten equation, then compare it with the original worked example. \emph{Which form was easier to solve, and why?}
+
+\vspace{6mm}
+\rule{\linewidth}{0.3pt}
+\end{bonusbox}
+
+\vspace{2mm}
+\banner{black!75}{HOMEWORK}
+Solve each equation completely on your own. Show all steps.
+
+\begin{tabularx}{\linewidth}{@{}p{0.5cm} X p{0.5cm} X@{}}
+\textbf{1.} & $\dfrac{y-4}{3} = 5$ & \textbf{2.} & $\dfrac{y+7}{2} = -6$ \\[10mm]
+\textbf{3.} & $\dfrac{y-3}{5} = -4$ & \textbf{4.} & $\dfrac{y+10}{4} = 2$ \\[10mm]
+\end{tabularx}
+
+% ===================================================
+\newpage
+\section*{Final Challenge \ · \ Mixed Review}
+
+\begin{targetbox}
+Solve \; $\dfrac{3y-9}{5}=6$.
+\end{targetbox}
+
+\textcircled{\small 1} Write your own assistant equation with the same structure (use a different letter, e.g.\ $n$, so it's not confused with the target): \rule{6cm}{0.3pt}
+
+\textcircled{\small 2} Explain why the first step must be ``multiply both sides by 5,'' rather than dividing $3y$ by 5 on its own. Show your full solution, with a reason for every step.
+
+\vspace{10mm}
+
+% ===================================================
+\vspace{2mm}
+\hrule
+\vspace{3mm}
+\subsection*{Answer Key}
+{\small
+\begin{tabularx}{\linewidth}{@{}X@{}}
+\textbf{Warm-Up:} (a) $y=7$\quad (b) $y=-3$\quad (c) $y=-6$\quad (d) $y=36$\\[2mm]
+
+\textbf{Part 2 --- Class Work:} MC: Step A = B (add 3 to both sides); Step B = A ($4y=16$); Step C = A ($y=4$). \quad Fill-in: subtract 2 from each side twice $\to$ $5y=-20$ (Reason: simplify) $\to$ $y=-4$ (Reason: divide each side by 5). \quad Independent: $-2y-7=9 \Rightarrow -2y=16 \Rightarrow y=-8$.\\[1mm]
+\textbf{Part 2 --- Homework:} 1. $y=5$\quad 2. $y=4$\quad 3. $y=3$\quad 4. $y=7$\\[2mm]
+
+\textbf{Part 3 --- Class Work:} MC: Step A = A (multiply both sides by 6); Step B = A ($y=-30$); Step C = A (multiplication undoes division). \quad Fill-in: multiply each side by 5 (Reason: clear the denominator) $\to$ $5\cdot\frac{y}{5}=5\cdot(-7)$ $\to$ $y=-35$ (Reason: simplify). \quad Independent: $\dfrac{y}{8}=-3 \Rightarrow y=-24$.\\[1mm]
+\textbf{Part 3 --- Homework:} 1. $y=-27$\quad 2. $y=28$\quad 3. $y=-30$\quad 4. $y=-54$\\[2mm]
+
+\textbf{Part 4 --- Class Work:} MC: Step A = A (multiply both sides by 4); Step B = A ($y+6=-8$); Step C = A ($y=-14$). \quad Fill-in: (Reason: multiply each side by 3) $\to$ $y-5=18$ $\to$ add 5 to each side ($y-5+5=18+5$, Reason: undo the subtraction) $\to$ $y=23$ (Reason: simplify). \quad Independent: $\dfrac{y+2}{7}=-3 \Rightarrow y+2=-21 \Rightarrow y=-23$.\\[1mm]
+\textbf{Part 4 --- Bonus Reasoning:} $\dfrac{y}{2}-\dfrac{9}{2}=-13$ gives the same answer, $y=-17$; multiplying by the denominator directly (the original form) is usually faster because it clears the fraction in one step, while splitting into two fractions takes extra work to combine or handle each term separately.\\[1mm]
+\textbf{Part 4 --- Homework:} 1. $y=19$\quad 2. $y=-19$\quad 3. $y=-17$\quad 4. $y=-2$\\[2mm]
+
+\textbf{Final Challenge:} Sample assistant equation: $\dfrac{2n-4}{3}=4$. Because $3y-9$ is a single quantity (a difference of two terms), you must multiply both sides by 5 to clear the fraction as a whole first (giving $3y-9=30$) before continuing with addition and division; you cannot divide just one part of the numerator by 5. Full solution: $\dfrac{3y-9}{5}=6 \Rightarrow 3y-9=30 \Rightarrow 3y=39 \Rightarrow y=13$.
+\end{tabularx}
+}
+
+\end{document}

@@ -1,0 +1,221 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage{enumitem}
+\usepackage{array}
+\usepackage{xcolor}
+\usepackage{fancyhdr}
+
+\definecolor{brandpurple}{RGB}{69,39,160}
+\definecolor{brandteal}{RGB}{0,105,92}
+\definecolor{brandblue}{RGB}{21,101,192}
+
+\setlength{\headheight}{14pt}
+\pagestyle{fancy}
+\fancyhf{}
+\lhead{\textcolor{brandpurple}{\textbf{Special Factoring Patterns}}}
+\rhead{\textcolor{brandpurple}{FangMath}}
+\lfoot{\footnotesize\textcolor{gray}{\textcopyright{} 2026 FangMath $\cdot$ All rights reserved.}}
+\cfoot{}
+\rfoot{\small\thepage}
+\renewcommand{\headrulewidth}{0.6pt}
+\renewcommand{\footrulewidth}{0.4pt}
+
+\newcommand{\sectionrule}{\vspace{2pt}\hrule\vspace{8pt}}
+
+% One faint writing line; \workspace stacks three of them under a problem.
+\newcommand{\rline}{\par\vspace{0.75cm}\noindent\textcolor{black!25}{\rule{\linewidth}{0.3pt}}}
+\newcommand{\workspace}{\rline\rline\rline\vspace{2pt}}
+
+\begin{document}
+
+\begin{center}
+{\Large\textbf{\textcolor{brandpurple}{Special Factoring: Perfect Squares, Difference of Squares \& Grouping}}}\\[3pt]
+{\small Notes $\cdot$ Summary $\cdot$ Practice Problems $\cdot$ Full Answer Key}\\[2pt]
+{\footnotesize \textcolor{gray}{Name: \underline{\hspace{4cm}} \qquad Date: \underline{\hspace{3cm}}}}\\[3pt]
+{\footnotesize \textcolor{brandblue}{\textbf{Estimated time: 45--60 minutes}}}
+\end{center}
+
+\vspace{4pt}
+
+\section*{\textcolor{brandpurple}{1. Summary}}
+\sectionrule
+
+\noindent\textbf{Pattern A --- Perfect Square Trinomial.}
+\[
+a^2 + 2ab + b^2 = (a+b)^2 \qquad\text{and}\qquad a^2 - 2ab + b^2 = (a-b)^2 .
+\]
+The first and last terms are perfect squares ($a^2,\ b^2$) and the middle term is $2ab$.
+
+\medskip
+\noindent\textbf{Pattern B --- Difference of Squares.}
+\[
+a^2 - b^2 = (a-b)(a+b).
+\]
+Two perfect-square terms separated by a minus sign, with no middle term.
+
+\medskip
+\noindent\textbf{Pattern C --- Factoring by Grouping} (four terms).
+\begin{enumerate}[label=(\arabic*),leftmargin=2em,itemsep=1pt]
+  \item Group the four terms into two pairs.
+  \item Factor out the GCF of the \emph{first} two terms and the GCF of the \emph{last} two terms.
+  \item If both pairs now share the \emph{same} binomial factor, factor it out.
+\end{enumerate}
+\[
+ax + ay + bx + by = a(x+y) + b(x+y) = (x+y)(a+b).
+\]
+\textit{Always check whether a resulting factor can be factored further (e.g.\ a difference of squares).}
+
+\begin{center}
+\fbox{$(a+b)^2 = a^2 + 2ab + b^2$}\quad
+\fbox{$a^2 - b^2 = (a-b)(a+b)$}\quad
+\fbox{$ax+ay+bx+by=(x+y)(a+b)$}
+\end{center}
+
+\section*{\textcolor{brandpurple}{2. Worked Examples}}
+\sectionrule
+
+\noindent\textbf{\textcolor{brandpurple}{Part A --- Perfect Square Trinomials}}
+
+\medskip
+\textbf{A1.}\quad $x^2 - 12x + 36$: \; product $36$, sum $-12 \Rightarrow -6,-6$.
+\[ x^2 - 12x + 36 = x^2 - 6x - 6x + 36 = (x-6)^2 . \]
+$\begin{array}{c|c|c}
+   & x & -6 \\ \hline
+ x & x^2 & -6x \\ \hline
+ -6 & -6x & 36
+\end{array}$
+
+\medskip
+\textbf{A2.}\quad $x^2 + 6x + 9 \Rightarrow 3,3$:\quad $x^2+6x+9=(x+3)^2$.
+\qquad
+\textbf{A3.}\quad $x^2 - 14x + 49 \Rightarrow -7,-7$:\quad $x^2-14x+49=(x-7)^2$.
+
+\bigskip
+\noindent\textbf{\textcolor{brandteal}{Part B --- Difference of Squares}}
+
+\medskip
+\textbf{B1.}\quad $x^2 - 9 = x^2 + 0\cdot x - 9$; \; product $-9$, sum $0 \Rightarrow 3,-3$.
+\[ x^2 - 9 = x^2 + 3x - 3x - 9 = (x-3)(x+3) . \]
+$\begin{array}{c|c|c}
+   & x & -3 \\ \hline
+ x & x^2 & -3x \\ \hline
+ 3 & 3x & -9
+\end{array}$
+\qquad
+\textbf{B2.}\quad $x^2 - 100 = (x+10)(x-10)$.
+
+\bigskip
+\noindent\textbf{\textcolor{brandblue}{Part C --- Factoring by Grouping}}
+
+\medskip
+\textbf{C.}\quad Factor $2z^3 + 6z^2 + 3z + 9$.
+\begin{align*}
+2z^3 + 6z^2 + 3z + 9 &= (2z^3 + 6z^2) + (3z + 9) &&\text{group into pairs}\\
+ &= 2z^2(z+3) + 3(z+3) &&\text{GCF of each pair}\\
+ &= (z+3)(2z^2 + 3) &&\text{factor out the common } (z+3)
+\end{align*}
+
+\newpage
+\section*{\textcolor{brandpurple}{3. Practice Problems}}
+\sectionrule
+
+\noindent\textbf{\textcolor{brandpurple}{Part A --- Factor each perfect square trinomial.}}
+\begin{enumerate}[label=\textbf{A\arabic*.},leftmargin=2.6em,itemsep=4pt]
+  \item $x^2 + 8x + 16$ \workspace
+  \item $x^2 - 10x + 25$ \workspace
+  \item $x^2 + 20x + 100$ \workspace
+  \item $x^2 - 2x + 1$ \workspace
+  \item $4x^2 + 12x + 9$ \workspace
+  \item $9x^2 - 30x + 25$ \workspace
+  \item $x^2 + x + \dfrac{1}{4}$ \workspace
+  \item $16x^2 - 40x + 25$ \workspace
+  \item $25x^2 + 60x + 36$ \workspace
+  \item \textbf{Application.} The area of a square patio is $16m^2 - 72m + 81$ ft$^2$. Find one side. \workspace
+\end{enumerate}
+
+\medskip
+\noindent\textbf{\textcolor{brandteal}{Part B --- Factor each difference of squares.}}
+\begin{enumerate}[label=\textbf{B\arabic*.},leftmargin=2.6em,itemsep=4pt]
+  \item $x^2 - 25$ \workspace
+  \item $x^2 - 49$ \workspace
+  \item $x^2 - 1$ \workspace
+  \item $4x^2 - 9$ \workspace
+  \item $9x^2 - 16$ \workspace
+  \item $25x^2 - 64$ \workspace
+  \item $x^2 - 144$ \workspace
+  \item $49x^2 - 100$ \workspace
+  \item $x^2 - \dfrac{4}{9}$ \workspace
+  \item \textbf{Application.} A square of side $x$ has a square of side $8$ cut out. Write the remaining area factored. \workspace
+\end{enumerate}
+
+\medskip
+\noindent\textbf{\textcolor{brandblue}{Part C --- Factoring by Grouping.}}\\
+\textit{For C1--C4: find the GCF of the first two terms and the GCF of the last two terms, then factor.}
+\begin{enumerate}[label=\textbf{C\arabic*.},leftmargin=2.6em,itemsep=4pt]
+  \item $3a^3 + 12a^2 + 2a + 8$ \workspace
+  \item $6b^3 - 10b^2 + 9b - 15$ \workspace
+  \item $4c^3 + 20c^2 - 3c - 15$ \workspace
+  \item $10d^3 + 4d^2 + 15d + 6$ \workspace
+\end{enumerate}
+\textit{For C5--C13: factor each expression completely.}
+\begin{enumerate}[label=\textbf{C\arabic*.},leftmargin=2.6em,itemsep=4pt,start=5]
+  \item $7n^3 + 21n^2 + 2n + 6$ \workspace
+  \item $5t^3 - 15t^2 + 4t - 12$ \workspace
+  \item $12x^3 + 8x^2 + 15x + 10$ \workspace
+  \item $9u^3 - 6u^2 + 15u - 10$ \workspace
+  \item $8s^3 + 12s^2 - 10s - 15$ \workspace
+  \item $6j^3 - 9j^2 - 8j + 12$ \workspace
+  \item $2e^3 + 6e^2 - 5e - 15$ \workspace
+  \item $4f^3 + 8f^2 - 9f - 18$ \workspace
+  \item $25g^3 - 50g^2 - g + 2$ \workspace
+\end{enumerate}
+
+\newpage
+\section*{\textcolor{brandteal}{4. Detailed Answer Key}}
+\sectionrule
+
+\noindent\textbf{\textcolor{brandpurple}{Part A --- Perfect Square Trinomials}}
+\begin{enumerate}[label=\textbf{A\arabic*.},leftmargin=2.6em,itemsep=5pt]
+  \item $a=x,\ b=4$; $2ab=8x$ \checkmark. $\boxed{(x+4)^2}$
+  \item $a=x,\ b=5$; middle $-10x$ \checkmark. $\boxed{(x-5)^2}$
+  \item $a=x,\ b=10$; $2ab=20x$ \checkmark. $\boxed{(x+10)^2}$
+  \item $a=x,\ b=1$; middle $-2x$ \checkmark. $\boxed{(x-1)^2}$
+  \item $a=2x,\ b=3$; $2ab=12x$ \checkmark. $\boxed{(2x+3)^2}$
+  \item $a=3x,\ b=5$; middle $-30x$ \checkmark. $\boxed{(3x-5)^2}$
+  \item $a=x,\ b=\tfrac12$; $2ab=x$ \checkmark. $\boxed{\left(x+\tfrac{1}{2}\right)^2}$
+  \item $a=4x,\ b=5$; middle $-40x$ \checkmark. $\boxed{(4x-5)^2}$
+  \item $a=5x,\ b=6$; $2ab=60x$ \checkmark. $\boxed{(5x+6)^2}$
+  \item $16m^2-72m+81=(4m-9)^2$, so side $=\boxed{\,4m-9\ \text{ft}\,}$.
+\end{enumerate}
+
+\medskip
+\noindent\textbf{\textcolor{brandteal}{Part B --- Difference of Squares}}
+\begin{enumerate}[label=\textbf{B\arabic*.},leftmargin=2.6em,itemsep=5pt]
+  \item $\boxed{(x-5)(x+5)}$ \item $\boxed{(x-7)(x+7)}$ \item $\boxed{(x-1)(x+1)}$
+  \item $\boxed{(2x-3)(2x+3)}$ \item $\boxed{(3x-4)(3x+4)}$ \item $\boxed{(5x-8)(5x+8)}$
+  \item $\boxed{(x-12)(x+12)}$ \item $\boxed{(7x-10)(7x+10)}$
+  \item $\boxed{\left(x-\tfrac{2}{3}\right)\left(x+\tfrac{2}{3}\right)}$
+  \item Remaining area $=x^2-64=\boxed{(x-8)(x+8)}$.
+\end{enumerate}
+
+\medskip
+\noindent\textbf{\textcolor{brandblue}{Part C --- Factoring by Grouping}}\\
+\textit{Shown: GCF of first pair, GCF of second pair, then the common binomial.}
+\begin{enumerate}[label=\textbf{C\arabic*.},leftmargin=2.6em,itemsep=5pt]
+  \item $3a^2(a+4)+2(a+4)=\boxed{(a+4)(3a^2+2)}$
+  \item $2b^2(3b-5)+3(3b-5)=\boxed{(3b-5)(2b^2+3)}$
+  \item $4c^2(c+5)-3(c+5)=\boxed{(c+5)(4c^2-3)}$
+  \item $2d^2(5d+2)+3(5d+2)=\boxed{(5d+2)(2d^2+3)}$
+  \item $7n^2(n+3)+2(n+3)=\boxed{(n+3)(7n^2+2)}$
+  \item $5t^2(t-3)+4(t-3)=\boxed{(t-3)(5t^2+4)}$
+  \item $4x^2(3x+2)+5(3x+2)=\boxed{(3x+2)(4x^2+5)}$
+  \item $3u^2(3u-2)+5(3u-2)=\boxed{(3u-2)(3u^2+5)}$
+  \item $4s^2(2s+3)-5(2s+3)=\boxed{(2s+3)(4s^2-5)}$
+  \item $3j^2(2j-3)-4(2j-3)=\boxed{(2j-3)(3j^2-4)}$
+  \item $2e^2(e+3)-5(e+3)=\boxed{(e+3)(2e^2-5)}$
+  \item $4f^2(f+2)-9(f+2)=(f+2)(4f^2-9)=\boxed{(f+2)(2f-3)(2f+3)}$ \; \small(diff.\ of squares!)
+  \item $25g^2(g-2)-1(g-2)=(g-2)(25g^2-1)=\boxed{(g-2)(5g-1)(5g+1)}$ \; \small(diff.\ of squares!)
+\end{enumerate}
+
+\end{document}

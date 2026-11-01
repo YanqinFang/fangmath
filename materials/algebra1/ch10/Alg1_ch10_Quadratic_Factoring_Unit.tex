@@ -1,0 +1,878 @@
+\documentclass[11pt]{article}
+% =====================================================================
+% MULTIPLYING & FACTORING QUADRATICS -- The Box and X Methods
+% Complete unit: Lesson + Practice Worksheet + Answer Key
+% FangMath  |  SELF-CONTAINED, grayscale for black & white printing
+% =====================================================================
+\usepackage[letterpaper,margin=0.85in,top=0.8in,bottom=0.9in]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage[table]{xcolor}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage{pifont}
+\usepackage{fancyhdr}
+\usepackage{tikz}
+\usetikzlibrary{calc}
+
+% ---------- grayscale palette ----------
+\definecolor{primary}{gray}{0.12}
+\definecolor{boxfill}{gray}{0.92}
+\definecolor{accent}{gray}{0.80}
+\definecolor{reasonclr}{gray}{0.42}
+\definecolor{tipfill}{gray}{0.96}
+\definecolor{keyfill}{gray}{0.95}
+
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0.4pt}
+\lhead{\small\itshape Multiplying \& Factoring Quadratics}
+\rhead{\small\itshape FangMath}
+\lfoot{\small\itshape \textcopyright\ 2026 FangMath $\cdot$ All rights reserved.}
+\rfoot{\small\thepage}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{4pt}
+
+% ---------- banners ----------
+\newcounter{partnum}
+\newcommand{\partbanner}[1]{%
+  \stepcounter{partnum}%
+  \vspace{8pt}\par\noindent
+  \begin{tcolorbox}[colback=primary,colframe=primary,arc=2pt,
+    left=10pt,right=10pt,top=5pt,bottom=5pt,boxrule=0pt]
+  {\color{accent}\bfseries Part \thepartnum\ \ \textbullet\ \ }{\color{white}\bfseries\large #1}
+  \end{tcolorbox}\par\vspace{3pt}}
+
+\newcounter{practnum}
+\newcommand{\practbanner}[1]{%
+  \stepcounter{practnum}%
+  \vspace{8pt}\par\noindent
+  \begin{tcolorbox}[colback=primary,colframe=primary,arc=2pt,
+    left=10pt,right=10pt,top=5pt,bottom=5pt,boxrule=0pt]
+  {\color{accent}\bfseries Practice \Alph{practnum}\ \ \textbullet\ \ }{\color{white}\bfseries\large #1}
+  \end{tcolorbox}\par\vspace{3pt}}
+
+\newcommand{\sectionbanner}[2]{%
+  \begin{center}
+  {\color{primary}\rule{\linewidth}{2pt}}\\[10pt]
+  {\color{primary}\bfseries\fontsize{22}{26}\selectfont #1}\\[6pt]
+  {\itshape #2}\\[8pt]
+  {\color{primary}\rule{\linewidth}{2pt}}
+  \end{center}\vspace{4pt}}
+
+% ---------- boxes ----------
+\newtcolorbox{keybox}{colback=boxfill,colframe=primary,coltitle=white,
+  colbacktitle=primary,fonttitle=\bfseries,title={Key Idea},
+  arc=2pt,boxrule=0.8pt,left=7pt,right=7pt,top=4pt,bottom=4pt}
+\newtcolorbox{exbox}{colback=tipfill,colframe=primary,coltitle=white,
+  colbacktitle=primary,fonttitle=\bfseries,title={\ding{43}\ \ Worked Example},
+  arc=2pt,boxrule=0.8pt,left=7pt,right=7pt,top=4pt,bottom=4pt}
+\newtcolorbox{warnbox}{colback=tipfill,colframe=primary,coltitle=white,
+  colbacktitle=primary,fonttitle=\bfseries,title={\ding{55}\ \ Common Mistakes},
+  arc=2pt,boxrule=0.8pt,left=7pt,right=7pt,top=4pt,bottom=4pt}
+\newtcolorbox{anskey}{colback=keyfill,colframe=primary,coltitle=white,
+  colbacktitle=primary,fonttitle=\bfseries,title={Answer Key},
+  arc=2pt,boxrule=0.8pt,left=7pt,right=7pt,top=4pt,bottom=4pt,breakable}
+
+% ---------- difficulty dots ----------
+\newcommand{\LvE}{{\footnotesize\ding{108}\ding{109}\ding{109}}\ \textbf{\small Easy}\ \ }
+\newcommand{\LvM}{{\footnotesize\ding{108}\ding{108}\ding{109}}\ \textbf{\small Medium}\ \ }
+\newcommand{\LvH}{{\footnotesize\ding{108}\ding{108}\ding{108}}\ \textbf{\small Hard}\ \ }
+
+% ---------- ruled work lines ----------
+\newcommand{\worklines}[1]{\par\nobreak\vspace{2mm}%
+  \foreach \zz in {1,...,#1}{\noindent\textcolor{gray!55}{\rule{\linewidth}{0.3pt}}\par\vspace{0.72cm}}%
+  \vspace{1mm}}
+
+\newlist{prob}{enumerate}{1}
+\setlist[prob]{label=\textbf{\arabic*.},leftmargin=2.3em,itemsep=3pt,topsep=3pt}
+
+% ---------- the box (area) model ----------
+\newcommand{\boxmodel}[9][1.0]{%
+\begin{tikzpicture}[scale=#1,baseline=(current bounding box.center)]
+  \draw[line width=0.9pt] (0,0) rectangle (3.4,2.2);
+  \draw[line width=0.9pt] (1.7,0)--(1.7,2.2);
+  \draw[line width=0.9pt] (0,1.1)--(3.4,1.1);
+  \node[above,font=\small] at (0.85,2.24) {#2};
+  \node[above,font=\small] at (2.55,2.24) {#3};
+  \node[left,font=\small]  at (-0.06,1.65) {#4};
+  \node[left,font=\small]  at (-0.06,0.55) {#5};
+  \node[font=\small] at (0.85,1.65) {#6};
+  \node[font=\small] at (2.55,1.65) {#7};
+  \node[font=\small] at (0.85,0.55) {#8};
+  \node[font=\small] at (2.55,0.55) {#9};
+\end{tikzpicture}}
+
+\newcommand{\blankbox}[1][1.0]{%
+\begin{tikzpicture}[scale=#1,baseline=(current bounding box.center)]
+  \draw[line width=0.9pt] (0,0) rectangle (3.4,2.2);
+  \draw[line width=0.9pt] (1.7,0)--(1.7,2.2);
+  \draw[line width=0.9pt] (0,1.1)--(3.4,1.1);
+  \draw[gray!55,line width=0.3pt] (0.15,2.5)--(1.55,2.5);
+  \draw[gray!55,line width=0.3pt] (1.85,2.5)--(3.25,2.5);
+  \draw[gray!55,line width=0.3pt] (-1.25,1.65)--(-0.15,1.65);
+  \draw[gray!55,line width=0.3pt] (-1.25,0.55)--(-0.15,0.55);
+\end{tikzpicture}}
+
+% ---------- the "X" diagram ----------
+\newcommand{\xdiag}[5][0.85]{%
+\begin{tikzpicture}[scale=#1,baseline=(current bounding box.center)]
+  \draw[line width=0.9pt] (-1.05,1.05)--(1.05,-1.05);
+  \draw[line width=0.9pt] (1.05,1.05)--(-1.05,-1.05);
+  \node[font=\small] at (0,1.42) {#2};
+  \node[font=\small,left]  at (-1.12,0) {#3};
+  \node[font=\small,right] at (1.12,0)  {#4};
+  \node[font=\small] at (0,-1.42) {#5};
+\end{tikzpicture}}
+
+
+% ---------- diagonal naming: visual (\ and /) + content ----------
+\newcommand{\bsd}{\textbf{``\textbackslash'' diagonal}}
+\newcommand{\fsd}{\textbf{``/'' diagonal}}
+\newcommand{\bsdt}{\textbackslash\ diagonal}
+\newcommand{\fsdt}{/\ diagonal}
+
+% box with ONE diagonal drawn:  #2 = 1 for "\" , 2 for "/"
+\newcommand{\diagdemo}[6][0.72]{%
+\begin{tikzpicture}[scale=#1,baseline=(current bounding box.center)]
+  \draw[line width=0.9pt] (0,0) rectangle (3.4,2.2);
+  \draw[line width=0.9pt] (1.7,0)--(1.7,2.2);
+  \draw[line width=0.9pt] (0,1.1)--(3.4,1.1);
+  % diagonal drawn first, so the cell labels sit on top of it
+  \ifnum#2=1
+    \draw[line width=1.7pt,black!70] (0.25,1.95)--(3.15,0.25);
+  \else
+    \draw[line width=1.7pt,black!70] (3.15,1.95)--(0.25,0.25);
+  \fi
+  \node[font=\small,fill=white,inner sep=1.6pt] at (0.85,1.65) {#3};
+  \node[font=\small,fill=white,inner sep=1.6pt] at (2.55,1.65) {#4};
+  \node[font=\small,fill=white,inner sep=1.6pt] at (0.85,0.55) {#5};
+  \node[font=\small,fill=white,inner sep=1.6pt] at (2.55,0.55) {#6};
+\end{tikzpicture}}
+
+\begin{document}
+
+% =====================================================================
+% COVER
+% =====================================================================
+\thispagestyle{empty}
+\begin{center}
+\vspace*{1.0cm}
+{\color{primary}\rule{\linewidth}{2.5pt}}\\[18pt]
+{\color{primary}\bfseries\fontsize{30}{36}\selectfont Multiplying \&\\[4pt] Factoring Quadratics}\\[10pt]
+{\bfseries\fontsize{18}{22}\selectfont The Box and X Methods}\\[12pt]
+{\color{primary}\rule{\linewidth}{2.5pt}}\\[22pt]
+{\large Complete Unit \ $\cdot$ \ Lesson, Practice \& Answer Key}
+
+\vspace{1.2cm}
+\begin{tcolorbox}[colback=boxfill,colframe=primary,width=0.9\linewidth,arc=3pt]
+\begin{tabular}{@{}p{2.2cm}p{10.6cm}@{}}
+\multicolumn{2}{@{}l@{}}{\bfseries Section I --- Lesson}\\[4pt]
+Part 1 & Forward: multiplying two binomials with a box \\[3pt]
+Part 2 & Where the X comes from \\[3pt]
+Part 3 & Backward: factoring when $a = 1$ \\[3pt]
+Part 4 & Backward: factoring when $a \neq 1$ \\[3pt]
+Part 5 & Does the order of the split matter? \\[3pt]
+Part 6 & The three sign cases \\[3pt]
+Part 7 & Always take the GCF first \\[3pt]
+Part 8 & Summary --- the whole method on one page \\[8pt]
+\multicolumn{2}{@{}l@{}}{\bfseries Section II --- Practice Worksheet}\\[4pt]
+A--F & 30 problems, three difficulty levels \\[8pt]
+\multicolumn{2}{@{}l@{}}{\bfseries Section III --- Complete Answer Key}\\
+\end{tabular}
+\end{tcolorbox}
+
+\vspace{1.2cm}
+\begin{tabular}{@{}p{7cm}@{\hspace{1.4cm}}p{4.6cm}@{}}
+\textbf{Name:} \underline{\hspace{4.6cm}} & \textbf{Date:} \underline{\hspace{3.2cm}}
+\end{tabular}
+\end{center}
+\newpage
+
+% =====================================================================
+% SECTION I --- LESSON
+% =====================================================================
+\sectionbanner{Section I \ $\cdot$ \ Lesson}{From multiplying binomials to factoring any quadratic}
+
+\begin{keybox}
+\textbf{The big idea.} The area of a rectangle is (length)\,$\times$\,(width).
+If each side is a \emph{binomial}, split the rectangle into four smaller rectangles ---
+one for each pair of terms. The four little areas add up to the answer.
+\medskip
+
+We learn the box in \textbf{two directions}:
+\begin{itemize}[nosep,leftmargin=1.4em]
+\item \textbf{Forward} (Part 1): given the two sides, \emph{multiply} to find the area.
+\item \textbf{Backward} (Parts 3--7): given the area, \emph{factor} to find the two sides.
+\end{itemize}
+Learning the forward direction first is what makes the backward direction make sense.
+\end{keybox}
+
+% ---------------------------------------------------------------------
+\partbanner{Forward --- Multiplying Two Binomials}
+
+\subsection*{1.1\quad Simple case: leading coefficient $=1$}
+
+\begin{exbox}
+Multiply $(x+4)(x+5)$.
+
+\vspace{4pt}
+\begin{minipage}[c]{0.42\linewidth}
+\centering
+\boxmodel[0.85]{$x$}{$+4$}{$x$}{$+5$}{$x^2$}{$4x$}{$5x$}{$20$}
+\end{minipage}
+\hfill
+\begin{minipage}[c]{0.55\linewidth}
+\begin{align*}
+&x \text{ and } +4 \text{ across the top} &&\color{reasonclr}\text{first factor}\\
+&x \text{ and } +5 \text{ down the side} &&\color{reasonclr}\text{second factor}\\
+&\text{cell} = (\text{row})\times(\text{column}) &&\color{reasonclr}\text{area of each piece}\\
+&x^2 + 4x + 5x + 20 &&\color{reasonclr}\text{add all four cells}\\
+&= x^2 + 9x + 20 &&\color{reasonclr}\text{combine middle terms}
+\end{align*}
+\end{minipage}
+
+\vspace{3pt}
+\textbf{Notice:} the two $x$-terms, $4x$ and $5x$, combine into the middle term $9x$.
+They sit on the \fsd\ of the box, while $x^2$ and $20$ sit on the \bsd.
+Remember this --- it is the key to factoring later.
+\end{exbox}
+
+\subsection*{1.2\quad General case: leading coefficient $\neq 1$}
+
+\begin{exbox}
+Multiply $(2x+3)(5x+7)$.
+
+\vspace{4pt}
+\begin{minipage}[c]{0.42\linewidth}
+\centering
+\boxmodel[0.85]{$2x$}{$+3$}{$5x$}{$+7$}{$10x^2$}{$15x$}{$14x$}{$21$}
+\end{minipage}
+\hfill
+\begin{minipage}[c]{0.55\linewidth}
+\begin{align*}
+10x^2 + 15x + 14x + 21 &&&\color{reasonclr}\text{add the four cells}\\
+= 10x^2 + 29x + 21 &&&\color{reasonclr}\text{combine } 15x + 14x
+\end{align*}
+\end{minipage}
+
+\vspace{4pt}
+The box is just the distributive property done twice:
+\[
+(2x+3)(5x+7) = (2x+3)(5x) + (2x+3)(7) = 10x^2 + 15x + 14x + 21.
+\]
+\end{exbox}
+
+\newpage
+% ---------------------------------------------------------------------
+\partbanner{Where the X Comes From}
+
+\begin{exbox}
+Multiply the general pair $(x+p)(x+q)$ and watch the four cells.
+
+\vspace{4pt}
+\begin{minipage}[c]{0.40\linewidth}
+\centering
+\boxmodel[0.85]{$x$}{$+p$}{$x$}{$+q$}{$x^2$}{$px$}{$qx$}{$pq$}
+\end{minipage}
+\hfill
+\begin{minipage}[c]{0.56\linewidth}
+\[
+(x+p)(x+q) = x^2 + \underbrace{(p+q)}_{\text{\footnotesize the \textbf{sum}}}x
++ \underbrace{pq}_{\text{\footnotesize the \textbf{product}}}
+\]
+\end{minipage}
+
+\vspace{4pt}
+A $2\times 2$ box has \textbf{two diagonals}. We name them by the way they slant:
+\end{exbox}
+
+\begin{keybox}
+\textbf{Naming the two diagonals.}
+
+\vspace{4pt}
+\begin{center}
+\begin{tabular}{@{}c@{\hspace{22pt}}c@{}}
+\diagdemo[0.70]{1}{$x^2$}{$px$}{$qx$}{$pq$} &
+\diagdemo[0.70]{2}{$x^2$}{$px$}{$qx$}{$pq$} \\[4pt]
+\bsd & \fsd \\[2pt]
+{\footnotesize holds $x^2$ and $pq$} & {\footnotesize holds $px$ and $qx$} \\
+{\footnotesize the two you are \textbf{given}} & {\footnotesize the two you must \textbf{find}} \\
+\end{tabular}
+\end{center}
+
+\vspace{2pt}
+\begin{itemize}[nosep,leftmargin=1.4em]
+\item The \fsd\ \emph{adds} to the middle term.
+\item The two diagonals have the \emph{same product}:
+$x^2\cdot pq = pq\,x^2$ \ and \ $(px)(qx) = pq\,x^2$.
+\end{itemize}
+
+\vspace{2pt}
+\textbf{House rule:} always write the \emph{variable} term first along the top and down the side.
+Then $x^2$ always lands in the top-left cell, and the \bsd\ always carries the two known terms.
+\emph{(If you write the terms in the other order the box still works --- but the two diagonals
+swap places, so the names would flip.)}
+\end{keybox}
+
+\begin{exbox}
+Now the fully general pair $(ax+b)(cx+d)$.
+
+\vspace{4pt}
+\begin{minipage}[c]{0.42\linewidth}
+\centering
+\boxmodel[0.85]{$ax$}{$+b$}{$cx$}{$+d$}{$acx^2$}{$bcx$}{$adx$}{$bd$}
+\end{minipage}
+\hfill
+\begin{minipage}[c]{0.55\linewidth}
+\[
+(ax+b)(cx+d) = acx^2 + (ad+bc)x + bd
+\]
+\[
+\underbrace{(acx^2)(bd)}_{\text{\footnotesize\bsdt}} = abcd\,x^2
+= \underbrace{(bcx)(adx)}_{\text{\footnotesize\fsdt}}
+\]
+\end{minipage}
+\end{exbox}
+
+\begin{keybox}
+\textbf{The equal-diagonals property.} In \emph{any} such box the two diagonals multiply to the
+same thing:
+\[
+\underbrace{(acx^2)\cdot(bd)}_{\text{\footnotesize\bsdt}}
+\;=\;
+\underbrace{(bcx)\cdot(adx)}_{\text{\footnotesize\fsdt}}
+\;=\; abcd\,x^2 .
+\]
+\emph{Careful with words:} all four cells sit in corners, and \emph{both} pairs form a diagonal.
+Tell them apart by the \textbf{slant}: the \bsd\ carries the $x^2$ term and the constant
+(what the problem gives you); the \fsd\ carries the two $x$-terms (what you must find).
+\end{keybox}
+
+\begin{keybox}
+\textbf{So every factoring problem asks the same two questions:}
+\begin{center}
+\begin{minipage}{0.30\linewidth}
+\centering
+\xdiag[0.88]{\textbf{PRODUCT}}{$\square$}{$\square$}{\textbf{SUM}}
+\end{minipage}
+\hspace{0.4cm}
+\begin{minipage}{0.60\linewidth}
+\textbf{Top of the X} $=$ the product you need $= a\cdot c$\\[4pt]
+\textbf{Bottom of the X} $=$ the sum you need $= b$\\[4pt]
+\textbf{Sides of the X} $=$ the two numbers you are hunting for
+\end{minipage}
+\end{center}
+\end{keybox}
+
+\newpage
+% ---------------------------------------------------------------------
+\partbanner{Backward --- Factoring when $a = 1$}
+
+\begin{exbox}
+Factor $x^2 + 9x + 20$.
+
+\vspace{4pt}
+\begin{minipage}[c]{0.34\linewidth}
+\centering
+\boxmodel[0.78]{$x$}{$+4$}{$x$}{$+5$}{$x^2$}{$4x$}{$5x$}{$20$}
+\end{minipage}
+\hfill
+\begin{minipage}[c]{0.26\linewidth}
+\centering
+\xdiag[0.78]{$20$}{$4$}{$5$}{$9$}
+\end{minipage}
+\hfill
+\begin{minipage}[c]{0.35\linewidth}
+{\footnotesize
+top $=$ product $=20$\\[2pt]
+bottom $=$ sum $=9$\\[2pt]
+sides $=$ the two numbers}
+\end{minipage}
+
+\vspace{6pt}
+\begin{align*}
+\text{Put } x^2 \text{ and } 20 \text{ on the } \backslash \text{ diagonal} &&&\color{reasonclr}\text{what we are given}\\
+\text{need product } 20,\ \text{sum } 9 \ \Rightarrow\ 4 \text{ and } 5 &&&\color{reasonclr}\text{fill the } / \text{ diagonal}\\
+\text{read the sides: } x{+}4 \ \text{and}\ x{+}5 &&&\color{reasonclr}\text{GCF of each row/column}
+\end{align*}
+\[
+\boxed{\,x^2+9x+20 = (x+4)(x+5)\,}
+\]
+\end{exbox}
+
+\begin{keybox}
+\textbf{Shortcut when $a=1$.} You only need two numbers with \textbf{product} $=c$ and
+\textbf{sum} $=b$. Then $x^2+bx+c = (x+p)(x+q)$ directly --- no grouping required.
+\end{keybox}
+
+% ---------------------------------------------------------------------
+\partbanner{Backward --- Factoring when $a \neq 1$}
+
+\subsection*{4.1\quad Why guessing is slow}
+
+To factor $6x^2 + 13x + 5$ by trial and error you would test every pairing:
+\begin{center}
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{@{}l l l@{}}
+\textbf{Guess} & \textbf{Expands to} & \textbf{Middle term} \\ \hline
+$(x+1)(6x+5)$ & $6x^2 + 5x + 6x + 5$ & $11x$ \ \ding{55} \\
+$(6x+1)(x+5)$ & $6x^2 + 30x + x + 5$ & $31x$ \ \ding{55} \\
+$(2x+1)(3x+5)$ & $6x^2 + 10x + 3x + 5$ & $13x$ \ \ding{51} \\
+\end{tabular}
+\end{center}
+The X method finds the right one \emph{directly}, with no guessing.
+
+\subsection*{4.2\quad The method: X, then split, then group}
+
+\begin{exbox}
+Factor $6x^2 + 13x + 5$.
+
+\vspace{4pt}
+\begin{minipage}[c]{0.28\linewidth}
+\centering
+\xdiag[0.80]{$30x^2$}{$10x$}{$3x$}{$13x$}
+\end{minipage}
+\hfill
+\begin{minipage}[c]{0.36\linewidth}
+\centering
+\boxmodel[0.76]{$3x$}{$+5$}{$2x$}{$+1$}{$6x^2$}{$10x$}{$3x$}{$5$}
+\end{minipage}
+\hfill
+\begin{minipage}[c]{0.32\linewidth}
+{\footnotesize
+$ac = 6\cdot 5 = 30$\\[2pt]
+need product $30$, sum $13$\\[2pt]
+$\Rightarrow 10$ and $3$}
+\end{minipage}
+
+\vspace{6pt}
+\begin{align*}
+6x^2 + 13x + 5 &= 6x^2 + 10x + 3x + 5 &&\color{reasonclr}\text{split the middle term}\\
+&= 2x(3x+5) + 1(3x+5) &&\color{reasonclr}\text{GCF of each pair}\\
+&= (2x+1)(3x+5) &&\color{reasonclr}\text{factor out the common } (3x+5)
+\end{align*}
+\emph{Check:} $(2x+1)(3x+5) = 6x^2+10x+3x+5 = 6x^2+13x+5$ \ \ding{51}
+\end{exbox}
+
+\subsection*{4.3\quad A second example --- and the trap}
+
+\begin{exbox}
+Factor $2x^2 + 13x + 6$.
+
+\vspace{4pt}
+\begin{minipage}[c]{0.28\linewidth}
+\centering
+\xdiag[0.80]{$12x^2$}{$1x$}{$12x$}{$13x$}
+\end{minipage}
+\hfill
+\begin{minipage}[c]{0.34\linewidth}
+\centering
+\boxmodel[0.76]{}{}{}{}{$2x^2$}{$1x$}{$12x$}{$6$}
+\end{minipage}
+\hfill
+\begin{minipage}[c]{0.34\linewidth}
+{\footnotesize
+$ac = 2\cdot 6 = 12$, sum $13$\\[2pt]
+$\Rightarrow \mathbf{1}$ and $\mathbf{12}$}
+\end{minipage}
+
+\vspace{6pt}
+\begin{align*}
+2x^2 + 13x + 6 &= 2x^2 + 1x + 12x + 6 &&\color{reasonclr}\text{split}\\
+&= \big(2x^2 + x\big) + \big(12x + 6\big) &&\color{reasonclr}\text{group in pairs}\\
+&= x(2x+1) + 6(2x+1) &&\color{reasonclr}\text{GCF of each pair}\\
+&= (2x+1)(x+6) &&\color{reasonclr}\text{brackets match \ding{51}}
+\end{align*}
+\end{exbox}
+
+\begin{warnbox}
+\textbf{The trap.} When you pull the GCF out of $2x^2 + x$, the leftover is $\mathbf{2x+1}$,
+\emph{not} $x+2$:
+\[
+2x^2 + x = x(2x+1) \quad\text{\ding{51}}
+\qquad\qquad
+2x^2 + x \neq x(x+2) \quad\text{\ding{55}}
+\]
+Writing $x(x+2)$ loses the leading coefficient and gives the wrong answer
+$(x+2)(x+6) = x^2+8x+12$ --- a \emph{different} polynomial.
+\medskip
+
+\textbf{Divide, don't guess:} $\dfrac{2x^2}{x} = 2x$ and $\dfrac{x}{x} = 1$, so the bracket
+must read $2x+1$. If the two brackets do not come out \textbf{identical}, something is wrong ---
+go back and check.
+\end{warnbox}
+
+\newpage
+% ---------------------------------------------------------------------
+\partbanner{Does the Order of the Split Matter?}
+
+\begin{exbox}
+Factor $3d^2 + 23d + 14$ --- and then do it again with the split reversed.
+
+\vspace{4pt}
+\begin{minipage}[c]{0.30\linewidth}
+\centering
+\xdiag[0.84]{$42d^2$}{$2d$}{$21d$}{$23d$}
+\end{minipage}
+\hfill
+\begin{minipage}[c]{0.66\linewidth}
+{\footnotesize
+no common GCF \quad$\cdot$\quad product $= a\cdot c = 3\cdot 14 = 42$ \quad$\cdot$\quad sum $= 23$\\[3pt]
+$42 = 2\cdot 21$ \ and \ $2+21 = 23$ \ \ding{51} \ $\Rightarrow$ the numbers are $\mathbf{2}$ and $\mathbf{21}$}
+\end{minipage}
+
+\vspace{7pt}
+\textbf{First order} ($2d$ then $21d$):
+\begin{align*}
+3d^2 + 23d + 14 &= 3d^2 + 2d + 21d + 14 = d(3d+2) + 7(3d+2) = (3d+2)(d+7)
+\end{align*}
+\textbf{Second order} ($21d$ then $2d$):
+\begin{align*}
+3d^2 + 23d + 14 &= 3d^2 + 21d + 2d + 14 = 3d(d+7) + 2(d+7) = (d+7)(3d+2)
+\end{align*}
+\emph{Check:} $(3d+2)(d+7) = 3d^2+21d+2d+14 = 3d^2+23d+14$ \ \ding{51}
+\end{exbox}
+
+\begin{keybox}
+\textbf{The order does not matter.} Either split gives the same pair of factors --- only the
+\emph{order you discover them in} changes. Pick whichever grouping looks easier.
+\medskip
+
+\textbf{Finding the pair quickly.} List the factor pairs of $ac$ in order and test the sums:
+\begin{center}
+\renewcommand{\arraystretch}{1.15}
+\begin{tabular}{@{}c c c@{}}
+\textbf{Pair of $42$} & \textbf{Sum} & \\ \hline
+$1 \cdot 42$ & $43$ & \\
+$2 \cdot 21$ & $23$ & \ \ding{51}\ \textbf{this one} \\
+$3 \cdot 14$ & $17$ & \\
+$6 \cdot 7$ & $13$ & \\
+\end{tabular}
+\end{center}
+Going in order means you never miss a pair.
+\end{keybox}
+
+\newpage
+% ---------------------------------------------------------------------
+\partbanner{The Three Sign Cases}
+
+\begin{keybox}
+Let the two mystery numbers be $p$ and $q$, with $pq = ac$ and $p+q = b$.
+\begin{center}
+\renewcommand{\arraystretch}{1.35}
+\begin{tabular}{@{}c c l@{}}
+\textbf{Sign of $ac$} & \textbf{Sign of $b$} & \textbf{What $p$ and $q$ look like} \\ \hline
+$+$ & $+$ & both \textbf{positive} \\
+$+$ & $-$ & both \textbf{negative} \\
+$-$ & either & \textbf{opposite signs}; the bigger one matches the sign of $b$ \\
+\end{tabular}
+\end{center}
+\end{keybox}
+
+\begin{exbox}
+\textbf{Case $+\,/-$:} \ Factor $6r^2 - 23r + 20$.
+
+\vspace{3pt}
+$ac = 6 \cdot 20 = 120 > 0$ and $b = -23 < 0$, so \emph{both} numbers are negative: $-15$ and $-8$.
+\begin{align*}
+6r^2 - 23r + 20 &= 6r^2 - 15r - 8r + 20 &&\color{reasonclr}\text{split}\\
+&= 3r(2r-5) - 4(2r-5) &&\color{reasonclr}\text{pull out a \emph{negative} GCF from the second pair}\\
+&= (2r-5)(3r-4) &&\color{reasonclr}\text{brackets match \ding{51}}
+\end{align*}
+\emph{The $-4$ is essential:} taking $+4$ would give $4(-2r+5)$, which does not match $(2r-5)$.
+\end{exbox}
+
+\begin{exbox}
+\textbf{Case $-$:} \ Factor $3n^2 + 2n - 8$.
+
+\vspace{3pt}
+$ac = 3\cdot(-8) = -24 < 0$, so the numbers have \emph{opposite} signs and sum to $+2$: $+6$ and $-4$.
+\begin{align*}
+3n^2 + 2n - 8 &= 3n^2 + 6n - 4n - 8 &&\color{reasonclr}\text{split}\\
+&= 3n(n+2) - 4(n+2) &&\color{reasonclr}\text{GCF of each pair}\\
+&= (n+2)(3n-4) &&\color{reasonclr}\text{brackets match \ding{51}}
+\end{align*}
+\end{exbox}
+
+% ---------------------------------------------------------------------
+\partbanner{Always Take the GCF First}
+
+\begin{exbox}
+Factor $4x^2 + 14x + 6$.
+
+\vspace{3pt}
+\textbf{Wrong start:} jumping straight to $ac = 4\cdot 6 = 24$ works, but the numbers get large
+and the final answer is not fully factored.
+
+\vspace{3pt}
+\textbf{Right start:} every term is even, so pull out $2$ first.
+\begin{align*}
+4x^2 + 14x + 6 &= 2\big(2x^2 + 7x + 3\big) &&\color{reasonclr}\text{GCF} = 2\\
+ac = 2\cdot 3 = 6,\ \ \text{sum } 7 &\Rightarrow 6 \text{ and } 1 &&\color{reasonclr}\text{much smaller numbers}\\
+2x^2+7x+3 &= 2x^2+6x+x+3 &&\color{reasonclr}\text{split}\\
+&= 2x(x+3) + 1(x+3) = (2x+1)(x+3) &&\color{reasonclr}\text{group}\\
+\Rightarrow\ 4x^2+14x+6 &= \boxed{2(2x+1)(x+3)} &&\color{reasonclr}\text{don't lose the } 2\,!
+\end{align*}
+\end{exbox}
+
+\newpage
+% ---------------------------------------------------------------------
+\partbanner{Summary --- The Whole Method on One Page}
+
+\begin{keybox}
+\textbf{To MULTIPLY $(ax+b)(cx+d)$:}
+\begin{enumerate}[nosep,leftmargin=1.7em]
+\item Write one factor across the top, the other down the side.
+\item Fill each cell with (row)\,$\times$\,(column).
+\item Add all four cells and combine the two middle terms.
+\end{enumerate}
+\medskip
+
+\textbf{To FACTOR $ax^2+bx+c$ --- the five steps:}
+\begin{enumerate}[nosep,leftmargin=1.7em]
+\item \textbf{GCF first.} Factor out anything common to all three terms.
+\item \textbf{Multiply} $a \cdot c$. That is the \textbf{top} of the X.
+\item \textbf{Find two numbers} with product $ac$ and sum $b$. Those are the \textbf{sides} of the X.
+\item \textbf{Split} the middle term into those two pieces, then \textbf{group in pairs}.
+\item \textbf{Factor out the matching bracket} --- and \textbf{check} by multiplying back.
+\end{enumerate}
+\medskip
+
+\textbf{When $a = 1$}, Steps 2--4 collapse: just find two numbers with product $c$ and sum $b$.
+\end{keybox}
+
+\begin{warnbox}
+\begin{itemize}[nosep,leftmargin=1.4em]
+\item \textbf{Using $c$ instead of $ac$.} When $a \neq 1$, the product is $a\cdot c$.
+\item \textbf{Losing the GCF.} If you factor out a $2$ at the start, it must appear in the final answer.
+\item \textbf{Mismatched brackets.} $2x^2+x = x(2x+1)$, \emph{not} $x(x+2)$. Divide each term by
+the GCF instead of guessing.
+\item \textbf{Wrong sign on the second GCF.} Sometimes you must pull out a \emph{negative}
+to make the brackets match.
+\item \textbf{Mixing up the two diagonals.} $ax^2$ and $c$ go on the \bsd;
+the two $x$-terms go on the \fsd. (Every cell is a corner --- tell the diagonals apart
+by their slant.)
+\item \textbf{Not checking.} Multiplying back takes ten seconds and catches everything above.
+\end{itemize}
+\end{warnbox}
+
+\newpage
+% =====================================================================
+% SECTION II --- PRACTICE
+% =====================================================================
+\sectionbanner{Section II \ $\cdot$ \ Practice Worksheet}{30 problems $\cdot$ three difficulty levels}
+
+\begin{keybox}
+For each problem: write $a\cdot c$ on top of the X and $b$ on the bottom, find the two numbers,
+split, group, factor --- then \textbf{check by multiplying back}.
+\medskip
+
+Difficulty: {\footnotesize\ding{108}\ding{109}\ding{109}} Easy \quad
+{\footnotesize\ding{108}\ding{108}\ding{109}} Medium \quad
+{\footnotesize\ding{108}\ding{108}\ding{108}} Hard
+\end{keybox}
+
+\practbanner{Multiplying Binomials with a Box}
+\textit{Fill the box, then write the product in standard form.}
+\begin{prob}
+\item \LvE $(x+2)(x+6)$ \hfill \blankbox[0.58] \worklines{2}
+\item \LvE $(x+3)(x-5)$ \hfill \blankbox[0.58] \worklines{2}
+\item \LvM $(2x+1)(x+4)$ \hfill \blankbox[0.58] \worklines{2}
+\item \LvM $(3x+2)(2x+5)$ \hfill \blankbox[0.58] \worklines{2}
+\item \LvH $(4x-3)(2x+7)$ \hfill \blankbox[0.58] \worklines{2}
+\item \LvH $(5x-2)(3x-4)$ \hfill \blankbox[0.58] \worklines{2}
+\end{prob}
+
+\newpage
+\practbanner{Factoring when $a = 1$}
+\textit{Two numbers with product $c$ and sum $b$.}
+\begin{prob}
+\item \LvE $x^2 + 7x + 12$ \hfill \xdiag[0.58]{}{}{}{} \worklines{2}
+\item \LvE $x^2 + 10x + 21$ \hfill \xdiag[0.58]{}{}{}{} \worklines{2}
+\item \LvM $x^2 - 9x + 20$ \hfill \xdiag[0.58]{}{}{}{} \worklines{2}
+\item \LvM $x^2 + 2x - 15$ \hfill \xdiag[0.58]{}{}{}{} \worklines{2}
+\item \LvM $x^2 - 3x - 28$ \hfill \xdiag[0.58]{}{}{}{} \worklines{2}
+\item \LvH $x^2 - 16$ \ \emph{(what is the middle term?)} \hfill \xdiag[0.58]{}{}{}{} \worklines{2}
+\end{prob}
+
+\newpage
+\practbanner{Factoring when $a \neq 1$ --- All Signs Positive}
+\textit{Remember: the product is $a\cdot c$, not just $c$.}
+\begin{prob}
+\item \LvE $2x^2 + 7x + 3$ \hfill \xdiag[0.58]{}{}{}{} \worklines{3}
+\item \LvE $3y^2 + 16y + 5$ \hfill \xdiag[0.58]{}{}{}{} \worklines{3}
+\item \LvM $5m^2 + 17m + 6$ \hfill \xdiag[0.58]{}{}{}{} \worklines{3}
+\item \LvM $4k^2 + 11k + 6$ \hfill \xdiag[0.58]{}{}{}{} \worklines{3}
+\item \LvM $4p^2 + 7p + 3$ \hfill \xdiag[0.58]{}{}{}{} \worklines{3}
+\item \LvH $6x^2 + 17x + 5$ \hfill \xdiag[0.58]{}{}{}{} \worklines{3}
+\end{prob}
+
+\newpage
+\practbanner{Working with Negative Signs}
+\textit{Check the sign of $ac$ and of $b$ before you start.}
+\begin{prob}
+\item \LvM $2x^2 - 9x + 4$ \hfill \xdiag[0.58]{}{}{}{} \worklines{3}
+\item \LvM $5t^2 - 13t - 6$ \hfill \xdiag[0.58]{}{}{}{} \worklines{3}
+\item \LvH $4x^2 - 4x - 15$ \hfill \xdiag[0.58]{}{}{}{} \worklines{3}
+\item \LvH $6x^2 - 7x - 3$ \hfill \xdiag[0.58]{}{}{}{} \worklines{3}
+\end{prob}
+
+\newpage
+\practbanner{GCF First, Then Factor}
+\textit{Pull out the common factor before touching the X --- and keep it in your answer.}
+\begin{prob}
+\item \LvM $6y^2 + 21y + 9$ \hfill \xdiag[0.58]{}{}{}{} \worklines{3}
+\item \LvM $8x^2 + 20x + 12$ \hfill \xdiag[0.58]{}{}{}{} \worklines{3}
+\item \LvH $12m^2 - 2m - 4$ \hfill \xdiag[0.58]{}{}{}{} \worklines{4}
+\item \LvH $18k^2 + 3k - 6$ \hfill \xdiag[0.58]{}{}{}{} \worklines{4}
+\end{prob}
+
+\newpage
+\practbanner{Reasoning \& Challenge}
+\begin{prob}
+\item \LvM A rectangle has area $2x^2 + 11x + 12$ square units. One side measures $2x+3$.
+Find the other side. \worklines{3}
+
+\item \LvM The product $12x^2 + bx + 15$ factors as $(3x+5)$ times another binomial.
+Find the other binomial and the value of $b$. \worklines{3}
+
+\item \LvM Marcus factored $8x^2 + 10x - 3$ and got $(4x-1)(2x+3)$. Multiply his answer back
+out. Is he right? Explain how you know. \worklines{3}
+
+\item \LvH Complete the box. Two cells are filled in; find the missing cells \emph{and} both
+binomial factors.
+\begin{center}
+\boxmodel[0.82]{}{}{}{}{$6x^2$}{}{}{$-10$}
+\end{center}
+\emph{Hint: there is more than one correct answer. Give one and check it.} \worklines{3}
+
+\item \LvH Find \emph{every} positive integer $k$ for which $3x^2 + kx + 8$ factors with
+integer coefficients. \emph{(Hint: $ac = 24$; list the factor pairs.)} \worklines{4}
+
+\item \LvH \textbf{Why does $a\cdot c$ work?} Suppose $ax^2+bx+c = (mx+p)(nx+q)$.
+Multiply the right side out and explain why the two numbers you hunt for must multiply to $ac$
+and add to $b$. \worklines{5}
+\end{prob}
+
+\newpage
+% =====================================================================
+% SECTION III --- ANSWER KEY
+% =====================================================================
+\sectionbanner{Section III \ $\cdot$ \ Complete Answer Key}{with the product--sum reasoning for every problem}
+
+\begin{anskey}[title={Practice A --- Multiplying Binomials}]
+\begin{enumerate}[label=\textbf{\arabic*.},leftmargin=2em,itemsep=4pt]
+\item Cells $x^2,\ 6x,\ 2x,\ 12 \Rightarrow \mathbf{x^2+8x+12}$
+\item Cells $x^2,\ -5x,\ 3x,\ -15 \Rightarrow \mathbf{x^2-2x-15}$
+\item Cells $2x^2,\ 8x,\ x,\ 4 \Rightarrow \mathbf{2x^2+9x+4}$
+\item Cells $6x^2,\ 15x,\ 4x,\ 10 \Rightarrow \mathbf{6x^2+19x+10}$
+\item Cells $8x^2,\ 28x,\ -6x,\ -21 \Rightarrow \mathbf{8x^2+22x-21}$
+\item Cells $15x^2,\ -20x,\ -6x,\ 8 \Rightarrow \mathbf{15x^2-26x+8}$
+\end{enumerate}
+\end{anskey}
+
+\begin{anskey}[title={Practice B --- Factoring when $a = 1$}]
+\begin{enumerate}[label=\textbf{\arabic*.},leftmargin=2em,itemsep=4pt]
+\item Product $12$, sum $7 \Rightarrow 3,4$. \quad $\mathbf{(x+3)(x+4)}$
+\item Product $21$, sum $10 \Rightarrow 3,7$. \quad $\mathbf{(x+3)(x+7)}$
+\item Product $20$, sum $-9 \Rightarrow -4,-5$ (both negative). \quad $\mathbf{(x-4)(x-5)}$
+\item Product $-15$, sum $2 \Rightarrow 5,-3$ (opposite signs). \quad $\mathbf{(x+5)(x-3)}$
+\item Product $-28$, sum $-3 \Rightarrow -7,4$. \quad $\mathbf{(x-7)(x+4)}$
+\item Write it as $x^2 + 0x - 16$: product $-16$, sum $0 \Rightarrow 4,-4$.
+\quad $\mathbf{(x-4)(x+4)}$ --- a \emph{difference of squares}.
+\end{enumerate}
+\end{anskey}
+
+\begin{anskey}[title={Practice C --- Factoring when $a \neq 1$, All Positive}]
+\begin{enumerate}[label=\textbf{\arabic*.},leftmargin=2em,itemsep=5pt]
+\item $ac=6$, sum $7 \Rightarrow 6,1$: \ $2x^2+6x+x+3 = 2x(x+3)+1(x+3) = \mathbf{(2x+1)(x+3)}$
+\item $ac=15$, sum $16 \Rightarrow 15,1$: \ $3y^2+15y+y+5 = 3y(y+5)+1(y+5) = \mathbf{(3y+1)(y+5)}$
+\item $ac=30$, sum $17 \Rightarrow 15,2$: \ $5m^2+15m+2m+6 = 5m(m+3)+2(m+3) = \mathbf{(5m+2)(m+3)}$
+\item $ac=24$, sum $11 \Rightarrow 8,3$: \ $4k^2+8k+3k+6 = 4k(k+2)+3(k+2) = \mathbf{(4k+3)(k+2)}$
+\item $ac=12$, sum $7 \Rightarrow 3,4$: \ $4p^2+3p+4p+3 = p(4p+3)+1(4p+3) = \mathbf{(4p+3)(p+1)}$
+\item $ac=30$, sum $17 \Rightarrow 15,2$: \ $6x^2+15x+2x+5 = 3x(2x+5)+1(2x+5) = \mathbf{(3x+1)(2x+5)}$
+\end{enumerate}
+\end{anskey}
+
+\begin{anskey}[title={Practice D --- Working with Negative Signs}]
+\begin{enumerate}[label=\textbf{\arabic*.},leftmargin=2em,itemsep=5pt]
+\item $ac=8>0$, sum $-9<0 \Rightarrow$ both negative: $-8,-1$. \
+$2x^2-8x-x+4 = 2x(x-4)-1(x-4) = \mathbf{(2x-1)(x-4)}$
+\item $ac=-30<0$, sum $-13$: $-15,2$. \
+$5t^2-15t+2t-6 = 5t(t-3)+2(t-3) = \mathbf{(5t+2)(t-3)}$
+\item $ac=-60<0$, sum $-4$: $-10,6$. \
+$4x^2-10x+6x-15 = 2x(2x-5)+3(2x-5) = \mathbf{(2x-5)(2x+3)}$
+\item $ac=-18<0$, sum $-7$: $-9,2$. \
+$6x^2-9x+2x-3 = 3x(2x-3)+1(2x-3) = \mathbf{(2x-3)(3x+1)}$
+\end{enumerate}
+\end{anskey}
+
+\begin{anskey}[title={Practice E --- GCF First}]
+\begin{enumerate}[label=\textbf{\arabic*.},leftmargin=2em,itemsep=5pt]
+\item $= 3(2y^2+7y+3)$; $ac=6$, sum $7 \Rightarrow 6,1$: \ $2y(y+3)+1(y+3)$.
+\quad $\mathbf{3(2y+1)(y+3)}$
+\item $= 4(2x^2+5x+3)$; $ac=6$, sum $5 \Rightarrow 2,3$: \
+$2x^2+2x+3x+3 = 2x(x+1)+3(x+1)$. \quad $\mathbf{4(x+1)(2x+3)}$
+\item $= 2(6m^2-m-2)$; $ac=-12$, sum $-1 \Rightarrow -4,3$: \
+$6m^2-4m+3m-2 = 2m(3m-2)+1(3m-2)$. \quad $\mathbf{2(3m-2)(2m+1)}$
+\item $= 3(6k^2+k-2)$; $ac=-12$, sum $1 \Rightarrow 4,-3$: \
+$6k^2+4k-3k-2 = 2k(3k+2)-1(3k+2)$. \quad $\mathbf{3(3k+2)(2k-1)}$
+\end{enumerate}
+\emph{In every case the GCF stays in the final answer.}
+\end{anskey}
+
+\begin{anskey}[title={Practice F --- Reasoning \& Challenge}]
+\begin{enumerate}[label=\textbf{\arabic*.},leftmargin=2em,itemsep=7pt]
+\item $ac = 2\cdot 12 = 24$, sum $11 \Rightarrow 8,3$;
+\ $2x^2+8x+3x+12 = 2x(x+4)+3(x+4) = (2x+3)(x+4)$.
+Since one side is $2x+3$, the other side is $\mathbf{x+4}$.
+\emph{Check:} $(2x+3)(x+4) = 2x^2+11x+12$ \ding{51}
+
+\item The $x^2$ cells must give $12x^2$, so the other leading term is $4x$; the constants must
+give $15$, so the other constant is $3$. The other binomial is $\mathbf{4x+3}$.
+Multiplying: $(3x+5)(4x+3) = 12x^2+9x+20x+15 = 12x^2+29x+15$, so $\mathbf{b = 29}$.
+
+\item $(4x-1)(2x+3) = 8x^2 + 12x - 2x - 3 = 8x^2 + 10x - 3$.
+\ \textbf{Marcus is correct.} \ding{51}
+\emph{(Confirm with the X: $ac = 8\cdot(-3) = -24$, sum $10 \Rightarrow 12$ and $-2$;
+$8x^2+12x-2x-3 = 4x(2x+3)-1(2x+3) = (4x-1)(2x+3)$.)}
+Re-multiplying confirms a right answer just as clearly as it catches a wrong one.
+
+\item With $6x^2$ and $-10$ on the \bsd, $ac = 6\cdot(-10) = -60$. Choose any pair with
+product $-60$ --- for example $15$ and $-4$ (sum $11$):
+\[
+6x^2 + 15x - 4x - 10 = 3x(2x+5) - 2(2x+5) = \mathbf{(3x-2)(2x+5)},
+\]
+which expands to $6x^2+11x-10$.
+\emph{Other answers are possible} --- each factor pair of $-60$ gives a different middle term.
+
+\item $ac = 3\cdot 8 = 24$. Each factor pair of $24$ gives a value of $k$ (their sum):
+\begin{center}
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{@{}c c l@{}}
+\textbf{Pair} & $k$ & \textbf{Factorization} \\ \hline
+$1\cdot 24$ & $25$ & $(3x+1)(x+8)$ \\
+$2\cdot 12$ & $14$ & $(3x+2)(x+4)$ \\
+$3\cdot 8$  & $11$ & $(3x+8)(x+1)$ \\
+$4\cdot 6$  & $10$ & $(3x+4)(x+2)$ \\
+\end{tabular}
+\end{center}
+So $\mathbf{k = 10,\ 11,\ 14,\ 25}$.
+
+\item Multiplying out,
+\[
+(mx+p)(nx+q) = \underbrace{mn}_{a}x^2 + \underbrace{(mq+np)}_{b}x + \underbrace{pq}_{c}.
+\]
+Now multiply the two middle pieces together:
+\[
+(mq)(np) = (mn)(pq) = a \cdot c .
+\]
+So the two terms that \emph{add} to $b$ are exactly the two terms that \emph{multiply} to $ac$.
+That is precisely what the X asks for --- and it is why splitting the middle term into those two
+pieces always makes the grouping work.
+\end{enumerate}
+\end{anskey}
+
+\end{document}

@@ -1,0 +1,414 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath,amssymb,geometry,enumitem,array}
+\usepackage[most]{tcolorbox}
+\usepackage{xcolor,fancyhdr,tikz}
+\usetikzlibrary{arrows.meta}
+
+\geometry{margin=0.85in, top=0.75in, bottom=0.9in}
+
+%% Colors
+\definecolor{navy}{RGB}{10,36,99}
+\definecolor{teal}{RGB}{0,120,110}
+\definecolor{green}{RGB}{0,140,60}
+\definecolor{midgray}{RGB}{110,110,110}
+\definecolor{exbg}{RGB}{235,248,245}
+\definecolor{keybg}{RGB}{230,238,255}
+\definecolor{sectiongray}{RGB}{200,200,200}
+\definecolor{fangcolor}{RGB}{80,80,80}
+
+%% Boxes
+\tcbuselibrary{skins,breakable}
+
+\newtcolorbox{keybox}{enhanced,breakable,
+  colback=keybg,colframe=navy,coltitle=white,
+  fonttitle=\bfseries\large,title={Key Concepts},
+  arc=5pt,boxrule=1.5pt,left=10pt,right=10pt,top=7pt,bottom=7pt}
+
+\newtcolorbox{exbox}[1]{enhanced,breakable,
+  colback=exbg,colframe=teal,coltitle=white,
+  fonttitle=\bfseries,title={#1},
+  arc=5pt,boxrule=1.4pt,left=10pt,right=10pt,top=7pt,bottom=8pt}
+
+\newtcolorbox{secbox}[1]{enhanced,
+  colback=sectiongray!30,colframe=sectiongray,coltitle=black,
+  fonttitle=\bfseries,title={#1},
+  arc=4pt,boxrule=1pt,left=8pt,right=8pt,top=5pt,bottom=5pt}
+
+%% Header / Footer
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\textbf{Absolute Value Equations \& Inequalities}}
+\fancyhead[R]{Name:\;\underline{\hspace{3.5cm}}\quad Date:\;\underline{\hspace{2cm}}}
+\fancyfoot[C]{\small\textcolor{fangcolor}{\copyright\ FangMath}\quad|\quad\thepage}
+\renewcommand{\headrulewidth}{1pt}
+\setlength{\headheight}{16pt}
+
+%% Work space
+\newcommand{\wsp}{\vspace{2.4cm}}
+\newcommand{\wspm}{\vspace{1.8cm}}
+
+%% ── Number line macro ────────────────────────────────────────────────────────
+%% \numline{xmin}{xmax}{scale}{body tikz commands}
+\newcommand{\numline}[4]{%
+\begin{center}
+\begin{tikzpicture}[x=#3, y=1cm,
+    dot/.style={circle,draw=blue!70!black,fill=blue!70!black,inner sep=2.2pt},
+    odot/.style={circle,draw=blue!70!black,fill=white,inner sep=2.2pt,line width=0.8pt},
+    arr/.style={-{Stealth[length=5pt]},thick}]
+  \draw[arr] (#1-0.6,0) -- (#2+0.6,0);
+  \foreach \x in {#1,...,#2}{
+    \draw (\x,0.07)--(\x,-0.07);
+    \node[below,font=\scriptsize] at (\x,-0.07) {$\x$};
+  }
+  #4
+\end{tikzpicture}
+\end{center}}
+
+\begin{document}
+
+%% ════════════════════════════════════════════════════════════
+%%  KEY CONCEPTS
+%% ════════════════════════════════════════════════════════════
+\begin{keybox}
+\begin{tabular}{@{}ll@{}}
+\textbf{Absolute Value Equation} &
+  $|x|=a \;\Rightarrow\; x=a \text{ or } x=-a$\\[6pt]
+\textbf{Absolute Value Inequality} $(\leq)$ &
+  $|x|\leq a \;\Rightarrow\; -a\leq x\leq a$ \quad (AND, closed interval)\\[4pt]
+\textbf{Absolute Value Inequality} $(\geq)$ &
+  $|x|\geq a \;\Rightarrow\; x\leq -a \text{ or } x\geq a$ \quad (OR, union)\\[6pt]
+\multicolumn{2}{@{}l@{}}{\textbf{Verbal meaning:} $|x-c|\leq d$ means
+  ``the distance between $x$ and $c$ is at most $d$.''}
+\end{tabular}
+
+\vspace{4pt}
+\textbf{Steps to Solve:}
+\begin{enumerate}[leftmargin=1.8em,topsep=2pt,itemsep=1pt]
+  \item Isolate the absolute value expression.
+  \item Split into two cases (positive and negative).
+  \item Solve each case and check your answers.
+  \item Graph the solution on a number line.
+\end{enumerate}
+\end{keybox}
+
+\vspace{8pt}
+
+%% ════════════════════════════════════════════════════════════
+%%  EXAMPLE 1 — EQUATION
+%% ════════════════════════════════════════════════════════════
+\begin{exbox}{Example 1 \textemdash\ Equation:\quad $|f-6|=3$}
+\textbf{Step 1: Split into two cases}
+\[f-6=3 \qquad\text{or}\qquad f-6=-3\]
+\textbf{Step 2: Solve each}
+\[f=9 \qquad\text{or}\qquad f=3\]
+\textbf{Step 3: Check}\quad
+$f=9$: $|9-6|=3$ \checkmark\qquad
+$f=3$: $|3-6|=3$ \checkmark\\[2pt]
+\textbf{Solution:} $f=3$ or $f=9$
+
+\numline{0}{10}{0.7cm}{%
+  \node[dot,label=above:{$3$}] at (3,0){};
+  \node[dot,label=above:{$9$}] at (9,0){};
+}
+\end{exbox}
+
+\vspace{6pt}
+
+%% ════════════════════════════════════════════════════════════
+%%  EXAMPLE 2 — INEQUALITY ≤
+%% ════════════════════════════════════════════════════════════
+\begin{exbox}{Example 2 \textemdash\ Inequality:\quad $|f-6|\leq 3$}
+\textbf{Method (Algebraic):} Apply $-3\leq f-6\leq 3$, then add 6:
+\[3\leq f\leq 9\]
+\textbf{Check:}\quad $f=4$: $|4-6|=2\leq 3$ \checkmark\qquad
+$f=10$: $|10-6|=4\leq 3$ \texttimes\ (non-solution, correct)
+
+\numline{0}{10}{0.7cm}{%
+  \node[dot,label=above:{$3$}] at (3,0){};
+  \node[dot,label=above:{$9$}] at (9,0){};
+  \draw[blue!70!black,line width=1.8pt] (3,0)--(9,0);
+}
+\end{exbox}
+
+\vspace{6pt}
+
+%% ════════════════════════════════════════════════════════════
+%%  EXAMPLE 3 — INEQUALITY >
+%% ════════════════════════════════════════════════════════════
+\begin{exbox}{Example 3 \textemdash\ Inequality:\quad $5|b+8|-7>13$}
+\textbf{Step 1: Isolate}\quad
+$5|b+8|>20 \;\Rightarrow\; |b+8|>4$\\[4pt]
+\textbf{Step 2: Split (OR)}
+\[b+8<-4 \qquad\text{or}\qquad b+8>4\]
+\[b<-12 \qquad\text{or}\qquad b>-4\]
+
+\numline{-14}{-2}{0.65cm}{%
+  \node[odot,label=above:{$-12$}] at (-12,0){};
+  \node[odot,label=above:{$-4$}] at (-4,0){};
+  \draw[blue!70!black,line width=1.8pt,{Stealth[length=5pt]}-]
+    (-12,0)--(-14.6,0);
+  \draw[blue!70!black,line width=1.8pt,-{Stealth[length=5pt]}]
+    (-4,0)--(-1.4,0);
+}
+\end{exbox}
+
+\newpage
+
+%% ════════════════════════════════════════════════════════════
+%%  PRACTICE PROBLEMS
+%% ════════════════════════════════════════════════════════════
+\begin{center}
+{\LARGE\bfseries Practice Problems}\\[4pt]
+{\small Solve each equation or inequality. Show all steps.
+Graph your solution on the number line provided.}
+\end{center}
+\vspace{6pt}
+
+%% ── SECTION A ────────────────────────────────────────────────
+\begin{secbox}{Section A \textemdash\ Absolute Value Equations}
+\end{secbox}
+\vspace{4pt}
+
+\noindent\textbf{1.}\quad $|x|=5$
+
+\wsp
+\numline{-6}{6}{0.65cm}{}
+\vspace{6pt}
+
+\noindent\textbf{2.}\quad $|x-3|=7$
+
+\wsp
+\numline{-5}{11}{0.6cm}{}
+\vspace{6pt}
+
+\noindent\textbf{3.}\quad $|2x+1|=9$
+
+\wsp
+\numline{-6}{5}{0.65cm}{}
+\vspace{6pt}
+
+\noindent\textbf{4.}\quad $|3x-6|=12$
+
+\wsp
+\numline{-3}{7}{0.72cm}{}
+\vspace{6pt}
+
+\noindent\textbf{5.}\quad $|x+4|-2=5$
+
+\wsp
+\numline{-12}{4}{0.58cm}{}
+
+\newpage
+
+%% ── SECTION B ────────────────────────────────────────────────
+\begin{secbox}{Section B \textemdash\ Inequalities $(\leq\;/\;<)$\quad ``AND'' type $\Rightarrow$ closed interval}
+\end{secbox}
+\vspace{4pt}
+
+\noindent\textbf{6.}\quad $|x|\leq 4$
+
+\wsp
+\numline{-5}{5}{0.72cm}{}
+\vspace{6pt}
+
+\noindent\textbf{7.}\quad $|x-2|<5$
+
+\wsp
+\numline{-4}{8}{0.65cm}{}
+\vspace{6pt}
+
+\noindent\textbf{8.}\quad $|2x-4|\leq 6$
+
+\wsp
+\numline{-2}{6}{0.72cm}{}
+\vspace{6pt}
+
+\noindent\textbf{9.}\quad $|3x+3|<9$
+
+\wsp
+\numline{-5}{3}{0.72cm}{}
+\vspace{6pt}
+
+\noindent\textbf{10.}\quad $2|x+1|-3\leq 7$
+
+\wsp
+\numline{-7}{5}{0.6cm}{}
+\vspace{6pt}
+
+\noindent\textbf{11.}\quad $3|x-5|+1\leq 10$
+
+\wsp
+\numline{0}{10}{0.7cm}{}
+
+\newpage
+
+%% ── SECTION C ────────────────────────────────────────────────
+\begin{secbox}{Section C \textemdash\ Inequalities $(\geq\;/\;>)$\quad ``OR'' type $\Rightarrow$ union of two rays}
+\end{secbox}
+\vspace{4pt}
+
+\noindent\textbf{12.}\quad $|x|>3$
+
+\wsp
+\numline{-5}{5}{0.72cm}{}
+\vspace{6pt}
+
+\noindent\textbf{13.}\quad $|x+2|\geq 4$
+
+\wsp
+\numline{-7}{3}{0.72cm}{}
+\vspace{6pt}
+
+\noindent\textbf{14.}\quad $|2x-6|>4$
+
+\wsp
+\numline{-2}{7}{0.72cm}{}
+\vspace{6pt}
+
+\noindent\textbf{15.}\quad $3|x-1|\geq 9$
+
+\wsp
+\numline{-3}{5}{0.72cm}{}
+\vspace{6pt}
+
+\noindent\textbf{16.}\quad $5|b+8|-7>13$
+
+\wsp
+\numline{-14}{-2}{0.65cm}{}
+
+\newpage
+
+%% ── SECTION D ────────────────────────────────────────────────
+\begin{secbox}{Section D \textemdash\ Mixed \& Word Problems}
+\end{secbox}
+\vspace{4pt}
+
+\noindent\textbf{17.}\quad Solve and graph:\quad $|4x-8|\geq 12$
+
+\wsp\wspm
+\numline{-3}{7}{0.72cm}{}
+\vspace{6pt}
+
+\noindent\textbf{18.}\quad Write the absolute value inequality shown by the graph below, then
+verify with one solution and one non-solution.
+
+\numline{-5}{5}{0.72cm}{%
+  \node[dot,label=above:{$-3$}] at (-3,0){};
+  \node[dot,label=above:{$3$}] at (3,0){};
+  \draw[blue!70!black,line width=1.8pt] (-3,0)--(3,0);
+}
+
+\noindent Inequality:\;\underline{\hspace{5cm}}
+
+\wspm
+
+\noindent\underline{\hspace{\linewidth}}
+
+\vspace{10pt}
+
+\noindent\textbf{19.}\quad \textbf{Temperature:} A thermostat keeps the temperature within
+3 degrees of $70^\circ$F. Write and solve an absolute value inequality to find the
+acceptable temperature range.
+
+\wspm
+
+\noindent\underline{\hspace{\linewidth}}
+
+\vspace{10pt}
+
+\noindent\textbf{20.}\quad \textbf{Challenge:} Solve $|2x-1|=|x+4|$.
+\textit{Hint: The expressions inside can be equal, or one can be the negative of the other.}
+
+\wsp
+
+\noindent\underline{\hspace{\linewidth}}
+
+\vspace{10pt}
+
+\begin{center}
+\textit{``The distance interpretation of absolute value makes everything click.
+Keep practicing!''}
+\end{center}
+
+
+\newpage
+
+%% ════════════════════════════════════════════════════════════
+%%  ANSWER KEY
+%% ════════════════════════════════════════════════════════════
+\begin{center}
+{\LARGE\bfseries Answer Key}
+\end{center}
+\vspace{6pt}
+
+\tcbset{anskey/.style={
+  enhanced, colback=green!6, colframe=green!60!black,
+  arc=4pt, boxrule=1pt,
+  left=8pt, right=8pt, top=6pt, bottom=6pt,
+  fonttitle=\bfseries, coltitle=green!40!black}}
+
+%% ── Section A ────────────────────────────────────────────
+\begin{tcolorbox}[anskey, title={Section A \textemdash\ Absolute Value Equations}]
+\begin{enumerate}[leftmargin=1.8em, itemsep=4pt]
+  \item $|x|=5$ \hfill $\boldsymbol{x=-5}$ \textbf{ or } $\boldsymbol{x=5}$
+  \item $|x-3|=7$ \hfill $\boldsymbol{x=-4}$ \textbf{ or } $\boldsymbol{x=10}$
+  \item $|2x+1|=9$ \hfill $\boldsymbol{x=-5}$ \textbf{ or } $\boldsymbol{x=4}$
+  \item $|3x-6|=12$ \hfill $\boldsymbol{x=-2}$ \textbf{ or } $\boldsymbol{x=6}$
+  \item $|x+4|-2=5 \;\Rightarrow\; |x+4|=7$ \hfill $\boldsymbol{x=-11}$ \textbf{ or } $\boldsymbol{x=3}$
+\end{enumerate}
+\end{tcolorbox}
+
+\vspace{8pt}
+
+%% ── Section B ────────────────────────────────────────────
+\begin{tcolorbox}[anskey, title={Section B \textemdash\ Inequalities $(\leq\;/\;<)$}]
+\begin{enumerate}[leftmargin=1.8em, itemsep=4pt, start=6]
+  \item $|x|\leq 4$ \hfill $\boldsymbol{-4\leq x\leq 4}$
+  \item $|x-2|<5 \;\Rightarrow\; -5<x-2<5$ \hfill $\boldsymbol{-3<x<7}$
+  \item $|2x-4|\leq 6 \;\Rightarrow\; -6\leq 2x-4\leq 6$ \hfill $\boldsymbol{-1\leq x\leq 5}$
+  \item $|3x+3|<9 \;\Rightarrow\; -9<3x+3<9$ \hfill $\boldsymbol{-4<x<2}$
+  \item $2|x+1|-3\leq 7 \;\Rightarrow\; |x+1|\leq 5$ \hfill $\boldsymbol{-6\leq x\leq 4}$
+  \item $3|x-5|+1\leq 10 \;\Rightarrow\; |x-5|\leq 3$ \hfill $\boldsymbol{2\leq x\leq 8}$
+\end{enumerate}
+\end{tcolorbox}
+
+\vspace{8pt}
+
+%% ── Section C ────────────────────────────────────────────
+\begin{tcolorbox}[anskey, title={Section C \textemdash\ Inequalities $(\geq\;/\;>)$}]
+\begin{enumerate}[leftmargin=1.8em, itemsep=4pt, start=12]
+  \item $|x|>3$ \hfill $\boldsymbol{x<-3}$ \textbf{ or } $\boldsymbol{x>3}$
+  \item $|x+2|\geq 4 \;\Rightarrow\; x+2\leq -4$ or $x+2\geq 4$ \hfill $\boldsymbol{x\leq -6}$ \textbf{ or } $\boldsymbol{x\geq 2}$
+  \item $|2x-6|>4 \;\Rightarrow\; 2x-6<-4$ or $2x-6>4$ \hfill $\boldsymbol{x<1}$ \textbf{ or } $\boldsymbol{x>5}$
+  \item $3|x-1|\geq 9 \;\Rightarrow\; |x-1|\geq 3$ \hfill $\boldsymbol{x\leq -2}$ \textbf{ or } $\boldsymbol{x\geq 4}$
+  \item $5|b+8|-7>13 \;\Rightarrow\; |b+8|>4$ \hfill $\boldsymbol{b<-12}$ \textbf{ or } $\boldsymbol{b>-4}$
+\end{enumerate}
+\end{tcolorbox}
+
+\vspace{8pt}
+
+%% ── Section D ────────────────────────────────────────────
+\begin{tcolorbox}[anskey, title={Section D \textemdash\ Mixed \& Word Problems}]
+\begin{enumerate}[leftmargin=1.8em, itemsep=6pt, start=17]
+  \item $|4x-8|\geq 12$\\
+        $4x-8\leq -12 \;\Rightarrow\; x\leq -1$\quad or\quad
+        $4x-8\geq 12 \;\Rightarrow\; x\geq 5$\hfill
+        $\boldsymbol{x\leq -1}$ \textbf{ or } $\boldsymbol{x\geq 5}$
+
+  \item Graph shows closed dots at $-3$ and $3$, shaded between.\\
+        \textbf{Inequality:} $\boldsymbol{|x|\leq 3}$\quad
+        Solution: $\boldsymbol{-3\leq x\leq 3}$\\
+        Check: $x=0$: $|0|=0\leq 3$ \checkmark\quad
+               $x=4$: $|4|=4\leq 3$ \texttimes\
+
+  \item $|T-70|\leq 3 \;\Rightarrow\; -3\leq T-70\leq 3$\hfill
+        $\boldsymbol{67^\circ\text{F}\leq T\leq 73^\circ\text{F}}$
+
+  \item $|2x-1|=|x+4|$\\
+        \textit{Case 1:} $2x-1=x+4 \;\Rightarrow\; x=5$\\
+        \textit{Case 2:} $2x-1=-(x+4) \;\Rightarrow\; 3x=-3 \;\Rightarrow\; x=-1$\hfill
+        $\boldsymbol{x=-1}$ \textbf{ or } $\boldsymbol{x=5}$
+\end{enumerate}
+\end{tcolorbox}
+
+\end{document}

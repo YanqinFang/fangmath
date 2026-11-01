@@ -1,0 +1,435 @@
+\documentclass[11pt]{article}
+
+% ---------- FangMath house style ----------
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{helvet}
+\renewcommand{\familydefault}{\sfdefault}
+\usepackage[margin=1.9cm,top=2.4cm,bottom=2.4cm]{geometry}
+\usepackage{xcolor}
+\usepackage[most]{tcolorbox}
+\usepackage{fancyhdr}
+\usepackage{titlesec}
+\usepackage{enumitem}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{array}
+\usepackage{needspace}
+\usepackage{multicol}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,calc}
+\usepackage{hyperref}
+\hypersetup{hidelinks}
+
+\definecolor{fmnavy}{RGB}{0,32,96}
+\definecolor{fmgray}{RGB}{110,110,110}
+\definecolor{keybg}{RGB}{224,242,241}
+\definecolor{keyframe}{RGB}{0,105,92}
+\definecolor{workbg}{RGB}{250,250,250}
+\definecolor{workframe}{RGB}{190,190,190}
+\definecolor{exbg}{RGB}{232,245,233}
+\definecolor{exframe}{RGB}{46,125,50}
+\definecolor{mistbg}{RGB}{253,235,235}
+\definecolor{mistframe}{RGB}{183,28,28}
+\definecolor{ytbg}{RGB}{255,248,225}
+\definecolor{ytframe}{RGB}{191,144,0}
+
+\titleformat{\section}
+  {\color{fmnavy}\Large\bfseries}{\thesection.}{0.6em}{}
+\titlespacing*{\section}{0pt}{16pt}{4pt}
+
+\newcommand{\sectionepigraph}[1]{{\color{fmgray}\itshape\small #1\par}\vspace{6pt}}
+
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0.6pt}
+\renewcommand{\footrulewidth}{0pt}
+\fancyhead[L]{\small\color{fmnavy}\bfseries FangMath}
+\fancyhead[R]{\small\color{fmgray} Real Numbers \& Algebraic Expressions}
+\fancyfoot[C]{\small\color{fmgray} \textcopyright\ 2026 FangMath. All rights reserved.}
+\fancyfoot[R]{\small\color{fmgray}\thepage}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{4pt}
+
+\newcommand{\infoblank}[1]{\underline{\hspace{#1}}}
+
+\newtcolorbox{keyidea}[1][Key Idea]{colback=keybg,colframe=keyframe,
+  fonttitle=\bfseries,coltitle=white,colbacktitle=keyframe,title=#1,
+  arc=1mm,boxrule=0.6pt}
+\newtcolorbox{workedex}[1][Watch Me]{colback=exbg,colframe=exframe,
+  fonttitle=\bfseries,coltitle=white,colbacktitle=exframe,title=#1,
+  arc=1mm,boxrule=0.6pt}
+\newtcolorbox{mistakebox}[1][Common Mistake to Avoid]{colback=mistbg,colframe=mistframe,
+  fonttitle=\bfseries,coltitle=white,colbacktitle=mistframe,title=#1,
+  arc=1mm,boxrule=0.6pt}
+
+% ---------- Ruled student workspace (responsive width) ----------
+\newcommand{\ruleline}{\vspace{0.55cm}\noindent\textcolor{workframe}{\hrulefill}\par}
+\newcommand{\drawrulelines}[1]{%
+  \count255=#1\relax
+  \loop
+    \ruleline
+    \advance\count255 by -1
+  \ifnum\count255>0
+  \repeat
+}
+\newcommand{\workspace}[1]{%
+  \begin{tcolorbox}[colback=workbg, colframe=workframe, boxrule=0.4pt, arc=1mm,
+                     left=6pt, right=6pt, top=2pt, bottom=4pt]
+    {\footnotesize\color{fmgray} Show your work:}
+    \drawrulelines{#1}
+  \end{tcolorbox}
+}
+
+\newcounter{prac}
+\newcommand{\practice}[1]{%
+  \needspace{4\baselineskip}
+  \refstepcounter{prac}
+  \par\vspace{4pt}{\bfseries\color{fmnavy} \theprac.} #1\par
+}
+
+\begin{document}
+
+% =====================================================================
+% TITLE BLOCK
+% =====================================================================
+\begin{center}
+  {\Huge\color{fmnavy}\bfseries Real Numbers \& Algebraic Expressions}\\[6pt]
+  {\large\color{fmgray}\itshape A Chapter 1 practice worksheet --- classifying, comparing, and\break
+  working with real numbers, plus writing and evaluating expressions.}
+\end{center}
+
+\vspace{12pt}
+
+\begin{tcolorbox}[colback=workbg, colframe=workframe, boxrule=0.4pt, arc=1mm,
+                   left=14pt, right=14pt, top=10pt, bottom=10pt]
+  \renewcommand{\arraystretch}{2.2}
+  \begin{tabular}{@{}l l@{}}
+    {\bfseries\color{fmnavy} Name:}~\infoblank{5.4cm} &
+    {\bfseries\color{fmnavy} Grade:}~\infoblank{2.6cm} \\
+    {\bfseries\color{fmnavy} Date:}~\infoblank{3.4cm} &
+    {\bfseries\color{fmnavy} Weekday:}~\infoblank{3.4cm} \\
+    {\bfseries\color{fmnavy} Time:}~\infoblank{3.4cm} &
+  \end{tabular}
+\end{tcolorbox}
+
+\vspace{6pt}
+
+% =====================================================================
+\section{A. Classifying Real Numbers}
+\sectionepigraph{Every real number belongs to at least one of these families. Some numbers belong to several.}
+
+\begin{keyidea}[The Real Number Family]
+\textbf{Natural numbers} ($1,2,3,\dots$) are the counting numbers.\\
+\textbf{Whole numbers} ($0,1,2,3,\dots$) are the natural numbers plus $0$.\\
+\textbf{Integers} ($\dots,-2,-1,0,1,2,\dots$) are the whole numbers plus their opposites.\\
+\textbf{Rational numbers} can be written as a fraction $\dfrac{a}{b}$ of two integers
+($b\neq0$) --- this includes all integers, all terminating decimals, and all
+repeating decimals.\\
+\textbf{Irrational numbers} \emph{cannot} be written as a fraction of two integers ---
+their decimals go on forever with no repeating pattern (like $\sqrt2$ or $\pi$).
+Every real number is rational \emph{or} irrational, never both.
+\end{keyidea}
+
+\begin{mistakebox}
+A square root is not automatically irrational! $\sqrt{36}=6$ is a whole number,
+because $36$ is a \emph{perfect square}. Always simplify a square root first ---
+\emph{then} decide which family it belongs to.
+\end{mistakebox}
+
+\textbf{Name every subset (Natural, Whole, Integer, Rational, Irrational) that each number belongs to.}
+
+\begin{multicols}{2}
+\practice{$9$}
+\practice{$-14$}
+\practice{$\dfrac{3}{8}$}
+\practice{$\sqrt{36}$}
+\practice{$\sqrt{28}$}
+\practice{$-4.75$}
+\practice{$0$}
+\practice{$\sqrt5$}
+\end{multicols}
+
+% =====================================================================
+\section{B. Simplifying Square Roots}
+\sectionepigraph{If the number under the root sign is a perfect square (or a fraction of two perfect squares), the square root simplifies to an exact number.}
+
+\begin{workedex}
+Simplify $\sqrt{\dfrac{49}{100}}$.
+\[
+\sqrt{\dfrac{49}{100}} = \dfrac{\sqrt{49}}{\sqrt{100}} = \dfrac{7}{10},
+\qquad\text{since } 7^2=49 \text{ and } 10^2=100.
+\]
+\end{workedex}
+
+\practice{$\sqrt{64}$}
+\practice{$\sqrt{121}$}
+\practice{$\sqrt{\dfrac{9}{16}}$}
+\practice{$\sqrt{\dfrac{25}{36}}$}
+
+% =====================================================================
+\section{C. Estimating Square Roots}
+\sectionepigraph{When a number is \emph{not} a perfect square, its square root sits between two whole numbers. Find which two, then decide which one it's closer to.}
+
+\begin{workedex}
+Estimate $\sqrt{52}$ to the nearest integer.
+\[
+6^2=36 \qquad 7^2=49 \qquad 8^2=64
+\]
+Since $49<52<64$, we know $7<\sqrt{52}<8$. Because $52$ is much closer to
+$49$ than to $64$, $\sqrt{52}\approx 7$.
+\end{workedex}
+
+\textbf{Estimate each square root. Round to the nearest integer.}
+
+\practice{$\sqrt{40}$}
+\workspace{2}
+\practice{$\sqrt{55}$}
+\workspace{2}
+\practice{$\sqrt{95}$}
+\workspace{2}
+\practice{$\sqrt{150}$}
+\workspace{2}
+
+% =====================================================================
+\section{D. Square Roots in Context}
+\sectionepigraph{If you know the \emph{area} of a square, its side length is the square root of the area --- since $A = s^2$.}
+
+\practice{A framed painting is a square with an area of $50$ in$^2$. About how long is one side, to the nearest inch?}
+\workspace{3}
+
+\practice{A garden plot is a square with an area of $95$ m$^2$. About how long is one side, to the nearest meter?}
+\workspace{3}
+
+\practice{A stage floor is a square with an area of $200$ ft$^2$. About how long is one side, to the nearest foot?}
+\workspace{3}
+
+% =====================================================================
+\section{E. Comparing Real Numbers}
+\sectionepigraph{To compare two real numbers, rewrite both as decimals --- then line them up and compare.}
+
+\begin{workedex}
+Compare $3\dfrac{1}{4}$ and $\sqrt{11}$ using $<,\ >,$ or $=$.
+\[
+3\tfrac14 = 3.25, \qquad \sqrt{11}\approx3.3166\dots
+\]
+Since $3.25<3.3166\dots$, \quad $3\dfrac14 < \sqrt{11}$.
+\end{workedex}
+
+\textbf{Compare the numbers in each pair using $<,\ >,$ or $=$.}
+
+\practice{$4\dfrac25 \quad \bigcirc \quad \sqrt{19}$}
+\workspace{2}
+\practice{$-2.1 \quad \bigcirc \quad -\dfrac74$}
+\workspace{2}
+\practice{$\dfrac53 \quad \bigcirc \quad \sqrt3$}
+\workspace{2}
+\practice{$\sqrt{70} \quad \bigcirc \quad 8.3$}
+\workspace{2}
+
+% =====================================================================
+\section{F. Ordering Real Numbers}
+\sectionepigraph{Convert every number to a decimal first --- then it's just like ordering decimals.}
+
+\practice{Order these numbers from \textbf{least to greatest}:
+\[
+3, \qquad -1, \qquad \sqrt{10}, \qquad -\dfrac52, \qquad 2.6
+\]}
+\workspace{4}
+
+% =====================================================================
+\section{G. Properties of Real Numbers}
+\sectionepigraph{These two properties describe ways you can rearrange a sum or a product without changing the answer.}
+
+\begin{keyidea}[Commutative \& Associative Properties]
+\textbf{Commutative Property} --- you can swap the \emph{order} of the numbers:
+\[
+a+b=b+a \qquad\qquad a\times b = b\times a
+\]
+\textbf{Associative Property} --- you can move the \emph{grouping} parentheses, as
+long as the order of the numbers stays the same:
+\[
+(a+b)+c = a+(b+c) \qquad\qquad (a\times b)\times c = a\times(b\times c)
+\]
+A quick way to tell them apart: if the \emph{numbers switch places}, it's
+Commutative. If the numbers \emph{stay in the same order} but the parentheses move,
+it's Associative.
+\end{keyidea}
+
+\textbf{Name the property shown in each equation.}
+
+\practice{$(4+9)+6 = 4+(9+6)$}
+\practice{$7\times12 = 12\times7$}
+\practice{$5\times(3\times8) = (5\times3)\times8$}
+\practice{$n+15 = 15+n$}
+
+% =====================================================================
+\section{H. Writing Algebraic Expressions}
+\sectionepigraph{Turn a word phrase into symbols by translating one piece at a time.}
+
+\begin{workedex}
+Write an algebraic expression for: \emph{4 more than three times a number $t$.}
+\[
+\text{``three times a number } t\text{''} = 3t \qquad\qquad
+\text{``4 more than that''} = 3t+4.
+\]
+\end{workedex}
+
+\practice{A number $k$ increased by $9$.}
+\practice{$5$ less than twice a number $m$.}
+\practice{The quotient of a number $p$ and $7$.}
+\practice{Renting a kayak costs an \$8 flat fee plus \$3 for every hour $h$ you keep it.}
+
+\practice{The table shows the total cost of catering an event based on the number
+of guests. Write a rule for the total cost \textbf{in words}, and then as an
+algebraic expression using $n$ for the number of guests.
+
+\begin{center}
+\renewcommand{\arraystretch}{1.4}
+\begin{tabular}{|c|c|}
+\hline
+\textbf{Number of Guests} & \textbf{Total Cost} \\ \hline
+$10$ & $(15\cdot10)+40$ \\ \hline
+$20$ & $(15\cdot20)+40$ \\ \hline
+$30$ & $(15\cdot30)+40$ \\ \hline
+\end{tabular}
+\end{center}
+}
+\workspace{3}
+
+% =====================================================================
+\section{I. Order of Operations}
+\sectionepigraph{Work inside parentheses first, then exponents, then multiply/divide left to right, then add/subtract left to right --- \emph{PEMDAS}.}
+
+\begin{workedex}
+Simplify $30\div(1+2^2)$.
+\[
+30\div(1+2^2) = 30\div(1+4) = 30\div5 = 6.
+\]
+\end{workedex}
+
+\practice{$36\div(2+4^2)$}
+\workspace{2}
+\practice{$5^2-3\times(8-2)$}
+\workspace{2}
+\practice{$(9-4)^2+3\times2$}
+\workspace{2}
+\practice{$48\div(2^3-2)+5$}
+\workspace{2}
+
+% =====================================================================
+\section{J. Evaluating Algebraic Expressions}
+\sectionepigraph{Substitute the given value for each variable --- then follow order of operations.}
+
+\begin{workedex}
+Evaluate $2x^2\div y$ when $x=3$ and $y=6$.
+\[
+2(3)^2\div6 = 2(9)\div6 = 18\div6 = 3.
+\]
+\end{workedex}
+
+\practice{Evaluate $4x\cdot3\div y$ when $x=2$ and $y=6$.}
+\workspace{3}
+
+\practice{Evaluate $(3a)^2\div(b-1)$ when $a=2$ and $b=5$.}
+\workspace{3}
+
+\practice{Evaluate $2(x+y)-z$ when $x=4$, $y=3$, and $z=5$.}
+\workspace{3}
+
+% =====================================================================
+\section{K. Apply: Word Problems}
+\sectionepigraph{Read carefully, decide which idea from this worksheet applies, and show your reasoning.}
+
+\practice{A contractor is installing tile in a square room. Tile and labor
+cost \$8 per square foot, and the total job costs \$960. About how long is a
+side of the room, to the nearest foot?}
+\workspace{4}
+
+\practice{If you lean a ladder against a wall, a safe length for the ladder is
+$\sqrt{x^2+(3x)^2}$ feet, where $x$ is how far the base of the ladder sits from
+the wall. Find the ladder length, to the nearest tenth of a foot, when the base
+is $6$ feet from the wall.}
+\workspace{4}
+
+\practice{A rafting company charges \$48 per adult, \$27 per child, and \$6 per
+hour for equipment rental. Write an expression for the total cost of a trip
+for $2$ adults and $3$ children who rent equipment for $h$ hours. Then find the
+total cost if the trip lasts $4$ hours.}
+\workspace{5}
+
+% =====================================================================
+\newpage
+\section*{\color{fmnavy} Detailed Answer Key}
+\sectionepigraph{Full solutions and reasoning, in order.}
+
+\textbf{Section A --- Classifying Real Numbers.}\\
+1. $9$: Natural, Whole, Integer, Rational.\\
+2. $-14$: Integer, Rational (not Natural or Whole --- it's negative).\\
+3. $\dfrac38$: Rational only.\\
+4. $\sqrt{36}=6$: Natural, Whole, Integer, Rational (it's a perfect square!).\\
+5. $\sqrt{28}\approx5.2915\dots$: Irrational ($28$ is not a perfect square, so the decimal never ends or repeats).\\
+6. $-4.75$: Rational (a terminating decimal, and $-4.75=-\dfrac{19}{4}$).\\
+7. $0$: Whole, Integer, Rational (not Natural --- the natural numbers start at $1$).\\
+8. $\sqrt5\approx2.2360\dots$: Irrational ($5$ is not a perfect square).
+
+\textbf{Section B --- Simplifying Square Roots.}\\
+9. $\sqrt{64}=8$, since $8^2=64$.\\
+10. $\sqrt{121}=11$, since $11^2=121$.\\
+11. $\sqrt{\dfrac{9}{16}}=\dfrac{\sqrt9}{\sqrt{16}}=\dfrac{3}{4}$.\\
+12. $\sqrt{\dfrac{25}{36}}=\dfrac{\sqrt{25}}{\sqrt{36}}=\dfrac{5}{6}$.
+
+\textbf{Section C --- Estimating Square Roots.}\\
+13. $\sqrt{40}$: since $36<40<49$, $6<\sqrt{40}<7$; $40$ is close to $36$, so $\sqrt{40}\approx6$ ($\sqrt{40}\approx6.32$).\\
+14. $\sqrt{55}$: since $49<55<64$, $7<\sqrt{55}<8$; $55$ is closer to $49$, so $\sqrt{55}\approx7$ ($\sqrt{55}\approx7.42$).\\
+15. $\sqrt{95}$: since $81<95<100$, $9<\sqrt{95}<10$; $95$ is much closer to $100$, so $\sqrt{95}\approx10$ ($\sqrt{95}\approx9.75$).\\
+16. $\sqrt{150}$: since $144<150<169$, $12<\sqrt{150}<13$; $150$ is much closer to $144$, so $\sqrt{150}\approx12$ ($\sqrt{150}\approx12.25$).
+
+\textbf{Section D --- Square Roots in Context.}\\
+17. $A=s^2=50 \Rightarrow s=\sqrt{50}\approx7.07$, so the side is about $\mathbf{7}$ inches.\\
+18. $A=s^2=95 \Rightarrow s=\sqrt{95}\approx9.75$, so the side is about $\mathbf{10}$ meters.\\
+19. $A=s^2=200 \Rightarrow s=\sqrt{200}\approx14.14$, so the side is about $\mathbf{14}$ feet.
+
+\textbf{Section E --- Comparing Real Numbers.}\\
+20. $4\dfrac25=4.4$ and $\sqrt{19}\approx4.359$, so $4\dfrac25 \mathbf{>} \sqrt{19}$.\\
+21. $-2.1$ and $-\dfrac74=-1.75$; since $-2.1$ is farther left on the number line, $-2.1 \mathbf{<} -\dfrac74$.\\
+22. $\dfrac53\approx1.667$ and $\sqrt3\approx1.732$, so $\dfrac53 \mathbf{<} \sqrt3$.\\
+23. $\sqrt{70}\approx8.367$ and $8.3$, so $\sqrt{70} \mathbf{>} 8.3$.
+
+\textbf{Section F --- Ordering Real Numbers.}\\
+24. Converting: $3=3.000$, $-1=-1.000$, $\sqrt{10}\approx3.162$, $-\dfrac52=-2.5$, $2.6=2.600$.\\
+From least to greatest: $\mathbf{-\dfrac52,\ -1,\ 2.6,\ 3,\ \sqrt{10}}$.
+
+\textbf{Section G --- Properties of Real Numbers.}\\
+25. $(4+9)+6=4+(9+6)$: the order of the numbers doesn't change, only the grouping --- \textbf{Associative Property of Addition}.\\
+26. $7\times12=12\times7$: the two numbers switch places --- \textbf{Commutative Property of Multiplication}.\\
+27. $5\times(3\times8)=(5\times3)\times8$: the order stays the same, only the grouping moves --- \textbf{Associative Property of Multiplication}.\\
+28. $n+15=15+n$: the two terms switch places --- \textbf{Commutative Property of Addition}.
+
+\textbf{Section H --- Writing Algebraic Expressions.}\\
+29. $k+9$.\\
+30. $2m-5$.\\
+31. $\dfrac{p}{7}$ (or $p\div7$).\\
+32. $8+3h$.\\
+33. Each cost is \$15 times the number of guests, plus a \$40 fee. In words:
+``the total cost is \$15 per guest plus a \$40 flat fee.'' As an expression with
+$n$ guests: $\mathbf{15n+40}$.
+
+\textbf{Section I --- Order of Operations.}\\
+34. $36\div(2+4^2)=36\div(2+16)=36\div18=\mathbf{2}$.\\
+35. $5^2-3\times(8-2)=25-3\times6=25-18=\mathbf{7}$.\\
+36. $(9-4)^2+3\times2=5^2+6=25+6=\mathbf{31}$.\\
+37. $48\div(2^3-2)+5=48\div(8-2)+5=48\div6+5=8+5=\mathbf{13}$.
+
+\textbf{Section J --- Evaluating Algebraic Expressions.}\\
+38. $4(2)\cdot3\div6 = 24\div6 = \mathbf{4}$.\\
+39. $(3\cdot2)^2\div(5-1) = 6^2\div4 = 36\div4 = \mathbf{9}$.\\
+40. $2(4+3)-5 = 2(7)-5 = 14-5 = \mathbf{9}$.
+
+\textbf{Section K --- Apply: Word Problems.}\\
+41. Area $=\$960\div\$8\text{ per ft}^2 = 120$ ft$^2$. Side $=\sqrt{120}\approx10.95$, so the room is about $\mathbf{11}$ feet on a side.\\
+42. Length $=\sqrt{6^2+(3\cdot6)^2}=\sqrt{36+324}=\sqrt{360}\approx18.9736\dots$, which rounds to $\mathbf{19.0}$ feet (nearest tenth).\\
+43. Cost $=2(48)+3(27)+6h = 96+81+6h = \mathbf{177+6h}$. At $h=4$: $177+6(4)=177+24=\mathbf{\$201}$.
+
+\end{document}

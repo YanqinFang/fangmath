@@ -1,0 +1,481 @@
+\documentclass[11pt]{article}
+
+% ============================================================
+%  FANG MATH  --  Real Numbers, Exponents & Radicals
+%  (c) 2026 FangMath / Prof. Fang.  All rights reserved.
+% ============================================================
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[margin=1in,headheight=26pt,headsep=14pt,footskip=28pt]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage[table]{xcolor}
+\usepackage{mdframed}
+\usepackage{enumitem}
+\usepackage{fancyhdr}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{needspace}
+\usepackage{tikz}
+\usepackage{pgffor}
+\usepackage{titlesec}
+
+% ---------- FangMath color palette ----------
+\definecolor{fangblue}{HTML}{1F4E79}
+\definecolor{fanglight}{HTML}{EAF1F8}
+\definecolor{fangmid}{HTML}{2E6DA4}
+\definecolor{easygreen}{HTML}{2E8B57}
+\definecolor{medorange}{HTML}{C77A16}
+\definecolor{hardred}{HTML}{B23B3B}
+\definecolor{wsgray}{HTML}{B9C4D0}
+\definecolor{keygray}{HTML}{F4F6F9}
+
+% ---------- Header / Footer ----------
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{1.2pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{fangblue}\leaders\hrule height \headrulewidth\hfill}}
+\lhead{\textcolor{fangblue}{\textbf{\large FangMath}}\;\textcolor{fangmid}{\small$\vert$ Prof. Fang}}
+\rhead{\textcolor{fangmid}{\small Real Numbers, Exponents \& Radicals}}
+\renewcommand{\footrulewidth}{0.6pt}
+\renewcommand{\footrule}{\hbox to\headwidth{\color{fangblue}\leaders\hrule height \footrulewidth\hfill}}
+\lfoot{\textcolor{fangmid}{\footnotesize \copyright\ 2026 FangMath. All Rights Reserved.}}
+\rfoot{\textcolor{fangmid}{\footnotesize Page \thepage}}
+
+% ---------- Section styling ----------
+\titleformat{\section}
+  {\color{fangblue}\Large\bfseries}
+  {}{0pt}
+  {\rule{4pt}{18pt}\hspace{8pt}}
+\titlespacing*{\section}{0pt}{16pt}{8pt}
+
+\titleformat{\subsection}
+  {\color{fangmid}\large\bfseries}{}{0pt}{}
+\titlespacing*{\subsection}{0pt}{10pt}{4pt}
+
+% ---------- Concept box ----------
+\newmdenv[
+  linecolor=fangblue,
+  linewidth=1pt,
+  backgroundcolor=fanglight,
+  roundcorner=6pt,
+  innertopmargin=8pt,
+  innerbottommargin=8pt,
+  innerleftmargin=12pt,
+  innerrightmargin=12pt,
+  skipabove=8pt,
+  skipbelow=8pt
+]{conceptbox}
+
+% ---------- Example box ----------
+\newmdenv[
+  linecolor=fangmid,
+  linewidth=0.8pt,
+  topline=false,bottomline=false,rightline=false,
+  leftline=true,
+  innerleftmargin=12pt,
+  innertopmargin=4pt,
+  innerbottommargin=4pt,
+  skipabove=6pt,
+  skipbelow=6pt
+]{examplebox}
+
+% ---------- Difficulty badges ----------
+\newcommand{\easy}{\colorbox{easygreen}{\textcolor{white}{\scriptsize\bfseries\,EASY\,}}}
+\newcommand{\medium}{\colorbox{medorange}{\textcolor{white}{\scriptsize\bfseries\,MEDIUM\,}}}
+\newcommand{\hard}{\colorbox{hardred}{\textcolor{white}{\scriptsize\bfseries\,HARD\,}}}
+
+% ---------- Ruled workspace ----------
+\newcommand{\workspace}[1]{%
+  \par\vspace{3mm}%
+  \foreach \x in {1,...,#1}{%
+    \noindent\textcolor{wsgray}{\rule{\linewidth}{0.3pt}}\par\vspace{8mm}%
+  }%
+}
+
+% ---------- Repeating decimal shorthand ----------
+\newcommand{\rep}[1]{\overline{#1}}
+
+% ---------- Problem list environment ----------
+\newlist{problems}{enumerate}{1}
+\setlist[problems]{label=\textbf{\color{fangblue}\arabic*.},leftmargin=*,itemsep=10pt}
+
+\newcommand{\topictitle}[2]{%
+  \needspace{4\baselineskip}
+  \section*{\color{fangblue}#1}
+  \vspace{-6pt}
+  {\color{fangmid}\small\itshape #2}\par
+  \vspace{4pt}
+  {\color{fangblue}\rule{\linewidth}{0.8pt}}
+}
+
+\setlength{\parindent}{0pt}
+
+\begin{document}
+
+% =================================================================
+%  TITLE BLOCK
+% =================================================================
+\begin{center}
+  {\color{fangblue}\Huge\bfseries Real Numbers, Exponents \& Radicals}\\[6pt]
+  {\color{fangmid}\large Notes \& Practice Worksheet}\\[10pt]
+  \begin{tikzpicture}
+    \draw[fangblue,line width=1.4pt] (0,0) -- (12,0);
+    \node[fill=white,text=fangblue] at (6,0) {\ \bfseries FANG MATH \ };
+  \end{tikzpicture}
+\end{center}
+
+\vspace{4pt}
+\begin{center}
+\begin{tabular}{@{}p{0.5\linewidth}p{0.42\linewidth}@{}}
+\textbf{\color{fangblue}Name:} \underline{\hspace{5cm}} &
+\textbf{\color{fangblue}Date:} \underline{\hspace{4cm}}
+\end{tabular}
+\end{center}
+
+\vspace{10pt}
+
+% =================================================================
+%  PART I -- NOTES
+% =================================================================
+\section*{Part I \; \textbullet\; Key Concepts (Notes)}
+{\color{fangblue}\rule{\linewidth}{0.8pt}}
+
+% ---- 1. Exponents & Order of Operations ----
+\subsection*{1.\; Exponents \& Order of Operations}
+
+An \textbf{exponent} tells you how many times to multiply the base by itself.
+\[
+3^{4}=3\cdot3\cdot3\cdot3 = 81,
+\qquad
+\left(\tfrac{2}{3}\right)^{3}=\tfrac{2}{3}\cdot\tfrac{2}{3}\cdot\tfrac{2}{3}=\tfrac{8}{27}.
+\]
+
+\begin{conceptbox}
+\textbf{\color{fangblue}Order of Operations (PEMDAS).}
+Work in this order:
+\textbf{P}arentheses $\rightarrow$ \textbf{E}xponents $\rightarrow$
+\textbf{M}ultiply/\textbf{D}ivide (left to right) $\rightarrow$
+\textbf{A}dd/\textbf{S}ubtract (left to right).
+\end{conceptbox}
+
+\begin{examplebox}
+\textbf{Example.}\quad
+$\dfrac{4+3^{4}}{5}=\dfrac{4+81}{5}=\dfrac{85}{5}=\boxed{17}$
+\end{examplebox}
+
+Notice that grouping symbols come first: a fraction bar groups the whole
+numerator, so we evaluate $4+81$ \emph{before} dividing by $5$.
+
+% ---- 2. Square Roots & Cube Roots ----
+\subsection*{2.\; Square Roots \& Cube Roots}
+
+Taking a root ``undoes'' a power. To solve an equation with an unknown power,
+ask: \emph{what number, raised to that power, gives this result?}
+\[
+\square^{3}=27 \;\Longrightarrow\; \square=\sqrt[3]{27}=3,
+\qquad
+\square^{2}=16 \;\Longrightarrow\; \square=\pm 4.
+\]
+
+\begin{conceptbox}
+\textbf{\color{fangblue}Watch the sign.}
+Every positive number has \emph{two} square roots.
+$\sqrt{16}=4$ means the \textbf{principal (positive)} root, while
+$-\sqrt{16}=-4$. So the full solution of $x^{2}=16$ is $x=\pm 4$.
+Cube roots keep the sign: $\sqrt[3]{27}=3$ and $\sqrt[3]{-27}=-3$.
+\end{conceptbox}
+
+\begin{examplebox}
+\textbf{Check with squaring.}\quad
+$\sqrt{16}=4$ because $4\cdot 4 =16$, i.e. $\sqrt{16}\cdot\sqrt{16}=16$.
+Likewise $\bigl(\sqrt{17}\bigr)^{2}=17$ and
+$\left(\tfrac{13}{3}\right)^{2}=\dfrac{169}{9}$, so
+$4\tfrac{1}{3}=\tfrac{13}{3}$ is the square root of $\tfrac{169}{9}$.
+\end{examplebox}
+
+\textbf{Estimating.} $\sqrt{17}$ is between $4$ and $5$ because
+$4^{2}=16 < 17 < 25 = 5^{2}$; since $17$ is close to $16$, $\sqrt{17}\approx 4.1$.
+
+% ---- 3. Repeating Decimals to Fractions ----
+\subsection*{3.\; Converting Repeating Decimals to Fractions}
+
+\begin{conceptbox}
+\textbf{\color{fangblue}Every decimal is one of three types.}
+\begin{enumerate}[label=\textbf{(\arabic*)},leftmargin=2.2em,itemsep=1pt]
+  \item \textbf{Terminating} (e.g. $0.25$) $\rightarrow$ rational
+  \item \textbf{Repeating} (e.g. $0.\rep{2}=0.222\ldots$) $\rightarrow$ rational
+  \item \textbf{Non-repeating, non-terminating} (e.g. $\pi$) $\rightarrow$ \textbf{irrational}
+\end{enumerate}
+\end{conceptbox}
+
+\textbf{Algebraic method (the reliable way).}
+Multiply by a power of $10$ so the repeating tails line up, then subtract.
+
+\begin{examplebox}
+\textbf{Single repeating digit:} convert $0.\rep{2}$.
+\begin{align*}
+x &= 0.222\ldots\\
+10x &= 2.222\ldots\\
+10x - x &= 2 \;\Longrightarrow\; 9x = 2 \;\Longrightarrow\; \boxed{x=\tfrac{2}{9}}
+\end{align*}
+\end{examplebox}
+
+\begin{examplebox}
+\textbf{Two repeating digits:} convert $0.\rep{23}$. Multiply by $100$.
+\begin{align*}
+x &= 0.2323\ldots\\
+100x &= 23.2323\ldots = 23 + x\\
+100x - x &= 23 \;\Longrightarrow\; 99x = 23 \;\Longrightarrow\; \boxed{x=\tfrac{23}{99}}
+\end{align*}
+\end{examplebox}
+
+\textbf{Rule of thumb:} for a purely repeating block of $n$ digits, the denominator
+is $n$ nines. $\;0.\rep{d}=\tfrac{d}{9},\quad 0.\rep{ab}=\tfrac{ab}{99},\quad
+0.\rep{abc}=\tfrac{abc}{999}.$ Always reduce to lowest terms.
+
+% ---- 4. Classifying Real Numbers ----
+\subsection*{4.\; Classifying Real Numbers}
+
+Think of the number sets as nested ``bags'': each set sits inside the larger one.
+\[
+\underbrace{\mathbb{N}}_{\text{Natural}}\subset
+\underbrace{\mathbb{W}}_{\text{Whole}}\subset
+\underbrace{\mathbb{Z}}_{\text{Integer}}\subset
+\underbrace{\mathbb{Q}}_{\text{Rational}},
+\qquad
+\text{Irrational} = \text{Real} \setminus \mathbb{Q}.
+\]
+
+\begin{conceptbox}
+\textbf{\color{fangblue}Quick definitions.}
+\textbf{Natural} $=\{1,2,3,\dots\}$ \; \textbullet\;
+\textbf{Whole} $=\{0,1,2,\dots\}$ \; \textbullet\;
+\textbf{Integer} $=\{\dots,-2,-1,0,1,2,\dots\}$ \; \textbullet\;
+\textbf{Rational} $=$ any $\tfrac{a}{b}$ (terminating or repeating decimal) \; \textbullet\;
+\textbf{Irrational} $=$ non-terminating, non-repeating (e.g. $\sqrt{12},\ \pi$).
+\end{conceptbox}
+
+\begin{center}
+\renewcommand{\arraystretch}{1.35}
+\begin{tabular}{|>{\columncolor{fanglight}}c|c|c|c|c|c|}
+\hline
+\rowcolor{fangblue}
+\textcolor{white}{\textbf{Number}} & \textcolor{white}{\textbf{Natural}} &
+\textcolor{white}{\textbf{Whole}} & \textcolor{white}{\textbf{Integer}} &
+\textcolor{white}{\textbf{Rational}} & \textcolor{white}{\textbf{Irrational}}\\
+\hline
+$\sqrt{9}=3$ & \checkmark & \checkmark & \checkmark & \checkmark & \\
+\hline
+$\tfrac{3}{10}$ & & & & \checkmark & \\
+\hline
+$-0.45$ & & & & \checkmark & \\
+\hline
+$\sqrt{12}$ & & & & & \checkmark \\
+\hline
+\end{tabular}
+\end{center}
+
+\vspace{2pt}
+\textbf{Tip:} simplify first! $\sqrt{9}=3$ is a natural number, but
+$\sqrt{12}=2\sqrt{3}\approx 3.464\ldots$ never terminates or repeats, so it is irrational.
+
+\vspace{6pt}
+{\color{fangblue}\rule{\linewidth}{1.2pt}}
+
+% =================================================================
+%  PART II -- PRACTICE
+% =================================================================
+\needspace{6\baselineskip}
+\section*{Part II \; \textbullet\; Practice Problems}
+{\color{fangmid}\small Show all work in the space provided.}\par
+\vspace{4pt}
+{\color{fangblue}\rule{\linewidth}{0.8pt}}
+
+% ---------------- TOPIC 1 ----------------
+\topictitle{Topic 1 \; \textbullet\; Order of Operations \& Exponents}{Evaluate each expression. Show every step.}
+
+\begin{problems}
+\item \easy\; Evaluate $\;2^{4}$.
+\workspace{2}
+\item \easy\; Evaluate $\;\left(\dfrac{3}{4}\right)^{2}$.
+\workspace{2}
+\item \easy\; Evaluate $\;5^{3}$.
+\workspace{2}
+\item \medium\; Evaluate $\;3^{2}+4^{2}$.
+\workspace{2}
+\item \medium\; Evaluate $\;(12-5)\cdot 2^{3}$.
+\workspace{2}
+\item \medium\; Evaluate $\;\dfrac{4+81}{5}$.
+\workspace{2}
+\item \medium\; Evaluate $\;0.5\times 0.5\times 0.5$.
+\workspace{2}
+\item \hard\; Evaluate $\;2\cdot 3^{3}-(7-3)^{2}$.
+\workspace{3}
+\item \hard\; Evaluate $\;\left(\dfrac{2}{3}\right)^{3}+\left(\dfrac{1}{2}\right)^{2}$.
+\workspace{3}
+\item \hard\; Evaluate $\;\left[\,(5^{2}-1)\div 4\,\right]^{2}$.
+\workspace{3}
+\end{problems}
+
+% ---------------- TOPIC 2 ----------------
+\topictitle{Topic 2 \; \textbullet\; Square Roots \& Cube Roots}{Find each root or solution. Give all valid answers.}
+
+\begin{problems}
+\item \easy\; Evaluate $\;\sqrt{49}$.
+\workspace{2}
+\item \easy\; Evaluate $\;\sqrt[3]{8}$.
+\workspace{2}
+\item \easy\; Evaluate $\;-\sqrt{25}$.
+\workspace{2}
+\item \medium\; Solve $\;x^{2}=36$ \; (find both solutions).
+\workspace{2}
+\item \medium\; Solve $\;x^{3}=64$.
+\workspace{2}
+\item \medium\; Evaluate $\;\bigl(\sqrt{13}\bigr)^{2}$.
+\workspace{2}
+\item \medium\; Evaluate $\;\sqrt{\dfrac{9}{16}}$.
+\workspace{2}
+\item \hard\; Between which two consecutive integers does $\sqrt{17}$ lie? Explain how you know.
+\workspace{3}
+\item \hard\; Evaluate $\;\sqrt[3]{-27}$.
+\workspace{2}
+\item \hard\; Solve $\;x^{2}=20$ and write the answer in simplest radical form.
+\workspace{3}
+\end{problems}
+
+% ---------------- TOPIC 3 ----------------
+\topictitle{Topic 3 \; \textbullet\; Repeating Decimals to Fractions}{Convert each repeating decimal to a fraction in lowest terms. Use the algebraic method.}
+
+\begin{problems}
+\item \easy\; Convert $\;0.\rep{5}$.
+\workspace{2}
+\item \easy\; Convert $\;0.\rep{7}$.
+\workspace{2}
+\item \easy\; Convert $\;0.\rep{1}$.
+\workspace{2}
+\item \medium\; Convert $\;0.\rep{45}$.
+\workspace{3}
+\item \medium\; Convert $\;0.\rep{27}$.
+\workspace{3}
+\item \medium\; Convert $\;0.\rep{8}$.
+\workspace{2}
+\item \medium\; Convert $\;0.\rep{12}$.
+\workspace{3}
+\item \hard\; Convert $\;0.1\rep{6}$ \;(only the $6$ repeats).
+\workspace{3}
+\item \hard\; Convert $\;0.\rep{456}$.
+\workspace{3}
+\item \hard\; Convert $\;0.58\rep{3}$ \;(only the $3$ repeats).
+\workspace{3}
+\end{problems}
+
+% ---------------- TOPIC 4 ----------------
+\topictitle{Topic 4 \; \textbullet\; Classifying Real Numbers}{List \emph{every} set each number belongs to: Natural, Whole, Integer, Rational, Irrational. Simplify first.}
+
+\begin{problems}
+\item \easy\; Classify $\;\sqrt{9}$.
+\workspace{2}
+\item \easy\; Classify $\;-7$.
+\workspace{2}
+\item \easy\; Classify $\;\dfrac{3}{10}$.
+\workspace{2}
+\item \medium\; Classify $\;\sqrt{12}$.
+\workspace{2}
+\item \medium\; Classify $\;-0.45$.
+\workspace{2}
+\item \medium\; Classify $\;0$.
+\workspace{2}
+\item \medium\; Classify $\;\pi$.
+\workspace{2}
+\item \hard\; Classify $\;\sqrt{\dfrac{16}{25}}$.
+\workspace{2}
+\item \hard\; Classify $\;0.1011011101111\ldots$ (pattern continues, never repeats a fixed block).
+\workspace{2}
+\item \hard\; Classify $\;\sqrt[3]{27}$.
+\workspace{2}
+\end{problems}
+
+% =================================================================
+%  PART III -- ANSWER KEY
+% =================================================================
+\clearpage
+\section*{Part III \; \textbullet\; Detailed Answer Key}
+{\color{fangblue}\rule{\linewidth}{0.8pt}}
+
+\begin{mdframed}[backgroundcolor=keygray,linecolor=fangmid,linewidth=0.8pt,roundcorner=4pt]
+\small\itshape For teacher / self-check use. Each answer shows the reasoning, not just the result.
+\end{mdframed}
+
+% ---- Key Topic 1 ----
+\subsection*{Topic 1 \; \textbullet\; Order of Operations \& Exponents}
+\begin{enumerate}[label=\textbf{\color{fangblue}\arabic*.},leftmargin=*,itemsep=5pt]
+\item $2^{4}=2\cdot2\cdot2\cdot2=\mathbf{16}$.
+\item $\left(\frac{3}{4}\right)^{2}=\frac{3^{2}}{4^{2}}=\mathbf{\frac{9}{16}}$.
+\item $5^{3}=5\cdot5\cdot5=\mathbf{125}$.
+\item Exponents first: $3^{2}+4^{2}=9+16=\mathbf{25}$.
+\item Parentheses, then exponent, then multiply: $(12-5)\cdot2^{3}=7\cdot 8=\mathbf{56}$.
+\item The fraction bar groups the numerator: $\frac{4+81}{5}=\frac{85}{5}=\mathbf{17}$.
+\item $0.5\times0.5=0.25$, then $0.25\times0.5=\mathbf{0.125}$ \; $\left(=\tfrac{1}{8}\right)$.
+\item Exponents first: $2\cdot 3^{3}-(7-3)^{2}=2\cdot 27-4^{2}=54-16=\mathbf{38}$.
+\item $\left(\frac{2}{3}\right)^{3}+\left(\frac{1}{2}\right)^{2}=\frac{8}{27}+\frac{1}{4}
+      =\frac{32}{108}+\frac{27}{108}=\mathbf{\frac{59}{108}}$.
+\item Inside brackets first: $5^{2}-1=24$, then $24\div 4=6$, then $6^{2}=\mathbf{36}$.
+\end{enumerate}
+
+% ---- Key Topic 2 ----
+\subsection*{Topic 2 \; \textbullet\; Square Roots \& Cube Roots}
+\begin{enumerate}[label=\textbf{\color{fangblue}\arabic*.},leftmargin=*,itemsep=5pt]
+\item $\sqrt{49}=\mathbf{7}$ \; (since $7^{2}=49$).
+\item $\sqrt[3]{8}=\mathbf{2}$ \; (since $2^{3}=8$).
+\item $-\sqrt{25}=\mathbf{-5}$ \; (the negative of the principal root $5$).
+\item $x^{2}=36\Rightarrow x=\pm\sqrt{36}=\mathbf{\pm 6}$. Both $6$ and $-6$ square to $36$.
+\item $x^{3}=64\Rightarrow x=\sqrt[3]{64}=\mathbf{4}$ \; (cube roots give one real answer).
+\item $\bigl(\sqrt{13}\bigr)^{2}=\mathbf{13}$ \; (squaring undoes the square root).
+\item $\sqrt{\frac{9}{16}}=\frac{\sqrt{9}}{\sqrt{16}}=\mathbf{\frac{3}{4}}$.
+\item $\sqrt{17}$ lies between $\mathbf{4}$ and $\mathbf{5}$, because
+      $4^{2}=16<17<25=5^{2}$. Since $17$ is nearer $16$, $\sqrt{17}\approx 4.1$.
+\item $\sqrt[3]{-27}=\mathbf{-3}$ \; (since $(-3)^{3}=-27$; cube roots keep the sign).
+\item $x^{2}=20\Rightarrow x=\pm\sqrt{20}=\pm\sqrt{4\cdot 5}=\mathbf{\pm 2\sqrt{5}}$.
+\end{enumerate}
+
+% ---- Key Topic 3 ----
+\subsection*{Topic 3 \; \textbullet\; Repeating Decimals to Fractions}
+{\small\itshape Same four steps every time: (1) let $x=$ the decimal, (2) multiply by a power of $10$ to shift, (3) subtract to erase the repeating tail, (4) solve and reduce.}
+\begin{enumerate}[label=\textbf{\color{fangblue}\arabic*.},leftmargin=*,itemsep=7pt]
+\item $x=0.\rep{5}$; $\;10x=5.\rep{5}$; $\;10x-x=5\Rightarrow 9x=5\Rightarrow x=\mathbf{\frac{5}{9}}$.
+\item $x=0.\rep{7}$; $\;10x=7.\rep{7}$; $\;10x-x=7\Rightarrow 9x=7\Rightarrow x=\mathbf{\frac{7}{9}}$.
+\item $x=0.\rep{1}$; $\;10x=1.\rep{1}$; $\;10x-x=1\Rightarrow 9x=1\Rightarrow x=\mathbf{\frac{1}{9}}$.
+\item $x=0.\rep{45}$; $\;100x=45.\rep{45}$; $\;100x-x=45\Rightarrow 99x=45\Rightarrow x=\frac{45}{99}=\mathbf{\frac{5}{11}}$.
+\item $x=0.\rep{27}$; $\;100x=27.\rep{27}$; $\;100x-x=27\Rightarrow 99x=27\Rightarrow x=\frac{27}{99}=\mathbf{\frac{3}{11}}$.
+\item $x=0.\rep{8}$; $\;10x=8.\rep{8}$; $\;10x-x=8\Rightarrow 9x=8\Rightarrow x=\mathbf{\frac{8}{9}}$.
+\item $x=0.\rep{12}$; $\;100x=12.\rep{12}$; $\;100x-x=12\Rightarrow 99x=12\Rightarrow x=\frac{12}{99}=\mathbf{\frac{4}{33}}$.
+\item $x=0.1\rep{6}$; $\;10x=1.\rep{6}$; $\;100x=16.\rep{6}$; $\;100x-10x=15\Rightarrow 90x=15\Rightarrow x=\frac{15}{90}=\mathbf{\frac{1}{6}}$. \; {\small\itshape(Two shifts are needed because of the non-repeating ``$1$'' after the point.)}
+\item $x=0.\rep{456}$; $\;1000x=456.\rep{456}$; $\;1000x-x=456\Rightarrow 999x=456\Rightarrow x=\frac{456}{999}=\mathbf{\frac{152}{333}}$.
+\item $x=0.58\rep{3}$; $\;100x=58.\rep{3}$; $\;1000x=583.\rep{3}$; $\;1000x-100x=525\Rightarrow 900x=525\Rightarrow x=\frac{525}{900}=\mathbf{\frac{7}{12}}$. \; {\small\itshape(Two shifts because of the non-repeating ``$58$''.)}
+\end{enumerate}
+
+% ---- Key Topic 4 ----
+\subsection*{Topic 4 \; \textbullet\; Classifying Real Numbers}
+\begin{enumerate}[label=\textbf{\color{fangblue}\arabic*.},leftmargin=*,itemsep=5pt]
+\item $\sqrt{9}=3$: \textbf{Natural, Whole, Integer, Rational}.
+\item $-7$: \textbf{Integer, Rational} \;(negative, so not natural or whole).
+\item $\frac{3}{10}=0.3$: \textbf{Rational} only \;(a terminating decimal, not an integer).
+\item $\sqrt{12}=2\sqrt{3}\approx 3.464\ldots$: \textbf{Irrational} \;(not a perfect square).
+\item $-0.45$: \textbf{Rational} only \;(terminating decimal $=-\tfrac{9}{20}$).
+\item $0$: \textbf{Whole, Integer, Rational} \;(not natural, since naturals start at $1$).
+\item $\pi\approx 3.14159\ldots$: \textbf{Irrational} \;(non-terminating, non-repeating).
+\item $\sqrt{\frac{16}{25}}=\frac{4}{5}$: \textbf{Rational} only.
+\item $0.1011011101111\ldots$: \textbf{Irrational} \;(never repeats a fixed block).
+\item $\sqrt[3]{27}=3$: \textbf{Natural, Whole, Integer, Rational}.
+\end{enumerate}
+
+\vspace{10pt}
+{\color{fangblue}\rule{\linewidth}{1.2pt}}
+\begin{center}
+\textcolor{fangmid}{\small\itshape
+\copyright\ 2026 FangMath \; \textbullet\; Prof.\ Fang. \;
+For classroom and tutoring use. All rights reserved.}
+\end{center}
+
+\end{document}

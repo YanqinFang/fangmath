@@ -323,7 +323,9 @@ const COURSES = [
       { title: "4. Congruent Triangles", app: "practice/geometry.html?chapter=g4", appTopics: 5, lessons: [] },
       { title: "5. Relationships Within Triangles", app: "practice/geometry.html?chapter=g5", appTopics: 5, lessons: [] },
       { title: "6. Polygons & Quadrilaterals", app: "practice/geometry.html?chapter=g6", appTopics: 5, lessons: [] },
-      { title: "7. Similarity", app: "practice/geometry.html?chapter=g7", appTopics: 5, lessons: [] },
+      { title: "7. Similarity", app: "practice/geometry.html?chapter=g7", appTopics: 5, lessons: [
+        { title: "Practice · Getting Ready for Similarity", worksheet: "materials/geometry/ch07/Geo_ch07_Getting_Ready_for_Similarity.pdf", answers: "materials/geometry/ch07/Geo_ch07_Getting_Ready_for_Similarity_Key.pdf", summary: "Similar rectangles and similar triangles: same shape, different size. Find the scale factor, decide whether two figures are similar, and find a missing side two ways (scale factor or proportion). A worked example before each part. Separate answer key." }
+      ] },
       { title: "8. Right Triangles & Trigonometry", app: "practice/geometry.html?chapter=g8", appTopics: 7, lessons: [] },
       { title: "9. Transformations", app: "practice/geometry.html?chapter=g9", appTopics: 5, lessons: [] },
       { title: "10. Circles", app: "practice/geometry.html?chapter=g10", appTopics: 6, lessons: [] },
@@ -337,7 +339,9 @@ const COURSES = [
     blurb: "Functions, polynomials, logarithms, trigonometry and more — with flash cards for every chapter.",
     app: "practice/algebra2.html",
     units: [
-      { title: "1. Expressions, Equations & Inequalities", lessons: [] },
+      { title: "1. Expressions, Equations & Inequalities", lessons: [
+        { title: "Practice · Equations, Lines & Absolute Value — Practice Sets 1–3", worksheet: "materials/algebra2/ch01/Alg2_ch01_Equations_Lines_AbsValue_Practice_Sets.pdf", summary: "Three test-style practice sets with point values: equations with fractions, finding a missing coordinate from the slope, writing equations of lines (through two points, parallel or perpendicular), absolute value inequalities in interval notation, and graphing a line. Answer key included." }
+      ] },
       { title: "2. Functions, Equations & Graphs", app: "practice/algebra2.html?chapter=gr", appTopics: 2, lessons: [
         { title: "2-1 Domain & Range",
           notes: "materials/algebra2/ch02/Alg2_2-1_Domain_Range_Worksheet.pdf",
@@ -373,6 +377,7 @@ const COURSES = [
       ] },
       { title: "5. Polynomials & Polynomial Functions", app: "practice/algebra2.html?chapter=py", appTopics: 17, lessons: [] },
       { title: "6. Radical Functions & Rational Exponents", app: "practice/algebra2.html?chapter=rf", appTopics: 7, lessons: [
+        { title: "Review · Algebra 2 Mixed Practice", worksheet: "materials/algebra2/ch06/Alg2_ch06_Mixed_Practice.pdf", summary: "Seven topics, each with a short summary and worked examples, then Easy → Hard practice: arithmetic sequences, piecewise functions, systems of equations and inequalities, rational exponents, and rational and radical equations. Full solutions at the end." },
         { title: "6-7 Inverse Relations & Functions",
           notes: "materials/algebra2/ch06/Alg2_6-7_Inverse_Functions_Worksheet.pdf",
           worksheet: "materials/algebra2/ch06/Alg2_6-7_Inverse_Functions_Worksheet.pdf", bw: true,

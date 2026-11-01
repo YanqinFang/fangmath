@@ -169,14 +169,15 @@
       { t: "Counterexample", tag: "defined", see: "“All birds can fly.” One penguin is enough to break it.", say: "<b>One</b> example that shows a statement is false.", write: "To disprove: find one counterexample. To prove: one example is never enough." },
       { t: "Inductive reasoning", tag: "defined", see: "The sun has risen every morning, so it will rise tomorrow. You see a pattern and guess.", say: "Making a <b>conjecture</b> (a guess) from a pattern of examples. It can be wrong!", write: "Pattern → conjecture. Test it, try to break it." },
       { t: "Deductive reasoning", tag: "defined", see: "A detective: “Only the cook had a key. The door was unlocked with a key. So the cook did it.”", say: "Reaching a conclusion that <b>must</b> be true, using facts, definitions and rules of logic.", write: "Law of Detachment: $p \\to q$ and $p$ is true, so $q$ is true. Law of Syllogism: $p \\to q$, $q \\to r$, so $p \\to r$." },
-      { t: "Theorem & proof", tag: "defined", see: "A courtroom: every claim needs evidence.", say: "A <b>theorem</b> is a statement that has been <b>proven</b>. A <b>proof</b> is a logical argument where each statement has a reason.", write: "Two-column proof: <b>Statements</b> on the left, <b>Reasons</b> on the right." }
+      { t: "Theorem & proof", tag: "defined", see: "A courtroom: every claim needs evidence.", say: "A <b>theorem</b> is a statement that has been <b>proven</b>. A <b>proof</b> is a logical argument where each statement has a reason.", write: "Two-column proof: <b>Statements</b> on the left, <b>Reasons</b> on the right." },
+      { t: "Statement", tag: "defined", see: "“A triangle has 3 sides” is true. “$2 + 2 = 5$” is false. “Close the door!” and “Is it raining?” are neither — they are not statements.", say: "A <b>statement</b> is a sentence that is either <b>true</b> or <b>false</b>, but not both.", write: "Letters stand for statements: $p$, $q$. The <b>negation</b> of $p$ is “not $p$”, written $\\sim p$; it has the opposite truth value." }
     ],
     table: S`<table class="wtable"><tr><th>Form</th><th>Example (original: if a figure is a square, then it has 4 sides)</th><th>Always true?</th></tr>
       <tr><td><b>Converse</b></td><td>If a figure has 4 sides, then it is a square.</td><td>no</td></tr>
       <tr><td><b>Inverse</b></td><td>If a figure is not a square, then it does not have 4 sides.</td><td>no</td></tr>
       <tr><td><b>Contrapositive</b></td><td>If a figure does not have 4 sides, then it is not a square.</td><td>yes ✓</td></tr></table>`,
     tableTitle: "The four forms",
-    vocab: ["conjecture", "inductive reasoning", "counterexample", "conditional", "hypothesis", "conclusion", "converse", "inverse", "contrapositive", "negation", "biconditional", "deductive reasoning", "Law of Detachment", "Law of Syllogism", "theorem", "proof", "two-column proof", "Reflexive Property", "Symmetric Property", "Transitive Property", "Substitution Property"],
+    vocab: ["conjecture", "inductive reasoning", "counterexample", "statement", "conditional", "hypothesis", "conclusion", "converse", "inverse", "contrapositive", "negation", "biconditional", "deductive reasoning", "Law of Detachment", "Law of Syllogism", "theorem", "proof", "two-column proof", "Reflexive Property", "Symmetric Property", "Transitive Property", "Substitution Property"],
     postTitle: "Properties you'll use as reasons",
     posts: [
       ["<b>Reflexive:</b> $a = a$.", "Everything is equal to itself — like your reflection in a mirror."],
@@ -539,7 +540,7 @@
   const Q1 = (q, ans, wrong, sol) => ({ q, n: 1, opts: [ans, ...wrong].sort(), ok: ONE(ans), sol });
 
   WORDS.ch2.groups = [
-    G("If–then statements", [0, 1, 2], [
+    G("If–then statements", [7, 0, 1, 2], [
       Q1("Statement: “If an angle is a right angle, then it measures $90^\\circ$.” What is the <b>hypothesis</b>?", TX("an angle is a right angle"), [TX("it measures 90°"), TX("an angle measures 90°"), TX("it is not a right angle")], "The hypothesis is the part right after <b>if</b>: “an angle is a right angle.”"),
       Q1("Write the <b>converse</b> of “If it is a dog, then it has 4 legs.”", TX("If it has 4 legs, then it is a dog."), [TX("If it is not a dog, then it does not have 4 legs."), TX("If it does not have 4 legs, then it is not a dog."), TX("If it is a dog, then it does not have 4 legs.")], "The converse <b>swaps</b> the two parts. (It is false — a cat has 4 legs too.)"),
       Q1("Which statement is the <b>contrapositive</b> of “If it is a dog, then it has 4 legs”?", TX("If it does not have 4 legs, then it is not a dog."), [TX("If it has 4 legs, then it is a dog."), TX("If it is not a dog, then it does not have 4 legs."), TX("It is a dog if and only if it has 4 legs.")], "Swap <b>and</b> negate. The contrapositive is true whenever the original is true.")

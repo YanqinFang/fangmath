@@ -13,7 +13,7 @@
 <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
 <script defer src="https://cdn.jsdelivr.net/npm/mathjs@14.9.1/lib/browser/math.js"></script>
 <script defer src="geometry-stories.js?v=20261030s"></script>
-<script defer src="geometry-words.js?v=20261031e"></script>
+<script defer src="geometry-words.js?v=20261101s"></script>
 <style>
 :root{
   --bg:#FBF8F3; --surface:#FFFFFF; --ink:#16233B; --muted:#5B6474; --faint:#8C93A0; --line:#E8E2D8;
@@ -614,7 +614,7 @@ const MORE=[
   ()=>{const n=rnd(6,20);return Math.random()<.5?{q:`The pattern $1, 4, 9, 16, \\ldots$ continues. What is the $${n}$th term?`,type:"number",ans:n*n,ansTex:`${n*n}`,hint:"These are perfect squares.",sol:[`The $n$th term is $n^2 = ${n*n}$.`]}:{q:`The pattern $1, 3, 6, 10, 15, \\ldots$ continues (triangular numbers). What is the $${n}$th term?`,type:"number",ans:n*(n+1)/2,ansTex:`${n*(n+1)/2}`,hint:"The differences are $2, 3, 4, 5, \\ldots$ The $n$th term is $\\dfrac{n(n+1)}{2}$.",sol:[`$\\dfrac{${n}(${n+1})}{2} = ${n*(n+1)/2}$.`]}},
   ()=>{const n=rnd(6,20);return Math.random()<.5?{q:`Each of $${n}$ people shakes hands once with every other person. How many handshakes are there?`,type:"number",ans:n*(n-1)/2,ansTex:`${n*(n-1)/2}`,hint:"Each person shakes $n - 1$ hands, but each handshake is counted twice.",sol:[`$\\dfrac{${n}(${n-1})}{2} = ${n*(n-1)/2}$.`]}:{q:`How many diagonals does a polygon with $${n}$ sides have?`,type:"number",ans:n*(n-3)/2,ansTex:`${n*(n-3)/2}`,hint:"Each vertex connects to $n - 3$ others by a diagonal; each diagonal is counted twice.",sol:[`$\\dfrac{${n}(${n-3})}{2} = ${n*(n-3)/2}$.`]}}
  ]},
- {id:"cond",title:"2.2 Conditional Statements",idea:"<b>Conditional</b>: if $p$, then $q$. <b>Converse</b>: if $q$, then $p$. <b>Inverse</b>: if not $p$, then not $q$. <b>Contrapositive</b>: if not $q$, then not $p$.",
+ {id:"cond",title:"2.2 Conditional Statements",idea:"A <b>statement</b> is a sentence that is either true or false, but not both. <b>Conditional</b>: if $p$, then $q$. <b>Converse</b>: if $q$, then $p$. <b>Inverse</b>: if not $p$, then not $q$. <b>Contrapositive</b>: if not $q$, then not $p$.",
   lesson:{steps:[["\\text{If it rains, the ground is wet.}","Conditional: $p \\to q$."],["\\text{If the ground is wet, it rained.}","Converse: switch."],["\\text{If the ground is not wet, it did not rain.}","Contrapositive: switch <b>and</b> negate."]],warn:"A conditional and its <b>contrapositive</b> are always both true or both false. The converse might not be."},
   gen:[
   ()=>{const [p,q]=pick(COND);return mcQ(`In the statement "If ${p}, then ${q}," what is the <b>hypothesis</b>?`,p,[q,neg(p),neg(q)],"The hypothesis is the part right after \"if\".",[`The hypothesis is "${p}".`]);},

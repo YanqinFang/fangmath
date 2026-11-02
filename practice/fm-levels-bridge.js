@@ -1254,7 +1254,7 @@
     if (!nav) { nav = document.createElement("div"); nav.id = "fmPartsNav"; nav.className = "fm-parts-nav"; }
     parts[k].after(nav);
     const nxt = parts[k + 1];
-    nav.innerHTML = `${k > 0 ? `<button type="button" class="btn ghost sm" data-go="${k - 1}">← Back</button>` : "<span></span>"}<span class="fp-n">${k + 1} of ${parts.length}</span>${nxt ? `<button type="button" class="btn sm" data-go="${k + 1}">Next: ${partOf(nxt)[2]} →</button>` : `<button type="button" class="btn sm teal" data-practice="1">Practice this section →</button>`}`;
+    nav.innerHTML = `${k > 0 ? `<button type="button" class="btn ghost sm" data-go="${k - 1}">← Back</button>` : "<span></span>"}<span class="fp-n">${k + 1} of ${parts.length}</span>${nxt ? `<button type="button" class="btn sm" data-go="${k + 1}">Next: ${partOf(nxt)[2]} →</button>` : "<span></span>"}`;
     const go = i => { partAt[key] = i; partsDraw(); bar.scrollIntoView({ behavior: "smooth", block: "start" }); };
     bar.querySelectorAll("[data-i]").forEach(b => b.onclick = () => go(+b.dataset.i));
     nav.querySelectorAll("[data-go]").forEach(b => b.onclick = () => go(+b.dataset.go));

@@ -610,6 +610,83 @@
       <p>Narrowing to one row is a <b>conditional probability</b>: $P(\text{Yes} \mid \text{Grade 9})$. If it's different from the overall chance, the events are <b>not independent</b>.</p>`,
   };
 
+
+  /* ---- Common Core additions ---- */
+  T["ch1/part"] = {
+    title: "The Rest Stop",
+    scene: S`<p>A highway runs straight from Ashton to Bayview, 90 miles. The state wants a rest stop so that drivers from Ashton reach it after one part of the trip and still have <b>two</b> equal parts left.</p>`,
+    think: S`How far from Ashton should the rest stop be? Is it halfway?`,
+    aha: S`<p>One part done, two parts left: the trip is cut into $1 + 2 = 3$ equal parts, so the stop is $\tfrac13$ of the way — $30$ miles from Ashton, not $45$. That is the ratio $1:2$.</p>
+      <p>On a coordinate plane you do the same thing to the $x$-change and the $y$-change: take $\tfrac{a}{a+b}$ of each and add it to the starting point.</p>`,
+  };
+  T["ch1/constrc"] = {
+    title: "Six Steps Around the Circle",
+    scene: S`<p>Draw a circle. Without changing the compass, put its point anywhere on the circle and make a mark on the circle. Move to the new mark and do it again. Keep going.</p>`,
+    think: S`How many steps until you come back to where you started? What shape do the marks make?`,
+    aha: S`<p>Exactly <b>six</b> steps. Each step is one radius long, and each little triangle (center, mark, next mark) has three sides equal to the radius — it's equilateral, with a $60^\circ$ angle at the center. $6 \times 60^\circ = 360^\circ$.</p>
+      <p>Join the six marks: a regular hexagon. Join every other mark: an equilateral triangle. For a square, you need a right angle at the center — construct a diameter and its perpendicular bisector.</p>`,
+  };
+  T["ch6/cproof"] = {
+    title: "Prove It Without a Ruler",
+    scene: S`<p>A city planner says the four corners of a new park, $A(0, 0)$, $B(4, 1)$, $C(6, 4)$ and $D(2, 3)$, make a parallelogram. Her boss says, “It looks a little crooked to me. Prove it.”</p>`,
+    think: S`You can't trust a drawing. What could you <i>calculate</i> about the sides to settle the argument?`,
+    aha: S`<p>Compare <b>slopes</b>: $\overline{AB}$ and $\overline{DC}$ both have slope $\tfrac14$; $\overline{BC}$ and $\overline{AD}$ both have slope $\tfrac32$. Both pairs of opposite sides are parallel — it <b>is</b> a parallelogram.</p>
+      <p>That's a coordinate proof: slopes for parallel and perpendicular, the Distance Formula for equal lengths, the Midpoint Formula for diagonals that bisect each other.</p>`,
+  };
+  T["ch8/cofn"] = {
+    title: "Two Ladders, One Triangle",
+    scene: S`<p>A ladder leans against a wall. Mia stands at the foot of the ladder and looks up at the angle it makes with the ground. Leo stands at the top and looks at the angle it makes with the wall.</p>`,
+    think: S`The side across from Mia's angle is the wall. Which side is <i>next to</i> Leo's angle?`,
+    aha: S`<p>The same wall! The two acute angles add to $90^\circ$, and the side <b>opposite</b> one is <b>adjacent</b> to the other. So Mia's sine is Leo's cosine: $\sin A = \cos(90^\circ - A)$.</p>
+      <p>That's where the name comes from: <b>co</b>sine is the sine of the <b>co</b>mplementary angle.</p>`,
+  };
+  T["ch8/sinarea"] = {
+    title: "The Leaning Sail",
+    scene: S`<p>A triangular sail has two edges of $8$ m and $10$ m that meet at the top of the mast at a $30^\circ$ angle. The sailmaker needs the area to order fabric, but nobody measured the height.</p>`,
+    think: S`Where would the height go? Can you find it using the $30^\circ$ angle?`,
+    aha: S`<p>Drop a height from the end of the $10$ m edge to the $8$ m edge: in that small right triangle, $h = 10 \sin 30^\circ = 5$. Area $= \tfrac12 \cdot 8 \cdot 5 = 20$ m².</p>
+      <p>Every time it works the same way: $h = b \sin C$, so $\text{Area} = \tfrac12 ab \sin C$ — two sides and the angle between them.</p>`,
+  };
+  T["ch9/rigid"] = {
+    title: "Tracing Paper Test",
+    scene: S`<p>Two triangles are drawn on a page. Trace one on tracing paper. You may <b>slide</b> the paper, <b>turn</b> it, or <b>flip</b> it over — but not stretch it.</p>`,
+    think: S`If you can make the tracing sit exactly on the other triangle, what do you know about the two triangles?`,
+    aha: S`<p>They are <b>congruent</b>. Slides, turns and flips (translations, rotations, reflections) are <b>rigid motions</b>: they never change a length or an angle. That is the real definition of congruence.</p>
+      <p>And it explains SAS, ASA and SSS: once the matching parts line up, the last vertex has nowhere else to go.</p>`,
+  };
+  T["ch10/insc"] = {
+    title: "The Round Table",
+    scene: S`<p>Four friends sit at a round table at points $A$, $B$, $C$, $D$, with strings stretched between neighbors to make a four-sided shape inside the circle. The angle at $A$ is $70^\circ$.</p>`,
+    think: S`Move the friends around the table. When $\angle A$ gets bigger, what happens to the angle at the opposite seat $C$?`,
+    aha: S`<p>It gets smaller — they always add to $180^\circ$. Each angle is half of the arc it looks at, and the two arcs together are the whole $360^\circ$ circle.</p>
+      <p>Special case: if two friends sit at the ends of a diameter, any third friend sees them at exactly $90^\circ$.</p>`,
+  };
+  T["ch10/radn"] = {
+    title: "Measuring with the Radius",
+    scene: S`<p>Cut a piece of string as long as a circle's radius. Lay it along the edge of the circle, starting anywhere.</p>`,
+    think: S`How many strings fit all the way around? Would the answer change for a bigger circle?`,
+    aha: S`<p>A little more than $6$ — exactly $2\pi \approx 6.28$ — for <b>every</b> circle, because all circles are similar. The angle that one radius-length of arc makes at the center is <b>1 radian</b>.</p>
+      <p>So a full turn is $2\pi$ radians, $180^\circ = \pi$, and the arc length is simply radius times angle: $s = r\theta$.</p>`,
+  };
+  T["ch10/ceq"] = {
+    title: "Hidden Center",
+    scene: S`<p>A cell tower's signal reaches every point on the circle $x^2 + y^2 - 6x + 4y - 12 = 0$ (in miles). A family wants to know where the tower is and how far it reaches.</p>`,
+    think: S`The equation is scrambled. Can you rewrite it so it looks like $(x - h)^2 + (y - k)^2 = r^2$?`,
+    aha: S`<p>Complete the square: $(x^2 - 6x + 9) + (y^2 + 4y + 4) = 12 + 9 + 4$, so $(x - 3)^2 + (y + 2)^2 = 25$. The tower is at $(3, -2)$ and reaches $5$ miles.</p>`,
+  };
+  T["ch10/parab"] = {
+    title: "The Satellite Dish",
+    scene: S`<p>A satellite dish bounces every signal to one small receiver, the <b>focus</b>. The dish's shape is all the points that are the same distance from the focus as from a straight line behind the dish, the <b>directrix</b>.</p>`,
+    think: S`With the focus at $(0, 3)$ and the directrix $y = -3$, is the point $(6, 3)$ on the dish? Compare its two distances.`,
+    aha: S`<p>Distance to the focus: $6$. Distance to the line: $3 - (-3) = 6$. Equal, so yes! Setting the two distances equal for every point gives $x^2 = 12y$ — the shape of a parabola, $x^2 = 4py$ with $p = 3$.</p>`,
+  };
+  T["ch12/model"] = {
+    title: "The Leaning Stack",
+    scene: S`<p>Make a straight stack of 20 coins. Now push it so it leans to one side, like a slanted tower.</p>`,
+    think: S`Did the stack's volume change? Look at one coin at any height in both stacks.`,
+    aha: S`<p>No. At every height the slice is the same coin, so the volumes are equal — that's <b>Cavalieri's Principle</b>. It's why an oblique cylinder still has $V = \pi r^2 h$ with the <b>straight-up</b> height.</p>
+      <p>Real problems add one more step: multiply by a <b>density</b> (grams per cm³, people per square mile) to get mass, cost or population.</p>`,
+  };
   window.drawStory = function (chId, topic) {
     const lesson = document.getElementById("lesson"); if (!lesson) return;
     let box = document.getElementById("story");

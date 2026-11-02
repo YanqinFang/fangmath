@@ -174,6 +174,8 @@ footer{text-align:center;color:var(--faint);font-size:13px;padding:24px}
 #pLevels{display:none}
 .topic .tgo{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
 .topic .tgo small{color:var(--muted);font-size:13px}
+.cctag{display:block;width:fit-content;margin:2px 0 6px;font-size:12px;font-weight:600;letter-spacing:.03em;color:var(--teal);background:var(--teal-soft);border-radius:999px;padding:3px 10px}
+.mex{border:1px solid var(--line);border-radius:14px;padding:12px 14px;margin:10px 0;background:#fff}.mex .q{font-size:17px;margin:4px 0 6px}.mex .label{color:var(--green)}
 .watch{margin:-4px 0 4px;font-size:14px;color:var(--muted)} .watch b{color:var(--ink)}
 
 /* ---- hide the topic cards while a practice problem is open ---- */
@@ -693,6 +695,182 @@ const MORE=[
 ];
 
 CHAPTERS.push(...MORE);
+/* ================= DEEPER LESSONS + COMMON CORE PRACTICE (Precalculus) ================= */
+const PC_PLUS={
+ ch1:{
+  dom:{cc:"F-IF.1, F-IF.2, F-IF.5",more:[
+   {tag:"Example 2 · Test level",q:"Find the domain of $f(x) = \\dfrac{\\sqrt{x + 3}}{x - 2}$.",steps:[["x + 3 \\ge 0 \\Rightarrow x \\ge -3","The square root needs a non-negative inside."],["x - 2 \\ne 0 \\Rightarrow x \\ne 2","No division by zero."],["[-3, 2) \\cup (2, \\infty)","Both conditions together."]]},
+   {tag:"Example 3 · In context",q:"A box is made from a $20$-in square sheet by cutting $x$-in squares from the corners: $V(x) = x(20 - 2x)^2$. What domain makes sense?",steps:[["x > 0","You must cut something."],["20 - 2x > 0 \\Rightarrow x < 10","The base must have positive width."],["0 < x < 10","The model only works here (F-IF.5)."]]}]},
+  trans:{cc:"F-BF.3",more:[
+   {tag:"Example 2 · Test level",q:"Describe how $g(x) = -2(x - 3)^2 + 1$ is built from $f(x) = x^2$.",steps:[["x - 3:\\ \\text{right } 3","Inside changes move left/right — the opposite way."],["-2:\\ \\text{reflect over the } x\\text{-axis, stretch by } 2","Outside multipliers act vertically."],["+1:\\ \\text{up } 1","Vertex moves to $(3, 1)$."]]},
+   {tag:"Example 3 · Even or odd",q:"Is $f(x) = x^3 - 4x$ even, odd, or neither?",steps:[["f(-x) = -x^3 + 4x","Replace $x$ with $-x$."],["= -(x^3 - 4x) = -f(x)","It is the negative of $f$."],["\\text{odd: symmetric about the origin}","F-BF.3 asks you to recognize this from the formula."]]}]},
+  comp:{cc:"F-BF.1c, F-BF.4",more:[
+   {tag:"Example 2 · Test level",q:"$f(x) = 2x + 1$, $g(x) = x^2$. Find $(f \\circ g)(3)$ and $(g \\circ f)(3)$.",steps:[["f(g(3)) = f(9) = 19","Inside first."],["g(f(3)) = g(7) = 49","Order matters."]]},
+   {tag:"Example 3 · Inverse in context",q:"Fahrenheit from Celsius: $F(C) = \\tfrac95 C + 32$. Find the inverse and explain it.",steps:[["F - 32 = \\tfrac95 C","Undo the $+32$."],["C = \\tfrac59(F - 32)","Undo the $\\tfrac95$."],["\\text{The inverse turns } {}^\\circ\\text{F back into } {}^\\circ\\text{C}","Inputs and outputs swap roles (F-BF.4)."]]}]}
+ },
+ ch2:{
+  endb:{cc:"F-IF.7c, A-APR.3",more:[
+   {tag:"Example 2 · Test level",q:"Describe the end behavior and zeros of $f(x) = -2x^3(x - 1)^2$.",steps:[["\\text{degree } 5,\\ \\text{leading coefficient } -2","Odd degree, negative."],["x \\to \\infty:\\ f \\to -\\infty;\\ x \\to -\\infty:\\ f \\to \\infty","Up on the left, down on the right."],["\\text{zeros } 0 \\text{ (crosses)},\\ 1 \\text{ (touches)}","Odd multiplicity crosses, even touches."]]},
+   {tag:"Example 3 · Sketch from zeros",q:"Write a cubic with zeros $-2$, $1$, $3$ and $f(0) = 12$.",steps:[["f(x) = a(x + 2)(x - 1)(x - 3)","Zeros give the factors (A-APR.3)."],["f(0) = a(2)(-1)(-3) = 6a = 12","Use the extra point."],["a = 2","$f(x) = 2(x + 2)(x - 1)(x - 3)$."]]}]},
+  div:{cc:"A-APR.2, A-APR.6",more:[
+   {tag:"Example 2 · Test level",q:"Find the remainder when $x^3 - 4x^2 + 2x + 5$ is divided by $x - 3$.",steps:[["f(3) = 27 - 36 + 6 + 5","Remainder Theorem: just evaluate $f(3)$."],["= 2","The remainder is $2$."]]},
+   {tag:"Example 3 · Factor theorem",q:"Is $x + 2$ a factor of $x^3 + 8$? Factor completely.",steps:[["f(-2) = -8 + 8 = 0","Zero remainder: yes."],["x^3 + 8 = (x + 2)(x^2 - 2x + 4)","Divide (or use the sum of cubes)."]]}]},
+  rat:{cc:"F-IF.7d, A-APR.7",more:[
+   {tag:"Example 2 · Test level",q:"Find the asymptotes and hole of $f(x) = \\dfrac{x^2 - 4}{x^2 - x - 2}$.",steps:[["\\dfrac{(x - 2)(x + 2)}{(x - 2)(x + 1)}","Factor."],["\\text{hole at } x = 2","The common factor cancels."],["\\text{VA } x = -1,\\ \\text{HA } y = 1","Equal degrees: ratio of leading coefficients."]]},
+   {tag:"Example 3 · Average cost",q:"A company's average cost per item is $\\bar C(x) = \\dfrac{500 + 4x}{x}$. What happens as $x$ grows?",steps:[["\\bar C(x) = \\dfrac{500}{x} + 4","Split the fraction."],["x \\to \\infty:\\ \\bar C \\to 4","The horizontal asymptote."],["\\text{Each item costs about \\$4 at large volume}","The fixed $\\$500$ spreads out."]]}]}
+ },
+ ch3:{
+  expf:{cc:"F-LE.1, F-LE.2, F-IF.8b",more:[
+   {tag:"Example 2 · Test level",q:"$\\$2000$ is invested at 5% compounded monthly. Find the balance after 10 years.",steps:[["A = 2000\\left(1 + \\tfrac{0.05}{12}\\right)^{120}","$A = P(1 + \\tfrac rn)^{nt}$."],["\\approx 3294.02","About \\$3294."]]},
+   {tag:"Example 3 · Half-life",q:"A medicine has a half-life of 6 hours. What fraction is left after 1 day?",steps:[["24 \\div 6 = 4 \\text{ half-lives}","Count the halvings."],["\\left(\\tfrac12\\right)^4 = \\tfrac{1}{16}","About $6\\%$ remains."]]}]},
+  logp:{cc:"F-BF.5, F-LE.4",more:[
+   {tag:"Example 2 · Test level",q:"Expand $\\log_3\\!\\left(\\dfrac{9x^2}{y}\\right)$.",steps:[["\\log_3 9 + \\log_3 x^2 - \\log_3 y","Product and quotient rules."],["2 + 2\\log_3 x - \\log_3 y","Power rule; $\\log_3 9 = 2$."]]},
+   {tag:"Example 3 · Why logs",q:"Explain $\\log_2 32 = 5$ in words, and why logs undo exponentials.",steps:[["2^5 = 32","A log asks: what exponent?"],["\\log_2(2^x) = x,\\ 2^{\\log_2 x} = x","Inverse functions (F-BF.5)."]]}]},
+  loge:{cc:"F-LE.4, A-REI.11",more:[
+   {tag:"Example 2 · Test level",q:"Solve $3 \\cdot 5^x = 75$.",steps:[["5^x = 25","Divide by $3$."],["x = 2","$5^2 = 25$."]]},
+   {tag:"Example 3 · Doubling time",q:"How long does money take to double at 6% compounded continuously?",steps:[["2 = e^{0.06t}","$A = Pe^{rt}$ with $A = 2P$."],["t = \\dfrac{\\ln 2}{0.06} \\approx 11.6 \\text{ years}","Take $\\ln$ of both sides."]]}]}
+ },
+ ch4:{
+  radian:{cc:"F-TF.1",more:[
+   {tag:"Example 2 · Test level",q:"Find a positive and a negative angle coterminal with $\\tfrac{7\\pi}{4}$.",steps:[["\\tfrac{7\\pi}{4} + 2\\pi = \\tfrac{15\\pi}{4}","Add a full turn."],["\\tfrac{7\\pi}{4} - 2\\pi = -\\tfrac{\\pi}{4}","Subtract a full turn."]]},
+   {tag:"Example 3 · Angular speed",q:"A wheel of radius $0.3$ m turns $10$ revolutions per second. How fast does a point on the rim move?",steps:[["\\omega = 10 \\cdot 2\\pi = 20\\pi \\text{ rad/s}","Revolutions to radians."],["v = r\\omega = 0.3 \\cdot 20\\pi \\approx 18.8 \\text{ m/s}","Arc length per second: $s = r\\theta$."]]}]},
+  unitc:{cc:"F-TF.2, F-TF.3",more:[
+   {tag:"Example 2 · Test level",q:"Find $\\sin\\tfrac{5\\pi}{6}$, $\\cos\\tfrac{5\\pi}{6}$, $\\tan\\tfrac{5\\pi}{6}$.",steps:[["\\text{reference angle } \\tfrac{\\pi}{6},\\ \\text{Quadrant II}","Sine positive, cosine negative."],["\\sin = \\tfrac12,\\ \\cos = -\\tfrac{\\sqrt3}{2}","Unit circle point $(-\\tfrac{\\sqrt3}{2}, \\tfrac12)$."],["\\tan = -\\tfrac{1}{\\sqrt3} = -\\tfrac{\\sqrt3}{3}","$\\sin / \\cos$."]]},
+   {tag:"Example 3 · Symmetry",q:"Explain why $\\sin(-\\theta) = -\\sin\\theta$ using the unit circle.",steps:[["\\theta \\to (x, y),\\ -\\theta \\to (x, -y)","Going the other way reflects over the $x$-axis."],["\\sin(-\\theta) = -y = -\\sin\\theta","Sine is odd (F-TF.4)."]]}]},
+  tgraph:{cc:"F-TF.5, F-IF.7e",more:[
+   {tag:"Example 2 · Test level",q:"State the amplitude, period and midline of $y = 3\\sin(2x) - 1$.",steps:[["\\text{amplitude } 3","The multiplier in front."],["\\text{period } \\tfrac{2\\pi}{2} = \\pi","$2\\pi \\div B$."],["\\text{midline } y = -1","The vertical shift."]]},
+   {tag:"Example 3 · Model",q:"A Ferris wheel of diameter $40$ m has its center $25$ m up and turns once every $8$ minutes. Write the height of a rider who starts at the bottom.",steps:[["\\text{amplitude } 20,\\ \\text{midline } 25","Radius and center height."],["\\text{period } 8 \\Rightarrow B = \\tfrac{2\\pi}{8} = \\tfrac{\\pi}{4}","Minutes per turn."],["h(t) = 25 - 20\\cos\\left(\\tfrac{\\pi}{4}t\\right)","Start at the bottom: $-\\cos$ (F-TF.5)."]]}]}
+ },
+ ch5:{
+  invt:{cc:"F-TF.6, F-TF.7",more:[
+   {tag:"Example 2 · Test level",q:"Find $\\sin^{-1}\\!\\left(-\\tfrac{\\sqrt3}{2}\\right)$ and $\\cos^{-1}\\!\\left(-\\tfrac12\\right)$.",steps:[["\\sin^{-1}: \\ -\\tfrac{\\pi}{3}","Range $[-\\tfrac{\\pi}{2}, \\tfrac{\\pi}{2}]$."],["\\cos^{-1}: \\ \\tfrac{2\\pi}{3}","Range $[0, \\pi]$."]]},
+   {tag:"Example 3 · Why restrict",q:"Why does $\\sin^{-1}$ only give angles from $-\\tfrac{\\pi}{2}$ to $\\tfrac{\\pi}{2}$?",steps:[["\\sin \\text{ repeats, so it is not one-to-one}","Many angles share each sine value."],["\\text{Restrict to an interval where it is one-to-one}","Then the inverse is a function (F-TF.6)."]]}]},
+  teq:{cc:"F-TF.7",more:[
+   {tag:"Example 2 · Test level",q:"Solve $2\\sin^2 x - \\sin x - 1 = 0$ on $[0, 2\\pi)$.",steps:[["(2\\sin x + 1)(\\sin x - 1) = 0","Factor like a quadratic."],["\\sin x = -\\tfrac12:\\ x = \\tfrac{7\\pi}{6}, \\tfrac{11\\pi}{6}","Quadrants III and IV."],["\\sin x = 1:\\ x = \\tfrac{\\pi}{2}","Three solutions in all."]]},
+   {tag:"Example 3 · In context",q:"A tide's depth is $d = 6 + 2\\sin\\left(\\tfrac{\\pi}{6}t\\right)$ m. When (first time) is it $7$ m deep?",steps:[["\\sin\\left(\\tfrac{\\pi}{6}t\\right) = \\tfrac12","Set $d = 7$."],["\\tfrac{\\pi}{6}t = \\tfrac{\\pi}{6} \\Rightarrow t = 1 \\text{ h}","First solution."]]}]},
+  tapp:{cc:"G-SRT.8, F-TF.7",more:[
+   {tag:"Example 2 · Test level",q:"From a $60$-m cliff, the angle of depression to a boat is $25^\\circ$. How far is the boat from the cliff's base?",steps:[["\\tan 25^\\circ = \\dfrac{60}{d}","The depression angle equals the elevation angle from the boat."],["d = \\dfrac{60}{\\tan 25^\\circ} \\approx 128.7 \\text{ m}","Solve."]]},
+   {tag:"Example 3 · Two angles",q:"From two points $50$ m apart on a line toward a tower, the elevations are $30^\\circ$ and $45^\\circ$. Find the height.",steps:[["h = x\\tan 45^\\circ = x,\\ h = (x + 50)\\tan 30^\\circ","Two right triangles."],["x = \\tfrac{x + 50}{\\sqrt3} \\Rightarrow x(\\sqrt3 - 1) = 50","Solve."],["h = x \\approx 68.3 \\text{ m}","Done."]]}]}
+ },
+ ch6:{
+  basic:{cc:"F-TF.8",more:[
+   {tag:"Example 2 · Test level",q:"$\\sin\\theta = \\tfrac35$ and $\\theta$ is in Quadrant II. Find $\\cos\\theta$ and $\\tan\\theta$.",steps:[["\\cos^2\\theta = 1 - \\tfrac{9}{25} = \\tfrac{16}{25}","Pythagorean identity."],["\\cos\\theta = -\\tfrac45","Negative in Quadrant II."],["\\tan\\theta = -\\tfrac34","$\\sin / \\cos$."]]},
+   {tag:"Example 3 · Prove",q:"Prove $\\dfrac{1 - \\cos^2 x}{\\sin x} = \\sin x$.",steps:[["1 - \\cos^2 x = \\sin^2 x","Pythagorean identity."],["\\dfrac{\\sin^2 x}{\\sin x} = \\sin x","Cancel one $\\sin x$."]],note:"Work on one side only until it matches the other side."}]},
+  sumd:{cc:"F-TF.9",more:[
+   {tag:"Example 2 · Test level",q:"Find the exact value of $\\cos 75^\\circ$.",steps:[["\\cos(45^\\circ + 30^\\circ)","Write as a sum of known angles."],["\\cos45\\cos30 - \\sin45\\sin30","Sum formula."],["\\tfrac{\\sqrt2}{2}\\cdot\\tfrac{\\sqrt3}{2} - \\tfrac{\\sqrt2}{2}\\cdot\\tfrac12 = \\tfrac{\\sqrt6 - \\sqrt2}{4}","Simplify."]]},
+   {tag:"Example 3 · Prove",q:"Prove $\\sin\\left(x + \\tfrac{\\pi}{2}\\right) = \\cos x$.",steps:[["\\sin x\\cos\\tfrac{\\pi}{2} + \\cos x\\sin\\tfrac{\\pi}{2}","Sum formula."],["\\sin x \\cdot 0 + \\cos x \\cdot 1 = \\cos x","Done."]]}]},
+  dbl:{cc:"F-TF.9",more:[
+   {tag:"Example 2 · Test level",q:"$\\cos\\theta = \\tfrac45$, $\\theta$ in Quadrant I. Find $\\sin 2\\theta$ and $\\cos 2\\theta$.",steps:[["\\sin\\theta = \\tfrac35","Pythagorean identity."],["\\sin2\\theta = 2 \\cdot \\tfrac35 \\cdot \\tfrac45 = \\tfrac{24}{25}","Double angle."],["\\cos2\\theta = \\tfrac{16}{25} - \\tfrac{9}{25} = \\tfrac{7}{25}","$\\cos^2 - \\sin^2$."]]},
+   {tag:"Example 3 · Half angle",q:"Find the exact value of $\\sin 15^\\circ$.",steps:[["\\sin 15^\\circ = \\sqrt{\\tfrac{1 - \\cos 30^\\circ}{2}}","Half-angle, positive in Quadrant I."],["= \\sqrt{\\tfrac{2 - \\sqrt3}{4}} = \\tfrac{\\sqrt{2 - \\sqrt3}}{2}","Simplify."]]}]}
+ },
+ ch7:{
+  los:{cc:"G-SRT.10, G-SRT.11",more:[
+   {tag:"Example 2 · Test level",q:"$A = 35^\\circ$, $B = 80^\\circ$, $c = 12$. Find $a$.",steps:[["C = 65^\\circ","Angles add to $180^\\circ$."],["\\dfrac{a}{\\sin35^\\circ} = \\dfrac{12}{\\sin65^\\circ}","Law of Sines."],["a \\approx 7.6","Solve."]]},
+   {tag:"Example 3 · Ambiguous case",q:"$A = 30^\\circ$, $a = 6$, $b = 10$. How many triangles?",steps:[["h = b\\sin A = 5","Height from $C$."],["5 < 6 < 10","$h < a < b$."],["\\text{two triangles}","The side $a$ can swing to two places."]]}]},
+  loc:{cc:"G-SRT.10, G-SRT.11",more:[
+   {tag:"Example 2 · Test level",q:"A triangle has sides $5$, $7$, $9$. Find the largest angle.",steps:[["\\cos C = \\dfrac{5^2 + 7^2 - 9^2}{2(5)(7)} = -\\tfrac{7}{70}","Largest angle is across from $9$."],["C \\approx 95.7^\\circ","Inverse cosine."]]},
+   {tag:"Example 3 · Navigation",q:"Two ships leave port: one goes $40$ km on bearing $030^\\circ$, the other $60$ km on bearing $110^\\circ$. How far apart are they?",steps:[["\\text{angle between} = 80^\\circ","$110 - 30$."],["d^2 = 40^2 + 60^2 - 2(40)(60)\\cos80^\\circ","Law of Cosines."],["d \\approx 66.1 \\text{ km}","Solve."]]}]},
+  tarea:{cc:"G-SRT.9",more:[
+   {tag:"Example 2 · Heron",q:"Find the area of a triangle with sides $13$, $14$, $15$.",steps:[["s = 21","Semi-perimeter."],["\\sqrt{21 \\cdot 8 \\cdot 7 \\cdot 6} = \\sqrt{7056}","Heron's formula."],["= 84","Done."]]},
+   {tag:"Example 3 · Land",q:"A triangular lot has sides $80$ m and $65$ m with a $70^\\circ$ angle between them. Find its area.",steps:[["\\tfrac12 \\cdot 80 \\cdot 65 \\sin70^\\circ","Two sides and the included angle."],["\\approx 2443 \\text{ m}^2","Done."]]}]}
+ },
+ ch8:{
+  vcomp:{cc:"N-VM.1, N-VM.2, N-VM.4",more:[
+   {tag:"Example 2 · Test level",q:"$\\vec v$ has magnitude $10$ and direction $150^\\circ$. Find its components.",steps:[["\\langle 10\\cos150^\\circ,\\ 10\\sin150^\\circ\\rangle","Magnitude times cosine and sine."],["\\langle -5\\sqrt3,\\ 5\\rangle","Exact values."]]},
+   {tag:"Example 3 · Unit vector",q:"Find the unit vector in the direction of $\\langle 6, -8\\rangle$.",steps:[["|\\vec v| = 10","Magnitude."],["\\langle 0.6, -0.8\\rangle","Divide each component by $10$."]]}]},
+  dot:{cc:"N-VM.4",more:[
+   {tag:"Example 2 · Test level",q:"Find the angle between $\\langle 3, 4\\rangle$ and $\\langle 5, -12\\rangle$.",steps:[["\\vec u \\cdot \\vec v = 15 - 48 = -33","Dot product."],["\\cos\\theta = \\dfrac{-33}{5 \\cdot 13}","Divide by both magnitudes."],["\\theta \\approx 120.5^\\circ","Inverse cosine."]]},
+   {tag:"Example 3 · Work",q:"A force $\\langle 20, 5\\rangle$ N moves a box along $\\langle 4, 0\\rangle$ m. How much work is done?",steps:[["W = \\vec F \\cdot \\vec d = 80 + 0","Work is a dot product."],["W = 80 \\text{ J}","Only the part of the force along the motion counts."]]}]},
+  vapp:{cc:"N-VM.3",more:[
+   {tag:"Example 2 · Test level",q:"Two forces, $30$ N east and $40$ N north, act on an object. Find the resultant.",steps:[["\\langle 30, 40\\rangle","Add components."],["|\\vec R| = 50 \\text{ N},\\ \\theta = \\tan^{-1}\\tfrac43 \\approx 53.1^\\circ","Magnitude and direction."]]},
+   {tag:"Example 3 · Wind",q:"A plane flies $200$ km/h due north; wind blows $50$ km/h due east. Find the ground speed and direction.",steps:[["\\langle 50, 200\\rangle","Add the velocity vectors."],["\\sqrt{50^2 + 200^2} \\approx 206.2 \\text{ km/h}","Ground speed."],["\\tan^{-1}\\tfrac{50}{200} \\approx 14^\\circ \\text{ east of north}","Direction."]]}]}
+ },
+ ch9:{
+  polar:{cc:"N-CN.4",more:[
+   {tag:"Example 2 · Test level",q:"Convert $(-2, 2\\sqrt3)$ to polar coordinates.",steps:[["r = \\sqrt{4 + 12} = 4","Distance from the origin."],["\\theta = \\tfrac{2\\pi}{3}","Quadrant II, reference $\\tfrac{\\pi}{3}$."]]},
+   {tag:"Example 3 · Equation",q:"Convert $r = 4\\cos\\theta$ to rectangular form and describe it.",steps:[["r^2 = 4r\\cos\\theta","Multiply by $r$."],["x^2 + y^2 = 4x","Use $r^2 = x^2 + y^2$, $x = r\\cos\\theta$."],["(x - 2)^2 + y^2 = 4","A circle, center $(2, 0)$, radius $2$."]]}]},
+  cpolar:{cc:"N-CN.4, N-CN.5",more:[
+   {tag:"Example 2 · Test level",q:"Write $1 + i\\sqrt3$ in polar form.",steps:[["r = 2,\\ \\theta = \\tfrac{\\pi}{3}","Modulus and argument."],["2\\left(\\cos\\tfrac{\\pi}{3} + i\\sin\\tfrac{\\pi}{3}\\right)","Polar form."]]},
+   {tag:"Example 3 · Powers",q:"Find $(1 + i\\sqrt3)^6$.",steps:[["2^6\\left(\\cos 2\\pi + i\\sin 2\\pi\\right)","De Moivre: raise $r$, multiply the angle."],["= 64","Multiplying by a complex number rotates and stretches (N-CN.5)."]]}]},
+  param:{cc:"F-IF.7, G-GPE (modeling)",more:[
+   {tag:"Example 2 · Test level",q:"Eliminate the parameter: $x = 2t + 1$, $y = t^2$.",steps:[["t = \\dfrac{x - 1}{2}","Solve for $t$."],["y = \\dfrac{(x - 1)^2}{4}","Substitute: a parabola."]]},
+   {tag:"Example 3 · Projectile",q:"A ball: $x = 30t$, $y = -16t^2 + 40t$ (ft). How far does it travel before landing?",steps:[["-16t^2 + 40t = 0 \\Rightarrow t = 2.5","Lands when $y = 0$."],["x = 30(2.5) = 75 \\text{ ft}","Horizontal distance."]]}]}
+ },
+ ch10:{
+  conid:{cc:"G-GPE.3",more:[
+   {tag:"Example 2 · Test level",q:"Classify $4x^2 - 9y^2 + 8x + 36y - 68 = 0$.",steps:[["A = 4,\\ C = -9","The $x^2$ and $y^2$ coefficients."],["AC < 0 \\Rightarrow \\text{hyperbola}","Opposite signs."]]},
+   {tag:"Example 3 · Eccentricity",q:"An ellipse has $a = 5$ and $c = 3$. Find $e$ and $b$.",steps:[["e = \\tfrac{c}{a} = 0.6","How stretched it is."],["b = \\sqrt{25 - 9} = 4","$c^2 = a^2 - b^2$."]]}]},
+  ellh:{cc:"G-GPE.3",more:[
+   {tag:"Example 2 · Test level",q:"Find the center, vertices and foci of $\\dfrac{(x - 1)^2}{25} + \\dfrac{(y + 2)^2}{9} = 1$.",steps:[["\\text{center } (1, -2),\\ a = 5,\\ b = 3","Major axis horizontal."],["\\text{vertices } (6, -2), (-4, -2)","$\\pm a$ in $x$."],["c = 4:\\ \\text{foci } (5, -2), (-3, -2)","$c^2 = a^2 - b^2$."]]},
+   {tag:"Example 3 · Whispering gallery",q:"An elliptical room is $50$ ft long and $30$ ft wide. Where should two people stand to hear whispers?",steps:[["a = 25,\\ b = 15","Half of each dimension."],["c = \\sqrt{625 - 225} = 20","Foci."],["\\text{20 ft from the center on the long axis}","Sound from one focus reflects to the other."]]}]},
+  parab:{cc:"G-GPE.2",more:[
+   {tag:"Example 2 · Test level",q:"Find the vertex, focus and directrix of $(y - 1)^2 = 8(x + 3)$.",steps:[["\\text{vertex } (-3, 1),\\ 4p = 8,\\ p = 2","Opens right."],["\\text{focus } (-1, 1),\\ \\text{directrix } x = -5","$p$ units each way."]]},
+   {tag:"Example 3 · Headlight",q:"A headlight reflector is a parabola $6$ in wide and $2$ in deep. Where is the bulb?",steps:[["x^2 = 4py \\text{ through } (3, 2)","Vertex at the origin."],["9 = 8p \\Rightarrow p = 1.125","Solve."],["\\text{bulb } 1.125 \\text{ in from the vertex}","At the focus."]]}]}
+ },
+ ch11:{
+  seq:{cc:"F-BF.2, A-SSE.4",more:[
+   {tag:"Example 2 · Test level",q:"Find the sum of the first $20$ terms of $3, 7, 11, \\ldots$",steps:[["a_{20} = 3 + 19 \\cdot 4 = 79","Last term."],["S_{20} = \\tfrac{20}{2}(3 + 79) = 820","Average of first and last, times $n$."]]},
+   {tag:"Example 3 · Loan",q:"Deposit $\\$100$ a month; each grows 0.5% a month. Write the total after 12 months as a geometric sum.",steps:[["100(1.005)^{11} + \\cdots + 100","Each deposit grows a different number of months."],["100 \\cdot \\dfrac{1.005^{12} - 1}{0.005} \\approx 1233.56","Geometric series formula (A-SSE.4)."]]}]},
+  binom:{cc:"A-APR.5",more:[
+   {tag:"Example 2 · Test level",q:"Find the coefficient of $x^3$ in $(2x - 1)^5$.",steps:[["\\binom{5}{3}(2x)^3(-1)^2","Choose three $2x$'s."],["10 \\cdot 8 = 80","Coefficient $80$."]]},
+   {tag:"Example 3 · Pascal",q:"Expand $(a + b)^4$ using Pascal's triangle.",steps:[["1,\\ 4,\\ 6,\\ 4,\\ 1","Row 4."],["a^4 + 4a^3b + 6a^2b^2 + 4ab^3 + b^4","Powers of $a$ go down, $b$ go up."]]}]},
+  sums:{cc:"A-SSE.4, MP3",more:[
+   {tag:"Example 2 · Test level",q:"Find $\\sum_{k=1}^{6} 3 \\cdot 2^{k-1}$.",steps:[["3 \\cdot \\dfrac{2^6 - 1}{2 - 1}","Geometric: $a = 3$, $r = 2$."],["= 189","Done."]]},
+   {tag:"Example 3 · Induction",q:"Show that $1 + 3 + 5 + \\cdots + (2n - 1) = n^2$.",steps:[["n = 1:\\ 1 = 1^2","Base case."],["\\text{If true for } n:\\ n^2 + (2n + 1) = (n + 1)^2","Add the next odd number."],["\\text{true for all } n","Induction."]]}]}
+ },
+ ch12:{
+  lim1:{cc:"AP Calculus readiness",more:[
+   {tag:"Example 2 · Test level",q:"Find $\\displaystyle\\lim_{x \\to 3} \\dfrac{x^2 - 9}{x - 3}$.",steps:[["\\dfrac{(x - 3)(x + 3)}{x - 3} = x + 3","Factor and cancel ($x \\ne 3$)."],["\\to 6","Plug in now."]]},
+   {tag:"Example 3 · Meaning",q:"What does the limit mean if $f(3)$ is undefined?",steps:[["\\text{The limit is where the graph is heading}","Not the value at $x = 3$."],["\\text{a hole at } (3, 6)","The graph approaches $6$ but has a gap there."]]}]},
+  liminf:{cc:"AP Calculus readiness",more:[
+   {tag:"Example 2 · Test level",q:"Find $\\displaystyle\\lim_{x \\to \\infty} \\dfrac{3x^2 - 1}{2x^2 + 5x}$.",steps:[["\\text{equal degrees}","Compare leading terms."],["\\dfrac{3}{2}","Ratio of leading coefficients."]]},
+   {tag:"Example 3 · Continuity",q:"For what $k$ is $f(x) = \\begin{cases} x^2, & x < 2 \\\\ kx, & x \\ge 2 \\end{cases}$ continuous?",steps:[["\\lim_{x \\to 2^-} = 4,\\ f(2) = 2k","Left side meets right side."],["2k = 4 \\Rightarrow k = 2","No jump."]]}]},
+  deriv:{cc:"AP Calculus readiness, F-IF.6",more:[
+   {tag:"Example 2 · Test level",q:"Find the slope of $f(x) = x^2$ at $x = 3$ using the limit definition.",steps:[["\\dfrac{(3 + h)^2 - 9}{h} = \\dfrac{6h + h^2}{h}","Difference quotient."],["= 6 + h \\to 6","Let $h \\to 0$."]]},
+   {tag:"Example 3 · Velocity",q:"A ball's height is $s(t) = -16t^2 + 64t$. Find its velocity at $t = 1$.",steps:[["s'(t) = -32t + 64","Derivative = instantaneous rate."],["s'(1) = 32 \\text{ ft/s}","Still rising."]]}]}
+ }
+};
+const PC_CC={
+ ch1:{dom:[()=>{const s=pick([12,16,20,24]);return{q:`A box is made from a ${s}-in square sheet by cutting $x$-in squares from each corner: $V(x) = x(${s} - 2x)^2$. The domain is $0 < x < k$. Find $k$.`,type:"number",ans:s/2,ansTex:`${s/2}`,hint:"The base width $"+s+" - 2x$ must stay positive.",sol:[`$${s} - 2x > 0 \\Rightarrow x < ${s/2}$.`]};}],
+  trans:[()=>{const f=pick([["x^3 - 4x","odd"],["x^4 + 2x^2","even"],["x^2 + x","neither"],["\\dfrac{x}{x^2 + 1}","odd"],["|x| + 3","even"],["x^3 + 1","neither"]]);return mcQ(`Is $f(x) = ${f[0]}$ even, odd, or neither?`,f[1],["even","odd","neither"].filter(x=>x!==f[1]),"Compute $f(-x)$ and compare it to $f(x)$ and $-f(x)$.",[`$f(-x)$ ${f[1]==="even"?"equals $f(x)$":f[1]==="odd"?"equals $-f(x)$":"is neither"}: <b>${f[1]}</b>.`]);}],
+  comp:[()=>{const c=pick([0,10,25,35,40,100]),F=c*9/5+32;return{q:`$F(C) = \\tfrac95 C + 32$. Use the inverse function to find the Celsius temperature when it is $${F}^\\circ$F.`,type:"number",ans:c,ansTex:`${c}`,hint:"$C = \\tfrac59(F - 32)$.",sol:[`$\\tfrac59(${F} - 32) = ${c}$.`]};}]},
+ ch2:{endb:[()=>{const a=pick([-3,-2,-1,1,2,3]),n=pick([2,3,4,5]);const R=(n%2===0)?(a>0?"up, up":"down, down"):(a>0?"down, up":"up, down");return mcQ(`End behavior of $f(x) = ${a}x^{${n}} + \\ldots$ (left end, right end)?`,R,["up, up","down, down","down, up","up, down"].filter(x=>x!==R),"Even degree: both ends the same way. Odd: opposite ways. The sign of the leading coefficient decides the right end.",[`Degree $${n}$, leading coefficient $${a}$: ${R}.`]);}],
+  div:[()=>{const r=rnd(-3,3),a=rnd(-4,4),b=rnd(-5,5),c=rnd(-9,9),R=r**3+a*r*r+b*r+c;return{q:`Find the remainder when $x^3 ${sg(a)}x^2 ${sg(b)}x ${sg(c)}$ is divided by $x ${sg(-r)}$.`.replace(/\+ 0x\^2 |\+ 0x /g,""),type:"number",ans:R,ansTex:`${R}`,hint:`Remainder Theorem: evaluate $f(${r})$.`,sol:[`$f(${r}) = ${R}$.`]};}],
+  rat:[()=>{const F=pick([200,500,800,1000]),v=pick([2,3,4,5,8]);return{q:`The average cost per item is $\\bar C(x) = \\dfrac{${F} + ${v}x}{x}$. What value does it approach as $x$ grows very large?`,type:"number",ans:v,ansTex:`${v}`,hint:"Split the fraction: $\\tfrac{"+F+"}{x} + "+v+"$.",sol:[`$\\tfrac{${F}}{x} \\to 0$, so $\\bar C \\to ${v}$.`]};}]},
+ ch3:{expf:[()=>{const P=pick([1000,2000,5000]),r=pick([3,4,5,6]),t=pick([5,10,15]),n=pick([1,4,12]);const A=Math.round(P*(1+r/100/n)**(n*t)*100)/100;return{q:`$\\$${P}$ is invested at ${r}% compounded ${n===1?"annually":n===4?"quarterly":"monthly"} for ${t} years. Find the balance (nearest dollar).`,type:"number",ans:A,tol:1,ansTex:`\\approx ${Math.round(A)}`,hint:`$A = P\\left(1 + \\tfrac{r}{n}\\right)^{nt}$ with $n = ${n}$.`,sol:[`$${P}\\left(1 + \\tfrac{${r/100}}{${n}}\\right)^{${n*t}} \\approx ${A}$.`]};}],
+  logp:[()=>{const b=pick([2,3,5,10]),k=rnd(2,4),m=rnd(1,3);return{q:`Evaluate $\\log_{${b}}(${b**k} \\cdot ${b**m})$ using the product rule.`,type:"number",ans:k+m,ansTex:`${k+m}`,hint:"$\\log(MN) = \\log M + \\log N$.",sol:[`$${k} + ${m} = ${k+m}$.`]};}],
+  loge:[()=>{const r=pick([2,3,4,5,6,7,8,10]),t=Math.round(Math.log(2)/(r/100)*10)/10;return{q:`Money grows at ${r}% compounded continuously. How many years until it doubles? (Nearest tenth.)`,type:"number",ans:t,tol:0.11,ansTex:`\\approx ${t}`,hint:"$2 = e^{rt}$, so $t = \\dfrac{\\ln 2}{r}$.",sol:[`$t = \\dfrac{\\ln 2}{${r/100}} \\approx ${t}$ years.`]};}]},
+ ch4:{radian:[()=>{const r=pick([0.2,0.25,0.3,0.4,0.5]),n=pick([2,3,4,5,10]),v=Math.round(r*2*Math.PI*n*10)/10;return{q:`A wheel of radius $${r}$ m turns $${n}$ revolutions per second. How fast does a point on the rim move (m/s, nearest tenth)?`,type:"number",ans:v,tol:0.11,ansTex:`\\approx ${v}`,hint:"$v = r\\omega$ with $\\omega$ in radians per second.",sol:[`$\\omega = ${n} \\cdot 2\\pi$ rad/s.`,`$v = ${r} \\cdot ${2*n}\\pi \\approx ${v}$ m/s.`]};}],
+  unitc:[()=>{const A=pick([["\\sin(-\\theta)","-\\sin\\theta",["\\sin\\theta","\\cos\\theta","-\\cos\\theta"]],["\\cos(-\\theta)","\\cos\\theta",["-\\cos\\theta","\\sin\\theta","-\\sin\\theta"]],["\\sin(\\pi - \\theta)","\\sin\\theta",["-\\sin\\theta","\\cos\\theta","-\\cos\\theta"]],["\\cos(\\pi - \\theta)","-\\cos\\theta",["\\cos\\theta","\\sin\\theta","-\\sin\\theta"]]]);return mcQ(`Use the unit circle: $${A[0]} = $`,`$${A[1]}$`,A[2].map(x=>`$${x}$`),"Reflect the point on the unit circle and see which coordinate changes sign.",[`$${A[0]} = ${A[1]}$.`]);}],
+  tgraph:[()=>{const D=pick([20,30,40,50,60]),T=pick([4,6,8,10,12]);return{q:`A Ferris wheel of diameter ${D} m turns once every ${T} minutes. In $h(t) = c - a\\cos(Bt)$, find $B$. (Type it like pi/4.)`,type:"number",ans:2*Math.PI/T,ansTex:`\\tfrac{\\pi}{${T/2}}`,hint:"Period $= \\dfrac{2\\pi}{B}$.",sol:[`$B = \\dfrac{2\\pi}{${T}} = \\dfrac{\\pi}{${T/2}}$.`]};}]},
+ ch5:{invt:[()=>{const V=pick([["\\sin^{-1}(1)",Math.PI/2,"\\tfrac{\\pi}{2}"],["\\sin^{-1}(-\\tfrac12)",-Math.PI/6,"-\\tfrac{\\pi}{6}"],["\\cos^{-1}(0)",Math.PI/2,"\\tfrac{\\pi}{2}"],["\\cos^{-1}(-1)",Math.PI,"\\pi"],["\\tan^{-1}(1)",Math.PI/4,"\\tfrac{\\pi}{4}"],["\\cos^{-1}(\\tfrac12)",Math.PI/3,"\\tfrac{\\pi}{3}"]]);return{q:`Evaluate $${V[0]}$ in radians. (Type pi for π.)`,type:"number",ans:V[1],ansTex:V[2],hint:"Remember the restricted ranges.",sol:[`$${V[0]} = ${V[2]}$.`]};}],
+  teq:[()=>{const m=pick([4,5,6,8]),A=pick([1,2,3]);return{q:`A tide's depth is $d = ${m} + ${2*A}\\sin\\left(\\tfrac{\\pi}{6}t\\right)$ m. Find the first time $t > 0$ (hours) when $d = ${m+A}$.`,type:"number",ans:1,ansTex:"1",hint:"Solve $\\sin\\left(\\tfrac{\\pi}{6}t\\right) = \\tfrac12$.",sol:[`$\\sin\\left(\\tfrac{\\pi}{6}t\\right) = \\tfrac12 \\Rightarrow \\tfrac{\\pi}{6}t = \\tfrac{\\pi}{6}$, $t = 1$.`]};}],
+  tapp:[()=>{const h=pick([40,50,60,80,100]),a=pick([15,20,25,30,35]),d=Math.round(h/Math.tan(a*Math.PI/180)*10)/10;return{q:`From a ${h}-m cliff, the angle of depression to a boat is $${a}^\\circ$. How far is the boat from the base of the cliff? (Nearest tenth.)`,type:"number",ans:d,tol:0.15,ansTex:`\\approx ${d}`,hint:"$\\tan(\\text{angle}) = \\dfrac{\\text{height}}{\\text{distance}}$.",sol:[`$d = \\dfrac{${h}}{\\tan ${a}^\\circ} \\approx ${d}$ m.`]};}]},
+ ch6:{basic:[()=>{const T=pick([[3,4,5],[5,12,13],[8,15,17]]),Q=pick([2,3,4]);const c=(Q===2||Q===3)?-T[1]:T[1];return{q:`$\\sin\\theta = ${Q===3||Q===4?"-":""}\\tfrac{${T[0]}}{${T[2]}}$ and $\\theta$ is in Quadrant ${["","I","II","III","IV"][Q]}. Find $\\cos\\theta$.`,type:"number",ans:c/T[2],ansTex:frac(c,T[2]),hint:"$\\cos^2\\theta = 1 - \\sin^2\\theta$; pick the sign by quadrant.",sol:[`$\\cos\\theta = ${frac(c,T[2])}$.`]};}],
+  sumd:[()=>{const A=pick([["\\cos 75^\\circ",(Math.sqrt(6)-Math.sqrt(2))/4,"\\tfrac{\\sqrt6 - \\sqrt2}{4}"],["\\sin 75^\\circ",(Math.sqrt(6)+Math.sqrt(2))/4,"\\tfrac{\\sqrt6 + \\sqrt2}{4}"],["\\cos 15^\\circ",(Math.sqrt(6)+Math.sqrt(2))/4,"\\tfrac{\\sqrt6 + \\sqrt2}{4}"],["\\sin 15^\\circ",(Math.sqrt(6)-Math.sqrt(2))/4,"\\tfrac{\\sqrt6 - \\sqrt2}{4}"]]);return{q:`Find the exact value of $${A[0]}$. (Type it like (sqrt(6)-sqrt(2))/4.)`,type:"number",ans:A[1],ansTex:A[2],hint:"Write the angle as $45^\\circ \\pm 30^\\circ$.",sol:[`$${A[0]} = ${A[2]}$.`]};}],
+  dbl:[()=>{const T=pick([[3,4,5],[5,12,13],[8,15,17]]);return{q:`$\\cos\\theta = \\tfrac{${T[1]}}{${T[2]}}$ with $\\theta$ in Quadrant I. Find $\\sin 2\\theta$.`,type:"number",ans:2*T[0]*T[1]/T[2]**2,ansTex:frac(2*T[0]*T[1],T[2]**2),hint:"$\\sin2\\theta = 2\\sin\\theta\\cos\\theta$.",sol:[`$\\sin\\theta = \\tfrac{${T[0]}}{${T[2]}}$.`,`$2 \\cdot \\tfrac{${T[0]}}{${T[2]}} \\cdot \\tfrac{${T[1]}}{${T[2]}} = ${frac(2*T[0]*T[1],T[2]**2)}$.`]};}]},
+ ch7:{los:[()=>{const A=rnd(25,60),b=rnd(6,15),hgt=b*Math.sin(A*Math.PI/180),n=pick([0,1,2]);let a;if(n===0)a=Math.max(1,Math.floor(hgt*10-5)/10);else if(n===1)a=b+rnd(1,4);else a=Math.round((hgt+(b-hgt)/2)*10)/10;const real=a<hgt?0:a>=b?1:2;return{q:`$A = ${A}^\\circ$, $a = ${a}$, $b = ${b}$. How many triangles are possible? (Type 0, 1 or 2.)`,type:"number",ans:real,ansTex:`${real}`,hint:"Compare $a$ with the height $h = b\\sin A$ and with $b$.",sol:[`$h = ${b}\\sin ${A}^\\circ \\approx ${hgt.toFixed(2)}$.`,real===0?"$a < h$: none.":real===1?"$a \\ge b$: one.":"$h < a < b$: two."]};}],
+  loc:[()=>{const a=rnd(20,60),b=rnd(30,80),t=rnd(40,140),d=Math.round(Math.sqrt(a*a+b*b-2*a*b*Math.cos(t*Math.PI/180))*10)/10;return{q:`Two ships leave port. One sails ${a} km, the other ${b} km, with $${t}^\\circ$ between their courses. How far apart are they? (Nearest tenth.)`,type:"number",ans:d,tol:0.15,ansTex:`\\approx ${d}`,hint:"Law of Cosines with the included angle.",sol:[`$d^2 = ${a}^2 + ${b}^2 - 2(${a})(${b})\\cos ${t}^\\circ$, $d \\approx ${d}$.`]};}],
+  tarea:[()=>{const T=pick([[13,14,15,84],[5,5,6,12],[7,15,20,42],[9,10,17,36],[10,13,13,60]]);return{q:`Use Heron's formula to find the area of a triangle with sides ${T[0]}, ${T[1]}, ${T[2]}.`,type:"number",ans:T[3],ansTex:`${T[3]}`,hint:"$s = \\tfrac{a + b + c}{2}$, area $= \\sqrt{s(s-a)(s-b)(s-c)}$.",sol:[`$s = ${(T[0]+T[1]+T[2])/2}$, area $= ${T[3]}$.`]};}]},
+ ch8:{vcomp:[()=>{const T=pick([[3,4,5],[6,8,10],[5,12,13],[8,15,17]]);return{q:`Find the magnitude of $\\langle ${T[0]}, ${-T[1]}\\rangle$.`,type:"number",ans:T[2],ansTex:`${T[2]}`,hint:"$\\sqrt{x^2 + y^2}$.",sol:[`$\\sqrt{${T[0]}^2 + ${T[1]}^2} = ${T[2]}$.`]};}],
+  dot:[()=>{const F=[rnd(5,30),rnd(-10,10)],d=rnd(2,10);return{q:`A force $\\langle ${F[0]}, ${F[1]}\\rangle$ N moves a box $${d}$ m along the $x$-axis. How much work is done (J)?`,type:"number",ans:F[0]*d,ansTex:`${F[0]*d}`,hint:"$W = \\vec F \\cdot \\vec d$ with $\\vec d = \\langle "+d+", 0\\rangle$.",sol:[`$${F[0]} \\cdot ${d} + ${F[1]} \\cdot 0 = ${F[0]*d}$ J.`]};}],
+  vapp:[()=>{const p=pick([150,200,240,300]),w=pick([30,40,50,60]),g=Math.round(Math.sqrt(p*p+w*w)*10)/10;return{q:`A plane flies ${p} km/h due north; the wind blows ${w} km/h due east. Find the ground speed (nearest tenth).`,type:"number",ans:g,tol:0.11,ansTex:`\\approx ${g}`,hint:"Add the vectors, then take the magnitude.",sol:[`$\\sqrt{${p}^2 + ${w}^2} \\approx ${g}$ km/h.`]};}]},
+ ch9:{polar:[()=>{const r=rnd(1,6);return{q:`$r = ${2*r}\\cos\\theta$ is a circle. Find its radius.`,type:"number",ans:r,ansTex:`${r}`,hint:"Multiply by $r$ and complete the square.",sol:[`$x^2 + y^2 = ${2*r}x \\Rightarrow (x - ${r})^2 + y^2 = ${r*r}$.`]};}],
+  cpolar:[()=>{const n=pick([3,4,6]);return{q:`Find $(1 + i\\sqrt3)^{${n}}$. (Type a number like -8 or 64.)`,type:"number",ans:Math.round(2**n*Math.cos(n*Math.PI/3)),ansTex:`${Math.round(2**n*Math.cos(n*Math.PI/3))}`,hint:"$1 + i\\sqrt3 = 2(\\cos 60^\\circ + i\\sin 60^\\circ)$. Use De Moivre.",sol:[`$2^{${n}}(\\cos ${60*n}^\\circ + i\\sin ${60*n}^\\circ) = ${Math.round(2**n*Math.cos(n*Math.PI/3))}$.`]};}],
+  param:[()=>{const vx=pick([20,30,40]),vy=pick([32,48,64]);return{q:`A ball: $x = ${vx}t$, $y = -16t^2 + ${vy}t$ (feet). How far does it travel horizontally before landing?`,type:"number",ans:vx*vy/16,ansTex:`${vx*vy/16}`,hint:"Find when $y = 0$, then find $x$ then.",sol:[`$t = ${vy/16}$ s.`,`$x = ${vx} \\cdot ${vy/16} = ${vx*vy/16}$ ft.`]};}]},
+ ch10:{conid:[()=>{const T=pick([[5,3,4],[13,5,12],[10,6,8],[17,8,15]]);return{q:`An ellipse has $a = ${T[0]}$ and $b = ${T[2]}$. Find its eccentricity $e = \\tfrac{c}{a}$.`,type:"number",ans:T[1]/T[0],ansTex:frac(T[1],T[0]),hint:"$c^2 = a^2 - b^2$.",sol:[`$c = ${T[1]}$, $e = ${frac(T[1],T[0])}$.`]};}],
+  ellh:[()=>{const T=pick([[25,15,20],[13,5,12],[10,6,8],[17,8,15]]);return{q:`An elliptical whispering gallery is ${2*T[0]} ft long and ${2*T[1]} ft wide. How far from the center are the foci?`,type:"number",ans:T[2],ansTex:`${T[2]}`,hint:"$c = \\sqrt{a^2 - b^2}$.",sol:[`$\\sqrt{${T[0]}^2 - ${T[1]}^2} = ${T[2]}$ ft.`]};}],
+  parab:[()=>{const w=pick([4,6,8,12]),d=pick([1,2,3]),p=(w/2)**2/(4*d);return{q:`A reflector is a parabola ${w} in wide and ${d} in deep. How far from the vertex is the focus?`,type:"number",ans:p,ansTex:`${p}`,hint:`$x^2 = 4py$ passes through $(${w/2}, ${d})$.`,sol:[`$${(w/2)**2} = 4p(${d})$, $p = ${p}$ in.`]};}]},
+ ch11:{seq:[()=>{const a=rnd(1,9),d=rnd(2,6),n=pick([10,15,20,25]);const L=a+(n-1)*d;return{q:`Find the sum of the first ${n} terms of $${a}, ${a+d}, ${a+2*d}, \\ldots$`,type:"number",ans:n*(a+L)/2,ansTex:`${n*(a+L)/2}`,hint:"$S_n = \\tfrac n2(a_1 + a_n)$.",sol:[`$a_{${n}} = ${L}$.`,`$S = \\tfrac{${n}}{2}(${a} + ${L}) = ${n*(a+L)/2}$.`]};}],
+  binom:[()=>{const n=pick([4,5,6]),k=rnd(1,n-1),a=pick([1,2,3]);const C=(N,R)=>{let x=1;for(let i=0;i<R;i++)x=x*(N-i)/(i+1);return Math.round(x)};return{q:`Find the coefficient of $x^{${k}}$ in $(${a===1?"":a}x + 1)^{${n}}$.`,type:"number",ans:C(n,k)*a**k,ansTex:`${C(n,k)*a**k}`,hint:"$\\binom{n}{k}(ax)^k$.",sol:[`$\\binom{${n}}{${k}} \\cdot ${a}^{${k}} = ${C(n,k)*a**k}$.`]};}],
+  sums:[()=>{const n=rnd(5,30);return{q:`Find $1 + 3 + 5 + \\cdots + ${2*n-1}$.`,type:"number",ans:n*n,ansTex:`${n*n}`,hint:"The sum of the first $n$ odd numbers is $n^2$.",sol:[`There are $${n}$ odd numbers, so the sum is $${n}^2 = ${n*n}$.`]};}]},
+ ch12:{lim1:[()=>{const a=nz(-6,6);return{q:`Find $\\displaystyle\\lim_{x \\to ${a}} \\dfrac{x^2 - ${a*a}}{x ${sg(-a)}}$.`,type:"number",ans:2*a,ansTex:`${2*a}`,hint:"Factor the top and cancel.",sol:[`$\\dfrac{(x ${sg(-a)})(x ${sg(a)})}{x ${sg(-a)}} = x ${sg(a)} \\to ${2*a}$.`]};}],
+  liminf:[()=>{const a=rnd(1,6),c=rnd(1,6);return{q:`Find $\\displaystyle\\lim_{x \\to \\infty} \\dfrac{${a}x^2 - 1}{${c}x^2 + 5x}$.`,type:"number",ans:a/c,ansTex:frac(a,c),hint:"Equal degrees: ratio of leading coefficients.",sol:[`$${frac(a,c)}$.`]};}],
+  deriv:[()=>{const v=pick([32,48,64,80]),t=rnd(0,2);return{q:`$s(t) = -16t^2 + ${v}t$ feet. Find the velocity at $t = ${t}$ s.`,type:"number",ans:-32*t+v,ansTex:`${-32*t+v}`,hint:"Velocity is the derivative: $s'(t) = -32t + "+v+"$.",sol:[`$s'(${t}) = ${-32*t+v}$ ft/s.`]};}]}
+};
+CHAPTERS.forEach(c=>{ const M=PC_PLUS[c.id]||{}, G=PC_CC[c.id]||{}; c.topics.forEach(t=>{ const x=M[t.id]; if(x){ if(x.cc) t.cc=x.cc; if(x.more) t.lesson.more=x.more; }
+  const g=G[t.id]; if(g) [2,3,4].forEach(lv=>{ const orig=t.gen[lv]; if(orig) t.gen[lv]=()=>Math.random()<.4?pick(g)():orig(); }); }); });
+
 const ALLCH=[[1,"Functions and Their Graphs","ch1"],[2,"Polynomial and Rational Functions","ch2"],[3,"Exponential and Logarithmic Functions","ch3"],[4,"Trigonometric Functions","ch4"],[5,"Inverse Trig, Equations & Applications","ch5"],[6,"Trigonometric Identities","ch6"],[7,"Laws of Sines and Cosines","ch7"],[8,"Vectors","ch8"],[9,"Polar, Complex & Parametric","ch9"],[10,"Conic Sections","ch10"],[11,"Sequences, Series & Binomial Theorem","ch11"],[12,"Limits & Intro to Calculus","ch12"]];
 /* number every lesson as a section: 1.1, 1.2, … */
 CHAPTERS.forEach(c=>{ const n=(ALLCH.find(a=>a[2]===c.id)||[])[0]; if(n) c.topics.forEach((t,i)=>{ if(!/^\d+\.\d+ /.test(t.title)) t.title=n+"."+(i+1)+" "+t.title; }); });
@@ -932,11 +1110,12 @@ function openLesson(i,scroll){ LI=i; shown=1; tDone=false; tTries=0; TP=null; ro
 function drawLesson(){
   const t=CH.topics[LI], l=t.lesson, box=$("lesson");
   const inl=false;
-  box.innerHTML=`<span class="label">${inl?`Part 2 of 2 · Name it with symbols`:tlab(t).multi?`${tlab(t).sec} · Part ${tlab(t).k} of ${tlab(t).n}`:`Lesson ${LI+1} of ${CH.topics.length}`}</span><h2>${inl?`Line, ray, segment or length?`:tlab(t).multi?tlab(t).part:t.title}</h2><div class="big">${t.idea}</div>${l.fig||""}<span class="label">👀 Watch me — simplest example</span><p class="watch">I'll solve it one step at a time. Read each step and think about <b>why</b>. When it makes sense, press <b>Got it — next step</b>.</p><ol class="steps">${l.steps.slice(0,shown).map(s=>`<li><div><div class="m">$${s[0]}$</div><div class="w">${s[1]}</div></div></li>`).join("")}</ol>`;
+  box.innerHTML=`<span class="label">${inl?`Part 2 of 2 · Name it with symbols`:tlab(t).multi?`${tlab(t).sec} · Part ${tlab(t).k} of ${tlab(t).n}`:`Lesson ${LI+1} of ${CH.topics.length}`}</span><h2>${inl?`Line, ray, segment or length?`:tlab(t).multi?tlab(t).part:t.title}</h2>${t.cc?`<div class="cctag">Common Core ${t.cc}</div>`:""}<div class="big">${t.idea}</div>${l.fig||""}<span class="label">👀 Watch me — simplest example</span><p class="watch">I'll solve it one step at a time. Read each step and think about <b>why</b>. When it makes sense, press <b>Got it — next step</b>.</p><ol class="steps">${l.steps.slice(0,shown).map(s=>`<li><div><div class="m">$${s[0]}$</div><div class="w">${s[1]}</div></div></li>`).join("")}</ol>`;
   if(shown<l.steps.length){ const b=document.createElement("button"); b.className="btn"; b.style.alignSelf="flex-start"; b.textContent="Got it — next step →"; b.onclick=()=>{ shown++; drawLesson(); }; box.appendChild(b);
     const s=document.createElement("button"); s.className="btn ghost sm"; s.style.alignSelf="flex-start"; s.textContent="Show all steps at once"; s.onclick=()=>{ shown=l.steps.length; drawLesson(); }; box.appendChild(s); }
   else {
     box.insertAdjacentHTML("beforeend",`<div class="warn"><b>Watch out: </b>${l.warn}</div>`);
+    if(l.more) box.insertAdjacentHTML("beforeend",`<span class="label">🧩 More examples — test level &amp; Common Core</span>`+l.more.map((e,j)=>`<div class="mex"><span class="label">${e.tag||("Example "+(j+2))}</span><div class="q">${e.q}</div><ol class="steps">${e.steps.map(s=>`<li><div><div class="m">$${s[0]}$</div><div class="w">${s[1]}</div></div></li>`).join("")}</ol>${e.note?`<div class="warn"><b>Why it matters: </b>${e.note}</div>`:""}</div>`).join(""));
     if(!TP) TP=t.gen[0]();
     const w=document.createElement("div"); w.className="turn";
     w.innerHTML=`<span class="label" style="color:var(--gold)">Your turn</span><div class="q">${TP.q}</div><div class="row"><input type="text" id="tAns" autocomplete="off" placeholder="Your answer" aria-label="Your answer"><button class="btn" id="tChk">Check</button><button class="btn ghost" id="tHint">Hint</button></div><div class="howto">${HOW[TP.type]}</div><div id="tFb"></div>`;

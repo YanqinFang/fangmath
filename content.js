@@ -402,7 +402,22 @@ const COURSES = [
       { title: "7. Exponential & Logarithmic Functions", app: "practice/algebra2.html?chapter=el", appTopics: 7, lessons: [] },
       { title: "8. Rational Functions", app: "practice/algebra2.html?chapter=rt", appTopics: 7, lessons: [] },
       { title: "9. Sequences & Series", app: "practice/algebra2.html?chapter=ss", appTopics: 7, lessons: [] },
-      { title: "10. Quadratic Relations & Conic Sections", app: "practice/algebra2.html?chapter=qr", appTopics: 7, lessons: [] },
+      { title: "10. Quadratic Relations & Conic Sections", app: "practice/algebra2.html?chapter=qr", appTopics: 7, lessons: [
+        { title: "10-1 Parabolas: Focus & Directrix",
+          notes: "materials/algebra2/ch10/Alg2_10-1_Parabolas_Worksheet.pdf",
+          worksheet: "materials/algebra2/ch10/Alg2_10-1_Parabolas_Worksheet.pdf", bw: true,
+          answers: "materials/algebra2/ch10/Alg2_10-1_Parabolas_Key.pdf",
+          summary: "A medium-level warm-up from earlier Algebra 2 units (distance, completing the square, transformations, solving quadratics, linear–quadratic systems, inverses), then the four directions of a parabola — up, down, right, left — with a worked example and 3 easy, 1 medium and 1 hard problem for each. 28 problems; the key has full solutions.",
+          example: { q: "Find the vertex, focus and directrix of $(x - 2)^2 = 8(y + 1)$.",
+            steps: ["Vertex $(h, k) = (2, -1)$.", "$4p = 8$, so $p = 2$: $x$ is squared and $p > 0$, so it opens up.", "Focus $(2, -1 + 2) = (2, 1)$; directrix $y = -1 - 2 = -3$."],
+            simpler: "Try $x^2 = 4y$ first: $4p = 4$, so $p = 1$. Focus $(0, 1)$, directrix $y = -1$." },
+          quiz: [
+            { q: "Which way does $y^2 = -12x$ open?", choices: ["left", "right", "up", "down"], answer: 0, simpler: "$y$ is squared, so it opens sideways; the sign of $p$ decides which side." },
+            { q: "Focus of $x^2 = 20y$?", choices: ["$(0, 5)$", "$(0, 20)$", "$(5, 0)$", "$(0, -5)$"], answer: 0, simpler: "$4p = 20$." },
+            { q: "Directrix of $y^2 = 8x$?", choices: ["$x = -2$", "$x = 2$", "$y = -2$", "$x = -8$"], answer: 0 },
+            { q: "Vertex $(0, 0)$ and focus $(0, -3)$. The equation is ...", choices: ["$x^2 = -12y$", "$y^2 = -12x$", "$x^2 = -3y$", "$x^2 = 12y$"], answer: 0 }
+          ] }
+      ] },
       { title: "11. Probability & Statistics", app: "practice/algebra2.html?chapter=ps", appTopics: 7, lessons: [] },
       { title: "12. Matrices", app: "practice/algebra2.html?chapter=mx", appTopics: 8, lessons: [] },
       { title: "13. Periodic Functions & Trigonometry", app: "practice/algebra2.html?chapter=tr", appTopics: 7, lessons: [] },

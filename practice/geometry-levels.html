@@ -1242,6 +1242,207 @@ const LESSON_PLUS={
 Object.entries(LESSON_PLUS).forEach(([cid,M])=>{ const c=CHAPTERS.find(x=>x.id===cid); if(!c) return;
   c.topics.forEach(t=>{ const x=M[t.id]; if(!x) return; if(x.cc&&!t.cc) t.cc=x.cc; if(x.more) t.lesson.more=x.more; }); });
 
+const LESSON_PLUS_B={
+ ch2:{
+  pat:{cc:"G-CO.9, MP3",more:[
+   {tag:"Example 2 · Test level",q:"Find the next term and a rule for the $n$th term: $2, 6, 18, 54, \\ldots$",steps:[["6 \\div 2 = 3,\\ 18 \\div 6 = 3,\\ 54 \\div 18 = 3","Not adding — multiplying by $3$ each time."],["54 \\cdot 3 = 162","The next term."],["a_n = 2 \\cdot 3^{\\,n-1}","Start at $2$ and multiply by $3$ a total of $n - 1$ times."]]},
+   {tag:"Example 3 · Reasoning",q:"Conjecture: “When you multiply two numbers, the answer is bigger than both.” Is it always true?",steps:[["3 \\cdot 4 = 12,\\ 5 \\cdot 6 = 30","Examples make it sound true."],["\\tfrac12 \\cdot 4 = 2","$2$ is smaller than $4$."],["\\text{One counterexample} \\Rightarrow \\text{false}","The conjecture is false."]],note:"Inductive reasoning makes a guess. One counterexample breaks it; only a deductive proof makes it certain."}]},
+  cond:{cc:"G-CO.9, MP3",more:[
+   {tag:"Example 2 · Test level",q:"“If two angles are vertical angles, then they are congruent.” Write the converse and the contrapositive. Which are true?",steps:[["\\text{Converse: if congruent, then vertical}","False: two $30^\\circ$ angles in different places are congruent but not vertical."],["\\text{Contrapositive: if not congruent, then not vertical}","True — it always matches the original."],["\\text{Original and contrapositive true; converse false}","Never assume the converse is true."]]},
+   {tag:"Example 3 · Good definitions",q:"Is “An angle is a right angle if and only if it measures $90^\\circ$” a good definition?",steps:[["\\text{If right, then } 90^\\circ","True."],["\\text{If } 90^\\circ, \\text{ then right}","True."],["\\text{Both directions true} \\Rightarrow \\text{biconditional}","A good definition always works both ways."]]}]},
+  post:{cc:"G-CO.1",more:[
+   {tag:"Example 2 · Test level",q:"How many planes pass through three points that are all on one line? Through three points that are not on one line?",steps:[["\\text{Collinear points: infinitely many planes}","A plane can spin around the line like a door on its hinge."],["\\text{Noncollinear points: exactly one plane}","Three points not on a line fix the plane (a three-legged stool never wobbles)."]]},
+   {tag:"Example 3 · Reading a diagram",q:"In a diagram, two lines cross at $P$ and nothing is marked. What can you assume, and what can't you?",steps:[["\\text{You may assume: the lines intersect at } P","Intersections, collinear points and points between others can be read from the picture."],["\\text{You may not assume: right angles, equal lengths}","Those need a mark (a box, tick marks) or a reason."]],note:"Proofs only use what is <b>given</b>, <b>marked</b>, or <b>proved</b> — never “it looks like it.”"}]},
+  proof:{cc:"A-REI.1, G-CO.9",more:[
+   {tag:"Example 2 · Test level",q:"Solve $3(x - 2) = 12$ and give a reason for each step.",steps:[["3(x - 2) = 12","Given."],["3x - 6 = 12","Distributive Property."],["3x = 18","Addition Property of Equality."],["x = 6","Division Property of Equality."]]},
+   {tag:"Example 3 · Geometry with algebra",q:"$A, B, C, D$ are on a line in that order and $AB = CD$. Show that $AC = BD$.",steps:[["AB + BC = AC,\\ BC + CD = BD","Segment Addition Postulate."],["AB = CD","Given."],["AB + BC = CD + BC","Addition Property of Equality (add $BC$ to both sides)."],["AC = BD","Substitution."]]}]},
+  tcp:{cc:"G-CO.9",more:[
+   {tag:"Example 2 · Test level",q:"Given: $M$ is the midpoint of $\\overline{AB}$. Prove: $AM = \\tfrac12 AB$.",steps:[["1.\\ M \\text{ is the midpoint of } \\overline{AB}","Given."],["2.\\ AM = MB","Definition of midpoint."],["3.\\ AM + MB = AB","Segment Addition Postulate."],["4.\\ AM + AM = AB \\Rightarrow 2AM = AB","Substitution; combine like terms."],["5.\\ AM = \\tfrac12 AB","Division Property of Equality."]]},
+   {tag:"Example 3 · Congruent supplements",q:"Given: $\\angle 1$ and $\\angle 2$ are a linear pair; $\\angle 2$ and $\\angle 3$ are a linear pair. Prove: $\\angle 1 \\cong \\angle 3$.",steps:[["1.\\ m\\angle 1 + m\\angle 2 = 180^\\circ","Linear Pair Postulate."],["2.\\ m\\angle 3 + m\\angle 2 = 180^\\circ","Linear Pair Postulate."],["3.\\ m\\angle 1 + m\\angle 2 = m\\angle 3 + m\\angle 2","Substitution (both equal $180^\\circ$)."],["4.\\ m\\angle 1 = m\\angle 3","Subtraction Property of Equality."],["5.\\ \\angle 1 \\cong \\angle 3","Definition of congruent angles."]]}]},
+  angp:{cc:"G-CO.9",more:[
+   {tag:"Example 2 · Test level",q:"$\\angle 1$ and $\\angle 2$ are complementary. $m\\angle 1 = (2x + 4)^\\circ$ and $m\\angle 2 = (4x - 10)^\\circ$. Find both angles.",steps:[["(2x + 4) + (4x - 10) = 90","Complementary angles add to $90^\\circ$."],["6x - 6 = 90 \\Rightarrow x = 16","Solve."],["m\\angle 1 = 36^\\circ,\\ m\\angle 2 = 54^\\circ","Check: $36 + 54 = 90$ ✓"]]},
+   {tag:"Example 3 · Prove it",q:"Prove: all right angles are congruent.",steps:[["1.\\ \\angle A, \\angle B \\text{ are right angles}","Given."],["2.\\ m\\angle A = 90^\\circ,\\ m\\angle B = 90^\\circ","Definition of right angle."],["3.\\ m\\angle A = m\\angle B","Transitive Property of Equality."],["4.\\ \\angle A \\cong \\angle B","Definition of congruent angles."]]}]}
+ },
+ ch3:{
+  pairs:{cc:"G-CO.1",more:[
+   {tag:"Example 2 · Test level",q:"In box $ABCD\\text{-}EFGH$ ($ABCD$ on the bottom, $E$ above $A$, $F$ above $B$…), describe $\\overline{AB}$ with $\\overline{EF}$, with $\\overline{BF}$, and with $\\overline{CG}$.",steps:[["\\overline{AB} \\parallel \\overline{EF}","Same direction, same front face, never meet."],["\\overline{AB} \\perp \\overline{BF}","They meet at a right angle at $B$."],["\\overline{AB} \\text{ and } \\overline{CG}: \\text{ skew}","Not in one plane, never meet."]]},
+   {tag:"Example 3 · Angle pairs",q:"A transversal crosses two lines. Angles $1$–$4$ are at the top crossing (1 top-left, 2 top-right, 3 bottom-left, 4 bottom-right) and $5$–$8$ at the bottom crossing in the same order. Name each pair: $\\angle 1, \\angle 5$; $\\angle 4, \\angle 5$; $\\angle 3, \\angle 5$.",steps:[["\\angle 1, \\angle 5: \\text{ corresponding}","Same corner at each crossing."],["\\angle 4, \\angle 5: \\text{ alternate interior}","Between the lines, opposite sides of the transversal."],["\\angle 3, \\angle 5: \\text{ same-side interior}","Between the lines, same side."]]}]},
+  par:{cc:"G-CO.9",more:[
+   {tag:"Example 2 · Test level",q:"$\\ell \\parallel m$. Corresponding angles measure $(3x + 15)^\\circ$ and $(5x - 25)^\\circ$. Find the angle.",steps:[["3x + 15 = 5x - 25","Corresponding angles are congruent when the lines are parallel."],["40 = 2x \\Rightarrow x = 20","Solve."],["3(20) + 15 = 75^\\circ","Both angles are $75^\\circ$."]]},
+   {tag:"Example 3 · Same-side interior",q:"$\\ell \\parallel m$. Same-side interior angles are $(2x + 10)^\\circ$ and $(3x - 5)^\\circ$. Find both.",steps:[["(2x + 10) + (3x - 5) = 180","Same-side interior angles are supplementary."],["5x + 5 = 180 \\Rightarrow x = 35","Solve."],["80^\\circ \\text{ and } 100^\\circ","Check: $80 + 100 = 180$ ✓"]],note:"Pick the right relationship first: congruent (corresponding, alternate) or supplementary (same-side)."}]},
+  conv:{cc:"G-CO.9",more:[
+   {tag:"Example 2 · Test level",q:"A transversal makes alternate interior angles of $65^\\circ$ and $65^\\circ$ with lines $p$ and $q$. Are $p$ and $q$ parallel? Why?",steps:[["\\text{Alternate interior angles are congruent}","What we see."],["p \\parallel q","Converse of the Alternate Interior Angles Theorem."]]},
+   {tag:"Example 3 · Find x",q:"Same-side interior angles are $(4x + 6)^\\circ$ and $(5x - 15)^\\circ$. For what $x$ are the lines parallel?",steps:[["(4x + 6) + (5x - 15) = 180","Lines are parallel exactly when same-side interior angles are supplementary."],["9x - 9 = 180 \\Rightarrow x = 21","Solve."],["90^\\circ + 90^\\circ = 180^\\circ","Check — at $x = 21$ both angles are $90^\\circ$."]]}]},
+  perp:{cc:"G-CO.9, G-CO.12",more:[
+   {tag:"Example 2 · Test level",q:"Two lines form a linear pair of congruent angles. What can you conclude?",steps:[["x + x = 180^\\circ","A linear pair adds to $180^\\circ$, and the angles are equal."],["x = 90^\\circ","Each angle is a right angle."],["\\text{The lines are perpendicular}","Linear pair of congruent angles ⇒ perpendicular."]]},
+   {tag:"Example 3 · Reasoning",q:"In a plane, lines $a$ and $b$ are both perpendicular to line $t$. Why are $a$ and $b$ parallel?",steps:[["\\text{Both make } 90^\\circ \\text{ angles with } t","Given."],["\\text{Those } 90^\\circ \\text{ angles are corresponding}","Same corner at each crossing."],["a \\parallel b","Converse of the Corresponding Angles Postulate."]]}]},
+  slope:{cc:"G-GPE.5",more:[
+   {tag:"Example 2 · Test level",q:"Write the line through $(2, 3)$ parallel to $y = 4x - 1$.",steps:[["m = 4","Parallel lines have equal slopes."],["y - 3 = 4(x - 2)","Point-slope form."],["y = 4x - 5","Simplify."]]},
+   {tag:"Example 3 · Perpendicular",q:"Write the line through $(4, 1)$ perpendicular to $2x + 3y = 6$.",steps:[["y = -\\tfrac23 x + 2 \\Rightarrow m = -\\tfrac23","Solve for $y$ to read the slope."],["m_\\perp = \\tfrac32","Flip and change the sign."],["y - 1 = \\tfrac32(x - 4) \\Rightarrow y = \\tfrac32 x - 5","Point-slope, then simplify."]]}]}
+ },
+ ch4:{
+  tri:{cc:"G-CO.10",more:[
+   {tag:"Example 2 · Test level",q:"The angles of a triangle are $(x + 10)^\\circ$, $(2x)^\\circ$ and $(3x - 10)^\\circ$. Find them.",steps:[["(x + 10) + 2x + (3x - 10) = 180","Triangle Sum Theorem."],["6x = 180 \\Rightarrow x = 30","Solve."],["40^\\circ,\\ 60^\\circ,\\ 80^\\circ","Check: they add to $180^\\circ$ ✓"]]},
+   {tag:"Example 3 · Exterior angle",q:"An exterior angle of a triangle is $120^\\circ$. Its remote interior angles are $(2x)^\\circ$ and $(x + 30)^\\circ$. Find $x$ — and explain why the rule works.",steps:[["2x + (x + 30) = 120","Exterior Angle Theorem."],["3x = 90 \\Rightarrow x = 30","Both remote angles are $60^\\circ$."],["\\text{ext} + \\text{adj} = 180 = \\text{adj} + \\text{remote}_1 + \\text{remote}_2","Why: the exterior angle and the whole triangle both “use up” $180^\\circ$ with the same adjacent angle."]]}]},
+  cpoly:{cc:"G-CO.7",more:[
+   {tag:"Example 2 · Test level",q:"$\\triangle ABC \\cong \\triangle DEF$, $AB = 8$ and $m\\angle B = 50^\\circ$. Find $DE$ and $m\\angle E$.",steps:[["A \\leftrightarrow D,\\ B \\leftrightarrow E,\\ C \\leftrightarrow F","Read the matching from the order of the letters."],["DE = AB = 8","Corresponding sides are congruent."],["m\\angle E = m\\angle B = 50^\\circ","Corresponding angles are congruent."]]},
+   {tag:"Example 3 · With algebra",q:"$\\triangle PQR \\cong \\triangle XYZ$, $m\\angle P = (2x + 10)^\\circ$ and $m\\angle X = (3x - 15)^\\circ$. Find $m\\angle P$.",steps:[["\\angle P \\cong \\angle X","First letters match."],["2x + 10 = 3x - 15 \\Rightarrow x = 25","Solve."],["m\\angle P = 60^\\circ","Plug in."]]}]},
+  iso:{cc:"G-CO.10",more:[
+   {tag:"Example 2 · Test level",q:"Each base angle of an isosceles triangle is $40^\\circ$. Find the vertex angle.",steps:[["40 + 40 + v = 180","Base angles are equal; the angles add to $180^\\circ$."],["v = 100^\\circ","Solve."]]},
+   {tag:"Example 3 · Surprise",q:"In an isosceles triangle the vertex angle is $(2x)^\\circ$ and each base angle is $(x + 30)^\\circ$. Find all three angles.",steps:[["2x + 2(x + 30) = 180","Two equal base angles plus the vertex angle."],["4x + 60 = 180 \\Rightarrow x = 30","Solve."],["60^\\circ,\\ 60^\\circ,\\ 60^\\circ","All three are equal: the triangle is <b>equilateral</b>."]],note:"Every equilateral triangle is isosceles — and equiangular, with $60^\\circ$ angles."}]},
+  cong:{cc:"G-CO.8, G-SRT.5",more:[
+   {tag:"Example 2 · Test level",q:"Which shortcut proves the triangles congruent? (a) three pairs of sides; (b) two angles and the side between them; (c) two sides and an angle not between them.",steps:[["(a)\\ \\text{SSS}","Three sides lock the shape."],["(b)\\ \\text{ASA}","The side is between the two angles."],["(c)\\ \\text{none (SSA)}","Two different triangles can have those parts."]]},
+   {tag:"Example 3 · Prove it",q:"Given: $\\overline{BD}$ bisects $\\angle ABC$ and $AB = CB$. Prove: $\\triangle ABD \\cong \\triangle CBD$.",steps:[["1.\\ AB = CB","Given."],["2.\\ \\angle ABD \\cong \\angle CBD","Definition of angle bisector."],["3.\\ \\overline{BD} \\cong \\overline{BD}","Reflexive Property (shared side)."],["4.\\ \\triangle ABD \\cong \\triangle CBD","SAS — the angle is between the two sides."]]}]},
+  cpctc:{cc:"G-CO.8, G-SRT.5",more:[
+   {tag:"Example 2 · Test level",q:"$\\triangle ABC \\cong \\triangle DEF$ by ASA. $AC = 3x - 4$ and $DF = 2x + 5$. Find $AC$.",steps:[["AC = DF","CPCTC (after the triangles are proved congruent)."],["3x - 4 = 2x + 5 \\Rightarrow x = 9","Solve."],["AC = 23","Plug in."]]},
+   {tag:"Example 3 · Prove it",q:"Given: $\\overline{AD}$ and $\\overline{BC}$ bisect each other at $M$. Prove: $\\overline{AB} \\cong \\overline{DC}$.",steps:[["1.\\ AM = DM,\\ BM = CM","Definition of bisect (Given)."],["2.\\ \\angle AMB \\cong \\angle DMC","Vertical Angles Theorem."],["3.\\ \\triangle AMB \\cong \\triangle DMC","SAS."],["4.\\ \\overline{AB} \\cong \\overline{DC}","CPCTC."]],note:"CPCTC always comes <b>after</b> you prove the triangles congruent."}]}
+ }
+};
+Object.entries(LESSON_PLUS_B).forEach(([cid,M])=>{ const c=CHAPTERS.find(x=>x.id===cid); if(!c) return;
+  c.topics.forEach(t=>{ const x=M[t.id]; if(!x) return; if(x.cc&&!t.cc) t.cc=x.cc; if(x.more) t.lesson.more=x.more; }); });
+
+const LESSON_PLUS_C={
+ ch5:{
+  mid:{cc:"G-CO.10, G-SRT.4",more:[
+   {tag:"Example 2 · Test level",q:"$\\overline{DE}$ joins the midpoints of $\\overline{AB}$ and $\\overline{AC}$ in $\\triangle ABC$. $DE = 2x + 1$ and $BC = 5x - 4$. Find $BC$.",steps:[["DE = \\tfrac12 BC","Midsegment Theorem."],["2x + 1 = \\tfrac12(5x - 4) \\Rightarrow 4x + 2 = 5x - 4","Multiply both sides by 2."],["x = 6,\\ BC = 26","Check: $DE = 13 = \\tfrac12 \\cdot 26$ ✓"]]},
+   {tag:"Example 3 · Centroid",q:"$G$ is the centroid of $\\triangle ABC$ and median $\\overline{AM}$ has length $18$. Find $AG$ and $GM$.",steps:[["AG = \\tfrac23 AM","The centroid is $\\tfrac23$ of the way from a vertex to the midpoint of the opposite side."],["AG = 12,\\ GM = 6","$GM$ is the remaining $\\tfrac13$."]],note:"The centroid is the balance point: cut a cardboard triangle and it balances there."}]},
+  conc:{cc:"G-C.3, G-CO.10",more:[
+   {tag:"Example 2 · Test level",q:"$P$ is the circumcenter of $\\triangle ABC$ and $PA = 3x + 2$, $PB = 5x - 6$. Find $PC$.",steps:[["PA = PB = PC","The circumcenter is the same distance from all three vertices."],["3x + 2 = 5x - 6 \\Rightarrow x = 4","Solve."],["PC = 14","Plug in."]]},
+   {tag:"Example 3 · Application",q:"Three towns want one water tower the same distance from each. Which point should they use, and how do they find it?",steps:[["\\text{Equal distance to 3 points} \\Rightarrow \\text{circumcenter}","Points on a perpendicular bisector are equidistant from its segment's ends."],["\\text{Construct two perpendicular bisectors}","Where they cross is the tower site."]],note:"Equal distance to three <b>sides</b> (like a round table touching three walls) would be the <b>incenter</b> instead."}]},
+  ineq:{cc:"G-CO.10",more:[
+   {tag:"Example 2 · Test level",q:"Two sides of a triangle are $7$ and $12$. What lengths can the third side have?",steps:[["12 - 7 < x < 12 + 7","Each side is less than the sum and more than the difference of the other two."],["5 < x < 19","Any length strictly between $5$ and $19$."]]},
+   {tag:"Example 3 · Order",q:"In $\\triangle ABC$, $m\\angle A = 50^\\circ$, $m\\angle B = 70^\\circ$. List the sides from shortest to longest.",steps:[["m\\angle C = 60^\\circ","Triangle Sum."],["\\angle A < \\angle C < \\angle B","Order the angles."],["BC < AB < AC","The shortest side is across from the smallest angle."]]}]},
+  hinge:{cc:"G-CO.10, MP3",more:[
+   {tag:"Example 2 · Test level",q:"$\\triangle ABC$ and $\\triangle DEF$ have $AB = DE$, $AC = DF$, $m\\angle A = 70^\\circ$, $m\\angle D = 55^\\circ$. Compare $BC$ and $EF$.",steps:[["\\text{Two pairs of equal sides}","Like two doors of the same size."],["70^\\circ > 55^\\circ","The included angle at $A$ is wider."],["BC > EF","Hinge Theorem: the wider angle makes the longer opposite side."]]},
+   {tag:"Example 3 · Indirect proof",q:"Prove indirectly: a triangle cannot have two right angles.",steps:[["\\text{Assume it has two right angles}","Suppose the opposite of what you want."],["90 + 90 + x = 180 \\Rightarrow x = 0","Then the third angle would be $0^\\circ$."],["\\text{Impossible} \\Rightarrow \\text{assumption false}","So a triangle has at most one right angle."]]}]}
+ },
+ ch6:{
+  poly:{cc:"G-CO.11",more:[
+   {tag:"Example 2 · Test level",q:"Find the measure of each interior angle of a regular octagon.",steps:[["(8 - 2) \\cdot 180 = 1080^\\circ","Interior angle sum: $(n - 2) \\cdot 180^\\circ$."],["1080 \\div 8 = 135^\\circ","Regular means all angles equal."]]},
+   {tag:"Example 3 · Work backward",q:"Each exterior angle of a regular polygon is $24^\\circ$. How many sides does it have?",steps:[["\\text{Exterior angles add to } 360^\\circ","For every convex polygon."],["n = 360 \\div 24 = 15","A regular 15-gon."]]}]},
+  para:{cc:"G-CO.11",more:[
+   {tag:"Example 2 · Test level",q:"In parallelogram $ABCD$, $m\\angle A = (3x + 10)^\\circ$ and $m\\angle B = (5x - 30)^\\circ$. Find $m\\angle A$.",steps:[["\\angle A + \\angle B = 180^\\circ","Consecutive angles of a parallelogram are supplementary."],["8x - 20 = 180 \\Rightarrow x = 25","Solve."],["m\\angle A = 85^\\circ,\\ m\\angle B = 95^\\circ","Check: $85 + 95 = 180$ ✓"]]},
+   {tag:"Example 3 · Diagonals",q:"The diagonals of parallelogram $ABCD$ meet at $E$. $AE = 2y + 3$ and $EC = 4y - 7$. Find $AC$.",steps:[["AE = EC","Diagonals of a parallelogram bisect each other."],["2y + 3 = 4y - 7 \\Rightarrow y = 5","Solve."],["AC = 2 \\cdot 13 = 26","$AE = 13$, and $AC$ is twice that."]]}]},
+  ppar:{cc:"G-CO.11",more:[
+   {tag:"Example 2 · Test level",q:"For what $x$ is $ABCD$ a parallelogram if $AB = 3x - 1$, $CD = x + 7$, and $\\overline{AB} \\parallel \\overline{CD}$?",steps:[["\\text{One pair of sides both parallel and congruent}","That is enough to prove a parallelogram."],["3x - 1 = x + 7 \\Rightarrow x = 4","Make them congruent."],["AB = CD = 11","At $x = 4$ it is a parallelogram."]]},
+   {tag:"Example 3 · Which test?",q:"A quadrilateral's diagonals bisect each other. Is it a parallelogram? What if only one pair of opposite sides is parallel?",steps:[["\\text{Diagonals bisect each other} \\Rightarrow \\text{yes}","One of the parallelogram tests."],["\\text{One pair parallel only} \\Rightarrow \\text{not enough}","It could be a trapezoid."]]}]},
+  rrs:{cc:"G-CO.11",more:[
+   {tag:"Example 2 · Test level",q:"In rectangle $ABCD$, diagonal $AC = 4x - 6$ and $BD = 2x + 10$. Find $AC$.",steps:[["AC = BD","The diagonals of a rectangle are congruent."],["4x - 6 = 2x + 10 \\Rightarrow x = 8","Solve."],["AC = 26","Plug in."]]},
+   {tag:"Example 3 · Rhombus",q:"The diagonals of a rhombus are $10$ and $24$. Find a side.",steps:[["\\text{Diagonals bisect each other at right angles}","They cut the rhombus into 4 right triangles."],["\\text{Legs: } 5 \\text{ and } 12","Half of each diagonal."],["s = \\sqrt{5^2 + 12^2} = 13","Pythagorean Theorem."]]}]},
+  trap:{cc:"G-CO.11, G-MG.1",more:[
+   {tag:"Example 2 · Test level",q:"A trapezoid has bases $9$ and $21$. Find its midsegment.",steps:[["\\text{midsegment} = \\tfrac12(b_1 + b_2)","The average of the bases."],["\\tfrac12(9 + 21) = 15","Done."]]},
+   {tag:"Example 3 · Kite",q:"In kite $ABCD$ with $AB = AD$ and $CB = CD$, $m\\angle B = 110^\\circ$ and $m\\angle A = 70^\\circ$. Find $m\\angle C$.",steps:[["m\\angle D = m\\angle B = 110^\\circ","The angles between the unequal sides are congruent."],["70 + 110 + 110 + C = 360","Quadrilateral angle sum."],["m\\angle C = 70^\\circ","Solve."]]}]}
+ },
+ ch7:{
+  ratio:{cc:"G-SRT.2, MP4",more:[
+   {tag:"Example 2 · Test level",q:"Solve $\\dfrac{x + 2}{6} = \\dfrac{x - 1}{4}$.",steps:[["4(x + 2) = 6(x - 1)","Cross-multiply."],["4x + 8 = 6x - 6 \\Rightarrow x = 7","Solve."]]},
+   {tag:"Example 3 · Map scale",q:"A map's scale is $1 \\text{ cm} : 25 \\text{ km}$. Two cities are $7.2$ cm apart on the map. How far apart are they?",steps:[["\\dfrac{1}{25} = \\dfrac{7.2}{d}","Map : real, in the same order."],["d = 7.2 \\cdot 25 = 180 \\text{ km}","Solve."]]}]},
+  simp:{cc:"G-SRT.2",more:[
+   {tag:"Example 2 · Test level",q:"$ABCD \\sim EFGH$ with $AB = 6$, $EF = 9$ and $BC = 8$. Find $FG$ and the ratio of perimeters.",steps:[["k = \\tfrac{9}{6} = \\tfrac32","Scale factor from $ABCD$ to $EFGH$."],["FG = 8 \\cdot \\tfrac32 = 12","Every side scales by $k$."],["\\tfrac{P_2}{P_1} = \\tfrac32","Perimeters scale by $k$ too."]]},
+   {tag:"Example 3 · Area",q:"Two similar triangles have scale factor $2:3$. The smaller has area $20$. Find the larger area.",steps:[["\\text{Areas scale by } k^2","Both length and width grow by $k$."],["\\left(\\tfrac32\\right)^2 = \\tfrac94","Area factor."],["20 \\cdot \\tfrac94 = 45","The larger area."]]}]},
+  prove:{cc:"G-SRT.3, G-SRT.5",more:[
+   {tag:"Example 2 · Test level",q:"$\\triangle ABC$ has angles $40^\\circ$ and $75^\\circ$; $\\triangle DEF$ has angles $75^\\circ$ and $65^\\circ$. Similar?",steps:[["\\triangle ABC:\\ 180 - 40 - 75 = 65^\\circ","Find the third angle."],["\\text{Angles } 40, 75, 65 \\text{ in both}","Two pairs of angles match."],["\\text{Similar by AA}","Two angles are enough."]]},
+   {tag:"Example 3 · Shadows",q:"A $6$-ft person casts a $4$-ft shadow while a tree casts a $30$-ft shadow at the same time. How tall is the tree?",steps:[["\\text{Same sun angle} \\Rightarrow \\text{similar triangles (AA)}","Both have a right angle and the same angle of the sun."],["\\dfrac{h}{30} = \\dfrac{6}{4}","Height : shadow."],["h = 45 \\text{ ft}","Solve."]]}]},
+  split:{cc:"G-SRT.4",more:[
+   {tag:"Example 2 · Test level",q:"In $\\triangle ABC$, $\\overline{DE} \\parallel \\overline{BC}$ with $D$ on $\\overline{AB}$, $E$ on $\\overline{AC}$. $AD = 4$, $DB = 6$, $AE = 5$. Find $EC$.",steps:[["\\dfrac{AD}{DB} = \\dfrac{AE}{EC}","Triangle Proportionality Theorem."],["\\dfrac46 = \\dfrac{5}{EC} \\Rightarrow EC = 7.5","Cross-multiply."]]},
+   {tag:"Example 3 · Angle bisector",q:"In $\\triangle ABC$, $\\overline{AD}$ bisects $\\angle A$ with $D$ on $\\overline{BC}$. $AB = 9$, $AC = 6$, $BC = 10$. Find $BD$.",steps:[["\\dfrac{BD}{DC} = \\dfrac{AB}{AC} = \\dfrac96 = \\dfrac32","Triangle Angle Bisector Theorem."],["BD = \\tfrac{3}{5} \\cdot 10 = 6","Split $10$ in the ratio $3:2$."]]}]}
+ },
+ ch8:{
+  special:{cc:"G-SRT.8",more:[
+   {tag:"Example 2 · Test level",q:"A $30$-$60$-$90$ triangle has hypotenuse $14$. Find both legs.",steps:[["\\text{short leg} = \\tfrac12 \\cdot 14 = 7","Across from $30^\\circ$."],["\\text{long leg} = 7\\sqrt3","Across from $60^\\circ$: short leg $\\times \\sqrt3$."]]},
+   {tag:"Example 3 · Application",q:"A $10$-ft ladder leans against a wall with its foot $6$ ft from the wall. How high does it reach?",steps:[["6^2 + h^2 = 10^2","The ladder is the hypotenuse."],["h^2 = 64 \\Rightarrow h = 8 \\text{ ft}","Solve."]]}]},
+  simrt:{cc:"G-SRT.4, G-SRT.5",more:[
+   {tag:"Example 2 · Test level",q:"The altitude to the hypotenuse splits it into segments $4$ and $9$. Find the altitude.",steps:[["h^2 = 4 \\cdot 9","The altitude is the geometric mean of the two segments."],["h = 6","Square root."]]},
+   {tag:"Example 3 · Prove the Pythagorean Theorem",q:"Use the three similar triangles to explain $a^2 + b^2 = c^2$.",steps:[["a^2 = c \\cdot x,\\ b^2 = c \\cdot y","Each leg is the geometric mean of the hypotenuse and its adjacent segment."],["a^2 + b^2 = c(x + y)","Add."],["x + y = c \\Rightarrow a^2 + b^2 = c^2","The two segments make the whole hypotenuse."]],note:"This is one of the Common Core proofs of the Pythagorean Theorem (G-SRT.4)."}]},
+  trig:{cc:"G-SRT.6, G-SRT.8",more:[
+   {tag:"Example 2 · Test level",q:"In right $\\triangle ABC$ ($\\angle C = 90^\\circ$), $\\angle A = 35^\\circ$ and the hypotenuse is $20$. Find the side opposite $A$.",steps:[["\\sin 35^\\circ = \\dfrac{x}{20}","Opposite and hypotenuse: sine."],["x = 20 \\sin 35^\\circ \\approx 11.5","Calculator in degrees."]]},
+   {tag:"Example 3 · Why ratios work",q:"Why is $\\sin 35^\\circ$ the same in every right triangle with a $35^\\circ$ angle?",steps:[["\\text{All such triangles are similar (AA)}","They share a right angle and a $35^\\circ$ angle."],["\\text{Similar} \\Rightarrow \\text{same side ratios}","Scaling changes lengths, not ratios."]],note:"Trig ratios are properties of the <b>angle</b>, which is why we can make tables and calculator buttons for them (G-SRT.6)."}]},
+  app:{cc:"G-SRT.8, G-MG.1",more:[
+   {tag:"Example 2 · Test level",q:"From $50$ m away, the angle of elevation to the top of a building is $40^\\circ$. How tall is it?",steps:[["\\tan 40^\\circ = \\dfrac{h}{50}","Opposite over adjacent."],["h = 50 \\tan 40^\\circ \\approx 42.0 \\text{ m}","Solve."]]},
+   {tag:"Example 3 · Find the angle",q:"A ramp rises $1.5$ ft over a horizontal run of $18$ ft. Find its angle with the ground.",steps:[["\\tan\\theta = \\dfrac{1.5}{18}","Rise over run."],["\\theta = \\tan^{-1}(0.0833) \\approx 4.8^\\circ","Inverse tangent."]]}]},
+  laws:{cc:"G-SRT.10, G-SRT.11",more:[
+   {tag:"Example 2 · Law of Sines",q:"In $\\triangle ABC$, $\\angle A = 40^\\circ$, $\\angle B = 60^\\circ$, $a = 10$. Find $b$.",steps:[["\\dfrac{a}{\\sin A} = \\dfrac{b}{\\sin B}","Law of Sines."],["b = \\dfrac{10 \\sin 60^\\circ}{\\sin 40^\\circ} \\approx 13.5","Solve."]]},
+   {tag:"Example 3 · Law of Cosines",q:"Two sides are $8$ and $11$ with a $70^\\circ$ angle between them. Find the third side.",steps:[["c^2 = 8^2 + 11^2 - 2(8)(11)\\cos 70^\\circ","Law of Cosines (two sides and the included angle)."],["c^2 \\approx 185 - 60.2 = 124.8","Compute."],["c \\approx 11.2","Square root."]]}]}
+ }
+};
+Object.entries(LESSON_PLUS_C).forEach(([cid,M])=>{ const c=CHAPTERS.find(x=>x.id===cid); if(!c) return;
+  c.topics.forEach(t=>{ const x=M[t.id]; if(!x) return; if(x.cc&&!t.cc) t.cc=x.cc; if(x.more) t.lesson.more=x.more; }); });
+
+const LESSON_PLUS_D={
+ ch9:{
+  tr:{cc:"G-CO.2, G-CO.4, G-CO.5",more:[
+   {tag:"Example 2 · Test level",q:"Translate $\\triangle ABC$ with $A(1, 2)$, $B(4, 2)$, $C(2, 5)$ by $(x, y) \\to (x - 3, y + 1)$.",steps:[["A' = (-2, 3)","Subtract 3 from $x$, add 1 to $y$."],["B' = (1, 3),\\ C' = (-1, 6)","Same rule for every vertex."]]},
+   {tag:"Example 3 · Reflect over y = x",q:"Reflect $P(5, -2)$ over the line $y = x$, then over the $x$-axis.",steps:[["(x, y) \\to (y, x):\\ (-2, 5)","Over $y = x$, swap the coordinates."],["(x, y) \\to (x, -y):\\ (-2, -5)","Over the $x$-axis, flip the sign of $y$."]]}]},
+  rot:{cc:"G-CO.2, G-CO.5, G-SRT.1",more:[
+   {tag:"Example 2 · Test level",q:"Rotate $P(3, -4)$ by $90^\\circ$ counterclockwise about the origin.",steps:[["(x, y) \\to (-y, x)","The rule for $90^\\circ$ counterclockwise."],["P' = (4, 3)","Check: both are $5$ from the origin."]]},
+   {tag:"Example 3 · Dilation",q:"Dilate $\\overline{AB}$ with $A(2, 1)$, $B(4, 5)$ by $k = 3$ centered at the origin. What happens to its length and slope?",steps:[["A' = (6, 3),\\ B' = (12, 15)","Multiply each coordinate by 3."],["AB = \\sqrt{20},\\ A'B' = \\sqrt{180} = 3\\sqrt{20}","Length is multiplied by $k$."],["m = 2 \\text{ for both}","A dilation keeps lines parallel to the original (G-SRT.1)."]]}]},
+  sym:{cc:"G-CO.3, G-CO.5",more:[
+   {tag:"Example 2 · Test level",q:"Describe all rotations that map a regular hexagon onto itself.",steps:[["360^\\circ \\div 6 = 60^\\circ","The smallest turn that works."],["60^\\circ, 120^\\circ, 180^\\circ, 240^\\circ, 300^\\circ","All multiples of $60^\\circ$ (plus $360^\\circ$)."]]},
+   {tag:"Example 3 · Two reflections",q:"Reflect a point over line $\\ell$, then over line $m$, where $\\ell \\parallel m$ and the lines are $4$ units apart. What single motion is this?",steps:[["\\text{Two reflections over parallel lines}","Each flip reverses orientation, two flips restore it."],["\\text{A translation of } 2 \\cdot 4 = 8 \\text{ units}","Perpendicular to the lines, twice the gap."]],note:"Over <b>intersecting</b> lines, two reflections make a rotation by twice the angle between the lines."}]},
+  cst:{cc:"G-SRT.2, G-CO.6",more:[
+   {tag:"Example 2 · Test level",q:"$\\triangle ABC$ is reflected over the $y$-axis and then dilated by $k = 2$. Is the image congruent or similar to $\\triangle ABC$?",steps:[["\\text{Reflection: rigid}","Keeps size and shape."],["\\text{Dilation by 2: doubles lengths}","Keeps shape, changes size."],["\\text{Similar, not congruent}","A dilation in the sequence means similar."]]},
+   {tag:"Example 3 · Similarity by motions",q:"$\\triangle ABC$ with $A(0,0)$, $B(2,0)$, $C(0,1)$ and $\\triangle DEF$ with $D(3,1)$, $E(9,1)$, $F(3,4)$. Show they are similar.",steps:[["\\text{Dilate by } k = 3 \\text{ (center origin)}: (0,0), (6,0), (0,3)","Sides become $3$ times as long."],["\\text{Translate } (x, y) \\to (x + 3, y + 1)","Lands exactly on $D, E, F$."],["\\text{Dilation + rigid motion} \\Rightarrow \\triangle ABC \\sim \\triangle DEF","That is the definition of similarity."]]}]}
+ },
+ ch10:{
+  seg:{cc:"G-C.2, G-C.4",more:[
+   {tag:"Example 2 · Test level",q:"$\\overline{PA}$ is tangent to circle $O$ at $A$. $OA = 5$ and $OP = 13$. Find $PA$.",steps:[["\\overline{OA} \\perp \\overline{PA}","A tangent is perpendicular to the radius at the point of tangency."],["PA = \\sqrt{13^2 - 5^2} = 12","Pythagorean Theorem."]]},
+   {tag:"Example 3 · Two tangents",q:"From point $P$, two tangents touch a circle at $A$ and $B$. $PA = 3x + 4$ and $PB = 5x - 6$. Find $PA$.",steps:[["PA = PB","Tangent segments from the same outside point are congruent."],["3x + 4 = 5x - 6 \\Rightarrow x = 5","Solve."],["PA = 19","Plug in."]]}]},
+  arcs:{cc:"G-C.2",more:[
+   {tag:"Example 2 · Test level",q:"An inscribed angle intercepts an arc of $110^\\circ$. Find the inscribed angle and the central angle on the same arc.",steps:[["\\text{central angle} = 110^\\circ","A central angle equals its arc."],["\\text{inscribed angle} = \\tfrac12 \\cdot 110 = 55^\\circ","An inscribed angle is half its arc."]]},
+   {tag:"Example 3 · Same arc",q:"Two inscribed angles intercept the same arc. One is $(4x - 2)^\\circ$ and the other $(2x + 18)^\\circ$. Find them.",steps:[["4x - 2 = 2x + 18","Inscribed angles on the same arc are congruent."],["x = 10 \\Rightarrow 38^\\circ","Both angles."]]}]},
+  cang:{cc:"G-C.2",more:[
+   {tag:"Example 2 · Test level",q:"Two chords cross inside a circle, cutting arcs of $80^\\circ$ and $40^\\circ$ (the arcs across from the angle). Find the angle.",steps:[["\\theta = \\tfrac12(80 + 40)","Inside the circle: half the <b>sum</b> of the arcs."],["\\theta = 60^\\circ","Done."]]},
+   {tag:"Example 3 · Outside",q:"Two secants from an outside point intercept arcs of $130^\\circ$ and $50^\\circ$. Find the angle at the outside point.",steps:[["\\theta = \\tfrac12(130 - 50)","Outside the circle: half the <b>difference</b>."],["\\theta = 40^\\circ","Done."]]}]},
+  cseg:{cc:"G-C.2",more:[
+   {tag:"Example 2 · Test level",q:"Two chords cross: one is split into $4$ and $9$, the other into $6$ and $x$. Find $x$.",steps:[["4 \\cdot 9 = 6 \\cdot x","Products of the chord pieces are equal."],["x = 6","Solve."]]},
+   {tag:"Example 3 · Tangent and secant",q:"From $P$, a tangent of length $12$ and a secant with outside part $8$ and whole length $8 + x$. Find $x$.",steps:[["12^2 = 8(8 + x)","Tangent² = outside × whole."],["144 = 64 + 8x \\Rightarrow x = 10","Solve."]]}]},
+  eq:{cc:"G-GPE.1, G-C.5",more:[
+   {tag:"Example 2 · Test level",q:"Write the equation of the circle with center $(-2, 5)$ through $(1, 9)$.",steps:[["r = \\sqrt{3^2 + 4^2} = 5","Distance from the center to the point."],["(x + 2)^2 + (y - 5)^2 = 25","Plug into $(x - h)^2 + (y - k)^2 = r^2$."]]},
+   {tag:"Example 3 · Arc length and sector",q:"A circle has radius $9$. Find the arc length and the sector area for a $40^\\circ$ central angle.",steps:[["s = \\tfrac{40}{360} \\cdot 2\\pi(9) = 2\\pi","The arc is $\\tfrac19$ of the circumference."],["A = \\tfrac{40}{360} \\cdot \\pi(9)^2 = 9\\pi","The sector is $\\tfrac19$ of the area."]]}]}
+ },
+ ch11:{
+  poly:{cc:"G-GPE.7, G-MG.1",more:[
+   {tag:"Example 2 · Test level",q:"A trapezoid has bases $8$ and $14$ and height $5$. Find its area.",steps:[["A = \\tfrac12(b_1 + b_2)h","Average base times height."],["A = \\tfrac12(22)(5) = 55","Done."]]},
+   {tag:"Example 3 · Rhombus",q:"A rhombus has diagonals $12$ and $16$. Find its area and side.",steps:[["A = \\tfrac12 d_1 d_2 = 96","Half the product of the diagonals."],["s = \\sqrt{6^2 + 8^2} = 10","Half-diagonals are the legs of a right triangle."]]}]},
+  circ:{cc:"G-GMD.1, G-MG.1",more:[
+   {tag:"Example 2 · Test level",q:"A square with side $10$ has a circle inscribed in it. Find the shaded area outside the circle.",steps:[["\\text{square} = 100,\\ \\text{circle} = \\pi(5)^2 = 25\\pi","The circle's diameter is the side."],["100 - 25\\pi \\approx 21.5","Subtract."]]},
+   {tag:"Example 3 · Why πr²",q:"Explain the area formula $A = \\pi r^2$ by cutting a circle into thin wedges.",steps:[["\\text{Rearrange the wedges into a near-rectangle}","Alternate them point-up, point-down."],["\\text{width} \\approx \\tfrac12 \\cdot 2\\pi r = \\pi r,\\ \\text{height} = r","Half the circumference on top, half on the bottom."],["A = \\pi r \\cdot r = \\pi r^2","The thinner the wedges, the closer to a rectangle (G-GMD.1)."]]}]},
+  reg:{cc:"G-MG.1, G-SRT.2",more:[
+   {tag:"Example 2 · Test level",q:"A regular hexagon has side $6$. Find its area.",steps:[["\\text{6 equilateral triangles of side } 6","From the center to each vertex."],["\\text{each} = \\tfrac{\\sqrt3}{4} \\cdot 36 = 9\\sqrt3","Equilateral triangle area."],["A = 54\\sqrt3 \\approx 93.5","Six of them."]]},
+   {tag:"Example 3 · Scale",q:"Two similar pentagons have perimeters $20$ and $30$. The smaller has area $48$. Find the larger area.",steps:[["k = \\tfrac{30}{20} = \\tfrac32","Perimeter ratio = scale factor."],["48 \\cdot \\left(\\tfrac32\\right)^2 = 108","Areas scale by $k^2$."]]}]}
+ },
+ ch12:{
+  xsec:{cc:"G-GMD.4",more:[
+   {tag:"Example 2 · Test level",q:"Describe the cross section when a plane slices a cylinder (a) parallel to its base, (b) perpendicular to its base through the axis.",steps:[["(a)\\ \\text{a circle}","Same as the base."],["(b)\\ \\text{a rectangle}","Height × diameter."]]},
+   {tag:"Example 3 · Solid of revolution",q:"A right triangle with legs $3$ (vertical) and $4$ (horizontal) spins around its vertical leg. What solid is formed, and what is its volume?",steps:[["\\text{a cone: } r = 4,\\ h = 3","The horizontal leg sweeps the base."],["V = \\tfrac13 \\pi (4)^2 (3) = 16\\pi","Cone volume."]]}]},
+  prism:{cc:"G-GMD.3, G-MG.2",more:[
+   {tag:"Example 2 · Test level",q:"Find the volume and surface area of a cylinder with $r = 3$ and $h = 10$.",steps:[["V = \\pi(3)^2(10) = 90\\pi","Base area times height."],["S = 2\\pi(3)^2 + 2\\pi(3)(10) = 78\\pi","Two circles plus the label."]]},
+   {tag:"Example 3 · Design",q:"A box must hold $72$ in³ with a square base $6$ in wide. How tall is it, and how much cardboard (surface area) does it use?",steps:[["h = 72 \\div 36 = 2 \\text{ in}","Volume ÷ base area."],["S = 2(36) + 4(6 \\cdot 2) = 120 \\text{ in}^2","Top, bottom and four sides."]]}]},
+  pyr:{cc:"G-GMD.1, G-GMD.3",more:[
+   {tag:"Example 2 · Test level",q:"A cone has radius $5$ and slant height $13$. Find its height and volume.",steps:[["h = \\sqrt{13^2 - 5^2} = 12","Radius, height, slant height form a right triangle."],["V = \\tfrac13 \\pi (5)^2 (12) = 100\\pi","Cone volume."]]},
+   {tag:"Example 3 · Why one third",q:"A pyramid and a prism have the same base and height. How do their volumes compare?",steps:[["\\text{Three pyramids fill the prism}","A cube splits into 3 congruent pyramids that meet at one corner."],["V_{\\text{pyramid}} = \\tfrac13 B h","One third of the prism."]]}]},
+  sph:{cc:"G-GMD.3, G-SRT.2",more:[
+   {tag:"Example 2 · Test level",q:"Find the volume and surface area of a sphere with radius $6$.",steps:[["V = \\tfrac43 \\pi (6)^3 = 288\\pi","Sphere volume."],["S = 4\\pi(6)^2 = 144\\pi","Sphere surface area."]]},
+   {tag:"Example 3 · Similar solids",q:"Two similar cylinders have heights $4$ and $10$. The small one holds $32$ mL. How much does the large one hold?",steps:[["k = \\tfrac{10}{4} = \\tfrac52","Scale factor."],["32 \\cdot \\left(\\tfrac52\\right)^3 = 500 \\text{ mL}","Volumes scale by $k^3$."]]}]}
+ },
+ ch13:{
+  basic:{cc:"S-CP.1",more:[
+   {tag:"Example 2 · Test level",q:"A bag has $4$ red, $5$ blue and $3$ green marbles. Find $P(\\text{not blue})$.",steps:[["P(\\text{blue}) = \\tfrac{5}{12}","5 blue out of 12."],["P(\\text{not blue}) = 1 - \\tfrac{5}{12} = \\tfrac{7}{12}","Complement."]]},
+   {tag:"Example 3 · Geometric probability",q:"A dart lands at a random point on a $10 \\times 10$ board with a circle of radius $3$ in the middle. Find $P(\\text{inside the circle})$.",steps:[["\\dfrac{\\pi(3)^2}{100} = \\dfrac{9\\pi}{100}","Favorable area over total area."],["\\approx 0.28","About $28\\%$."]]}]},
+  twt:{cc:"S-CP.4, S-CP.6",more:[
+   {tag:"Example 2 · Test level",q:"Of $100$ students, $40$ play sports; $25$ of those also play music. Find $P(\\text{music} \\mid \\text{sports})$.",steps:[["\\text{Only look at the sports row: } 40 \\text{ students}","“Given sports” shrinks the group."],["\\tfrac{25}{40} = 0.625","Music among them."]]},
+   {tag:"Example 3 · Independence",q:"In a school, $P(A) = 0.5$, $P(B) = 0.3$, and $P(A \\text{ and } B) = 0.15$. Are $A$ and $B$ independent?",steps:[["P(A) \\cdot P(B) = 0.15","Multiply."],["= P(A \\text{ and } B) \\Rightarrow \\text{independent}","Knowing $B$ does not change the chance of $A$ (S-CP.2)."]]}]},
+  comp:{cc:"S-CP.2, S-CP.3, S-CP.7",more:[
+   {tag:"Example 2 · Addition rule",q:"$P(A) = 0.4$, $P(B) = 0.5$, $P(A \\text{ and } B) = 0.2$. Find $P(A \\text{ or } B)$.",steps:[["P(A \\text{ or } B) = P(A) + P(B) - P(A \\text{ and } B)","Don't count the overlap twice."],["0.4 + 0.5 - 0.2 = 0.7","Done."]]},
+   {tag:"Example 3 · Without replacement",q:"Draw two cards from a standard deck without replacement. Find $P(\\text{both aces})$.",steps:[["\\tfrac{4}{52} \\cdot \\tfrac{3}{51}","The second draw depends on the first."],["= \\tfrac{12}{2652} = \\tfrac{1}{221}","Simplify."]]}]},
+  count:{cc:"S-CP.9",more:[
+   {tag:"Example 2 · Test level",q:"How many ways can a club of $10$ choose a president, vice president and treasurer?",steps:[["\\text{Order matters} \\Rightarrow {}_{10}P_3","Different jobs."],["10 \\cdot 9 \\cdot 8 = 720","Done."]]},
+   {tag:"Example 3 · Probability with counting",q:"A committee of $3$ is chosen at random from $6$ girls and $4$ boys. Find $P(\\text{all girls})$.",steps:[["\\text{favorable: } {}_6C_3 = 20","Order does not matter."],["\\text{total: } {}_{10}C_3 = 120","Any 3 of the 10."],["P = \\tfrac{20}{120} = \\tfrac16","Favorable over total."]]}]}
+ }
+};
+Object.entries(LESSON_PLUS_D).forEach(([cid,M])=>{ const c=CHAPTERS.find(x=>x.id===cid); if(!c) return;
+  c.topics.forEach(t=>{ const x=M[t.id]; if(!x) return; if(x.cc&&!t.cc) t.cc=x.cc; if(x.more) t.lesson.more=x.more; }); });
+
 CHAPTERS.forEach(c=>{ const k=t=>{ const m=/^\d+\.(\d+) /.exec(t.title); return m?+m[1]:99; }; c.topics.sort((x,y)=>k(x)-k(y)); });
 CHAPTERS.sort((a,b)=>Number(a.id.slice(2))-Number(b.id.slice(2)));
 const ALLCH=[[1,"Foundations of Geometry","ch1"],[2,"Reasoning & Proof","ch2"],[3,"Parallel & Perpendicular Lines","ch3"],[4,"Congruent Triangles","ch4"],[5,"Relationships Within Triangles","ch5"],[6,"Polygons & Quadrilaterals","ch6"],[7,"Similarity","ch7"],[8,"Right Triangles & Trigonometry","ch8"],[9,"Transformations","ch9"],[10,"Circles","ch10"],[11,"Area","ch11"],[12,"Surface Area & Volume","ch12"],[13,"Probability","ch13"]];

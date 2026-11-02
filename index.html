@@ -1113,7 +1113,10 @@ function updateAcct(){
   else if (adult) { a.textContent = "Dashboard"; a.href = "#/dashboard"; }
   else { a.textContent = "Sign in"; a.href = "#/login"; }
 }
-function modal(kids){ const w = h("div", { class:"modal", onclick:e => { if (e.target === w) w.remove(); } }, h("div", { class:"card" }, kids)); document.body.append(w); return w; }
+function modal(kids){   // closes on a click outside the box, but not when a drag (e.g. selecting the PIN) ends outside it
+  let downOut = false;
+  const w = h("div", { class:"modal", onmousedown:e => { downOut = e.target === w; }, onclick:e => { if (e.target === w && downOut) w.remove(); downOut = false; } }, h("div", { class:"card" }, kids));
+  document.body.append(w); return w; }
 const pctOf = (s, t) => t ? Math.round(100 * s / t) : 0;
 const when = iso => new Date(iso).toLocaleDateString("en-US", { month:"short", day:"numeric" }) + " " + new Date(iso).toLocaleTimeString("en-US", { hour:"numeric", minute:"2-digit" });
 
@@ -1398,7 +1401,7 @@ async function ensureTeacher(){
   if (data) adultProfile = data;
   return !!(adultProfile && adultProfile.is_teacher);
 }
-function pinInput(){ return h("input", { class:"fin", inputmode:"numeric", maxlength:"4", pattern:"[0-9]*", autocomplete:"off", placeholder:"4 digits", style:"max-width:140px" }); }
+function pinInput(){ return h("input", { class:"fin", inputmode:"numeric", maxlength:"4", pattern:"[0-9]*", autocomplete:"off", placeholder:"4 digits", style:"max-width:140px", onfocus:e => e.currentTarget.select() }); }
 const randPin = () => String(Math.floor(Math.random() * 10000)).padStart(4, "0");
 async function pageDashboard(v){
   if (!adult) { location.hash = "#/login"; return; }

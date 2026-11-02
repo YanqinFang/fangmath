@@ -1,0 +1,226 @@
+% =====================================================================
+%  FangMath — Algebra 2, 10-1 Parabolas (Focus & Directrix)
+%  One source file, two PDFs:
+%    pdflatex -jobname=Alg2_10-1_Parabolas_Worksheet Alg2_10-1_Parabolas.tex
+%    pdflatex -jobname=Alg2_10-1_Parabolas_Key "\def\iskey{1}\input{Alg2_10-1_Parabolas.tex}"
+% =====================================================================
+\documentclass[11pt,letterpaper]{article}
+\usepackage[margin=0.8in,top=0.85in,bottom=0.8in]{geometry}
+\usepackage{mathpazo}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath,amssymb}
+\usepackage{xcolor}
+\usepackage{enumitem}
+\usepackage{multicol}
+\usepackage{booktabs}
+\usepackage{needspace}
+\usepackage{fancyhdr}
+\usepackage[most]{tcolorbox}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.17}
+\usetikzlibrary{arrows.meta}
+
+\definecolor{FangBlue}{HTML}{1F4E79}
+\definecolor{FangTeal}{HTML}{0F7C7C}
+\definecolor{FangGold}{HTML}{C9962B}
+\definecolor{FangRed}{HTML}{B3261E}
+\definecolor{FangGreen}{HTML}{2E8B57}
+\definecolor{FangPurple}{HTML}{6A4BD8}
+\definecolor{Soft}{HTML}{F4F7FB}
+% black-and-white version: pdflatex with \def\isbw{1} before \input
+\ifdefined\isbw
+\definecolor{FangBlue}{HTML}{000000}\definecolor{FangTeal}{HTML}{000000}\definecolor{FangGold}{HTML}{555555}
+\definecolor{FangRed}{HTML}{000000}\definecolor{FangGreen}{HTML}{000000}\definecolor{FangPurple}{HTML}{000000}\definecolor{Soft}{HTML}{FFFFFF}
+\fi
+
+\newif\ifkey
+\ifdefined\iskey \keytrue \else \keyfalse \fi
+
+\pagestyle{fancy}\fancyhf{}
+\renewcommand{\headrulewidth}{0.4pt}
+\fancyhead[L]{\small\color{FangBlue}\textbf{FangMath} \,|\, Algebra 2 \,·\, 10-1 Parabolas: Focus \& Directrix}
+\fancyhead[R]{\small\ifkey\textcolor{FangRed}{\textbf{ANSWER KEY}}\else Name: \underline{\hspace{4.2cm}}\fi}
+\fancyfoot[C]{\small\thepage}
+\fancyfoot[R]{\scriptsize\color{gray}fangmath.com}
+\setlength{\headheight}{14pt}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{4pt}
+
+% ---------- boxes ----------
+\newtcolorbox{idea}[1][]{colback=Soft,colframe=FangBlue,boxrule=0.8pt,arc=3pt,left=8pt,right=8pt,top=6pt,bottom=6pt,
+  fonttitle=\bfseries,coltitle=white,colbacktitle=FangBlue,title={#1}}
+\newtcolorbox{example}[1][]{colback=white,colframe=FangTeal,boxrule=0.6pt,arc=3pt,left=8pt,right=8pt,top=5pt,bottom=5pt,
+  fonttitle=\bfseries,coltitle=FangTeal,colbacktitle=white,title={#1},attach boxed title to top left={xshift=8pt,yshift=-7pt},boxed title style={boxrule=0pt,colframe=white}, enhanced}
+\newtcolorbox{warn}{colback=FangRed!5,colframe=FangRed,boxrule=0.6pt,arc=3pt,left=8pt,right=8pt,top=4pt,bottom=4pt,leftrule=3pt}
+\newtcolorbox{simple}{colback=FangGold!10,colframe=FangGold,boxrule=0.6pt,arc=3pt,left=8pt,right=8pt,top=4pt,bottom=4pt,leftrule=3pt}
+\newtcolorbox{sol}{colback=FangGreen!6,colframe=FangGreen,boxrule=0.5pt,arc=2pt,left=6pt,right=6pt,top=3pt,bottom=3pt,breakable}
+
+\newcommand{\badge}[2]{\tcbox[on line,colback=#1,colframe=#1,coltext=white,boxrule=0pt,arc=6pt,left=4pt,right=4pt,top=1pt,bottom=1pt,fontupper=\scriptsize\bfseries]{#2}}
+\newcommand{\easy}{\badge{FangGreen}{EASY}}
+\newcommand{\medium}{\badge{FangTeal}{MEDIUM}}
+\newcommand{\hard}{\badge{FangRed}{HARD}}
+\newcommand{\finv}{f^{-1}}
+\newcommand{\work}[2][]{\ifkey\begin{sol}#2\end{sol}\else\vspace*{#1}\fi}
+\newcommand{\np}[1][6cm]{\needspace{#1}}
+\newcommand{\sect}[2]{\par\needspace{7cm}\medskip{\Large\bfseries\color{FangBlue}\tcbox[on line,colback=FangBlue,colframe=FangBlue,coltext=white,arc=2pt,boxrule=0pt,left=5pt,right=5pt,top=1pt,bottom=1pt]{#1}\ #2}\par\smallskip}
+
+\setlist[enumerate,1]{label=\textbf{\color{FangBlue}\arabic*.},leftmargin=*,itemsep=6pt}
+\newcommand{\type}[3]{\par\needspace{5cm}\medskip{\Large\bfseries\color{FangBlue}\tcbox[on line,colback=FangBlue,colframe=FangBlue,coltext=white,arc=2pt,boxrule=0pt,left=5pt,right=5pt,top=1pt,bottom=1pt]{#1}\ #2}\hfill{\large #3}\par\smallskip}
+\newcommand{\minipara}[2]{% #1 = 1 up, 2 down, 3 right, 4 left ; #2 label
+\begin{tikzpicture}[scale=0.55]
+\draw[gray!60,-{Stealth}] (-2.2,0)--(2.2,0);\draw[gray!60,-{Stealth}] (0,-2.2)--(0,2.2);
+\ifcase#1\or
+ \draw[FangBlue,very thick,domain=-2:2,samples=40] plot(\x,{\x*\x/2});\fill[FangRed] (0,0.5) circle(2.5pt);\draw[FangRed,dashed] (-2,-0.5)--(2,-0.5);
+\or
+ \draw[FangBlue,very thick,domain=-2:2,samples=40] plot(\x,{-\x*\x/2});\fill[FangRed] (0,-0.5) circle(2.5pt);\draw[FangRed,dashed] (-2,0.5)--(2,0.5);
+\or
+ \draw[FangBlue,very thick,domain=-2:2,samples=40] plot({\x*\x/2},\x);\fill[FangRed] (0.5,0) circle(2.5pt);\draw[FangRed,dashed] (-0.5,-2)--(-0.5,2);
+\or
+ \draw[FangBlue,very thick,domain=-2:2,samples=40] plot({-\x*\x/2},\x);\fill[FangRed] (-0.5,0) circle(2.5pt);\draw[FangRed,dashed] (0.5,-2)--(0.5,2);
+\fi
+\node[below,font=\small\bfseries] at (0,-2.3){#2};
+\end{tikzpicture}}
+
+\begin{document}
+
+% ======================= TITLE =======================
+\begin{center}
+{\color{FangBlue}\Huge\bfseries Parabolas: Focus \& Directrix}\\[2pt]
+{\large Conic Sections --- one parabola, four directions}
+\ifkey\\[3pt]{\color{FangRed}\large\bfseries Answer Key with complete solutions}\fi
+\end{center}
+\vspace{-4pt}
+
+\begin{idea}[The big idea]
+A \textbf{parabola} is every point that is the \textbf{same distance} from a point (the \textbf{focus}) and a line (the \textbf{directrix}).
+The \textbf{vertex} is halfway between them, and $p$ is the distance (with a sign) from the vertex to the focus.
+\begin{center}
+\minipara{1}{opens up}\hfill\minipara{2}{opens down}\hfill\minipara{3}{opens right}\hfill\minipara{4}{opens left}
+\end{center}
+\renewcommand{\arraystretch}{1.5}
+\begin{center}\begin{tabular}{@{}lcccc@{}}
+\toprule
+ & \textbf{Equation} & \textbf{Focus} & \textbf{Directrix} & \textbf{Axis}\\ \midrule
+Up ($p>0$) / Down ($p<0$) & $(x-h)^2 = 4p(y-k)$ & $(h,\ k+p)$ & $y = k-p$ & $x = h$\\
+Right ($p>0$) / Left ($p<0$) & $(y-k)^2 = 4p(x-h)$ & $(h+p,\ k)$ & $x = h-p$ & $y = k$\\
+\bottomrule
+\end{tabular}\end{center}
+\end{idea}
+
+\begin{simple}
+\textbf{Simple case first.} $x^2 = 4y$: here $4p = 4$, so $p = 1$. Vertex $(0,0)$, focus $(0,1)$, directrix $y=-1$.
+Check with the point $(2,1)$ on the curve: distance to the focus is $2$, distance to the line $y=-1$ is $2$. \checkmark
+\end{simple}
+
+\begin{warn}
+\textbf{Watch out:} \textbf{The squared letter tells the direction.} $x^2$ $\Rightarrow$ opens up or down; $y^2$ $\Rightarrow$ opens right or left. Then the sign of $p$ decides which way.
+And $4p$ is not $p$: in $x^2 = 12y$, \ $p = 3$, not $12$.
+\end{warn}
+
+% ======================= WARM-UP =======================
+\type{0}{Warm-Up: Algebra 2 skills you'll need}{\medium}
+{\small These come from earlier Algebra 2 units. Each one shows up again below.}
+\begin{enumerate}
+\item \textbf{Distance formula.} Find the distance between $(-2,5)$ and $(4,-3)$.
+\work[2.4cm]{$\sqrt{(4-(-2))^2+(-3-5)^2}=\sqrt{36+64}=\sqrt{100}=\mathbf{10}$.}
+\item \textbf{Distance formula.} The point $(x,4)$ is $5$ units from $(1,0)$. Find every possible $x$.
+\work[2.8cm]{$(x-1)^2+(4-0)^2=25 \Rightarrow (x-1)^2=9 \Rightarrow x-1=\pm3 \Rightarrow \mathbf{x=4}$ or $\mathbf{x=-2}$.}
+\item \textbf{Completing the square.} Write $y = x^2+6x+5$ in vertex form and give the vertex.
+\work[2.8cm]{$y=(x^2+6x+9)+5-9=\mathbf{(x+3)^2-4}$. \ Vertex $\mathbf{(-3,-4)}$.}
+\item \textbf{Completing the square.} Write $y = 2x^2-8x+5$ in vertex form.
+\work[2.8cm]{$y=2(x^2-4x)+5=2(x^2-4x+4)+5-8=\mathbf{2(x-2)^2-3}$. \ Vertex $(2,-3)$.}
+\item \textbf{Transformations.} Describe $g(x) = -\tfrac12(x+1)^2+4$ compared with $y=x^2$, and give its vertex.
+\work[2.8cm]{Left $1$, up $4$, reflected over the $x$-axis (opens \textbf{down}), vertically compressed by $\tfrac12$. \ Vertex $\mathbf{(-1,4)}$.}
+\item \textbf{Solving quadratics.} Solve $2x^2-3x-5=0$.
+\work[2.6cm]{$(2x-5)(x+1)=0 \Rightarrow \mathbf{x=\tfrac52}$ or $\mathbf{x=-1}$.}
+\item \textbf{Linear--quadratic system.} Solve $y = x^2-2$ and $y = x+4$.
+\work[2.8cm]{$x^2-2=x+4 \Rightarrow x^2-x-6=0 \Rightarrow (x-3)(x+2)=0$. \ $x=3$: $y=7$; \ $x=-2$: $y=2$. \ $\mathbf{(3,7)}$ and $\mathbf{(-2,2)}$.}
+\item \textbf{Inverse functions.} $f(x)=(x-1)^2+2$ for $x\ge1$. Find $f^{-1}(x)$ and its domain. (Its graph is half of a sideways parabola.)
+\work[3cm]{Swap: $x=(y-1)^2+2 \Rightarrow (y-1)^2=x-2 \Rightarrow y-1=\sqrt{x-2}$ (positive root, since $y\ge1$).\par
+$\mathbf{f^{-1}(x)=1+\sqrt{x-2}}$, \ domain $\mathbf{x\ge 2}$.}
+\end{enumerate}
+
+% ======================= TYPE A =======================
+\type{A}{Opens Up \ \ $(x-h)^2 = 4p(y-k)$, \ $p>0$}{}
+\begin{example}[Example \;·\; opens up]
+Find the vertex, focus and directrix of $(x-1)^2 = 4(y+2)$.\par
+Vertex $(h,k)=(1,-2)$. \ $4p=4$, so $p=1$ (positive: opens up). \ Focus $(1,-2+1)=(1,-1)$. \ Directrix $y=-2-1=-3$.
+\end{example}
+\begin{enumerate}[resume]
+\item \easy\ Find the vertex, focus and directrix of $x^2 = 8y$.
+\work[2.6cm]{$4p=8 \Rightarrow p=2$. \ Vertex $\mathbf{(0,0)}$, focus $\mathbf{(0,2)}$, directrix $\mathbf{y=-2}$.}
+\item \easy\ Find the focus and directrix of $x^2 = 12y$.
+\work[2.6cm]{$4p=12 \Rightarrow p=3$. \ Focus $\mathbf{(0,3)}$, directrix $\mathbf{y=-3}$.}
+\item \easy\ Write the equation of the parabola with vertex $(0,0)$ and focus $(0,5)$.
+\work[2.6cm]{Focus above the vertex: opens up, $p=5$. \ $x^2=4(5)y$: \ $\mathbf{x^2=20y}$.}
+\item \medium\ Find the vertex, focus, directrix and axis of symmetry of $(x-2)^2 = 8(y+1)$.
+\work[3cm]{Vertex $\mathbf{(2,-1)}$. \ $4p=8 \Rightarrow p=2$. \ Focus $(2,-1+2)=\mathbf{(2,1)}$. \ Directrix $y=-1-2$: $\mathbf{y=-3}$. \ Axis $\mathbf{x=2}$.}
+\item \hard\ Write $y = \tfrac14x^2 - x + 3$ in the form $(x-h)^2 = 4p(y-k)$. Then find the vertex, focus and directrix.
+\work[3.6cm]{Multiply by 4: $4y = x^2-4x+12 \Rightarrow x^2-4x = 4y-12$.\par
+Complete the square: $x^2-4x+4 = 4y-12+4 \Rightarrow \mathbf{(x-2)^2 = 4(y-2)}$.\par
+Vertex $\mathbf{(2,2)}$, \ $p=1$, \ focus $\mathbf{(2,3)}$, \ directrix $\mathbf{y=1}$. \ (Check: $x=2$ gives $y=1-2+3=2$ \checkmark)}
+\end{enumerate}
+
+% ======================= TYPE B =======================
+\type{B}{Opens Down \ \ $(x-h)^2 = 4p(y-k)$, \ $p<0$}{}
+\begin{example}[Example \;·\; opens down]
+Find the vertex, focus and directrix of $x^2 = -8y$.\par
+$4p=-8$, so $p=-2$ (negative: opens down). \ Vertex $(0,0)$, focus $(0,-2)$, directrix $y=2$ --- the directrix is on the \emph{opposite} side.
+\end{example}
+\begin{enumerate}[resume]
+\item \easy\ Find the vertex, focus and directrix of $x^2 = -16y$.
+\work[2.6cm]{$4p=-16 \Rightarrow p=-4$. \ Vertex $\mathbf{(0,0)}$, focus $\mathbf{(0,-4)}$, directrix $\mathbf{y=4}$.}
+\item \easy\ Find the focus and directrix of $x^2 = -4y$.
+\work[2.6cm]{$4p=-4 \Rightarrow p=-1$. \ Focus $\mathbf{(0,-1)}$, directrix $\mathbf{y=1}$.}
+\item \easy\ Write the equation of the parabola with vertex $(0,0)$ and directrix $y=3$.
+\work[2.6cm]{The directrix is above, so the parabola opens down: $p=-3$. \ $x^2=4(-3)y$: \ $\mathbf{x^2=-12y}$.}
+\item \medium\ Write the equation of the parabola with focus $(1,-2)$ and directrix $y=4$.
+\work[3.2cm]{The vertex is halfway between: $\left(1,\frac{-2+4}{2}\right)=(1,1)$. \ The focus is $3$ below the vertex: $p=-3$.\par
+$\mathbf{(x-1)^2=-12(y-1)}$.}
+\item \hard\ Write $x^2+6x+8y+1=0$ in standard form. Find the vertex, focus and directrix.
+\work[3.6cm]{$x^2+6x=-8y-1 \Rightarrow x^2+6x+9=-8y-1+9=-8y+8 \Rightarrow \mathbf{(x+3)^2=-8(y-1)}$.\par
+Vertex $\mathbf{(-3,1)}$, \ $4p=-8 \Rightarrow p=-2$, \ focus $\mathbf{(-3,-1)}$, \ directrix $\mathbf{y=3}$.}
+\end{enumerate}
+
+% ======================= TYPE C =======================
+\type{C}{Opens Right \ \ $(y-k)^2 = 4p(x-h)$, \ $p>0$}{}
+\begin{example}[Example \;·\; opens right]
+Find the vertex, focus and directrix of $y^2 = 12x$.\par
+$y$ is squared: it opens sideways. \ $4p=12$, so $p=3$ (positive: right). \ Vertex $(0,0)$, focus $(3,0)$, directrix $x=-3$ (a \emph{vertical} line).
+\end{example}
+\begin{enumerate}[resume]
+\item \easy\ Find the vertex, focus and directrix of $y^2 = 4x$.
+\work[2.6cm]{$4p=4 \Rightarrow p=1$. \ Vertex $\mathbf{(0,0)}$, focus $\mathbf{(1,0)}$, directrix $\mathbf{x=-1}$.}
+\item \easy\ Find the focus and directrix of $y^2 = 20x$.
+\work[2.6cm]{$4p=20 \Rightarrow p=5$. \ Focus $\mathbf{(5,0)}$, directrix $\mathbf{x=-5}$.}
+\item \easy\ Write the equation of the parabola with vertex $(0,0)$ and focus $(2,0)$.
+\work[2.6cm]{Focus to the right: $y^2$ form, $p=2$. \ $\mathbf{y^2=8x}$.}
+\item \medium\ Find the vertex, focus, directrix and axis of symmetry of $(y-3)^2 = 12(x+2)$.
+\work[3cm]{Vertex $\mathbf{(-2,3)}$. \ $4p=12 \Rightarrow p=3$. \ Focus $(-2+3,\ 3)=\mathbf{(1,3)}$. \ Directrix $x=-2-3$: $\mathbf{x=-5}$. \ Axis $\mathbf{y=3}$.}
+\item \hard\ \textbf{Satellite dish.} A dish's cross-section is a parabola with vertex at the origin, opening right. The dish is $24$ inches wide and $4$ inches deep. How far from the vertex should the receiver (at the focus) be placed?
+\work[3.8cm]{The rim is at $x=4$ (depth), $y=\pm12$ (half the width), so $(4,12)$ is on $y^2=4px$.\par
+$144=4p(4)=16p \Rightarrow p=9$. \ The focus is $(9,0)$: the receiver goes \textbf{9 inches} from the vertex.}
+\end{enumerate}
+
+% ======================= TYPE D =======================
+\type{D}{Opens Left \ \ $(y-k)^2 = 4p(x-h)$, \ $p<0$}{}
+\begin{example}[Example \;·\; opens left]
+Find the vertex, focus and directrix of $(y+1)^2 = -4(x-2)$.\par
+Vertex $(2,-1)$. \ $4p=-4$, so $p=-1$ (negative: left). \ Focus $(2-1,\ -1)=(1,-1)$. \ Directrix $x=2+1=3$.
+\end{example}
+\begin{enumerate}[resume]
+\item \easy\ Find the vertex, focus and directrix of $y^2 = -8x$.
+\work[2.6cm]{$4p=-8 \Rightarrow p=-2$. \ Vertex $\mathbf{(0,0)}$, focus $\mathbf{(-2,0)}$, directrix $\mathbf{x=2}$.}
+\item \easy\ Find the focus and directrix of $y^2 = -24x$.
+\work[2.6cm]{$4p=-24 \Rightarrow p=-6$. \ Focus $\mathbf{(-6,0)}$, directrix $\mathbf{x=6}$.}
+\item \easy\ Write the equation of the parabola with vertex $(0,0)$ and directrix $x=7$.
+\work[2.6cm]{The directrix is on the right, so it opens left: $p=-7$. \ $\mathbf{y^2=-28x}$.}
+\item \medium\ Write the equation of the parabola with vertex $(3,-1)$ and focus $(1,-1)$. Give its directrix.
+\work[3cm]{The focus is $2$ to the left: opens left, $p=-2$. \ $\mathbf{(y+1)^2=-8(x-3)}$. \ Directrix $x=3+2$: $\mathbf{x=5}$.}
+\item \hard\ Write $y^2-4y+4x+12=0$ in standard form. Find the vertex, focus and directrix, then check one point with the definition.
+\work[4.2cm]{$y^2-4y=-4x-12 \Rightarrow y^2-4y+4=-4x-8 \Rightarrow \mathbf{(y-2)^2=-4(x+2)}$.\par
+Vertex $\mathbf{(-2,2)}$, \ $p=-1$, \ focus $\mathbf{(-3,2)}$, \ directrix $\mathbf{x=-1}$.\par
+Check: $x=-3$ gives $(y-2)^2=4$, so $(-3,4)$ is on it. Distance to the focus: $2$; to the line $x=-1$: $2$. \checkmark}
+\end{enumerate}
+
+\end{document}

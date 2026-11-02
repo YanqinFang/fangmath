@@ -249,6 +249,7 @@
       ch2: [{ t: "2-1 Domain & Range", ws: "../materials/algebra2/ch02/Alg2_2-1_Domain_Range_Worksheet.pdf", key: "../materials/algebra2/ch02/Alg2_2-1_Domain_Range_Key.pdf", bw: 1 }],
       ch4: [{ t: "4-1 Quadratic Functions & Transformations (notes)", ws: "../materials/algebra2/ch04/Alg2_4-1_Notes.pdf", key: "../materials/algebra2/ch04/Alg2_4-1_Notes_Key.pdf" }],
       ch6: [{ t: "6-7 Inverse Relations & Functions", ws: "../materials/algebra2/ch06/Alg2_6-7_Inverse_Functions_Worksheet.pdf", key: "../materials/algebra2/ch06/Alg2_6-7_Inverse_Functions_Key.pdf", bw: 1 }],
+      ch10: [{ t: "10-1 Parabolas: Focus & Directrix", ws: "../materials/algebra2/ch10/Alg2_10-1_Parabolas_Worksheet.pdf", key: "../materials/algebra2/ch10/Alg2_10-1_Parabolas_Key.pdf", bw: 1 }],
     },
   };
   function drawHandouts() {

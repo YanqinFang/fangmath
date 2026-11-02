@@ -46,5 +46,11 @@ window.FM_HANDOUTS = {
     "1.4": "../materials/geometry/ch01/Geo_1-4_Perimeter_Area",
     "1.5": "../materials/geometry/ch01/Geo_1-5_Angles",
     "1.6": "../materials/geometry/ch01/Geo_1-6_Constructions",
+    "2.1": "../materials/geometry/ch02/Geo_2-1_Inductive_Reasoning",
+    "2.2": "../materials/geometry/ch02/Geo_2-2_Conditional_Statements",
+    "2.3": "../materials/geometry/ch02/Geo_2-3_Postulates_Diagrams",
+    "2.4": "../materials/geometry/ch02/Geo_2-4_Algebraic_Reasoning",
+    "2.5": "../materials/geometry/ch02/Geo_2-5_Two_Column_Proofs",
+    "2.6": "../materials/geometry/ch02/Geo_2-6_Proving_Angles",
   },
 };

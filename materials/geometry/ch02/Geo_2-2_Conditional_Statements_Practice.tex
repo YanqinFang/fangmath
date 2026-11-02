@@ -1,0 +1,152 @@
+\documentclass[11pt,letterpaper]{article}
+\usepackage[T1]{fontenc}
+\usepackage[scaled]{helvet}
+\renewcommand{\familydefault}{\sfdefault}
+\usepackage{amsmath,amssymb}
+\usepackage[margin=0.8in,bottom=0.9in]{geometry}
+\usepackage[most]{tcolorbox}
+\usepackage{tikz}
+\usetikzlibrary{calc}
+\usepackage{enumitem}
+\usepackage{array}
+\usepackage{needspace}
+\usepackage{fancyhdr}
+\usepackage{pifont}
+
+% ---- Palette "F. Bright & Playful" ----
+\definecolor{fmtitle}{HTML}{3D2C8D}
+\definecolor{fmkey}{HTML}{0096C7}
+\definecolor{fmwatch}{HTML}{2BB673}
+\definecolor{fmturn}{HTML}{F4A100}
+\definecolor{fmmistake}{HTML}{EF476F}
+\definecolor{fmnotice}{HTML}{9B5DE5}
+\definecolor{fmgray}{HTML}{6B6B6B}
+
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
+\fancyfoot[C]{\footnotesize\color{fmgray}\textcopyright\ 2026 FangMath. All rights reserved.}
+\fancyfoot[R]{\footnotesize\color{fmgray}\thepage}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{3pt}
+
+\newcommand{\badge}[1]{\colorbox{fmtitle}{\color{white}\bfseries\small\ #1\ }}
+\newcommand{\leveltag}[2]{\colorbox{#1}{\color{white}\bfseries\scriptsize\ #2\ }}
+\newcommand{\LE}{\leveltag{fmwatch}{EASY}}
+\newcommand{\LM}{\leveltag{fmturn}{MEDIUM}}
+\newcommand{\LH}{\leveltag{fmmistake}{HARD}}
+
+\newcommand{\sectionbar}[2]{\needspace{6cm}\par\vspace{4mm}
+  \begin{tcolorbox}[enhanced,colback=fmtitle,colframe=fmtitle,arc=2mm,
+    left=4mm,top=1.5mm,bottom=1.5mm]
+  \color{white}\bfseries\large #1\hfill{\normalsize\mdseries #2}
+  \end{tcolorbox}}
+
+\newtcolorbox{keyidea}{enhanced,breakable,colback=white,colframe=fmkey,boxrule=1pt,arc=2mm,
+  title={Key Idea},coltitle=fmkey,fonttitle=\bfseries,
+  attach boxed title to top left={xshift=4mm,yshift=-2mm},
+  boxed title style={colback=white,colframe=fmkey,boxrule=0.9pt}}
+\newtcolorbox{watchme}{enhanced,colback=white,colframe=fmwatch,boxrule=1pt,arc=2mm,
+  title={Watch Me --- Worked Example},coltitle=fmwatch,fonttitle=\bfseries,
+  attach boxed title to top left={xshift=4mm,yshift=-2mm},
+  boxed title style={colback=white,colframe=fmwatch,boxrule=0.9pt}}
+\newtcolorbox{mistakebox}{enhanced,breakable,colback=white,colframe=fmmistake,boxrule=1pt,arc=2mm,
+  title={Common Mistake},coltitle=fmmistake,fonttitle=\bfseries,
+  attach boxed title to top left={xshift=4mm,yshift=-2mm},
+  boxed title style={colback=white,colframe=fmmistake,boxrule=0.9pt}}
+\newtcolorbox{yourturn}{enhanced,breakable,colback=white,colframe=fmturn,boxrule=1pt,arc=2mm,
+  title={Your Turn},coltitle=fmturn,fonttitle=\bfseries,
+  attach boxed title to top left={xshift=4mm,yshift=-2mm},
+  boxed title style={colback=white,colframe=fmturn,boxrule=0.9pt}}
+\newtcolorbox{answerbox}[1]{enhanced,breakable,colback=white,colframe=fmwatch,boxrule=1pt,arc=2mm,
+  title={#1},coltitle=fmwatch,fonttitle=\bfseries,
+  attach boxed title to top left={xshift=4mm,yshift=-2mm},
+  boxed title style={colback=white,colframe=fmwatch,boxrule=0.9pt}}
+
+\newcommand{\work}[1]{\par\vspace{#1}}
+\setlist[enumerate]{itemsep=2pt,topsep=3pt}
+
+% ---------------- extra boxes ----------------
+\newtcolorbox{notebox}{enhanced,breakable,colback=white,colframe=fmnotice,boxrule=1pt,arc=2mm,
+  title={Notice},coltitle=fmnotice,fonttitle=\bfseries,
+  attach boxed title to top left={xshift=4mm,yshift=-2mm},
+  boxed title style={colback=white,colframe=fmnotice,boxrule=0.9pt}}
+\newtcolorbox{exbox}{enhanced,colback=white,colframe=fmwatch,boxrule=0.8pt,arc=2mm,
+  title={Example},coltitle=fmwatch,fonttitle=\bfseries\small,
+  attach boxed title to top left={xshift=4mm,yshift=-2mm},
+  boxed title style={colback=white,colframe=fmwatch,boxrule=0.8pt},fontupper=\small}
+\newcommand{\topicbar}[1]{\needspace{4.5cm}\par\vspace{5mm}
+  \begin{tcolorbox}[enhanced,colback=fmtitle,colframe=fmtitle,arc=2mm,left=4mm,top=1.5mm,bottom=1.5mm]
+  \color{white}\bfseries\large #1
+  \end{tcolorbox}}
+\usepackage{multicol}
+
+% ---------------- practice layout ----------------
+\newcommand{\workline}{\par\vspace{7mm}{\color{gray!55}\rule{\linewidth}{0.4pt}}}
+\newcommand{\worklines}[1]{\foreach \i in {1,...,#1}{\workline}}
+\newcommand{\prob}[3]{\needspace{#3}\par\vspace{3mm}{\color{fmturn}\bfseries #1.}\ #2\par}
+\newcommand{\ansline}{\par\vspace{4mm}\hfill\textbf{Answer:}\ \rule{5cm}{0.4pt}\par}
+\newcommand{\keyitem}[3]{\needspace{3.2cm}\par\vspace{2mm}
+  \begin{tcolorbox}[enhanced,colback=white,colframe=fmwatch!60,boxrule=0.6pt,arc=1.5mm,left=3mm,top=1.5mm,bottom=1.5mm]
+  {\color{fmwatch}\bfseries #1.}\quad\small #2\par\vspace{1mm}
+  \normalsize\textbf{Answer: #3}
+  \end{tcolorbox}}
+
+
+\usetikzlibrary{arrows.meta}
+\providecommand{\iskey}{0}
+% fill-in blank: line for students, pink answer in the key
+\newcommand{\fb}[2][2.6cm]{\ifnum\iskey=1 \underline{\makebox[#1][c]{\color{fmmistake}\bfseries #2}}\else\underline{\makebox[#1]{}}\fi}
+% answer line for practice problems
+\newcommand{\pans}[2][3.2cm]{\ifnum\iskey=1 \underline{\makebox[#1][c]{\color{fmmistake}\bfseries #2}}\else\rule{#1}{0.4pt}\fi}
+\newcommand{\vid}[1]{{\color{fmgray}\small\textit{\ding{43} Video: #1}}}
+\newcommand{\pt}[2]{\fill (#1) circle (2.2pt) node[above=1pt,font=\small]{$#2$};}
+
+\usetikzlibrary{decorations.pathreplacing}
+% three points on a segment with lengths written above the pieces: #1,#2,#3 letters; #4,#5 piece labels; #6 whole label (below)
+\newcommand{\threept}[6]{\begin{tikzpicture}[x=1cm]\draw[thick] (0,0)--(3.6,0);
+\fill (0,0) circle(2.2pt) node[below=2pt,font=\small]{$#1$} (1.4,0) circle(2.2pt) node[below=2pt,font=\small]{$#2$} (3.6,0) circle(2.2pt) node[below=2pt,font=\small]{$#3$};
+\node[above,font=\small] at (0.7,0.02){#4};\node[above,font=\small] at (2.5,0.02){#5};
+\if\relax\detokenize{#6}\relax\else\draw[gray,decorate,decoration={brace,amplitude=4pt,mirror}] (0,-0.45)--(3.6,-0.45) node[midway,below=4pt,font=\small]{#6};\fi
+\end{tikzpicture}}
+\newcommand{\sdp}[3]{\begin{minipage}[t][2.4cm]{0.48\linewidth}{\color{fmturn}\bfseries #1.}\ #2\par\vfill\hfill \pans[3.6cm]{#3}\end{minipage}}
+\newcommand{\figp}[4]{\begin{minipage}[t]{0.48\linewidth}{\color{fmturn}\bfseries #1.}\ #2\par\vspace{1mm}\centering #3\par\vspace{2mm}\raggedleft \pans[2.6cm]{#4}\end{minipage}}
+\newcommand{\algp}[3]{\begin{minipage}[t][4.6cm]{0.48\linewidth}{\color{fmturn}\bfseries #1.}\ #2\par\vfill\hfill \pans[4.2cm]{#3}\end{minipage}}
+
+
+% ch2: long key answers wrap inside their column instead of running into the next one
+\newlength{\pw}
+\renewcommand{\pans}[2][3.2cm]{\ifnum\iskey=1 \settowidth{\pw}{\bfseries #2}\ifdim\pw>#1 \parbox[b]{#1}{\raggedleft\color{fmmistake}\bfseries\small #2}\else\underline{\makebox[#1][c]{\color{fmmistake}\bfseries #2}}\fi\else\rule{#1}{0.4pt}\fi}
+\begin{document}
+\ifnum\iskey=1 \colorbox{fmwatch}{\color{white}\bfseries\small\ ANSWER KEY\ }\else\badge{PRACTICE}\fi\hfill{\small\color{fmgray}Geometry \textperiodcentered\ Lesson 2.2}\par\vspace{4mm}
+{\color{fmtitle}\LARGE\bfseries Conditional Statements --- Practice\ifnum\iskey=1 \ --- Answer Key\fi}\par\vspace{1mm}
+{\color{fmgray}A worked example comes before each type. Show your thinking.}\par\vspace{3mm}
+Name: \rule{6cm}{0.4pt}\hspace{1cm}Date: \rule{3.5cm}{0.4pt}\par\vspace{2mm}
+
+\needspace{6cm}\topicbar{Type 1 \quad Hypothesis and Conclusion}
+\begin{watchme}``If two angles are vertical angles, then they are congruent.''\par
+Hypothesis ($p$): two angles are vertical angles. \quad Conclusion ($q$): they are congruent.\par
+\emph{Not in if-then form?} ``All squares are rectangles'' $\to$ If a shape is a square, then it is a rectangle.\end{watchme}
+\needspace{3.4cm}\noindent\sdp{1}{``If $x = 5$, then $2x = 10$.'' Name the hypothesis.}{$x = 5$}\hfill\sdp{2}{``If a figure is a triangle, then it has three sides.'' Name the conclusion.}{it has three sides}\par\vspace{2mm}
+\needspace{4.6cm}\noindent\algp{3}{Write in if-then form: ``All right angles measure $90^\circ$.''}{If an angle is right, then it measures $90^\circ$.}\hfill\algp{4}{Write in if-then form: ``Fish live in water.''}{If an animal is a fish, then it lives in water.}\par
+
+\needspace{7cm}\topicbar{Type 2 \quad Converse, Inverse, Contrapositive}
+\begin{watchme}Conditional: If an animal is a dog, then it has four legs.\par
+\textbf{Converse} (switch): If an animal has four legs, then it is a dog.\par
+\textbf{Inverse} (negate): If an animal is not a dog, then it does not have four legs.\par
+\textbf{Contrapositive} (switch and negate): If an animal does not have four legs, then it is not a dog.\end{watchme}
+\needspace{4.6cm}\noindent\algp{5}{``If you live in Los Angeles, then you live in California.'' Write the converse.}{If you live in California, then you live in Los Angeles.}\hfill\algp{6}{``If an angle measures $120^\circ$, then it is obtuse.'' Write the contrapositive.}{If an angle is not obtuse, then it does not measure $120^\circ$.}\par\vspace{2mm}
+\needspace{4.6cm}\noindent\algp{7}{``If $x = 3$, then $x^2 = 9$.'' Write the inverse.}{If $x \ne 3$, then $x^2 \ne 9$.}\hfill\algp{8}{$p$: it is Saturday. \ $q$: there is no school. \ Write $\sim q \to \sim p$ in words.}{If there is school, then it is not Saturday.}\par
+
+\needspace{6cm}\topicbar{Type 3 \quad True or False? Give a Counterexample}
+\begin{watchme}``If $x^2 = 9$, then $x = 3$.'' \quad Try $x = -3$: $(-3)^2 = 9$, but $x \ne 3$.\par
+\textbf{Answer: false} --- counterexample $x = -3$. \ (To show a statement is false, one counterexample is enough.)\end{watchme}
+\needspace{3.4cm}\noindent\sdp{9}{``If a number is divisible by $10$, then it is divisible by $5$.'' True or false?}{true}\hfill\sdp{10}{Converse of \#9: ``If a number is divisible by $5$, then it is divisible by $10$.'' True or false? Counterexample?}{false; $15$}\par\vspace{2mm}
+\needspace{4.6cm}\noindent\algp{11}{``If two angles are supplementary, then they form a linear pair.'' True or false?}{false (they need not be adjacent)}\hfill\algp{12}{A conditional is true. Must its contrapositive be true? Must its converse be true?}{contrapositive yes; converse no}\par
+
+\needspace{6cm}\topicbar{Type 4 \quad Biconditionals}
+\begin{watchme}``If an angle is a right angle, then it measures $90^\circ$'' is true, and so is its converse.\par
+\textbf{Biconditional:} An angle is a right angle \textbf{if and only if} it measures $90^\circ$.\end{watchme}
+\needspace{4.6cm}\noindent\algp{13}{Write as a biconditional: ``If two angles have the same measure, then they are congruent'' (the converse is also true).}{Two angles are congruent if and only if they have the same measure.}\hfill\algp{14}{Is this a good biconditional? ``An angle is acute if and only if it measures $40^\circ$.'' Explain.}{No: a $60^\circ$ angle is acute but is not $40^\circ$.}\par\vspace{2mm}
+\needspace{4.6cm}\noindent\algp{15}{Write the two conditionals in: ``$x + 2 = 7$ if and only if $x = 5$.''}{If $x + 2 = 7$, then $x = 5$; if $x = 5$, then $x + 2 = 7$.}\hfill\algp{16}{\LH\ A statement is false. Which related statement must also be false: converse, inverse or contrapositive?}{the contrapositive}\par
+\end{document}

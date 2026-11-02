@@ -1,0 +1,152 @@
+\documentclass[11pt,letterpaper]{article}
+\usepackage[T1]{fontenc}
+\usepackage[scaled]{helvet}
+\renewcommand{\familydefault}{\sfdefault}
+\usepackage{amsmath,amssymb}
+\usepackage[margin=0.8in,bottom=0.9in]{geometry}
+\usepackage[most]{tcolorbox}
+\usepackage{tikz}
+\usetikzlibrary{calc}
+\usepackage{enumitem}
+\usepackage{array}
+\usepackage{needspace}
+\usepackage{fancyhdr}
+\usepackage{pifont}
+
+% ---- Palette "F. Bright & Playful" ----
+\definecolor{fmtitle}{HTML}{3D2C8D}
+\definecolor{fmkey}{HTML}{0096C7}
+\definecolor{fmwatch}{HTML}{2BB673}
+\definecolor{fmturn}{HTML}{F4A100}
+\definecolor{fmmistake}{HTML}{EF476F}
+\definecolor{fmnotice}{HTML}{9B5DE5}
+\definecolor{fmgray}{HTML}{6B6B6B}
+
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
+\fancyfoot[C]{\footnotesize\color{fmgray}\textcopyright\ 2026 FangMath. All rights reserved.}
+\fancyfoot[R]{\footnotesize\color{fmgray}\thepage}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{3pt}
+
+\newcommand{\badge}[1]{\colorbox{fmtitle}{\color{white}\bfseries\small\ #1\ }}
+\newcommand{\leveltag}[2]{\colorbox{#1}{\color{white}\bfseries\scriptsize\ #2\ }}
+\newcommand{\LE}{\leveltag{fmwatch}{EASY}}
+\newcommand{\LM}{\leveltag{fmturn}{MEDIUM}}
+\newcommand{\LH}{\leveltag{fmmistake}{HARD}}
+
+\newcommand{\sectionbar}[2]{\needspace{6cm}\par\vspace{4mm}
+  \begin{tcolorbox}[enhanced,colback=fmtitle,colframe=fmtitle,arc=2mm,
+    left=4mm,top=1.5mm,bottom=1.5mm]
+  \color{white}\bfseries\large #1\hfill{\normalsize\mdseries #2}
+  \end{tcolorbox}}
+
+\newtcolorbox{keyidea}{enhanced,breakable,colback=white,colframe=fmkey,boxrule=1pt,arc=2mm,
+  title={Key Idea},coltitle=fmkey,fonttitle=\bfseries,
+  attach boxed title to top left={xshift=4mm,yshift=-2mm},
+  boxed title style={colback=white,colframe=fmkey,boxrule=0.9pt}}
+\newtcolorbox{watchme}{enhanced,colback=white,colframe=fmwatch,boxrule=1pt,arc=2mm,
+  title={Watch Me --- Worked Example},coltitle=fmwatch,fonttitle=\bfseries,
+  attach boxed title to top left={xshift=4mm,yshift=-2mm},
+  boxed title style={colback=white,colframe=fmwatch,boxrule=0.9pt}}
+\newtcolorbox{mistakebox}{enhanced,breakable,colback=white,colframe=fmmistake,boxrule=1pt,arc=2mm,
+  title={Common Mistake},coltitle=fmmistake,fonttitle=\bfseries,
+  attach boxed title to top left={xshift=4mm,yshift=-2mm},
+  boxed title style={colback=white,colframe=fmmistake,boxrule=0.9pt}}
+\newtcolorbox{yourturn}{enhanced,breakable,colback=white,colframe=fmturn,boxrule=1pt,arc=2mm,
+  title={Your Turn},coltitle=fmturn,fonttitle=\bfseries,
+  attach boxed title to top left={xshift=4mm,yshift=-2mm},
+  boxed title style={colback=white,colframe=fmturn,boxrule=0.9pt}}
+\newtcolorbox{answerbox}[1]{enhanced,breakable,colback=white,colframe=fmwatch,boxrule=1pt,arc=2mm,
+  title={#1},coltitle=fmwatch,fonttitle=\bfseries,
+  attach boxed title to top left={xshift=4mm,yshift=-2mm},
+  boxed title style={colback=white,colframe=fmwatch,boxrule=0.9pt}}
+
+\newcommand{\work}[1]{\par\vspace{#1}}
+\setlist[enumerate]{itemsep=2pt,topsep=3pt}
+
+% ---------------- extra boxes ----------------
+\newtcolorbox{notebox}{enhanced,breakable,colback=white,colframe=fmnotice,boxrule=1pt,arc=2mm,
+  title={Notice},coltitle=fmnotice,fonttitle=\bfseries,
+  attach boxed title to top left={xshift=4mm,yshift=-2mm},
+  boxed title style={colback=white,colframe=fmnotice,boxrule=0.9pt}}
+\newtcolorbox{exbox}{enhanced,colback=white,colframe=fmwatch,boxrule=0.8pt,arc=2mm,
+  title={Example},coltitle=fmwatch,fonttitle=\bfseries\small,
+  attach boxed title to top left={xshift=4mm,yshift=-2mm},
+  boxed title style={colback=white,colframe=fmwatch,boxrule=0.8pt},fontupper=\small}
+\newcommand{\topicbar}[1]{\needspace{4.5cm}\par\vspace{5mm}
+  \begin{tcolorbox}[enhanced,colback=fmtitle,colframe=fmtitle,arc=2mm,left=4mm,top=1.5mm,bottom=1.5mm]
+  \color{white}\bfseries\large #1
+  \end{tcolorbox}}
+\usepackage{multicol}
+
+% ---------------- practice layout ----------------
+\newcommand{\workline}{\par\vspace{7mm}{\color{gray!55}\rule{\linewidth}{0.4pt}}}
+\newcommand{\worklines}[1]{\foreach \i in {1,...,#1}{\workline}}
+\newcommand{\prob}[3]{\needspace{#3}\par\vspace{3mm}{\color{fmturn}\bfseries #1.}\ #2\par}
+\newcommand{\ansline}{\par\vspace{4mm}\hfill\textbf{Answer:}\ \rule{5cm}{0.4pt}\par}
+\newcommand{\keyitem}[3]{\needspace{3.2cm}\par\vspace{2mm}
+  \begin{tcolorbox}[enhanced,colback=white,colframe=fmwatch!60,boxrule=0.6pt,arc=1.5mm,left=3mm,top=1.5mm,bottom=1.5mm]
+  {\color{fmwatch}\bfseries #1.}\quad\small #2\par\vspace{1mm}
+  \normalsize\textbf{Answer: #3}
+  \end{tcolorbox}}
+
+
+\usetikzlibrary{arrows.meta}
+\providecommand{\iskey}{0}
+% fill-in blank: line for students, pink answer in the key
+\newcommand{\fb}[2][2.6cm]{\ifnum\iskey=1 \underline{\makebox[#1][c]{\color{fmmistake}\bfseries #2}}\else\underline{\makebox[#1]{}}\fi}
+% answer line for practice problems
+\newcommand{\pans}[2][3.2cm]{\ifnum\iskey=1 \underline{\makebox[#1][c]{\color{fmmistake}\bfseries #2}}\else\rule{#1}{0.4pt}\fi}
+\newcommand{\vid}[1]{\needspace{3.8cm}\par{\color{fmgray}\small\textit{\ding{43} Video: #1}}}
+\newcommand{\pt}[2]{\fill (#1) circle (2.2pt) node[above=1pt,font=\small]{$#2$};}
+
+\usetikzlibrary{decorations.pathreplacing}
+
+\begin{document}
+\ifnum\iskey=1 \colorbox{fmwatch}{\color{white}\bfseries\small\ ANSWER KEY\ }\else\badge{WATCH \& FILL IN}\fi\hfill{\small\color{fmgray}Geometry \textperiodcentered\ Lesson 2.4}\par\vspace{4mm}
+{\color{fmtitle}\LARGE\bfseries Algebraic Reasoning \& Properties --- Notes\ifnum\iskey=1 \ --- Answer Key\fi}\par\vspace{1mm}
+{\color{fmgray}Watch the video and fill in each blank. Pause when you see ``Your turn.''}\par\vspace{3mm}
+Name: \rule{6cm}{0.4pt}\hspace{1cm}Date: \rule{3.5cm}{0.4pt}\par\vspace{2mm}
+
+\vid{Every step needs a reason}
+\begin{keyidea}In geometry we don't just get the answer --- we \fb[2cm]{justify} every step with a \fb[1.6cm]{reason}: a definition, a property, a postulate or a theorem.\end{keyidea}
+
+\vid{Solve and justify}
+\begin{watchme}\renewcommand{\arraystretch}{1.7}\begin{tabular}{@{}l l@{}}
+$x - 4 = 10$ & Given\\
+$x = 14$ & \fb[6cm]{Addition Property of Equality}\\
+\end{tabular}\par\vspace{1mm}
+The reason names \fb[3.6cm]{what you did} to both sides.\end{watchme}
+
+\vid{Properties of equality}
+\begin{keyidea}\renewcommand{\arraystretch}{1.7}\begin{tabular}{@{}l l@{}}
+\textbf{Addition / Subtraction} & add or subtract the \fb[1.6cm]{same} number on both sides\\
+\textbf{Multiplication / Division} & multiply or divide both sides by the same number (not \fb[0.8cm]{$0$})\\
+\textbf{Substitution} & if $a = b$, you can \fb[1.8cm]{replace} $a$ with $b$\\
+\textbf{Distributive} & $a(b + c) = $ \fb[2cm]{$ab + ac$}\\
+\end{tabular}\end{keyidea}
+
+\vid{Reflexive, symmetric, transitive}
+\begin{keyidea}\renewcommand{\arraystretch}{1.7}\begin{tabular}{@{}l l@{}}
+\fb[2.2cm]{Reflexive} & $a = a$ \quad {\small e.g.\ $AB = AB$}\\
+\fb[2.2cm]{Symmetric} & if $a = b$, then \fb[1.4cm]{$b = a$}\\
+\fb[2.2cm]{Transitive} & if $a = b$ and $b = c$, then \fb[1.4cm]{$a = c$}\\
+\end{tabular}\end{keyidea}
+
+\vid{A longer example}
+\begin{watchme}\renewcommand{\arraystretch}{1.7}\begin{tabular}{@{}l l@{}}
+$3(x + 2) = 21$ & Given\\
+$3x + 6 = 21$ & \fb[5cm]{Distributive Property}\\
+$3x = 15$ & \fb[6cm]{Subtraction Property of Equality}\\
+$x = 5$ & \fb[6cm]{Division Property of Equality}\\
+\end{tabular}\end{watchme}
+
+\vid{Your turn}
+\begin{yourturn}Name the property.\par\vspace{1mm}
+(a) If $AB = CD$, then $CD = AB$. \quad \fb[2.4cm]{Symmetric} \ --- the equation is flipped.\par\vspace{1mm}
+(b) If $m\angle 1 = m\angle 2$ and $m\angle 2 = m\angle 3$, then $m\angle 1 = m\angle 3$. \quad \fb[2.4cm]{Transitive} \ --- a chain.\end{yourturn}
+
+\begin{notebox}\textbf{Remember:}\quad Every step needs a \textbf{reason}.\quad Did something to both sides? Name that property of equality.\quad \textbf{Reflexive} $a = a$, \textbf{symmetric} flip, \textbf{transitive} chain.\end{notebox}
+\end{document}

@@ -1,0 +1,148 @@
+\documentclass[11pt,letterpaper]{article}
+\usepackage[T1]{fontenc}
+\usepackage[scaled]{helvet}
+\renewcommand{\familydefault}{\sfdefault}
+\usepackage{amsmath,amssymb}
+\usepackage[margin=0.8in,bottom=0.9in]{geometry}
+\usepackage[most]{tcolorbox}
+\usepackage{tikz}
+\usetikzlibrary{calc}
+\usepackage{enumitem}
+\usepackage{array}
+\usepackage{needspace}
+\usepackage{fancyhdr}
+\usepackage{pifont}
+
+% ---- Palette "F. Bright & Playful" ----
+\definecolor{fmtitle}{HTML}{3D2C8D}
+\definecolor{fmkey}{HTML}{0096C7}
+\definecolor{fmwatch}{HTML}{2BB673}
+\definecolor{fmturn}{HTML}{F4A100}
+\definecolor{fmmistake}{HTML}{EF476F}
+\definecolor{fmnotice}{HTML}{9B5DE5}
+\definecolor{fmgray}{HTML}{6B6B6B}
+
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
+\fancyfoot[C]{\footnotesize\color{fmgray}\textcopyright\ 2026 FangMath. All rights reserved.}
+\fancyfoot[R]{\footnotesize\color{fmgray}\thepage}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{3pt}
+
+\newcommand{\badge}[1]{\colorbox{fmtitle}{\color{white}\bfseries\small\ #1\ }}
+\newcommand{\leveltag}[2]{\colorbox{#1}{\color{white}\bfseries\scriptsize\ #2\ }}
+\newcommand{\LE}{\leveltag{fmwatch}{EASY}}
+\newcommand{\LM}{\leveltag{fmturn}{MEDIUM}}
+\newcommand{\LH}{\leveltag{fmmistake}{HARD}}
+
+\newcommand{\sectionbar}[2]{\needspace{6cm}\par\vspace{4mm}
+  \begin{tcolorbox}[enhanced,colback=fmtitle,colframe=fmtitle,arc=2mm,
+    left=4mm,top=1.5mm,bottom=1.5mm]
+  \color{white}\bfseries\large #1\hfill{\normalsize\mdseries #2}
+  \end{tcolorbox}}
+
+\newtcolorbox{keyidea}{enhanced,breakable,colback=white,colframe=fmkey,boxrule=1pt,arc=2mm,
+  title={Key Idea},coltitle=fmkey,fonttitle=\bfseries,
+  attach boxed title to top left={xshift=4mm,yshift=-2mm},
+  boxed title style={colback=white,colframe=fmkey,boxrule=0.9pt}}
+\newtcolorbox{watchme}{enhanced,colback=white,colframe=fmwatch,boxrule=1pt,arc=2mm,
+  title={Watch Me --- Worked Example},coltitle=fmwatch,fonttitle=\bfseries,
+  attach boxed title to top left={xshift=4mm,yshift=-2mm},
+  boxed title style={colback=white,colframe=fmwatch,boxrule=0.9pt}}
+\newtcolorbox{mistakebox}{enhanced,breakable,colback=white,colframe=fmmistake,boxrule=1pt,arc=2mm,
+  title={Common Mistake},coltitle=fmmistake,fonttitle=\bfseries,
+  attach boxed title to top left={xshift=4mm,yshift=-2mm},
+  boxed title style={colback=white,colframe=fmmistake,boxrule=0.9pt}}
+\newtcolorbox{yourturn}{enhanced,breakable,colback=white,colframe=fmturn,boxrule=1pt,arc=2mm,
+  title={Your Turn},coltitle=fmturn,fonttitle=\bfseries,
+  attach boxed title to top left={xshift=4mm,yshift=-2mm},
+  boxed title style={colback=white,colframe=fmturn,boxrule=0.9pt}}
+\newtcolorbox{answerbox}[1]{enhanced,breakable,colback=white,colframe=fmwatch,boxrule=1pt,arc=2mm,
+  title={#1},coltitle=fmwatch,fonttitle=\bfseries,
+  attach boxed title to top left={xshift=4mm,yshift=-2mm},
+  boxed title style={colback=white,colframe=fmwatch,boxrule=0.9pt}}
+
+\newcommand{\work}[1]{\par\vspace{#1}}
+\setlist[enumerate]{itemsep=2pt,topsep=3pt}
+
+% ---------------- extra boxes ----------------
+\newtcolorbox{notebox}{enhanced,breakable,colback=white,colframe=fmnotice,boxrule=1pt,arc=2mm,
+  title={Notice},coltitle=fmnotice,fonttitle=\bfseries,
+  attach boxed title to top left={xshift=4mm,yshift=-2mm},
+  boxed title style={colback=white,colframe=fmnotice,boxrule=0.9pt}}
+\newtcolorbox{exbox}{enhanced,colback=white,colframe=fmwatch,boxrule=0.8pt,arc=2mm,
+  title={Example},coltitle=fmwatch,fonttitle=\bfseries\small,
+  attach boxed title to top left={xshift=4mm,yshift=-2mm},
+  boxed title style={colback=white,colframe=fmwatch,boxrule=0.8pt},fontupper=\small}
+\newcommand{\topicbar}[1]{\needspace{4.5cm}\par\vspace{5mm}
+  \begin{tcolorbox}[enhanced,colback=fmtitle,colframe=fmtitle,arc=2mm,left=4mm,top=1.5mm,bottom=1.5mm]
+  \color{white}\bfseries\large #1
+  \end{tcolorbox}}
+\usepackage{multicol}
+
+% ---------------- practice layout ----------------
+\newcommand{\workline}{\par\vspace{7mm}{\color{gray!55}\rule{\linewidth}{0.4pt}}}
+\newcommand{\worklines}[1]{\foreach \i in {1,...,#1}{\workline}}
+\newcommand{\prob}[3]{\needspace{#3}\par\vspace{3mm}{\color{fmturn}\bfseries #1.}\ #2\par}
+\newcommand{\ansline}{\par\vspace{4mm}\hfill\textbf{Answer:}\ \rule{5cm}{0.4pt}\par}
+\newcommand{\keyitem}[3]{\needspace{3.2cm}\par\vspace{2mm}
+  \begin{tcolorbox}[enhanced,colback=white,colframe=fmwatch!60,boxrule=0.6pt,arc=1.5mm,left=3mm,top=1.5mm,bottom=1.5mm]
+  {\color{fmwatch}\bfseries #1.}\quad\small #2\par\vspace{1mm}
+  \normalsize\textbf{Answer: #3}
+  \end{tcolorbox}}
+
+
+\usetikzlibrary{arrows.meta}
+\providecommand{\iskey}{0}
+% fill-in blank: line for students, pink answer in the key
+\newcommand{\fb}[2][2.6cm]{\ifnum\iskey=1 \underline{\makebox[#1][c]{\color{fmmistake}\bfseries #2}}\else\underline{\makebox[#1]{}}\fi}
+% answer line for practice problems
+\newcommand{\pans}[2][3.2cm]{\ifnum\iskey=1 \underline{\makebox[#1][c]{\color{fmmistake}\bfseries #2}}\else\rule{#1}{0.4pt}\fi}
+\newcommand{\vid}[1]{\needspace{3.8cm}\par{\color{fmgray}\small\textit{\ding{43} Video: #1}}}
+\newcommand{\pt}[2]{\fill (#1) circle (2.2pt) node[above=1pt,font=\small]{$#2$};}
+
+\usetikzlibrary{decorations.pathreplacing}
+
+\begin{document}
+\ifnum\iskey=1 \colorbox{fmwatch}{\color{white}\bfseries\small\ ANSWER KEY\ }\else\badge{WATCH \& FILL IN}\fi\hfill{\small\color{fmgray}Geometry \textperiodcentered\ Lesson 2.1}\par\vspace{4mm}
+{\color{fmtitle}\LARGE\bfseries Patterns \& Inductive Reasoning --- Notes\ifnum\iskey=1 \ --- Answer Key\fi}\par\vspace{1mm}
+{\color{fmgray}Watch the video and fill in each blank. Pause when you see ``Your turn.''}\par\vspace{3mm}
+Name: \rule{6cm}{0.4pt}\hspace{1cm}Date: \rule{3.5cm}{0.4pt}\par\vspace{2mm}
+
+\vid{What is inductive reasoning?}
+\begin{keyidea}\textbf{Inductive reasoning}: look at examples, find a \fb[2cm]{pattern}, and use it to \fb[2cm]{predict}.\par\vspace{2mm}
+\textbf{1.} Look \quad $\to$ \quad \textbf{2.} Describe the \fb[1.6cm]{rule} \quad $\to$ \quad \textbf{3.} Predict\end{keyidea}
+
+\vid{A number pattern}
+\begin{watchme}{\large $3,\ 7,\ 11,\ 15,\ \ldots$}\par\vspace{2mm}
+\renewcommand{\arraystretch}{1.7}\begin{tabular}{@{}l l@{}}
+Rule: \fb[2cm]{add 4} each time & check \textbf{every} pair: $7 - 3$, $11 - 7$, $15 - 11$\\
+Next term: $15 + 4 = $ \fb[1.2cm]{$19$} & \\
+10th term: $3 + 9 \cdot 4 = $ \fb[1.2cm]{$39$} & start at $3$, add $4$ \fb[1.4cm]{nine} times\\
+\end{tabular}\end{watchme}
+
+\vid{A picture pattern}
+\begin{keyidea}\begin{minipage}[c]{0.5\linewidth}\centering
+\begin{tikzpicture}\foreach \n/\x in {1/0,2/1.0,3/2.5,4/4.4}{\foreach \i in {1,...,\n}{\foreach \j in {1,...,\n}{\fill[fmkey] (\x+\i*0.3,\j*0.3) circle(0.09);}}}\end{tikzpicture}\par
+$1,\ 4,\ 9,\ 16,\ \ldots$\end{minipage}\hfill
+\begin{minipage}[c]{0.46\linewidth}These are \fb[3.4cm]{square numbers}: $1^2, 2^2, 3^2, 4^2$.\par\vspace{2mm}
+Next: $5^2 = $ \fb[1.2cm]{$25$}\end{minipage}\end{keyidea}
+
+\vid{Conjecture and counterexample}
+\begin{keyidea}A \fb[2.4cm]{conjecture} is a statement you believe is true, based on a pattern.\par\vspace{2mm}
+Conjecture: ``The sum of two numbers is always greater than each number.''\par\vspace{2mm}
+A \fb[3cm]{counterexample}: $-2 + 5 = $ \fb[1cm]{$3$}, and $3 < 5$. \ So the conjecture is \fb[1.4cm]{false}.\par\vspace{1mm}
+{\small One counterexample is enough to show a conjecture is false.}\end{keyidea}
+
+\vid{Watch out}
+\begin{mistakebox}$2,\ 4,\ 8,\ \ldots$ \quad Times 2? \ Next is \fb[1cm]{$16$}. \quad Or $+2, +4, +6$? \ Next is \fb[1cm]{$14$}.\par\vspace{1mm}
+Two rules can fit the same first terms --- that's why inductive reasoning gives a \fb[2.4cm]{conjecture}, not a proof.\end{mistakebox}
+
+\vid{Your turn}
+\begin{yourturn}Find the next two terms: \quad {\large $1,\ 3,\ 6,\ 10,\ \ldots$}\par\vspace{2mm}
+The differences are $+2, +3, +4$, so next \fb[1cm]{$+5$}, then \fb[1cm]{$+6$}.\par\vspace{1mm}
+$10 + 5 = $ \fb[1.2cm]{$15$}, \qquad $15 + 6 = $ \fb[1.2cm]{$21$}\end{yourturn}
+
+\begin{notebox}\textbf{Remember:}\quad Look $\to$ describe the rule $\to$ predict.\quad Check the rule on \textbf{every} pair.\quad A pattern gives a \textbf{conjecture}; one \textbf{counterexample} shows it is false.\end{notebox}
+\end{document}

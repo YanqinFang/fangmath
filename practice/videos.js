@@ -41,5 +41,6 @@ window.FM_VIDEOS = {
 window.FM_HANDOUTS = {
   geometry: {
     "1.1": "../materials/geometry/ch01/Geo_1-1_Terms",
+    "1.2": "../materials/geometry/ch01/Geo_1-2_Segment_Addition",
   },
 };

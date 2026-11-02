@@ -1,0 +1,146 @@
+\documentclass[11pt,letterpaper]{article}
+\usepackage[T1]{fontenc}
+\usepackage[scaled]{helvet}
+\renewcommand{\familydefault}{\sfdefault}
+\usepackage{amsmath,amssymb}
+\usepackage[margin=0.8in,bottom=0.9in]{geometry}
+\usepackage[most]{tcolorbox}
+\usepackage{tikz}
+\usetikzlibrary{calc}
+\usepackage{enumitem}
+\usepackage{array}
+\usepackage{needspace}
+\usepackage{fancyhdr}
+\usepackage{pifont}
+
+% ---- Palette "F. Bright & Playful" ----
+\definecolor{fmtitle}{HTML}{3D2C8D}
+\definecolor{fmkey}{HTML}{0096C7}
+\definecolor{fmwatch}{HTML}{2BB673}
+\definecolor{fmturn}{HTML}{F4A100}
+\definecolor{fmmistake}{HTML}{EF476F}
+\definecolor{fmnotice}{HTML}{9B5DE5}
+\definecolor{fmgray}{HTML}{6B6B6B}
+
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
+\fancyfoot[C]{\footnotesize\color{fmgray}\textcopyright\ 2026 FangMath. All rights reserved.}
+\fancyfoot[R]{\footnotesize\color{fmgray}\thepage}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{3pt}
+
+\newcommand{\badge}[1]{\colorbox{fmtitle}{\color{white}\bfseries\small\ #1\ }}
+\newcommand{\leveltag}[2]{\colorbox{#1}{\color{white}\bfseries\scriptsize\ #2\ }}
+\newcommand{\LE}{\leveltag{fmwatch}{EASY}}
+\newcommand{\LM}{\leveltag{fmturn}{MEDIUM}}
+\newcommand{\LH}{\leveltag{fmmistake}{HARD}}
+
+\newcommand{\sectionbar}[2]{\needspace{6cm}\par\vspace{4mm}
+  \begin{tcolorbox}[enhanced,colback=fmtitle,colframe=fmtitle,arc=2mm,
+    left=4mm,top=1.5mm,bottom=1.5mm]
+  \color{white}\bfseries\large #1\hfill{\normalsize\mdseries #2}
+  \end{tcolorbox}}
+
+\newtcolorbox{keyidea}{enhanced,breakable,colback=white,colframe=fmkey,boxrule=1pt,arc=2mm,
+  title={Key Idea},coltitle=fmkey,fonttitle=\bfseries,
+  attach boxed title to top left={xshift=4mm,yshift=-2mm},
+  boxed title style={colback=white,colframe=fmkey,boxrule=0.9pt}}
+\newtcolorbox{watchme}{enhanced,colback=white,colframe=fmwatch,boxrule=1pt,arc=2mm,
+  title={Watch Me --- Worked Example},coltitle=fmwatch,fonttitle=\bfseries,
+  attach boxed title to top left={xshift=4mm,yshift=-2mm},
+  boxed title style={colback=white,colframe=fmwatch,boxrule=0.9pt}}
+\newtcolorbox{mistakebox}{enhanced,breakable,colback=white,colframe=fmmistake,boxrule=1pt,arc=2mm,
+  title={Common Mistake},coltitle=fmmistake,fonttitle=\bfseries,
+  attach boxed title to top left={xshift=4mm,yshift=-2mm},
+  boxed title style={colback=white,colframe=fmmistake,boxrule=0.9pt}}
+\newtcolorbox{yourturn}{enhanced,breakable,colback=white,colframe=fmturn,boxrule=1pt,arc=2mm,
+  title={Your Turn},coltitle=fmturn,fonttitle=\bfseries,
+  attach boxed title to top left={xshift=4mm,yshift=-2mm},
+  boxed title style={colback=white,colframe=fmturn,boxrule=0.9pt}}
+\newtcolorbox{answerbox}[1]{enhanced,breakable,colback=white,colframe=fmwatch,boxrule=1pt,arc=2mm,
+  title={#1},coltitle=fmwatch,fonttitle=\bfseries,
+  attach boxed title to top left={xshift=4mm,yshift=-2mm},
+  boxed title style={colback=white,colframe=fmwatch,boxrule=0.9pt}}
+
+\newcommand{\work}[1]{\par\vspace{#1}}
+\setlist[enumerate]{itemsep=2pt,topsep=3pt}
+
+% ---------------- extra boxes ----------------
+\newtcolorbox{notebox}{enhanced,breakable,colback=white,colframe=fmnotice,boxrule=1pt,arc=2mm,
+  title={Notice},coltitle=fmnotice,fonttitle=\bfseries,
+  attach boxed title to top left={xshift=4mm,yshift=-2mm},
+  boxed title style={colback=white,colframe=fmnotice,boxrule=0.9pt}}
+\newtcolorbox{exbox}{enhanced,colback=white,colframe=fmwatch,boxrule=0.8pt,arc=2mm,
+  title={Example},coltitle=fmwatch,fonttitle=\bfseries\small,
+  attach boxed title to top left={xshift=4mm,yshift=-2mm},
+  boxed title style={colback=white,colframe=fmwatch,boxrule=0.8pt},fontupper=\small}
+\newcommand{\topicbar}[1]{\needspace{4.5cm}\par\vspace{5mm}
+  \begin{tcolorbox}[enhanced,colback=fmtitle,colframe=fmtitle,arc=2mm,left=4mm,top=1.5mm,bottom=1.5mm]
+  \color{white}\bfseries\large #1
+  \end{tcolorbox}}
+\usepackage{multicol}
+
+% ---------------- practice layout ----------------
+\newcommand{\workline}{\par\vspace{7mm}{\color{gray!55}\rule{\linewidth}{0.4pt}}}
+\newcommand{\worklines}[1]{\foreach \i in {1,...,#1}{\workline}}
+\newcommand{\prob}[3]{\needspace{#3}\par\vspace{3mm}{\color{fmturn}\bfseries #1.}\ #2\par}
+\newcommand{\ansline}{\par\vspace{4mm}\hfill\textbf{Answer:}\ \rule{5cm}{0.4pt}\par}
+\newcommand{\keyitem}[3]{\needspace{3.2cm}\par\vspace{2mm}
+  \begin{tcolorbox}[enhanced,colback=white,colframe=fmwatch!60,boxrule=0.6pt,arc=1.5mm,left=3mm,top=1.5mm,bottom=1.5mm]
+  {\color{fmwatch}\bfseries #1.}\quad\small #2\par\vspace{1mm}
+  \normalsize\textbf{Answer: #3}
+  \end{tcolorbox}}
+
+
+\usetikzlibrary{arrows.meta}
+\providecommand{\iskey}{0}
+% fill-in blank: line for students, pink answer in the key
+\newcommand{\fb}[2][2.6cm]{\ifnum\iskey=1 \underline{\makebox[#1][c]{\color{fmmistake}\bfseries #2}}\else\underline{\makebox[#1]{}}\fi}
+% answer line for practice problems
+\newcommand{\pans}[2][3.2cm]{\ifnum\iskey=1 \underline{\makebox[#1][c]{\color{fmmistake}\bfseries #2}}\else\rule{#1}{0.4pt}\fi}
+\newcommand{\vid}[1]{{\color{fmgray}\small\textit{\ding{43} Video: #1}}}
+\newcommand{\pt}[2]{\fill (#1) circle (2.2pt) node[above=1pt,font=\small]{$#2$};}
+
+\usetikzlibrary{decorations.pathreplacing}
+\newcommand{\gridb}[4]{\draw[gray!30,step=1] (#1,#2) grid (#3,#4);\draw[gray!70,-{Stealth}] (#1,0)--(#3+0.4,0);\draw[gray!70,-{Stealth}] (0,#2)--(0,#4+0.4);}
+\newcommand{\sdp}[3]{\begin{minipage}[t][2.4cm]{0.48\linewidth}{\color{fmturn}\bfseries #1.}\ #2\par\vfill\hfill \pans[3.6cm]{#3}\end{minipage}}
+\newcommand{\sdpw}[3]{\begin{minipage}[t][2.4cm]{0.48\linewidth}{\color{fmturn}\bfseries #1.}\ #2\par\vfill\hfill \pans[5.2cm]{#3}\end{minipage}}
+\newcommand{\algp}[3]{\begin{minipage}[t][4.2cm]{0.48\linewidth}{\color{fmturn}\bfseries #1.}\ #2\par\vfill\hfill \pans[4.4cm]{#3}\end{minipage}}
+\newcommand{\pair}[2]{\needspace{3.4cm}\noindent #1\hfill #2\par\vspace{2mm}}
+\newcommand{\head}[2]{\ifnum\iskey=1 \colorbox{fmwatch}{\color{white}\bfseries\small\ ANSWER KEY\ }\else\badge{#1}\fi\hfill{\small\color{fmgray}Geometry \textperiodcentered\ Lesson #2}\par\vspace{4mm}}
+\newcommand{\nameline}{Name: \rule{6cm}{0.4pt}\hspace{1cm}Date: \rule{3.5cm}{0.4pt}\par\vspace{2mm}}
+\renewcommand{\vid}[1]{\needspace{4.2cm}{\color{fmgray}\small\textit{\ding{43} Video: #1}}}
+\begin{document}
+\head{PRACTICE}{1.4}
+{\color{fmtitle}\LARGE\bfseries Perimeter \& Area in the Coordinate Plane --- Practice\ifnum\iskey=1 \ --- Key\fi}\par\vspace{1mm}
+{\color{fmgray}A worked example comes before each type. Sketching the points on graph paper helps. Show your thinking.}\par\vspace{3mm}
+\nameline
+
+\needspace{6cm}\topicbar{Type 1 \quad Horizontal \& Vertical Lengths}
+\begin{watchme}Find the length from $(-2, 3)$ to $(5, 3)$.\par
+Same $y$, so subtract the $x$'s: $5 - (-2) = 7$. \quad \textbf{Answer: $\boldsymbol{7}$}\end{watchme}
+\pair{\sdp{1}{$(1, 4)$ to $(9, 4)$}{$8$}}{\sdp{2}{$(3, -2)$ to $(3, 6)$}{$8$}}
+\pair{\sdp{3}{$(-5, -1)$ to $(2, -1)$}{$7$}}{\sdp{4}{$(-4, 7)$ to $(-4, -3)$}{$10$}}
+
+\needspace{6cm}\topicbar{Type 2 \quad Rectangles: Perimeter \& Area}
+\begin{watchme}Rectangle $A(-1, 1)$, $B(5, 1)$, $C(5, 5)$, $D(-1, 5)$.\par
+Width $= 5 - (-1) = 6$, height $= 5 - 1 = 4$. \ $P = 2(6 + 4) = 20$, \ $A = 6 \cdot 4 = 24$.\par
+\textbf{Answer: $\boldsymbol{P = 20}$ units, $\boldsymbol{A = 24}$ square units}\end{watchme}
+\pair{\sdpw{5}{$(0, 0)$, $(7, 0)$, $(7, 3)$, $(0, 3)$}{$P = 20,\ A = 21$}}{\sdpw{6}{$(-2, -1)$, $(4, -1)$, $(4, 4)$, $(-2, 4)$}{$P = 22,\ A = 30$}}
+\pair{\sdpw{7}{Square $(1, 1)$, $(6, 1)$, $(6, 6)$, $(1, 6)$}{$P = 20,\ A = 25$}}{\sdpw{8}{Rectangle $(0, 0)$, $(9, 0)$, $(9, k)$, $(0, k)$ has area $54$. Find $k$ $(k > 0)$.}{$k = 6$}}
+
+\needspace{6.5cm}\topicbar{Type 3 \quad Area of a Triangle}
+\begin{watchme}Triangle $(0, 0)$, $(8, 0)$, $(3, 5)$.\par
+The base lies on the $x$-axis: $b = 8$. The height is straight up to $(3, 5)$: $h = 5$.\par
+$A = \tfrac12 \cdot 8 \cdot 5$. \quad \textbf{Answer: $\boldsymbol{20}$ square units}\end{watchme}
+\pair{\sdp{9}{$(1, 1)$, $(7, 1)$, $(4, 6)$}{$15$}}{\sdp{10}{$(-2, 0)$, $(6, 0)$, $(0, 7)$}{$28$}}
+\pair{\sdp{11}{$(0, 0)$, $(0, 6)$, $(5, 2)$ \ {\small(hint: the base is vertical)}}{$15$}}{\sdp{12}{\LH\ $(2, -1)$, $(10, -1)$, $(12, 4)$}{$20$}}
+
+\needspace{6.5cm}\topicbar{Type 4 \quad Slanted Sides: Use Pythagoras}
+\begin{watchme}Triangle $(0, 0)$, $(3, 0)$, $(0, 4)$. Find the perimeter and area.\par
+Legs $3$ and $4$; slanted side $\sqrt{3^2 + 4^2} = 5$. \ $P = 3 + 4 + 5 = 12$, \ $A = \tfrac12 \cdot 3 \cdot 4 = 6$.\par
+\textbf{Answer: $\boldsymbol{P = 12,\ A = 6}$}\end{watchme}
+\pair{\sdpw{13}{$(0, 0)$, $(5, 0)$, $(0, 12)$: find the perimeter.}{$P = 30$}}{\sdpw{14}{$(1, 1)$, $(7, 1)$, $(1, 9)$: find the perimeter and area.}{$P = 24,\ A = 24$}}
+\pair{\sdpw{15}{$(-3, 0)$, $(3, 0)$, $(0, 4)$: find the perimeter and area.}{$P = 16,\ A = 12$}}{\sdpw{16}{\LH\ Square $(0, 0)$, $(3, 4)$, $(-1, 7)$, $(-4, 3)$: find the perimeter and area.}{$P = 20,\ A = 25$}}
+\end{document}

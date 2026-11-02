@@ -42,5 +42,9 @@ window.FM_HANDOUTS = {
   geometry: {
     "1.1": "../materials/geometry/ch01/Geo_1-1_Terms",
     "1.2": "../materials/geometry/ch01/Geo_1-2_Segment_Addition",
+    "1.3": "../materials/geometry/ch01/Geo_1-3_Midpoint_Distance",
+    "1.4": "../materials/geometry/ch01/Geo_1-4_Perimeter_Area",
+    "1.5": "../materials/geometry/ch01/Geo_1-5_Angles",
+    "1.6": "../materials/geometry/ch01/Geo_1-6_Constructions",
   },
 };

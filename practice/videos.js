@@ -13,11 +13,11 @@
    ===================================================================== */
 window.FM_VIDEOS = {
   geometry: {
-    "1.1": "https://youtu.be/7IZskPjEpQc",
-    "1.2": "https://youtu.be/gM7xeGs15SI",
-    "1.3": "https://youtu.be/ovFhnfDSNgA",
-    "1.4": "https://youtu.be/DTbSuw06syM",
-    "1.5": "https://youtu.be/enSKv1Kd0_s",
+    "1.1": "https://youtu.be/JD2JyOvYgdg",
+    "1.2": "https://youtu.be/RaRO7jnwvw0",
+    "1.3": "https://youtu.be/XW7OdlGGqys",
+    "1.4": "https://youtu.be/FbsE3ed3NpY",
+    "1.5": "https://youtu.be/smFVgfW5KVI",
     "1.6": "https://youtu.be/gmc-M-tiobs",
     "2.1": "https://youtu.be/n5U1R33VPrU",
     "2.2": "https://youtu.be/KdQ2ZLJAe94",

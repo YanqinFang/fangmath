@@ -169,6 +169,8 @@ footer{text-align:center;color:var(--faint);font-size:13px;padding:24px}
 #pLevels{display:none}
 .topic .tgo{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
 .topic .tgo small{color:var(--muted);font-size:13px}
+.cctag{display:block;width:fit-content;margin:2px 0 6px;font-size:12px;font-weight:600;letter-spacing:.03em;color:var(--teal);background:var(--teal-soft);border-radius:999px;padding:3px 10px}
+.mex{border:1px solid var(--line);border-radius:14px;padding:12px 14px;margin:10px 0;background:#fff}.mex .q{font-size:17px;margin:4px 0 6px}.mex .label{color:var(--green)}
 .watch{margin:-4px 0 4px;font-size:14px;color:var(--muted)} .watch b{color:var(--ink)}
 
 /* ---- hide the topic cards while a practice problem is open ---- */
@@ -662,6 +664,35 @@ const CHAPTERS=[
 
 ];
 const COMING=[];
+/* ================= DEEPER LESSONS + COMMON CORE PRACTICE (Algebra 1) ================= */
+const A1_PLUS={
+ ch1:{
+  ops:{cc:"A-SSE.1, 6.EE.2c",more:[
+   {tag:"Example 2 · Test level",q:"Evaluate $18 - 3(4 - 1)^2 \\div 9$.",steps:[["18 - 3(3)^2 \\div 9","Parentheses first."],["18 - 3 \\cdot 9 \\div 9","Then the exponent: $3^2 = 9$."],["18 - 27 \\div 9 = 18 - 3","Multiply and divide left to right."],["= 15","Subtract last."]]},
+   {tag:"Example 3 · Reasoning",q:"Insert one pair of parentheses so that $2 + 3 \\cdot 4 - 1 = 19$.",steps:[["2 + 3 \\cdot 4 - 1 = 13","Without parentheses we get $13$ — too small."],["(2 + 3) \\cdot 4 - 1 = 5 \\cdot 4 - 1","Make the addition happen first."],["= 19 \\ ✓","The parentheses change the order, so they change the value."]],note:"Parentheses are how mathematicians say “do this part first.” The same numbers can give different answers."}]},
+  eval:{cc:"A-SSE.1a, A-CED.1",more:[
+   {tag:"Example 2 · Test level",q:"Evaluate $3x^2 - 2xy$ when $x = -2$ and $y = 5$.",steps:[["3(-2)^2 - 2(-2)(5)","Put each value in parentheses."],["3 \\cdot 4 - (-20)","$(-2)^2 = 4$ and $2 \\cdot (-2) \\cdot 5 = -20$."],["12 + 20 = 32","Subtracting a negative adds."]]},
+   {tag:"Example 3 · Real world",q:"A phone plan costs $C = 25 + 0.15m$ dollars for $m$ minutes. Find the cost for $180$ minutes. What does the $25$ mean?",steps:[["C = 25 + 0.15 \\cdot 180","Substitute $m = 180$."],["= 25 + 27 = 52","The bill is 52 dollars."],["25 = \\text{cost when } m = 0","The monthly fee you pay even with no calls."]],note:"Common Core asks you to <b>interpret</b> each part of an expression in context, not only compute it."}]},
+  simp:{cc:"A-SSE.2, 6.EE.3",more:[
+   {tag:"Example 2 · Test level",q:"Simplify $3(2x - 5) - 4(x + 1)$.",steps:[["6x - 15 - 4x - 4","Distribute both — the $-4$ multiplies <b>both</b> terms."],["(6x - 4x) + (-15 - 4)","Group like terms."],["2x - 19","Combine."]]},
+   {tag:"Example 3 · Equivalent?",q:"Are $2(x + 3)$ and $2x + 3$ equivalent expressions?",steps:[["x = 0:\\ 2(0 + 3) = 6,\\ 2(0) + 3 = 3","Test one value."],["6 \\ne 3 \\Rightarrow \\text{not equivalent}","One counterexample is enough."],["2(x + 3) = 2x + 6","The $2$ multiplies the $3$ too."]]}]},
+  realnum:{cc:"N-RN.3, 8.NS.1",more:[
+   {tag:"Example 2 · Test level",q:"Classify $\\sqrt{49}$, $-\\tfrac34$, $\\sqrt{12}$ and $0.\\overline{12}$.",steps:[["\\sqrt{49} = 7","Natural, whole, integer, rational."],["-\\tfrac34","Rational (a fraction of integers)."],["\\sqrt{12} = 2\\sqrt3","Irrational — never ends, never repeats."],["0.\\overline{12} = \\tfrac{12}{99}","Repeating decimal: rational."]]},
+   {tag:"Example 3 · Why",q:"Why is $2 + \\sqrt3$ irrational?",steps:[["\\text{Suppose } 2 + \\sqrt3 = r \\text{ is rational}","Try the opposite."],["\\sqrt3 = r - 2","Rational minus rational is rational."],["\\text{But } \\sqrt3 \\text{ is irrational} \\Rightarrow \\text{contradiction}","So $2 + \\sqrt3$ is irrational."]],note:"Rational + irrational is always irrational (N-RN.3)."}]}
+ }
+};
+const A1_CC={
+ ch1:{
+  ops:[()=>{const a=rnd(2,6),b=rnd(2,6),c=rnd(2,6),d=rnd(1,5),w=(a+b)*c-d,o=a+b*c-d;return{q:`Compare $(${a} + ${b}) \\cdot ${c} - ${d}$ and $${a} + ${b} \\cdot ${c} - ${d}$. How much larger is the first one?`,type:"number",ans:w-o,ansTex:`${w-o}`,hint:"Evaluate both. The parentheses change what gets multiplied.",sol:[`First: $${a+b} \\cdot ${c} - ${d} = ${w}$.`,`Second: $${a} + ${b*c} - ${d} = ${o}$.`,`Difference: $${w} - ${o} = ${w-o}$ — the parentheses made $${a}$ get multiplied by $${c}$ too.`]};}],
+  eval:[()=>{const f=pick([20,25,30,35]),r=pick([0.1,0.15,0.2,0.25]),m=pick([100,120,150,200,240]);const C=Math.round((f+r*m)*100)/100;return{q:`A rental costs $C = ${f} + ${r}m$ dollars for $m$ miles. What does it cost to drive $${m}$ miles?`,type:"number",ans:C,ansTex:`\\$${C}`,hint:"Substitute the number of miles for $m$.",sol:[`$C = ${f} + ${r} \\cdot ${m} = ${f} + ${Math.round(r*m*100)/100} = ${C}$.`,`The $${f}$ is the fixed fee.`]};},
+   ()=>{const c=pick([-10,0,15,20,25,30,35,40]),F=c*9/5+32;return{q:`Convert $${c}^\\circ$C to Fahrenheit with $F = \\tfrac95 C + 32$.`,type:"number",ans:F,ansTex:`${F}^\\circ\\text{F}`,hint:"Multiply by $\\tfrac95$ first, then add $32$.",sol:[`$\\tfrac95 \\cdot ${c} = ${c*9/5}$.`,`$${c*9/5} + 32 = ${F}$.`]};}],
+  simp:[()=>{const a=rnd(2,6),b=rnd(2,9),ok=Math.random()<.4;const right=ok?`${a}x + ${a*b}`:`${a}x + ${b}`;return{q:`Are $${a}(x + ${b})$ and $${right}$ equivalent? (Type yes or no.)`,type:"yn",ans:ok?"YES":"NO",ansTex:ok?"\\text{Yes}":"\\text{No}",hint:"Distribute, or test $x = 0$ in both.",sol:[`$${a}(x + ${b}) = ${a}x + ${a*b}$.`,ok?"Same expression — yes.":`$x = 0$ gives $${a*b}$ and $${b}$ — not equivalent.`]};}],
+  realnum:[()=>{const Q=pick([["$3 + \\sqrt2$","NO","rational + irrational is irrational"],["$\\sqrt{2} \\cdot \\sqrt{8}$","YES","$\\sqrt{16} = 4$"],["$\\tfrac12 + \\tfrac13$","YES","rational + rational is rational"],["$5\\pi$","NO","nonzero rational × irrational is irrational"],["$\\sqrt{3} + \\sqrt{3}$","NO","$2\\sqrt3$ is irrational"],["$(\\sqrt{5})^2$","YES","it equals $5$"]]);return{q:`Is ${Q[0]} rational? (Type yes or no.)`,type:"yn",ans:Q[1],ansTex:Q[1]==="YES"?"\\text{Yes}":"\\text{No}",hint:"Simplify first if you can. Rational + irrational is irrational.",sol:[`${Q[0]}: ${Q[2]}.`]};}]
+ }
+};
+CHAPTERS.forEach(c=>{ const M=A1_PLUS[c.id]||{}, G=A1_CC[c.id]||{}; c.topics.forEach(t=>{ const x=M[t.id]; if(x){ if(x.cc) t.cc=x.cc; if(x.more) t.lesson.more=x.more; }
+  const g=G[t.id]; if(g) [2,3,4].forEach(lv=>{ const orig=t.gen[lv]; if(orig) t.gen[lv]=()=>Math.random()<.4?pick(g)():orig(); }); }); });
+
 const ALLCH=CHAPTERS.map((c,i)=>[i+1,c.title,c.id]).concat(COMING.map((t,i)=>[CHAPTERS.length+i+1,t,null]));
 /* number every lesson as a section: 1.1, 1.2, … */
 CHAPTERS.forEach(c=>{ const n=(ALLCH.find(a=>a[2]===c.id)||[])[0]; if(n) c.topics.forEach((t,i)=>{ if(!/^\d+\.\d+ /.test(t.title)) t.title=n+"."+(i+1)+" "+t.title; }); });
@@ -885,11 +916,12 @@ function openLesson(i,scroll){ LI=i; shown=1; tDone=false; tTries=0; TP=null; ro
 function drawLesson(){
   const t=CH.topics[LI], l=t.lesson, box=$("lesson");
   const inl=false;
-  box.innerHTML=`<span class="label">${inl?`Part 2 of 2 · Name it with symbols`:tlab(t).multi?`${tlab(t).sec} · Part ${tlab(t).k} of ${tlab(t).n}`:`Lesson ${LI+1} of ${CH.topics.length}`}</span><h2>${inl?`Line, ray, segment or length?`:tlab(t).multi?tlab(t).part:t.title}</h2><div class="big">${t.idea}</div>${l.fig||""}<span class="label">👀 Watch me — simplest example</span><p class="watch">I'll solve it one step at a time. Read each step and think about <b>why</b>. When it makes sense, press <b>Got it — next step</b>.</p><ol class="steps">${l.steps.slice(0,shown).map(s=>`<li><div><div class="m">$${s[0]}$</div><div class="w">${s[1]}</div></div></li>`).join("")}</ol>`;
+  box.innerHTML=`<span class="label">${inl?`Part 2 of 2 · Name it with symbols`:tlab(t).multi?`${tlab(t).sec} · Part ${tlab(t).k} of ${tlab(t).n}`:`Lesson ${LI+1} of ${CH.topics.length}`}</span><h2>${inl?`Line, ray, segment or length?`:tlab(t).multi?tlab(t).part:t.title}</h2>${t.cc?`<div class="cctag">Common Core ${t.cc}</div>`:""}<div class="big">${t.idea}</div>${l.fig||""}<span class="label">👀 Watch me — simplest example</span><p class="watch">I'll solve it one step at a time. Read each step and think about <b>why</b>. When it makes sense, press <b>Got it — next step</b>.</p><ol class="steps">${l.steps.slice(0,shown).map(s=>`<li><div><div class="m">$${s[0]}$</div><div class="w">${s[1]}</div></div></li>`).join("")}</ol>`;
   if(shown<l.steps.length){ const b=document.createElement("button"); b.className="btn"; b.style.alignSelf="flex-start"; b.textContent="Got it — next step →"; b.onclick=()=>{ shown++; drawLesson(); }; box.appendChild(b);
     const s=document.createElement("button"); s.className="btn ghost sm"; s.style.alignSelf="flex-start"; s.textContent="Show all steps at once"; s.onclick=()=>{ shown=l.steps.length; drawLesson(); }; box.appendChild(s); }
   else {
     box.insertAdjacentHTML("beforeend",`<div class="warn"><b>Watch out: </b>${l.warn}</div>`);
+    if(l.more) box.insertAdjacentHTML("beforeend",`<span class="label">🧩 More examples — test level &amp; Common Core</span>`+l.more.map((e,j)=>`<div class="mex"><span class="label">${e.tag||("Example "+(j+2))}</span><div class="q">${e.q}</div><ol class="steps">${e.steps.map(s=>`<li><div><div class="m">$${s[0]}$</div><div class="w">${s[1]}</div></div></li>`).join("")}</ol>${e.note?`<div class="warn"><b>Why it matters: </b>${e.note}</div>`:""}</div>`).join(""));
     if(!TP) TP=t.gen[0]();
     const w=document.createElement("div"); w.className="turn";
     w.innerHTML=`<span class="label" style="color:var(--gold)">Your turn</span><div class="q">${TP.q}</div><div class="row"><input type="text" id="tAns" autocomplete="off" placeholder="Your answer" aria-label="Your answer"><button class="btn" id="tChk">Check</button><button class="btn ghost" id="tHint">Hint</button></div><div class="howto">${HOW[TP.type]}</div><div id="tFb"></div>`;

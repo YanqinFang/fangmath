@@ -378,6 +378,9 @@
   .sc-btn:hover{filter:brightness(.97)}
   .simpler{background:var(--gold-soft);border-left:4px solid var(--gold);border-radius:12px;padding:10px 14px;margin-top:8px;font-size:15px;line-height:1.55}
   .simpler b{color:#8A6415}
+  .sub-box{padding:22px 24px}.sub-in{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.2fr);gap:20px;align-items:center}
+  @media (max-width:820px){.sub-in{grid-template-columns:minmax(0,1fr)}}
+  .sub-row{display:flex;gap:8px;flex-wrap:wrap}.sub-row .fin{flex:1;min-width:180px;margin:0}.sub-row select.fin{flex:0 0 160px;min-width:0}
   footer{border-top:1px solid var(--line);margin-top:40px;padding:28px 0 40px;color:var(--muted);font-size:14px}
   footer .in{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
   footer a{color:var(--muted)}
@@ -607,6 +610,8 @@ function routeInner(){
   else if (page === "dashboard") pageDashboard(v);
   else if (page === "student") pageStudent(v, parts[1]);
   else if (page === "privacy") pagePrivacy(v);
+  else if (page === "subscribe") pageSubscribe(v);
+  else if (page === "unsubscribe") pageUnsubscribe(v);
   else if (page === "calendar") { if (typeof pageCalendar === "undefined") notFound(v); else pageCalendar(v, parts[1], parts[2]); }
   else if (page === "worksheets") pageWorksheets(v, parts[1]);
   else if (page === "search") { if (typeof pageSearch === "undefined") notFound(v); else pageSearch(v, parts.slice(1).join("/")); }
@@ -697,6 +702,8 @@ function pageHome(v){
     h("div", { class:"sec-head" }, h("div", {}, h("h2", {}, "The Five Moves"), h("p", {}, "How we solve every problem — from a first look to real mastery."))),
     h("div", { class:"moves" }, [["Observe", "What do you notice? What is it asking?"], ["Simplify", "Try a smaller or easier version."], ["Explore", "Test cases, draw, look for a pattern."], ["Generalize", "Say the rule that always works."], ["Master", "Use it on something new."]]
       .map(([t, d]) => h("div", { class:"move" }, h("b", {}, t), h("span", {}, d)))))));
+
+  v.append(h("section", { class:"block" }, h("div", { class:"wrap" }, subBox("home"))));
 
   v.append(h("section", { class:"block" }, h("div", { class:"wrap" },
     h("div", { class:"sec-head" }, h("div", {}, h("h2", {}, "Practice & review"), h("p", {}, "Quick, fun ways to build fluency."))),
@@ -1493,6 +1500,41 @@ async function pageStudent(v, id){
 }
 
 /* ---------- privacy for families ---------- */
+/* ---------- email newsletter (parents & teachers) ---------- */
+function subBox(source){
+  const email = h("input", { class:"fin", type:"email", autocomplete:"email", placeholder:"you@example.com", "aria-label":"Email" });
+  const role = h("select", { class:"fin", "aria-label":"I am a", style:"max-width:170px" }, h("option", { value:"parent" }, "I'm a parent"), h("option", { value:"teacher" }, "I'm a teacher"), h("option", { value:"other" }, "Other adult"));
+  const ok18 = h("input", { type:"checkbox" });
+  const msg = h("div", { class:"err" });
+  const btn = h("button", { class:"btn teal" }, "Subscribe");
+  const box = h("div", { class:"card sub-box" });
+  btn.onclick = async () => {
+    msg.textContent = ""; msg.className = "err";
+    const e = email.value.trim();
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e)) return msg.textContent = "Please enter a valid email.";
+    if (!ok18.checked) return msg.textContent = "Please confirm you are a parent, teacher or other adult (18+).";
+    if (!accountsOn) return msg.textContent = "Subscriptions are not open yet. Please try again soon.";
+    btn.disabled = true; const { error } = await sb.rpc("fm_subscribe", { p_email: e, p_role: role.value, p_source: source || "" }); btn.disabled = false;
+    if (error) return msg.textContent = netMsg(error.message);
+    put(box, h("div", { style:"font-size:36px" }, "📬"), h("h3", { style:"font-size:22px;margin:4px 0 6px" }, "You're subscribed!"), h("p", { class:"muted", style:"margin:0" }, "The next Weekly Challenge will arrive at " + e + ". You can unsubscribe any time."));
+  };
+  email.addEventListener("keydown", ev => { if (ev.key === "Enter") btn.click(); });
+  put(box, h("div", { class:"sub-in" },
+    h("div", { class:"sub-txt" }, h("h2", { style:"font-size:26px;margin:0 0 6px" }, "📬 The Weekly Challenge, by email"),
+      h("p", { class:"muted", style:"margin:0" }, "One problem to think about together, one learning tip, and what's new on FangMath — once a week, free. For parents and teachers.")),
+    h("div", { class:"sub-form" }, h("div", { class:"sub-row" }, email, role, btn),
+      h("label", { class:"check", style:"margin-top:8px" }, ok18, h("span", {}, "I'm a parent, teacher or other adult (18+). I can unsubscribe any time. ", h("a", { href:"#/privacy" }, "Privacy"))), msg)));
+  return box;
+}
+function pageSubscribe(v){ v.append(h("div", { class:"wrap" }, h("div", { class:"page-head" }, h("h1", {}, "Weekly Challenge by email")), subBox("page"))); }
+function pageUnsubscribe(v){
+  const email = h("input", { class:"fin", type:"email", autocomplete:"email", placeholder:"you@example.com", style:"max-width:340px" });
+  const msg = h("div", { class:"err" }); const btn = h("button", { class:"btn" }, "Unsubscribe");
+  const card = h("div", { class:"card" }, h("p", { style:"margin-top:0" }, "Type the email you subscribed with. We'll stop sending it the Weekly Challenge."), h("div", { class:"sub-row" }, email, btn), msg);
+  btn.onclick = async () => { const e = email.value.trim(); if (!e) return; btn.disabled = true; const { error } = await sb.rpc("fm_unsubscribe", { p_email: e }); btn.disabled = false;
+    if (error) return msg.textContent = netMsg(error.message); put(card, h("p", { style:"margin:0" }, "✓ Done. " + e + " will not get any more emails. Sorry to see you go!")); };
+  v.append(h("div", { class:"wrap" }, h("div", { class:"page-head" }, h("h1", {}, "Unsubscribe")), card));
+}
 function pagePrivacy(v){
   const P = t => h("p", {}, t);
   v.append(h("div", { class:"wrap", style:"max-width:780px" }, h("div", { class:"page-head" }, h("h1", {}, "Privacy for families"), h("p", {}, "Last updated " + fmtDate("2026-09-30"))),
@@ -2046,7 +2088,7 @@ function pageApp(v, cid, ui, mode){
 function notFound(v){ v.append(h("div", { class:"wrap" }, h("div", { class:"page-head" }, h("h1", {}, "Page not found"), h("p", {}, h("a", { href:"#/" }, "← Back home"))))); }
 
 $("yr").textContent = new Date().getFullYear();
-$("footLinks").append(h("span", {}, h("a", { href:"mailto:" + SITE.email }, SITE.email), SITE.youtube ? [" · ", h("a", { href:SITE.youtube, target:"_blank", rel:"noopener" }, "YouTube")] : null, " · ", h("a", { href:SITE.pma, target:"_blank", rel:"noopener" }, "Parents Meet AI")));
+$("footLinks").append(h("span", {}, h("a", { href:"#/subscribe" }, "📬 Weekly email"), " · ", h("a", { href:"mailto:" + SITE.email }, SITE.email), SITE.youtube ? [" · ", h("a", { href:SITE.youtube, target:"_blank", rel:"noopener" }, "YouTube")] : null, " · ", h("a", { href:SITE.pma, target:"_blank", rel:"noopener" }, "Parents Meet AI")));
 /* practice runs from the "at your level" pages that were not saved yet (see practice/fm-levels-bridge.js) */
 async function flushLevels(){
   if (!accountsOn || !kid) return;

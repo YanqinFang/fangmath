@@ -215,6 +215,7 @@
     eocHooks();
     vidInit();
     partsInit();
+    backInit();
     drawHandouts();
     const oc = window.openChapter;
     window.openChapter = function () { const r = oc.apply(this, arguments); try { drawHandouts(); } catch (e) {} return r; };
@@ -1274,6 +1275,14 @@
       ${(N.tryit || []).length ? `<div class="fn-h">Try it</div>` + N.tryit.map(([q, a]) => `<details class="fn-try"><summary>${q}</summary><div>${a}</div></details>`).join("") : ""}
       ${(N.pdf || []).length ? `<div class="fn-pdf">${N.pdf.map(([t, f]) => `<a class="btn sm ghost" href="${f}" target="_blank" rel="noopener">📄 ${esc(t)}</a>`).join("")}</div>` : ""}`;
     if (typeof render === "function") render(box);
+  }
+  /* "← Back to Learn" at the top of the Practice tab */
+  function backInit() {
+    const pv = g("practiceView"); if (!pv || g("fmBackLearn") || typeof setTab !== "function") return;
+    const b = document.createElement("button"); b.type = "button"; b.id = "fmBackLearn"; b.className = "btn ghost sm"; b.style.margin = "0 0 12px";
+    b.textContent = "← Back to Learn the ideas";
+    b.onclick = () => { setTab("learn"); try { if (typeof openLesson === "function" && typeof LI === "number") openLesson(LI); } catch (e) {} (g("tabLearn") || document.body).scrollIntoView({ behavior: "smooth", block: "start" }); };
+    pv.prepend(b);
   }
   function partsInit() {
     const hasNotes = () => !!((window.FM_NOTES || {})[PG.replace(/-levels$/, "")]);

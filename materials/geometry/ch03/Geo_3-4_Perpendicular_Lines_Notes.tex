@@ -1,0 +1,149 @@
+\documentclass[11pt,letterpaper]{article}
+\usepackage[T1]{fontenc}
+\usepackage[scaled]{helvet}
+\renewcommand{\familydefault}{\sfdefault}
+\usepackage{amsmath,amssymb}
+\usepackage[margin=0.8in,bottom=0.9in]{geometry}
+\usepackage[most]{tcolorbox}
+\usepackage{tikz}
+\usetikzlibrary{calc}
+\usepackage{enumitem}
+\usepackage{array}
+\usepackage{needspace}
+\usepackage{fancyhdr}
+\usepackage{pifont}
+
+% ---- Palette "F. Bright & Playful" ----
+\definecolor{fmtitle}{HTML}{3D2C8D}
+\definecolor{fmkey}{HTML}{0096C7}
+\definecolor{fmwatch}{HTML}{2BB673}
+\definecolor{fmturn}{HTML}{F4A100}
+\definecolor{fmmistake}{HTML}{EF476F}
+\definecolor{fmnotice}{HTML}{9B5DE5}
+\definecolor{fmgray}{HTML}{6B6B6B}
+
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
+\fancyfoot[C]{\footnotesize\color{fmgray}\textcopyright\ 2026 FangMath. All rights reserved.}
+\fancyfoot[R]{\footnotesize\color{fmgray}\thepage}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{3pt}
+
+\newcommand{\badge}[1]{\colorbox{fmtitle}{\color{white}\bfseries\small\ #1\ }}
+\newcommand{\leveltag}[2]{\colorbox{#1}{\color{white}\bfseries\scriptsize\ #2\ }}
+\newcommand{\LE}{\leveltag{fmwatch}{EASY}}
+\newcommand{\LM}{\leveltag{fmturn}{MEDIUM}}
+\newcommand{\LH}{\leveltag{fmmistake}{HARD}}
+
+\newcommand{\sectionbar}[2]{\needspace{6cm}\par\vspace{4mm}
+  \begin{tcolorbox}[enhanced,colback=fmtitle,colframe=fmtitle,arc=2mm,
+    left=4mm,top=1.5mm,bottom=1.5mm]
+  \color{white}\bfseries\large #1\hfill{\normalsize\mdseries #2}
+  \end{tcolorbox}}
+
+\newtcolorbox{keyidea}{enhanced,breakable,colback=white,colframe=fmkey,boxrule=1pt,arc=2mm,
+  title={Key Idea},coltitle=fmkey,fonttitle=\bfseries,
+  attach boxed title to top left={xshift=4mm,yshift=-2mm},
+  boxed title style={colback=white,colframe=fmkey,boxrule=0.9pt}}
+\newtcolorbox{watchme}{enhanced,colback=white,colframe=fmwatch,boxrule=1pt,arc=2mm,
+  title={Watch Me --- Worked Example},coltitle=fmwatch,fonttitle=\bfseries,
+  attach boxed title to top left={xshift=4mm,yshift=-2mm},
+  boxed title style={colback=white,colframe=fmwatch,boxrule=0.9pt}}
+\newtcolorbox{mistakebox}{enhanced,breakable,colback=white,colframe=fmmistake,boxrule=1pt,arc=2mm,
+  title={Common Mistake},coltitle=fmmistake,fonttitle=\bfseries,
+  attach boxed title to top left={xshift=4mm,yshift=-2mm},
+  boxed title style={colback=white,colframe=fmmistake,boxrule=0.9pt}}
+\newtcolorbox{yourturn}{enhanced,breakable,colback=white,colframe=fmturn,boxrule=1pt,arc=2mm,
+  title={Your Turn},coltitle=fmturn,fonttitle=\bfseries,
+  attach boxed title to top left={xshift=4mm,yshift=-2mm},
+  boxed title style={colback=white,colframe=fmturn,boxrule=0.9pt}}
+\newtcolorbox{answerbox}[1]{enhanced,breakable,colback=white,colframe=fmwatch,boxrule=1pt,arc=2mm,
+  title={#1},coltitle=fmwatch,fonttitle=\bfseries,
+  attach boxed title to top left={xshift=4mm,yshift=-2mm},
+  boxed title style={colback=white,colframe=fmwatch,boxrule=0.9pt}}
+
+\newcommand{\work}[1]{\par\vspace{#1}}
+\setlist[enumerate]{itemsep=2pt,topsep=3pt}
+
+% ---------------- extra boxes ----------------
+\newtcolorbox{notebox}{enhanced,breakable,colback=white,colframe=fmnotice,boxrule=1pt,arc=2mm,
+  title={Notice},coltitle=fmnotice,fonttitle=\bfseries,
+  attach boxed title to top left={xshift=4mm,yshift=-2mm},
+  boxed title style={colback=white,colframe=fmnotice,boxrule=0.9pt}}
+\newtcolorbox{exbox}{enhanced,colback=white,colframe=fmwatch,boxrule=0.8pt,arc=2mm,
+  title={Example},coltitle=fmwatch,fonttitle=\bfseries\small,
+  attach boxed title to top left={xshift=4mm,yshift=-2mm},
+  boxed title style={colback=white,colframe=fmwatch,boxrule=0.8pt},fontupper=\small}
+\newcommand{\topicbar}[1]{\needspace{4.5cm}\par\vspace{5mm}
+  \begin{tcolorbox}[enhanced,colback=fmtitle,colframe=fmtitle,arc=2mm,left=4mm,top=1.5mm,bottom=1.5mm]
+  \color{white}\bfseries\large #1
+  \end{tcolorbox}}
+\usepackage{multicol}
+
+% ---------------- practice layout ----------------
+\newcommand{\workline}{\par\vspace{7mm}{\color{gray!55}\rule{\linewidth}{0.4pt}}}
+\newcommand{\worklines}[1]{\foreach \i in {1,...,#1}{\workline}}
+\newcommand{\prob}[3]{\needspace{#3}\par\vspace{3mm}{\color{fmturn}\bfseries #1.}\ #2\par}
+\newcommand{\ansline}{\par\vspace{4mm}\hfill\textbf{Answer:}\ \rule{5cm}{0.4pt}\par}
+\newcommand{\keyitem}[3]{\needspace{3.2cm}\par\vspace{2mm}
+  \begin{tcolorbox}[enhanced,colback=white,colframe=fmwatch!60,boxrule=0.6pt,arc=1.5mm,left=3mm,top=1.5mm,bottom=1.5mm]
+  {\color{fmwatch}\bfseries #1.}\quad\small #2\par\vspace{1mm}
+  \normalsize\textbf{Answer: #3}
+  \end{tcolorbox}}
+
+
+\usetikzlibrary{arrows.meta}
+\providecommand{\iskey}{0}
+% fill-in blank: line for students, pink answer in the key
+\newcommand{\fb}[2][2.6cm]{\ifnum\iskey=1 \underline{\makebox[#1][c]{\color{fmmistake}\bfseries #2}}\else\underline{\makebox[#1]{}}\fi}
+% answer line for practice problems
+\newcommand{\pans}[2][3.2cm]{\ifnum\iskey=1 \underline{\makebox[#1][c]{\color{fmmistake}\bfseries #2}}\else\rule{#1}{0.4pt}\fi}
+\newcommand{\vid}[1]{\needspace{5.2cm}\par{\color{fmgray}\small\textit{\ding{43} Video: #1}}}
+\newcommand{\pt}[2]{\fill (#1) circle (2.2pt) node[above=1pt,font=\small]{$#2$};}
+
+\usetikzlibrary{decorations.pathreplacing}
+
+\usetikzlibrary{arrows.meta}
+% parallel lines l, m cut by transversal t; #1 = comma list of angle numbers to highlight
+\newcommand{\tfig}[1][]{\begin{tikzpicture}[scale=0.7]
+\draw[very thick,fmkey,{Stealth}-{Stealth}] (-2.6,1)--(2.6,1) node[right,black]{$\ell$};
+\draw[very thick,fmkey,{Stealth}-{Stealth}] (-2.6,-1)--(2.6,-1) node[right,black]{$m$};
+\draw[very thick,{Stealth}-{Stealth}] (-1.32,-2.2)--(1.32,2.2) node[above]{$t$};
+\foreach \n/\x/\y in {1/-0.02/1.3,2/1.15/1.3,3/0.05/0.7,4/1.22/0.7,5/-1.22/-0.7,6/-0.05/-0.7,7/-1.15/-1.3,8/0.02/-1.3}{\node[font=\small\bfseries] at (\x,\y){\n};}
+\end{tikzpicture}}
+\begin{document}
+\ifnum\iskey=1 \colorbox{fmwatch}{\color{white}\bfseries\small\ ANSWER KEY\ }\else\badge{WATCH \& FILL IN}\fi\hfill{\small\color{fmgray}Geometry \textperiodcentered\ Lesson 3.4}\par\vspace{4mm}
+{\color{fmtitle}\LARGE\bfseries Perpendicular Lines --- Notes\ifnum\iskey=1 \ --- Answer Key\fi}\par\vspace{1mm}
+{\color{fmgray}Watch the video and fill in each blank. Pause when you see ``Your turn.''}\par\vspace{3mm}
+Name: \rule{6cm}{0.4pt}\hspace{1cm}Date: \rule{3.5cm}{0.4pt}\par\vspace{2mm}
+
+
+\vid{Perpendicular lines}
+\begin{keyidea}\fb[2.8cm]{Perpendicular} lines meet at a \fb[2.4cm]{right angle} ($90^\circ$). \ Symbol: $a$ \fb[1cm]{$\perp$} $b$.\par\vspace{1mm}
+In a picture, a little \fb[1.6cm]{square} marks a right angle.\end{keyidea}
+
+\vid{Linear pair of congruent angles}
+\begin{watchme}$\angle 1$ and $\angle 2$ form a linear pair: \ $m\angle 1 + m\angle 2 = $ \fb[1.4cm]{$180^\circ$}\par\vspace{1mm}
+If $\angle 1 \cong \angle 2$, each is $180 \div 2 = $ \fb[1.4cm]{$90^\circ$}.\par\vspace{1mm}
+So two lines that form a linear pair of congruent angles are \fb[3cm]{perpendicular}.\end{watchme}
+
+\vid{Two lines perpendicular to the same line}
+\begin{keyidea}In a plane: if $a \perp t$ and $b \perp t$, then $a$ \fb[1cm]{$\parallel$} $b$.\par\vspace{1mm}
+Why: both make $90^\circ$ \fb[3cm]{corresponding} angles with $t$, so the angles are congruent.\end{keyidea}
+
+\vid{Distance from a point to a line}
+\begin{keyidea}\begin{minipage}[c]{0.34\linewidth}\centering \begin{tikzpicture}[scale=0.7]\draw[very thick,{Stealth}-{Stealth}] (-2.4,0)--(2.4,0) node[right]{$\ell$};\fill (0,2) circle(2.5pt) node[above]{$P$};\draw[very thick,fmkey] (0,2)--(0,0);\fill (0,0) circle(2.2pt) node[below]{$Q$};\draw (0,0)--(0.25,0)--(0.25,0.25)--(0,0.25);\draw[thick,dashed,fmmistake] (0,2)--(-1.6,0) (0,2)--(1.3,0);\end{tikzpicture}\end{minipage}\hfill
+\begin{minipage}[c]{0.62\linewidth}Drop a segment from $P$ straight to the line: $\overline{PQ}$ \fb[1cm]{$\perp$} $\ell$.\par\vspace{1mm}
+Every slanted path is \fb[1.6cm]{longer} than $PQ$.\par\vspace{1mm}
+Distance from a point to a line $=$ length of the \fb[3cm]{perpendicular} segment --- the \fb[2cm]{shortest} path.\end{minipage}\end{keyidea}
+
+\vid{Watch out}
+\begin{mistakebox}Only the \fb[3cm]{perpendicular} segment measures the distance to a line --- not a slanted one.\end{mistakebox}
+
+\vid{Your turn}
+\begin{yourturn}Point $P(3, 5)$ and the line $y = 1$. What is the distance from $P$ to the line?\par\vspace{2mm}
+Go straight down to \fb[1.6cm]{$(3, 1)$}. \quad Distance $= 5 - 1 = $ \fb[1.2cm]{$4$}\end{yourturn}
+
+\begin{notebox}\textbf{Remember:}\quad Perpendicular lines meet at $90^\circ$.\quad A linear pair of congruent angles means perpendicular.\quad Distance to a line $=$ the perpendicular segment, the shortest path.\end{notebox}
+\end{document}

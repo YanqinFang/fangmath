@@ -25,6 +25,7 @@ window.FM_VIDEOS = {
     "2.4": "https://youtu.be/j6fpAfKB-ck",
     "2.5": "https://youtu.be/acwvcHY3Svg",
     "2.6": "https://youtu.be/HAOJKmC4dPk",
+    "3.1": "https://youtu.be/hiXgM5WzBkw",
   },
   algebra1: {},
   algebra2: {},
@@ -52,5 +53,10 @@ window.FM_HANDOUTS = {
     "2.4": "../materials/geometry/ch02/Geo_2-4_Algebraic_Reasoning",
     "2.5": "../materials/geometry/ch02/Geo_2-5_Two_Column_Proofs",
     "2.6": "../materials/geometry/ch02/Geo_2-6_Proving_Angles",
+    "3.1": "../materials/geometry/ch03/Geo_3-1_Pairs_of_Lines_Angles",
+    "3.2": "../materials/geometry/ch03/Geo_3-2_Parallel_Lines_Transversals",
+    "3.3": "../materials/geometry/ch03/Geo_3-3_Proving_Lines_Parallel",
+    "3.4": "../materials/geometry/ch03/Geo_3-4_Perpendicular_Lines",
+    "3.5": "../materials/geometry/ch03/Geo_3-5_Equations_Parallel_Perpendicular",
   },
 };

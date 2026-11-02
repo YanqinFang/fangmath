@@ -97,6 +97,9 @@ button:focus-visible,input:focus{outline:2px solid var(--teal);outline-offset:1p
 .tab.on{color:var(--teal);border-bottom-color:var(--teal)}
 .learn,.pview{display:flex;flex-direction:column;gap:20px}
 .road{display:flex;gap:8px;flex-wrap:wrap}
+.lesson .lsub{margin:2px 0 4px}.lesson .lsubh{display:flex;align-items:center;gap:8px;font-family:Fraunces,Georgia,serif;font-size:19px;font-weight:600;margin:6px 0 2px}
+.lesson .lsubh .gn{width:26px;height:26px;border-radius:50%;background:var(--navy);color:#fff;display:grid;place-items:center;font-family:Inter,sans-serif;font-size:13px}
+.lesson .wfoot{display:flex;align-items:center;justify-content:space-between;gap:10px;border-top:1px solid var(--line);padding-top:12px;margin-top:6px}.lesson .wfoot .wcount{color:var(--faint);font-size:13px}
 .stop{display:flex;align-items:center;gap:8px;border:1.5px solid var(--line);background:var(--surface);border-radius:999px;padding:6px 14px 6px 6px;cursor:pointer;font-size:14px;font-weight:600;color:var(--ink)}
 .stop i{font-style:normal;width:24px;height:24px;border-radius:50%;display:grid;place-items:center;background:var(--bg);font-size:12px;border:1.5px solid var(--line)}
 .stop.done i{background:var(--green);border-color:var(--green);color:#fff}
@@ -1302,16 +1305,27 @@ $("placeBtn").onclick=()=>{
 let LI=0, shown=1, TP=null, tDone=false, tTries=0;
 window.fmMarkLearned=id=>{ if(st){ st.learned[id]=true; save(); road(); } };   // used by geometry-words.js
 function road(){ const r=$("road"); r.innerHTML=""; const G=sections().find(g=>g.idx.includes(LI)); r.classList.toggle("single",!G||G.idx.length<2); secList(); CH.topics.forEach((t,i)=>{ const b=document.createElement("button"); b.type="button"; b.className="stop"+(st.learned[t.id]?" done":"")+(i===LI?" on":"")+(G&&!G.idx.includes(i)?" other":""); const sm=/^(\d+\.\d+) (.*)$/.exec(t.title); const tl=tlab(t); b.innerHTML=`<i>${st.learned[t.id]?"✓":tl.multi&&G&&G.idx.includes(i)?tl.k:sm?sm[1]:i+1}</i>${sm?sm[2]:t.title}`; b.onclick=()=>openLesson(i); r.appendChild(b); }); }
-function openLesson(i,scroll){ LI=i; shown=1; tDone=false; tTries=0; TP=null; road(); if($("topics")&&st){ const G=sections().find(g=>g.idx.includes(i)); if(T&&G&&!G.idx.includes(CH.topics.indexOf(T))) $("practice").hidden=true; topics(); } if(window.drawStory) drawStory(CH.id,CH.topics[i]); drawLesson(); if(scroll) ($("story")||$("lesson")).scrollIntoView({behavior:"smooth",block:"start"}); }
+let LSTEP=0;
+function openLesson(i,scroll){ LI=i; shown=1; LSTEP=0; tDone=false; tTries=0; TP=null; road(); if($("topics")&&st){ const G=sections().find(g=>g.idx.includes(i)); if(T&&G&&!G.idx.includes(CH.topics.indexOf(T))) $("practice").hidden=true; topics(); } if(window.drawStory) drawStory(CH.id,CH.topics[i]); drawLesson(); if(scroll) ($("story")||$("lesson")).scrollIntoView({behavior:"smooth",block:"start"}); }
 function drawLesson(){
   const t=CH.topics[LI], l=t.lesson, box=$("lesson");
   const inl=window.GEOMETRY_WORDS&&GEOMETRY_WORDS[CH.id]&&GEOMETRY_WORDS[CH.id].inLesson===t.id;   // e.g. 1.1: the words card above IS the lesson
   box.hidden=!!inl; if(inl) return;
-  box.innerHTML=`<span class="label">${inl?`Part 2 of 2 · Name it with symbols`:tlab(t).multi?`${tlab(t).sec} · Part ${tlab(t).k} of ${tlab(t).n}`:`Lesson ${LI+1} of ${CH.topics.length}`}</span><h2>${inl?`Line, ray, segment or length?`:tlab(t).multi?tlab(t).part:t.title}</h2><div class="big">${t.idea}</div>${l.fig||""}<span class="label">👀 Watch me — simplest example</span><p class="watch">I'll solve it one step at a time. Read each step and think about <b>why</b>. When it makes sense, press <b>Got it — next step</b>.</p><ol class="steps">${l.steps.slice(0,shown).map(s=>`<li><div><div class="m">$${s[0]}$</div><div class="w">${s[1]}</div></div></li>`).join("")}</ol>`;
-  if(shown<l.steps.length){ const b=document.createElement("button"); b.className="btn"; b.style.alignSelf="flex-start"; b.textContent="Got it — next step →"; b.onclick=()=>{ shown++; drawLesson(); }; box.appendChild(b);
-    const s=document.createElement("button"); s.className="btn ghost sm"; s.style.alignSelf="flex-start"; s.textContent="Show all steps at once"; s.onclick=()=>{ shown=l.steps.length; drawLesson(); }; box.appendChild(s); }
-  else {
-    box.insertAdjacentHTML("beforeend",`<div class="warn"><b>Watch out: </b>${l.warn}</div>`);
+  /* like 1.1: the lesson is shown in small steps — ① The idea → ② Watch me → ③ Your turn — with Next at the bottom */
+  const SUB=[["The idea","💡"],["Watch me","👀"],["Your turn","✏️"]];
+  const head=`<span class="label">${tlab(t).multi?`${tlab(t).sec} · Part ${tlab(t).k} of ${tlab(t).n}`:`Lesson ${LI+1} of ${CH.topics.length}`}</span><h2>${tlab(t).multi?tlab(t).part:t.title}</h2>
+    <div class="wnav lsub" role="tablist">${SUB.map(([n],i)=>`<button type="button" role="tab" data-ls="${i}" class="${i===LSTEP?"on":""}${i<LSTEP?" past":""}" aria-selected="${i===LSTEP}"><i>${i+1}</i><span>${n}</span></button>`).join("")}</div>
+    <h4 class="lsubh"><span class="gn">${LSTEP+1}</span>${SUB[LSTEP][1]} ${LSTEP===0?"The big idea":LSTEP===1?"Watch me — simplest example":"Your turn — try one yourself"}</h4>`;
+  const foot=()=>{ const f=document.createElement("div"); f.className="wfoot"; f.innerHTML=`${LSTEP?`<button type="button" class="btn ghost sm" data-ls="${LSTEP-1}">← Back</button>`:"<span></span>"}<span class="wcount">${LSTEP+1} of 3</span>${LSTEP<2?`<button type="button" class="btn sm" data-ls="${LSTEP+1}">Next: ${SUB[LSTEP+1][0]} →</button>`:"<span></span>"}`; return f; };
+  const wire=()=>box.querySelectorAll("[data-ls]").forEach(b=>b.onclick=()=>{ LSTEP=+b.dataset.ls; if(LSTEP===1&&shown<1) shown=1; drawLesson(); box.scrollIntoView({behavior:"smooth",block:"start"}); });
+  if(LSTEP===0){ box.innerHTML=head+`<div class="big">${t.idea}</div>${l.fig||""}`; box.appendChild(foot()); wire(); render(box); return; }
+  if(LSTEP===1){ box.innerHTML=head+`<p class="watch">I'll solve it one step at a time. Read each step and think about <b>why</b>. When it makes sense, press <b>Got it — next step</b>.</p><ol class="steps">${l.steps.slice(0,shown).map(s=>`<li><div><div class="m">$${s[0]}$</div><div class="w">${s[1]}</div></div></li>`).join("")}</ol>`;
+    if(shown<l.steps.length){ const b=document.createElement("button"); b.className="btn"; b.style.alignSelf="flex-start"; b.textContent="Got it — next step →"; b.onclick=()=>{ shown++; drawLesson(); }; box.appendChild(b);
+      const s=document.createElement("button"); s.className="btn ghost sm"; s.style.alignSelf="flex-start"; s.textContent="Show all steps at once"; s.onclick=()=>{ shown=l.steps.length; drawLesson(); }; box.appendChild(s); }
+    else box.insertAdjacentHTML("beforeend",`<div class="warn"><b>Watch out: </b>${l.warn}</div>`);
+    box.appendChild(foot()); wire(); render(box); return; }
+  box.innerHTML=head;
+  {
     if(!TP) TP=t.gen[0]();
     const w=document.createElement("div"); w.className="turn";
     w.innerHTML=`<span class="label" style="color:var(--gold)">Your turn</span><div class="q">${TP.q}</div><div class="row"><input type="text" id="tAns" autocomplete="off" placeholder="Your answer" aria-label="Your answer"><button class="btn" id="tChk">Check</button><button class="btn ghost" id="tHint">Hint</button></div><div class="howto">${HOW[TP.type]}</div><div id="tFb"></div>`;
@@ -1327,6 +1341,7 @@ function drawLesson(){
       tTries++; if(tTries<2) fbx("bad","Not yet",TP.hint+" Try again."); else { fbx("hint","Answer",`$${TP.ansTex}$. Try another one to make sure.`); const a=document.createElement("button"); a.className="btn ghost sm"; a.textContent="Try another"; a.onclick=()=>{ TP=t.gen[0](); tTries=0; drawLesson(); }; $("tFb").appendChild(a); } };
     $("tChk").onclick=go; $("tAns").addEventListener("keydown",e=>{ if(e.key==="Enter"){ e.preventDefault(); go(); } }); $("tHint").onclick=()=>fbx("hint","Hint",TP.hint);
     if(st.learned[t.id]) showNext();
+    box.appendChild(foot()); wire();
   }
   render(box);
 }

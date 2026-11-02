@@ -244,6 +244,7 @@
   nav.main a.acct:hover{background:var(--navy);filter:brightness(1.12)}
   @media (max-width:860px){nav.main a.acct{margin:6px 0 0;text-align:center}}
   .login-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:18px;align-items:start}
+  .login-one{max-width:520px}.login-as{display:flex;align-items:center;gap:12px;margin:0 0 14px;font-size:17px}.login-as .fin{margin:0}
   .login-grid.three{grid-template-columns:repeat(3,minmax(0,1fr))}
   @media (max-width:1020px){.login-grid.three{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}}
   @media (max-width:820px){.login-grid,.login-grid.three{grid-template-columns:minmax(0,1fr)}}
@@ -1241,10 +1242,16 @@ function challengeSubmit(ch, scored){
 /* ---------- sign-in page ---------- */
 function pageLogin(v){
   if (!accountsOn) return v.append(h("div", { class:"wrap" }, h("div", { class:"page-head" }, h("h1", {}, "Accounts coming soon"))));
-  const kidCard = h("div", { class:"card" }), parentCard = h("div", { class:"card" }), teacherCard = h("div", { class:"card" });
+  let who = "student"; try { who = localStorage.getItem("fm-login-as") || "student"; } catch (e) {}
+  const card = h("div", { class:"card" });
+  const sel = h("select", { class:"fin", id:"loginAs", style:"max-width:260px" },
+    [["student", "🎒 Student"], ["parent", "👪 Parent"], ["teacher", "🍎 Teacher"]].map(([k, t]) => h("option", { value:k, selected: k === who ? true : null }, t)));
+  const show = () => { who = sel.value; try { localStorage.setItem("fm-login-as", who); } catch (e) {}
+    if (who === "student") kidStep1(card); else adultForm(card, "login", who); };
+  sel.onchange = show;
   v.append(h("div", { class:"wrap" }, h("div", { class:"page-head" }, h("h1", {}, "Sign in"), h("p", {}, "Free for everyone. Students sign in with a code from a parent or teacher. Parents and teachers use email.")),
-    h("div", { class:"login-grid three" }, kidCard, parentCard, teacherCard)));
-  kidStep1(kidCard); adultForm(parentCard, "login", "parent"); adultForm(teacherCard, "login", "teacher");
+    h("div", { class:"login-one" }, h("label", { class:"login-as", for:"loginAs" }, h("b", {}, "I am a"), sel), card)));
+  show();
 }
 function kidStep1(card, prefill){
   const err = h("div", { class:"err" });

@@ -693,6 +693,167 @@ const A1_CC={
 CHAPTERS.forEach(c=>{ const M=A1_PLUS[c.id]||{}, G=A1_CC[c.id]||{}; c.topics.forEach(t=>{ const x=M[t.id]; if(x){ if(x.cc) t.cc=x.cc; if(x.more) t.lesson.more=x.more; }
   const g=G[t.id]; if(g) [2,3,4].forEach(lv=>{ const orig=t.gen[lv]; if(orig) t.gen[lv]=()=>Math.random()<.4?pick(g)():orig(); }); }); });
 
+const A1_PLUS2={
+ ch2:{
+  two:{cc:"A-REI.1, A-REI.3",more:[
+   {tag:"Example 2 · Test level",q:"Solve $\\dfrac{x}{4} - 7 = 3$.",steps:[["\\dfrac{x}{4} = 10","Add $7$ to both sides (undo the subtraction first)."],["x = 40","Multiply both sides by $4$."],["\\tfrac{40}{4} - 7 = 3 \\ ✓","Check."]]},
+   {tag:"Example 3 · Real world",q:"A gym charges $\\$40$ to join plus $\\$15$ a month. Mia paid $\\$160$. How many months has she been a member? Write and solve an equation.",steps:[["40 + 15m = 160","Fee + monthly cost = total."],["15m = 120","Subtract $40$."],["m = 8 \\text{ months}","Divide by $15$."]]}]},
+  multi:{cc:"A-REI.1, A-REI.3",more:[
+   {tag:"Example 2 · Test level",q:"Solve $5(x - 2) - 3x = 14$.",steps:[["5x - 10 - 3x = 14","Distribute."],["2x - 10 = 14","Combine like terms."],["2x = 24 \\Rightarrow x = 12","Add $10$, divide by $2$."]]},
+   {tag:"Example 3 · Explain each step",q:"Solve $\\dfrac{2x + 1}{3} = 5$ and name the property used in each step.",steps:[["2x + 1 = 15","Multiplication Property of Equality (× 3)."],["2x = 14","Subtraction Property of Equality."],["x = 7","Division Property of Equality."]],note:"A-REI.1 asks you to <b>explain</b> each step — every move must keep the equation balanced."}]},
+  both:{cc:"A-REI.3, A-CED.4",more:[
+   {tag:"Example 2 · Test level",q:"Solve $7x - 4 = 3x + 20$.",steps:[["4x - 4 = 20","Subtract $3x$ from both sides."],["4x = 24 \\Rightarrow x = 6","Add $4$, divide by $4$."]]},
+   {tag:"Example 3 · Literal equation",q:"Solve $A = \\tfrac12 h(b_1 + b_2)$ for $h$. Then find $h$ when $A = 60$, $b_1 = 7$, $b_2 = 8$.",steps:[["2A = h(b_1 + b_2)","Multiply both sides by $2$."],["h = \\dfrac{2A}{b_1 + b_2}","Divide by $(b_1 + b_2)$."],["h = \\dfrac{120}{15} = 8","Use the new formula."]]}]}
+ },
+ ch3:{
+  one:{cc:"A-REI.3, A-CED.1",more:[
+   {tag:"Example 2 · Test level",q:"Solve $-3x + 5 \\ge 17$ and graph it.",steps:[["-3x \\ge 12","Subtract $5$."],["x \\le -4","Divide by $-3$ and <b>flip</b> the sign."],["\\text{closed dot at } -4,\\ \\text{shade left}","$\\le$ includes $-4$."]]},
+   {tag:"Example 3 · Real world",q:"Leo has $\\$50$ and wants to buy a $\\$14$ book plus as many $\\$4$ notebooks as possible. How many notebooks can he buy?",steps:[["14 + 4n \\le 50","Total cost must be at most $\\$50$."],["4n \\le 36 \\Rightarrow n \\le 9","Solve."],["n = 9","Notebooks come in whole numbers."]]}]},
+  multi:{cc:"A-REI.3",more:[
+   {tag:"Example 2 · Compound “and”",q:"Solve $-2 < 3x + 4 \\le 13$.",steps:[["-6 < 3x \\le 9","Subtract $4$ from all three parts."],["-2 < x \\le 3","Divide all three parts by $3$."]]},
+   {tag:"Example 3 · Compound “or”",q:"Solve $2x - 1 < -5$ or $x + 3 > 8$.",steps:[["x < -2","First inequality."],["x > 5","Second inequality."],["x < -2 \\text{ or } x > 5","Two separate pieces on the number line."]]}]},
+  abs:{cc:"A-REI.3, A-CED.1",more:[
+   {tag:"Example 2 · Test level",q:"Solve $|2x - 3| \\le 7$.",steps:[["-7 \\le 2x - 3 \\le 7","“Less than” → in between."],["-4 \\le 2x \\le 10","Add $3$."],["-2 \\le x \\le 5","Divide by $2$."]]},
+   {tag:"Example 3 · Tolerance",q:"A machine cuts rods that should be $50$ cm, with an error of at most $0.2$ cm. Write and solve an inequality for acceptable lengths $L$.",steps:[["|L - 50| \\le 0.2","Distance from 50 is at most 0.2."],["49.8 \\le L \\le 50.2","Solve."]],note:"Absolute value inequalities describe “close enough” in real measuring."}]}
+ },
+ ch4:{
+  feval:{cc:"F-IF.2",more:[
+   {tag:"Example 2 · Test level",q:"$f(x) = x^2 - 3x$. Find $f(-2)$ and $f(a + 1)$.",steps:[["f(-2) = 4 + 6 = 10","Replace $x$ with $(-2)$."],["f(a+1) = (a+1)^2 - 3(a+1)","Replace $x$ with $(a + 1)$."],["= a^2 - a - 2","Expand and combine."]]},
+   {tag:"Example 3 · Interpret",q:"$h(t) = -16t^2 + 64t$ is a ball's height (ft) after $t$ seconds. Find and explain $h(2)$.",steps:[["h(2) = -64 + 128 = 64","Evaluate."],["\\text{After 2 s the ball is 64 ft high}","Say what the input and output mean."]]}]},
+  dom:{cc:"F-IF.1, F-IF.5",more:[
+   {tag:"Example 2 · Test level",q:"Is $\\{(1, 3), (2, 5), (1, 7)\\}$ a function?",steps:[["x = 1 \\text{ goes to } 3 \\text{ and } 7","One input, two outputs."],["\\text{Not a function}","Each input must have exactly one output."]]},
+   {tag:"Example 3 · Domain in context",q:"A bakery pays $\\$2$ per cupcake to make up to $40$ cupcakes a day: $C(n) = 2n$. Find a sensible domain and range.",steps:[["n = 0, 1, 2, \\ldots, 40","Whole numbers of cupcakes, at most 40."],["C = 0, 2, 4, \\ldots, 80","Matching costs."]],note:"In real problems the domain is often whole numbers with a limit (F-IF.5)."}]},
+  model:{cc:"F-BF.1, F-LE.1",more:[
+   {tag:"Example 2 · Test level",q:"A taxi charges $\\$3$ plus $\\$2$ per mile. Write $C(m)$ and find the cost of $7$ miles.",steps:[["C(m) = 2m + 3","Rate times miles plus start fee."],["C(7) = 17","$\\$17$."]]},
+   {tag:"Example 3 · Table to rule",q:"$x$: 0, 1, 2, 3 and $y$: 5, 8, 11, 14. Write the function.",steps:[["\\text{Each step: } +3","Constant change → linear."],["\\text{Start: } y = 5 \\text{ at } x = 0","The $y$-intercept."],["y = 3x + 5","Rule."]]}]}
+ },
+ ch5:{
+  slope:{cc:"F-IF.6, 8.EE.6",more:[
+   {tag:"Example 2 · Test level",q:"Find the slope through $(-3, 4)$ and $(5, -2)$.",steps:[["m = \\dfrac{-2 - 4}{5 - (-3)}","Rise over run."],["= \\dfrac{-6}{8} = -\\dfrac34","Simplify."]]},
+   {tag:"Example 3 · Rate of change",q:"A car's gas drops from $14$ gal at $1$ pm to $8$ gal at $4$ pm. Find and interpret the slope.",steps:[["m = \\dfrac{8 - 14}{4 - 1} = -2","Gallons per hour."],["\\text{The car uses 2 gallons each hour}","Negative = decreasing."]]}]},
+  int:{cc:"F-IF.4, A-CED.2",more:[
+   {tag:"Example 2 · Test level",q:"Find the intercepts of $4x - 5y = 20$.",steps:[["y = 0:\\ x = 5","$x$-intercept $(5, 0)$."],["x = 0:\\ y = -4","$y$-intercept $(0, -4)$."]]},
+   {tag:"Example 3 · Interpret",q:"A gift card: $B = 60 - 4c$ after $c$ coffees. Find and explain both intercepts.",steps:[["c = 0:\\ B = 60","Starting balance $\\$60$."],["B = 0:\\ c = 15","After 15 coffees the card is empty."]]}]},
+  si:{cc:"F-IF.7a, A-CED.2",more:[
+   {tag:"Example 2 · Test level",q:"Write $6x + 3y = 9$ in slope-intercept form and graph it.",steps:[["3y = -6x + 9","Subtract $6x$."],["y = -2x + 3","Divide by $3$."],["\\text{Start at } (0, 3),\\ \\text{down 2, right 1}","Graph."]]},
+   {tag:"Example 3 · Compare",q:"Plan A: $y = 10x + 20$. Plan B: $y = 15x$. When does B cost more?",steps:[["15x > 10x + 20","Set up."],["5x > 20 \\Rightarrow x > 4","Solve."],["\\text{After 4 months B is more}","Interpret."]]}]}
+ },
+ ch6:{
+  write:{cc:"A-CED.2, F-LE.2",more:[
+   {tag:"Example 2 · Test level",q:"Write the line through $(2, 1)$ and $(6, 9)$.",steps:[["m = \\dfrac{8}{4} = 2","Slope first."],["y - 1 = 2(x - 2)","Point-slope."],["y = 2x - 3","Simplify."]]},
+   {tag:"Example 3 · From a story",q:"A plant is $6$ cm tall after $2$ weeks and $15$ cm after $5$ weeks, growing at a steady rate. Write $h(w)$.",steps:[["m = \\dfrac{15 - 6}{5 - 2} = 3","cm per week."],["6 = 3(2) + b \\Rightarrow b = 0","Find the start."],["h = 3w","It started at 0 cm."]]}]},
+  std:{cc:"A-CED.2, G-GPE.5",more:[
+   {tag:"Example 2 · Test level",q:"Write $y = \\tfrac23 x - 4$ in standard form $Ax + By = C$ with integers.",steps:[["3y = 2x - 12","Multiply by $3$."],["-2x + 3y = -12 \\Rightarrow 2x - 3y = 12","Move $x$ and make $A$ positive."]]},
+   {tag:"Example 3 · Budget",q:"Tickets cost $\\$5$ (kids) and $\\$8$ (adults). A group spends $\\$80$. Write the equation and give two possible groups.",steps:[["5k + 8a = 80","Standard form fits “total” problems."],["(16, 0),\\ (8, 5)","Check: $40 + 40 = 80$ ✓"]]}]},
+  apply:{cc:"F-LE.5, S-ID.7",more:[
+   {tag:"Example 2 · Interpret",q:"A model says $p = 1.5t + 20$ (price in dollars, $t$ years after 2020). Explain $1.5$ and $20$.",steps:[["20:\\ \\text{price in 2020}","$y$-intercept."],["1.5:\\ \\text{price goes up \\$1.50 per year}","Slope."]]},
+   {tag:"Example 3 · Predict",q:"Use $p = 1.5t + 20$ to predict the price in 2030.",steps:[["t = 10","2030 is 10 years after 2020."],["p = 15 + 20 = 35","$\\$35$ (if the trend continues)."]]}]}
+ },
+ ch7:{
+  solve:{cc:"A-REI.6, A-REI.5",more:[
+   {tag:"Example 2 · Elimination",q:"Solve $3x + 2y = 16$ and $x - 2y = 0$.",steps:[["4x = 16","Add the equations: $y$ cancels."],["x = 4,\\ y = 2","Back-substitute."]]},
+   {tag:"Example 3 · Why elimination works",q:"Why can you add two equations together?",steps:[["\\text{Both sides of each equation are equal}","Adding equal amounts to equal amounts keeps them equal."],["\\text{The new equation has the same solution}","A-REI.5: replacing an equation by a sum keeps the solutions."]]}]},
+  nsol:{cc:"A-REI.6",more:[
+   {tag:"Example 2 · Test level",q:"How many solutions: $y = 3x + 1$ and $6x - 2y = 4$?",steps:[["y = 3x - 2","Rewrite the second."],["\\text{same slope, different intercept}","Parallel lines."],["\\text{No solution}","They never meet."]]},
+   {tag:"Example 3 · Choose k",q:"For what $k$ does $y = 2x + 5$ and $y = kx + 1$ have exactly one solution?",steps:[["k \\ne 2","Different slopes always cross once."]]}]},
+  word:{cc:"A-CED.3, A-REI.6",more:[
+   {tag:"Example 2 · Test level",q:"Adult tickets cost $\\$9$, child tickets $\\$5$. 12 tickets cost $\\$84$. How many adults?",steps:[["a + c = 12,\\ 9a + 5c = 84","Count and money."],["9a + 5(12 - a) = 84 \\Rightarrow 4a = 24","Substitute."],["a = 6,\\ c = 6","Check: $54 + 30 = 84$ ✓"]]},
+   {tag:"Example 3 · Mixture",q:"Mix a 10% salt solution with a 40% one to get 30 L of 20%. How much of each?",steps:[["x + y = 30","Total volume."],["0.1x + 0.4y = 6","Total salt: 20% of 30."],["x = 20,\\ y = 10","Solve."]]}]}
+ },
+ ch8:{
+  rules:{cc:"N-RN.1, 8.EE.1",more:[
+   {tag:"Example 2 · Test level",q:"Simplify $\\dfrac{(2x^3)^2 \\cdot x^4}{4x^5}$.",steps:[["4x^6 \\cdot x^4 = 4x^{10}","Power of a power, then product rule."],["\\dfrac{4x^{10}}{4x^5} = x^5","Quotient rule."]]},
+   {tag:"Example 3 · Why",q:"Why is $a^3 \\cdot a^4 = a^7$?",steps:[["(a \\cdot a \\cdot a)(a \\cdot a \\cdot a \\cdot a)","Write out the factors."],["7 \\text{ factors of } a","Count them."]]}]},
+  neg:{cc:"N-RN.1, 8.EE.1",more:[
+   {tag:"Example 2 · Test level",q:"Simplify $\\dfrac{3x^{-2}y^3}{x^4 y^{-1}}$.",steps:[["3x^{-2-4}y^{3-(-1)}","Quotient rule on each letter."],["3x^{-6}y^4 = \\dfrac{3y^4}{x^6}","Move the negative power down."]]},
+   {tag:"Example 3 · Why a⁰ = 1",q:"Explain why $5^0 = 1$.",steps:[["\\dfrac{5^3}{5^3} = 1","Anything over itself is 1."],["\\dfrac{5^3}{5^3} = 5^{3-3} = 5^0","Quotient rule."],["5^0 = 1","The rules agree only if $5^0 = 1$."]]}]},
+  sci:{cc:"8.EE.3, 8.EE.4, F-LE.1",more:[
+   {tag:"Example 2 · Test level",q:"Compute $(3 \\times 10^5)(4 \\times 10^{-2})$ in scientific notation.",steps:[["12 \\times 10^{3}","Multiply the numbers, add the exponents."],["1.2 \\times 10^4","Fix so the first number is from 1 to 10."]]},
+   {tag:"Example 3 · Growth",q:"A town of $5000$ grows 3% per year. Write the model and find the population after 4 years.",steps:[["P = 5000(1.03)^t","Multiply by 1.03 each year."],["P(4) \\approx 5628","Evaluate."]]}]}
+ },
+ ch9:{
+  add:{cc:"A-APR.1",more:[
+   {tag:"Example 2 · Test level",q:"Subtract $(4x^2 - 3x + 2) - (x^2 + 5x - 7)$.",steps:[["4x^2 - 3x + 2 - x^2 - 5x + 7","Change every sign in the second."],["3x^2 - 8x + 9","Combine like terms."]]},
+   {tag:"Example 3 · Perimeter",q:"A rectangle has length $3x + 2$ and width $x - 1$. Write its perimeter.",steps:[["2(3x + 2) + 2(x - 1)","Two lengths and two widths."],["6x + 4 + 2x - 2 = 8x + 2","Combine."]]}]},
+  mul:{cc:"A-APR.1",more:[
+   {tag:"Example 2 · Test level",q:"Multiply $(2x - 3)(x^2 + 4x - 1)$.",steps:[["2x^3 + 8x^2 - 2x","$2x$ times each term."],["-3x^2 - 12x + 3","$-3$ times each term."],["2x^3 + 5x^2 - 14x + 3","Combine."]]},
+   {tag:"Example 3 · Area",q:"A square garden of side $x$ gets a path $2$ m wide around it. Write the total area.",steps:[["(x + 4)^2","The side grows by 2 on each end."],["x^2 + 8x + 16","Square of a binomial."]]}]},
+  div:{cc:"A-APR.6",more:[
+   {tag:"Example 2 · Test level",q:"Divide $\\dfrac{6x^3 - 9x^2 + 3x}{3x}$.",steps:[["2x^2 - 3x + 1","Divide each term by $3x$."]]},
+   {tag:"Example 3 · Check",q:"Is $(x - 2)$ a factor of $x^2 + x - 6$?",steps:[["x^2 + x - 6 = (x - 2)(x + 3)","Divide or factor."],["\\text{Remainder } 0 \\Rightarrow \\text{yes}","A factor leaves no remainder."]]}]}
+ },
+ ch10:{
+  gcf:{cc:"A-SSE.2",more:[
+   {tag:"Example 2 · Test level",q:"Factor $12x^3 - 18x^2$.",steps:[["\\text{GCF} = 6x^2","Largest common factor."],["6x^2(2x - 3)","Divide each term by the GCF."]]},
+   {tag:"Example 3 · Structure",q:"Factor $x^4 - 16$ completely.",steps:[["(x^2 - 4)(x^2 + 4)","Difference of squares."],["(x - 2)(x + 2)(x^2 + 4)","$x^2 - 4$ is again a difference of squares."]],note:"A-SSE.2: see $x^4$ as $(x^2)^2$ — spotting structure is the skill."}]},
+  tri1:{cc:"A-SSE.2, A-SSE.3a",more:[
+   {tag:"Example 2 · Test level",q:"Factor $x^2 - 5x - 24$.",steps:[["\\text{product } -24,\\ \\text{sum } -5","Find the two numbers."],["-8 \\text{ and } 3","$-8 \\cdot 3 = -24$, $-8 + 3 = -5$."],["(x - 8)(x + 3)","Done."]]},
+   {tag:"Example 3 · Use it",q:"A rectangle's area is $x^2 + 7x + 12$. Find expressions for its sides.",steps:[["(x + 3)(x + 4)","3 and 4: product 12, sum 7."],["\\text{sides } x + 3,\\ x + 4","Area = length × width."]]}]},
+  tri2:{cc:"A-SSE.2",more:[
+   {tag:"Example 2 · Test level",q:"Factor $3x^2 + 10x + 8$.",steps:[["ac = 24,\\ \\text{sum } 10:\\ 6, 4","X method."],["3x^2 + 6x + 4x + 8","Split the middle."],["3x(x + 2) + 4(x + 2) = (3x + 4)(x + 2)","Group."]]},
+   {tag:"Example 3 · Check by multiplying",q:"Show that $(2x - 1)(x + 5) = 2x^2 + 9x - 5$.",steps:[["2x^2 + 10x - x - 5","Multiply out."],["2x^2 + 9x - 5 \\ ✓","Factoring and multiplying undo each other."]]}]}
+ },
+ ch11:{
+  qsolve:{cc:"A-REI.4b, A-SSE.3a",more:[
+   {tag:"Example 2 · Test level",q:"Solve $2x^2 - 5x - 3 = 0$.",steps:[["(2x + 1)(x - 3) = 0","Factor."],["x = -\\tfrac12 \\text{ or } x = 3","Zero product property."]]},
+   {tag:"Example 3 · Projectile",q:"$h = -16t^2 + 48t$. When does the ball land?",steps:[["-16t(t - 3) = 0","Set $h = 0$ and factor."],["t = 0 \\text{ or } t = 3","$t = 0$ is the launch."],["\\text{lands at } t = 3 \\text{ s}","Interpret."]]}]},
+  graph:{cc:"F-IF.4, F-IF.7a, F-IF.8a",more:[
+   {tag:"Example 2 · Test level",q:"Find the vertex of $y = x^2 - 6x + 5$.",steps:[["x = -\\dfrac{b}{2a} = 3","Axis of symmetry."],["y = 9 - 18 + 5 = -4","Plug in."],["(3, -4)","Vertex (a minimum)."]]},
+   {tag:"Example 3 · Maximum",q:"A ball's height is $h = -5t^2 + 20t + 2$. Find the maximum height.",steps:[["t = -\\dfrac{20}{2(-5)} = 2","Time of the top."],["h(2) = -20 + 40 + 2 = 22","22 m."]]}]},
+  disc:{cc:"A-REI.4a, A-REI.4b",more:[
+   {tag:"Example 2 · Test level",q:"Solve $x^2 + 6x - 7 = 0$ by completing the square.",steps:[["x^2 + 6x = 7","Move the constant."],["x^2 + 6x + 9 = 16","Add $(\\tfrac62)^2 = 9$ to both sides."],["(x + 3)^2 = 16 \\Rightarrow x = 1 \\text{ or } -7","Square root."]]},
+   {tag:"Example 3 · How many solutions",q:"How many real solutions does $3x^2 - 4x + 2 = 0$ have?",steps:[["b^2 - 4ac = 16 - 24 = -8","Discriminant."],["< 0 \\Rightarrow \\text{none}","No real solutions."]]}]}
+ },
+ ch12:{
+  rad:{cc:"N-RN.2, A-REI.2",more:[
+   {tag:"Example 2 · Test level",q:"Simplify $\\sqrt{72} + \\sqrt{18}$.",steps:[["6\\sqrt2 + 3\\sqrt2","Pull out perfect squares."],["9\\sqrt2","Like radicals add."]]},
+   {tag:"Example 3 · Radical equation",q:"Solve $\\sqrt{x + 3} = x - 3$.",steps:[["x + 3 = x^2 - 6x + 9","Square both sides."],["x^2 - 7x + 6 = 0 \\Rightarrow x = 1 \\text{ or } 6","Factor."],["x = 1 \\text{ fails } (2 \\ne -2);\\ x = 6","Check: squaring can add fake answers."]]}]},
+  ratl:{cc:"A-APR.6, A-REI.2",more:[
+   {tag:"Example 2 · Test level",q:"Simplify $\\dfrac{x^2 - 9}{x^2 + 5x + 6}$.",steps:[["\\dfrac{(x - 3)(x + 3)}{(x + 2)(x + 3)}","Factor top and bottom."],["\\dfrac{x - 3}{x + 2},\\ x \\ne -3, -2","Cancel; note the excluded values."]]},
+   {tag:"Example 3 · Work problem",q:"Ana paints a room in 3 h, Ben in 6 h. Together?",steps:[["\\tfrac13 + \\tfrac16 = \\tfrac1t","Rates add."],["\\tfrac12 = \\tfrac1t \\Rightarrow t = 2 \\text{ h}","Solve."]]}]},
+  cap:{cc:"8.G.7, G-SRT.8",more:[
+   {tag:"Example 2 · Test level",q:"A TV screen is $48$ in wide and $36$ in tall. Find the diagonal.",steps:[["d^2 = 48^2 + 36^2 = 3600","Pythagorean Theorem."],["d = 60 \\text{ in}","A “60-inch TV”."]]},
+   {tag:"Example 3 · Distance",q:"Find the distance between $(1, 2)$ and $(7, 10)$.",steps:[["\\sqrt{6^2 + 8^2}","The legs are the $x$- and $y$-changes."],["= 10","Done."]]}]}
+ }
+};
+const A1_CC2={
+ ch2:{two:[()=>{const f=pick([25,30,40,50]),r=pick([8,10,12,15]),m=rnd(3,12),T=f+r*m;return{q:`A club charges $\\$${f}$ to join plus $\\$${r}$ a month. Sam paid $\\$${T}$ in all. How many months?`,type:"number",ans:m,ansTex:`${m}`,hint:`Write $${f} + ${r}m = ${T}$.`,sol:[`$${r}m = ${T-f}$, so $m = ${m}$.`]};}],
+  multi:[()=>{const x=rnd(2,12),a=pick([2,3,4]),b=rnd(1,9),d=pick([3,5,7]);const R=(a*x+b);return R%d===0?{q:`Solve $\\dfrac{${a}x + ${b}}{${d}} = ${R/d}$.`,type:"number",ans:x,ansTex:`x = ${x}`,hint:"Multiply both sides by the denominator first.",sol:[`$${a}x + ${b} = ${R}$`,`$x = ${x}$.`]}:{q:`Solve $${d}(${a}x + ${b}) = ${d*R}$.`,type:"number",ans:x,ansTex:`x = ${x}`,hint:"Divide both sides by the number outside, or distribute.",sol:[`$${a}x + ${b} = ${R}$`,`$x = ${x}$.`]};}],
+  both:[()=>{const r1=pick([3,4,5]),f1=pick([10,20,30]),r2=r1+pick([2,3,5]),f2=0,m=f1/(r2-r1);return Number.isInteger(m)?{q:`Gym A: $\\$${f1}$ sign-up + $\\$${r1}$ per visit. Gym B: $\\$${r2}$ per visit, no sign-up. After how many visits do they cost the same?`,type:"number",ans:m,ansTex:`${m}`,hint:`$${f1} + ${r1}v = ${r2}v$.`,sol:[`$${f1} = ${r2-r1}v$, so $v = ${m}$.`]}:{q:`Solve $${r2}x = ${r1}x + ${f1}$.`,type:"number",ans:m,ansTex:`${frac(f1,r2-r1)}`,hint:"Get the $x$ terms on one side.",sol:[`$${r2-r1}x = ${f1}$, so $x = ${frac(f1,r2-r1)}$.`]};}]},
+ ch3:{one:[()=>{const B=pick([40,50,60,80]),c=pick([10,12,15]),p=pick([3,4,5,6]),n=Math.floor((B-c)/p);return{q:`You have $\\$${B}$. A ticket costs $\\$${c}$ and each snack costs $\\$${p}$. What is the greatest number of snacks you can buy?`,type:"number",ans:n,ansTex:`${n}`,hint:`$${c} + ${p}s \\le ${B}$. Round <b>down</b> to a whole number.`,sol:[`$${p}s \\le ${B-c}$, $s \\le ${Math.round((B-c)/p*100)/100}$.`,`Greatest whole number: $${n}$.`]};}],
+  multi:[()=>{const lo=rnd(60,70),hi=lo+rnd(10,20);return{q:`A recipe needs oven temperatures between $${lo*5}^\\circ$F and $${hi*5}^\\circ$F inclusive. What is the <b>width</b> of this range in degrees?`,type:"number",ans:(hi-lo)*5,ansTex:`${(hi-lo)*5}`,hint:"Subtract the low end from the high end.",sol:[`$${hi*5} - ${lo*5} = ${(hi-lo)*5}$.`]};}],
+  abs:[()=>{const t=pick([12,16,20,32,50]),e=pick([0.1,0.2,0.25,0.5]);return{q:`A bottle should hold $${t}$ oz with an error of at most $${e}$ oz: $|v - ${t}| \\le ${e}$. What is the <b>largest</b> acceptable amount?`,type:"number",ans:t+e,ansTex:`${t+e}`,hint:"Distance from the target is at most the error.",sol:[`$${t-e} \\le v \\le ${t+e}$.`,`Largest: $${t+e}$ oz.`]};}]},
+ ch4:{feval:[()=>{const v=pick([32,48,64,80]),t=rnd(1,3),h=-16*t*t+v*t;return{q:`A ball's height is $h(t) = -16t^2 + ${v}t$ feet. Find $h(${t})$.`,type:"number",ans:h,ansTex:`${h}`,hint:"Square first, then multiply.",sol:[`$-16(${t*t}) + ${v}(${t}) = ${h}$ ft.`]};}],
+  dom:[()=>{const cap=pick([20,30,40,50]),p=pick([3,4,5]);return{q:`A food truck can make at most ${cap} tacos a day and sells them for $\\$${p}$ each, $R(n) = ${p}n$. What is the greatest value in the range?`,type:"number",ans:cap*p,ansTex:`${cap*p}`,hint:"The domain is $0$ to $"+cap+"$ tacos.",sol:[`$R(${cap}) = ${cap*p}$.`]};}],
+  model:[()=>{const a=rnd(2,7),b=rnd(1,9);return{q:`The table shows $x = 0, 1, 2, 3$ and $y = ${b}, ${a+b}, ${2*a+b}, ${3*a+b}$. Find $y$ when $x = 10$.`,type:"number",ans:10*a+b,ansTex:`${10*a+b}`,hint:"Find the constant change and the starting value.",sol:[`$y = ${a}x + ${b}$.`,`$y(10) = ${10*a+b}$.`]};}]},
+ ch5:{slope:[()=>{const t1=rnd(1,3),t2=t1+rnd(2,4),r=pick([2,3,4,5]),g1=rnd(30,60),g2=g1-r*(t2-t1);return{q:`A water tank has $${g1}$ gallons at hour $${t1}$ and $${g2}$ gallons at hour $${t2}$. Find the rate of change (gallons per hour).`,type:"number",ans:-r,ansTex:`${-r}`,hint:"Change in gallons over change in hours.",sol:[`$\\dfrac{${g2} - ${g1}}{${t2} - ${t1}} = ${-r}$ gal/h.`]};}],
+  int:[()=>{const b=pick([40,50,60,80,100]),r=pick([2,4,5,10]);return{q:`A gift card has $B = ${b} - ${r}c$ dollars after $c$ coffees. After how many coffees is it empty?`,type:"number",ans:b/r,ansTex:`${b/r}`,hint:"Set $B = 0$.",sol:[`$0 = ${b} - ${r}c$, $c = ${b/r}$.`]};}],
+  si:[()=>{const a=pick([5,8,10]),f=pick([20,30,40]),b=a+pick([3,5,10]);const x=f/(b-a);return Number.isInteger(x)?{q:`Plan A costs $y = ${a}x + ${f}$. Plan B costs $y = ${b}x$. After how many months do they cost the same?`,type:"number",ans:x,ansTex:`${x}`,hint:"Set the two equal.",sol:[`$${b-a}x = ${f}$, $x = ${x}$.`]}:{q:`Find the slope of $y = ${a}x + ${f}$.`,type:"number",ans:a,ansTex:`${a}`,hint:"The number in front of $x$.",sol:[`$m = ${a}$.`]};}]},
+ ch6:{write:[()=>{const r=rnd(2,5),b=rnd(0,10),w1=rnd(1,3),w2=w1+rnd(2,4);return{q:`A plant is $${r*w1+b}$ cm tall after ${w1} weeks and $${r*w2+b}$ cm after ${w2} weeks, growing steadily. How tall was it at week 0?`,type:"number",ans:b,ansTex:`${b}`,hint:"Find the rate, then go back to week 0.",sol:[`Rate $= ${r}$ cm/week.`,`$${r*w1+b} - ${r}(${w1}) = ${b}$ cm.`]};}],
+  std:[()=>{const a=pick([4,5,6]),b=pick([7,8,9,10]),k=rnd(2,6),A=rnd(1,4),T=a*k+b*A;return{q:`Kids' tickets cost $\\$${a}$ and adults' $\\$${b}$. A group spends $\\$${T}$ and has ${A} adults. How many kids?`,type:"number",ans:k,ansTex:`${k}`,hint:`$${a}k + ${b}(${A}) = ${T}$.`,sol:[`$${a}k = ${T-b*A}$, $k = ${k}$.`]};}],
+  apply:[()=>{const r=pick([0.5,1.5,2,2.5]),b=pick([10,20,30]),t=rnd(5,12);return{q:`A price model is $p = ${r}t + ${b}$ dollars, $t$ years after 2020. Predict the price in ${2020+t}.`,type:"number",ans:r*t+b,ansTex:`${r*t+b}`,hint:`$t = ${t}$.`,sol:[`$${r}(${t}) + ${b} = ${r*t+b}$.`]};}]},
+ ch7:{solve:[()=>{const x=rnd(-5,6),y=rnd(-5,6),a=rnd(1,4),b=rnd(1,4);return{q:`Solve: $${a}x + ${b}y = ${a*x+b*y}$ and $x - ${b}y = ${x-b*y}$. Find $x$.`,type:"number",ans:x,ansTex:`x = ${x}`,hint:"Add the equations: the $y$ terms cancel.",sol:[`$${a+1}x = ${a*x+b*y+x-b*y}$, $x = ${x}$.`]};}],
+  nsol:[()=>{const m=nz(-4,4),b1=rnd(-5,5),k=pick([2,3]),same=Math.random()<.5,b2=same?b1:b1+nz(-3,3);return{q:`How many solutions? $y = ${m}x ${sg(b1)}$ and $${k}y = ${k*m}x ${sg(k*b2)}$. (Type one, none, or infinitely many.)`,type:"nsol",ans:same?"INF":"NONE",ansTex:same?"\\text{infinitely many}":"\\text{none}",hint:"Divide the second by "+k+" and compare slopes and intercepts.",sol:[`Second: $y = ${m}x ${sg(b2)}$.`,same?"Same line: infinitely many.":"Same slope, different intercept: none."]};}],
+  word:[()=>{const a=rnd(3,9),c=rnd(3,9),pa=pick([8,9,10,12]),pc=pick([4,5,6]);return{q:`Adult tickets cost $\\$${pa}$ and child tickets $\\$${pc}$. ${a+c} tickets cost $\\$${a*pa+c*pc}$. How many adult tickets?`,type:"number",ans:a,ansTex:`${a}`,hint:`$a + c = ${a+c}$ and $${pa}a + ${pc}c = ${a*pa+c*pc}$.`,sol:[`$${pa}a + ${pc}(${a+c} - a) = ${a*pa+c*pc}$`,`$${pa-pc}a = ${a*pa+c*pc-pc*(a+c)}$, $a = ${a}$.`]};}]},
+ ch8:{rules:[()=>{const a=rnd(2,5),b=rnd(2,5),c=rnd(1,4);return{q:`Simplify $(x^{${a}})^{${b}} \\cdot x^{${c}}$. Type the exponent of $x$.`,type:"number",ans:a*b+c,ansTex:`x^{${a*b+c}}`,hint:"Power of a power multiplies; product adds.",sol:[`$x^{${a*b}} \\cdot x^{${c}} = x^{${a*b+c}}$.`]};}],
+  neg:[()=>{const b=pick([2,3,4,5,10]),n=rnd(1,3);return{q:`Evaluate $${b}^{-${n}}$. (A fraction is fine.)`,type:"number",ans:1/b**n,ansTex:`\\frac{1}{${b**n}}`,hint:"A negative exponent means one over the positive power.",sol:[`$${b}^{-${n}} = \\dfrac{1}{${b}^{${n}}} = \\dfrac{1}{${b**n}}$.`]};}],
+  sci:[()=>{const P=pick([1000,2000,5000,8000]),r=pick([2,3,5]),t=rnd(2,5),v=Math.round(P*(1+r/100)**t);return{q:`A town of ${P} people grows ${r}% per year. About how many people after ${t} years? (Nearest whole number.)`,type:"number",ans:v,tol:1.5,ansTex:`\\approx ${v}`,hint:`$P = ${P}(1.0${r})^{${t}}$.`,sol:[`$${P}(${1+r/100})^{${t}} \\approx ${v}$.`]};}]},
+ ch9:{add:[()=>{const a=rnd(2,6),b=rnd(1,8),c=rnd(1,4),d=rnd(1,5);return{q:`A rectangle has length $${a}x + ${b}$ and width $${c}x - ${d}$. Its perimeter is $px + q$. Find $p + q$.`,type:"number",ans:2*(a+c)+2*(b-d),ansTex:`${2*(a+c)}x ${sg(2*(b-d))}`,hint:"Perimeter = 2(length) + 2(width).",sol:[`$2(${a}x + ${b}) + 2(${c}x - ${d}) = ${2*(a+c)}x ${sg(2*(b-d))}$.`,`$p + q = ${2*(a+c)+2*(b-d)}$.`]};}],
+  mul:[()=>{const w=rnd(1,3);return{q:`A square garden with side $x$ m gets a path ${w} m wide all around. The total area is $x^2 + bx + c$. Find $c$.`,type:"number",ans:4*w*w,ansTex:`${4*w*w}`,hint:`The new side is $x + ${2*w}$.`,sol:[`$(x + ${2*w})^2 = x^2 + ${4*w}x + ${4*w*w}$.`]};}],
+  div:[()=>{const r=rnd(-5,5),s=rnd(-5,5);return{q:`Is $(x ${sg(-r)})$ a factor of $x^2 ${sg(-(r+s))}x ${sg(r*s)}$? (Type yes or no.)`.replace("+ 0x ",""),type:"yn",ans:"YES",ansTex:"\\text{Yes}",hint:`Plug in $x = ${r}$: a factor gives $0$.`,sol:[`$x^2 ${sg(-(r+s))}x ${sg(r*s)} = (x ${sg(-r)})(x ${sg(-s)})$.`]};}]},
+ ch10:{gcf:[()=>{const a=pick([2,3]),k=pick([1,4,9,16,25]);return{q:`Factor $x^4 - ${k*k}$ completely. How many factors are there (not counting 1)?`,type:"number",ans:3,ansTex:`(x^2 + ${k})(x - ${Math.sqrt(k)})(x + ${Math.sqrt(k)})`,hint:"Difference of squares twice.",sol:[`$(x^2 - ${k})(x^2 + ${k})$, and $x^2 - ${k} = (x - ${Math.sqrt(k)})(x + ${Math.sqrt(k)})$.`,"Three factors."]};}],
+  tri1:[()=>{const p=rnd(1,8),q=rnd(1,8);return{q:`A rectangle has area $x^2 + ${p+q}x + ${p*q}$ and width $x + ${p}$. What is its length when $x = 5$?`,type:"number",ans:5+q,ansTex:`${5+q}`,hint:"Factor the area to find the other side.",sol:[`$(x + ${p})(x + ${q})$: length $x + ${q}$.`,`At $x = 5$: $${5+q}$.`]};}],
+  tri2:[()=>{const a=pick([2,3]),p=rnd(1,5),q=rnd(1,5);return{q:`Factor $${a}x^2 + ${a*q+p}x + ${p*q}$ as $(${a}x + m)(x + n)$. Find $m + n$.`,type:"number",ans:p+q,ansTex:`${p+q}`,hint:"Use the X method: product $"+a*p*q+"$.",sol:[`$(${a}x + ${p})(x + ${q})$.`,`$m + n = ${p+q}$.`]};}]},
+ ch11:{qsolve:[()=>{const v=pick([32,48,64,80,96]);return{q:`A ball is thrown up: $h = -16t^2 + ${v}t$. When does it land (in seconds)?`,type:"number",ans:v/16,ansTex:`${v/16}`,hint:"Set $h = 0$ and factor out $-16t$.",sol:[`$-16t(t - ${v/16}) = 0$.`,`$t = ${v/16}$ s.`]};}],
+  graph:[()=>{const t=rnd(1,4),a=pick([5,16]),c=rnd(0,10),b=2*a*t,H=-a*t*t+b*t+c;return{q:`A ball's height is $h = -${a}t^2 + ${b}t + ${c}$. Find the maximum height.`,type:"number",ans:H,ansTex:`${H}`,hint:"Top at $t = -\\dfrac{b}{2a}$.",sol:[`$t = ${t}$.`,`$h(${t}) = ${H}$.`]};}],
+  disc:[()=>{const b=rnd(-6,6),a=rnd(1,3),c=rnd(-5,6),D=b*b-4*a*c;return{q:`How many real solutions does $${a===1?"":a}x^2 ${sg(b)}x ${sg(c)} = 0$ have? (Type a number.)`.replace(/\+ 0x /,""),type:"number",ans:D>0?2:D===0?1:0,ansTex:`${D>0?2:D===0?1:0}`,hint:"Compute $b^2 - 4ac$.",sol:[`$b^2 - 4ac = ${D}$.`,D>0?"Positive: 2.":D===0?"Zero: 1.":"Negative: 0."]};}]},
+ ch12:{rad:[()=>{const k=pick([2,3,5]),a=rnd(2,5),b=rnd(1,4);return{q:`Simplify $\\sqrt{${a*a*k}} + \\sqrt{${b*b*k}}$ to $c\\sqrt{${k}}$. Find $c$.`,type:"number",ans:a+b,ansTex:`${a+b}\\sqrt{${k}}`,hint:"Pull out the perfect squares, then add like radicals.",sol:[`$${a}\\sqrt{${k}} + ${b}\\sqrt{${k}} = ${a+b}\\sqrt{${k}}$.`]};}],
+  ratl:[()=>{const P=pick([[3,6,2],[2,6,1.5],[4,12,3],[6,12,4],[3,6,2],[10,15,6]]);return{q:`One pump fills a tank in ${P[0]} h, another in ${P[1]} h. How many hours together?`,type:"number",ans:P[2],ansTex:`${P[2]}`,hint:"Rates add: $\\tfrac1a + \\tfrac1b = \\tfrac1t$.",sol:[`$\\tfrac1{${P[0]}} + \\tfrac1{${P[1]}} = \\tfrac1{${P[2]}}$, so $t = ${P[2]}$ h.`]};}],
+  cap:[()=>{const T=pick([[3,4,5],[6,8,10],[9,12,15],[12,16,20],[24,32,40]]),k=pick([2,3]);return{q:`A TV screen is ${T[0]*k} in wide and ${T[1]*k} in tall. How long is the diagonal?`,type:"number",ans:T[2]*k,ansTex:`${T[2]*k}`,hint:"Pythagorean Theorem.",sol:[`$\\sqrt{${T[0]*k}^2 + ${T[1]*k}^2} = ${T[2]*k}$ in.`]};}]}
+};
+CHAPTERS.forEach(c=>{ const M=A1_PLUS2[c.id]||{}, G=A1_CC2[c.id]||{}; c.topics.forEach(t=>{ const x=M[t.id]; if(x){ if(x.cc) t.cc=x.cc; if(x.more) t.lesson.more=x.more; }
+  const g=G[t.id]; if(g) [2,3,4].forEach(lv=>{ const orig=t.gen[lv]; if(orig) t.gen[lv]=()=>Math.random()<.4?pick(g)():orig(); }); }); });
+
 const ALLCH=CHAPTERS.map((c,i)=>[i+1,c.title,c.id]).concat(COMING.map((t,i)=>[CHAPTERS.length+i+1,t,null]));
 /* number every lesson as a section: 1.1, 1.2, … */
 CHAPTERS.forEach(c=>{ const n=(ALLCH.find(a=>a[2]===c.id)||[])[0]; if(n) c.topics.forEach((t,i)=>{ if(!/^\d+\.\d+ /.test(t.title)) t.title=n+"."+(i+1)+" "+t.title; }); });

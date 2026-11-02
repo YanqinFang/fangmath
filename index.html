@@ -244,7 +244,9 @@
   nav.main a.acct:hover{background:var(--navy);filter:brightness(1.12)}
   @media (max-width:860px){nav.main a.acct{margin:6px 0 0;text-align:center}}
   .login-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:18px;align-items:start}
-  @media (max-width:820px){.login-grid{grid-template-columns:minmax(0,1fr)}}
+  .login-grid.three{grid-template-columns:repeat(3,minmax(0,1fr))}
+  @media (max-width:1020px){.login-grid.three{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}}
+  @media (max-width:820px){.login-grid,.login-grid.three{grid-template-columns:minmax(0,1fr)}}
   label.f{display:flex;flex-direction:column;gap:5px;font-size:14px;font-weight:600;color:var(--muted);margin-bottom:12px}
   .fin{border:1px solid var(--line);border-radius:12px;padding:10px 12px;background:#fff;font-size:16px;width:100%}
   .fin:focus{outline:none;border-color:var(--teal);box-shadow:0 0 0 3px var(--teal-soft)}
@@ -1232,10 +1234,10 @@ function challengeSubmit(ch, scored){
 /* ---------- sign-in page ---------- */
 function pageLogin(v){
   if (!accountsOn) return v.append(h("div", { class:"wrap" }, h("div", { class:"page-head" }, h("h1", {}, "Accounts coming soon"))));
-  const kidCard = h("div", { class:"card" }), adultCard = h("div", { class:"card" });
-  v.append(h("div", { class:"wrap" }, h("div", { class:"page-head" }, h("h1", {}, "Sign in"), h("p", {}, "Students sign in with a code from a parent or teacher. Parents and teachers use email.")),
-    h("div", { class:"login-grid" }, kidCard, adultCard)));
-  kidStep1(kidCard); adultForm(adultCard, "login");
+  const kidCard = h("div", { class:"card" }), parentCard = h("div", { class:"card" }), teacherCard = h("div", { class:"card" });
+  v.append(h("div", { class:"wrap" }, h("div", { class:"page-head" }, h("h1", {}, "Sign in"), h("p", {}, "Free for everyone. Students sign in with a code from a parent or teacher. Parents and teachers use email.")),
+    h("div", { class:"login-grid three" }, kidCard, parentCard, teacherCard)));
+  kidStep1(kidCard); adultForm(parentCard, "login", "parent"); adultForm(teacherCard, "login", "teacher");
 }
 function kidStep1(card, prefill){
   const err = h("div", { class:"err" });
@@ -1281,36 +1283,37 @@ function kidStep3(card, code, who){
   const keyH = e => { if (!document.body.contains(card)) return document.removeEventListener("keydown", keyH); if (/^[0-9]$/.test(e.key)) press(e.key); else if (e.key === "Backspace") press("⌫"); };
   document.addEventListener("keydown", keyH);
 }
-function adultForm(card, mode){
+function adultForm(card, mode, role){
+  role = role === "teacher" ? "teacher" : "parent"; const T = role === "teacher";
   const err = h("div", { class:"err" });
   const name = h("input", { class:"fin", maxlength:"60", autocomplete:"name" });
   const email = h("input", { class:"fin", type:"email", autocomplete:"email" });
   const pw = h("input", { class:"fin", type:"password", minlength:"6", autocomplete: mode === "signup" ? "new-password" : "current-password" });
   const consent = h("input", { type:"checkbox" });
-  const tabs = h("div", { class:"tabs2" }, h("button", { class: mode === "login" ? "on" : "", onclick:() => adultForm(card, "login") }, "Sign in"), h("button", { class: mode === "signup" ? "on" : "", onclick:() => adultForm(card, "signup") }, "Create account"));
+  const tabs = h("div", { class:"tabs2" }, h("button", { class: mode === "login" ? "on" : "", onclick:() => adultForm(card, "login", role) }, "Sign in"), h("button", { class: mode === "signup" ? "on" : "", onclick:() => adultForm(card, "signup", role) }, "Create account"));
   const btn = h("button", { class:"btn", style:"width:100%" }, mode === "signup" ? "Create account" : "Sign in");
   btn.onclick = async () => {
     err.textContent = "";
     if (!email.value.trim() || pw.value.length < 6) return err.textContent = "Enter your email and a password of 6+ characters.";
     if (mode === "signup" && !name.value.trim()) return err.textContent = "Please enter your name.";
-    if (mode === "signup" && !consent.checked) return err.textContent = "Please confirm you are a parent/guardian or teacher (18+).";
+    if (mode === "signup" && !consent.checked) return err.textContent = T ? "Please confirm you are a teacher (18+)." : "Please confirm you are a parent or guardian (18+).";
     btn.disabled = true;
     const res = mode === "signup"
-      ? await sb.auth.signUp({ email: email.value.trim(), password: pw.value, options: { data: { display_name: name.value.trim(), consent: "yes" }, emailRedirectTo: location.origin + location.pathname } })
+      ? await sb.auth.signUp({ email: email.value.trim(), password: pw.value, options: { data: { display_name: name.value.trim(), consent: "yes", role }, emailRedirectTo: location.origin + location.pathname } })
       : await sb.auth.signInWithPassword({ email: email.value.trim(), password: pw.value });
     btn.disabled = false;
     if (res.error) return err.textContent = /invalid login/i.test(res.error.message) ? "Email or password is not right." : netMsg(res.error.message);
     if (mode === "signup" && !res.data.session) { put(card, h("h2", { style:"font-size:22px" }, "📬 Check your email"), h("p", {}, "Click the link we sent to " + email.value.trim() + ", then sign in.")); return; }
-    await loadAdult(); location.hash = "#/dashboard";
+    await loadAdult(); if (T && adultProfile && !adultProfile.is_teacher) await ensureTeacher(); location.hash = "#/dashboard";
   };
   const forgot = h("button", { class:"btn sm ghost", style:"margin-top:10px", onclick:async () => {
     if (!email.value.trim()) return err.textContent = "Type your email first.";
     const { error } = await sb.auth.resetPasswordForEmail(email.value.trim(), { redirectTo: location.origin + location.pathname });
     err.textContent = ""; if (error) { err.textContent = netMsg(error.message); return; } card.append(h("p", { class:"okmsg" }, "If that email has an account, a reset link is on its way."));
   } }, "Forgot password?");
-  put(card, h("h2", { style:"font-size:24px" }, "👩‍🏫 Parent or teacher"), h("p", { class:"muted", style:"margin:6px 0 14px" }, "Add your children, see their progress, and (for teachers) manage classes."), tabs,
+  put(card, h("h2", { style:"font-size:24px" }, T ? "🍎 I'm a teacher" : "👪 I'm a parent"), h("p", { class:"muted", style:"margin:6px 0 14px" }, T ? "Create classes, add students in one go, print sign-in cards, and see each student's progress." : "Add your children, give each one a sign-in PIN, and follow their progress."), tabs,
     mode === "signup" ? h("label", { class:"f" }, "Your name", name) : null, h("label", { class:"f" }, "Email", email), h("label", { class:"f" }, "Password (6+ characters)", pw),
-    mode === "signup" ? h("label", { class:"check" }, consent, h("span", {}, "I am a parent/guardian or teacher (18+). I agree that my child's nickname, grade and practice results are stored so I can see their progress. ", h("a", { href:"#/privacy" }, "Privacy for families"))) : null,
+    mode === "signup" ? h("label", { class:"check" }, consent, h("span", {}, T ? "I am a teacher (18+). I agree that my students' nicknames, grades and practice results are stored so I can see their progress. " : "I am a parent or guardian (18+). I agree that my child's nickname, grade and practice results are stored so I can see their progress. ", h("a", { href:"#/privacy" }, "Privacy for families"))) : null,
     err, btn, mode === "login" ? forgot : null);
 }
 function newPasswordForm(){
@@ -1368,8 +1371,18 @@ async function loadAdult(){
   if (!accountsOn) return;
   const { data: { session } } = await sb.auth.getSession();
   adult = session ? session.user : null; adultProfile = null;
-  if (adult) { const { data } = await sb.from("fm_adults").select("display_name,is_teacher").eq("id", adult.id).maybeSingle(); adultProfile = data || { display_name:"", is_teacher:false }; }
+  if (adult) { const { data } = await sb.from("fm_adults").select("display_name,is_teacher").eq("id", adult.id).maybeSingle(); adultProfile = data || { display_name:"", is_teacher:false };
+    if (!adultProfile.is_teacher && adult.user_metadata && adult.user_metadata.role === "teacher") await ensureTeacher(); }
   updateAcct();
+}
+/* teacher tools: turned on for anyone who signs up as a teacher (free for everyone) */
+async function ensureTeacher(){
+  if (!adult) return false;
+  let r = await sb.rpc("fm_set_teacher", { p_teacher: true });
+  if (r.error) r = await sb.from("fm_adults").update({ is_teacher: true }).eq("id", adult.id);
+  const { data } = await sb.from("fm_adults").select("display_name,is_teacher").eq("id", adult.id).maybeSingle();
+  if (data) adultProfile = data;
+  return !!(adultProfile && adultProfile.is_teacher);
 }
 function pinInput(){ return h("input", { class:"fin", inputmode:"numeric", maxlength:"4", pattern:"[0-9]*", autocomplete:"off", placeholder:"4 digits", style:"max-width:140px" }); }
 const randPin = () => String(Math.floor(Math.random() * 10000)).padStart(4, "0");
@@ -1402,6 +1415,9 @@ async function pageDashboard(v){
         h("ol", {}, h("li", {}, "Go to fangmath.com and tap Sign in → I'm a student."), h("li", {}, "Type the code ", h("b", {}, g.code), "."), h("li", {}, "Tap their name and enter their 4-digit PIN."))));
   };
   add(wrap, groupCard(fam));
+  if (!(adultProfile && adultProfile.is_teacher)) add(wrap, h("div", { class:"card", style:"margin-bottom:16px;display:flex;gap:10px;align-items:center;justify-content:space-between;flex-wrap:wrap" },
+    h("div", {}, h("b", {}, "🍎 Are you also a teacher?"), h("div", { class:"muted", style:"font-size:14px" }, "Turn on class tools: create classes, add many students, print sign-in cards. Free.")),
+    h("button", { class:"btn sm teal", onclick:async e => { e.currentTarget.disabled = true; const ok = await ensureTeacher(); if (ok) { updateAcct(); route(); } else alertBox("Teacher tools could not be turned on yet. Please try again later."); } }, "Turn on teacher tools")));
   if (adultProfile && adultProfile.is_teacher) {
     const classes = (groups || []).filter(g => g.kind === "class");
     const cname = h("input", { class:"fin", maxlength:"60", placeholder:"e.g. Algebra 1 — Saturday", style:"max-width:320px" });

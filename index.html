@@ -627,7 +627,7 @@ function routeInner(){
 function levelsMeta(c){
   const chs = new Set(); c.units.forEach(u => (u.learn || []).forEach(l => chs.add(l.href + l.ch)));
   if (c.group === "K–8") { const done = c.units.filter(u => (u.learn || []).length).length; return c.units.length + " units · Learn + 5-level practice" + (done < c.units.length ? " (Unit" + (done > 1 ? "s 1–" + done : " 1") + " ready)" : ""); }
-  const units = c.units.length + (c.group === "Calculus & Beyond" || c.id === "precalc" ? " AP units" : " chapters");
+  const units = c.units.length + (c.group === "Calculus & Beyond" || c.id === "precalc" || c.id === "apstat" ? " AP units" : " chapters");
   return (c.id === "alg1" || c.id === "geo" || c.id === "alg2" ? units : units + " · " + chs.size + " lessons") + " · Learn + 5-level practice";
 }
 function courseCard(c){
@@ -724,7 +724,7 @@ function pageHighSchool(v){
   const stop = c => c ? h("a", { class:"hs-stop", href:"#/course/" + c.id, style:"--c:" + c.color }, h("i", {}), c.title) : null;
   const arrow = () => h("span", { class:"hs-arr", "aria-hidden":"true" }, "→");
   const path = [];
-  core.forEach(c => { path.push(stop(c), arrow()); });
+  core.filter(c => c.id !== "apstat").forEach(c => { path.push(stop(c), arrow()); });
   calc.forEach((c, i) => { path.push(stop(c)); path.push(i < calc.length - 1 ? h("span", { class:"hs-or" }, "or") : arrow()); });
   path.push(h("span", { class:"hs-college" }, h("span", { class:"hs-lab" }, "College"), college.map(stop)));
   const sec = (t, d, list) => list.length ? h("section", { class:"hs-sec" }, h("div", { class:"sec-head" }, h("div", {}, h("h2", {}, t), h("p", {}, d))), h("div", { class:"grid" }, list.map(courseCard))) : null;
@@ -732,7 +732,7 @@ function pageHighSchool(v){
   v.append(h("div", { class:"wrap" },
     h("div", { class:"page-head" }, h("h1", {}, "High School"), h("p", {}, "From Algebra 1 to AP Calculus — and on to college math. Follow the path, or jump straight to the course you need.")),
     h("nav", { class:"hs-path", "aria-label":"Course pathway" }, path),
-    sec("Core Courses", "The four-year sequence, chapter by chapter — lessons, 5-level practice and a cheat sheet for every chapter.", core),
+    sec("Core Courses", "The four-year sequence plus AP Statistics, chapter by chapter — lessons, 5-level practice and a cheat sheet for every chapter.", core),
     sec("AP Calculus", "AB covers Units 1–8; BC adds parametric, polar and vector calculus and infinite series.", calc),
     sec("College Math", "For students who finish calculus early.", college),
     cals.length ? h("section", { class:"hs-sec" }, h("div", { class:"sec-head" }, h("div", {}, h("h2", {}, "Free Daily Practice Calendars"), h("p", {}, "34 weeks · Monday–Friday · 10 problems a day (2027–28)."))),

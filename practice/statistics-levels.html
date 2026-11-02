@@ -1,0 +1,1039 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>AP Statistics: Learn &amp; Practice — FangMath</title>
+<meta name="description" content="AP Statistics unit by unit: learn each idea from the simplest example, then practice in five levels from Foundation to Competition.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/mathjs@14.9.1/lib/browser/math.js"></script>
+<style>
+:root{
+  --bg:#FBF8F3; --surface:#FFFFFF; --ink:#16233B; --muted:#5B6474; --faint:#8C93A0; --line:#E8E2D8;
+  --navy:#1F3A68; --teal:#0F7C7C; --teal-soft:#DDF0EE; --gold:#C9962B; --gold-soft:#FBF1DC; --red:#B3261E; --red-soft:#FBE7E5; --green:#1E7A45; --green-soft:#DDF4E6;
+  --l1:#2E8B57; --l2:#0F7C7C; --l3:#1F3A68; --l4:#B7472A; --l5:#6A4BD8;
+  --radius:18px; --shadow:0 8px 26px rgba(22,35,59,.07);
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 Inter,system-ui,-apple-system,sans-serif;-webkit-font-smoothing:antialiased}
+a{color:var(--teal)}
+h1,h2,h3{font-family:Fraunces,Georgia,serif;font-weight:600;letter-spacing:-.01em;margin:0;line-height:1.15}
+button,input{font:inherit;color:inherit}
+[hidden]{display:none!important}
+header.top{position:sticky;top:0;z-index:40;background:rgba(255,255,255,.96);border-bottom:1px solid var(--line)}
+header.top .in{max-width:1120px;margin:0 auto;padding:0 20px;height:64px;display:flex;align-items:center;gap:24px}
+.brand{font-weight:700;font-size:19px;text-decoration:none;color:var(--ink);white-space:nowrap}
+.brand span{color:var(--teal)}
+.back{margin-left:auto;font-size:15px;text-decoration:none;color:var(--muted);font-weight:500}
+.wrap{max-width:1120px;margin:0 auto;padding:24px 20px 48px;display:flex;flex-direction:column;gap:20px}
+.intro h1{font-size:clamp(28px,4vw,40px)}
+.intro p{color:var(--muted);margin:6px 0 0;max-width:680px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:20px}
+.label{font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--faint);font-weight:700}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:10px 18px;border-radius:999px;font-weight:600;border:1px solid transparent;cursor:pointer;background:var(--navy);color:#fff;text-decoration:none}
+.btn.teal{background:var(--teal)} .btn.ghost{background:var(--surface);color:var(--ink);border-color:var(--line)}
+.btn.sm{padding:7px 14px;font-size:14px}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+button:focus-visible,input:focus{outline:2px solid var(--teal);outline-offset:1px}
+/* level legend */
+.legend{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px}
+@media (max-width:760px){.legend{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.lg{border-radius:12px;padding:10px 12px;background:var(--bg);border-left:4px solid var(--c)}
+.lg b{display:block;font-size:14px;color:var(--c)} .lg span{font-size:13px;color:var(--muted)}
+/* placement */
+.place{display:flex;flex-wrap:wrap;gap:14px;align-items:center;justify-content:space-between;background:linear-gradient(120deg,var(--teal-soft),#fff 70%);border:1.5px solid var(--teal)}
+.place .t b{font-family:Fraunces,Georgia,serif;font-size:20px;display:block}
+.place .t span{color:var(--muted);font-size:15px}
+.rec{font-weight:600;color:var(--teal)}
+/* topics */
+.topics{display:block}
+.psec{display:flex;flex-direction:column;gap:8px}.psec h2{font-size:22px;margin:0 0 4px}
+.prow{display:flex;align-items:center;gap:12px;padding:10px 12px;border:1px solid var(--line);border-radius:12px;background:var(--bg)}
+.prow.on{border-color:var(--teal);background:var(--teal-soft)}
+.prow .pt{flex:1;font-weight:600}.prow small{color:var(--green);font-size:13px;font-weight:600}
+@media (max-width:760px){.topics{grid-template-columns:minmax(0,1fr)}}
+.topic{display:flex;flex-direction:column;gap:12px}
+.topic h2{font-size:22px}
+.idea{color:var(--muted);font-size:15px;margin:0}
+.example{background:var(--bg);border-radius:12px;padding:12px 14px;font-size:15px;overflow-x:auto}
+.example .q{font-size:17px;margin-bottom:4px}
+.pills{display:flex;flex-wrap:wrap;gap:6px}
+.pill{position:relative;border:1.5px solid var(--line);background:var(--surface);border-radius:999px;padding:6px 12px;font-size:13px;font-weight:600;cursor:pointer;color:var(--ink)}
+.pill:hover{border-color:var(--c)}
+.pill.on{background:var(--c);border-color:var(--c);color:#fff}
+.pill .n{font-weight:500;opacity:.75;margin-left:4px}
+.pill.star::after{content:"★";position:absolute;top:-8px;right:-4px;font-size:12px;color:var(--gold)}
+/* practice */
+.practice{display:flex;flex-direction:column;gap:14px;scroll-margin-top:80px}
+.phead{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between}
+.phead h2{font-size:24px}
+.problem{font-size:clamp(19px,2.6vw,24px);padding:16px 18px;border-radius:14px;background:var(--bg);overflow-x:auto;line-height:1.7}
+.row{display:flex;gap:8px;flex-wrap:wrap} .row[hidden],.problem[hidden]{display:none}
+.row input{flex:1 1 240px;border:1px solid var(--line);border-radius:999px;padding:11px 16px;background:var(--bg)}
+.preview{font-size:18px;min-height:1.4em}
+.preview .pl{font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--faint);font-weight:700;margin-right:8px}
+.howto{font-size:13px;color:var(--faint)}
+.fb{border-radius:12px;padding:10px 14px;font-size:15px;overflow-x:auto}
+.fb.good{background:var(--green-soft)} .fb.bad{background:var(--red-soft)} .fb.hint{background:var(--gold-soft)}
+.fb .tag{display:block;font-size:11px;text-transform:uppercase;letter-spacing:.08em;font-weight:700}
+.fb.good .tag{color:var(--green)} .fb.bad .tag{color:var(--red)} .fb.hint .tag{color:var(--gold)}
+.sol{margin:6px 0 0;padding-left:20px} .sol li{margin:2px 0}
+.suggest{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;border:1.5px dashed var(--c);border-radius:12px;padding:10px 14px}
+.streak{display:flex;gap:4px;align-items:center;font-size:13px;color:var(--faint)}
+.streak i{width:10px;height:10px;border-radius:50%;background:var(--line)} .streak i.ok{background:var(--green)} .streak i.no{background:var(--red)}
+.streak i.todo{background:transparent;border:1.5px solid var(--line)} .streak span{margin-right:6px;font-weight:600;color:var(--ink)}
+.rres{border:1.5px solid var(--teal);border-radius:14px;padding:16px 18px;background:var(--teal-soft)}
+.rres .rsc{display:flex;align-items:baseline;gap:10px} .rres .rsc b{font-family:Fraunces,Georgia,serif;font-size:34px} .rres .rsc span{color:var(--muted)}
+.rres p{margin:6px 0 12px} .racts{display:flex;flex-wrap:wrap;gap:10px;align-items:center} .rdone{font-weight:600}
+.rres .suggest{margin-top:12px}
+.cs-card h3 .cs-part{display:block;font-family:Inter,sans-serif;font-size:12.5px;font-weight:600;color:var(--muted);margin-top:2px}
+/* modal quiz */
+.modal{position:fixed;inset:0;background:rgba(22,35,59,.45);display:grid;place-items:center;padding:16px;z-index:60}
+.modal .card{width:min(620px,100%);max-height:90vh;overflow:auto;display:flex;flex-direction:column;gap:14px}
+.qprog{display:flex;gap:6px} .qprog i{flex:1;height:6px;border-radius:3px;background:var(--line)} .qprog i.ok{background:var(--green)} .qprog i.no{background:var(--red)} .qprog i.now{background:var(--teal)}
+.tabs{display:flex;gap:6px;flex-wrap:wrap;border-bottom:1px solid var(--line);padding-bottom:0}
+.tab{border:none;background:none;padding:10px 16px;font-weight:600;font-size:16px;color:var(--muted);cursor:pointer;border-bottom:3px solid transparent;margin-bottom:-1px}
+.tab.on{color:var(--teal);border-bottom-color:var(--teal)}
+.learn,.pview{display:flex;flex-direction:column;gap:20px}
+.road{display:flex;gap:8px;flex-wrap:wrap}
+.stop{display:flex;align-items:center;gap:8px;border:1.5px solid var(--line);background:var(--surface);border-radius:999px;padding:6px 14px 6px 6px;cursor:pointer;font-size:14px;font-weight:600;color:var(--ink)}
+.stop i{font-style:normal;width:24px;height:24px;border-radius:50%;display:grid;place-items:center;background:var(--bg);font-size:12px;border:1.5px solid var(--line)}
+.stop.done i{background:var(--green);border-color:var(--green);color:#fff}
+.stop.on{border-color:var(--teal);background:var(--teal-soft)}
+.lesson{display:flex;flex-direction:column;gap:16px;scroll-margin-top:80px}
+.lesson h2{font-size:clamp(24px,3vw,30px)}
+.big{font-size:18px;background:var(--teal-soft);border-radius:14px;padding:14px 16px;overflow-x:auto}
+.big b{color:var(--teal)}
+.steps{display:flex;flex-direction:column;gap:8px;margin:0;padding:0;list-style:none;counter-reset:k}
+.steps li{counter-increment:k;display:grid;grid-template-columns:30px minmax(0,1fr);gap:10px;align-items:start;background:var(--bg);border-radius:12px;padding:10px 12px;animation:pop .25s ease}
+.steps li::before{content:counter(k);width:26px;height:26px;border-radius:50%;background:var(--navy);color:#fff;display:grid;place-items:center;font-size:13px;font-weight:700}
+.steps .m{font-size:19px;overflow-x:auto;overflow-y:hidden;padding:3px 0 4px} .steps .w{font-size:14px;color:var(--muted)}
+@keyframes pop{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){.steps li{animation:none}}
+.warn{background:var(--red-soft);border-radius:14px;padding:12px 16px;font-size:15px;overflow-x:auto}
+.warn b{color:var(--red)}
+.turn{border:1.5px solid var(--gold);border-radius:14px;padding:14px 16px;display:flex;flex-direction:column;gap:10px}
+.turn .q{font-size:19px;overflow-x:auto}
+.lnav{display:flex;gap:8px;flex-wrap:wrap;justify-content:space-between}
+footer{text-align:center;color:var(--faint);font-size:13px;padding:24px}
+.chapters{display:flex;flex-wrap:wrap;gap:8px}
+.chap{display:flex;align-items:center;gap:8px;border:1.5px solid var(--line);background:var(--surface);border-radius:999px;padding:5px 14px 5px 5px;font-size:14px;font-weight:600;color:var(--ink);cursor:pointer}
+.chap i{font-style:normal;width:24px;height:24px;border-radius:50%;display:grid;place-items:center;background:var(--bg);font-size:12px}
+.chap.on{background:var(--navy);border-color:var(--navy);color:#fff} .chap.on i{background:rgba(255,255,255,.2)}
+.chap.soon{opacity:.45;cursor:default}
+.fig{display:block;width:100%;max-width:360px;height:auto;margin:4px 0 8px}
+.problem .fig{max-width:340px}
+.mc{display:grid;gap:6px;margin-top:10px;font-size:.92em}
+.mc div{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:6px 10px}
+.mc div{cursor:pointer} .mc div:hover{border-color:var(--teal)} .mc div.sel{border-color:var(--teal);background:var(--teal-soft)}
+
+/* ---- left sidebar for chapters (wide screens) ---- */
+.lv-main{display:contents}
+.lv-main>.intro{order:-1}
+@media (min-width:720px){
+  .wrap{max-width:1320px;display:grid;grid-template-columns:210px minmax(0,1fr);gap:20px;align-items:start;padding-left:14px;padding-right:14px}
+  .lv-main{display:flex;flex-direction:column;gap:20px;min-width:0}
+  .wrap>.chapters{position:sticky;top:16px;flex-direction:column;flex-wrap:nowrap;gap:2px;max-height:calc(100vh - 32px);overflow-y:auto;background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:12px 10px}
+  .wrap>.chapters::before{content:attr(aria-label);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--faint);font-weight:700;padding:4px 8px 8px}
+  .wrap>.chapters .chap{border:0;border-radius:10px;background:transparent;padding:8px 8px;font-size:14px;line-height:1.3;text-align:left;width:100%;align-items:flex-start}
+  .wrap>.chapters .chap i{flex:0 0 auto;min-width:24px;width:auto;padding:0 5px;height:24px;border-radius:12px}
+  .wrap>.chapters .chap:hover{background:var(--bg)}
+  .wrap>.chapters .chap.on{background:var(--navy);color:#fff}
+  .secs{display:flex;flex-direction:column;gap:1px;margin:2px 0 8px 18px;padding-left:10px;border-left:2px solid var(--line)}
+  .sec{display:flex;gap:7px;align-items:flex-start;border:0;background:transparent;text-align:left;font:inherit;font-size:13px;line-height:1.3;color:var(--muted,#555);padding:6px 8px;border-radius:8px;cursor:pointer}
+  .sec b{font-weight:700;color:var(--faint);min-width:24px;font-size:12px;padding-top:1px}
+  .sec:hover{background:var(--bg)}
+  .sec.on{background:var(--teal-soft);color:var(--ink);font-weight:600}
+  .sec.on b{color:var(--teal)}
+  .sec.done b{color:var(--green)}
+  .road .stop.other{display:none}
+  .road.single{display:none}
+}
+@media (max-width:719.98px){ .secs{display:none} }
+@media (min-width:1050px){ .wrap{grid-template-columns:260px minmax(0,1fr);gap:28px;padding-left:20px;padding-right:20px} }
+
+/* ---- compact level bar: one level for the whole chapter ---- */
+.lvbar{display:flex;flex-direction:column;gap:10px;padding:14px 18px}
+.lvtop{display:flex;flex-wrap:wrap;align-items:center;gap:10px 14px}
+.lvtop>.label{margin:0}
+.lvchips{display:flex;flex-wrap:wrap;gap:6px}
+.lvc{position:relative;display:inline-flex;align-items:center;gap:6px;border:1.5px solid var(--line);background:var(--surface);border-radius:999px;padding:4px 12px 4px 4px;font:inherit;font-size:13px;font-weight:600;color:var(--ink);cursor:pointer;line-height:1.2}
+.lvc i{font-style:normal;width:22px;height:22px;border-radius:50%;display:grid;place-items:center;font-size:12px;background:var(--bg);color:var(--c)}
+.lvc:hover{border-color:var(--c)}
+.lvc.on{background:var(--c);border-color:var(--c);color:#fff}
+.lvc.on i{background:rgba(255,255,255,.25);color:#fff}
+.lvc.star::after{content:"★";position:absolute;top:-7px;right:-3px;font-size:11px;color:var(--gold)}
+.lvsub{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px 14px;font-size:14px;color:var(--muted)}
+.lvsub b{color:var(--ink)}
+.lvsub .lvplace{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+#pLevels{display:none}
+.topic .tgo{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.topic .tgo small{color:var(--muted);font-size:13px}
+.cctag{display:block;width:fit-content;margin:2px 0 6px;font-size:12px;font-weight:600;letter-spacing:.03em;color:var(--teal);background:var(--teal-soft);border-radius:999px;padding:3px 10px}
+.mex{border:1px solid var(--line);border-radius:14px;padding:12px 14px;margin:10px 0;background:#fff}.mex .q{font-size:17px;margin:4px 0 6px}.mex .label{color:var(--green)}
+.stbl{border-collapse:collapse;margin:8px 0;font-size:15px}.stbl th,.stbl td{border:1px solid var(--line);padding:4px 12px;text-align:center}.stbl tr:first-child th{background:var(--bg)}.stnote{font-size:14px;color:var(--muted);margin:-2px 0 8px}
+.watch{margin:-4px 0 4px;font-size:14px;color:var(--muted)} .watch b{color:var(--ink)}
+
+/* ---- hide the topic cards while a practice problem is open ---- */
+#practice:not([hidden]) ~ #topics{display:none}
+/* ---- chapter cheat sheet ---- */
+.tabs .cs-btn{margin-left:auto;align-self:center;border:1.5px solid var(--gold,#C9962B);background:#FFF8EA;color:#8A6415;border-radius:999px;padding:6px 14px;font:inherit;font-size:14px;font-weight:600;cursor:pointer;margin-bottom:6px}
+.tabs .cs-btn:hover{background:#FBF0D9}
+.csm{position:fixed;inset:0;background:rgba(15,23,42,.45);z-index:60;display:flex;justify-content:center;align-items:flex-start;padding:24px 12px;overflow-y:auto}
+.cs-sheet{background:#fff;border-radius:16px;max-width:980px;width:100%;padding:22px 26px 26px;box-shadow:0 20px 50px rgba(0,0,0,.25)}
+.cs-top{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;border-bottom:2px solid var(--navy);padding-bottom:10px;margin-bottom:14px}
+.cs-top h2{font-family:Fraunces,Georgia,serif;font-size:24px;margin:0;color:var(--navy)}
+.cs-top .sub{font-size:13px;color:var(--muted)}
+.cs-top .cs-acts{display:flex;gap:8px}
+.cs-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+@media (max-width:700px){.cs-grid{grid-template-columns:1fr}}
+.cs-card{border:1px solid var(--line);border-radius:12px;padding:12px 14px;break-inside:avoid;page-break-inside:avoid}
+.cs-card h3{margin:0 0 6px;font-size:16px;color:var(--navy);font-family:Fraunces,Georgia,serif}
+.cs-card .cs-idea{font-size:14px;line-height:1.55;margin-bottom:8px}
+.cs-card .cs-ex{background:var(--bg);border-radius:8px;padding:6px 10px;font-size:14px}
+.cs-card .cs-ex .lab,.cs-card .cs-warn .lab{display:block;font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--faint);font-weight:700;margin-bottom:2px}
+.cs-card .cs-ex div{margin:2px 0;overflow-x:auto}
+.cs-card .cs-warn{margin-top:8px;font-size:13px;line-height:1.5;border-left:3px solid var(--red,#C0392B);padding:2px 0 2px 8px}
+.cs-card .cs-warn .lab{color:var(--red,#C0392B)}
+.cs-foot{margin-top:12px;font-size:12px;color:var(--faint);text-align:right}
+@media print{
+  body.cs-printing > *:not(.csm){display:none !important}
+  body.cs-printing .csm{position:static;background:none;padding:0;overflow:visible}
+  body.cs-printing .cs-sheet{box-shadow:none;border-radius:0;padding:0;max-width:none}
+  body.cs-printing .cs-acts{display:none}
+  body.cs-printing .cs-card .cs-ex{background:#f4f4f4}
+  @page{margin:12mm}
+}
+</style>
+</head>
+<body>
+<header class="top"><div class="in">
+  <a class="brand" href="../index.html#/">Fang<span>Math</span></a>
+  <a class="back" href="../index.html#/highschool">← Back to lessons</a>
+</div></header>
+
+<div class="wrap">
+  <nav class="chapters" id="chapters" aria-label="Units"></nav>
+  <div class="lv-main">
+  <div class="intro">
+    <span class="label">AP Statistics · Learn &amp; Practice at Your Level</span>
+    <h1 id="chTitle">AP Statistics</h1>
+    <p>Pick a unit. First learn each idea from the simplest example, then practice at the level that fits you and move up when you're ready.</p>
+  </div>
+
+
+  <div class="tabs" role="tablist">
+    <button class="tab" id="tabLearn" role="tab">① Learn the ideas</button>
+    <button class="tab" id="tabPractice" role="tab">② Practice at your level</button>
+    <button class="cs-btn" id="csBtn" type="button" title="One page with every key idea, example and warning in this chapter">📄 Cheat Sheet</button>
+  </div>
+
+  <div id="learnView" class="learn">
+    <div class="road" id="road"></div>
+    <div class="card lesson" id="lesson"></div>
+  </div>
+
+  <div id="practiceView" class="pview">
+    <div class="card lvbar">
+      <div class="lvtop"><span class="label">Your level for this chapter</span><div class="lvchips" id="legend"></div></div>
+      <div class="lvsub"><span id="lvDesc"></span><span class="lvplace"><span id="recText"></span><button class="btn ghost sm" id="placeBtn">Take the 5-question check</button></span></div>
+    </div>
+    <div class="topics" id="topics"></div>
+    <div class="card practice" id="practice" hidden>
+      <div class="phead"><h2 id="pTitle"></h2><button class="btn ghost sm" id="closeP">← This section</button></div>
+      <div class="pills" id="pLevels"></div>
+      <div class="problem" id="pQ"></div>
+      <div class="row">
+        <input type="text" id="pAns" autocomplete="off" placeholder="Your answer" aria-label="Your answer">
+        <button class="btn" id="pCheck">Check</button>
+        <button class="btn ghost" id="pHint">Hint</button>
+        <button class="btn ghost" id="pShow" hidden>Show solution</button>
+        <button class="btn teal" id="pNext" hidden>Next problem →</button>
+      </div>
+      <div class="preview" id="pPrev"></div>
+      <div class="howto" id="pHow"></div>
+      <div id="pFb"></div>
+      <div id="pSuggest"></div>
+      <div class="streak" id="pStreak"></div>
+    </div>
+  </div>
+  </div>
+</div>
+<footer>© 2026 FangMath</footer>
+
+<script>
+"use strict";
+/* ================= helpers ================= */
+const $=id=>document.getElementById(id);
+const rnd=(a,b)=>a+Math.floor(Math.random()*(b-a+1));
+const nz=(a,b)=>{let x;do{x=rnd(a,b)}while(x===0);return x};
+const pick=a=>a[Math.floor(Math.random()*a.length)];
+const gcd=(a,b)=>{a=Math.abs(a);b=Math.abs(b);while(b){[a,b]=[b,a%b]}return a};
+const sg=k=>k>=0?"+ "+k:"- "+(-k);            // "+ 3" / "- 3"
+const P=n=>n<0?"("+n+")":String(n);            // wrap negatives
+function co(a,v){ return (a===1?"":a===-1?"-":String(a))+v; }   // coefficient with variable
+function lin(a,b,v="x"){ if(a===0) return String(b); let s=co(a,v); if(b) s+=" "+sg(b); return s; }
+function cterm(a,v){ return (a<0?"- ":"+ ")+(Math.abs(a)===1?"":Math.abs(a))+v; } // signed term for middle
+function frac(n,d){ if(d<0){n=-n;d=-d} const g=gcd(n,d)||1; n/=g; d/=g; return d===1?String(n):(n<0?"-":"")+"\\frac{"+Math.abs(n)+"}{"+d+"}"; }
+const OPT={"<":"<","<=":"\\le",">":">",">=":"\\ge"}; const FLIP={"<":">","<=":">=",">":"<",">=":"<="};
+const pt=(x,y)=>`(${x}, ${y})`;
+const sq2=h=>`(x ${sg(-h)})^2`;
+function ptex(cs,v="x"){ const n=cs.length-1; let t=""; cs.forEach((c,i)=>{ const d=n-i; if(!c) return; const a=Math.abs(c), vv=d===0?"":d===1?v:v+"^{"+d+"}", cf=(a===1&&d>0)?"":String(a); t+=t?(c<0?" - ":" + "):(c<0?"-":""); t+=cf+vv; }); return t||"0"; }
+function pstr(cs){ const n=cs.length-1; return cs.map((c,i)=>`(${c})*x^${n-i}`).join("+"); }
+function pmul(a,b){ const r=Array(a.length+b.length-1).fill(0); a.forEach((x,i)=>b.forEach((y,j)=>r[i+j]+=x*y)); return r; }
+function radParts(n){ let k=1,m=n; for(let i=Math.floor(Math.sqrt(n));i>1;i--){ if(n%(i*i)===0){ k=i; m=n/(i*i); break; } } return [k,m]; }
+function rad(n){ const [k,m]=radParts(n); return m===1?String(k):(k===1?"":k)+"\\sqrt{"+m+"}"; }
+function radTex(c,n){ const [k,m]=radParts(n); const K=c*k; return m===1?String(K):(K===1?"":K)+"\\sqrt{"+m+"}"; }
+const divisors=n=>{n=Math.abs(n);const d=[];for(let i=1;i<=n;i++) if(n%i===0) d.push(i);return d;};
+const LEVELS=[
+ {n:1,name:"Foundation",zh:"起步",desc:"Review the basics first",c:"var(--l1)"},
+ {n:2,name:"Basic",zh:"基础",desc:"Textbook examples",c:"var(--l2)"},
+ {n:3,name:"Standard",zh:"标准",desc:"School test level",c:"var(--l3)"},
+ {n:4,name:"Challenge",zh:"挑战",desc:"AP multiple-choice level",c:"var(--l4)"},
+ {n:5,name:"Competition",zh:"竞赛",desc:"AP free-response / hardest",c:"var(--l5)"}];
+const HOW={point:"Type an ordered pair like (3, -2). Vectors can be typed like <3, -2>. Radicals are fine: 2sqrt(3).",cplx:"Type a complex number like 3-2i (fractions are fine).",croots:"List every solution separated by commas, like 2+3i, 2-3i (± is fine: 2±3i).",matrix:"Type the matrix row by row, like [[1, 2], [3, 4]] or 1 2; 3 4.",mc:"Click a choice or type its letter, then press Check.",word:"Type your answer as a word or abbreviation.",roots:"Give every solution, separated by commas: 3, -2. Use sqrt(5) for √5; ± is fine: 2±sqrt(3).",nsol:"Type one, none, or infinitely many.",point:"Type a point like (2, -5).",yn:"Type yes or no.",list:"List the values separated by commas, like -2, 0, 5.",line:"Type an equation like y = 2x + 3 (any correct form works).",number:"Type a number. Fractions like 9/4 are fine.",set:"Type the value, like 4 or x = 4.",expr:"Type an expression like 7x - 1 or (c - b)/a.",
+  ineq:"Type like x > 3 or x <= -2 (≤ and ≥ work too).",between:"Type like -2 < x <= 4.",or:"Type like x < -5 or x > 3."};
+const ineqTex=(op,v)=>`x ${OPT[op]} ${v}`;
+
+/* ================= chapters =================
+   generators return {q, type, ans, ansTex, hint, sol[]} */
+const sq=(h,v="x")=>h===0?v+"^2":"("+v+" "+sg(-h)+")^2";
+const deg=v=>`${v}^\\circ`;
+function mcQ(stem,correct,wrong,hint,sol){ const opts=[correct,...wrong].map((t,i)=>({t,ok:i===0})).sort(()=>Math.random()-.5); const L="ABCDE"; const ans=L[opts.findIndex(o=>o.ok)];
+  return {q:`${stem}<div class="mc">${opts.map((o,i)=>`<div><b>${L[i]}.</b> ${o.t}</div>`).join("")}</div>`,type:"mc",ans,ansTex:`\\text{${ans}}`,hint,sol:[...sol,`Answer: <b>${ans}</b>.`]}; }
+const fact=n=>n<=1?1:n*fact(n-1); const nPr=(n,r)=>fact(n)/fact(n-r), nCr=(n,r)=>fact(n)/(fact(r)*fact(n-r));
+const r2=v=>Math.round(v*100)/100, r1=v=>Math.round(v*10)/10;
+const cx=(a,b)=>b===0?String(a):(a===0?"":a+(b>0?" + ":" - "))+(a===0&&b<0?"-":"")+(Math.abs(b)===1?"":Math.abs(b))+"i";
+const fr=(n,d)=>frac(n,d);
+function piTex(n,d){ if(d<0){n=-n;d=-d} if(n===0) return "0"; const g=gcd(n,d)||1; n/=g; d/=g; const top=(n===1?"":n===-1?"-":n)+"\\pi"; return d===1?top:(n<0?"-":"")+"\\dfrac{"+(Math.abs(n)===1?"":Math.abs(n))+"\\pi}{"+d+"}"; }
+function numTex(v){ if(Math.abs(v)<1e-12) return "0"; const s=v<0?"-":"", a=Math.abs(v);
+  for(const b of [1,2,3,5,6,7,10,11,13]) for(let q=1;q<=100;q++){ const k=a*q/Math.sqrt(b), kr=Math.round(k); if(kr>0&&Math.abs(k-kr)<1e-9){ const g=gcd(kr,q), K=kr/g, Q=q/g; const top=b===1?String(K):(K===1?"":K)+"\\sqrt{"+b+"}"; return s+(Q===1?top:"\\dfrac{"+top+"}{"+Q+"}"); } }
+  return String(Math.round(v*1000)/1000); }
+const angTex=t=>piTex(Math.round(t/Math.PI*24),24);
+const R=d=>d*Math.PI/180, D=r=>r*180/Math.PI;
+const sinD=d=>Math.sin(R(d)), cosD=d=>Math.cos(R(d)), tanD=d=>Math.tan(R(d));
+function cTex(re,im){ if(Math.abs(im)<1e-9) return numTex(re); const a=Math.abs(re)<1e-9?"":numTex(re); const m=Math.abs(im), mt=Math.abs(m-1)<1e-9?"":numTex(m); return a+(a?(im<0?" - ":" + "):(im<0?"-":""))+mt+"i"; }
+function sols(f,N=48){ const out=[]; for(let k=0;k<N;k++){ const t=k*2*Math.PI/N; if(Math.abs(f(t))<1e-9) out.push(t); } return out; }
+const solTex=a=>a.map(angTex).join(",\\ ");
+const vtex=(a,b)=>`\\langle ${a}, ${b} \\rangle`;
+const TRIP=[[3,4,5],[5,12,13],[8,15,17],[7,24,25],[6,8,10],[9,12,15],[20,21,29]];
+function terms(arr){ let t=""; arr.forEach(([c,v])=>{ if(!c) return; const a=Math.abs(c), cf=(a===1&&v)?"":String(a); t+=t?(c<0?" - ":" + "):(c<0?"-":""); t+=cf+v; }); return t||"0"; }
+const SPECIAL=[[0,"0"],[0.5,"\\tfrac12"],[Math.SQRT1_2,"\\tfrac{\\sqrt2}{2}"],[Math.sqrt(3)/2,"\\tfrac{\\sqrt3}{2}"],[1,"1"]];
+const TANV=[[0,"0"],[Math.sqrt(3)/3,"\\tfrac{\\sqrt3}{3}"],[1,"1"],[Math.sqrt(3),"\\sqrt3"]];
+const QN=["I","II","III","IV"];
+
+/* ================= statistics helpers ================= */
+const sum=a=>a.reduce((s,x)=>s+x,0), mean=a=>sum(a)/a.length;
+const sorted=a=>[...a].sort((x,y)=>x-y);
+const med=a=>{const b=sorted(a),n=b.length;return n%2?b[(n-1)/2]:(b[n/2-1]+b[n/2])/2;};
+const halves=a=>{const b=sorted(a),n=b.length,h=Math.floor(n/2);return [b.slice(0,h),b.slice(n-h)];};
+const Q1=a=>med(halves(a)[0]), Q3=a=>med(halves(a)[1]);
+const sdS=a=>{const m=mean(a);return Math.sqrt(sum(a.map(x=>(x-m)**2))/(a.length-1));};
+function erf(x){const s=Math.sign(x);x=Math.abs(x);const t=1/(1+0.3275911*x);const y=1-(((((1.061405429*t-1.453152027)*t)+1.421413741)*t-0.284496736)*t+0.254829592)*t*Math.exp(-x*x);return s*y;}
+const Phi=z=>0.5*(1+erf(z/Math.SQRT2));
+const r3=v=>Math.round(v*1000)/1000, r4=v=>Math.round(v*10000)/10000;
+const fx=(v,d=4)=>String(Number(v.toFixed(d)));
+const list=a=>a.join(",\\ ");
+const NQ=(q,ans,hint,sol,tol,tex)=>({q,type:"number",ans,ansTex:tex!=null?tex:fx(ans),hint,sol,tol});
+const YN=(q,yes,hint,sol)=>({q,type:"yn",ans:yes?"YES":"NO",ansTex:yes?"\\text{yes}":"\\text{no}",hint,sol});
+const ints=(n,a,b)=>Array.from({length:n},()=>rnd(a,b));
+const binP=(n,k,p)=>nCr(n,k)*p**k*(1-p)**(n-k);
+const ZS=[[0.90,1.645],[0.95,1.96],[0.99,2.576]];
+const pct=p=>Math.round(p*100)+"\\%";
+const tbl=(head,rows)=>`<table class="stbl"><tr>${head.map(h=>`<th>${h}</th>`).join("")}</tr>${rows.map(r=>`<tr>${r.map((c,i)=>i?`<td>${c}</td>`:`<th>${c}</th>`).join("")}</tr>`).join("")}</table>`;
+const regOut=(xn,b0,b1,se0,se1,s,r2v)=>tbl(["Predictor","Coef","SE Coef"],[["Constant",b0,se0],[xn,b1,se1]])+`<div class="stnote">$S = ${s}$ &nbsp;&nbsp; R-sq $= ${r2v}\\%$</div>`;
+
+const CHAPTERS=[
+/* ===================== 1 ===================== */
+{id:"ch1",title:"Exploring One-Variable Data",topics:[
+ {id:"ctr",title:"Center & Spread",idea:"The <b>mean</b> $\\bar x$ is the balance point; the <b>median</b> is the middle value. The <b>standard deviation</b> $s$ measures the typical distance from the mean, and the <b>IQR</b> $= Q_3 - Q_1$ is the spread of the middle half.",
+  lesson:{steps:[["\\text{Data: } 2,\\ 4,\\ 4,\\ 5,\\ 10","Five quiz scores."],["\\bar x = \\dfrac{2 + 4 + 4 + 5 + 10}{5} = 5","Add, then divide by how many."],["\\text{median} = 4","The middle (3rd) value of the sorted list."],["\\bar x > \\text{median}","The large value $10$ pulls the mean up; the median does not move."]],warn:"Sort the data before finding the median. For an even number of values, the median is the average of the two middle values."},
+  gen:[
+  ()=>{const a=ints(5,1,20);const m=mean(a);return NQ(`Find the mean of $${list(a)}$.`,m,"Add all the values, then divide by $5$.",[`Sum $= ${sum(a)}$.`,`$\\bar x = \\dfrac{${sum(a)}}{5} = ${fx(m)}$.`]);},
+  ()=>{const n=pick([6,7,8]),a=ints(n,10,60);return NQ(`Find the median of $${list(a)}$.`,med(a),"Sort first. With an even count, average the two middle values.",[`Sorted: $${list(sorted(a))}$.`,`Median $= ${fx(med(a))}$.`]);},
+  ()=>{const a=ints(pick([7,9]),1,40);const q1=Q1(a),q3=Q3(a);return NQ(`Find the IQR of $${list(a)}$.`,q3-q1,"Sort. $Q_1$ is the median of the lower half, $Q_3$ the median of the upper half (leave out the overall median).",[`Sorted: $${list(sorted(a))}$.`,`$Q_1 = ${q1}$, $Q_3 = ${q3}$.`,`IQR $= ${fx(q3-q1)}$.`]);},
+  ()=>{const a=ints(5,1,15);const s=sdS(a);return NQ(`Find the sample standard deviation of $${list(a)}$ (nearest hundredth).`,r2(s),"$s = \\sqrt{\\dfrac{\\sum (x - \\bar x)^2}{n - 1}}$. Use $n - 1 = 4$.",[`$\\bar x = ${fx(mean(a))}$.`,`$\\sum (x - \\bar x)^2 = ${fx(sum(a.map(x=>(x-mean(a))**2)))}$.`,`$s = \\sqrt{${fx(sum(a.map(x=>(x-mean(a))**2)))}/4} \\approx ${fx(s,2)}$.`],0.011);},
+  ()=>{const m=rnd(10,40),s=rnd(2,8),k=pick([2,3,4,5]),c=nz(-10,20);const askSD=Math.random()<.5;return askSD?NQ(`A data set has mean $${m}$ and standard deviation $${s}$. Every value is multiplied by $${k}$ and then $${c}$ is added. Find the new standard deviation.`,k*s,"Adding a constant shifts the data but does not change the spread. Multiplying scales the spread.",[`New SD $= ${k} \\cdot ${s} = ${k*s}$ (the $${sg(c)}$ has no effect).`]):NQ(`A data set has mean $${m}$ and standard deviation $${s}$. Every value is multiplied by $${k}$ and then $${c}$ is added. Find the new mean.`,k*m+c,"Both operations affect the center.",[`New mean $= ${k}(${m}) ${sg(c)} = ${k*m+c}$.`]);}
+ ]},
+ {id:"box",title:"Boxplots & Outliers",idea:"The <b>five-number summary</b> is Min, $Q_1$, Median, $Q_3$, Max — a boxplot draws it. A value is an <b>outlier</b> if it is more than $1.5 \\cdot \\text{IQR}$ below $Q_1$ or above $Q_3$.",
+  lesson:{steps:[["Q_1 = 20,\\ Q_3 = 32","From the data."],["\\text{IQR} = 32 - 20 = 12","Middle half."],["1.5 \\cdot 12 = 18","The outlier distance."],["\\text{fences: } 20 - 18 = 2,\\ 32 + 18 = 50","Any value below $2$ or above $50$ is an outlier."]],warn:"The fences are measured from the <b>quartiles</b>, not from the median."},
+  gen:[
+  ()=>{const a=ints(7,1,30);return NQ(`For the data $${list(a)}$, find $Q_1$.`,Q1(a),"Sort. $Q_1$ is the median of the lower 3 values.",[`Sorted: $${list(sorted(a))}$.`,`Lower half: $${list(halves(a)[0])}$, so $Q_1 = ${Q1(a)}$.`]);},
+  ()=>{const q1=rnd(10,40),q3=q1+rnd(4,20);return NQ(`A boxplot has $Q_1 = ${q1}$ and $Q_3 = ${q3}$. Find the IQR.`,q3-q1,"IQR $= Q_3 - Q_1$.",[`$${q3} - ${q1} = ${q3-q1}$.`]);},
+  ()=>{const q1=rnd(10,40),iq=2*rnd(2,10),q3=q1+iq;return NQ(`$Q_1 = ${q1}$ and $Q_3 = ${q3}$. Find the upper fence for outliers.`,q3+1.5*iq,"Upper fence $= Q_3 + 1.5 \\cdot \\text{IQR}$.",[`IQR $= ${iq}$.`,`$${q3} + 1.5(${iq}) = ${q3+1.5*iq}$.`]);},
+  ()=>{const q1=rnd(10,40),iq=2*rnd(2,10),q3=q1+iq,lo=q1-1.5*iq,hi=q3+1.5*iq;const out=Math.random()<.5;const v=out?(Math.random()<.5?hi+rnd(1,6):lo-rnd(1,6)):rnd(Math.ceil(lo),Math.floor(hi));return YN(`$Q_1 = ${q1}$ and $Q_3 = ${q3}$. Is $${v}$ an outlier?`,out,"Find both fences: $Q_1 - 1.5\\cdot\\text{IQR}$ and $Q_3 + 1.5\\cdot\\text{IQR}$.",[`Fences: $${lo}$ and $${hi}$.`,out?`$${v}$ is outside: outlier.`:`$${v}$ is inside: not an outlier.`]);},
+  ()=>{const s=pick(["right","left"]);return mcQ(`A distribution of household incomes is strongly skewed to the ${s}. Which is most likely true?`,s==="right"?"The mean is greater than the median.":"The mean is less than the median.",[s==="right"?"The mean is less than the median.":"The mean is greater than the median.","The mean equals the median.","The IQR is larger than the range."],"The mean is pulled toward the long tail.",[`The long tail is on the ${s}, so the mean is pulled ${s==="right"?"up":"down"}.`]);}
+ ]},
+ {id:"norm",title:"z-Scores & Normal Distributions",idea:"A <b>z-score</b> $z = \\dfrac{x - \\mu}{\\sigma}$ counts standard deviations from the mean. In a Normal distribution about $68\\%$, $95\\%$, $99.7\\%$ of values lie within $1$, $2$, $3$ SDs (the <b>empirical rule</b>).",
+  lesson:{steps:[["\\mu = 70,\\ \\sigma = 8,\\ x = 86","Test scores are Normal."],["z = \\dfrac{86 - 70}{8} = 2","Two SDs above the mean."],["P(Z > 2) \\approx 0.025","$95\\%$ is within 2 SDs, so $5\\%$ is outside, half on each side."]],warn:"$z$ uses $\\sigma$, the standard deviation — not the variance."},
+  gen:[
+  ()=>{const mu=rnd(40,90),s=rnd(3,12),z=nz(-3,3)*pick([1,0.5]),x=mu+z*s;return NQ(`A distribution has mean $${mu}$ and standard deviation $${s}$. Find the z-score of $${x}$.`,z,"$z = \\dfrac{x - \\mu}{\\sigma}$.",[`$z = \\dfrac{${x} - ${mu}}{${s}} = ${z}$.`]);},
+  ()=>{const V=pick([["within 1 SD of the mean",68],["within 2 SDs of the mean",95],["within 3 SDs of the mean",99.7],["more than 1 SD above the mean",16],["more than 2 SDs above the mean",2.5],["below the mean",50],["between the mean and 1 SD above",34]]);return NQ(`For a Normal distribution, about what percent of values are ${V[0]}? (Type a percent like 68.)`,V[1],"Use $68$–$95$–$99.7$ and symmetry.",[`About $${V[1]}\\%$.`],0.01);},
+  ()=>{const mu=rnd(50,100),s=rnd(4,15),x=mu+rnd(-20,20)/10*s;const z=(x-mu)/s,p=Phi(z);return NQ(`Heights are Normal with mean $${mu}$ and SD $${s}$. What proportion is below $${fx(x,1)}$? (Four decimals.)`,p,"Find $z$, then use the Normal table or normalcdf.",[`$z = ${fx(z,2)}$.`,`$P(Z < ${fx(z,2)}) \\approx ${fx(p)}$.`],0.006);},
+  ()=>{const mu=rnd(50,100),s=rnd(4,15),a=mu-rnd(5,20)/10*s,b=mu+rnd(5,20)/10*s;const p=Phi((b-mu)/s)-Phi((a-mu)/s);return NQ(`A Normal distribution has $\\mu = ${mu}$ and $\\sigma = ${s}$. Find the proportion between $${fx(a,1)}$ and $${fx(b,1)}$.`,p,"Find both z-scores, then subtract the areas to the left.",[`$z_1 = ${fx((a-mu)/s,2)}$, $z_2 = ${fx((b-mu)/s,2)}$.`,`$${fx(Phi((b-mu)/s))} - ${fx(Phi((a-mu)/s))} \\approx ${fx(p)}$.`],0.006);},
+  ()=>{const P=pick([[90,1.282],[95,1.645],[10,-1.282],[75,0.674],[25,-0.674],[99,2.326]]),mu=rnd(50,500),s=rnd(5,60);const x=mu+P[1]*s;return NQ(`Scores are Normal with mean $${mu}$ and SD $${s}$. Find the ${P[0]}th percentile (nearest tenth). Use $z = ${P[1]}$.`,r1(x),"Solve $z = \\dfrac{x - \\mu}{\\sigma}$ for $x$: $x = \\mu + z\\sigma$.",[`$x = ${mu} + (${P[1]})(${s}) \\approx ${fx(x,1)}$.`],0.15);}
+ ]}
+]},
+/* ===================== 2 ===================== */
+{id:"ch2",title:"Exploring Two-Variable Data",topics:[
+ {id:"twoway",title:"Two-Way Tables",idea:"A <b>two-way table</b> counts two categorical variables. A <b>marginal</b> proportion uses a row or column total over the grand total; a <b>conditional</b> proportion looks only inside one row or column.",
+  lesson:{steps:[["\\text{Of } 40 \\text{ juniors, } 30 \\text{ drive}","One row of the table."],["P(\\text{drive} \\mid \\text{junior}) = \\dfrac{30}{40} = 0.75","Condition on the row: the denominator is the row total."],["\\text{Compare with seniors}","If the conditional proportions differ, the variables are associated."]],warn:"The word after “of” or “given” decides the denominator: “of the juniors” means divide by the number of juniors."},
+  gen:[
+  ()=>{const a=rnd(10,60),b=rnd(10,60),c=rnd(10,60),d=rnd(10,60);return NQ(`Survey: ${tbl(["","Yes","No"],[["Teens",a,b],["Adults",c,d]])} How many people answered Yes?`,a+c,"Add down the Yes column.",[`$${a} + ${c} = ${a+c}$.`]);},
+  ()=>{const a=rnd(10,60),b=rnd(10,60),c=rnd(10,60),d=rnd(10,60),T=a+b+c+d;return NQ(`${tbl(["","Yes","No"],[["Teens",a,b],["Adults",c,d]])} What proportion of all respondents are teens? (Four decimals.)`,(a+b)/T,"Marginal: row total over grand total.",[`$\\dfrac{${a+b}}{${T}} \\approx ${fx((a+b)/T)}$.`],0.0006);},
+  ()=>{const a=rnd(10,60),b=rnd(10,60),c=rnd(10,60),d=rnd(10,60);return NQ(`${tbl(["","Pet","No pet"],[["Rural",a,b],["Urban",c,d]])} What proportion of <b>rural</b> respondents have a pet? (Four decimals.)`,a/(a+b),"Conditional: divide by the rural total.",[`$\\dfrac{${a}}{${a+b}} \\approx ${fx(a/(a+b))}$.`],0.0006);},
+  ()=>{const a=rnd(10,60),b=rnd(10,60),c=rnd(10,60),d=rnd(10,60);return NQ(`${tbl(["","Pet","No pet"],[["Rural",a,b],["Urban",c,d]])} Of the people who have a pet, what proportion are urban? (Four decimals.)`,c/(a+c),"Condition on the Pet column.",[`$\\dfrac{${c}}{${a+c}} \\approx ${fx(c/(a+c))}$.`],0.0006);},
+  ()=>{const a=rnd(5,20),b=rnd(5,20),k=rnd(2,4),eq=Math.random()<.5;const c=eq?k*a:k*a+rnd(8,20),d=k*b;return YN(`${tbl(["","Passed","Failed"],[["Morning class",a,b],["Evening class",c,d]])} Is there an association between class time and passing?`,!eq,"Compare the proportion who passed in each row.",[`Morning: $${fx(a/(a+b),3)}$. Evening: $${fx(c/(c+d),3)}$.`,eq?"Equal, so no association.":"Different, so there is an association."]);}
+ ]},
+ {id:"lsrl",title:"Correlation & the Regression Line",idea:"The <b>least-squares regression line</b> $\\hat y = a + bx$ has slope $b = r\\dfrac{s_y}{s_x}$ and passes through $(\\bar x, \\bar y)$. The correlation $r$ (between $-1$ and $1$) measures the strength and direction of a <b>linear</b> relationship.",
+  lesson:{steps:[["r = 0.8,\\ s_x = 2,\\ s_y = 5","Summary statistics."],["b = 0.8 \\cdot \\dfrac{5}{2} = 2","Slope."],["\\bar x = 10,\\ \\bar y = 40:\\ a = 40 - 2(10) = 20","The line goes through the point of means."],["\\hat y = 20 + 2x","The regression line."]],warn:"Don't use the line far outside the range of the data — that's <b>extrapolation</b>."},
+  gen:[
+  ()=>{const a=rnd(-20,50),b=pick([0.5,1.5,2,2.5,3,-1.5,-2]),x=rnd(2,20);return NQ(`The regression line is $\\hat y = ${a} ${b<0?"-":"+"} ${Math.abs(b)}x$. Predict $y$ when $x = ${x}$.`,a+b*x,"Plug in $x$.",[`$${a} ${b<0?"-":"+"} ${Math.abs(b)}(${x}) = ${fx(a+b*x)}$.`]);},
+  ()=>{const r=pick([0.6,0.75,0.8,0.9,-0.6,-0.8]),sx=rnd(2,10),sy=rnd(2,20);return NQ(`$r = ${r}$, $s_x = ${sx}$, $s_y = ${sy}$. Find the slope of the regression line (nearest hundredth).`,r2(r*sy/sx),"$b = r\\dfrac{s_y}{s_x}$.",[`$b = ${r} \\cdot \\dfrac{${sy}}{${sx}} \\approx ${fx(r*sy/sx,2)}$.`],0.011);},
+  ()=>{const b=pick([1.5,2,2.5,-1.2,0.8]),xb=rnd(5,30),yb=rnd(20,90);return NQ(`The regression line has slope $${b}$ and $\\bar x = ${xb}$, $\\bar y = ${yb}$. Find the $y$-intercept.`,yb-b*xb,"The line passes through $(\\bar x, \\bar y)$: $a = \\bar y - b\\bar x$.",[`$a = ${yb} - (${b})(${xb}) = ${fx(yb-b*xb)}$.`]);},
+  ()=>{const a=rnd(10,40),b=pick([1.5,2,3,0.5]),x=rnd(5,20),y=Math.round(a+b*x+rnd(-8,8));return NQ(`$\\hat y = ${a} + ${b}x$. A point is $(${x}, ${y})$. Find its residual.`,y-(a+b*x),"Residual $= y - \\hat y$ (actual minus predicted).",[`$\\hat y = ${fx(a+b*x)}$.`,`Residual $= ${y} - ${fx(a+b*x)} = ${fx(y-(a+b*x))}$.`]);},
+  ()=>{const r=pick([0.6,0.75,0.8,0.9,-0.5,-0.7]),sx=rnd(2,10),sy=rnd(2,20),xb=rnd(10,40),yb=rnd(30,90),x=xb+rnd(-6,6);const b=r*sy/sx,y=yb+b*(x-xb);return NQ(`$\\bar x = ${xb}$, $s_x = ${sx}$, $\\bar y = ${yb}$, $s_y = ${sy}$, $r = ${r}$. Predict $y$ for $x = ${x}$ (nearest tenth).`,r1(y),"Find $b = r\\dfrac{s_y}{s_x}$, then $\\hat y = \\bar y + b(x - \\bar x)$.",[`$b = ${fx(b,3)}$.`,`$\\hat y = ${yb} + ${fx(b,3)}(${x - xb}) \\approx ${fx(y,1)}$.`],0.11);}
+ ]},
+ {id:"resid",title:"Residuals, r² & Fit",idea:"A <b>residual plot</b> with no pattern means a line is a good model; a curve means it isn't. $r^2$ is the <b>fraction of the variation in $y$</b> explained by the linear model with $x$.",
+  lesson:{steps:[["r = -0.9","Strong negative linear relationship."],["r^2 = 0.81","Square it."],["81\\% \\text{ of the variation in } y \\text{ is explained}","by the linear relationship with $x$."]],warn:"$r^2$ is always positive — to get $r$ back, take the square root and give it the sign of the slope."},
+  gen:[
+  ()=>{const r=pick([0.5,0.6,0.7,0.8,0.9,-0.6,-0.8,-0.9]);return NQ(`$r = ${r}$. Find $r^2$ as a percent.`,Math.round(r*r*100),"Square $r$, then write it as a percent.",[`$(${r})^2 = ${fx(r*r)} = ${Math.round(r*r*100)}\\%$.`],0.01);},
+  ()=>{const R=pick([0.64,0.81,0.49,0.36,0.25]),s=pick([1,-1]);return NQ(`$r^2 = ${R}$ and the regression slope is ${s>0?"positive":"negative"}. Find $r$.`,s*Math.sqrt(R),"$r = \\pm\\sqrt{r^2}$ with the sign of the slope.",[`$r = ${s<0?"-":""}${fx(Math.sqrt(R))}$.`]);},
+  ()=>{const R=pick([64,72,81,49,90]);return mcQ(`A regression of exam score on hours studied has $r^2 = ${R}\\%$. Which is the correct interpretation?`,`About $${R}\\%$ of the variation in exam score is explained by the linear relationship with hours studied.`,[`About $${R}\\%$ of students' scores are predicted correctly.`,`Each extra hour raises the score by $${R}\\%$.`,`The correlation is $0.${R}$.`],"$r^2$ is about variation in $y$ explained by the model.",["$r^2$ describes the fraction of variation in $y$ explained by $x$."]);},
+  ()=>{const V=pick([["a clear U-shaped curve","A line is not appropriate; try a nonlinear model."],["random scatter with no pattern","A line is appropriate."],["a fan shape (spread grows with $x$)","Predictions are less reliable for large $x$; the spread is not constant."]]);return mcQ(`A residual plot shows ${V[0]}. What does that tell you?`,V[1],["A line is not appropriate; try a nonlinear model.","A line is appropriate.","Predictions are less reliable for large $x$; the spread is not constant.","The correlation must be zero."].filter(x=>x!==V[1]).slice(0,3),"Good models leave residuals with no pattern.",[V[1]]);},
+  ()=>{const r=pick([0.4,0.5,0.6,0.8,-0.5,-0.7]),sy=rnd(3,20),sx=rnd(2,8);return NQ(`$r = ${r}$, $s_x = ${sx}$, $s_y = ${sy}$. If $x$ increases by one standard deviation, by how much does the predicted $y$ change?`,r*sy,"An increase of $1$ SD in $x$ predicts a change of $r$ SDs in $y$.",[`$r \\cdot s_y = ${r} \\cdot ${sy} = ${fx(r*sy)}$.`]);}
+ ]}
+]},
+/* ===================== 3 ===================== */
+{id:"ch3",title:"Collecting Data",topics:[
+ {id:"samp",title:"Sampling Methods & Bias",idea:"A <b>simple random sample</b> gives every group of $n$ the same chance. <b>Stratified</b>: SRS within each similar group. <b>Cluster</b>: pick whole groups. <b>Systematic</b>: every $k$th one. <b>Convenience</b> and <b>voluntary response</b> samples are biased.",
+  lesson:{steps:[["\\text{Population: } 1200 \\text{ students in 4 grades}","Goal: sample $100$."],["\\text{Stratified: SRS of 25 from each grade}","Every grade is represented — less variability."],["\\text{Cluster: pick 4 random homerooms, survey all}","Easier, but homerooms should look like the school."]],warn:"A larger sample does not fix <b>bias</b>. A big voluntary-response sample is still biased."},
+  gen:[
+  ()=>{const V=pick([["The principal numbers all 900 students and uses a random number generator to choose 60.","simple random sample"],["A pollster splits voters by state and takes an SRS of 50 from each state.","stratified random sample"],["An inspector randomly picks 5 shipping boxes and checks every item in those boxes.","cluster sample"],["A manager surveys every 20th customer who walks in, starting with a random one of the first 20.","systematic random sample"],["A reporter interviews the first 30 people leaving a mall.","convenience sample"],["A website asks visitors to click to vote in a poll.","voluntary response sample"]]);const all=["simple random sample","stratified random sample","cluster sample","systematic random sample","convenience sample","voluntary response sample"];return mcQ(`${V[0]} What kind of sample is this?`,V[1],all.filter(x=>x!==V[1]).sort(()=>Math.random()-.5).slice(0,3),"Ask: are groups sampled from (stratified) or whole groups taken (cluster)? Is chance used at all?",[`This is a <b>${V[1]}</b>.`]);},
+  ()=>{const n=pick([20,25,40,50]),k=pick([10,12,15,20,25]);return NQ(`A list has $${n*k}$ names. For a systematic sample of $${n}$, what is $k$ (take every $k$th name)?`,k,"$k = \\dfrac{N}{n}$.",[`$\\dfrac{${n*k}}{${n}} = ${k}$.`]);},
+  ()=>{const V=pick([["Only 20% of the mailed surveys are returned.","nonresponse bias"],["The survey asks, “Don't you agree that the city's parks are a disgrace?”","response bias (wording)"],["A phone survey uses a list of landline numbers only.","undercoverage"],["A radio host asks listeners to call in their opinion.","voluntary response bias"]]);const all=["nonresponse bias","response bias (wording)","undercoverage","voluntary response bias"];return mcQ(`${V[0]} Which kind of bias is most likely?`,V[1],all.filter(x=>x!==V[1]),"Undercoverage = some people can't be chosen. Nonresponse = chosen but don't answer. Response bias = answers are pushed or untrue.",[`<b>${V[1]}</b>.`]);},
+  ()=>mcQ("A school wants to estimate the average hours of sleep. Sleep is very different in different grades. Which design gives the most precise estimate?","Stratify by grade and take an SRS from each grade",["Take a cluster sample of three homerooms","Survey students in the cafeteria at lunch","Ask for volunteers on the school website"],"Strata should be groups that are alike inside and different from each other.",["Stratifying by grade removes the grade-to-grade variability from the estimate."]),
+  ()=>{const A=rnd(4,12)*50,B=rnd(4,12)*50,C=rnd(4,12)*50,N=A+B+C,n=pick([60,80,100,120]);const w=pick([["A",A],["B",B],["C",C]]);return NQ(`A district has three schools with $${A}$, $${B}$ and $${C}$ students. A stratified sample of $${n}$ uses proportional allocation. How many students come from school ${w[0]}? (Nearest whole number.)`,Math.round(n*w[1]/N),"Each school's share of the sample matches its share of the population.",[`$${n} \\cdot \\dfrac{${w[1]}}{${N}} \\approx ${fx(n*w[1]/N,2)}$, so about $${Math.round(n*w[1]/N)}$.`],0.51);}
+ ]},
+ {id:"exper",title:"Designing Experiments",idea:"An <b>experiment</b> imposes treatments. Good design: <b>compare</b> treatments (often with a control), <b>randomly assign</b> them, <b>replicate</b> on enough units, and <b>block</b> on a variable that affects the response.",
+  lesson:{steps:[["\\text{Question: does a new fertilizer help?}","Response: plant height."],["\\text{Treatments: new vs. old fertilizer}","Comparison."],["\\text{Randomly assign 40 plants, 20 each}","Random assignment balances other variables."],["\\text{Block by greenhouse}","Compare within each greenhouse to remove its effect."]],warn:"<b>Random assignment</b> lets you conclude cause and effect. <b>Random sampling</b> lets you generalize to a population. They are different."},
+  gen:[
+  ()=>{const V=pick([["Researchers give some volunteers 0, 200 or 400 mg of caffeine and measure reaction time.","amount of caffeine","reaction time"],["A teacher tries two study apps and compares quiz scores.","study app","quiz score"],["A farmer tests three watering schedules and records the tomato yield.","watering schedule","tomato yield"]]);return mcQ(`${V[0]} What is the explanatory variable?`,V[1],[V[2],"the volunteers","the researchers"],"The explanatory variable is the one the researchers change.",[`Explanatory: <b>${V[1]}</b>; response: ${V[2]}.`]);},
+  ()=>{const a=rnd(2,4),b=rnd(2,4);return NQ(`An experiment has two factors: one with $${a}$ levels and one with $${b}$ levels. How many treatments are there?`,a*b,"Each treatment is one combination of levels.",[`$${a} \\cdot ${b} = ${a*b}$.`]);},
+  ()=>mcQ("Why do researchers randomly assign subjects to treatments?","To create groups that are roughly equivalent, so differences in the response can be attributed to the treatments",["To make the results apply to a larger population","To make the sample size larger","So the subjects don't know their treatment"],"Random assignment ≠ random sampling.",["Random assignment balances the effects of other variables between groups."]),
+  ()=>{const V=pick([["Men and women may respond differently to a diet. The researchers split subjects by sex, then randomly assign diets within each group.","a randomized block design"],["Each subject tries both keyboards in a random order and their typing speeds are compared.","a matched pairs design"],["Subjects are randomly split into two groups; one gets the drug and one gets a placebo.","a completely randomized design"]]);const all=["a randomized block design","a matched pairs design","a completely randomized design"];return mcQ(`${V[0]} This is`,V[1],[...all.filter(x=>x!==V[1]),"an observational study"],"Blocks are formed before assignment; matched pairs is a block of size 2 (or each subject gets both).",[`<b>${V[1]}</b>.`]);},
+  ()=>mcQ("In a drug trial, neither the patients nor the doctors who measure the response know who got the real drug. The main purpose is to","prevent expectations from influencing the responses or measurements (double-blind)",["make sure the groups are the same size","replace random assignment","allow the results to be generalized"],"Blinding protects against the placebo effect and biased measurement.",["This is <b>double-blinding</b>."])
+ ]},
+ {id:"scope",title:"Observational Studies & Scope of Inference",idea:"An <b>observational study</b> just records what happens; it can't show causation because of <b>confounding</b> variables. The <b>scope of inference</b>: random sampling → generalize to the population; random assignment → conclude causation.",
+  lesson:{steps:[["\\text{Study: students who eat breakfast have higher GPAs}","Observational — no one was assigned to eat breakfast."],["\\text{Confounding: family routines, sleep, income}","Other variables linked to both."],["\\text{Conclusion: association, not causation}","Only a randomized experiment shows cause."]],warn:"“Statistically significant” in an observational study still means only an <b>association</b>."},
+  gen:[
+  ()=>{const V=pick([["Researchers record the screen time and sleep of 500 teens.","observational study"],["Researchers randomly assign 100 teens to limit screen time or not, then measure sleep.","experiment"],["A survey asks adults how many hours they exercise.","observational study"],["Volunteers are randomly assigned to drink green tea or water daily for 8 weeks.","experiment"]]);return mcQ(`${V[0]} Is this an experiment or an observational study?`,V[1],V[1]==="experiment"?["observational study"]:["experiment"],"Did the researchers impose a treatment?",[`<b>${V[1]}</b>.`]);},
+  ()=>mcQ("A study finds that cities with more police officers have more crimes. Which is the best explanation?","City population is a confounding variable related to both",["More police cause more crime","More crime causes fewer police","The study must have used a biased sample"],"Look for a variable linked to both the explanatory and response variables.",["Bigger cities have both more police and more crime: population is a confounding variable."]),
+  ()=>{const rs=Math.random()<.5,ra=Math.random()<.5;const c=rs&&ra?"Cause and effect, for the whole population":ra?"Cause and effect, but only for subjects like these":rs?"Association only, but it generalizes to the population":"Association only, for these subjects";return mcQ(`A study ${rs?"randomly selects":"uses volunteers as"} its subjects and ${ra?"randomly assigns":"does not assign"} the treatments. What can be concluded?`,c,["Cause and effect, for the whole population","Cause and effect, but only for subjects like these","Association only, but it generalizes to the population","Association only, for these subjects"].filter(x=>x!==c),"Random sampling → generalize. Random assignment → causation.",[c+"."]);},
+  ()=>mcQ("A randomized experiment on 60 volunteers finds a new teaching method raises scores significantly. Can the result be generalized to all students in the state?","No — the subjects were volunteers, not a random sample from the state",["Yes — the result was statistically significant","Yes — random assignment was used","No — experiments can never show cause and effect"],"Generalizing requires random sampling.",["Random assignment gives causation for these subjects; without random sampling we can't generalize to the state."]),
+  ()=>mcQ("Why can't an observational study prove that a vitamin prevents colds, even with a very large sample?","People who choose to take vitamins may differ in other ways (confounding)",["The sample is too large","Vitamins cannot be measured","Observational studies have no response variable"],"Size does not fix confounding.",["Without random assignment, other differences between the groups could explain the result."])
+ ]}
+]},
+/* ===================== 4 ===================== */
+{id:"ch4",title:"Probability, Random Variables & Distributions",topics:[
+ {id:"prob",title:"Probability Rules",idea:"<b>Complement</b>: $P(A^c) = 1 - P(A)$. <b>Addition</b>: $P(A \\cup B) = P(A) + P(B) - P(A \\cap B)$. <b>Conditional</b>: $P(A \\mid B) = \\dfrac{P(A \\cap B)}{P(B)}$. $A$ and $B$ are <b>independent</b> if $P(A \\mid B) = P(A)$; then $P(A \\cap B) = P(A)P(B)$.",
+  lesson:{steps:[["P(\\text{soccer}) = 0.4,\\ P(\\text{band}) = 0.3,\\ P(\\text{both}) = 0.1","Students at a school."],["P(\\text{soccer or band}) = 0.4 + 0.3 - 0.1 = 0.6","Subtract the overlap — it was counted twice."],["P(\\text{band} \\mid \\text{soccer}) = \\dfrac{0.1}{0.4} = 0.25","Only look at soccer players."]],warn:"<b>Mutually exclusive</b> (can't happen together) is not the same as <b>independent</b>. Mutually exclusive events with positive probabilities are never independent."},
+  gen:[
+  ()=>{const p=rnd(5,95)/100;return NQ(`The probability it rains tomorrow is $${p}$. What is the probability it does not rain?`,1-p,"Complement rule.",[`$1 - ${p} = ${fx(1-p)}$.`]);},
+  ()=>{const a=rnd(20,60)/100,b=rnd(20,50)/100,c=rnd(5,Math.min(a,b)*100-1)/100;return NQ(`$P(A) = ${a}$, $P(B) = ${b}$, $P(A \\cap B) = ${c}$. Find $P(A \\cup B)$.`,a+b-c,"Add, then subtract the overlap.",[`$${a} + ${b} - ${c} = ${fx(a+b-c)}$.`]);},
+  ()=>{const a=rnd(2,9)/10,b=rnd(2,9)/10;return NQ(`$A$ and $B$ are independent with $P(A) = ${a}$ and $P(B) = ${b}$. Find $P(A \\cap B)$.`,a*b,"Independent: multiply.",[`$${a} \\cdot ${b} = ${fx(a*b)}$.`]);},
+  ()=>{const b=rnd(30,80)/100,c=rnd(5,Math.round(b*100)-5)/100;return NQ(`$P(A \\cap B) = ${c}$ and $P(B) = ${b}$. Find $P(A \\mid B)$ (four decimals).`,c/b,"$P(A \\mid B) = \\dfrac{P(A \\cap B)}{P(B)}$.",[`$\\dfrac{${c}}{${b}} \\approx ${fx(c/b)}$.`],0.0006);},
+  ()=>{const p=pick([0.05,0.1,0.02,0.2,0.15]),n=rnd(3,10);const v=1-(1-p)**n;return NQ(`Each light bulb is defective with probability $${p}$, independently. In a pack of $${n}$, what is the probability at least one is defective? (Four decimals.)`,v,"$P(\\text{at least one}) = 1 - P(\\text{none})$.",[`$P(\\text{none}) = ${fx(1-p,2)}^{${n}} \\approx ${fx((1-p)**n)}$.`,`$1 - ${fx((1-p)**n)} \\approx ${fx(v)}$.`],0.0006);}
+ ]},
+ {id:"rv",title:"Discrete Random Variables",idea:"For a discrete random variable, $\\mu_X = E(X) = \\sum x\\,P(x)$ and $\\sigma_X = \\sqrt{\\sum (x - \\mu)^2 P(x)}$. For $Y = a + bX$: $\\mu_Y = a + b\\mu_X$ and $\\sigma_Y = |b|\\sigma_X$. For independent $X, Y$: $\\sigma^2_{X \\pm Y} = \\sigma_X^2 + \\sigma_Y^2$.",
+  lesson:{steps:[["X: 0,\\ 1,\\ 2 \\text{ with } P: 0.5,\\ 0.3,\\ 0.2","Number of pets."],["E(X) = 0(0.5) + 1(0.3) + 2(0.2) = 0.7","Weighted average."],["\\text{The long-run average is } 0.7 \\text{ pets}","Not a value $X$ can take — that's fine."]],warn:"Variances add — standard deviations do not. And for $X - Y$ the variances still <b>add</b>."},
+  gen:[
+  ()=>{const p=[rnd(1,4),rnd(1,4),rnd(1,3)].map(x=>x/10);const m=r2(1-sum(p));return NQ(`$X$ takes values $1, 2, 3, 4$ with $P = ${p.join(",\\ ")},\\ ?$ . Find the missing probability.`,m,"Probabilities add to $1$.",[`$1 - ${fx(sum(p))} = ${fx(m)}$.`]);},
+  ()=>{const x=[0,1,2,3],p=pick([[.1,.3,.4,.2],[.2,.4,.3,.1],[.25,.25,.25,.25],[.4,.3,.2,.1],[.1,.2,.3,.4]]);const m=sum(x.map((v,i)=>v*p[i]));return NQ(`${tbl(["$x$","0","1","2","3"],[["$P(x)$",...p]])} Find $E(X)$.`,m,"$\\sum x P(x)$.",[`$0(${p[0]}) + 1(${p[1]}) + 2(${p[2]}) + 3(${p[3]}) = ${fx(m)}$.`]);},
+  ()=>{const x=[0,1,2,3],p=pick([[.1,.3,.4,.2],[.2,.4,.3,.1],[.4,.3,.2,.1],[.1,.2,.3,.4]]);const m=sum(x.map((v,i)=>v*p[i])),s=Math.sqrt(sum(x.map((v,i)=>(v-m)**2*p[i])));return NQ(`${tbl(["$x$","0","1","2","3"],[["$P(x)$",...p]])} $E(X) = ${fx(m)}$. Find $\\sigma_X$ (nearest hundredth).`,r2(s),"$\\sigma = \\sqrt{\\sum (x - \\mu)^2 P(x)}$.",[`Variance $= ${fx(s*s)}$.`,`$\\sigma \\approx ${fx(s,2)}$.`],0.011);},
+  ()=>{const m=rnd(5,30),s=rnd(2,8),a=rnd(10,50),b=pick([2,3,5,10]);const ask=Math.random()<.5;return ask?NQ(`$X$ has mean $${m}$ and SD $${s}$. $Y = ${a} + ${b}X$. Find $\\mu_Y$.`,a+b*m,"$\\mu_Y = a + b\\mu_X$.",[`$${a} + ${b}(${m}) = ${a+b*m}$.`]):NQ(`$X$ has mean $${m}$ and SD $${s}$. $Y = ${a} + ${b}X$. Find $\\sigma_Y$.`,b*s,"Adding $a$ does not change the spread: $\\sigma_Y = |b|\\sigma_X$.",[`$${b} \\cdot ${s} = ${b*s}$.`]);},
+  ()=>{const T=pick([[3,4,5],[6,8,10],[5,12,13],[8,15,17]]),d=Math.random()<.5;return NQ(`$X$ and $Y$ are independent with $\\sigma_X = ${T[0]}$ and $\\sigma_Y = ${T[1]}$. Find $\\sigma_{X ${d?"-":"+"} Y}$.`,T[2],"Variances add, even for a difference.",[`$\\sigma^2 = ${T[0]}^2 + ${T[1]}^2 = ${T[2]**2}$.`,`$\\sigma = ${T[2]}$.`]);}
+ ]},
+ {id:"binom",title:"Binomial & Geometric Distributions",idea:"<b>Binomial</b> $X$: number of successes in $n$ independent trials with success probability $p$: $P(X = k) = \\binom{n}{k}p^k(1 - p)^{n-k}$, $\\mu = np$, $\\sigma = \\sqrt{np(1 - p)}$. <b>Geometric</b> $Y$: trial of the first success: $P(Y = k) = (1 - p)^{k-1}p$, $\\mu = \\tfrac1p$.",
+  lesson:{steps:[["n = 5,\\ p = 0.2,\\ P(X = 2)","Five free throws; $20\\%$ chance each to miss."],["\\binom{5}{2}(0.2)^2(0.8)^3","Choose which 2 are misses."],["= 10(0.04)(0.512) = 0.2048","Done."]],warn:"Check <b>BINS</b> first: Binary outcomes, Independent trials, fixed Number of trials, Same $p$. A geometric setting has no fixed $n$."},
+  gen:[
+  ()=>{const n=rnd(10,60),p=pick([0.1,0.2,0.25,0.3,0.4,0.5,0.6]);return NQ(`$X$ is binomial with $n = ${n}$ and $p = ${p}$. Find $\\mu_X$.`,n*p,"$\\mu = np$.",[`$${n}(${p}) = ${fx(n*p)}$.`]);},
+  ()=>{const n=rnd(10,80),p=pick([0.1,0.2,0.25,0.3,0.4,0.5]);const s=Math.sqrt(n*p*(1-p));return NQ(`$X$ is binomial with $n = ${n}$ and $p = ${p}$. Find $\\sigma_X$ (nearest hundredth).`,r2(s),"$\\sigma = \\sqrt{np(1 - p)}$.",[`$\\sqrt{${n}(${p})(${fx(1-p)})} \\approx ${fx(s,2)}$.`],0.011);},
+  ()=>{const n=rnd(4,10),p=pick([0.2,0.3,0.4,0.5,0.6,0.7]),k=rnd(1,n-1);const v=binP(n,k,p);return NQ(`A quiz has $${n}$ questions; a student gets each right with probability $${p}$, independently. Find $P(\\text{exactly } ${k} \\text{ right})$ (four decimals).`,v,"$\\binom{n}{k}p^k(1 - p)^{n-k}$.",[`$\\binom{${n}}{${k}}(${p})^{${k}}(${fx(1-p)})^{${n-k}} \\approx ${fx(v)}$.`],0.0006);},
+  ()=>{const p=pick([0.1,0.2,0.25,0.3,0.4]),k=rnd(2,6);const v=(1-p)**(k-1)*p;return NQ(`A basketball player makes a shot with probability $${p}$. Find the probability her first make is on shot $${k}$ (four decimals).`,v,"Geometric: $k - 1$ misses, then a make.",[`$(${fx(1-p)})^{${k-1}}(${p}) \\approx ${fx(v)}$.`],0.0006);},
+  ()=>{const n=rnd(5,12),p=pick([0.1,0.2,0.3]);const v=binP(n,0,p)+binP(n,1,p);return NQ(`$X$ is binomial with $n = ${n}$ and $p = ${p}$. Find $P(X \\le 1)$ (four decimals).`,v,"$P(X = 0) + P(X = 1)$.",[`$P(X = 0) = ${fx(binP(n,0,p))}$, $P(X = 1) = ${fx(binP(n,1,p))}$.`,`Sum $\\approx ${fx(v)}$.`],0.0006);}
+ ]}
+]},
+/* ===================== 5 ===================== */
+{id:"ch5",title:"Sampling Distributions",topics:[
+ {id:"phat",title:"Sampling Distribution of a Sample Proportion",idea:"For SRSs of size $n$ from a population with proportion $p$: $\\mu_{\\hat p} = p$ and $\\sigma_{\\hat p} = \\sqrt{\\dfrac{p(1 - p)}{n}}$ (when $n \\le 10\\%$ of the population). It is approximately Normal if $np \\ge 10$ and $n(1 - p) \\ge 10$.",
+  lesson:{steps:[["p = 0.3,\\ n = 100","Take many samples of 100."],["\\mu_{\\hat p} = 0.3","$\\hat p$ is an unbiased estimator of $p$."],["\\sigma_{\\hat p} = \\sqrt{\\dfrac{0.3(0.7)}{100}} \\approx 0.046","Typical distance of $\\hat p$ from $0.3$."],["np = 30,\\ n(1-p) = 70 \\ge 10","Approximately Normal."]],warn:"To cut $\\sigma_{\\hat p}$ in half, you need <b>four times</b> the sample size."},
+  gen:[
+  ()=>{const p=pick([0.2,0.35,0.4,0.55,0.6,0.72]),n=rnd(50,500);return NQ(`$${Math.round(p*100)}\\%$ of a city's adults ride the bus. For random samples of $${n}$, what is the mean of the sampling distribution of $\\hat p$?`,p,"$\\hat p$ is unbiased.",[`$\\mu_{\\hat p} = p = ${p}$.`]);},
+  ()=>{const p=pick([0.2,0.3,0.4,0.5,0.6]),n=pick([50,100,200,400,500]);const s=Math.sqrt(p*(1-p)/n);return NQ(`$p = ${p}$, $n = ${n}$. Find $\\sigma_{\\hat p}$ (four decimals).`,s,"$\\sqrt{\\dfrac{p(1 - p)}{n}}$.",[`$\\sqrt{\\dfrac{${p}(${fx(1-p)})}{${n}}} \\approx ${fx(s)}$.`],0.0006);},
+  ()=>{const p=pick([0.02,0.05,0.1,0.3,0.5,0.8,0.95]),n=pick([40,60,100,150,300]);const ok=n*p>=10&&n*(1-p)>=10;return YN(`$p = ${p}$ and $n = ${n}$. Is the sampling distribution of $\\hat p$ approximately Normal?`,ok,"Check $np \\ge 10$ and $n(1 - p) \\ge 10$.",[`$np = ${fx(n*p)}$, $n(1 - p) = ${fx(n*(1-p))}$.`,ok?"Both are at least 10: yes.":"One is below 10: no."]);},
+  ()=>{const p=pick([0.3,0.4,0.5,0.6]),n=pick([100,200,400]),s=Math.sqrt(p*(1-p)/n),c=r2(p+rnd(5,20)/10*s);const z=(c-p)/s,v=1-Phi(z);return NQ(`$p = ${p}$, $n = ${n}$. Find $P(\\hat p > ${c})$ using the Normal approximation (four decimals).`,v,"Standardize with $\\mu_{\\hat p}$ and $\\sigma_{\\hat p}$.",[`$\\sigma_{\\hat p} \\approx ${fx(s)}$.`,`$z = \\dfrac{${c} - ${p}}{${fx(s)}} \\approx ${fx(z,2)}$.`,`$P(Z > ${fx(z,2)}) \\approx ${fx(v)}$.`],0.006);},
+  ()=>{const n=pick([100,150,200,250]),k=pick([2,3]);return NQ(`A survey uses $n = ${n}$. What sample size would make $\\sigma_{\\hat p}$ ${k===2?"half":"one third"} as large?`,n*k*k,"$\\sigma$ depends on $\\sqrt{n}$.",[`Divide $\\sigma$ by $${k}$ → multiply $n$ by $${k}^2 = ${k*k}$: $${n*k*k}$.`]);}
+ ]},
+ {id:"xbar",title:"Sampling Distribution of a Sample Mean",idea:"$\\mu_{\\bar x} = \\mu$ and $\\sigma_{\\bar x} = \\dfrac{\\sigma}{\\sqrt n}$. If the population is Normal, so is $\\bar x$. The <b>Central Limit Theorem</b>: for large $n$ (about $n \\ge 30$), $\\bar x$ is approximately Normal whatever the population's shape.",
+  lesson:{steps:[["\\mu = 500,\\ \\sigma = 100,\\ n = 25","Exam scores."],["\\sigma_{\\bar x} = \\dfrac{100}{\\sqrt{25}} = 20","Averages vary much less than individuals."],["P(\\bar x > 540): z = \\dfrac{540 - 500}{20} = 2","Standardize with $\\sigma_{\\bar x}$."],["P \\approx 0.0228","Very unlikely."]],warn:"Use $\\sigma$ for one individual and $\\dfrac{\\sigma}{\\sqrt n}$ for a sample mean."},
+  gen:[
+  ()=>{const s=rnd(2,20)*pick([1,2,3]),n=pick([4,9,16,25,36,49,64,100]);return NQ(`A population has $\\sigma = ${s}$. Find $\\sigma_{\\bar x}$ for samples of size $${n}$.`,s/Math.sqrt(n),"$\\dfrac{\\sigma}{\\sqrt n}$.",[`$\\dfrac{${s}}{${Math.sqrt(n)}} = ${fx(s/Math.sqrt(n))}$.`]);},
+  ()=>{const m=rnd(20,300),n=rnd(10,80);return NQ(`The mean weight of a bag of chips is $${m}$ g. For random samples of $${n}$ bags, what is $\\mu_{\\bar x}$?`,m,"The sample mean is unbiased.",[`$\\mu_{\\bar x} = \\mu = ${m}$.`]);},
+  ()=>{const mu=rnd(50,200),s=rnd(5,30),n=pick([16,25,36,64,100]);const se=s/Math.sqrt(n),c=r1(mu+rnd(5,25)/10*se);const z=(c-mu)/se,v=1-Phi(z);return NQ(`$\\mu = ${mu}$, $\\sigma = ${s}$, $n = ${n}$. Find $P(\\bar x > ${c})$ (four decimals).`,v,"Standardize with $\\sigma_{\\bar x} = \\dfrac{\\sigma}{\\sqrt n}$.",[`$\\sigma_{\\bar x} = ${fx(se)}$.`,`$z \\approx ${fx(z,2)}$, $P \\approx ${fx(v)}$.`],0.006);},
+  ()=>{const n=pick([8,12,15,20,40,50,80]),shape=pick(["strongly skewed to the right","Normal","unknown"]);const ok=shape==="Normal"||n>=30;return YN(`The population is ${shape}. A sample of size $${n}$ is taken. Is it safe to treat $\\bar x$ as approximately Normal?`,ok,"Normal population → always. Otherwise the CLT needs a large sample ($n \\ge 30$).",[ok?(shape==="Normal"?"The population is Normal, so $\\bar x$ is Normal.":"$n \\ge 30$: the CLT applies."):"Not Normal and $n < 30$: not safe."]);},
+  ()=>{const s=pick([10,12,15,20,24,30]),t=pick([2,3,4,5]);return NQ(`$\\sigma = ${s}$. How large must $n$ be so that $\\sigma_{\\bar x} = ${s/t}$?`,t*t,"Solve $\\dfrac{\\sigma}{\\sqrt n} = \\text{target}$.",[`$\\sqrt n = \\dfrac{${s}}{${s/t}} = ${t}$, so $n = ${t*t}$.`]);}
+ ]},
+ {id:"diff",title:"Sampling Distributions of Differences",idea:"For independent samples: $\\mu_{\\hat p_1 - \\hat p_2} = p_1 - p_2$ and $\\sigma_{\\hat p_1 - \\hat p_2} = \\sqrt{\\dfrac{p_1(1 - p_1)}{n_1} + \\dfrac{p_2(1 - p_2)}{n_2}}$. For means: $\\sigma_{\\bar x_1 - \\bar x_2} = \\sqrt{\\dfrac{\\sigma_1^2}{n_1} + \\dfrac{\\sigma_2^2}{n_2}}$.",
+  lesson:{steps:[["p_1 = 0.6,\\ n_1 = 100;\\ p_2 = 0.5,\\ n_2 = 100","Two schools."],["\\mu = 0.6 - 0.5 = 0.1","Centers subtract."],["\\sigma = \\sqrt{\\dfrac{0.24}{100} + \\dfrac{0.25}{100}} = 0.07","Variances add."]],warn:"Each sample must be no more than $10\\%$ of its population (so the observations are nearly independent)."},
+  gen:[
+  ()=>{const a=rnd(30,80)/100,b=rnd(20,70)/100;return NQ(`$p_1 = ${a}$ and $p_2 = ${b}$. Find the mean of $\\hat p_1 - \\hat p_2$.`,a-b,"Centers subtract.",[`$${a} - ${b} = ${fx(a-b)}$.`]);},
+  ()=>{const a=pick([0.3,0.4,0.5,0.6]),b=pick([0.2,0.3,0.4,0.5]),n1=pick([100,150,200]),n2=pick([100,150,200]);const s=Math.sqrt(a*(1-a)/n1+b*(1-b)/n2);return NQ(`$p_1 = ${a}$, $n_1 = ${n1}$; $p_2 = ${b}$, $n_2 = ${n2}$. Find $\\sigma_{\\hat p_1 - \\hat p_2}$ (four decimals).`,s,"Add the two variances, then take the square root.",[`$\\sqrt{\\dfrac{${a}(${fx(1-a)})}{${n1}} + \\dfrac{${b}(${fx(1-b)})}{${n2}}} \\approx ${fx(s)}$.`],0.0006);},
+  ()=>{const s1=rnd(5,20),s2=rnd(5,20),n1=pick([25,36,49,64]),n2=pick([25,36,49,64]);const s=Math.sqrt(s1*s1/n1+s2*s2/n2);return NQ(`$\\sigma_1 = ${s1}$, $n_1 = ${n1}$; $\\sigma_2 = ${s2}$, $n_2 = ${n2}$. Find $\\sigma_{\\bar x_1 - \\bar x_2}$ (nearest hundredth).`,r2(s),"$\\sqrt{\\dfrac{\\sigma_1^2}{n_1} + \\dfrac{\\sigma_2^2}{n_2}}$.",[`$\\sqrt{\\dfrac{${s1*s1}}{${n1}} + \\dfrac{${s2*s2}}{${n2}}} \\approx ${fx(s,2)}$.`],0.011);},
+  ()=>{const a=pick([0.45,0.5,0.55]),b=pick([0.4,0.45,0.5]),n=pick([100,200]);const m=a-b,s=Math.sqrt(a*(1-a)/n+b*(1-b)/n),v=1-Phi((0-m)/s);return NQ(`$p_1 = ${a}$, $p_2 = ${b}$, $n_1 = n_2 = ${n}$. Find $P(\\hat p_1 - \\hat p_2 > 0)$ (four decimals).`,v,"Find the mean and SD of the difference, then standardize $0$.",[`$\\mu = ${fx(m)}$, $\\sigma \\approx ${fx(s)}$.`,`$z = \\dfrac{0 - ${fx(m)}}{${fx(s)}} \\approx ${fx(-m/s,2)}$, $P \\approx ${fx(v)}$.`],0.006);},
+  ()=>{const N=pick([800,1500,3000,600,12000]),n=pick([50,100,200,250]);const ok=n<=0.1*N;return YN(`A sample of $${n}$ is drawn without replacement from a population of $${N}$. Is the $10\\%$ condition met?`,ok,"Is $n \\le 0.1N$?",[`$0.1 \\cdot ${N} = ${0.1*N}$.`,ok?`$${n} \\le ${0.1*N}$: yes.`:`$${n} > ${0.1*N}$: no.`]);}
+ ]}
+]},
+/* ===================== 6 ===================== */
+{id:"ch6",title:"Inference for Categorical Data: Proportions",topics:[
+ {id:"cip",title:"Confidence Interval for a Proportion",idea:"A level $C$ <b>confidence interval</b> for $p$ is $\\hat p \\pm z^*\\sqrt{\\dfrac{\\hat p(1 - \\hat p)}{n}}$. The part after $\\pm$ is the <b>margin of error</b>. Use $z^* = 1.645, 1.96, 2.576$ for $90\\%, 95\\%, 99\\%$.",
+  lesson:{steps:[["120 \\text{ of } 400 \\text{ say yes}","Random sample."],["\\hat p = 0.3,\\ SE = \\sqrt{\\dfrac{0.3(0.7)}{400}} \\approx 0.0229","Standard error."],["0.3 \\pm 1.96(0.0229) = 0.3 \\pm 0.045","95% confidence."],["(0.255,\\ 0.345)","We are 95% confident the true proportion is in this interval."]],warn:"“95% confident” means the <b>method</b> captures $p$ in 95% of samples — not that there is a 95% chance $p$ is in this one interval."},
+  gen:[
+  ()=>{const n=rnd(5,40)*10,x=rnd(Math.round(n*.1),Math.round(n*.9));return NQ(`In a random sample of $${n}$ students, $${x}$ have a part-time job. Find $\\hat p$ (four decimals).`,x/n,"$\\hat p = \\dfrac{x}{n}$.",[`$\\dfrac{${x}}{${n}} = ${fx(x/n)}$.`],0.0006);},
+  ()=>{const p=pick([0.2,0.3,0.45,0.6,0.7]),n=pick([100,200,400,500]);const se=Math.sqrt(p*(1-p)/n);return NQ(`$\\hat p = ${p}$ and $n = ${n}$. Find the standard error (four decimals).`,se,"$SE = \\sqrt{\\dfrac{\\hat p(1 - \\hat p)}{n}}$.",[`$\\approx ${fx(se)}$.`],0.0006);},
+  ()=>{const p=pick([0.2,0.3,0.45,0.6,0.7]),n=pick([100,200,400,500]),Z=pick(ZS);const me=Z[1]*Math.sqrt(p*(1-p)/n);return NQ(`$\\hat p = ${p}$, $n = ${n}$. Find the margin of error for a $${Z[0]*100}\\%$ confidence interval (four decimals).`,me,`$ME = z^*\\,SE$ with $z^* = ${Z[1]}$.`,[`$SE \\approx ${fx(Math.sqrt(p*(1-p)/n))}$.`,`$ME = ${Z[1]}(${fx(Math.sqrt(p*(1-p)/n))}) \\approx ${fx(me)}$.`],0.0011);},
+  ()=>{const n=rnd(10,50)*10,x=rnd(Math.round(n*.2),Math.round(n*.8)),Z=pick(ZS);const p=x/n,me=Z[1]*Math.sqrt(p*(1-p)/n);return NQ(`$${x}$ of $${n}$ randomly chosen voters support a measure. Find the <b>upper</b> endpoint of a $${Z[0]*100}\\%$ confidence interval for $p$ (three decimals).`,r3(p+me),`$\\hat p + z^*\\,SE$, $z^* = ${Z[1]}$.`,[`$\\hat p = ${fx(p)}$, $SE \\approx ${fx(Math.sqrt(p*(1-p)/n))}$.`,`$${fx(p)} + ${fx(me)} \\approx ${fx(p+me,3)}$.`],0.0021);},
+  ()=>{const Z=pick(ZS),M=pick([0.02,0.03,0.04,0.05]);const n=Math.ceil((Z[1]/M)**2*0.25);return NQ(`What sample size is needed for a $${Z[0]*100}\\%$ confidence interval with margin of error at most $${M}$? Use $\\hat p = 0.5$.`,n,`Solve $${Z[1]}\\sqrt{\\dfrac{0.25}{n}} \\le ${M}$ and round <b>up</b>.`,[`$n \\ge \\left(\\dfrac{${Z[1]}}{${M}}\\right)^2(0.25) = ${fx((Z[1]/M)**2*0.25,2)}$.`,`Round up: $${n}$.`]);}
+ ]},
+ {id:"testp",title:"Significance Test for a Proportion",idea:"Test $H_0: p = p_0$. The test statistic is $z = \\dfrac{\\hat p - p_0}{\\sqrt{p_0(1 - p_0)/n}}$. The <b>P-value</b> is the probability, assuming $H_0$, of a result at least this extreme. If P-value $< \\alpha$, reject $H_0$.",
+  lesson:{steps:[["H_0: p = 0.5,\\ H_a: p > 0.5","Is a coin biased toward heads?"],["\\hat p = 0.58,\\ n = 100","Data."],["z = \\dfrac{0.58 - 0.5}{\\sqrt{0.25/100}} = 1.6","Use $p_0$ in the SE."],["P(Z > 1.6) \\approx 0.055 > 0.05","Fail to reject $H_0$: not convincing evidence."]],warn:"Use $p_0$ (not $\\hat p$) in the standard error for a test. And “fail to reject” is <b>not</b> the same as “accept $H_0$”."},
+  gen:[
+  ()=>{const p0=pick([0.5,0.3,0.25,0.6,0.8]),d=pick(["more","less","different from"]);const c=`$H_0: p = ${p0}$, $H_a: p ${d==="more"?">":d==="less"?"<":"\\ne"} ${p0}$`;return mcQ(`A company claims $${p0*100}\\%$ of customers are satisfied. A manager suspects the true proportion is ${d==="different from"?"different":d} than that. Which hypotheses?`,c,[">","<","\\ne"].filter(s=>s!==(d==="more"?">":d==="less"?"<":"\\ne")).map(s=>`$H_0: p = ${p0}$, $H_a: p ${s} ${p0}$`).concat([`$H_0: \\hat p = ${p0}$, $H_a: \\hat p \\ne ${p0}$`]),"Hypotheses are about the parameter $p$; $H_a$ matches the suspicion.",[c+"."]);},
+  ()=>{const p0=pick([0.5,0.4,0.3,0.6]),n=pick([100,200,400]),ph=r2(p0+rnd(-8,8)/100);const z=(ph-p0)/Math.sqrt(p0*(1-p0)/n);return NQ(`$H_0: p = ${p0}$. A sample of $${n}$ gives $\\hat p = ${ph}$. Find the $z$ test statistic (nearest hundredth).`,r2(z),"$z = \\dfrac{\\hat p - p_0}{\\sqrt{p_0(1 - p_0)/n}}$.",[`$SE = ${fx(Math.sqrt(p0*(1-p0)/n))}$.`,`$z \\approx ${fx(z,2)}$.`],0.011);},
+  ()=>{const z=rnd(50,280)/100,up=Math.random()<.5;const v=1-Phi(z);return NQ(`$H_a: p ${up?">":"<"} p_0$ and $z = ${up?z:-z}$. Find the P-value (four decimals).`,v,`One-sided: the area ${up?"above":"below"} $z$.`,[`$P \\approx ${fx(v)}$.`],0.0011);},
+  ()=>{const P=pick([0.003,0.012,0.031,0.048,0.062,0.087,0.21]),a=pick([0.01,0.05,0.10]);return YN(`The P-value is $${P}$ and $\\alpha = ${a}$. Should we reject $H_0$?`,P<a,"Reject when P-value $< \\alpha$.",[P<a?`$${P} < ${a}$: reject $H_0$.`:`$${P} \\ge ${a}$: fail to reject $H_0$.`]);},
+  ()=>{const z=rnd(100,280)/100;const v=2*(1-Phi(z));return NQ(`$H_a: p \\ne p_0$ and $z = ${pick([1,-1])*z}$. Find the P-value (four decimals).`,v,"Two-sided: double the tail area.",[`$2P(Z > ${z}) \\approx ${fx(v)}$.`],0.0021);}
+ ]},
+ {id:"power",title:"Errors & Power",idea:"<b>Type I error</b>: reject $H_0$ when it is true (probability $\\alpha$). <b>Type II error</b>: fail to reject $H_0$ when $H_a$ is true. <b>Power</b> $= 1 - P(\\text{Type II})$ = the chance of correctly rejecting a false $H_0$. Power goes up with larger $n$, larger $\\alpha$, or a bigger true effect.",
+  lesson:{steps:[["H_0: \\text{the new drug is no better}","Medical test."],["\\text{Type I: say it works when it doesn't}","Patients use a useless drug."],["\\text{Type II: miss a drug that really works}","A good drug is abandoned."],["\\text{Raise } n \\Rightarrow \\text{ power } \\uparrow","Less chance of a Type II error."]],warn:"Lowering $\\alpha$ protects against Type I errors but <b>raises</b> the chance of a Type II error."},
+  gen:[
+  ()=>mcQ("$H_0$: the batch of medicine is safe. A Type I error would be","concluding the batch is unsafe when it is actually safe",["concluding the batch is safe when it is actually unsafe","correctly deciding the batch is safe","taking too small a sample"],"Type I = rejecting a true $H_0$.",["A Type I error rejects a true $H_0$."]),
+  ()=>{const b=rnd(5,40)/100;return NQ(`The probability of a Type II error is $${b}$. Find the power.`,1-b,"Power $= 1 - \\beta$.",[`$1 - ${b} = ${fx(1-b)}$.`]);},
+  ()=>{const V=pick([["increase the sample size","increases"],["decrease $\\alpha$ from $0.05$ to $0.01$","decreases"],["the true value is farther from $p_0$","increases"],["decrease the sample size","decreases"]]);return mcQ(`What happens to the power of a test if we ${V[0]}?`,`The power ${V[1]}.`,[`The power ${V[1]==="increases"?"decreases":"increases"}.`,"The power stays the same.","The power becomes exactly $\\alpha$."],"Power rises with larger $n$, larger $\\alpha$ and larger effects.",[`Power ${V[1]}.`]);},
+  ()=>mcQ("A fire alarm's $H_0$ is “there is no fire.” Which error is more serious, and what should the designers do?","Type II (missing a real fire); make the alarm more sensitive (larger $\\alpha$)",["Type I (false alarm); make the alarm less sensitive","Type II; use a smaller $\\alpha$","Neither — both errors are equally serious"],"Think about the consequence of each error.",["Missing a real fire is worse, so accept more false alarms to raise power."]),
+  ()=>{const a=pick([0.01,0.05,0.1]);return NQ(`A test is run at $\\alpha = ${a}$ and $H_0$ is actually true. What is the probability of a Type I error?`,a,"The significance level is the probability of a Type I error when $H_0$ is true.",[`$P(\\text{Type I}) = \\alpha = ${a}$.`]);}
+ ]}
+]},
+/* ===================== 7 ===================== */
+{id:"ch7",title:"Inference for Quantitative Data: Means",topics:[
+ {id:"cim",title:"Confidence Interval for a Mean",idea:"When $\\sigma$ is unknown, use the <b>$t$ distribution</b> with $df = n - 1$: $\\bar x \\pm t^*\\dfrac{s}{\\sqrt n}$. Conditions: random sample, $n \\le 10\\%$ of population, and Normal population or $n \\ge 30$ (or no strong skew/outliers).",
+  lesson:{steps:[["n = 16,\\ \\bar x = 24,\\ s = 6","Minutes of homework."],["SE = \\dfrac{6}{\\sqrt{16}} = 1.5","Standard error of $\\bar x$."],["df = 15,\\ t^* = 2.131","95% confidence, from the $t$ table."],["24 \\pm 2.131(1.5) = (20.8,\\ 27.2)","We are 95% confident the true mean is in this interval."]],warn:"$t^*$ is bigger than $z^*$ because we estimate $\\sigma$ with $s$. The smaller the $df$, the bigger $t^*$."},
+  gen:[
+  ()=>{const n=rnd(6,60);return NQ(`A sample of $${n}$ is used for a one-sample $t$ interval. How many degrees of freedom?`,n-1,"$df = n - 1$.",[`$${n} - 1 = ${n-1}$.`]);},
+  ()=>{const s=rnd(3,30),n=pick([9,16,25,36,49,64,100]);return NQ(`$s = ${s}$ and $n = ${n}$. Find the standard error of $\\bar x$.`,s/Math.sqrt(n),"$SE = \\dfrac{s}{\\sqrt n}$.",[`$\\dfrac{${s}}{${Math.sqrt(n)}} \\approx ${fx(s/Math.sqrt(n))}$.`],0.0011);},
+  ()=>{const s=rnd(3,30),n=pick([9,16,25,36]),T={9:2.306,16:2.131,25:2.064,36:2.030}[n];const me=T*s/Math.sqrt(n);return NQ(`$n = ${n}$, $s = ${s}$. For 95% confidence, $t^* = ${T}$. Find the margin of error (nearest hundredth).`,r2(me),"$ME = t^*\\dfrac{s}{\\sqrt n}$.",[`$${T} \\cdot \\dfrac{${s}}{${Math.sqrt(n)}} \\approx ${fx(me,2)}$.`],0.011);},
+  ()=>{const xb=rnd(20,120),s=rnd(3,20),n=pick([16,25]),T={16:2.131,25:2.064}[n];const lo=xb-T*s/Math.sqrt(n);return NQ(`A random sample of $${n}$ gives $\\bar x = ${xb}$, $s = ${s}$. Using $t^* = ${T}$, find the <b>lower</b> endpoint of the 95% interval (nearest hundredth).`,r2(lo),"$\\bar x - t^*\\dfrac{s}{\\sqrt n}$.",[`$${xb} - ${T}(${fx(s/Math.sqrt(n))}) \\approx ${fx(lo,2)}$.`],0.011);},
+  ()=>{const lo=rnd(40,80),w=rnd(4,12),c=pick([lo-rnd(1,4),lo+rnd(1,w-1),lo+w+rnd(1,4)]);const inside=c>lo&&c<lo+w;return YN(`A 95% confidence interval for the mean battery life is $(${lo},\\ ${lo+w})$ hours. The maker claims the mean is $${c}$ hours. Is the claim plausible?`,inside,"A value inside the interval is plausible.",[inside?`$${c}$ is inside the interval: plausible.`:`$${c}$ is outside: the interval gives evidence against the claim.`]);}
+ ]},
+ {id:"testm",title:"t Test for a Mean (and Paired Data)",idea:"Test $H_0: \\mu = \\mu_0$ with $t = \\dfrac{\\bar x - \\mu_0}{s/\\sqrt n}$, $df = n - 1$. For <b>paired data</b> (before/after, twins, same subject twice), take the differences first and run a one-sample $t$ procedure on them.",
+  lesson:{steps:[["H_0: \\mu = 12,\\ H_a: \\mu < 12","A cereal box should hold 12 oz."],["n = 25,\\ \\bar x = 11.8,\\ s = 0.5","Sample."],["t = \\dfrac{11.8 - 12}{0.5/5} = -2","Standardize."],["df = 24,\\ P \\approx 0.028 < 0.05","Reject $H_0$: convincing evidence the boxes are underfilled."]],warn:"Paired data are <b>not</b> two independent samples. Subtract within each pair first."},
+  gen:[
+  ()=>{const xb=rnd(40,60),m0=rnd(40,60),s=rnd(4,12),n=pick([16,25,36,49]);const t=(xb-m0)/(s/Math.sqrt(n));return NQ(`$H_0: \\mu = ${m0}$. A sample of $${n}$ has $\\bar x = ${xb}$, $s = ${s}$. Find the $t$ statistic (nearest hundredth).`,r2(t),"$t = \\dfrac{\\bar x - \\mu_0}{s/\\sqrt n}$.",[`$\\dfrac{${xb} - ${m0}}{${s}/${Math.sqrt(n)}} \\approx ${fx(t,2)}$.`],0.011);},
+  ()=>{const n=rnd(8,40);return NQ(`A paired $t$ test uses $${n}$ pairs. How many degrees of freedom?`,n-1,"Paired: $df$ = number of pairs $- 1$.",[`$${n-1}$.`]);},
+  ()=>{const P=pick([0.004,0.018,0.034,0.051,0.077,0.14]),a=pick([0.05,0.01,0.10]);return YN(`A $t$ test gives P-value $${P}$. At $\\alpha = ${a}$, is there convincing evidence for $H_a$?`,P<a,"Convincing evidence when P-value $< \\alpha$.",[P<a?"Yes — reject $H_0$.":"No — fail to reject $H_0$."]);},
+  ()=>{const b=ints(5,60,90),d=b.map(()=>rnd(-3,9));const a=b.map((x,i)=>x+d[i]);return NQ(`Five students' scores before and after tutoring: ${tbl(["","S1","S2","S3","S4","S5"],[["Before",...b],["After",...a]])} Find the mean difference (After $-$ Before).`,mean(d),"Subtract within each pair, then average.",[`Differences: $${list(d)}$.`,`Mean $= ${fx(mean(d))}$.`]);},
+  ()=>{let d;do{d=ints(5,-2,8)}while(sdS(d)<0.5);const t=mean(d)/(sdS(d)/Math.sqrt(5));return NQ(`Differences (After $-$ Before) for 5 pairs: $${list(d)}$. Test $H_0: \\mu_d = 0$. Find $t$ (nearest hundredth).`,r2(t),"$t = \\dfrac{\\bar d - 0}{s_d/\\sqrt n}$.",[`$\\bar d = ${fx(mean(d))}$, $s_d \\approx ${fx(sdS(d))}$.`,`$t \\approx ${fx(t,2)}$.`],0.02);}
+ ]},
+ {id:"two",title:"Comparing Two Means",idea:"For two <b>independent</b> samples: the estimate is $\\bar x_1 - \\bar x_2$ with $SE = \\sqrt{\\dfrac{s_1^2}{n_1} + \\dfrac{s_2^2}{n_2}}$, and $t = \\dfrac{(\\bar x_1 - \\bar x_2) - 0}{SE}$.",
+  lesson:{steps:[["\\bar x_1 = 78,\\ s_1 = 8,\\ n_1 = 32","Group 1."],["\\bar x_2 = 73,\\ s_2 = 6,\\ n_2 = 36","Group 2."],["SE = \\sqrt{\\dfrac{64}{32} + \\dfrac{36}{36}} = \\sqrt3 \\approx 1.73","Add the variances of the means."],["t = \\dfrac{5}{1.73} \\approx 2.89","A big difference relative to its SE."]],warn:"Ask “paired or independent?” first. The same subjects measured twice → paired."},
+  gen:[
+  ()=>{const a=rnd(40,90),b=rnd(40,90);return NQ(`Group 1: $\\bar x_1 = ${a}$. Group 2: $\\bar x_2 = ${b}$. Find the point estimate of $\\mu_1 - \\mu_2$.`,a-b,"Subtract the sample means.",[`$${a} - ${b} = ${a-b}$.`]);},
+  ()=>{const s1=rnd(3,15),s2=rnd(3,15),n1=pick([20,25,30,40]),n2=pick([20,25,30,40]);const se=Math.sqrt(s1*s1/n1+s2*s2/n2);return NQ(`$s_1 = ${s1}$, $n_1 = ${n1}$; $s_2 = ${s2}$, $n_2 = ${n2}$. Find $SE(\\bar x_1 - \\bar x_2)$ (nearest hundredth).`,r2(se),"$\\sqrt{\\dfrac{s_1^2}{n_1} + \\dfrac{s_2^2}{n_2}}$.",[`$\\approx ${fx(se,2)}$.`],0.011);},
+  ()=>{const a=rnd(60,90),b=a-rnd(-3,8),s1=rnd(5,12),s2=rnd(5,12),n1=pick([30,40,50]),n2=pick([30,40,50]);const se=Math.sqrt(s1*s1/n1+s2*s2/n2),t=(a-b)/se;return NQ(`$\\bar x_1 = ${a}$, $s_1 = ${s1}$, $n_1 = ${n1}$; $\\bar x_2 = ${b}$, $s_2 = ${s2}$, $n_2 = ${n2}$. Find the two-sample $t$ statistic for $H_0: \\mu_1 = \\mu_2$ (nearest hundredth).`,r2(t),"$t = \\dfrac{\\bar x_1 - \\bar x_2}{SE}$.",[`$SE \\approx ${fx(se,3)}$.`,`$t \\approx ${fx(t,2)}$.`],0.02);},
+  ()=>{const V=pick([["Each runner's time is recorded with old shoes and with new shoes.","paired $t$"],["Twenty students from School A and twenty-five from School B take the same test.","two-sample $t$"],["Left and right hands of 15 people are tested for grip strength.","paired $t$"],["Fifty randomly chosen men and fifty randomly chosen women report hours of sleep.","two-sample $t$"]]);return mcQ(`${V[0]} Which procedure fits?`,V[1],[V[1]==="paired $t$"?"two-sample $t$":"paired $t$","one-proportion $z$","chi-square test"],"Is each value in one group linked to a value in the other?",[`<b>${V[1]}</b>.`]);},
+  ()=>{const d=rnd(2,12),se=rnd(10,40)/10,T=pick([2.0,2.01,2.02]);const hi=d+T*se;return NQ(`$\\bar x_1 - \\bar x_2 = ${d}$, $SE = ${se}$, $t^* = ${T}$. Find the upper endpoint of the confidence interval for $\\mu_1 - \\mu_2$ (nearest hundredth).`,r2(hi),"Estimate $+ t^* \\cdot SE$.",[`$${d} + ${T}(${se}) = ${fx(hi,2)}$.`],0.011);}
+ ]}
+]},
+/* ===================== 8 ===================== */
+{id:"ch8",title:"Inference for Categorical Data: Chi-Square",topics:[
+ {id:"expc",title:"Expected Counts",idea:"<b>Goodness of fit</b>: expected count $= n \\cdot p_i$, $df = k - 1$. <b>Two-way table</b> (independence or homogeneity): expected count $= \\dfrac{\\text{row total} \\cdot \\text{column total}}{\\text{grand total}}$, $df = (r - 1)(c - 1)$. Condition: all expected counts $\\ge 5$.",
+  lesson:{steps:[["\\text{Claim: colors } 30\\%,\\ 20\\%,\\ 50\\%,\\ n = 200","A bag of candies."],["E = 60,\\ 40,\\ 100","$200 \\times$ each proportion."],["df = 3 - 1 = 2","Number of categories minus one."]],warn:"Expected counts don't have to be whole numbers. Never round them to make them look like counts."},
+  gen:[
+  ()=>{const n=rnd(5,40)*10,p=pick([0.1,0.15,0.2,0.25,0.3,0.4]);return NQ(`A goodness-of-fit test has $n = ${n}$. The null hypothesis says category A has proportion $${p}$. Find the expected count for A.`,n*p,"$E = np$.",[`$${n}(${p}) = ${fx(n*p)}$.`]);},
+  ()=>{const k=rnd(3,8);return NQ(`A goodness-of-fit test has $${k}$ categories. How many degrees of freedom?`,k-1,"$df = k - 1$.",[`$${k-1}$.`]);},
+  ()=>{const a=rnd(10,50),b=rnd(10,50),c=rnd(10,50),d=rnd(10,50),T=a+b+c+d;return NQ(`${tbl(["","Yes","No"],[["Group 1",a,b],["Group 2",c,d]])} Find the expected count for Group 1, Yes (nearest hundredth).`,r2((a+b)*(a+c)/T),"Row total $\\times$ column total $\\div$ grand total.",[`$\\dfrac{${a+b} \\cdot ${a+c}}{${T}} \\approx ${fx((a+b)*(a+c)/T,2)}$.`],0.011);},
+  ()=>{const r=rnd(2,5),c=rnd(2,5);return NQ(`A chi-square test for independence uses a table with $${r}$ rows and $${c}$ columns. How many degrees of freedom?`,(r-1)*(c-1),"$(r - 1)(c - 1)$.",[`$(${r} - 1)(${c} - 1) = ${(r-1)*(c-1)}$.`]);},
+  ()=>{const n=pick([40,60,80,100,150]),p=pick([0.04,0.05,0.08,0.1]);const ok=n*p>=5;return YN(`In a goodness-of-fit test with $n = ${n}$, the smallest hypothesized proportion is $${p}$. Is the Large Counts condition met?`,ok,"Every expected count must be at least 5.",[`Smallest $E = ${fx(n*p)}$.`,ok?"At least 5: yes.":"Below 5: no."]);}
+ ]},
+ {id:"chis",title:"The Chi-Square Statistic",idea:"$\\chi^2 = \\sum \\dfrac{(O - E)^2}{E}$ adds up how far each observed count is from its expected count. Large $\\chi^2$ → small P-value → evidence against $H_0$.",
+  lesson:{steps:[["O: 50,\\ 30,\\ 120;\\ E: 60,\\ 40,\\ 100","Observed and expected."],["\\dfrac{100}{60} + \\dfrac{100}{40} + \\dfrac{400}{100}","Each $(O - E)^2/E$."],["\\approx 1.67 + 2.5 + 4 = 8.17","Add the components."],["df = 2:\\ P \\approx 0.017","Reject $H_0$ at $\\alpha = 0.05$."]],warn:"Divide by the <b>expected</b> count, not the observed count."},
+  gen:[
+  ()=>{const E=rnd(10,60),O=E+nz(-12,12);return NQ(`Observed $= ${O}$, expected $= ${E}$. Find this cell's contribution $\\dfrac{(O - E)^2}{E}$ (nearest hundredth).`,r2((O-E)**2/E),"Square the difference, divide by $E$.",[`$\\dfrac{${(O-E)**2}}{${E}} \\approx ${fx((O-E)**2/E,2)}$.`],0.011);},
+  ()=>{const E=[rnd(20,50),rnd(20,50),rnd(20,50)],O=E.map(e=>e+rnd(-8,8));const c=sum(O.map((o,i)=>(o-E[i])**2/E[i]));return NQ(`Observed: $${list(O)}$. Expected: $${list(E)}$. Find $\\chi^2$ (nearest hundredth).`,r2(c),"Add $\\dfrac{(O - E)^2}{E}$ for every category.",[`$\\chi^2 \\approx ${fx(c,2)}$.`],0.02);},
+  ()=>{const n=pick([100,200]),P=pick([[0.25,0.25,0.25,0.25],[0.4,0.3,0.2,0.1],[0.5,0.2,0.2,0.1]]);const E=P.map(p=>n*p),O=E.map(e=>Math.max(1,e+rnd(-9,9)));const c=sum(O.map((o,i)=>(o-E[i])**2/E[i]));return NQ(`A die-like spinner should land on A, B, C, D with probabilities $${list(P)}$. In $${sum(O)}$ spins: $${list(O)}$. Using expected counts $${list(E.map(e=>fx(e*sum(O)/n,2)))}$, find $\\chi^2$ (nearest hundredth).`,r2(sum(O.map((o,i)=>(o-E[i]*sum(O)/n)**2/(E[i]*sum(O)/n)))),"Expected $= (\\text{total spins}) \\times p$; then add the components.",[`$\\chi^2 \\approx ${fx(sum(O.map((o,i)=>(o-E[i]*sum(O)/n)**2/(E[i]*sum(O)/n))),2)}$.`],0.03);},
+  ()=>{const V=pick([["Is the distribution of blood types in a town the same as the national distribution?","goodness of fit"],["In one random sample of adults, is preferred music genre related to age group?","independence"],["Separate random samples from three schools: is the distribution of favorite sport the same at each school?","homogeneity"]]);return mcQ(`${V[0]} Which chi-square test?`,V[1],["goodness of fit","independence","homogeneity"].filter(x=>x!==V[1]).concat(["two-sample $t$"]),"One variable vs. a claim → GOF. One sample, two variables → independence. Several samples, one variable → homogeneity.",[`<b>${V[1]}</b>.`]);},
+  ()=>{const C=pick([[2,5.991],[3,7.815],[4,9.488],[6,12.592]]),x=r2(C[1]+rnd(-30,30)/10);return YN(`$df = ${C[0]}$. The critical value at $\\alpha = 0.05$ is $${C[1]}$. The test gives $\\chi^2 = ${x}$. Reject $H_0$?`,x>C[1],"Reject when $\\chi^2$ is larger than the critical value.",[x>C[1]?`$${x} > ${C[1]}$: reject.`:`$${x} \\le ${C[1]}$: fail to reject.`]);}
+ ]},
+ {id:"chictx",title:"Chi-Square Tests in Context",idea:"State $H_0$ (no association / distribution matches the claim / distributions are the same), check conditions (random, 10%, expected counts $\\ge 5$), compute $\\chi^2$ and the P-value, then conclude <b>in context</b>. The largest components show where the difference comes from.",
+  lesson:{steps:[["H_0: \\text{grade level and lunch choice are independent}","Independence test."],["\\chi^2 = 14.2,\\ df = 4,\\ P \\approx 0.007","From the calculator."],["P < 0.05","Reject $H_0$."],["\\text{Convincing evidence of an association}","Say it in the context of the study."]],warn:"Rejecting $H_0$ in a test for independence shows an <b>association</b>, not that one variable causes the other."},
+  gen:[
+  ()=>mcQ("Researchers test whether gender and preferred social media app are related. What is $H_0$?","There is no association between gender and preferred app.",["Gender causes app preference.","The proportions for each app are all equal.","There is an association between gender and preferred app."],"$H_0$ for independence: no association.",["$H_0$: no association (the variables are independent)."]),
+  ()=>{const comp=[rnd(1,30)/10,rnd(1,30)/10,rnd(1,30)/10,rnd(50,90)/10];const lab=["Red","Blue","Green","Yellow"];const order=[0,1,2,3].sort(()=>Math.random()-.5);const cs=order.map(i=>comp[i]),ls=order.map(i=>lab[i]);const k=cs.indexOf(Math.max(...cs));return mcQ(`The components of a chi-square statistic are: ${ls.map((l,i)=>`${l} $${cs[i]}$`).join(", ")}. Which category contributes most to the evidence against $H_0$?`,ls[k],ls.filter((_,i)=>i!==k),"The largest $(O - E)^2/E$.",[`${ls[k]} has the largest component, $${cs[k]}$.`]);},
+  ()=>{const P=pick([0.002,0.013,0.038,0.06,0.15,0.42]);return YN(`A chi-square goodness-of-fit test gives P-value $${P}$. At $\\alpha = 0.05$, is there convincing evidence that the distribution differs from the claim?`,P<0.05,"Compare the P-value with $0.05$.",[P<0.05?"Yes — reject $H_0$.":"No — fail to reject $H_0$."]);},
+  ()=>mcQ("A test for independence gives $P = 0.003$. Which conclusion is correct?","There is convincing evidence of an association between the two variables.",["One variable causes the other.","The variables are definitely independent.","There is a 0.3% chance the variables are independent."],"A small P-value supports $H_a$ — association, not causation.",["Reject $H_0$: convincing evidence of an association."]),
+  ()=>{const V=pick([["Expected counts are 12, 8, 3 and 17.","No — one expected count is below 5"],["Expected counts are 12, 8, 6 and 17.","Yes — all expected counts are at least 5"]]);return mcQ(`${V[0]} Is the Large Counts condition met?`,V[1],["Yes — all expected counts are at least 5","No — one expected count is below 5","Yes — all observed counts are at least 5","No — the expected counts must be equal"].filter(x=>x!==V[1]),"Check the <b>expected</b> counts.",[V[1]+"."]);}
+ ]}
+]},
+/* ===================== 9 ===================== */
+{id:"ch9",title:"Inference for Quantitative Data: Slopes",topics:[
+ {id:"slope",title:"Reading Regression Output",idea:"Computer output gives the sample slope $b$ (Coef of the predictor), its standard error $SE_b$, and $s$ (typical residual). For inference about the true slope $\\beta$, $df = n - 2$ and $t = \\dfrac{b - 0}{SE_b}$.",
+  lesson:{steps:[["\\text{Coef of Hours} = 3.2,\\ SE = 0.8","From the output."],["t = \\dfrac{3.2}{0.8} = 4","How many SEs from $0$."],["n = 20 \\Rightarrow df = 18","Two parameters are estimated."]],warn:"The slope is the Coef in the predictor's row — not the Constant row."},
+  gen:[
+  ()=>{const b0=r2(rnd(100,900)/10),b1=r2(rnd(5,60)/10*pick([1,-1])),se1=r2(rnd(2,15)/10);return NQ(`Regression of score on hours: ${regOut("Hours",b0,b1,r2(rnd(10,40)/10),se1,r2(rnd(20,90)/10),rnd(30,90))} What is the sample slope?`,b1,"Look in the Hours row, Coef column.",[`$b = ${b1}$.`]);},
+  ()=>{const n=rnd(10,60);return NQ(`A regression uses $${n}$ data points. How many degrees of freedom for inference about the slope?`,n-2,"$df = n - 2$.",[`$${n-2}$.`]);},
+  ()=>{const b0=r2(rnd(100,900)/10),b1=r2(rnd(5,60)/10),se1=r2(rnd(2,15)/10);return NQ(`${regOut("Age",b0,b1,r2(rnd(10,40)/10),se1,r2(rnd(20,90)/10),rnd(30,90))} What is the standard error of the slope?`,se1,"Age row, SE Coef column.",[`$SE_b = ${se1}$.`]);},
+  ()=>{const b1=r2(rnd(5,60)/10*pick([1,-1])),se1=r2(rnd(5,20)/10);return NQ(`${regOut("Temp",r2(rnd(100,900)/10),b1,r2(rnd(10,40)/10),se1,r2(rnd(20,90)/10),rnd(30,90))} Find $t$ for $H_0: \\beta = 0$ (nearest hundredth).`,r2(b1/se1),"$t = \\dfrac{b}{SE_b}$.",[`$\\dfrac{${b1}}{${se1}} \\approx ${fx(b1/se1,2)}$.`],0.011);},
+  ()=>{const R=pick([0.64,0.81,0.49,0.36]),s=pick([1,-1]);return NQ(`Output shows R-sq $= ${R*100}\\%$ and a ${s>0?"positive":"negative"} slope. Find $r$.`,s*Math.sqrt(R),"$r = \\pm\\sqrt{R^2}$ with the sign of the slope.",[`$r = ${s<0?"-":""}${Math.sqrt(R)}$.`]);}
+ ]},
+ {id:"cis",title:"Confidence Interval for the Slope",idea:"$b \\pm t^* SE_b$ with $df = n - 2$. Interpret: “We are $C\\%$ confident that for each one-unit increase in $x$, the mean $y$ changes by between ___ and ___.”",
+  lesson:{steps:[["b = 2.5,\\ SE_b = 0.5,\\ df = 18,\\ t^* = 2.101","95% confidence."],["2.5 \\pm 2.101(0.5) = 2.5 \\pm 1.05","Margin of error."],["(1.45,\\ 3.55)","Doesn't contain $0$."],["\\text{Convincing evidence of a positive linear relationship}","Zero is not a plausible slope."]],warn:"The interval is about the <b>true slope</b> $\\beta$ for the population, not about individual data points."},
+  gen:[
+  ()=>{const se=r2(rnd(2,15)/10),T=pick([2.101,2.048,2.009,1.98]);return NQ(`$SE_b = ${se}$ and $t^* = ${T}$. Find the margin of error (nearest hundredth).`,r2(T*se),"$t^* \\cdot SE_b$.",[`$${T}(${se}) \\approx ${fx(T*se,2)}$.`],0.011);},
+  ()=>{const b=r2(rnd(10,60)/10),se=r2(rnd(2,15)/10),T=2.048;return NQ(`$b = ${b}$, $SE_b = ${se}$, $t^* = ${T}$. Find the lower endpoint of the 95% interval for $\\beta$ (nearest hundredth).`,r2(b-T*se),"$b - t^*SE_b$.",[`$${b} - ${fx(T*se,3)} \\approx ${fx(b-T*se,2)}$.`],0.011);},
+  ()=>{const b=r2(rnd(10,60)/10*pick([1,-1])),se=r2(rnd(2,15)/10),T=2.101;return NQ(`$b = ${b}$, $SE_b = ${se}$, $t^* = ${T}$. Find the upper endpoint of the 95% interval for $\\beta$ (nearest hundredth).`,r2(b+T*se),"$b + t^*SE_b$.",[`$${b} + ${fx(T*se,3)} \\approx ${fx(b+T*se,2)}$.`],0.011);},
+  ()=>{const lo=r2(rnd(-30,20)/10),w=r2(rnd(10,40)/10);const has0=lo<0&&lo+w>0;return YN(`A 95% interval for the slope is $(${lo},\\ ${r2(lo+w)})$. Is there convincing evidence of a linear relationship?`,!has0,"Is $0$ outside the interval?",[has0?"$0$ is inside: a slope of $0$ is plausible, so no.":"$0$ is outside: yes."]);},
+  ()=>mcQ("A 95% interval for the slope of price (dollars) on age (years) is $(-850,\\ -420)$. Which interpretation is correct?","We are 95% confident that for each extra year of age, the mean price drops by between 420 and 850 dollars.",["95% of cars lose between 420 and 850 dollars per year.","There is a 95% chance the slope of this sample is in the interval.","Price does not depend on age."],"The interval estimates the true slope (the change in <b>mean</b> $y$).",["It is about the mean price change per year in the population."])
+ ]},
+ {id:"tslope",title:"Test for the Slope & Conditions",idea:"$H_0: \\beta = 0$ (no linear relationship). Conditions (<b>LINER</b>): <b>L</b>inear, <b>I</b>ndependent, <b>N</b>ormal residuals, <b>E</b>qual SD (no fan in the residual plot), <b>R</b>andom.",
+  lesson:{steps:[["H_0: \\beta = 0,\\ H_a: \\beta > 0","Do more hours of sleep go with higher scores?"],["t = \\dfrac{1.8}{0.6} = 3,\\ df = 23","From the output."],["P \\approx 0.003","One-sided."],["\\text{Reject } H_0","Convincing evidence of a positive linear relationship."]],warn:"Check the residual plot before trusting the test: a curve breaks <b>L</b>, a fan breaks <b>E</b>."},
+  gen:[
+  ()=>mcQ("Researchers want to know if there is a linear relationship between hours of exercise and resting heart rate. Which hypotheses?","$H_0: \\beta = 0$, $H_a: \\beta \\ne 0$",["$H_0: b = 0$, $H_a: b \\ne 0$","$H_0: \\beta \\ne 0$, $H_a: \\beta = 0$","$H_0: r = 1$, $H_a: r \\ne 1$"],"Hypotheses are about the population slope $\\beta$.",["$H_0: \\beta = 0$ vs. $H_a: \\beta \\ne 0$."]),
+  ()=>{const b=r2(rnd(5,40)/10*pick([1,-1])),se=r2(rnd(3,15)/10);return NQ(`$b = ${b}$ and $SE_b = ${se}$. Find the $t$ statistic for $H_0: \\beta = 0$ (nearest hundredth).`,r2(b/se),"$t = \\dfrac{b - 0}{SE_b}$.",[`$\\approx ${fx(b/se,2)}$.`],0.011);},
+  ()=>{const P=pick([0.001,0.02,0.04,0.07,0.2]),a=0.05;return YN(`A test for the slope gives P-value $${P}$. At $\\alpha = ${a}$, is there convincing evidence of a linear relationship?`,P<a,"Compare P with $\\alpha$.",[P<a?"Yes.":"No."]);},
+  ()=>{const V=pick([["The residual plot shows a curved pattern.","Linear"],["The residual plot fans out as $x$ increases.","Equal SD"],["A histogram of residuals is strongly skewed with a small sample.","Normal"],["The data came from volunteers who answered an online poll.","Random"]]);return mcQ(`${V[0]} Which LINER condition is violated?`,V[1],["Linear","Independent","Normal","Equal SD","Random"].filter(x=>x!==V[1]).slice(0,3),"L-I-N-E-R.",[`<b>${V[1]}</b>.`]);},
+  ()=>{const se=r2(rnd(3,15)/10),t=r2(rnd(15,45)/10);return NQ(`Output shows $SE_b = ${se}$ and $t = ${t}$ for the slope. Find $b$ (nearest hundredth).`,r2(se*t),"$t = \\dfrac{b}{SE_b}$, so $b = t \\cdot SE_b$.",[`$${t}(${se}) \\approx ${fx(se*t,2)}$.`],0.011);}
+ ]}
+]}
+];
+/* ================= DEEPER LESSONS + COMMON CORE PRACTICE (AP Statistics) ================= */
+const ST_PLUS={
+ ch1:{
+  ctr:{cc:"S-ID.2, S-ID.3 · AP Unit 1",more:[
+   {tag:"Example 2 · Test level",q:"Find the sample standard deviation of $3, 5, 7$.",steps:[["\\bar x = 5","Mean."],["(3 - 5)^2 + 0^2 + (7 - 5)^2 = 8","Squared deviations."],["s = \\sqrt{\\dfrac{8}{3 - 1}} = 2","Divide by $n - 1$, then take the root."]]},
+   {tag:"Example 3 · In context",q:"A teacher adds $5$ points to every test score. The mean was $72$ and the SD was $9$. What are the new mean and SD? Explain.",steps:[["\\text{new mean} = 77","Every score moves up $5$, so the center moves up $5$."],["\\text{new SD} = 9","The scores are just as spread out as before."]],note:"Adding a constant changes measures of center and position, but never measures of spread."}]},
+  box:{cc:"S-ID.1, S-ID.3 · AP Unit 1",more:[
+   {tag:"Example 2 · Test level",q:"Data: $2, 5, 6, 8, 9, 11, 30$. Is $30$ an outlier?",steps:[["Q_1 = 5,\\ Q_3 = 11","Medians of $2, 5, 6$ and $9, 11, 30$."],["\\text{IQR} = 6,\\ 11 + 1.5(6) = 20","Upper fence."],["30 > 20","Yes, $30$ is an outlier."]]},
+   {tag:"Example 3 · Compare",q:"Boxplot A has median $60$, IQR $10$; boxplot B has median $60$, IQR $25$. Compare the two classes' scores.",steps:[["\\text{Same center}","Both medians are $60$."],["\\text{B is more variable}","Its middle half is spread over $25$ points instead of $10$."]],note:"On the AP exam, compare <b>shape, center, spread</b> and outliers, in context, with words like “greater than.”"}]},
+  norm:{cc:"S-ID.4 · AP Unit 1",more:[
+   {tag:"Example 2 · Test level",q:"IQ scores are $N(100, 15)$. What percent are above $130$?",steps:[["z = \\dfrac{130 - 100}{15} = 2","Two SDs above."],["P(Z > 2) \\approx 0.0228","About $2.3\\%$."]]},
+   {tag:"Example 3 · Compare with z",q:"Ana scored $85$ on a test with mean $75$, SD $5$. Ben scored $90$ on a test with mean $80$, SD $8$. Who did better relative to their class?",steps:[["z_A = \\dfrac{85 - 75}{5} = 2","Ana: 2 SDs above."],["z_B = \\dfrac{90 - 80}{8} = 1.25","Ben: 1.25 SDs above."],["\\text{Ana did relatively better}","Larger z-score."]]}]}
+ },
+ ch2:{
+  twoway:{cc:"S-ID.5, S-CP.4 · AP Unit 2",more:[
+   {tag:"Example 2 · Test level",q:"Of 80 boys, 20 play an instrument; of 120 girls, 45 do. Find each conditional proportion.",steps:[["\\tfrac{20}{80} = 0.25","Boys."],["\\tfrac{45}{120} = 0.375","Girls."]]},
+   {tag:"Example 3 · Association",q:"Use the proportions above. Is there an association between gender and playing an instrument?",steps:[["0.25 \\ne 0.375","The conditional proportions differ."],["\\text{Yes — girls in this sample were more likely to play}","That is an association."]],note:"If the conditional distributions were the same in every row, there would be no association."}]},
+  lsrl:{cc:"S-ID.6, S-ID.7, S-ID.8 · AP Unit 2",more:[
+   {tag:"Example 2 · Test level",q:"$\\hat y = 12 + 3.5x$, where $x$ is hours studied and $y$ is score. Interpret the slope and intercept.",steps:[["\\text{slope } 3.5","For each extra hour, the <b>predicted</b> score increases by $3.5$ points."],["\\text{intercept } 12","A student who studies $0$ hours is predicted to score $12$ (may not make sense)."]]},
+   {tag:"Example 3 · Extrapolation",q:"The line was fit for $x$ from $1$ to $8$ hours. Should we use it for $x = 30$?",steps:[["30 \\gg 8","Far outside the data."],["\\text{No — extrapolation}","The pattern may not continue."]]}]},
+  resid:{cc:"S-ID.6b, S-ID.8, S-ID.9 · AP Unit 2",more:[
+   {tag:"Example 2 · Test level",q:"$\\hat y = 40 + 2x$. The point $(10, 55)$ has what residual? Is it above or below the line?",steps:[["\\hat y = 60","Predicted."],["55 - 60 = -5","Negative residual: the point is below the line."]]},
+   {tag:"Example 3 · Correlation ≠ causation",q:"Ice cream sales and drownings have $r = 0.85$. Does ice cream cause drownings?",steps:[["\\text{No}","Correlation alone doesn't show causation."],["\\text{Lurking variable: hot weather}","It raises both."]],note:"Only a randomized experiment can show cause and effect (S-ID.9)."}]}
+ },
+ ch3:{
+  samp:{cc:"S-IC.1, S-IC.3 · AP Unit 3",more:[
+   {tag:"Example 2 · Test level",q:"Describe how to take an SRS of 50 from 800 students.",steps:[["\\text{Number the students } 1 \\text{ to } 800","Label."],["\\text{Generate 50 different random integers}","Ignore repeats."],["\\text{Survey those 50 students}","Done."]]},
+   {tag:"Example 3 · Bias",q:"A survey about a new gym is posted on the gym's Instagram. Explain the likely bias.",steps:[["\\text{Voluntary response}","People choose to answer."],["\\text{Overestimates support}","Followers of the gym and people with strong opinions respond most."]]}]},
+  exper:{cc:"S-IC.3, S-IC.5 · AP Unit 3",more:[
+   {tag:"Example 2 · Test level",q:"Design an experiment to test whether music helps memory, with 40 volunteers.",steps:[["\\text{Two treatments: music, silence}","Comparison."],["\\text{Randomly assign 20 to each}","Draw names from a hat."],["\\text{Compare mean number of words recalled}","Response."]]},
+   {tag:"Example 3 · Blocking",q:"Half the volunteers are musicians. Why block on this?",steps:[["\\text{Musicians may respond to music differently}","It affects the response."],["\\text{Randomly assign within each block}","Removes that variability from the comparison."]]}]},
+  scope:{cc:"S-IC.3, S-IC.6, S-ID.9 · AP Unit 3",more:[
+   {tag:"Example 2 · Test level",q:"A study of 2000 adults finds coffee drinkers live longer. Can we conclude coffee causes longer life?",steps:[["\\text{Observational}","No treatment was assigned."],["\\text{No}","Confounders, such as income, could explain it."]]},
+   {tag:"Example 3 · Scope table",q:"A random sample of 200 students is randomly assigned to two study methods. What can we conclude?",steps:[["\\text{Random sampling}","Generalize to all students."],["\\text{Random assignment}","Conclude cause and effect."]],note:"This is the best case: causation, for the whole population."}]}
+ },
+ ch4:{
+  prob:{cc:"S-CP.1–S-CP.7 · AP Unit 4",more:[
+   {tag:"Example 2 · Test level",q:"$P(A) = 0.5$, $P(B) = 0.4$, $P(A \\cap B) = 0.2$. Are $A$ and $B$ independent?",steps:[["P(A)P(B) = 0.2","Multiply."],["= P(A \\cap B)","Yes, independent."]]},
+   {tag:"Example 3 · Medical test",q:"1% of people have a disease. A test is positive for 95% of sick people and 10% of healthy people. Find $P(\\text{sick} \\mid +)$.",steps:[["P(+) = 0.01(0.95) + 0.99(0.10) = 0.1085","Total probability."],["P(\\text{sick} \\mid +) = \\dfrac{0.0095}{0.1085} \\approx 0.088","Only about 9%!"]],note:"Most positives come from the large healthy group — that's why rare diseases need a second test."}]},
+  rv:{cc:"S-MD.1, S-MD.2, S-MD.5 · AP Unit 4",more:[
+   {tag:"Example 2 · Test level",q:"A raffle ticket costs $\\$5$. You win $\\$100$ with probability $0.02$. Find the expected net gain.",steps:[["E = 95(0.02) + (-5)(0.98)","Win: $+95$; lose: $-5$."],["= 1.9 - 4.9 = -3","On average you lose 3 dollars per ticket."]]},
+   {tag:"Example 3 · Combining",q:"Two independent tasks take $X$ (mean 20, SD 3) and $Y$ (mean 15, SD 4) minutes. Find the mean and SD of the total time.",steps:[["\\mu = 35","Means add."],["\\sigma = \\sqrt{9 + 16} = 5","Variances add."]]}]},
+  binom:{cc:"S-MD.3, S-MD.4 · AP Unit 4",more:[
+   {tag:"Example 2 · Test level",q:"A multiple-choice test has 10 questions with 4 choices each. A student guesses. Find the mean and SD of the number correct.",steps:[["n = 10,\\ p = 0.25","Binomial."],["\\mu = 2.5,\\ \\sigma = \\sqrt{10(0.25)(0.75)} \\approx 1.37","Formulas."]]},
+   {tag:"Example 3 · Is it binomial?",q:"Draw 5 cards from a deck without replacement and count hearts. Binomial?",steps:[["p \\text{ changes after each card}","Not independent."],["\\text{Not binomial}","(It is close enough only if the sample is under 10% of the population.)"]]}]}
+ },
+ ch5:{
+  phat:{cc:"S-IC.4 · AP Unit 5",more:[
+   {tag:"Example 2 · Test level",q:"$p = 0.6$, $n = 150$. Describe the sampling distribution of $\\hat p$.",steps:[["\\mu = 0.6","Center."],["\\sigma = \\sqrt{\\dfrac{0.24}{150}} = 0.04","Spread."],["np = 90,\\ n(1-p) = 60","Both $\\ge 10$: approximately Normal."]]},
+   {tag:"Example 3 · Is it unusual?",q:"A company says 60% of customers are satisfied. A sample of 150 gives $\\hat p = 0.5$. Is this surprising?",steps:[["z = \\dfrac{0.5 - 0.6}{0.04} = -2.5","2.5 SDs below."],["P(\\hat p \\le 0.5) \\approx 0.006","Very unlikely if the claim is true."],["\\text{Evidence against the claim}","This is the idea behind a significance test."]]}]},
+  xbar:{cc:"S-IC.4 · AP Unit 5",more:[
+   {tag:"Example 2 · Test level",q:"Bottles hold $\\mu = 500$ ml, $\\sigma = 4$. Find $P(\\bar x < 499)$ for $n = 16$ bottles.",steps:[["\\sigma_{\\bar x} = \\dfrac{4}{4} = 1","SD of the mean."],["z = -1,\\ P \\approx 0.159","Normal population, so $\\bar x$ is Normal."]]},
+   {tag:"Example 3 · CLT",q:"Incomes are strongly right-skewed. Why can we still use the Normal model for the mean of 100 incomes?",steps:[["n = 100 \\ge 30","Large sample."],["\\text{Central Limit Theorem}","The sampling distribution of $\\bar x$ is approximately Normal."]]}]},
+  diff:{cc:"S-IC.5 · AP Unit 5",more:[
+   {tag:"Example 2 · Test level",q:"Mean heights: boys $\\mu = 70$, $\\sigma = 3$; girls $\\mu = 65$, $\\sigma = 2.5$. Samples of 25 each. Find the mean and SD of $\\bar x_B - \\bar x_G$.",steps:[["\\mu = 5","Subtract means."],["\\sigma = \\sqrt{\\dfrac{9}{25} + \\dfrac{6.25}{25}} \\approx 0.78","Add variances."]]},
+   {tag:"Example 3 · Reasoning",q:"Why do we add variances even though we subtract the means?",steps:[["\\text{Both samples vary}","Either one can be high or low by chance."],["\\text{The difference varies more than either one}","So the uncertainty adds up."]]}]}
+ },
+ ch6:{
+  cip:{cc:"S-IC.4 · AP Unit 6",more:[
+   {tag:"Example 2 · Test level",q:"In a random sample of 500 teens, 310 own a bike. Build a 95% CI for $p$.",steps:[["\\hat p = 0.62,\\ SE = \\sqrt{\\dfrac{0.62(0.38)}{500}} \\approx 0.0217","Statistic and SE."],["0.62 \\pm 1.96(0.0217) = 0.62 \\pm 0.0425","Margin of error."],["(0.578,\\ 0.663)","Interval."]]},
+   {tag:"Example 3 · Interpret",q:"Interpret the interval and the confidence level.",steps:[["\\text{Interval}","We are 95% confident that between 57.8% and 66.3% of all teens own a bike."],["\\text{Level}","If we took many samples, about 95% of the intervals would capture the true proportion."]]}]},
+  testp:{cc:"S-IC.2, S-IC.5 · AP Unit 6",more:[
+   {tag:"Example 2 · Test level",q:"A school claims 80% of students pass. In a sample of 100, 72 pass. Test $H_a: p < 0.8$ at $\\alpha = 0.05$.",steps:[["z = \\dfrac{0.72 - 0.8}{\\sqrt{0.16/100}} = -2","Statistic."],["P(Z < -2) \\approx 0.023 < 0.05","P-value."],["\\text{Reject } H_0","Convincing evidence the pass rate is below 80%."]]},
+   {tag:"Example 3 · Meaning of P-value",q:"Interpret $P = 0.023$ in context.",steps:[["\\text{Assuming } p = 0.8","Start with $H_0$ true."],["\\text{2.3\\% of samples would give } \\hat p \\le 0.72","That's how surprising our result is."]]}]},
+  power:{cc:"S-IC.2, S-MD.7 · AP Unit 6",more:[
+   {tag:"Example 2 · Test level",q:"$H_0$: a new app does not raise test scores. Describe a Type I and Type II error.",steps:[["\\text{Type I}","Conclude the app helps when it doesn't."],["\\text{Type II}","Conclude no evidence it helps when it really does."]]},
+   {tag:"Example 3 · Raise power",q:"Give two ways to increase the power of this test.",steps:[["\\text{Larger sample}","Less sampling variability."],["\\text{Larger } \\alpha","Easier to reject — but more Type I errors."]]}]}
+ },
+ ch7:{
+  cim:{cc:"S-IC.4 · AP Unit 7",more:[
+   {tag:"Example 2 · Test level",q:"$n = 25$, $\\bar x = 6.4$ hours of sleep, $s = 1.2$. Build a 90% interval ($t^* = 1.711$).",steps:[["SE = \\dfrac{1.2}{5} = 0.24","Standard error."],["6.4 \\pm 1.711(0.24) = 6.4 \\pm 0.41","Margin."],["(5.99,\\ 6.81)","Interval."]]},
+   {tag:"Example 3 · Width",q:"How would a 99% interval compare? What about $n = 100$?",steps:[["99\\%: \\text{wider}","Larger $t^*$."],["n = 100: \\text{narrower}","Smaller SE (about half)."]]}]},
+  testm:{cc:"S-IC.5 · AP Unit 7",more:[
+   {tag:"Example 2 · Test level",q:"Before/after typing speeds for 10 students give $\\bar d = 4$, $s_d = 5$. Test $H_a: \\mu_d > 0$.",steps:[["t = \\dfrac{4}{5/\\sqrt{10}} \\approx 2.53","Paired $t$."],["df = 9,\\ P \\approx 0.016","One-sided."],["\\text{Reject } H_0","Convincing evidence speeds improved."]]},
+   {tag:"Example 3 · Why paired?",q:"Why is pairing better here than comparing two separate groups?",steps:[["\\text{Each student is their own control}","Differences between students are removed."],["\\text{Smaller variability}","More power."]]}]},
+  two:{cc:"S-IC.5 · AP Unit 7",more:[
+   {tag:"Example 2 · Test level",q:"Fertilizer A: $\\bar x = 30$, $s = 4$, $n = 20$. B: $\\bar x = 27$, $s = 5$, $n = 20$. Find $t$.",steps:[["SE = \\sqrt{\\dfrac{16}{20} + \\dfrac{25}{20}} \\approx 1.43","Standard error."],["t = \\dfrac{3}{1.43} \\approx 2.10","Statistic."]]},
+   {tag:"Example 3 · Interval and zero",q:"A 95% CI for $\\mu_A - \\mu_B$ is $(0.1, 5.9)$. What does it tell you?",steps:[["0 \\text{ is not in the interval}","No difference is not plausible."],["\\text{A gives a larger mean yield}","Convincing evidence at the 5% level."]]}]}
+ },
+ ch8:{
+  expc:{cc:"S-ID.5 · AP Unit 8",more:[
+   {tag:"Example 2 · Test level",q:"A table has row total 60, column total 50, grand total 200. Find the expected count.",steps:[["\\dfrac{60 \\cdot 50}{200} = 15","Row × column ÷ total."]]},
+   {tag:"Example 3 · Why this formula?",q:"Explain the formula using proportions.",steps:[["\\tfrac{50}{200} = 25\\% \\text{ in the column overall}","If $H_0$ is true…"],["25\\% \\text{ of the row's } 60 = 15","…every row has the same 25%."]]}]},
+  chis:{cc:"S-ID.5 · AP Unit 8",more:[
+   {tag:"Example 2 · Test level",q:"A die is rolled 60 times: counts $8, 12, 9, 11, 6, 14$. Find $\\chi^2$.",steps:[["E = 10 \\text{ each}","Fair die."],["\\dfrac{4 + 4 + 1 + 1 + 16 + 16}{10} = 4.2","Sum of components."],["df = 5,\\ P \\approx 0.52","No evidence the die is unfair."]]},
+   {tag:"Example 3 · Reasoning",q:"Why is a chi-square test always one-sided (right tail)?",steps:[["\\text{Each component} \\ge 0","Squares can't be negative."],["\\text{Only large } \\chi^2 \\text{ is evidence against } H_0","Small values mean a good fit."]]}]},
+  chictx:{cc:"S-ID.5, S-IC.1 · AP Unit 8",more:[
+   {tag:"Example 2 · Test level",q:"A test for homogeneity of favorite subject across 3 schools gives $\\chi^2 = 15.1$, $df = 6$, $P = 0.019$. Conclude.",steps:[["P < 0.05","Reject $H_0$."],["\\text{The distributions differ}","Convincing evidence the distribution of favorite subject is not the same at all three schools."]]},
+   {tag:"Example 3 · Follow-up",q:"How do you find which school is most different?",steps:[["\\text{Look at the largest components}","Biggest $(O - E)^2/E$."],["\\text{Compare } O \\text{ with } E \\text{ there}","Say whether it is more or fewer than expected."]]}]}
+ },
+ ch9:{
+  slope:{cc:"S-ID.7 · AP Unit 9",more:[
+   {tag:"Example 2 · Test level",q:"Output: Coef of Height $= 0.92$, SE Coef $= 0.23$, $n = 27$. Find $t$ and $df$.",steps:[["t = \\dfrac{0.92}{0.23} = 4","Statistic."],["df = 25","$n - 2$."]]},
+   {tag:"Example 3 · Interpret s",q:"Output shows $S = 3.1$. Interpret it.",steps:[["\\text{Typical residual}","Actual values are typically about $3.1$ units from the line's predictions."]]}]},
+  cis:{cc:"S-ID.7 · AP Unit 9",more:[
+   {tag:"Example 2 · Test level",q:"$b = 1.6$, $SE_b = 0.4$, $df = 22$, $t^* = 2.074$. Build the 95% CI.",steps:[["1.6 \\pm 2.074(0.4) = 1.6 \\pm 0.83","Margin."],["(0.77,\\ 2.43)","Interval."]]},
+   {tag:"Example 3 · Interpret",q:"$x$ = hours of practice, $y$ = points scored. Interpret the interval.",steps:[["\\text{95\\% confident}","For each extra hour, mean points increase by between $0.77$ and $2.43$."]]}]},
+  tslope:{cc:"S-ID.7, S-ID.8 · AP Unit 9",more:[
+   {tag:"Example 2 · Test level",q:"$b = -0.45$, $SE_b = 0.15$, $df = 30$. Test $H_a: \\beta < 0$.",steps:[["t = -3","Statistic."],["P \\approx 0.003","One-sided."],["\\text{Reject } H_0","Convincing evidence of a negative linear relationship."]]},
+   {tag:"Example 3 · Conditions",q:"How do you check the conditions from a residual plot and a histogram of residuals?",steps:[["\\text{Residual plot: no curve, no fan}","Linear and Equal SD."],["\\text{Histogram: roughly symmetric}","Normal residuals."]]}]}
+ }
+};
+const ST_CC={
+ ch1:{ctr:[()=>{const m=rnd(60,85),s=rnd(4,12),c=pick([3,5,8,10]);return mcQ(`Test scores have mean $${m}$ and SD $${s}$. The teacher adds $${c}$ points to every score. Which is true?`,`The mean becomes $${m+c}$ and the SD stays $${s}$.`,[`The mean becomes $${m+c}$ and the SD becomes $${s+c}$.`,`The mean stays $${m}$ and the SD becomes $${s+c}$.`,`Both stay the same.`],"Adding shifts the center, not the spread.",["Center moves up; spread is unchanged."]);}],
+  box:[()=>{const a=rnd(55,70),b=a+rnd(5,15);return mcQ(`Class A's scores have median $${a}$ and IQR $8$. Class B's have median $${b}$ and IQR $20$. Which comparison is correct?`,"Class B has a higher typical score and more variability.",["Class A has a higher typical score and more variability.","Class B has a higher typical score and less variability.","The classes have the same center."],"Compare center (median) and spread (IQR).",[`Median $${b} > ${a}$ and IQR $20 > 8$.`]);}],
+  norm:[()=>{const m1=rnd(60,80),s1=rnd(4,8),m2=rnd(60,80),s2=rnd(8,14),z1=pick([1,1.5,2]),z2=pick([0.5,1.25,1.8]);const x1=m1+z1*s1,x2=m2+z2*s2;const c=z1>z2?"Maya":"Leo";return mcQ(`Maya scored $${x1}$ on a test with mean $${m1}$, SD $${s1}$. Leo scored $${x2}$ on a test with mean $${m2}$, SD $${s2}$. Who did better <b>relative to their class</b>?`,c,[c==="Maya"?"Leo":"Maya","They did equally well","Can't tell without the sample sizes"],"Compare z-scores.",[`$z_{\\text{Maya}} = ${z1}$, $z_{\\text{Leo}} = ${z2}$.`]);}]},
+ ch2:{twoway:[()=>{const a=rnd(10,30),b=rnd(10,30),c=rnd(10,30),d=rnd(10,30);const pa=a/(a+b),pc=c/(c+d);const ans=pa>pc?"Seniors":"Juniors";return mcQ(`${tbl(["","Drive to school","Don't drive"],[["Seniors",a,b],["Juniors",c,d]])} Which group has a larger <b>proportion</b> who drive?`,pa===pc?"They are equal":ans,[pa===pc?"Seniors":ans==="Seniors"?"Juniors":"Seniors","The group with more students","Can't tell from a two-way table"],"Compare conditional proportions, not counts.",[`Seniors $${fx(pa,3)}$, juniors $${fx(pc,3)}$.`]);}],
+  lsrl:[()=>{const b=pick([2.4,3.5,-1.8,0.6,-0.9]),xn=pick(["hours studied","temperature (°F)","age (years)"]),yn=pick(["test score","sales","price"]);const c=`For each additional 1 unit of ${xn}, the predicted ${yn} ${b>0?"increases":"decreases"} by $${Math.abs(b)}$.`;return mcQ(`$\\widehat{\\text{${yn}}} = 20 ${b<0?"-":"+"} ${Math.abs(b)}(\\text{${xn}})$. Which interpretation of the slope is correct?`,c,[`For each additional 1 unit of ${xn}, the ${yn} always ${b>0?"increases":"decreases"} by exactly $${Math.abs(b)}$.`,`The predicted ${yn} is $${Math.abs(b)}$ when ${xn} is $0$.`,`$${Math.abs(b)}\\%$ of the variation in ${yn} is explained.`],"Slope = change in <b>predicted</b> $y$ per unit of $x$.",[c]);}],
+  resid:[()=>mcQ("Countries with more TVs per person have longer life expectancy ($r = 0.8$). Which conclusion is justified?","There is a strong positive association, but wealth may explain both.",["Buying more TVs will make people live longer.","The correlation proves TVs improve health.","The relationship must be curved."],"Correlation does not imply causation.",["A lurking variable (national wealth) is likely."])]},
+ ch3:{samp:[()=>{const n=pick([500,1000,2000]);return mcQ(`A magazine receives $${n*10}$ online votes about a new law. A pollster takes a random sample of $${n}$ adults. Which is more trustworthy?`,"The random sample, because the online vote is a biased voluntary response sample",["The online vote, because it is much larger","Both are equally good","Neither — samples can never estimate a population"],"Size doesn't fix bias.",["Random selection beats a huge biased sample."]);}],
+  exper:[()=>mcQ("A gym wants to know if its new class improves fitness. It compares members who chose the class with those who didn't. What is the main flaw?","Members chose their own treatment, so motivated people may be in the class (confounding)",["The sample is too small","There is no response variable","It used random assignment"],"Who decided the treatment?",["Without random assignment, self-selection confounds the result."])],
+  scope:[()=>mcQ("A random sample of 1000 adults shows that people who sleep more report less stress. A news headline says “Sleep reduces stress.” Is the headline justified?","No — this is an observational study; it shows association, not causation",["Yes — the sample was random","Yes — the sample was large","No — the sample should have been 10,000"],"Random sampling allows generalization; causation needs random assignment.",["Association only."])]},
+ ch4:{prob:[()=>{const p=pick([0.01,0.02,0.05]),se=pick([0.9,0.95,0.99]),fp=pick([0.05,0.1]);const v=p*se/(p*se+(1-p)*fp);return NQ(`$${p*100}\\%$ of people have a condition. A test is positive for $${se*100}\\%$ of people with it and $${fp*100}\\%$ of people without it. Find $P(\\text{has it} \\mid \\text{positive})$ (four decimals).`,v,"Use a tree: $P(+) = P(+ \\text{ and has}) + P(+ \\text{ and not})$.",[`$P(+) = ${p}(${se}) + ${fx(1-p)}(${fp}) = ${fx(p*se+(1-p)*fp)}$.`,`$\\dfrac{${fx(p*se)}}{${fx(p*se+(1-p)*fp)}} \\approx ${fx(v)}$.`],0.0011);}],
+  rv:[()=>{const c=pick([2,5,10]),w=pick([50,100,200]),p=pick([0.01,0.02,0.04]);const e=(w-c)*p-c*(1-p);return NQ(`A game costs $${c}$ dollars. You win a $${w}$-dollar prize with probability $${p}$. Find the expected net gain in dollars (negative = loss).`,e,"Net gain: $w - c$ if you win, $-c$ if you lose.",[`$${w-c}(${p}) + (-${c})(${fx(1-p)}) = ${fx(e)}$.`]);}],
+  binom:[()=>{const n=pick([10,20,25]),k=pick([0.25,0.2]);const m=n*k,s=Math.sqrt(n*k*(1-k)),obs=Math.round(m+rnd(25,40)/10*s);return mcQ(`A student guesses on all $${n}$ questions of a quiz with ${k===0.25?4:5} choices each and gets $${obs}$ right. Is that convincing evidence she wasn't just guessing?`,`Yes — $${obs}$ is about ${fx((obs-m)/s,1)} SDs above the expected $${m}$, which is unusual for guessing`,[`No — anything above $${m}$ could be luck`,`No — the binomial model doesn't apply`,`Yes — because she got more than half right`],"Compare with $\\mu = np$ and $\\sigma = \\sqrt{np(1-p)}$.",[`$\\mu = ${m}$, $\\sigma \\approx ${fx(s,2)}$.`]);}]},
+ ch5:{phat:[()=>{const p=pick([0.5,0.6,0.7]),n=pick([100,200]),s=Math.sqrt(p*(1-p)/n),ph=r2(p-rnd(25,35)/10*s);return mcQ(`A company claims $${p*100}\\%$ of users are satisfied. A random sample of $${n}$ gives $\\hat p = ${ph}$. What does this suggest?`,"The sample result would be very unlikely if the claim were true, so it casts doubt on the claim",["The claim must be correct because samples vary","The sample must be biased","Nothing — one sample can't tell us anything"],"How many SDs is $\\hat p$ from $p$?",[`$z = \\dfrac{${ph} - ${p}}{${fx(s)}} \\approx ${fx((ph-p)/s,2)}$.`]);}],
+  xbar:[()=>mcQ("Why do insurance companies prefer to insure many customers rather than a few?","The average claim per customer varies much less for a large group ($\\sigma/\\sqrt n$)",["Large groups have smaller average claims","Each customer's claim becomes Normal","The total of all claims becomes constant"],"Think about $\\sigma_{\\bar x}$.",["Averages over many independent customers are very predictable."])],
+  diff:[()=>{const n=pick([30,50,100]);return mcQ(`Two random samples of $${n}$ students each, one from School A and one from School B, give $\\bar x_A - \\bar x_B = 3$. Why might this difference be due to chance?`,"Each sample mean varies from sample to sample, so their difference varies too",["Because the schools have the same number of students","Because $3$ is a small number","It can't be due to chance — the samples were random"],"Differences of statistics have their own sampling distribution.",["Compare the difference with its standard deviation before deciding."]);}]},
+ ch6:{cip:[()=>{const lo=rnd(40,55),w=rnd(4,10);return mcQ(`A 95% confidence interval for the proportion of voters who support a measure is $(0.${lo},\\ 0.${lo+w})$. Which statement is correct?`,`We are 95% confident that between ${lo}% and ${lo+w}% of all voters support the measure.`,[`95% of voters support the measure.`,`There is a 95% probability that the sample proportion is in the interval.`,`${lo}% to ${lo+w}% of the sample support the measure, 95% of the time.`],"The interval estimates the <b>population</b> proportion.",["Interpret in context about the population parameter."]);}],
+  testp:[()=>{const P=pick([0.003,0.02,0.04,0.12,0.3]);return mcQ(`A test of $H_0: p = 0.5$ gives P-value $${P}$. Which is the correct meaning?`,`If $p = 0.5$ were true, there would be a ${P*100}% chance of getting a sample result at least this extreme.`,[`There is a ${P*100}% chance that $H_0$ is true.`,`There is a ${P*100}% chance the sample was wrong.`,`${P*100}% of the population agrees.`],"The P-value assumes $H_0$ is true.",["P-value = probability of data this extreme, assuming $H_0$."]);}],
+  power:[()=>mcQ("A school tests $H_0$: a new reading program does not help. The program is expensive. Which error is worse for the school, and what $\\alpha$ fits?","Type I (paying for a program that doesn't work); use a small $\\alpha$ like $0.01$",["Type II; use a small $\\alpha$","Type I; use a large $\\alpha$ like $0.10$","Neither; $\\alpha$ doesn't matter"],"A small $\\alpha$ protects against Type I errors.",["Wasting money on a useless program is the costly mistake here."])]},
+ ch7:{cim:[()=>{const a=rnd(10,20),w=rnd(2,6);return mcQ(`A 90% CI for the mean commute time is $(${a},\\ ${a+w})$ minutes. A 99% interval from the same data would be`,"wider, because $t^*$ is larger",["narrower, because we are more confident","the same width","shifted to the right"],"More confidence needs a bigger margin.",["Higher confidence → larger $t^*$ → wider interval."]);}],
+  testm:[()=>mcQ("Ten athletes' jump heights are measured before and after a training program. Why should we analyze the differences instead of comparing two independent groups?","Each athlete is measured twice, so the pairs are linked; using differences removes athlete-to-athlete variability",["Because the sample is small","Because the means are equal","Because two-sample tests need at least 30 per group"],"Same subjects twice → paired.",["Paired data: analyze the differences."])],
+  two:[()=>{const P=pick([0.001,0.03,0.2]);return mcQ(`An experiment randomly assigns 60 volunteers to a new or standard diet. A two-sample $t$ test for weight loss gives $P = ${P}$. What can be concluded at $\\alpha = 0.05$?`,P<0.05?"Convincing evidence that the new diet causes more weight loss for people like these volunteers":"Not convincing evidence that the new diet works better",[P<0.05?"The new diet works better for everyone in the country":"The two diets are proven equal","The volunteers' weights were Normal",P<0.05?"Not convincing evidence that the new diet works better":"Convincing evidence that the new diet causes more weight loss"],"Random assignment → causation; volunteers → limited generalization.",[P<0.05?"Reject $H_0$; causation for volunteers like these.":"Fail to reject $H_0$."]);}]},
+ ch8:{expc:[()=>{const n=pick([120,200,300]);return NQ(`A store claims its customers are $50\\%$ adults, $30\\%$ teens and $20\\%$ children. In a random sample of $${n}$ customers, how many teens would you expect if the claim is true?`,0.3*n,"Expected $= n \\cdot p$.",[`$${n}(0.3) = ${0.3*n}$.`]);}],
+  chis:[()=>mcQ("A chi-square goodness-of-fit test gives $\\chi^2 = 0.4$ with $df = 3$. What does this suggest?","The observed counts are very close to the expected counts; no evidence against $H_0$",["The data strongly contradict $H_0$","The test was done wrong — $\\chi^2$ must be larger than $df$","The variables are associated"],"Small $\\chi^2$ = good fit.",["$\\chi^2$ is tiny compared with $df$: a good fit."])],
+  chictx:[()=>mcQ("A test finds a significant association between owning a dog and exercising daily ($P = 0.002$) in a random sample. Which conclusion is correct?","Dog owners and non-owners differ in how often they exercise daily; we can't say dogs cause exercise",["Owning a dog causes people to exercise","Exercising causes people to buy dogs","There is no association"],"Observational data → association only.",["Association, not causation."])]},
+ ch9:{slope:[()=>{const b=pick([4.2,2.8,1.5]);return mcQ(`Output for predicting weight (lb) from height (in) shows slope $${b}$, SE $0.6$. Which is the correct interpretation of $${b}$?`,`For each additional inch of height, predicted weight increases by about $${b}$ lb.`,[`Every person gains $${b}$ lb per inch.`,`The typical prediction error is $${b}$ lb.`,`$${b}\\%$ of the variation in weight is explained.`],"The slope describes the predicted change.",["Predicted weight rises $"+b+"$ lb per inch."]);}],
+  cis:[()=>{const lo=r2(rnd(5,20)/10);return mcQ(`A 95% CI for the slope of the regression of reading score on hours read per week is $(${lo},\\ ${r2(lo+1.5)})$. What does it suggest?`,"There is convincing evidence of a positive linear relationship, since 0 is not in the interval",["There is no relationship, since the interval is narrow","Reading more causes higher scores for everyone","The slope is exactly the midpoint"],"Check whether 0 is a plausible slope.",["$0$ is not in the interval."]);}],
+  tslope:[()=>mcQ("A residual plot for a regression of fuel used on distance shows a clear fan shape. What should you say about a $t$ test for the slope?","The Equal-SD condition is not met, so the test results may not be reliable",["The test is fine because the sample is large","The relationship must be negative","The slope must be zero"],"Check LINER before trusting inference.",["A fan shape violates Equal SD."])]}
+};
+CHAPTERS.forEach(c=>{ const M=ST_PLUS[c.id]||{}, G=ST_CC[c.id]||{}; c.topics.forEach(t=>{ const x=M[t.id]; if(x){ if(x.cc) t.cc=x.cc; if(x.more) t.lesson.more=x.more; }
+  const g=G[t.id]; if(g) [2,3,4].forEach(lv=>{ const orig=t.gen[lv]; if(orig) t.gen[lv]=()=>Math.random()<.4?pick(g)():orig(); }); }); });
+
+const ALLCH=[[1,"Exploring One-Variable Data","ch1"],[2,"Exploring Two-Variable Data","ch2"],[3,"Collecting Data","ch3"],[4,"Probability, Random Variables & Distributions","ch4"],[5,"Sampling Distributions","ch5"],[6,"Inference for Proportions","ch6"],[7,"Inference for Means","ch7"],[8,"Chi-Square Tests","ch8"],[9,"Inference for Slopes","ch9"]];
+/* number every lesson as a section: 1.1, 1.2, … */
+CHAPTERS.forEach(c=>{ const n=(ALLCH.find(a=>a[2]===c.id)||[])[0]; if(n) c.topics.forEach((t,i)=>{ if(!/^\d+\.\d+ /.test(t.title)) t.title=n+"."+(i+1)+" "+t.title; }); });
+const COMING=[];
+
+/* ================= checking ================= */
+const CONST=new Set(["pi","e","E","PI","Infinity"]);
+function pre(s){ return String(s).replace(/°|\^\\circ|deg\b/g,"").replace(/θ/g,"theta").replace(/\barc(sin|cos|tan)\b/g,"a$1").replace(/(?<![a-z])(sin|cos|tan)\^\s*\(?-1\)?/g,"a$1")
+  .replace(/(?<![a-z])log\s*\(([^(),]*)\)/g,"log10($1)").replace(/(?<![a-z])ln\s*\(/g,"log(").replace(/(?<![a-z])ln\s*(\d+(?:\.\d+)?|[a-z])\b/g,"log($1)")
+  .replace(/(?<![a-z])(sin|cos|tan|sec|csc|cot)\s*\^\s*(\d+)\s*\(([^()]*)\)/g,"($1($3))^$2").replace(/(?<![a-z])(sin|cos|tan|sec|csc|cot)\s*\^\s*(\d+)\s*(\d*(?:x|theta))\b/g,"($1($3))^$2")
+  .replace(/(?<![a-z])(sin|cos|tan|sec|csc|cot)\s*(\d*(?:x|theta))\b/g,"$1($2)").replace(/(?<![a-z_][a-z_0-9]*)(\d+(?:\.\d+)?|\))\s*(?=(?!(?:or|and)\b)(?!e[-+]?\d)[a-z(√])/gi,"$1*"); }
+function clean(s){ return pre(s).replace(/\|([^|]+)\|/g,"abs($1)").replace(/(^|[^a-z])([a-z])\s*\(/gi,"$1$2*(").replace(/[−–]/g,"-").replace(/×|·/g,"*").replace(/÷/g,"/").replace(/π/g,"pi").replace(/≤|=</g,"<=").replace(/≥|=>/g,">=").replace(/√\s*(\d+(?:\.\d+)?|\([^)]*\)|[a-z])/g,"sqrt($1)").trim(); }
+function val(s){ try{ const r=math.evaluate(s); const v=typeof r==="number"?r:(r&&typeof r.valueOf()==="number"?r.valueOf():NaN); return isFinite(v)?v:NaN; }catch(e){ return NaN; } }
+const close=(a,b)=>Math.abs(a-b)<1e-6*Math.max(1,Math.abs(b));
+function varsOf(node){ const v=new Set(); node.traverse((n,path,parent)=>{ if(n.isSymbolNode&&!(parent&&parent.isFunctionNode&&path==="fn")&&!CONST.has(n.name)&&typeof math[n.name]!=="function") v.add(n.name); }); return [...v]; }
+function evalAt(node,sc){ try{ const r=node.evaluate(sc); const v=typeof r==="number"?r:(r&&typeof r.valueOf()==="number"?r.valueOf():NaN); return isFinite(v)?v:NaN; }catch(e){ return NaN; } }
+function exprEq(student,expected,form){
+  let s=clean(student); if(s.includes("=")) s=s.split("=").pop();
+  let S,E; try{ S=math.parse(s); E=math.parse(expected); }catch(e){ return null; }
+  if(form&&form!=="combined"&&!formOK(S,s,form)) return false;
+  if(form==="combined"){ if(s.includes("(")) return false; const cnt={}; S.traverse((n,path,parent)=>{ if(n.isSymbolNode&&!(parent&&parent.isFunctionNode&&path==="fn")&&!CONST.has(n.name)) cnt[n.name]=(cnt[n.name]||0)+1; }); if(Object.values(cnt).some(c=>c>1)) return false; }
+  const vars=[...new Set([...varsOf(S),...varsOf(E)])]; let t=0;
+  for(let k=0;k<12&&t<6;k++){ const sc={}; vars.forEach(v=>sc[v]=Math.round(Math.random()*4000)/1000+0.15); const a=evalAt(S,sc),b=evalAt(E,sc); if(isNaN(a)||isNaN(b)) continue; t++; if(!close(a,b)) return false; }
+  return t>=3?true:null;
+}
+function lineEq(student,expected,form){
+  const s=clean(student); if(s.split("=").length!==2) return null;
+  const [L,R]=s.split("="); if(!L.trim()||!R.trim()) return null;
+  let S,E; try{ S=math.parse("("+L+")-("+R+")"); const [eL,eR]=expected.split("="); E=math.parse("("+eL+")-("+eR+")"); }catch(e){ return null; }
+  if(form==="si"&&L.replace(/\s/g,"")!=="y") return false;
+  if(form==="std"){ if(s.includes("/")) return false; try{ if(varsOf(math.parse(R)).length) return false; }catch(e){ return null; } }
+  let ratio=null,t=0;
+  for(let k=0;k<14&&t<6;k++){ const sc={x:Math.round((Math.random()*8-4)*1000)/1000+0.31,y:Math.round((Math.random()*8-4)*1000)/1000+0.17}; const a=evalAt(S,sc),b=evalAt(E,sc); if(isNaN(a)||isNaN(b)) continue; t++;
+    if(Math.abs(b)<1e-9){ if(Math.abs(a)>1e-6) return false; continue; } const r=a/b; if(Math.abs(r)<1e-9) return false; if(ratio===null) ratio=r; else if(!close(r,ratio)) return false; }
+  return t>=3?true:null;
+}
+function radOK(input){ const t=clean(input).replace(/\s+/g,""); if(/\/\(?\*?sqrt/.test(t)) return false; const args=[...t.matchAll(/sqrt\(([^)]*)\)/g)].map(m=>m[1]); for(const a of args){ const n=Number(a); if(!Number.isInteger(n)||n<2) return false; if(radParts(n)[0]!==1) return false; } return true; }
+function parseRoots(s){ s=clean(s).replace(/\+\/-|\+-/g,"±").replace(/\b(or|and)\b/gi,",").replace(/;/g,","); const out=[];
+  for(let part of s.split(",")){ part=part.trim(); if(!part) continue; if(part.includes("=")) part=part.split("=").pop().trim();
+    if(part.includes("±")){ const i=part.indexOf("±"), L=part.slice(0,i).trim(), R=part.slice(i+1).trim();
+      if(/^\(/.test(L)&&/\)\s*\/\s*.+$/.test(R)){ const den=R.slice(R.lastIndexOf(")")+1), inner=R.slice(0,R.lastIndexOf(")")), l=L.slice(1)||"0"; out.push(val("("+l+"+("+inner+"))"+den),val("("+l+"-("+inner+"))"+den)); }
+      else { const l=L||"0"; out.push(val(l+"+("+R+")"),val(l+"-("+R+")")); } }
+    else out.push(val(part)); }
+  return out.length&&out.every(v=>!isNaN(v))?out:null; }
+function topTerms(n,out){ while(n.isParenthesisNode) n=n.content; if(n.isOperatorNode&&(n.fn==="add"||n.fn==="subtract")){ n.args.forEach(a=>topTerms(a,out)); } else if(n.isOperatorNode&&n.fn==="unaryMinus"){ topTerms(n.args[0],out); } else out.push(n); return out; }
+function strip(n){ while(n&&n.isParenthesisNode) n=n.content; return n; }
+function isSum(n){ n=strip(n); return n.isOperatorNode&&(n.fn==="add"||n.fn==="subtract"); }
+function factorsOf(n){ n=strip(n); if(n.isOperatorNode&&n.fn==="unaryMinus") return factorsOf(n.args[0]); if(n.isOperatorNode&&n.fn==="multiply") return n.args.flatMap(factorsOf); if(n.isOperatorNode&&n.fn==="pow"&&isSum(n.args[0])) return [strip(n.args[0])]; return [n]; }
+function coeffsX(node){ const ys=[0,1,2,3,4].map(x=>evalAt(node,{x})); if(ys.some(isNaN)) return null; const c=[]; let d=ys.slice(); const fact=[1,1,2,6,24]; const diffs=[];
+  for(let k=0;k<5;k++){ diffs.push(d[0]); d=d.slice(1).map((v,i)=>v-d[i]); }
+  if(Math.abs(diffs[4])>1e-9) return null; // degree <= 3 expected
+  // Newton forward form -> standard coefficients
+  const P=[[1],[0,1],[0,-1,1],[0,2,-3,1]]; const res=[0,0,0,0]; for(let k=0;k<4;k++){ const f=diffs[k]/fact[k]; P[k].forEach((v,i)=>res[i]+=f*v); }
+  return res.map(v=>Math.round(v*1e6)/1e6); }
+function formOK(S,s,form){
+  if(form==="simp"){ if(/\)\s*\^/.test(s)||/\^\s*-|\^\(-/.test(s)) return false; const cnt={}; S.traverse((n,path,parent)=>{ if(n.isSymbolNode&&!(parent&&parent.isFunctionNode&&path==="fn")&&!CONST.has(n.name)) cnt[n.name]=(cnt[n.name]||0)+1; }); return !Object.values(cnt).some(c=>c>1); }
+  if(form==="poly"){ if(s.includes("(")) return false; const degs=topTerms(S,[]).map(t=>{ const a=evalAt(t,{x:1.5}),b=evalAt(t,{x:3}); if(isNaN(a)||Math.abs(a)<1e-12) return null; return Math.round(Math.log(Math.abs(b/a))/Math.log(2)); }); if(degs.some(d=>d===null)) return false; return new Set(degs).size===degs.length; }
+  if(form==="factored"){ const f=factorsOf(S); if(f.length<2||!f.some(isSum)) return false;
+    for(const fa of f){ if(!isSum(fa)) continue; const vs=varsOf(fa); if(vs.length!==1||vs[0]!=="x") continue; const c=coeffsX(fa); if(!c) continue; const g=c.filter(v=>v!==0).reduce((a,b)=>gcd(a,Math.round(b)),0); if(Math.abs(g)>1) return false;
+      const nz_=c.filter(v=>v!==0).length; if(c[2]!==0&&c[3]===0&&c[1]!==0||false){ /* quadratic factor: check if it factors further over integers */ const A=c[2],B=c[1],C=c[0],D=B*B-4*A*C; if(D>=0&&Number.isInteger(Math.sqrt(D))) return false; }
+      if(c[2]!==0&&c[3]===0&&c[1]===0&&c[0]!==0){ const A=c[2],C=c[0],D=-4*A*C; if(D>0&&Number.isInteger(Math.sqrt(D))) return false; } }
+    return true; }
+  if(form==="nofrac") return !s.includes("/");
+  return true; }
+function cval(s){ try{ const r=math.evaluate(clean(s).replace(/([0-9)])\s*i\b/g,"$1*i")); if(typeof r==="number") return isFinite(r)?[r,0]:null; if(r&&typeof r.re==="number") return [r.re,r.im]; return null; }catch(e){ return null; } }
+function cList(s){ s=clean(s).replace(/\+\/-|\+-/g,"±").replace(/\b(or|and)\b/gi,",").replace(/;/g,","); const out=[];
+  for(let part of s.split(",")){ part=part.trim(); if(!part) continue; if(part.includes("=")) part=part.split("=").pop().trim();
+    if(part.includes("±")){ const k=part.indexOf("±"), L=part.slice(0,k).trim()||"0", R=part.slice(k+1).trim(); const z1=cval(L+"+("+R+")"), z2=cval(L+"-("+R+")"); if(!z1||!z2) return null; out.push(z1,z2); }
+    else { const z=cval(part); if(!z) return null; out.push(z); } }
+  return out.length?out:null; }
+/* inequalities → list of intervals {lo,li,hi,hiI} */
+function ray(op,v){ return op===">"?{lo:v,li:false,hi:Infinity,hiI:false}:op===">="?{lo:v,li:true,hi:Infinity,hiI:false}:op==="<"?{lo:-Infinity,li:false,hi:v,hiI:false}:{lo:-Infinity,li:false,hi:v,hiI:true}; }
+function parseIneqPart(str){
+  const t=str.replace(/\s+/g,"").split(/(<=|>=|<|>)/); const isV=x=>/^[a-z]$/i.test(x);
+  if(t.length===3){ if(isV(t[0])){ const v=val(t[2]); return isNaN(v)?null:ray(t[1],v); } if(isV(t[2])){ const v=val(t[0]); return isNaN(v)?null:ray(FLIP[t[1]],v); } return null; }
+  if(t.length===5&&isV(t[2])){ const A=val(t[0]),B=val(t[4]); if(isNaN(A)||isNaN(B)) return null; const up=o=>o==="<"||o==="<=";
+    if(up(t[1])&&up(t[3])) return {lo:A,li:t[1]==="<=",hi:B,hiI:t[3]==="<="}; if(!up(t[1])&&!up(t[3])) return {lo:B,li:t[3]===">=",hi:A,hiI:t[1]===">="}; }
+  return null;
+}
+function parseIneq(s){ s=clean(s).toLowerCase(); const out=[];
+  for(const part of s.split(/\bor\b|∪|\|\|/)){ if(!part.trim()) continue;
+    const ands=part.split(/\band\b|,|&&/).filter(x=>x.trim()); let iv={lo:-Infinity,li:false,hi:Infinity,hiI:false};
+    for(const a of ands){ const r=parseIneqPart(a); if(!r) return null; if(r.lo>iv.lo||(r.lo===iv.lo&&!r.li)){ iv.lo=r.lo; iv.li=r.li; } if(r.hi<iv.hi||(r.hi===iv.hi&&!r.hiI)){ iv.hi=r.hi; iv.hiI=r.hiI; } }
+    out.push(iv); }
+  return out.length?out:null; }
+function sameIv(a,b){ const e=(x,y)=>(x===y)||(isFinite(x)&&isFinite(y)&&close(x,y)); return e(a.lo,b.lo)&&e(a.hi,b.hi)&&(!isFinite(a.lo)||a.li===b.li)&&(!isFinite(a.hi)||a.hiI===b.hiI); }
+function check(pr,input){
+  if(pr.type==="mc"){ const m=/^\(?\s*([a-e])\s*[).]?\s*$/i.exec(String(input).trim()); if(!m) return null; return m[1].toUpperCase()===pr.ans; }
+  if(pr.type==="word"){ const w=String(input).toUpperCase().replace(/[^A-Z]/g,""); if(!w) return null; const opts=pr.opts||["SSS","SAS","ASA","AAS","HL","NONE"]; const n=/NONE|NOT|CANNOT|CANT|NEITHER/.test(w)||w==="NO"?"NONE":w; if(!opts.includes(n)) return null; return n===pr.ans; }
+  if(pr.type==="number"){ const v=val(clean(input).split("=").pop()); if(isNaN(v)) return null; if(pr.tol?Math.abs(v-pr.ans)>pr.tol:!close(v,pr.ans)) return false; if(pr.form==="rad"&&!radOK(input)) return false; return true; }
+  if(pr.type==="roots"){ const r=parseRoots(input); if(!r) return null; const u=a=>a.filter((x,i)=>a.findIndex(y=>close(x,y))===i); const su=u(r),eu=u(pr.ans); return su.length===eu.length&&eu.every(x=>su.some(y=>close(x,y))); }
+  if(pr.type==="nsol"){ const w=String(input).toLowerCase(); const k=/inf|many|all|∞/.test(w)?"INF":/none|no |^no$|zero|^0$|parallel/.test(w)?"NONE":/one|^1$|single|unique/.test(w)?"ONE":null; return k===null?null:k===pr.ans; }
+  if(pr.type==="set"){ const v=val(clean(input).split("=").pop()); return isNaN(v)?null:close(v,pr.ans[0]); }
+  if(pr.type==="expr") return exprEq(input,pr.ans,pr.form);
+  if(pr.type==="line") return lineEq(input,pr.ans,pr.form);
+  if(pr.type==="point"){ const t=clean(input).split("=").pop().trim().replace(/^[(<⟨]/,"").replace(/[)>⟩]$/,""); const parts=t.split(","); if(parts.length!==pr.ans.length) return null; const v=parts.map(val); if(v.some(isNaN)) return null; return v.every((x,k)=>Math.abs(x-pr.ans[k])<1e-6*Math.max(1,Math.abs(pr.ans[k]))+(pr.tol||0)); }
+  if(pr.type==="cplx"){ const z=cval(String(input).split("=").pop()); if(!z) return null; return close(z[0],pr.ans[0])&&close(z[1],pr.ans[1]); }
+  if(pr.type==="croots"){ const zs=cList(input); if(!zs) return null; const u=a=>a.filter((x,k)=>a.findIndex(y=>close(x[0],y[0])&&close(x[1],y[1]))===k); const su=u(zs),eu=u(pr.ans); return su.length===eu.length&&eu.every(x=>su.some(y=>close(x[0],y[0])&&close(x[1],y[1]))); }
+  if(pr.type==="matrix"){ const toks=clean(input).replace(/[\[\]{}()]/g," ").split(/[,;\s]+/).filter(Boolean); if(!toks.length) return null; const v=toks.map(val); if(v.some(isNaN)) return null; if(v.length!==pr.ans.length) return false; return v.every((x,k)=>close(x,pr.ans[k])); }
+  if(pr.type==="yn"){ const w=String(input).trim().toUpperCase(); if(/^(Y|YES|YEAH|IS)/.test(w)) return pr.ans==="YES"; if(/^(N|NO|NOT)/.test(w)) return pr.ans==="NO"; return null; }
+  if(pr.type==="list"){ const parts=clean(input).replace(/[{}]/g,"").split(/,|;|\s+and\s+/).map(x=>x.trim()).filter(Boolean); if(!parts.length) return null; const v=parts.map(val); if(v.some(isNaN)) return null; const u=a=>a.filter((x,i)=>a.findIndex(y=>close(x,y))===i); const su=u(v),eu=u(pr.ans); return su.length===eu.length&&eu.every(x=>su.some(y=>close(x,y))); }
+  const want=pr.type==="ineq"?[ray(pr.ans.op,pr.ans.v)]:pr.type==="between"?[pr.ans]:pr.ans.map(r=>ray(r.op,r.v));
+  const got=parseIneq(input); if(!got) return null;
+  const srt=a=>a.slice().sort((x,y)=>x.lo-y.lo); const g=srt(got),w=srt(want);
+  return g.length===w.length&&g.every((x,i)=>sameIv(x,w[i]));
+}
+function render(el){ if(window.renderMathInElement) renderMathInElement(el,{delimiters:[{left:"$",right:"$",display:false}],throwOnError:false}); }
+
+/* ================= state ================= */
+let ST={cur:"ch1",ch:{}}; try{ Object.assign(ST,JSON.parse(localStorage.getItem("fm-st")||"{}")); }catch(e){}
+const save=()=>{ try{ localStorage.setItem("fm-st",JSON.stringify(ST)); }catch(e){} };
+let CH=null, st=null, T=null, L=1, PR=null, tries=0, done=false, firstTry=true, streak=[];
+function useChapter(id){ CH=CHAPTERS.find(c=>c.id===id)||CHAPTERS[0]; ST.cur=CH.id; ST.ch[CH.id]=ST.ch[CH.id]||{rec:null,level:{},solved:{},learned:{}}; st=ST.ch[CH.id]; save(); }
+
+/* ================= page ================= */
+function chapters(){ const b=$("chapters"); b.innerHTML="";
+  ALLCH.forEach(([n,t,id])=>{ if(id&&CHAPTERS.some(c=>c.id===id)){ const x=document.createElement("button"); x.type="button"; x.className="chap"+(id===CH.id?" on":""); x.innerHTML=`<i>${n}</i>${t}`; x.onclick=()=>{ if(id!==CH.id) openChapter(id,"learn"); }; b.appendChild(x); }
+    else { const x=document.createElement("span"); x.className="chap soon"; x.title="Coming soon"; x.innerHTML=`<i>${n}</i>${t}`; b.appendChild(x); }
+    if(id===CH.id){ const s=document.createElement("div"); s.className="secs"; s.id="secs"; b.appendChild(s); } }); secList(); }
+/* sections of the open chapter, listed under it in the sidebar */
+const SECNAME={};
+function secOf(t,i){ const m=/^(\d+\.\d+) (.*)$/.exec(t.title); const n=ALLCH.find(c=>c[2]===CH.id)[0]; return m?{no:m[1],name:m[2]}:{no:n+"."+(i+1),name:t.title}; }
+function sections(){ const out=[]; CH.topics.forEach((t,i)=>{ const s=secOf(t,i); let g=out.find(x=>x.no===s.no); if(!g){ g={no:s.no,name:(SECNAME[CH.id]||{})[s.no]||s.name,idx:[]}; out.push(g); } g.idx.push(i); }); return out; }
+function tlab(t){ const i=CH.topics.indexOf(t), G=sections().find(g=>g.idx.includes(i)), m=/^(\d+\.\d+) (.*)$/.exec(t.title), part=m?m[2]:t.title;
+  if(!G||G.idx.length<2) return {multi:false,sec:t.title,part,full:t.title};
+  return {multi:true,sec:G.no+" "+G.name,part,k:G.idx.indexOf(i)+1,n:G.idx.length,first:G.idx[0]===i,full:G.no+" "+G.name+" · "+part}; }
+function secList(){ const box=$("secs"); if(!box||!CH) return; box.innerHTML=""; sections().forEach(g=>{ const x=document.createElement("button"); x.type="button"; const on=g.idx.includes(LI), done=g.idx.every(i=>st&&st.learned[CH.topics[i].id]); x.className="sec"+(on?" on":"")+(done?" done":""); x.innerHTML=`<b>${done?"✓":g.no}</b><span>${g.name}</span>`; x.onclick=()=>{ if(!$("practiceView").hidden){ LI=g.idx[0]; $("practice").hidden=true; road(); topics(); $("topics").scrollIntoView({behavior:"smooth",block:"start"}); return; } setTab("learn"); openLesson(g.idx[0],true); }; box.appendChild(x); }); }
+function legend(){ if(!st) return; const box=$("legend"); box.innerHTML=""; const cur=curLv(); LEVELS.forEach(l=>{ const b=document.createElement("button"); b.type="button"; b.className="lvc"+(l.n===cur?" on":"")+(st.rec===l.n?" star":""); b.style.setProperty("--c",l.c); b.title=l.desc; b.innerHTML=`<i>${l.n}</i>${l.name}`; b.onclick=()=>setLevel(l.n); box.appendChild(b); }); const L0=LEVELS[cur-1]; $("lvDesc").innerHTML=`<b style="color:${L0.c}">Level ${cur} · ${L0.name}</b> — ${L0.desc}. Every topic below uses this level.`; }
+
+function curLv(){ return st.lvl||st.rec||1; }
+function setLevel(n){ st.lvl=n; save(); if(T&&!$("practice").hidden){ L=n; streak=[]; newRound(); newProblem(); } legend(); topics(); }
+function recText(){ $("recText").innerHTML=st.rec?`★ Suggested: Level ${st.rec}`:"Not sure?"; $("placeBtn").textContent=st.rec?"Retake the check":"Take the 5-question check"; }
+function pillsFor(t,cur,onPick){ const w=document.createElement("div"); w.className="pills";
+  LEVELS.forEach(l=>{ const b=document.createElement("button"); b.type="button"; b.className="pill"+(l.n===cur?" on":"")+(st.rec===l.n?" star":""); b.style.setProperty("--c",l.c); const n=st.solved[t.id+l.n]||0; b.innerHTML=`${l.n} ${l.name}`+(n?`<span class="n">✓${n}</span>`:""); b.onclick=()=>onPick(l.n); w.appendChild(b); }); return w; }
+function topics(){ const box=$("topics"); box.innerHTML=""; legend(); const lvl=curLv();
+  /* practice = only the section that is open (pick another section in the list on the left) */
+  const SG=sections(), G=SG.find(g=>g.idx.includes(LI))||SG[0];
+  const c=document.createElement("div"); c.className="card psec";
+  c.innerHTML=`<span class="label">Practice · Level ${lvl} ${LEVELS[lvl-1].name}</span>`;
+  G.idx.map(i=>CH.topics[i]).forEach(t=>{ const n=st.solved[t.id+lvl]||0, on=T===t&&!$("practice").hidden;
+    const r=document.createElement("div"); r.className="prow"+(on?" on":"");
+    r.innerHTML=`<span class="pt">${G.idx.length>1?tlab(t).part:"5 levels · new problems every time"}</span><small>${n?`✓ ${n} solved`:""}</small>`;
+    const go=document.createElement("button"); go.className="btn teal sm"; go.textContent=on?"Practicing ↓":"Practice →"; go.onclick=()=>startPractice(t,lvl); r.appendChild(go); c.appendChild(r); });
+  box.appendChild(c); render(box); }
+function startPractice(t,n){ n=curLv(); T=t; L=n; st.level[t.id]=n; save(); streak=[]; newRound(); $("practice").hidden=false; $("pTitle").textContent=tlab(t).full; newProblem(); $("practice").scrollIntoView({behavior:"smooth",block:"start"}); topics(); }
+function levelPills(){ $("pLevels").replaceWith(Object.assign(pillsFor(T,L,n=>{ L=n; st.level[T.id]=n; save(); streak=[]; newRound(); newProblem(); topics(); }),{id:"pLevels"})); }
+function newProblem(){
+  PR=T.gen[L-1](); tries=0; done=false; firstTry=true;
+  $("pQ").innerHTML=`<span class="label" style="color:${LEVELS[L-1].c}">Level ${L} · ${LEVELS[L-1].name}</span><div>${PR.q}</div>`; render($("pQ"));
+  $("pAns").value=""; $("pAns").disabled=false; $("pPrev").textContent=""; $("pHow").textContent=PR.type==="word"&&PR.opts?"Type one of: "+PR.opts.map(o=>o==="NONE"?"none":o.length>3?o.toLowerCase():o).join(", ")+".":PR.form==="factored"?"Type the factored form, like 2(x - 3)(x + 4).":PR.form==="poly"?"Type the simplified polynomial, like 3x^2 - 5x + 2.":PR.form==="simp"?"Type the simplified expression with positive exponents, like 6x^5 or 3x^2/y^4.":PR.form==="rad"?"Type the simplest radical form, like 5sqrt(2).":PR.form==="si"?"Type it as y = mx + b, like y = -2x + 5.":PR.form==="std"?"Type it as Ax + By = C with whole numbers, like 3x - 2y = 6.":HOW[PR.type]; $("pFb").innerHTML=""; $("pSuggest").innerHTML="";
+  $("pQ").hidden=false; $("pAns").closest(".row").hidden=false; $("pCheck").hidden=false; $("pNext").hidden=true; $("pHint").disabled=false; $("pShow").hidden=true; $("pAns").disabled=false; levelPills(); drawStreak(); $("pAns").focus({preventScroll:true}); }
+function fb(kind,tag,html){ $("pFb").innerHTML=`<div class="fb ${kind}"><span class="tag">${tag}</span>${html}</div>`; render($("pFb")); }
+const solHtml=()=>`<ol class="sol">${PR.sol.map(s=>`<li>${s}</li>`).join("")}</ol>`;
+function finish(correct){ done=true; $("pAns").disabled=true; $("pCheck").hidden=true; $("pNext").hidden=false; $("pShow").hidden=true; $("pHint").disabled=true;
+  if(correct){ st.solved[T.id+L]=(st.solved[T.id+L]||0)+1; save(); }
+  streak.push(correct&&firstTry); if(streak.length>6) streak.shift();
+  RND.n++; if(correct) RND.right++; if(correct&&firstTry) RND.first++; drawStreak(); levelPills();
+  $("pNext").textContent=RND.n>=RLEN?"See my result →":"Next problem →"; $("pNext").focus({preventScroll:true}); }
+function submit(){ if(done||!PR) return; const v=$("pAns").value.trim(); if(!v) return; const r=check(PR,v);
+  if(r===null){ fb("hint","Try again","I couldn't read that. "+HOW[PR.type]); return; }
+  if(r){ fb("good","Correct"+(firstTry?" on the first try!":""),`$${PR.ansTex}$`+solHtml()); finish(true); return; }
+  tries++; firstTry=false;
+  if(tries===1){ fb("bad","Not yet",PR.hint+" Try again."); $("pShow").hidden=false; }
+  else { fb("bad","Not yet","Here's how it works:"+solHtml()); finish(false); } }
+/* ---- a round = 5 problems; then the student chooses: redo, or move to the next section ---- */
+const RLEN=5; let RND={n:0,right:0,first:0};
+function newRound(){ RND={n:0,right:0,first:0}; $("pSuggest").innerHTML=""; }
+function drawStreak(){ const s=$("pStreak"); s.innerHTML=`<span>Problem ${Math.min(RND.n+(done?0:1),RLEN)} of ${RLEN}</span> `; (RND.n?streak.slice(-RND.n):[]).forEach(x=>{ const i=document.createElement("i"); i.className=x?"ok":"no"; s.appendChild(i); }); for(let k=RND.n;k<RLEN;k++){ const i=document.createElement("i"); i.className="todo"; s.appendChild(i); } }
+function nextAfter(t){ const SG=sections(), i=CH.topics.indexOf(t), G=SG.find(g=>g.idx.includes(i)), k=G.idx.indexOf(i);
+  if(k<G.idx.length-1) return {t:CH.topics[G.idx[k+1]], label:`Next: ${tlab(CH.topics[G.idx[k+1]]).part}`};
+  const H=SG[SG.indexOf(G)+1]; return H?{t:CH.topics[H.idx[0]], label:`Move to ${H.no} ${H.name}`}:null; }
+function roundResult(){
+  const secKey="r_"+T.id+"_"+L, best=Math.max(st[secKey]||0,RND.right); st[secKey]=best; save();
+  $("pQ").hidden=true; $("pAns").closest(".row").hidden=true; $("pAns").disabled=true; $("pNext").hidden=true; $("pCheck").hidden=true; $("pHint").disabled=true; $("pShow").hidden=true; $("pPrev").textContent=""; $("pHow").textContent="";
+  const perfect=RND.first===RLEN, weak=RND.right<=2, nx=nextAfter(T);
+  const msg=perfect?`All ${RLEN} right on the first try — excellent!`:RND.right===RLEN?`All ${RLEN} right!`:RND.right>=3?`Good work — ${RND.right} out of ${RLEN}.`:`${RND.right} out of ${RLEN}. Look at the example in <b>Learn</b> once more, then redo it.`;
+  $("pFb").innerHTML=`<div class="rres"><div class="rsc"><b>${RND.right} / ${RLEN}</b><span>correct · ${RND.first} on the first try</span></div><p>${msg}</p><div class="racts"></div></div>`;
+  const A=$("pFb").querySelector(".racts");
+  const redo=document.createElement("button"); redo.className="btn ghost"; redo.textContent="↻ Redo it"; redo.onclick=()=>{ $("pFb").innerHTML=""; newRound(); newProblem(); }; A.appendChild(redo);
+  if(weak){ const lb=document.createElement("button"); lb.className="btn ghost"; lb.textContent="📘 Back to Learn"; lb.onclick=()=>{ setTab("learn"); openLesson(CH.topics.indexOf(T),true); }; A.appendChild(lb); }
+  if(nx){ const nb=document.createElement("button"); nb.className="btn teal"; nb.textContent=nx.label+" →"; nb.onclick=()=>{ $("pFb").innerHTML=""; LI=CH.topics.indexOf(nx.t); road(); startPractice(nx.t); }; A.appendChild(nb); }
+  else { const d=document.createElement("span"); d.className="rdone"; d.textContent="🎉 Last section of this chapter done!"; A.appendChild(d); }
+  if(perfect&&L<5){ const d=document.createElement("div"); d.className="suggest"; d.style.setProperty("--c",LEVELS[L].c); d.innerHTML=`<span>Ready for <b>Level ${L+1} · ${LEVELS[L].name}</b>?</span>`; const b=document.createElement("button"); b.className="btn sm"; b.style.background=LEVELS[L].c; b.textContent="Move up ↑"; b.onclick=()=>{ $("pFb").innerHTML=""; setLevel(L+1); }; d.appendChild(b); $("pFb").querySelector(".rres").appendChild(d); }
+  $("pStreak").innerHTML=""; render($("pFb")); topics(); }
+function suggest(){ const box=$("pSuggest"); box.innerHTML=""; const last=streak.slice(-3),last2=streak.slice(-2); let to=null,msg="";
+  if(L<5&&last.length===3&&last.every(Boolean)){ to=L+1; msg=`3 in a row on the first try! Ready for <b>Level ${L+1} · ${LEVELS[L].name}</b>?`; }
+  else if(L>1&&last2.length===2&&last2.every(x=>!x)){ to=L-1; msg=`These are tough — that's okay! Practice <b>Level ${L-1} · ${LEVELS[L-2].name}</b> first, then come back stronger.`; }
+  if(!to) return; const d=document.createElement("div"); d.className="suggest"; d.style.setProperty("--c",LEVELS[to-1].c); d.innerHTML=`<span>${msg}</span>`;
+  const b=document.createElement("button"); b.className="btn sm"; b.style.background=LEVELS[to-1].c; b.textContent=to>L?"Move up ↑":"Go to Level "+to; b.onclick=()=>{ setLevel(to); }; d.appendChild(b); box.appendChild(d); }
+$("pCheck").onclick=submit; $("pAns").addEventListener("keydown",e=>{ if(e.key==="Enter"){ e.preventDefault(); done?$("pNext").onclick():submit(); } });
+
+/* ---- chapter cheat sheet ---- */
+function cheatSheet(){
+  const old=document.querySelector(".csm"); if(old) old.remove();
+  const page=(document.querySelector(".intro .label")||{}).textContent||"";
+  const course=page.split("·")[0].trim();
+  const m=document.createElement("div"); m.className="csm";
+  m.innerHTML=`<div class="cs-sheet"><div class="cs-top"><div><h2>${$("chTitle").textContent}</h2><span class="sub">${course} · Cheat Sheet · FangMath</span></div><div class="cs-acts"><button class="btn teal sm" id="csPrint">🖨 Print / Save PDF</button><button class="btn ghost sm" id="csClose">Close</button></div></div>
+    <div class="cs-grid">${CH.topics.map(t=>`<div class="cs-card"><h3>${!tlab(t).multi?t.title:tlab(t).first?`${tlab(t).sec}<small class="cs-part">${tlab(t).part}</small>`:tlab(t).part}</h3><div class="cs-idea">${t.idea}</div>${t.lesson&&t.lesson.steps&&t.lesson.steps.length?`<div class="cs-ex"><span class="lab">Example</span>${t.lesson.steps.map(s=>`<div>$${s[0]}$</div>`).join("")}</div>`:""}${t.lesson&&t.lesson.warn?`<div class="cs-warn"><span class="lab">Watch out</span>${t.lesson.warn}</div>`:""}</div>`).join("")}</div>
+    <div class="cs-foot">fangmath.com</div></div>`;
+  document.body.appendChild(m); render(m);
+  const close=()=>{ m.remove(); document.body.classList.remove("cs-printing"); };
+  m.querySelector("#csClose").onclick=close; m.onclick=e=>{ if(e.target===m) close(); };
+  m.querySelector("#csPrint").onclick=()=>{ document.body.classList.add("cs-printing"); window.print(); setTimeout(()=>document.body.classList.remove("cs-printing"),500); };
+  document.addEventListener("keydown",function esc(e){ if(e.key==="Escape"){ close(); document.removeEventListener("keydown",esc); } });
+}
+$("csBtn").onclick=cheatSheet;
+$("pNext").onclick=()=>{ if(RND.n>=RLEN) roundResult(); else newProblem(); }; $("closeP").onclick=()=>{ $("practice").hidden=true; };
+$("pHint").onclick=()=>{ if(done) return; firstTry=false; fb("hint","Hint",PR.hint); };
+$("pShow").onclick=()=>{ fb("hint","Solution",`$${PR.ansTex}$`+solHtml()); finish(false); };
+$("pAns").addEventListener("input",()=>{ const v=$("pAns").value.trim(),pv=$("pPrev"); if(!v||!window.katex){ pv.textContent=""; return; }
+  try{ let tex; const c=clean(v);
+    if(/<|>/.test(c)) tex=c.replace(/<=/g,"\\le ").replace(/>=/g,"\\ge ").replace(/\bor\b/gi,"\\text{ or }").replace(/\band\b/gi,"\\text{ and }");
+    else tex=c.split("=").map(x=>math.parse(x).toTex({parenthesis:"auto",implicit:"hide"})).join(" = ");
+    pv.innerHTML='<span class="pl">You wrote</span><span class="pm"></span>'; katex.render(tex,pv.querySelector(".pm"),{throwOnError:false}); }catch(e){ pv.textContent=""; } });
+
+/* ---- placement ---- */
+$("placeBtn").onclick=()=>{
+  const PL=[0,1,2,0,1].map((ti,k)=>[CH.topics[ti%CH.topics.length],k+1]); let i=0,res=[],pr;
+  const m=document.createElement("div"); m.className="modal"; m.innerHTML=`<div class="card"><div class="phead"><h2>Where should I start?</h2><button class="btn ghost sm" id="qx">Close</button></div><div class="qprog" id="qp"></div><div class="problem" id="qq"></div><div class="row" id="qr"><input id="qa" type="text" autocomplete="off" placeholder="Your answer" aria-label="Your answer"><button class="btn" id="qc">Check</button><button class="btn ghost" id="qs">I don't know</button></div><div class="howto" id="qh"></div><div id="qf"></div></div>`;
+  document.body.appendChild(m); const q=id=>m.querySelector("#"+id);
+  const prog=()=>{ q("qp").innerHTML=PL.map((_,k)=>`<i class="${k<res.length?(res[k]?"ok":"no"):k===i?"now":""}"></i>`).join(""); };
+  const ask=()=>{ const [t,lv]=PL[i]; pr=t.gen[lv-1](); q("qq").innerHTML=`<span class="label">Question ${i+1} of 5 · Level ${lv}</span><div>${pr.q}</div>`; render(q("qq")); q("qa").value=""; q("qh").textContent=HOW[pr.type]; q("qf").innerHTML=""; prog(); q("qa").focus(); };
+  const end=()=>{ const lvl=res.indexOf(false)===-1?5:res.indexOf(false)+1; st.rec=lvl; st.lvl=lvl; save(); recText(); topics(); prog();
+    q("qq").innerHTML=`<span class="label">Result</span><div>Start at <b style="color:${LEVELS[lvl-1].c}">Level ${lvl} · ${LEVELS[lvl-1].name}</b>.</div><div style="font-size:15px;color:var(--muted)">${lvl===5?"You answered every question correctly — go for Competition!":lvl===1?"Foundation builds the base everything else needs. Move up whenever you get 3 in a row.":"You got the first "+(lvl-1)+" level"+(lvl===2?"":"s")+" right. Level "+lvl+" is the right challenge for you."}</div>`;
+    q("qr").hidden=true; q("qh").textContent=""; q("qf").innerHTML=""; const b=document.createElement("button"); b.className="btn teal"; b.textContent="See the topics"; b.onclick=()=>m.remove(); q("qf").appendChild(b); };
+  const answer=r=>{ res.push(r); if(!r){ end(); return; } i++; i>=PL.length?end():ask(); };
+  q("qc").onclick=()=>{ const v=q("qa").value.trim(); if(!v) return; const r=check(pr,v); if(r===null){ q("qf").innerHTML=`<div class="fb hint">I couldn't read that. ${HOW[pr.type]}</div>`; return; } answer(r); };
+  q("qa").addEventListener("keydown",e=>{ if(e.key==="Enter"){ e.preventDefault(); q("qc").click(); } });
+  q("qs").onclick=()=>answer(false); q("qx").onclick=()=>m.remove(); m.addEventListener("click",e=>{ if(e.target===m) m.remove(); });
+  ask(); };
+
+/* ---- learn ---- */
+let LI=0, shown=1, TP=null, tDone=false, tTries=0;
+function road(){ const r=$("road"); r.innerHTML=""; const G=sections().find(g=>g.idx.includes(LI)); r.classList.toggle("single",!G||G.idx.length<2); secList(); CH.topics.forEach((t,i)=>{ const b=document.createElement("button"); b.type="button"; b.className="stop"+(st.learned[t.id]?" done":"")+(i===LI?" on":"")+(G&&!G.idx.includes(i)?" other":""); const sm=/^(\d+\.\d+) (.*)$/.exec(t.title); const tl=tlab(t); b.innerHTML=`<i>${st.learned[t.id]?"✓":tl.multi&&G&&G.idx.includes(i)?tl.k:sm?sm[1]:i+1}</i>${sm?sm[2]:t.title}`; b.onclick=()=>openLesson(i); r.appendChild(b); }); }
+function openLesson(i,scroll){ LI=i; shown=1; tDone=false; tTries=0; TP=null; road(); if($("topics")&&st){ const G=sections().find(g=>g.idx.includes(i)); if(T&&G&&!G.idx.includes(CH.topics.indexOf(T))) $("practice").hidden=true; topics(); } if(window.drawStory) drawStory(CH.id,CH.topics[i]); drawLesson(); if(scroll) ($("story")||$("lesson")).scrollIntoView({behavior:"smooth",block:"start"}); }
+function drawLesson(){
+  const t=CH.topics[LI], l=t.lesson, box=$("lesson");
+  const inl=false;
+  box.innerHTML=`<span class="label">${inl?`Part 2 of 2 · Name it with symbols`:tlab(t).multi?`${tlab(t).sec} · Part ${tlab(t).k} of ${tlab(t).n}`:`Lesson ${LI+1} of ${CH.topics.length}`}</span><h2>${inl?`Line, ray, segment or length?`:tlab(t).multi?tlab(t).part:t.title}</h2>${t.cc?`<div class="cctag">Common Core ${t.cc}</div>`:""}<div class="big">${t.idea}</div>${l.fig||""}<span class="label">👀 Watch me — simplest example</span><p class="watch">I'll solve it one step at a time. Read each step and think about <b>why</b>. When it makes sense, press <b>Got it — next step</b>.</p><ol class="steps">${l.steps.slice(0,shown).map(s=>`<li><div><div class="m">$${s[0]}$</div><div class="w">${s[1]}</div></div></li>`).join("")}</ol>`;
+  if(shown<l.steps.length){ const b=document.createElement("button"); b.className="btn"; b.style.alignSelf="flex-start"; b.textContent="Got it — next step →"; b.onclick=()=>{ shown++; drawLesson(); }; box.appendChild(b);
+    const s=document.createElement("button"); s.className="btn ghost sm"; s.style.alignSelf="flex-start"; s.textContent="Show all steps at once"; s.onclick=()=>{ shown=l.steps.length; drawLesson(); }; box.appendChild(s); }
+  else {
+    box.insertAdjacentHTML("beforeend",`<div class="warn"><b>Watch out: </b>${l.warn}</div>`);
+    if(l.more) box.insertAdjacentHTML("beforeend",`<span class="label">🧩 More examples — test level &amp; Common Core</span>`+l.more.map((e,j)=>`<div class="mex"><span class="label">${e.tag||("Example "+(j+2))}</span><div class="q">${e.q}</div><ol class="steps">${e.steps.map(s=>`<li><div><div class="m">$${s[0]}$</div><div class="w">${s[1]}</div></div></li>`).join("")}</ol>${e.note?`<div class="warn"><b>Why it matters: </b>${e.note}</div>`:""}</div>`).join(""));
+    if(!TP) TP=t.gen[0]();
+    const w=document.createElement("div"); w.className="turn";
+    w.innerHTML=`<span class="label" style="color:var(--gold)">Your turn</span><div class="q">${TP.q}</div><div class="row"><input type="text" id="tAns" autocomplete="off" placeholder="Your answer" aria-label="Your answer"><button class="btn" id="tChk">Check</button><button class="btn ghost" id="tHint">Hint</button></div><div class="howto">${HOW[TP.type]}</div><div id="tFb"></div>`;
+    box.appendChild(w);
+    const nav=document.createElement("div"); nav.className="lnav"; const left=document.createElement("div"); left.className="row";
+    if(LI>0){ const pv=document.createElement("button"); pv.className="btn ghost sm"; pv.textContent="← Previous lesson"; pv.onclick=()=>openLesson(LI-1,true); left.appendChild(pv); }
+    const right=document.createElement("div"); right.className="row"; right.id="tNext"; nav.append(left,right); box.appendChild(nav);
+    const fbx=(k,tag,h)=>{ $("tFb").innerHTML=`<div class="fb ${k}"><span class="tag">${tag}</span>${h}</div>`; render($("tFb")); };
+    const win=()=>{ tDone=true; st.learned[t.id]=true; save(); road(); $("tAns").disabled=true; $("tChk").disabled=true; $("tHint").disabled=true; showNext(); };
+    const go=()=>{ if(tDone) return; const v=$("tAns").value.trim(); if(!v) return; const r=check(TP,v);
+      if(r===null){ fbx("hint","Try again","I couldn't read that. "+HOW[TP.type]); return; }
+      if(r){ fbx("good","Correct — you've got it!",`$${TP.ansTex}$`); win(); return; }
+      tTries++; if(tTries<2) fbx("bad","Not yet",TP.hint+" Try again."); else { fbx("hint","Answer",`$${TP.ansTex}$. Try another one to make sure.`); const a=document.createElement("button"); a.className="btn ghost sm"; a.textContent="Try another"; a.onclick=()=>{ TP=t.gen[0](); tTries=0; drawLesson(); }; $("tFb").appendChild(a); } };
+    $("tChk").onclick=go; $("tAns").addEventListener("keydown",e=>{ if(e.key==="Enter"){ e.preventDefault(); go(); } }); $("tHint").onclick=()=>fbx("hint","Hint",TP.hint);
+    if(st.learned[t.id]) showNext();
+  }
+  render(box);
+}
+function showNext(){ const r=$("tNext"); if(!r) return; r.innerHTML=""; const t=CH.topics[LI];
+  const pr=document.createElement("button"); pr.className="btn ghost sm"; pr.textContent="Practice this topic"; pr.onclick=()=>{ setTab("practice"); startPractice(t,st.level[t.id]||st.rec||1); }; r.appendChild(pr);
+  const n=document.createElement("button"); n.className="btn teal sm";
+  if(LI<CH.topics.length-1){ n.textContent="Next lesson →"; n.onclick=()=>openLesson(LI+1,true); } else { n.textContent="Start practicing →"; n.onclick=()=>{ setTab("practice"); window.scrollTo({top:0,behavior:"smooth"}); }; }
+  r.appendChild(n); }
+function setTab(t){ $("learnView").hidden=t!=="learn"; $("practiceView").hidden=t!=="practice"; $("tabLearn").classList.toggle("on",t==="learn"); $("tabPractice").classList.toggle("on",t==="practice"); try{ history.replaceState(null,"","#"+CH.id+"-"+t); }catch(e){} }
+function openChapter(id,tab){
+  useChapter(id); $("chTitle").textContent="Unit "+ALLCH.find(c=>c[2]===CH.id)[0]+": "+CH.title; $("practice").hidden=true;
+  chapters(); recText(); topics(); const first=CH.topics.findIndex(t=>!st.learned[t.id]); openLesson(first<0?0:first);
+  setTab(tab||(first<0?"practice":"learn")); }
+document.addEventListener("click",e=>{ const d=e.target.closest(".mc > div"); if(!d) return; const card=d.closest(".practice, .turn, .modal .card"); const inp=card&&card.querySelector("input[type=text]"); if(inp&&!inp.disabled){ inp.value=d.querySelector("b").textContent.trim()[0]; inp.focus(); d.parentElement.querySelectorAll("div").forEach(x=>x.classList.toggle("sel",x===d)); } });
+$("tabLearn").onclick=()=>setTab("learn"); $("tabPractice").onclick=()=>setTab("practice");
+window.addEventListener("load",()=>{ legend(); const m=/^#(ch\d+)(?:-(learn|practice))?$/.exec(location.hash); openChapter(m?m[1]:ST.cur,m?m[2]:null); });
+</script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="../mistakes.js"></script>
+<script src="fm-levels-bridge.js?v=20261102s"></script>
+<script src="fm-study.js?v=20261102s"></script>
+</body>
+</html>

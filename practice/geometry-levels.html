@@ -173,6 +173,8 @@ footer{text-align:center;color:var(--faint);font-size:13px;padding:24px}
 #pLevels{display:none}
 .topic .tgo{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
 .topic .tgo small{color:var(--muted);font-size:13px}
+.cctag{display:block;width:fit-content;margin:2px 0 6px;font-size:12px;font-weight:600;letter-spacing:.03em;color:var(--teal);background:var(--teal-soft);border-radius:999px;padding:3px 10px}
+.mex{border:1px solid var(--line);border-radius:14px;padding:12px 14px;margin:10px 0;background:#fff}.mex .q{font-size:17px;margin:4px 0 6px}.mex .label{color:var(--green)}
 .watch{margin:-4px 0 4px;font-size:14px;color:var(--muted)} .watch b{color:var(--ink)}
 .pf-head{font-size:15px;line-height:1.7;margin-bottom:8px}
 .proof{border-collapse:collapse;width:100%;max-width:640px;margin:4px 0 10px;font-size:15px;background:#fff}
@@ -1204,6 +1206,42 @@ add("ch12",{id:"model",title:"12.5 Cavalieri, Density & Design",cc:"G-GMD.1, G-M
 
 })();
 
+/* ================= DEEPER LESSONS: Common Core tags + "More examples" (test level and Common Core reasoning) =================
+   Merged into each lesson by id. Example 2 is a typical test question; Example 3 asks for reasoning, a proof idea or a real application. */
+const LESSON_PLUS={
+ ch1:{
+  segadd:{cc:"G-CO.1, G-CO.9",more:[
+   {tag:"Example 2 · Test level",q:"$B$ is between $A$ and $C$. $AB = 2x + 3$, $BC = 3x - 1$ and $AC = 27$. Find $x$, $AB$ and $BC$.",steps:[["AB + BC = AC","Part + part = whole."],["(2x + 3) + (3x - 1) = 27","Substitute the expressions."],["5x + 2 = 27 \\Rightarrow x = 5","Combine like terms and solve."],["AB = 13,\\ BC = 14","Check: $13 + 14 = 27$ ✓"]]},
+   {tag:"Example 3 · Reasoning",q:"$AB = 5$, $BC = 7$ and $AC = 10$. Is $B$ on $\\overline{AC}$?",steps:[["\\text{If } B \\text{ were on } \\overline{AC}:\\ AB + BC = AC","That is what the postulate promises."],["5 + 7 = 12 \\ne 10","The parts are longer than the whole."],["B \\text{ is not on } \\overline{AC}","$A$, $B$, $C$ form a triangle instead."]],note:"The Segment Addition Postulate only works when the point is <b>between</b> the other two — always check that before you add."}]},
+  seg:{cc:"G-CO.1, G-GPE.6",more:[
+   {tag:"Example 2 · Test level",q:"$M$ is the midpoint of $\\overline{AB}$. $AM = 4x - 1$ and $MB = 2x + 9$. Find $AB$.",steps:[["AM = MB","A midpoint makes two equal halves."],["4x - 1 = 2x + 9 \\Rightarrow x = 5","Solve."],["AM = 19","Plug back in."],["AB = 2 \\cdot 19 = 38","The whole is twice a half."]]},
+   {tag:"Example 3 · Coordinates",q:"$M(3, -1)$ is the midpoint of $\\overline{AB}$ and $A(7, 4)$. Find $B$.",steps:[["A \\to M:\\ \\Delta x = -4,\\ \\Delta y = -5","How you walk from $A$ to the middle."],["M \\to B:\\ \\text{the same walk}","The second half is equal to the first."],["B = (3 - 4,\\ -1 - 5) = (-1, -6)","Check: the midpoint of $(7, 4)$ and $(-1, -6)$ is $(3, -1)$ ✓"]]}]},
+  dist:{cc:"G-GPE.7",more:[
+   {tag:"Example 2 · Test level",q:"Find the perimeter of $\\triangle ABC$ with $A(0, 0)$, $B(6, 0)$, $C(6, 8)$.",steps:[["AB = 6,\\ BC = 8","Horizontal and vertical sides: just count."],["AC = \\sqrt{6^2 + 8^2} = 10","The slanted side needs the Distance Formula."],["P = 6 + 8 + 10 = 24","Add the three sides."]]},
+   {tag:"Example 3 · Prove it",q:"Show that $A(1, 1)$, $B(4, 5)$, $C(8, 2)$ form an isosceles right triangle.",steps:[["AB = \\sqrt{3^2 + 4^2} = 5,\\ BC = \\sqrt{4^2 + 3^2} = 5","Two equal sides: isosceles."],["AC = \\sqrt{7^2 + 1^2} = \\sqrt{50}","The third side."],["5^2 + 5^2 = 50 = (\\sqrt{50})^2","The converse of the Pythagorean Theorem: a right angle at $B$."]],note:"That is a <b>coordinate proof</b> — numbers, not a picture, show the triangle is isosceles and right."}]},
+  part:{more:[
+   {tag:"Example 2 · Test level",q:"$A(-2, 5)$ and $B(6, -3)$. Find $P$ with $AP:PB = 3:1$.",steps:[["\\tfrac{3}{3+1} = \\tfrac34","$P$ is $\\tfrac34$ of the way from $A$."],["\\Delta x = 8,\\ \\Delta y = -8 \\Rightarrow \\tfrac34:\\ 6,\\ -6","Take $\\tfrac34$ of each change."],["P = (-2 + 6,\\ 5 - 6) = (4, -1)","Add to $A$."]]},
+   {tag:"Example 3 · Application",q:"A trail goes straight from a trailhead $A(0, 0)$ to a lake $B(12, 9)$ (in km). A ranger station is twice as far from the trailhead as from the lake. Where is it?",steps:[["AP = 2 \\cdot PB \\Rightarrow AP:PB = 2:1","Translate the words into a ratio."],["\\tfrac{2}{3} \\text{ of } (12, 9) = (8, 6)","$\\tfrac23$ of the way from $A$."],["P = (8, 6)","Check: $AP = 10$, $PB = 5$ ✓"]]}]},
+  coordpa:{cc:"G-GPE.7",more:[
+   {tag:"Example 2 · Test level",q:"Find the area of the triangle with vertices $(-2, 1)$, $(4, 1)$, $(1, 6)$.",steps:[["\\text{base: } 4 - (-2) = 6","The bottom side is horizontal."],["\\text{height: } 6 - 1 = 5","Straight up from the base to the top vertex."],["A = \\tfrac12 \\cdot 6 \\cdot 5 = 15","Half of base times height."]]},
+   {tag:"Example 3 · Slanted sides",q:"$A(0, 0)$, $B(4, 3)$, $C(1, 7)$, $D(-3, 4)$. Find the area of $ABCD$.",steps:[["AB = \\sqrt{4^2 + 3^2} = 5,\\ BC = \\sqrt{3^2 + 4^2} = 5","All sides turn out to be $5$."],["m_{AB} = \\tfrac34,\\ m_{BC} = -\\tfrac43","Slopes multiply to $-1$: a right angle."],["\\text{square: } A = 5^2 = 25","Prove the shape first, then use its area formula."]],note:"When the sides are slanted, use the Distance Formula for the lengths and slopes to check right angles."}]},
+  angm:{cc:"G-CO.1",more:[
+   {tag:"Example 2 · Test level",q:"$D$ is in the interior of $\\angle ABC$. $m\\angle ABD = (3x + 5)^\\circ$, $m\\angle DBC = (2x)^\\circ$ and $m\\angle ABC = 95^\\circ$. Find $m\\angle ABD$.",steps:[["m\\angle ABD + m\\angle DBC = m\\angle ABC","Angle Addition Postulate."],["3x + 5 + 2x = 95 \\Rightarrow x = 18","Solve."],["m\\angle ABD = 3(18) + 5 = 59^\\circ","Plug in. Check: $59 + 36 = 95$ ✓"]]},
+   {tag:"Example 3 · Angle bisector",q:"$\\overrightarrow{BD}$ bisects $\\angle ABC$. $m\\angle ABD = (4x - 8)^\\circ$ and $m\\angle DBC = (x + 19)^\\circ$. Find $m\\angle ABC$ and classify it.",steps:[["m\\angle ABD = m\\angle DBC","A bisector makes two equal angles."],["4x - 8 = x + 19 \\Rightarrow x = 9","Solve."],["m\\angle ABC = 2(28) = 56^\\circ","Each half is $28^\\circ$."],["56^\\circ < 90^\\circ \\Rightarrow \\text{acute}","Classify by size."]]}]},
+  ang:{cc:"G-CO.9",more:[
+   {tag:"Example 2 · Test level",q:"Two vertical angles measure $(5x - 10)^\\circ$ and $(3x + 20)^\\circ$. Find each angle.",steps:[["5x - 10 = 3x + 20","Vertical angles are congruent."],["x = 15","Solve."],["5(15) - 10 = 65^\\circ","Both angles are $65^\\circ$."]]},
+   {tag:"Example 3 · Why it's true",q:"Explain why vertical angles $\\angle 1$ and $\\angle 3$ are always congruent.",steps:[["m\\angle 1 + m\\angle 2 = 180^\\circ","$\\angle 1$ and $\\angle 2$ form a linear pair."],["m\\angle 3 + m\\angle 2 = 180^\\circ","So do $\\angle 3$ and $\\angle 2$."],["m\\angle 1 = 180^\\circ - m\\angle 2 = m\\angle 3","Both equal the same thing."]],note:"This short argument is the <b>Vertical Angles Theorem</b> — you will write it as a two-column proof in 2.6."}]},
+  constr:{cc:"G-CO.12",more:[
+   {tag:"Example 2 · Why it works",q:"Why does the perpendicular bisector construction find the midpoint of $\\overline{AB}$?",steps:[["\\text{Same compass width from } A \\text{ and from } B","Each arc point $P$, $Q$ has $PA = PB$ and $QA = QB$."],["P, Q \\text{ are equidistant from } A, B","Every point equidistant from $A$ and $B$ is on the perpendicular bisector."],["\\overleftrightarrow{PQ} \\text{ is the perpendicular bisector}","It crosses $\\overline{AB}$ at the midpoint, at a right angle."]]},
+   {tag:"Example 3 · Copy an angle",q:"Copy $\\angle A$ onto a ray starting at $D$.",steps:[["\\text{Arc from } A \\text{ crosses both sides at } B, C","Same arc from $D$ crosses the ray at $E$."],["\\text{Measure } BC \\text{ with the compass}","Swing that width from $E$ to get $F$."],["\\text{Draw } \\overrightarrow{DF}:\\ \\angle EDF \\cong \\angle BAC","$\\triangle ABC \\cong \\triangle DEF$ by SSS, so the angles match."]],note:"Every construction is secretly a congruence proof — usually SSS."}]},
+  constrc:{more:[
+   {tag:"Example 2 · Test level",q:"A square is inscribed in a circle of radius $6$. Find the side of the square.",steps:[["\\text{diagonal} = \\text{diameter} = 12","The square's diagonals are diameters."],["s\\sqrt2 = 12","A square's diagonal is $s\\sqrt2$."],["s = \\tfrac{12}{\\sqrt2} = 6\\sqrt2","Rationalize."]]},
+   {tag:"Example 3 · Why it works",q:"Why is the side of an inscribed regular hexagon equal to the radius?",steps:[["6 \\text{ central angles: } 360^\\circ \\div 6 = 60^\\circ","Join the center to each vertex."],["\\text{Each triangle has two radii} \\Rightarrow \\text{isosceles}","So its base angles are equal: $(180 - 60) \\div 2 = 60^\\circ$."],["\\text{All angles } 60^\\circ \\Rightarrow \\text{equilateral}","So the hexagon side equals the radius."]]}]}
+ }
+};
+Object.entries(LESSON_PLUS).forEach(([cid,M])=>{ const c=CHAPTERS.find(x=>x.id===cid); if(!c) return;
+  c.topics.forEach(t=>{ const x=M[t.id]; if(!x) return; if(x.cc&&!t.cc) t.cc=x.cc; if(x.more) t.lesson.more=x.more; }); });
+
 CHAPTERS.forEach(c=>{ const k=t=>{ const m=/^\d+\.(\d+) /.exec(t.title); return m?+m[1]:99; }; c.topics.sort((x,y)=>k(x)-k(y)); });
 CHAPTERS.sort((a,b)=>Number(a.id.slice(2))-Number(b.id.slice(2)));
 const ALLCH=[[1,"Foundations of Geometry","ch1"],[2,"Reasoning & Proof","ch2"],[3,"Parallel & Perpendicular Lines","ch3"],[4,"Congruent Triangles","ch4"],[5,"Relationships Within Triangles","ch5"],[6,"Polygons & Quadrilaterals","ch6"],[7,"Similarity","ch7"],[8,"Right Triangles & Trigonometry","ch8"],[9,"Transformations","ch9"],[10,"Circles","ch10"],[11,"Area","ch11"],[12,"Surface Area & Volume","ch12"],[13,"Probability","ch13"]];
@@ -1472,14 +1510,19 @@ function drawLesson(){
   const inl=window.GEOMETRY_WORDS&&GEOMETRY_WORDS[CH.id]&&GEOMETRY_WORDS[CH.id].inLesson===t.id;   // e.g. 1.1: the words card above IS the lesson
   box.hidden=!!inl; if(inl) return;
   /* like 1.1: the lesson is shown in small steps — ① The idea → ② Watch me → ③ Your turn — with Next at the bottom */
-  const SUB=[["The idea","💡"],["Watch me","👀"],["Your turn","✏️"]];
-  const head=`<span class="label">${tlab(t).multi?`${tlab(t).sec} · Part ${tlab(t).k} of ${tlab(t).n}`:`Lesson ${LI+1} of ${CH.topics.length}`}</span><h2>${tlab(t).multi?tlab(t).part:t.title}</h2>
+  const KINDS=["idea","watch"].concat(l.more&&l.more.length?["more"]:[]).concat(["turn"]);
+  const SUBK={idea:["The idea","💡","The big idea"],watch:["Watch me","👀","Watch me — simplest example"],more:["More examples","🧩","More examples — test level & Common Core"],turn:["Your turn","✏️","Your turn — try one yourself"]};
+  if(LSTEP>=KINDS.length) LSTEP=KINDS.length-1;
+  const SUB=KINDS.map(k=>SUBK[k]), KIND=KINDS[LSTEP];
+  const head=`<span class="label">${tlab(t).multi?`${tlab(t).sec} · Part ${tlab(t).k} of ${tlab(t).n}`:`Lesson ${LI+1} of ${CH.topics.length}`}</span><h2>${tlab(t).multi?tlab(t).part:t.title}</h2>${t.cc?`<div class="cctag">Common Core ${t.cc}</div>`:""}
     <div class="wnav lsub" role="tablist">${SUB.map(([n],i)=>`<button type="button" role="tab" data-ls="${i}" class="${i===LSTEP?"on":""}${i<LSTEP?" past":""}" aria-selected="${i===LSTEP}"><i>${i+1}</i><span>${n}</span></button>`).join("")}</div>
-    <h4 class="lsubh"><span class="gn">${LSTEP+1}</span>${SUB[LSTEP][1]} ${LSTEP===0?"The big idea":LSTEP===1?"Watch me — simplest example":"Your turn — try one yourself"}</h4>`;
-  const foot=()=>{ const f=document.createElement("div"); f.className="wfoot"; f.innerHTML=`${LSTEP?`<button type="button" class="btn ghost sm" data-ls="${LSTEP-1}">← Back</button>`:"<span></span>"}<span class="wcount">${LSTEP+1} of 3</span>${LSTEP<2?`<button type="button" class="btn sm" data-ls="${LSTEP+1}">Next: ${SUB[LSTEP+1][0]} →</button>`:"<span></span>"}`; return f; };
-  const wire=()=>box.querySelectorAll("[data-ls]").forEach(b=>b.onclick=()=>{ LSTEP=+b.dataset.ls; if(LSTEP===1&&shown<1) shown=1; drawLesson(); box.scrollIntoView({behavior:"smooth",block:"start"}); });
-  if(LSTEP===0){ box.innerHTML=head+`<div class="big">${t.idea}</div>${l.fig||""}`; box.appendChild(foot()); wire(); render(box); return; }
-  if(LSTEP===1){ box.innerHTML=head+`<p class="watch">I'll solve it one step at a time. Read each step and think about <b>why</b>. When it makes sense, press <b>Got it — next step</b>.</p><ol class="steps">${l.steps.slice(0,shown).map(s=>`<li><div><div class="m">$${s[0]}$</div><div class="w">${s[1]}</div></div></li>`).join("")}</ol>`;
+    <h4 class="lsubh"><span class="gn">${LSTEP+1}</span>${SUB[LSTEP][1]} ${SUB[LSTEP][2]}</h4>`;
+  const foot=()=>{ const f=document.createElement("div"); f.className="wfoot"; f.innerHTML=`${LSTEP?`<button type="button" class="btn ghost sm" data-ls="${LSTEP-1}">← Back</button>`:"<span></span>"}<span class="wcount">${LSTEP+1} of ${KINDS.length}</span>${LSTEP<KINDS.length-1?`<button type="button" class="btn sm" data-ls="${LSTEP+1}">Next: ${SUB[LSTEP+1][0]} →</button>`:"<span></span>"}`; return f; };
+  const wire=()=>box.querySelectorAll("[data-ls]").forEach(b=>b.onclick=()=>{ LSTEP=+b.dataset.ls; if(KINDS[LSTEP]==="watch"&&shown<1) shown=1; drawLesson(); box.scrollIntoView({behavior:"smooth",block:"start"}); });
+  if(KIND==="idea"){ box.innerHTML=head+`<div class="big">${t.idea}</div>${l.fig||""}`; box.appendChild(foot()); wire(); render(box); return; }
+  if(KIND==="more"){ box.innerHTML=head+l.more.map((e,j)=>`<div class="mex"><span class="label">${e.tag||("Example "+(j+2))}</span><div class="q">${e.q}</div><ol class="steps">${e.steps.map(s=>`<li><div><div class="m">$${s[0]}$</div><div class="w">${s[1]}</div></div></li>`).join("")}</ol>${e.note?`<div class="warn"><b>Why it matters: </b>${e.note}</div>`:""}</div>`).join("");
+    box.appendChild(foot()); wire(); render(box); return; }
+  if(KIND==="watch"){ box.innerHTML=head+`<p class="watch">I'll solve it one step at a time. Read each step and think about <b>why</b>. When it makes sense, press <b>Got it — next step</b>.</p><ol class="steps">${l.steps.slice(0,shown).map(s=>`<li><div><div class="m">$${s[0]}$</div><div class="w">${s[1]}</div></div></li>`).join("")}</ol>`;
     if(shown<l.steps.length){ const b=document.createElement("button"); b.className="btn"; b.style.alignSelf="flex-start"; b.textContent="Got it — next step →"; b.onclick=()=>{ shown++; drawLesson(); }; box.appendChild(b);
       const s=document.createElement("button"); s.className="btn ghost sm"; s.style.alignSelf="flex-start"; s.textContent="Show all steps at once"; s.onclick=()=>{ shown=l.steps.length; drawLesson(); }; box.appendChild(s); }
     else box.insertAdjacentHTML("beforeend",`<div class="warn"><b>Watch out: </b>${l.warn}</div>`);

@@ -812,7 +812,16 @@
     const upd = () => { const vn = box.querySelector("#vocabN"); if (!vn) return; const n = box.querySelectorAll(".vocab input:checked").length; vn.textContent = `${n} of ${w.vocab.length} words ready${n === w.vocab.length ? " — great job! 🎉" : ""}`; };
     box.querySelectorAll(".vocab input").forEach(i => i.onchange = () => { const k = load(); k[chId] = [...box.querySelectorAll(".vocab input:checked")].map(x => x.value); save(k); upd(); });
     box.querySelectorAll(".defb").forEach(b => b.onclick = () => { const d = b.nextElementSibling; d.hidden = !d.hidden; b.textContent = d.hidden ? "Show the definition ▾" : "Hide the definition ▴"; });
-    box.querySelectorAll(".tries .tq").forEach(el => { const gi = +el.closest(".tries").dataset.g, tr = w.groups ? w.groups[gi].tries : w.tries, t = tr.qs[+el.dataset.q], sel = Array(t.n).fill(null);
+    wireTries(box, gi => w.groups ? w.groups[gi].tries : w.tries);
+    box.querySelectorAll(".qc button").forEach(b => b.onclick = () => { const a = b.nextElementSibling; a.hidden = !a.hidden; b.textContent = a.hidden ? "Show answer" : "Hide"; });
+    if (!target) box.addEventListener("toggle", e => { if (e.target !== box) return; const k = load(); k["_seen_" + chId] = !box.open; save(k); });
+    const more = box.querySelector(".wmore"); if (more) more.addEventListener("toggle", () => box.querySelectorAll(".tg").forEach(t => t.hidden = !more.open));
+    upd();
+    if (window.renderMathInElement) renderMathInElement(box, { delimiters: [{ left: "$", right: "$", display: false }], throwOnError: false });
+    else setTimeout(() => draw(chId), 300);
+  }
+  function wireTries(box, trOf) {
+    box.querySelectorAll(".tries .tq").forEach(el => { const gi = +el.closest(".tries").dataset.g, tr = trOf(gi), t = tr.qs[+el.dataset.q], sel = Array(t.n).fill(null);
       el.querySelectorAll(".dd").forEach(dd => { const b = dd.querySelector(".ddb"), m = dd.querySelector(".ddm");
         b.onclick = () => { box.querySelectorAll(".ddm").forEach(x => { if (x !== m) x.hidden = true; }); m.hidden = !m.hidden;
           if (!m.hidden) { m.classList.remove("up"); const r = m.getBoundingClientRect(); if (r.bottom > innerHeight - 8 && b.getBoundingClientRect().top > r.height + 8) m.classList.add("up"); } };
@@ -821,13 +830,17 @@
         if (sel.some(x => !x)) { fb.innerHTML = `<div class="fb hint"><span class="tag">Choose first</span>Pick ${t.n > 1 ? "both answers" : "an answer"} from the menu.</div>`; return; }
         const good = t.ok(sel); fb.innerHTML = `<div class="fb ${good ? "good" : "bad"}"><span class="tag">${good ? "Correct!" : "Not yet"}</span>${good ? "" : "Check your paper again. "}${t.sol}</div>`;
         if (window.renderMathInElement) renderMathInElement(fb, { delimiters: [{ left: "$", right: "$", display: false }], throwOnError: false }); }; });
-    box.querySelectorAll(".qc button").forEach(b => b.onclick = () => { const a = b.nextElementSibling; a.hidden = !a.hidden; b.textContent = a.hidden ? "Show answer" : "Hide"; });
-    if (!target) box.addEventListener("toggle", e => { if (e.target !== box) return; const k = load(); k["_seen_" + chId] = !box.open; save(k); });
-    const more = box.querySelector(".wmore"); if (more) more.addEventListener("toggle", () => box.querySelectorAll(".tg").forEach(t => t.hidden = !more.open));
-    upd();
-    if (window.renderMathInElement) renderMathInElement(box, { delimiters: [{ left: "$", right: "$", display: false }], throwOnError: false });
-    else setTimeout(() => draw(chId), 300);
   }
+
+  /* ---------- per-section lesson content (like 1.1): See it → Say it → Write it cards, then paper-first questions ----------
+     WORDS[ch].sec[topicId] = { cards: [index into WORDS[ch].cards | card object], qs: [Q1(...)], fig } — used by drawLesson */
+  const secOf = (chId, tid) => { const w = WORDS[chId], x = w && w.sec && w.sec[tid]; return x ? { x, w } : null; };
+  window.geoSecCards = (chId, tid) => { const o = secOf(chId, tid); if (!o) return "";
+    return `<div class="wgroup lsec"><h4 class="lsech">See it → Say it → Write it</h4><p class="wsub">Read each card. Picture it, say it in your own words, then press <b>Show the definition</b> and write it down.</p><div class="wgrid">${o.x.cards.map(c => cardHtml(typeof c === "number" ? o.w.cards[c] : c, true)).join("")}</div></div>`; };
+  window.geoSecTries = (chId, tid) => { const o = secOf(chId, tid); return o && o.x.qs ? triesHtml({ fig: o.x.fig || "", qs: o.x.qs }, 0) : ""; };
+  window.geoSecWire = (box, chId, tid) => { const o = secOf(chId, tid); if (!o) return;
+    box.querySelectorAll(".defb").forEach(b => b.onclick = () => { const d = b.nextElementSibling; d.hidden = !d.hidden; b.textContent = d.hidden ? "Show the definition ▾" : "Hide the definition ▴"; });
+    wireTries(box, () => ({ fig: o.x.fig || "", qs: o.x.qs })); };
 
 
   /* =====================================================================
@@ -986,5 +999,73 @@
     const orig = openChapter;
     window.openChapter = function (id, tab) { const r = orig.apply(this, arguments); try { draw(id); drawStudy(id); } catch (e) { console.warn("words", e); } return r; };
   }
+
+  /* =====================================================================
+     CHAPTER 2 — section by section (1.1 style)
+     ===================================================================== */
+  const lab = (x, y, t, c = ink, sz = 14) => `<text x="${x}" y="${y}" text-anchor="middle" font-family="Inter,sans-serif" font-size="${sz}" font-weight="700" fill="${c}">${t}</text>`;
+  const sq = (x0, n) => { let o = ""; for (let i = 0; i < n; i++) for (let j = 0; j < n; j++) o += `<circle cx="${x0 + i * 12}" cy="${56 - j * 12}" r="4" fill="${teal}"/>`; return o; };
+  Object.assign(PIC, {
+    dots: svg(`${sq(18, 1)}${sq(50, 2)}${sq(94, 3)}${lab(150, 50, "→", "#94A3B8", 18)}${lab(195, 50, "?", red, 22)}${lab(18, 14, "1", "#64748B", 11)}${lab(56, 14, "4", "#64748B", 11)}${lab(106, 14, "9", "#64748B", 11)}`, "1, 4, 9 dots in squares, then ?"),
+    vert: svg(`<line x1="20" y1="8" x2="210" y2="64" stroke="${teal}" stroke-width="3"/><line x1="20" y1="64" x2="210" y2="8" stroke="#6A4BD8" stroke-width="3"/>${lab(80, 41, "1")}${lab(115, 22, "2")}${lab(150, 41, "3")}${lab(115, 62, "4")}`, "two crossing lines make angles 1, 2, 3, 4"),
+    lpair: svg(`<line x1="12" y1="58" x2="218" y2="58" stroke="${teal}" stroke-width="3" marker-start="url(#wa)" marker-end="url(#wa)"/><line x1="115" y1="58" x2="168" y2="8" stroke="#6A4BD8" stroke-width="3" marker-end="url(#wa)"/>${lab(160, 50, "1")}${lab(92, 50, "2")}${lab(55, 22, "∠1 + ∠2 = 180°", red, 12)}`, "a linear pair: angles 1 and 2 on a straight line"),
+    comp: svg(`<line x1="40" y1="62" x2="214" y2="62" stroke="${teal}" stroke-width="3" marker-end="url(#wa)"/><line x1="40" y1="62" x2="40" y2="6" stroke="${teal}" stroke-width="3" marker-end="url(#wa)"/><line x1="40" y1="62" x2="160" y2="12" stroke="#6A4BD8" stroke-width="3" marker-end="url(#wa)"/><path d="M40,52 H50 V62" fill="none" stroke="${red}" stroke-width="2"/>${lab(96, 56, "1")}${lab(60, 30, "2")}${lab(178, 50, "∠1 + ∠2 = 90°", red, 12)}`, "a right angle split into angles 1 and 2"),
+    tcol: svg(`<rect x="20" y="6" width="190" height="60" rx="6" fill="#fff" stroke="${teal}" stroke-width="2"/><line x1="115" y1="6" x2="115" y2="66" stroke="${teal}" stroke-width="2"/><line x1="20" y1="24" x2="210" y2="24" stroke="${teal}" stroke-width="2"/>${lab(67, 19, "Statements", teal, 12)}${lab(162, 19, "Reasons", teal, 12)}${lab(67, 41, "1. AM = MB", ink, 11)}${lab(162, 41, "Def. of midpoint", ink, 11)}${lab(67, 59, "2. …", ink, 11)}${lab(162, 59, "…", ink, 11)}`, "a two-column proof: statements and reasons"),
+    diag: svg(`<line x1="20" y1="60" x2="120" y2="10" stroke="${teal}" stroke-width="3"/><line x1="120" y1="10" x2="215" y2="60" stroke="${teal}" stroke-width="3"/><line x1="20" y1="60" x2="215" y2="60" stroke="${teal}" stroke-width="3"/>${tick([20, 60], [120, 10])}${tick([120, 10], [215, 60])}<path d="M120,60 V50" stroke="#94A3B8" stroke-width="1.5" stroke-dasharray="3 3"/>`, "a triangle with tick marks on two equal sides")
+  });
+
+  WORDS.ch2.sec = {
+    pat: { cards: [
+        { k: "dots", t: "Pattern", see: "1, 4, 9, … dots arranged in squares. What comes next?", say: "Look at how each term <b>changes</b> from the one before: do you add the same amount? multiply? square?", write: "Write the rule in words, then use it: next is $4 \\times 4 = 16$ dots." },
+        4, 3 ],
+      qs: [
+        Q1("Find the next term: $3, 7, 11, 15, \\ldots$", "19", ["18", "21", "23"], "Each term is $4$ more than the one before: $15 + 4 = 19$."),
+        Q1("Find the next term: $2, 6, 18, 54, \\ldots$", "162", ["58", "108", "216"], "Each term is $3$ <b>times</b> the one before: $54 \\times 3 = 162$."),
+        Q1("Conjecture: “The sum of two odd numbers is odd.” Which is a <b>counterexample</b>?", "3 + 5 = 8", ["2 + 4 = 6", "3 + 6 = 9", "1 + 2 = 3"], "$3$ and $5$ are both odd, but $8$ is even — one example breaks the conjecture. (In fact odd + odd is <b>always</b> even.)")
+      ] },
+    cond: { cards: [7, 0, 1, 2],
+      qs: [
+        Q1("“If two angles are vertical, then they are congruent.” What is the <b>conclusion</b>?", TX("they are congruent"), [TX("two angles are vertical"), TX("they are not congruent"), TX("they are vertical")], "The conclusion is the part after <b>then</b>."),
+        Q1("Which is the <b>inverse</b> of “If it rains, then the game is canceled”?", TX("If it does not rain, then the game is not canceled."), [TX("If the game is canceled, then it rains."), TX("If the game is not canceled, then it does not rain."), TX("If it rains, then the game is not canceled.")], "The inverse <b>negates</b> both parts but does not swap them."),
+        Q1("“If $x = 3$, then $x^2 = 9$.” Is the <b>converse</b> true?", TX("No, x could be −3"), [TX("Yes, always"), TX("No, 3² is not 9"), TX("It is not a statement")], "Converse: “If $x^2 = 9$, then $x = 3$.” False — $x = -3$ is a counterexample.")
+      ] },
+    post: { cards: [
+        { k: "plane", t: "Postulate", see: "The rules of a game that everyone agrees on before playing.", say: "A statement we <b>accept as true without proof</b>. Theorems are proven from postulates.", write: "Example: through any two points there is <b>exactly one</b> line." },
+        { k: "diag", t: "Reading a diagram", see: "A map shows which roads meet — but you can't measure distances off a sketch.", say: "You <b>may</b> assume what you see about <b>position</b>: collinear points, lines that cross, a point between two others. You may <b>not</b> assume sizes — equal lengths, right angles, parallel lines — unless they are <b>marked</b>.", write: "Tick marks = congruent. A small square = right angle. Arrowheads on lines = parallel." },
+        5 ],
+      qs: [
+        Q1("How many lines pass through two points $A$ and $B$?", "1", ["0", "2", TX("infinitely many")], "Two-Point Postulate: <b>exactly one</b> line."),
+        Q1("Two different planes intersect. Their intersection is a…", TX("line"), [TX("point"), TX("plane"), TX("segment")], "Think of a wall meeting the floor: a <b>line</b>."),
+        Q1("In a diagram with <b>no marks</b>, two segments look the same length. Are they congruent?", TX("Can't assume it"), [TX("Yes, they look equal"), TX("No, never"), TX("Yes, if they meet")], "Only marks (tick marks) or given information tell you sizes. Looks can lie.")
+      ] },
+    proof: { cards: [
+        { t: "Properties of equality", see: "A balance scale: put the same weight on both pans and it stays level.", say: "The <b>Addition, Subtraction, Multiplication</b> and <b>Division</b> Properties: do the same thing to <b>both sides</b>. They become your <b>reasons</b> when you solve.", write: "If $a = b$, then $a + c = b + c$ (Addition Property)." },
+        { t: "Reflexive, Symmetric, Transitive", see: "A mirror (Reflexive). Swapping seats (Symmetric). Mia = Leo and Leo = Ava in height, so Mia = Ava (Transitive).", say: "$a = a$. If $a = b$, then $b = a$. If $a = b$ and $b = c$, then $a = c$.", write: "They work for <b>congruence</b> too: $\\overline{AB} \\cong \\overline{AB}$ (Reflexive)." },
+        { t: "Substitution & Distributive", see: "Trade a \\$5 bill for five \\$1 bills — same value.", say: "<b>Substitution</b>: if $a = b$, you may replace $a$ with $b$. <b>Distributive</b>: $a(b + c) = ab + ac$.", write: "$2(x + 3) = 14 \\Rightarrow 2x + 6 = 14$ (Distributive Property)." } ],
+      qs: [
+        Q1("$3x - 4 = 11$, so $3x = 15$. What is the reason?", TX("Addition Property of Equality"), [TX("Subtraction Property of Equality"), TX("Division Property of Equality"), TX("Distributive Property")], "You <b>added</b> $4$ to both sides."),
+        Q1("$3x = 15$, so $x = 5$. What is the reason?", TX("Division Property of Equality"), [TX("Multiplication Property of Equality"), TX("Subtraction Property of Equality"), TX("Symmetric Property")], "You <b>divided</b> both sides by $3$."),
+        Q1("If $AB = CD$ and $CD = EF$, then $AB = EF$. Which property?", TX("Transitive Property"), [TX("Symmetric Property"), TX("Reflexive Property"), TX("Distributive Property")], "A chain: $AB = CD = EF$. That's <b>Transitive</b>.")
+      ] },
+    tcp: { cards: [6,
+        { k: "tcol", t: "Two-column proof", see: "A recipe card: each step on the left, <b>why</b> it works on the right.", say: "Start from the <b>Given</b> and end with what you want to <b>Prove</b>. Every statement needs a reason: given, definition, property, postulate or theorem.", write: "<b>Statements</b> | <b>Reasons</b>. The first line is usually “Given.”" },
+        { t: "Definitions as reasons", see: "“Midpoint” means two equal halves — so if $M$ is the midpoint, you may write $AM = MB$.", say: "Every definition is a biconditional, so it works <b>both ways</b> and can be used as a reason.", write: "$M$ is the midpoint of $\\overline{AB}$ → $AM = MB$ (Definition of midpoint)." } ],
+      qs: [
+        Q1("What is the reason for the <b>first line</b> of most proofs?", TX("Given"), [TX("Prove"), TX("Reflexive Property"), TX("Definition of midpoint")], "You start from what you are told: <b>Given</b>."),
+        Q1("$M$ is the midpoint of $\\overline{AB}$, so $AM = MB$. What is the reason?", TX("Definition of midpoint"), [TX("Segment Addition Postulate"), TX("Symmetric Property"), TX("Given")], "That's exactly what “midpoint” means."),
+        Q1("$B$ is between $A$ and $C$, so $AB + BC = AC$. What is the reason?", TX("Segment Addition Postulate"), [TX("Definition of midpoint"), TX("Transitive Property"), TX("Angle Addition Postulate")], "Two pieces of a segment add up to the whole: <b>Segment Addition</b>.")
+      ] },
+    angp: { cards: [
+        { k: "vert", t: "Vertical angles", see: "Cross two pencils: the opposite angles always match.", say: "Two angles <b>opposite</b> each other where two lines cross. <b>Vertical angles are congruent.</b>", write: "$\\angle 1 \\cong \\angle 3$ and $\\angle 2 \\cong \\angle 4$ (Vertical Angles Theorem)." },
+        { k: "lpair", t: "Linear pair", see: "A door opened part-way against a straight wall: the two angles fill a straight line.", say: "Two angles side by side whose outer sides form a <b>straight line</b>. They are <b>supplementary</b>.", write: "$m\\angle 1 + m\\angle 2 = 180^\\circ$ (Linear Pair Postulate)." },
+        { k: "comp", t: "Complements & supplements", see: "The corner of a page ($90^\\circ$) cut into two pieces.", say: "<b>Complementary</b> angles add to $90^\\circ$. <b>Supplementary</b> angles add to $180^\\circ$. Two angles that are complements (or supplements) of the <b>same</b> angle are congruent.", write: "The complement of $35^\\circ$ is $55^\\circ$; the supplement is $145^\\circ$." } ],
+      fig: PIC.vert,
+      qs: [
+        Q1("In the picture, $m\\angle 1 = 72^\\circ$. Find $m\\angle 3$.", DG(72), [DG(108), DG(18), DG(144)], "$\\angle 1$ and $\\angle 3$ are <b>vertical</b>, so they are congruent."),
+        Q1("$m\\angle 1 = 72^\\circ$. Find $m\\angle 2$.", DG(108), [DG(72), DG(18), DG(98)], "$\\angle 1$ and $\\angle 2$ form a <b>linear pair</b>: $180 - 72 = 108$."),
+        Q1("What is the <b>supplement</b> of a $35^\\circ$ angle?", DG(145), [DG(55), DG(35), DG(325)], "Supplements add to $180^\\circ$: $180 - 35 = 145$. ($55^\\circ$ is the complement.)")
+      ] }
+  };
+
   window.GEOMETRY_WORDS = WORDS; window.GEOMETRY_STUDY = STUDY; window.drawWords = draw; window.drawStudy = drawStudy;
 })();

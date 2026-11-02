@@ -97,7 +97,7 @@ button:focus-visible,input:focus{outline:2px solid var(--teal);outline-offset:1p
 .tab.on{color:var(--teal);border-bottom-color:var(--teal)}
 .learn,.pview{display:flex;flex-direction:column;gap:20px}
 .road{display:flex;gap:8px;flex-wrap:wrap}
-.lesson .lsub{margin:2px 0 4px}.lesson .lsubh{display:flex;align-items:center;gap:8px;font-family:Fraunces,Georgia,serif;font-size:19px;font-weight:600;margin:6px 0 2px}
+.lesson .lsub{margin:2px 0 4px}.lesson .lsec h4{font-family:Fraunces,Georgia,serif;font-size:18px;margin:8px 0 4px}.lesson .lsec .wsub{margin:0 0 10px;color:var(--muted);font-size:14.5px}.lesson .tries .th{font-weight:700;margin-bottom:4px}.lesson .lsecn{margin:6px 0 0;font-weight:600}.lesson .lsubh{display:flex;align-items:center;gap:8px;font-family:Fraunces,Georgia,serif;font-size:19px;font-weight:600;margin:6px 0 2px}
 .lesson .lsubh .gn{width:26px;height:26px;border-radius:50%;background:var(--navy);color:#fff;display:grid;place-items:center;font-family:Inter,sans-serif;font-size:13px}
 .lesson .wfoot{display:flex;align-items:center;justify-content:space-between;gap:10px;border-top:1px solid var(--line);padding-top:12px;margin-top:6px}.lesson .wfoot .wcount{color:var(--faint);font-size:13px}
 .stop{display:flex;align-items:center;gap:8px;border:1.5px solid var(--line);background:var(--surface);border-radius:999px;padding:6px 14px 6px 6px;cursor:pointer;font-size:14px;font-weight:600;color:var(--ink)}
@@ -1519,7 +1519,8 @@ function drawLesson(){
     <h4 class="lsubh"><span class="gn">${LSTEP+1}</span>${SUB[LSTEP][1]} ${SUB[LSTEP][2]}</h4>`;
   const foot=()=>{ const f=document.createElement("div"); f.className="wfoot"; f.innerHTML=`${LSTEP?`<button type="button" class="btn ghost sm" data-ls="${LSTEP-1}">← Back</button>`:"<span></span>"}<span class="wcount">${LSTEP+1} of ${KINDS.length}</span>${LSTEP<KINDS.length-1?`<button type="button" class="btn sm" data-ls="${LSTEP+1}">Next: ${SUB[LSTEP+1][0]} →</button>`:"<span></span>"}`; return f; };
   const wire=()=>box.querySelectorAll("[data-ls]").forEach(b=>b.onclick=()=>{ LSTEP=+b.dataset.ls; if(KINDS[LSTEP]==="watch"&&shown<1) shown=1; drawLesson(); box.scrollIntoView({behavior:"smooth",block:"start"}); });
-  if(KIND==="idea"){ box.innerHTML=head+`<div class="big">${t.idea}</div>${l.fig||""}`; box.appendChild(foot()); wire(); render(box); return; }
+  const secC=window.geoSecCards?geoSecCards(CH.id,t.id):"", secT=window.geoSecTries?geoSecTries(CH.id,t.id):"";
+  if(KIND==="idea"){ box.innerHTML=head+`<div class="big">${t.idea}</div>${secC||l.fig||""}`; box.appendChild(foot()); wire(); if(secC) geoSecWire(box,CH.id,t.id); render(box); return; }
   if(KIND==="more"){ box.innerHTML=head+l.more.map((e,j)=>`<div class="mex"><span class="label">${e.tag||("Example "+(j+2))}</span><div class="q">${e.q}</div><ol class="steps">${e.steps.map(s=>`<li><div><div class="m">$${s[0]}$</div><div class="w">${s[1]}</div></div></li>`).join("")}</ol>${e.note?`<div class="warn"><b>Why it matters: </b>${e.note}</div>`:""}</div>`).join("");
     box.appendChild(foot()); wire(); render(box); return; }
   if(KIND==="watch"){ box.innerHTML=head+`<p class="watch">I'll solve it one step at a time. Read each step and think about <b>why</b>. When it makes sense, press <b>Got it — next step</b>.</p><ol class="steps">${l.steps.slice(0,shown).map(s=>`<li><div><div class="m">$${s[0]}$</div><div class="w">${s[1]}</div></div></li>`).join("")}</ol>`;
@@ -1527,7 +1528,8 @@ function drawLesson(){
       const s=document.createElement("button"); s.className="btn ghost sm"; s.style.alignSelf="flex-start"; s.textContent="Show all steps at once"; s.onclick=()=>{ shown=l.steps.length; drawLesson(); }; box.appendChild(s); }
     else box.insertAdjacentHTML("beforeend",`<div class="warn"><b>Watch out: </b>${l.warn}</div>`);
     box.appendChild(foot()); wire(); render(box); return; }
-  box.innerHTML=head;
+  box.innerHTML=head+(secT?secT+`<p class="lsecn">Now one more — type your answer here:</p>`:"");
+  if(secT) geoSecWire(box,CH.id,t.id);
   {
     if(!TP) TP=t.gen[0]();
     const w=document.createElement("div"); w.className="turn";

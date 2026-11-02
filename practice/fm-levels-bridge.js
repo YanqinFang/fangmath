@@ -1226,7 +1226,10 @@
   /* ================= ONE PART AT A TIME (like Geometry 1.1) =================
      A lesson's Learn page can have several cards: the chapter's words, the postulates box, the story and the
      lesson itself. Show one at a time, with numbered steps on top and "Next →" at the bottom. */
-  const PARTS = { fmVideo: "Video", words: "Words to know", postbox: "Postulates", story: "Story", lesson: "Learn it", fmNotes: "Notes" };
+  // each step says what the student does: [icon, short label, longer label for the Next button]
+  const PARTS = { fmVideo: ["▶", "Watch", "Watch the video"], words: ["🔤", "Words to know", "Words to know"], postbox: ["📐", "Postulates", "Postulates"],
+    story: ["📖", "Story", "Read the story"], lesson: ["💡", "Learn it", "Learn it"], fmNotes: ["📒", "Notes", "Dr. Fang's notes"] };
+  const partOf = e => e.id === "story" && e.classList.contains("inlesson") && !e.classList.contains("pbox") ? PARTS.lesson : PARTS[e.id];   // 1.1: the "story" card IS the lesson
   const partAt = {};
   function partsDraw() {
     const lv = g("learnView"); if (!lv || !CH) return;
@@ -1242,16 +1245,19 @@
     const key = CH.id + ":" + LI; let k = Math.min(partAt[key] || 0, parts.length - 1);
     if (!bar) { bar = document.createElement("div"); bar.id = "fmParts"; bar.className = "fm-parts"; }
     parts[0].before(bar);
-    bar.innerHTML = parts.map((e, i) => `<button type="button" class="fp-pill${i === k ? " on" : ""}${i < k ? " seen" : ""}" data-i="${i}"><i>${i < k ? "✓" : i + 1}</i>${PARTS[e.id]}</button>`).join("");
+    const T0 = (CH.topics[LI] || {}).title || "";
+    bar.innerHTML = `<div class="fp-head"><span class="fp-sec">${esc(T0)}</span><span class="fp-of">Step ${k + 1} of ${parts.length}</span></div>
+      <div class="fp-steps">${parts.map((e, i) => `${i ? '<span class="fp-arr" aria-hidden="true">→</span>' : ""}<button type="button" class="fp-pill${i === k ? " on" : ""}${i < k ? " seen" : ""}" data-i="${i}" aria-current="${i === k ? "step" : "false"}"><i>${i < k ? "✓" : partOf(e)[0]}</i>${partOf(e)[1]}</button>`).join("")}</div>`;
     parts.forEach((e, i) => e.classList.toggle("fm-off", i !== k));
     if (parts[k].tagName === "DETAILS") parts[k].open = true;
     if (!nav) { nav = document.createElement("div"); nav.id = "fmPartsNav"; nav.className = "fm-parts-nav"; }
     parts[k].after(nav);
     const nxt = parts[k + 1];
-    nav.innerHTML = `${k > 0 ? `<button type="button" class="btn ghost sm" data-go="${k - 1}">← Back</button>` : "<span></span>"}<span class="fp-n">${k + 1} of ${parts.length}</span>${nxt ? `<button type="button" class="btn sm" data-go="${k + 1}">Next: ${PARTS[nxt.id]} →</button>` : "<span></span>"}`;
+    nav.innerHTML = `${k > 0 ? `<button type="button" class="btn ghost sm" data-go="${k - 1}">← Back</button>` : "<span></span>"}<span class="fp-n">${k + 1} of ${parts.length}</span>${nxt ? `<button type="button" class="btn sm" data-go="${k + 1}">Next: ${partOf(nxt)[2]} →</button>` : `<button type="button" class="btn sm teal" data-practice="1">Practice this section →</button>`}`;
     const go = i => { partAt[key] = i; partsDraw(); bar.scrollIntoView({ behavior: "smooth", block: "start" }); };
     bar.querySelectorAll("[data-i]").forEach(b => b.onclick = () => go(+b.dataset.i));
     nav.querySelectorAll("[data-go]").forEach(b => b.onclick = () => go(+b.dataset.go));
+    nav.querySelectorAll("[data-practice]").forEach(b => b.onclick = () => { setTab("practice"); const v = g("practiceView"); if (v) v.scrollIntoView({ behavior: "smooth", block: "start" }); });
   }
   /* Dr. Fang's notes (practice/notes.js): the key ideas from her handouts, as a "Notes" step after "Learn it" */
   function notesDraw() {
@@ -1288,7 +1294,10 @@
     if (!on) { const o = window.openLesson; if (typeof o === "function") window.openLesson = function () { const r = o.apply(this, arguments); drawN(); return r; }; drawN(); return; }
     const css = document.createElement("style"); css.textContent = `
 .fm-off{display:none!important}
-.fm-parts{display:flex;flex-wrap:wrap;gap:8px;background:#fff;border:1px solid var(--line);border-radius:16px;padding:10px 12px;margin:0 0 -6px;box-shadow:var(--shadow)}
+.fm-parts{display:flex;flex-direction:column;gap:8px;background:#fff;border:1px solid var(--line);border-radius:16px;padding:10px 12px;margin:0 0 -6px;box-shadow:var(--shadow)}
+.fp-head{display:flex;align-items:baseline;justify-content:space-between;gap:10px;flex-wrap:wrap}.fp-sec{font-weight:700;color:var(--navy);font-size:15px}.fp-of{font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--faint)}
+.fp-steps{display:flex;flex-wrap:wrap;align-items:center;gap:6px}.fp-arr{color:var(--faint);font-weight:700}
+.fp-pill.on{box-shadow:0 0 0 3px rgba(31,58,104,.12)}
 .fp-pill{display:flex;align-items:center;gap:8px;border:1.5px solid var(--line);background:var(--surface,#fff);border-radius:999px;padding:5px 14px 5px 5px;font:inherit;font-size:14px;font-weight:600;color:var(--ink);cursor:pointer}
 .fp-pill i{font-style:normal;width:24px;height:24px;border-radius:50%;display:grid;place-items:center;background:var(--bg);font-size:12px}
 .fp-pill.on{border-color:var(--navy);background:var(--soft,#EEF3F8)}.fp-pill.on i{background:var(--navy);color:#fff}

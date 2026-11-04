@@ -18,7 +18,7 @@ window.FM_VIDEOS = {
     "1.3": "https://youtu.be/XW7OdlGGqys",
     "1.4": "https://youtu.be/FbsE3ed3NpY",
     "1.5": "https://youtu.be/smFVgfW5KVI",
-    "1.6": "https://youtu.be/gmc-M-tiobs",
+    "1.6": "https://youtu.be/3Y3c1CojBRA",
     "2.1": "https://youtu.be/n5U1R33VPrU",
     "2.2": "https://youtu.be/KdQ2ZLJAe94",
     "2.3": "https://youtu.be/9HUyFgx-ZDs",

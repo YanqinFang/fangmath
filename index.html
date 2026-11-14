@@ -704,6 +704,11 @@ function pageHome(v){
     h("div", { class:"moves" }, [["Observe", "What do you notice? What is it asking?"], ["Simplify", "Try a smaller or easier version."], ["Explore", "Test cases, draw, look for a pattern."], ["Generalize", "Say the rule that always works."], ["Master", "Use it on something new."]]
       .map(([t, d]) => h("div", { class:"move" }, h("b", {}, t), h("span", {}, d)))))));
 
+  v.append(h("section", { class:"block" }, h("div", { class:"wrap" },
+    h("div", { class:"sec-head" }, h("div", {}, h("h2", {}, "My picture book"), h("p", {}, "A math story for ages 4–6, now on Amazon."))),
+    h("div", { class:"promo" },
+      h("a", { class:"card", href:"https://www.amazon.com/dp/B0HRJFRTDM", target:"_blank", rel:"noopener" }, h("div", { class:"ic", style:"background:var(--gold-soft)" }, "📘"), h("div", {}, h("h3", {}, "Gugu and the Biggest Square"), h("p", {}, "A beach adventure with Gugu and Kiki about shapes and squares. Buy on Amazon →")))))));
+
   v.append(h("section", { class:"block" }, h("div", { class:"wrap" }, subBox("home"))));
 
   v.append(h("section", { class:"block" }, h("div", { class:"wrap" },
@@ -2098,7 +2103,7 @@ function pageApp(v, cid, ui, mode){
 function notFound(v){ v.append(h("div", { class:"wrap" }, h("div", { class:"page-head" }, h("h1", {}, "Page not found"), h("p", {}, h("a", { href:"#/" }, "← Back home"))))); }
 
 $("yr").textContent = new Date().getFullYear();
-$("footLinks").append(h("span", {}, h("a", { href:"#/subscribe" }, "📬 Weekly email"), " · ", h("a", { href:"mailto:" + SITE.email }, SITE.email), SITE.youtube ? [" · ", h("a", { href:SITE.youtube, target:"_blank", rel:"noopener" }, "YouTube")] : null, " · ", h("a", { href:SITE.pma, target:"_blank", rel:"noopener" }, "Parents Meet AI")));
+$("footLinks").append(h("span", {}, h("a", { href:"#/subscribe" }, "📬 Weekly email"), " · ", h("a", { href:"mailto:" + SITE.email }, SITE.email), SITE.youtube ? [" · ", h("a", { href:SITE.youtube, target:"_blank", rel:"noopener" }, "YouTube")] : null, " · ", h("a", { href:SITE.pma, target:"_blank", rel:"noopener" }, "Parents Meet AI"), " · ", h("a", { href:"https://www.amazon.com/dp/B0HRJFRTDM", target:"_blank", rel:"noopener" }, "📘 My book on Amazon")));
 /* practice runs from the "at your level" pages that were not saved yet (see practice/fm-levels-bridge.js) */
 async function flushLevels(){
   if (!accountsOn || !kid) return;
